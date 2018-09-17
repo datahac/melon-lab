@@ -100,11 +100,8 @@ const sendTransaction = async (
   }
 
   // eslint-disable-next-line no-underscore-dangle
-  await contract._pollTransactionReceipt(transactionHash);
+  const rawReceipt = await contract._pollTransactionReceipt(transactionHash);
 
-  const rawReceipt = await environment.api.eth.getTransactionReceipt(
-    transactionHash,
-  );
   const logs = rawReceipt.logs.filter((log) => log.address.toLowerCase() === contract.address.toLowerCase());
   const decodedLogs = contract.parseEventLogs(logs);
   const transactionReceipt = { ...rawReceipt, logs: decodedLogs };
