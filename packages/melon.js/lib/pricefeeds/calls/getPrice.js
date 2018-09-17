@@ -21,12 +21,12 @@ const getPrice = async (
   );
   const assetAddress = getAddress(config, tokenSymbol);
 
-  const [price, ,] = await canonicalPriceFeedContract.instance.getPrice.call(
+  const [isRecent, price, assetDecimals] = await canonicalPriceFeedContract.instance.getPriceInfo.call(
     {},
     [assetAddress],
   );
 
-  return toReadable(config, price, config.quoteAssetSymbol);
+  return toReadable(config, price, tokenSymbol);
 };
 
 export default getPrice;
