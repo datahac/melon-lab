@@ -26,7 +26,7 @@ const getPrice = async (
     [assetAddress],
   );
 
-  return toReadable(config, price, tokenSymbol);
+  return toReadable(config, price, config.quoteAssetSymbol);
 };
 
 export default getPrice;
