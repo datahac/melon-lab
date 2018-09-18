@@ -10,8 +10,7 @@ import getConfig from '../../version/calls/getConfig';
 import { Order } from '../schemas/Order';
 
 /**
- * Get `numberOfOrders` active orders for the `baseTokenSymbol`/
- * `quoteTokenSymbol` asset pair
+ * Builds an artificial kyber orderbook of specified depth and granularity
  */
 const getKyberOrderBook = async (
   environment,
