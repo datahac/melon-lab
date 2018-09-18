@@ -15,21 +15,27 @@ import { Order } from '../schemas/Order';
  */
 const getKyberOrderBook = async (
   environment,
-  { baseTokenSymbol, quoteTokenSymbol, progression = 1, depth = 5 },
+  { baseTokenSymbol, quoteTokenSymbol, granularity = 1, depth = 5 },
 ) => {
-  const rates = []
+  const orderbook = {'bids':[], 'asks':[]};
   const config = await getConfig(environment);
   const nativeAssetSymbol = await getNativeAssetSymbol(environment);
 
-  // To get the srcAmount to be equivalent to the worth of native asset (Ether) in incremental order
+  // To get the srcAmount to be equivalent to the worth of i native asset (Ether) for i = 1..depth
   let [nativeAssetToBaseTokenPrice,] = await getConversionRate(environment, { srcTokenSymbol: nativeAssetSymbol, destTokenSymbol: baseTokenSymbol, srcAmount: 1 });
   nativeAssetToBaseTokenPrice = toReadable(config, nativeAssetToBaseTokenPrice, nativeAssetSymbol);
+  
+  let [nativeAssetToQuoteTokenPrice,] = await getConversionRate(environment, { srcTokenSymbol: nativeAssetSymbol, destTokenSymbol: quoteTokenSymbol, srcAmount: 1 });
+  nativeAssetToQuoteTokenPrice = toReadable(config, nativeAssetToQuoteTokenPrice, nativeAssetSymbol);
 
-  for (let i = 1; i <= depth; i++) {
-    const [, slippageRate] = await getConversionRate(environment, { srcTokenSymbol: baseTokenSymbol, destTokenSymbol: quoteTokenSymbol, srcAmount: nativeAssetToBaseTokenPrice.mul(i) });
-    rates.push(slippageRate);
-  }
-  return rates;
+  for (let i = 1; i <= depth; i += granularity) {
+    const [, bidRate] = await getConversionRate(environment, { srcTokenSymbol: baseTokenSymbol, destTokenSymbol: quoteTokenSymbol, srcAmount: nativeAssetToBaseTokenPrice.mul(i) });
+    const [, quoteToBaseSlippageRate] = await getConversionRate(environment, { srcTokenSymbol: quoteTokenSymbol, destTokenSymbol: baseTokenSymbol, srcAmount: nativeAssetToQuoteTokenPrice.mul(i) });
+    const askRate = new BigNumber(10 ** 36).div(quoteToBaseSlippageRate);
+    orderbook.bids.push(bidRate);
+    orderbook.asks.push(askRate);
+  } 
+  return orderbook;
 };
 
 export default getKyberOrderBook;
