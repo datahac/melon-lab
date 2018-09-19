@@ -28,11 +28,13 @@ const getKyberOrderBook = async (
   nativeAssetToQuoteTokenPrice = toReadable(config, nativeAssetToQuoteTokenPrice, nativeAssetSymbol);
 
   for (let i = 1; i <= depth; i += granularity) {
-    const [, bidRate] = await getConversionRate(environment, { srcTokenSymbol: baseTokenSymbol, destTokenSymbol: quoteTokenSymbol, srcAmount: nativeAssetToBaseTokenPrice.mul(i) });
-    const [, quoteToBaseSlippageRate] = await getConversionRate(environment, { srcTokenSymbol: quoteTokenSymbol, destTokenSymbol: baseTokenSymbol, srcAmount: nativeAssetToQuoteTokenPrice.mul(i) });
+    const bidVolume = nativeAssetToBaseTokenPrice.mul(i);
+    const [, bidRate] = await getConversionRate(environment, { srcTokenSymbol: baseTokenSymbol, destTokenSymbol: quoteTokenSymbol, srcAmount: bidVolume });
+    const askVolume = nativeAssetToQuoteTokenPrice.mul(i);
+    const [, quoteToBaseSlippageRate] = await getConversionRate(environment, { srcTokenSymbol: quoteTokenSymbol, destTokenSymbol: baseTokenSymbol, srcAmount: askVolume });
     const askRate = new BigNumber(10 ** 36).div(quoteToBaseSlippageRate);
-    orderbook.bids.push(bidRate);
-    orderbook.asks.push(askRate);
+    orderbook.bids.push({'rate': bidRate, 'volume': bidVolume});
+    orderbook.asks.push({'rate': askRate, 'volume': askVolume});
   } 
   return orderbook;
 };
