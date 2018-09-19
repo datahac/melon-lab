@@ -12,10 +12,13 @@ RUN apk add --update --no-cache --virtual .apk git python make g++ libsecret-dev
 # -----------------------------------------------------------------------------
 FROM apk-dependencies as npm-dependencies
 
-# Copy whole workspace into the container. This seems crazy but
-# is actually more efficient than copying each package.json
-# individually.
-COPY . /app
+COPY packages/exchange-aggregator/package.json packages/exchange-aggregator/package.json
+COPY packages/graphql-schema/package.json packages/graphql-schema/package.json
+COPY packages/graphql-server/package.json packages/graphql-server/package.json
+COPY packages/melon.js/package.json packages/melon.js/package.json
+COPY packages/manager-components/package.json packages/manager-components/package.json
+COPY packages/manager-interface/package.json packages/manager-interface/package.json
+COPY package.json yarn.lock ./
 
 # Install node dependencies and clean up afterwards.
 RUN yarn install --ignore-engines --frozen-lockfile --pure-lockfile --production && \
@@ -28,12 +31,16 @@ RUN yarn install --ignore-engines --frozen-lockfile --pure-lockfile --production
 # base development image
 # -----------------------------------------------------------------------------
 FROM node:9.7.0-alpine as node-development
-COPY --from=npm-dependencies /app/node_modules /app/node_modules
-COPY package.json yarn.lock /app/
+WORKDIR /app
+
+COPY --from=npm-dependencies /app/node_modules node_modules
+COPY package.json yarn.lock ./
 
 # -----------------------------------------------------------------------------
 # base production image
 # -----------------------------------------------------------------------------
 FROM node:9.7.0-alpine as node-production
-COPY --from=npm-dependencies /app/node_modules_production /app/node_modules
-COPY package.json yarn.lock /app/
+WORKDIR /app
+
+COPY --from=npm-dependencies /app/node_modules_production node_modules
+COPY package.json yarn.lock ./

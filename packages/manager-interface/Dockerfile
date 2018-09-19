@@ -6,7 +6,7 @@ FROM melonproject/npm-dependencies:latest as dependencies
 FROM melonproject/node-development:latest as development
 WORKDIR /app/packages/manager-interface
 
-COPY --from=dependencies /app/packages/manager-interface/node_modules /app/packages/manager-interface/node_modules
+COPY --from=dependencies /app/packages/manager-interface/node_modules node_modules
 
 CMD ["yarn", "dev"]
 
@@ -24,13 +24,12 @@ RUN yarn build
 FROM melonproject/node-production:latest as production
 WORKDIR /app/packages/manager-interface
 
-COPY --from=dependencies /app/packages/manager-interface/node_modules /app/packages/manager-interface/node_modules
-COPY --from=build /app/packages/manager-interface/build /app/packages/manager-interface/build
-COPY --from=build /app/packages/manager-interface/src/static /app/packages/manager-interface/src/static
+COPY --from=dependencies /app/packages/manager-interface/node_modules node_modules
+COPY --from=build /app/packages/manager-interface/build build
+COPY --from=build /app/packages/manager-interface/src/static src/static
 
 COPY .env.defaults /app/
-COPY packages/manager-interface/package.json /app/packages/manager-interface/
-COPY packages/manager-interface/next.config.dist.js /app/packages/manager-interface/next.config.js
-COPY packages/manager-interface/config /app/packages/manager-interface/config
+COPY packages/manager-interface/package.json packages/manager-interface/next.config.dist.js ./
+COPY packages/manager-interface/config config
 
 CMD ["yarn", "start"]
