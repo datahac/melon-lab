@@ -14,7 +14,7 @@ export interface SetupProps {
   competitionName?: string;
   config: {
     canonicalPriceFeedAddress: string;
-    competitionComplianceAddress: string;
+    noComplianceAddress: string;
     onlyManagerCompetitionAddress: string;
   };
   errors?: any;
@@ -118,11 +118,11 @@ export const Setup: StatelessComponent<SetupProps> = ({
             <a
               href={`https://${
                 networkId === '42' ? 'kovan.' : ''
-              }etherscan.io/address/${config.onlyManagerCompetitionAddress}`}
+              }etherscan.io/address/${config.noComplianceAddress}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <strong>Only manager can invest (in WETH)</strong>
+              <strong>No compliance - anyone can invest (in WETH)</strong>
             </a>
           </div>
         )}

@@ -262,14 +262,14 @@ exports[`Setup should render correctly 1`] = `
                  
                 <a
                   className="jsx-__scopedHash"
-                  href="https://etherscan.io/address/foo"
+                  href="https://etherscan.io/address/undefined"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
                   <strong
                     className="jsx-__scopedHash"
                   >
-                    Only manager can invest (in WETH)
+                    No compliance - anyone can invest (in WETH)
                   </strong>
                 </a>
               </div>
@@ -881,14 +881,14 @@ exports[`Setup should render correctly with loading 1`] = `
                  
                 <a
                   className="jsx-__scopedHash"
-                  href="https://etherscan.io/address/foo"
+                  href="https://etherscan.io/address/undefined"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
                   <strong
                     className="jsx-__scopedHash"
                   >
-                    Only manager can invest (in WETH)
+                    No compliance - anyone can invest (in WETH)
                   </strong>
                 </a>
               </div>
@@ -1187,14 +1187,14 @@ exports[`Setup should render correctly with networkId 1`] = `
                  
                 <a
                   className="jsx-__scopedHash"
-                  href="https://kovan.etherscan.io/address/foo"
+                  href="https://kovan.etherscan.io/address/undefined"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
                   <strong
                     className="jsx-__scopedHash"
                   >
-                    Only manager can invest (in WETH)
+                    No compliance - anyone can invest (in WETH)
                   </strong>
                 </a>
               </div>
