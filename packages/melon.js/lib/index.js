@@ -29,13 +29,16 @@ import toReadable from './assets/utils/toReadable';
 
 // ./lib/exchange/calls
 import getActiveOrders from './exchange/calls/getActiveOrders';
+import getConversionRate from './exchange/calls/getConversionRate';
 import getFundRecentTrades from './exchange/calls/getFundRecentTrades';
+import getKyberOrderBook from './exchange/calls/getKyberOrderBook';
 import getLastOrderId from './exchange/calls/getLastOrderId';
 import getOrder from './exchange/calls/getOrder';
 import getOrderbook from './exchange/calls/getOrderbook';
 import getRecentTrades from './exchange/calls/getRecentTrades';
 
 // ./lib/exchange/contracts
+import getKyberProxyContract from './exchange/contracts/getKyberProxyContract';
 import getMatchingMarketAdapterContract from './exchange/contracts/getMatchingMarketAdapterContract';
 import getMatchingMarketContract from './exchange/contracts/getMatchingMarketContract';
 
@@ -51,6 +54,7 @@ import Trade from './exchange/schemas/Trade';
 import cancelOrderFromAccount from './exchange/transactions/cancelOrderFromAccount';
 import make0xOffChainOrder from './exchange/transactions/make0xOffChainOrder';
 import makeOrderFromAccount from './exchange/transactions/makeOrderFromAccount';
+import swapTokensFromAccount from './exchange/transactions/swapTokensFromAccount';
 import takeOrderFromAccount from './exchange/transactions/takeOrderFromAccount';
 
 // ./lib/exchange/utils
@@ -89,6 +93,7 @@ import callOnExchange from './fund/transactions/callOnExchange';
 import cancelOrder from './fund/transactions/cancelOrder';
 import makeOrder from './fund/transactions/makeOrder';
 import shutDownFund from './fund/transactions/shutDownFund';
+import swapTokens from './fund/transactions/swapTokens';
 import takeMultipleOrders from './fund/transactions/takeMultipleOrders';
 import takeOrder from './fund/transactions/takeOrder';
 import toggleInvestment from './fund/transactions/toggleInvestment';
@@ -254,11 +259,14 @@ export {
   toProcessable,
   toReadable,
   getActiveOrders,
+  getConversionRate,
   getFundRecentTrades,
+  getKyberOrderBook,
   getLastOrderId,
   getOrder,
   getOrderbook,
   getRecentTrades,
+  getKyberProxyContract,
   getMatchingMarketAdapterContract,
   getMatchingMarketContract,
   onOrderUpdate,
@@ -268,6 +276,7 @@ export {
   cancelOrderFromAccount,
   make0xOffChainOrder,
   makeOrderFromAccount,
+  swapTokensFromAccount,
   takeOrderFromAccount,
   averagePrice,
   deserializeOrder,
@@ -296,6 +305,7 @@ export {
   cancelOrder,
   makeOrder,
   shutDownFund,
+  swapTokens,
   takeMultipleOrders,
   takeOrder,
   toggleInvestment,
