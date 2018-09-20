@@ -30,7 +30,9 @@ module.exports = withComposedConfig({
     ['@melonproject/exchange-aggregator', 'src'],
   ],
   distDir: path.join('..', 'build'),
-  exportPathMap: () => require('./next.routes.js'),
+  exportPathMap: () => ({
+    '/': { page: '/' },
+  }),
   webpack: (config, options) => {
     config.resolve.alias = Object.assign({}, config.resolve.alias || {}, {
       '~/legacy': path.join(managerInterface, 'src', 'legacy'),

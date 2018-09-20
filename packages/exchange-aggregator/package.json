@@ -15,7 +15,7 @@
     "Jenna Zenk <jenna@melonport.com>"
   ],
   "dependencies": {
-    "@melonproject/smart-contracts": "0.8.0-kyber.3",
+    "@melonproject/smart-contracts": "0.8.10",
     "axios": "^0.18.0",
     "bignumber.js": "4.1.0",
     "debug": "2.6.9",

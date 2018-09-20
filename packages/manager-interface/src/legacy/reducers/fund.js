@@ -43,7 +43,6 @@ const reducers = {
   setAddress: (state, { address }) => ({
     ...state,
     address,
-    fundAddress: address,
   }),
   setLoading: (state, { address }) => ({
     ...loadingFund,

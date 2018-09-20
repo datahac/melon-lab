@@ -50,6 +50,9 @@ const invest = async (
   await isInvestmentRequestPermittedAndAllowed(environment, {
     fundContract,
     asset: getAddress(config, symbol),
+    who,
+    giveQuantity: toProcessable(config, offeredValue, symbol),
+    shareQuantity: toProcessable(config, numShares, symbol),
   });
 
   ensure(

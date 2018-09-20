@@ -11,6 +11,7 @@ import participation from './participation';
 import ranking from './ranking';
 import recentTrades from './recentTrades';
 import setup from './setup';
+import tracker from './tracker';
 import trade from './trade';
 import tradeHistory from './tradeHistory';
 import wallet from './wallet';
@@ -30,6 +31,8 @@ function* rootSaga() {
   yield fork(trade);
   yield fork(tradeHistory);
   yield fork(wallet);
+
+  if (global.analytics) yield fork(tracker);
 }
 
 export default rootSaga;

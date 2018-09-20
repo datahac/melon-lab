@@ -15,6 +15,7 @@ import isValidId from '../../utils/generic/isValidId';
 const getOrdersHistory = async (environment, { fundAddress }) => {
   const config = await getConfig(environment);
   const exchangeContract = await getMatchingMarketContract(environment);
+
   const fundContract = getFundContract(environment, fundAddress);
   const lastOrderIndex = await fundContract.instance.getLastOrderIndex.call(
     {},

@@ -35,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
 
 const OpenOrdersWithLifecycle = lifecycle({
   componentDidMount() {
-    setTimeout(() => this.props.getOpenOrders());
+    this.props.getOpenOrders();
   },
 })(OpenOrders);
 

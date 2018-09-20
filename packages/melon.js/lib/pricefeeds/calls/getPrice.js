@@ -21,7 +21,7 @@ const getPrice = async (
   );
   const assetAddress = getAddress(config, tokenSymbol);
 
-  const [price, ,] = await canonicalPriceFeedContract.instance.getPrice.call(
+  const [isRecent, price, assetDecimals] = await canonicalPriceFeedContract.instance.getPriceInfo.call(
     {},
     [assetAddress],
   );

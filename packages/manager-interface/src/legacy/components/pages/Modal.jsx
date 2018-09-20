@@ -1,7 +1,7 @@
 import React from 'react';
 import ModalComponent from '@melonproject/manager-components/blocks/Modal';
-import PasswordForm from '../containers/PasswordForm';
-import FeeForm from '../containers/FeeForm';
+import PasswordForm from '../../containers/PasswordForm';
+import FeeForm from '../../containers/FeeForm';
 
 export const types = {
   ERROR: 'ERROR',

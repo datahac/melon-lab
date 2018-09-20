@@ -45,7 +45,7 @@ const randomString = (length = 4) =>
         .toString(36)
         .substr(2, length);
 
-xit(
+fit(
     'Create fund, invest, take order, redeem',
     async () => {
         console.log('\n');
@@ -93,6 +93,7 @@ xit(
         );
 
         shared.config = await getConfig(environment);
+        console.log(config.assets)
         trace({
             message: `Got config w OasisDex exchange at ${
             shared.config.matchingMarketAddress
@@ -101,128 +102,128 @@ xit(
             }`,
             data: shared.config,
         });
-        const transfered = await transferTo(environment, { symbol: "WETH-T", toAddress: "0xAb180c5b69Df130d5a1585375384152Ffd5813de", quantity: 10 })
-        console.log(transfered)
-        // const versionContract = await getVersionContract(environment);
-        // let managerToFunds = await versionContract.instance.managerToFunds.call(
-        //     {},
-        //     [wallet.address],
+        // const transfered = await transferTo(environment, { symbol: "WETH-T", toAddress: "0xAb180c5b69Df130d5a1585375384152Ffd5813de", quantity: 10 })
+        // console.log(transfered)
+        const versionContract = await getVersionContract(environment);
+        let managerToFunds = await versionContract.instance.managerToFunds.call(
+            {},
+            [wallet.address],
+        );
+
+        // // // If wallet already has a fund, need to shut it down before creating a new one -Only for integration purposes
+        if (managerToFunds !== '0x0000000000000000000000000000000000000000') {
+            console.log('Existing fund needs to be shut down: ', managerToFunds);
+            await shutDownFund(environment, { fundAddress: managerToFunds });
+            console.log('Shutting down existing fund');
+            managerToFunds = await versionContract.instance.managerToFunds.call({}, [
+                environment.account.address,
+            ]);
+        }
+
+        const signature = await signTermsAndConditions(environment);
+        shared.vaultName = randomString();
+        shared.vault = await setupFund(environment, {
+            name: shared.vaultName,
+            signature,
+            exchangeNames: ['MatchingMarket', 'ZeroExExchange'],
+        });
+
+        expect(shared.vault.name).toBe(shared.vaultName);
+        expect(shared.vault.address).toBeTruthy();
+        expect(shared.vault.inception instanceof Date).toBeTruthy();
+        trace({
+            message: `vaultCreated: ${shared.vault.name} (${shared.vault.id}) at ${
+            shared.vault.address
+            }`,
+            data: shared,
+        });
+
+        const fundCreatedByManager = await getFundForManager(environment, {
+            managerAddress: environment.account.address,
+        });
+        expect(fundCreatedByManager).toBe(shared.vault.address);
+
+        shared.participation.initial = await getParticipation(environment, {
+            fundAddress: shared.vault.address,
+            investorAddress: environment.account.address,
+        });
+        expect(shared.participation.initial.personalStake.toNumber()).toBe(0);
+        expect(shared.participation.initial.totalSupply.toNumber()).toBe(0);
+
+        shared.initialCalculations = await performCalculations(environment, {
+            fundAddress: shared.vault.address,
+        });
+
+        trace({
+            message: `Initial calculations- GAV: ${
+            shared.initialCalculations.gav
+            }, NAV: ${shared.initialCalculations.nav}, Share Price: ${
+            shared.initialCalculations.sharePrice
+            }, totalSupply: ${shared.initialCalculations.totalSupply}`,
+            data: shared,
+        });
+        expect(shared.initialCalculations.sharePrice.toNumber()).toBe(1);
+        expect(shared.initialCalculations.gav.toNumber()).toBe(0);
+
+        shared.subscriptionRequest = await invest(environment, {
+            fundAddress: shared.vault.address,
+            numShares: new BigNumber(2),
+            offeredValue: new BigNumber(50),
+            isNativeAsset: false,
+        });
+
+        trace({
+            message: `Subscribe requested. shares: ${
+            shared.subscriptionRequest.numShares
+            }`,
+            data: shared,
+        });
+
+        shared.lastRequest = await getLastRequest(environment, {
+            fundAddress: shared.vault.address,
+            investorAddress: environment.account.address,
+        });
+
+        expect(shared.lastRequest.canBeExecutedInMs).toBe(0);
+
+        shared.executedSubscriptionRequest = await executeRequest(environment, {
+            id: shared.subscriptionRequest.id,
+            fundAddress: shared.vault.address,
+            // 0,
+        });
+
+        trace(`executedSubscriptionRequest ${shared.executedSubscriptionRequest}`);
+
+        shared.participation.invested = await getParticipation(environment, {
+            fundAddress: shared.vault.address,
+            investorAddress: environment.account.address,
+        });
+
+        // expect(shared.participation.invested.personalStake.toNumber()).toBe(
+        //   INITIAL_SUBSCRIBE_QUANTITY,
+        // );
+        // expect(shared.participation.invested.totalSupply.toNumber()).toBe(
+        //   INITIAL_SUBSCRIBE_QUANTITY,
         // );
 
-        // // // // If wallet already has a fund, need to shut it down before creating a new one -Only for integration purposes
-        // if (managerToFunds !== '0x0000000000000000000000000000000000000000') {
-        //     console.log('Existing fund needs to be shut down: ', managerToFunds);
-        //     await shutDownFund(environment, { fundAddress: managerToFunds });
-        //     console.log('Shutting down existing fund');
-        //     managerToFunds = await versionContract.instance.managerToFunds.call({}, [
-        //         environment.account.address,
-        //     ]);
-        // }
+        trace({
+            message: `Subscribe request executed. Personal stake: ${
+            shared.participation.invested.personalStake
+            }`,
+        });
 
-        // const signature = await signTermsAndConditions(environment);
-        // shared.vaultName = randomString();
-        // shared.vault = await setupFund(environment, {
-        //     name: shared.vaultName,
-        //     signature,
-        //     exchangeNames: ['MatchingMarket', 'ZeroExExchange'],
-        // });
+        shared.midCalculations = await performCalculations(environment, {
+            fundAddress: shared.vault.address,
+        });
 
-        // expect(shared.vault.name).toBe(shared.vaultName);
-        // expect(shared.vault.address).toBeTruthy();
-        // expect(shared.vault.inception instanceof Date).toBeTruthy();
-        // trace({
-        //     message: `vaultCreated: ${shared.vault.name} (${shared.vault.id}) at ${
-        //     shared.vault.address
-        //     }`,
-        //     data: shared,
-        // });
-
-        // const fundCreatedByManager = await getFundForManager(environment, {
-        //     managerAddress: environment.account.address,
-        // });
-        // expect(fundCreatedByManager).toBe(shared.vault.address);
-
-        // shared.participation.initial = await getParticipation(environment, {
-        //     fundAddress: shared.vault.address,
-        //     investorAddress: environment.account.address,
-        // });
-        // expect(shared.participation.initial.personalStake.toNumber()).toBe(0);
-        // expect(shared.participation.initial.totalSupply.toNumber()).toBe(0);
-
-        // shared.initialCalculations = await performCalculations(environment, {
-        //     fundAddress: shared.vault.address,
-        // });
-
-        // trace({
-        //     message: `Initial calculations- GAV: ${
-        //     shared.initialCalculations.gav
-        //     }, NAV: ${shared.initialCalculations.nav}, Share Price: ${
-        //     shared.initialCalculations.sharePrice
-        //     }, totalSupply: ${shared.initialCalculations.totalSupply}`,
-        //     data: shared,
-        // });
-        // expect(shared.initialCalculations.sharePrice.toNumber()).toBe(1);
-        // expect(shared.initialCalculations.gav.toNumber()).toBe(0);
-
-        // shared.subscriptionRequest = await invest(environment, {
-        //     fundAddress: shared.vault.address,
-        //     numShares: new BigNumber(2),
-        //     offeredValue: new BigNumber(50),
-        //     isNativeAsset: false,
-        // });
-
-        // trace({
-        //     message: `Subscribe requested. shares: ${
-        //     shared.subscriptionRequest.numShares
-        //     }`,
-        //     data: shared,
-        // });
-
-        // shared.lastRequest = await getLastRequest(environment, {
-        //     fundAddress: shared.vault.address,
-        //     investorAddress: environment.account.address,
-        // });
-
-        // expect(shared.lastRequest.canBeExecutedInMs).toBe(0);
-
-        // shared.executedSubscriptionRequest = await executeRequest(environment, {
-        //     id: shared.subscriptionRequest.id,
-        //     fundAddress: shared.vault.address,
-        //     // 0,
-        // });
-
-        // trace(`executedSubscriptionRequest ${shared.executedSubscriptionRequest}`);
-
-        // shared.participation.invested = await getParticipation(environment, {
-        //     fundAddress: shared.vault.address,
-        //     investorAddress: environment.account.address,
-        // });
-
-        // // expect(shared.participation.invested.personalStake.toNumber()).toBe(
-        // //   INITIAL_SUBSCRIBE_QUANTITY,
-        // // );
-        // // expect(shared.participation.invested.totalSupply.toNumber()).toBe(
-        // //   INITIAL_SUBSCRIBE_QUANTITY,
-        // // );
-
-        // trace({
-        //     message: `Subscribe request executed. Personal stake: ${
-        //     shared.participation.invested.personalStake
-        //     }`,
-        // });
-
-        // shared.midCalculations = await performCalculations(environment, {
-        //     fundAddress: shared.vault.address,
-        // });
-
-        // trace({
-        //     message: `Mid calculations- GAV: ${shared.midCalculations.gav}, NAV: ${
-        //     shared.midCalculations.nav
-        //     }, Share Price: ${shared.midCalculations.sharePrice}, totalSupply: ${
-        //     shared.midCalculations.totalSupply
-        //     }`,
-        //     data: shared,
-        // });
+        trace({
+            message: `Mid calculations- GAV: ${shared.midCalculations.gav}, NAV: ${
+            shared.midCalculations.nav
+            }, Share Price: ${shared.midCalculations.sharePrice}, totalSupply: ${
+            shared.midCalculations.totalSupply
+            }`,
+            data: shared,
+        });
 
         // // shared.simpleOrder = await makeOrderFromAccount(environment, {
         // //   sell: {

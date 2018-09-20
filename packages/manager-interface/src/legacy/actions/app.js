@@ -8,10 +8,11 @@ export const types = {
 };
 
 export const actions = {
-  setTrack: ({ track, isCompetition }) => ({
+  setTrack: ({ track, isCompetition, isElectron }) => ({
     type: types.SET_TRACK,
     track,
     isCompetition,
+    isElectron,
   }),
   setUsersFund: usersFund => ({
     type: types.SET_USERS_FUND,

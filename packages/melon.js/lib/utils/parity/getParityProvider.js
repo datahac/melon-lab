@@ -6,7 +6,7 @@ import ensure from '../generic/ensure';
 
 const checkHttpProvider = async url => {
   try {
-    const provider = new Api.Provider.Http(url);
+    const provider = new Api.Provider.Http(url, 60000);
     const api = new Api(provider);
     // HACK: Parity does not properly return api.isConnected. This is always true.
     // So we need to explicitly make a call that fails for a unreachable node. :(

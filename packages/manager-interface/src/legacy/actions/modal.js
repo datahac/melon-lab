@@ -1,4 +1,4 @@
-import { types as modalTypes } from '../components/Modal';
+import { types as modalTypes } from '../components/pages/Modal';
 
 export const types = {
   OPEN: 'OPEN:modal:melon.fund',

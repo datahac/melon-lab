@@ -21,7 +21,7 @@ function* init() {
     console.warn(`TRACK is set to ${track} which is not a supported track.`);
   }
   yield put(
-    actions.setTrack({ track, isCompetition }),
+    actions.setTrack({ track, isCompetition, isElectron: ELECTRON }),
   );
 }
 
@@ -86,6 +86,37 @@ function* deriveReadyState() {
   if (hasChanged) yield put(actions.setReadyState(readyState));
 }
 
+function* redirectSaga() {
+  const usersFundChecked = yield select(state => state.app.usersFundChecked);
+
+  if (!usersFundChecked) {
+    yield take(types.SET_USERS_FUND);
+  }
+
+  const usersFund = yield select(state => state.app.usersFund);
+
+  if (usersFund) {
+    const fundInfoReceived = yield select(
+      state => !['', '-', '...'].includes(state.fund.name),
+    );
+
+    if (!fundInfoReceived) {
+      yield put(fundActions.infoRequested(usersFund));
+      yield take(fundTypes.INFO_SUCCEEDED);
+    }
+
+    const isReadyToTrade = yield select(state => state.app.isReadyToTrade);
+
+    if (isReadyToTrade) {
+      yield put(routeActions.fund(usersFund));
+    } else {
+      yield put(routeActions.setup());
+    }
+  } else {
+    yield put(routeActions.ranking());
+  }
+}
+
 function* scrollTo({ id }) {
   const target = document.getElementById(id);
 
@@ -97,6 +128,7 @@ const onlyMelonActions = action =>
 
 function* appSaga() {
   yield takeLatest(browserTypes.LOADED, init);
+  yield takeLatest(routeTypes.ROOT, redirectSaga);
   yield takeLatest(onlyMelonActions, deriveReadyState);
   yield takeLatest(types.SCROLL_TO, scrollTo);
 }

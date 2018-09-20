@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Modal from '../components/Modal';
+import Modal from '../components/pages/Modal';
 import { actions, interactions } from '../actions/modal';
 import { getEnvironment, setEnvironment } from '@melonproject/melon.js';
 

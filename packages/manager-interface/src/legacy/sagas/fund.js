@@ -12,7 +12,6 @@ import {
   isCompetitionActive,
   getEndTime,
 } from '@melonproject/melon.js';
-import Router from 'next/router';
 import { takeLatest, put, call, take, select } from 'redux-saga/effects';
 import { actions, types } from '../actions/fund';
 import { types as ethereumTypes } from '../actions/ethereum';
@@ -98,7 +97,8 @@ function* requestInfo({ address }) {
 }
 
 function* checkAndLoad() {
-  const address = Router.router.query && Router.router.query.address || '';
+  // HACK: We should use state.location.payload... but it seems to be broken
+  const address = yield select(state => state.location.pathname.slice(1));
   let isReadyToVisit = yield select(state => state.app.isReadyToVisit);
   yield put(actions.setLoading(address));
 

@@ -36,7 +36,9 @@ exports[`Holdings should render correctly 1`] = `
           <CellHead
             textAlign="right"
           >
-            Price (MLN)
+            Price (in 
+            WETH-T
+            )
           </CellHead>
           <CellHead
             textAlign="right"
@@ -641,7 +643,9 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellHead
             textAlign="right"
           >
-            Price (MLN)
+            Price (in 
+            WETH-T
+            )
           </CellHead>
           <CellHead
             textAlign="right"

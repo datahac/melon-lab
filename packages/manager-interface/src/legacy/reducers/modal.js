@@ -1,5 +1,5 @@
 import { types as actionTypes } from '../actions/modal';
-import { types as modalTypes } from '../components/Modal';
+import { types as modalTypes } from '../components/pages/Modal';
 
 export const initialState = {
   isOpen: false,

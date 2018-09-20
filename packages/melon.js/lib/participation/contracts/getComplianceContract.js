@@ -7,8 +7,8 @@ import ComplianceInterfaceAbi from '@melonproject/smart-contracts/out/compliance
 const getComplianceContract = async (environment, fundContract) => {
   const [
     ,
-    ,
     participationContractAddress,
+    ,
   ] = await fundContract.instance.getModules.call();
   return environment.api.newContract(
     ComplianceInterfaceAbi,

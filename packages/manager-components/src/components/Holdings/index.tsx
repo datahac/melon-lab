@@ -48,7 +48,7 @@ export const Holdings: StatelessComponent<HoldingsProps> = ({
               <CellHead>Asset</CellHead>
               <CellHead>Quantity</CellHead>
               <CellHead textAlign="right">% of portfolio</CellHead>
-              <CellHead textAlign="right">Price (MLN)</CellHead>
+              <CellHead textAlign="right">Price (in {quoteAsset})</CellHead>
               <CellHead textAlign="right" />
             </Row>
           </TableHead>

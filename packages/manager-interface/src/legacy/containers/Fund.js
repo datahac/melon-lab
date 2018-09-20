@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import isSameAddress from '../utils/isSameAddress';
-import Fund from '../components/Fund';
+import Fund from '../components/pages/Fund';
 
 const mapStateToProps = state => {
   const isManager =
