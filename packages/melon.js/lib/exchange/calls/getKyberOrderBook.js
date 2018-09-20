@@ -5,6 +5,7 @@ import getOrder from './getOrder';
 import getConversionRate from './getConversionRate';
 import getKyberProxyContract from '../contracts/getKyberProxyContract';
 import toReadable from '../../assets/utils/toReadable';
+import getDecimals from '../../assets/utils/getDecimals';
 import getNativeAssetSymbol from '../../version/calls/getNativeAssetSymbol';
 import getConfig from '../../version/calls/getConfig';
 import { Order } from '../schemas/Order';
@@ -25,9 +26,10 @@ const formatOrder = (config, type, sellSymbol, buySymbol, sellQuantity, price): 
     howMuch: sellQuantity,
   };
 
+  const buyQuantity = (type === 'sell') ? sellQuantity.mul(price) : sellQuantity.div(price);
   order.buy = {
     symbol: buySymbol,
-    howMuch: sellQuantity.mul(price),
+    howMuch: buyQuantity,
   };
 
   return order;
@@ -52,13 +54,18 @@ const getKyberOrderBook = async (
   nativeAssetToQuoteTokenPrice = toReadable(config, nativeAssetToQuoteTokenPrice, nativeAssetSymbol);
 
   for (let i = 1; i <= depth; i += granularity) {
+    // Calculate bidRate
     const bidVolume = nativeAssetToBaseTokenPrice.mul(i);
-    const [, bidRate] = await getConversionRate(environment, { srcTokenSymbol: baseTokenSymbol, destTokenSymbol: quoteTokenSymbol, srcAmount: bidVolume });
+    const [, baseToQuoteSlippageRate] = await getConversionRate(environment, { srcTokenSymbol: baseTokenSymbol, destTokenSymbol: quoteTokenSymbol, srcAmount: bidVolume });
+    const bidRate = toReadable(config, baseToQuoteSlippageRate, nativeAssetSymbol);
+    
+    // Calculate askRate
     const askVolume = nativeAssetToQuoteTokenPrice.mul(i);
     const [, quoteToBaseSlippageRate] = await getConversionRate(environment, { srcTokenSymbol: quoteTokenSymbol, destTokenSymbol: baseTokenSymbol, srcAmount: askVolume });
-    const askRate = new BigNumber(10 ** 36).div(quoteToBaseSlippageRate);
-    orderbook.push(formatOrder(config, 'buy', baseTokenSymbol, quoteTokenSymbol, bidVolume, bidRate));
-    orderbook.push(formatOrder(config, 'sell', quoteTokenSymbol, baseTokenSymbol, askVolume, askRate));
+    const askRate = new BigNumber(10 ** 18).div(quoteToBaseSlippageRate);
+    
+    orderbook.push(formatOrder(config, 'sell', baseTokenSymbol, quoteTokenSymbol, bidVolume, bidRate));
+    orderbook.push(formatOrder(config, 'buy', quoteTokenSymbol, baseTokenSymbol, askVolume, askRate));
   } 
   return orderbook;
 };
