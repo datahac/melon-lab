@@ -38,7 +38,7 @@ const formatOrder = (config, type, sellSymbol, buySymbol, sellQuantity, price): 
 /**
  * Builds an artificial kyber orderbook of specified depth and granularity
  */
-const getKyberOrderBook = async (
+const getKyberOrderbook = async (
   environment,
   { baseTokenSymbol, quoteTokenSymbol, granularity = 1, depth = 5 },
 ) : [Order] => {
@@ -70,4 +70,4 @@ const getKyberOrderBook = async (
   return orderbook;
 };
 
-export default getKyberOrderBook;
+export default getKyberOrderbook;

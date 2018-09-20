@@ -1,10 +1,10 @@
-import { getOrderbook, getSymbol } from '@melonproject/melon.js';
+import { getKyberOrderbook } from '@melonproject/melon.js';
 import * as R from 'ramda';
 import * as Rx from 'rxjs';
 
-const debug = require('debug')('melon-lab:exchange-aggregator:oasis-dex');
+const debug = require('debug')('melon-lab:exchange-aggregator:kyber-network');
 
-const labelOrder = order => ({ ...order, exchange: 'OASIS_DEX' });
+const labelOrder = order => ({ ...order, exchange: 'KYBER_NETWORK' });
 const labelOrders = orders => orders.map(labelOrder);
 
 const getObservableOasisDex = (
@@ -13,7 +13,7 @@ const getObservableOasisDex = (
   environment,
 ) => {
   const orderbook$ = Rx.Observable.defer(() =>
-    getOrderbook(environment, { baseTokenSymbol, quoteTokenSymbol }),
+    getKyberOrderbook(environment, { baseTokenSymbol, quoteTokenSymbol }),
   )
     .do(value => debug('Receiving values.', value))
     .distinctUntilChanged(R.equals)

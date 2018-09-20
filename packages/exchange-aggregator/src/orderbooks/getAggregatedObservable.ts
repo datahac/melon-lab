@@ -3,6 +3,7 @@ import * as Rx from 'rxjs';
 import getObservableErcDex from './ercDex/getObservableErcDex';
 import getObservableOasisDex from './oasisDex/getObservableOasisDex';
 import getObservableRadarRelay from './radarRelay/getObservableRadarRelay';
+import getObservableKyberNetwork from './kyberNetwork/getObservableKyberNetwork';
 import { getAddress } from '@melonproject/melon.js';
 
 import { ExchangeEnum, NetworkEnum, Order } from '../index';
@@ -42,10 +43,21 @@ const exchangeToCreatorFunction: { [P in ExchangeEnum]: ExchangeCreator } = {
     getObservableOasisDex(
       baseTokenSymbol,
       quoteTokenSymbol,
-      baseTokenAddress,
-      quoteTokenAddress,
       environment,
-      config,
+    ),
+  KYBER_NETWORK: (
+    baseTokenSymbol,
+    quoteTokenSymbol,
+    baseTokenAddress,
+    quoteTokenAddress,
+    network,
+    environment,
+    config,
+  ) =>
+    getObservableKyberNetwork(
+      baseTokenSymbol,
+      quoteTokenSymbol,
+      environment,
     ),
   ERC_DEX: (
     baseTokenSymbol,
@@ -78,7 +90,7 @@ const sortOrderBooks = R.sort<Order>((a, b) => {
 const getAggregatedObservable = (
   baseTokenSymbol: string,
   quoteTokenSymbol: string,
-  exchanges: ExchangeEnum[] = ['RADAR_RELAY', 'OASIS_DEX', 'ERC_DEX'],
+  exchanges: ExchangeEnum[] = ['RADAR_RELAY', 'OASIS_DEX', 'ERC_DEX', 'KYBER_NETWORK'],
   network: NetworkEnum = 'KOVAN',
   environment,
   config,

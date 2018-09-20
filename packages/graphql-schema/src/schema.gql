@@ -6,6 +6,7 @@ enum ExchangeEnum {
   RADAR_RELAY
   OASIS_DEX
   ERC_DEX
+  KYBER_NETWORK
 }
 
 type Fund {
@@ -41,7 +42,7 @@ type HowMuchOfAsset {
 }
 
 interface Order {
-  maker: String!
+  maker: String
   taker: String
   isActive: Boolean!
   type: String!
@@ -53,7 +54,7 @@ interface Order {
 }
 
 type ZeroExOrder implements Order {
-  maker: String!
+  maker: String
   taker: String
   isActive: Boolean!
   type: String!
@@ -71,7 +72,7 @@ type ZeroExOrder implements Order {
 }
 
 type OasisDexOrder implements Order {
-  maker: String!
+  maker: String
   taker: String
   isActive: Boolean!
   type: String!
