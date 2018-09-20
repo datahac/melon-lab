@@ -36,8 +36,7 @@ fit('swapTokens from account', async () => {
   const environment = getEnvironment();
   const config = await getConfig(environment);
 
-  // console.log((await getKyberOrderBook(environment, { baseTokenSymbol: "WETH-T", quoteTokenSymbol: "DAI-T" })).bids);
-  // console.log((await getKyberOrderBook(environment, { baseTokenSymbol: "WETH-T", quoteTokenSymbol: "DAI-T" })).asks);
+  // console.log((await getKyberOrderBook(environment, { baseTokenSymbol: "WETH-T", quoteTokenSymbol: "DAI-T" })));
 
   const srcAmount = 0.1;
   const [, slippageRate] = await getConversionRate(environment, { srcTokenSymbol: "WETH-T", destTokenSymbol: "DAI-T", srcAmount });

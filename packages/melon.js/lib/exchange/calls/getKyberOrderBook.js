@@ -9,14 +9,38 @@ import getNativeAssetSymbol from '../../version/calls/getNativeAssetSymbol';
 import getConfig from '../../version/calls/getConfig';
 import { Order } from '../schemas/Order';
 
+const formatOrder = (config, type, sellSymbol, buySymbol, sellQuantity, price): Order => {
+  const order = {
+    id: -1,
+    owner: 'Kyber',
+    isActive: true,
+    price,
+    type,
+    exchangeContractAddress: config.kyberNetworkAddress,
+    exchange: "Kyber"
+  };
+
+  order.sell = {
+    symbol: sellSymbol,
+    howMuch: sellQuantity,
+  };
+
+  order.buy = {
+    symbol: buySymbol,
+    howMuch: sellQuantity.mul(price),
+  };
+
+  return order;
+};
+
 /**
  * Builds an artificial kyber orderbook of specified depth and granularity
  */
 const getKyberOrderBook = async (
   environment,
   { baseTokenSymbol, quoteTokenSymbol, granularity = 1, depth = 5 },
-) => {
-  const orderbook = {'bids':[], 'asks':[]};
+) : [Order] => {
+  const orderbook = [];
   const config = await getConfig(environment);
   const nativeAssetSymbol = await getNativeAssetSymbol(environment);
 
@@ -33,8 +57,8 @@ const getKyberOrderBook = async (
     const askVolume = nativeAssetToQuoteTokenPrice.mul(i);
     const [, quoteToBaseSlippageRate] = await getConversionRate(environment, { srcTokenSymbol: quoteTokenSymbol, destTokenSymbol: baseTokenSymbol, srcAmount: askVolume });
     const askRate = new BigNumber(10 ** 36).div(quoteToBaseSlippageRate);
-    orderbook.bids.push({'rate': bidRate, 'volume': bidVolume});
-    orderbook.asks.push({'rate': askRate, 'volume': askVolume});
+    orderbook.push(formatOrder(config, 'buy', baseTokenSymbol, quoteTokenSymbol, bidVolume, bidRate));
+    orderbook.push(formatOrder(config, 'sell', quoteTokenSymbol, baseTokenSymbol, askVolume, askRate));
   } 
   return orderbook;
 };
