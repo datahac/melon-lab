@@ -8,7 +8,7 @@ import getNativeAssetSymbol from '../../../../lib/version/calls/getNativeAssetSy
 import hasRecentPrice from '../../../../lib/pricefeeds/calls/hasRecentPrice';
 import getParityProvider from '../../../../lib/utils/parity/getParityProvider';
 import getOrderbook from '../../../../lib/exchange/calls/getOrderbook';
-import getKyberOrderBook from '../../../../lib/exchange/calls/getKyberOrderBook';
+import getKyberOrderBook from '../../../../lib/exchange/calls/getKyberOrderbook';
 import getConversionRate from '../../../../lib/exchange/calls/getConversionRate';
 import getKyberProxyContract from '../../../../lib/exchange/contracts/getKyberProxyContract';
 import importWalletFromMnemonic from '../../../../lib/utils/wallet/importWalletFromMnemonic';
