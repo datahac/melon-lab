@@ -53,7 +53,7 @@ exports[`Orderbook should render correctly 1`] = `
         >
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35181"
+            key="35181-0"
             onClick={[Function]}
             style={
               Object {
@@ -88,7 +88,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35180"
+            key="35180-1"
             onClick={[Function]}
             style={
               Object {
@@ -123,7 +123,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="82308000392722064780839831843676531186157865405440223968573990222569806632804"
+            key="82308000392722064780839831843676531186157865405440223968573990222569806632804-2"
             onClick={[Function]}
             style={
               Object {
@@ -158,7 +158,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35208"
+            key="35208-3"
             onClick={[Function]}
             style={
               Object {
@@ -193,7 +193,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35209"
+            key="35209-4"
             onClick={[Function]}
             style={
               Object {
@@ -228,7 +228,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="113800866172774416504623384277397812966239744209968072974179274104386711996"
+            key="113800866172774416504623384277397812966239744209968072974179274104386711996-5"
             onClick={[Function]}
             style={
               Object {
@@ -263,7 +263,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35210"
+            key="35210-6"
             onClick={[Function]}
             style={
               Object {
@@ -298,7 +298,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="96776313600780594239625648986583570374390282304979507394055377602011602578406"
+            key="96776313600780594239625648986583570374390282304979507394055377602011602578406-7"
             onClick={[Function]}
             style={
               Object {
@@ -333,7 +333,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="62745833173228774081066255167991918157047470531730258564989614196330867701429"
+            key="62745833173228774081066255167991918157047470531730258564989614196330867701429-8"
             onClick={[Function]}
             style={
               Object {
@@ -368,7 +368,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35211"
+            key="35211-9"
             onClick={[Function]}
             style={
               Object {
@@ -403,7 +403,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35212"
+            key="35212-10"
             onClick={[Function]}
             style={
               Object {
@@ -438,7 +438,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="65765178849432166838664565564223588120931810247755896294500846507735706768778"
+            key="65765178849432166838664565564223588120931810247755896294500846507735706768778-11"
             onClick={[Function]}
             style={
               Object {
@@ -473,7 +473,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="7615851857606809569329377127359118203606056606422405268266811601217946939114"
+            key="7615851857606809569329377127359118203606056606422405268266811601217946939114-12"
             onClick={[Function]}
             style={
               Object {
@@ -508,7 +508,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35213"
+            key="35213-13"
             onClick={[Function]}
             style={
               Object {
@@ -543,7 +543,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35214"
+            key="35214-14"
             onClick={[Function]}
             style={
               Object {
@@ -578,7 +578,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="67251964846712113589105067487459297212505430254706952884314748608752903382916"
+            key="67251964846712113589105067487459297212505430254706952884314748608752903382916-15"
             onClick={[Function]}
             style={
               Object {
@@ -613,7 +613,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35215"
+            key="35215-16"
             onClick={[Function]}
             style={
               Object {
@@ -648,7 +648,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="74548636906738055573517807206275655438527861345553564536259842939483268685658"
+            key="74548636906738055573517807206275655438527861345553564536259842939483268685658-17"
             onClick={[Function]}
             style={
               Object {
@@ -683,7 +683,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35216"
+            key="35216-18"
             onClick={[Function]}
             style={
               Object {
@@ -718,7 +718,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="25598525409006788019377570006798783760140035732676827506219796205888225011364"
+            key="25598525409006788019377570006798783760140035732676827506219796205888225011364-19"
             onClick={[Function]}
             style={
               Object {
@@ -753,7 +753,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="3706839253204025122373570205042155544336209410007250498015918615454407753340"
+            key="3706839253204025122373570205042155544336209410007250498015918615454407753340-20"
             onClick={[Function]}
             style={
               Object {
@@ -788,7 +788,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35217"
+            key="35217-21"
             onClick={[Function]}
             style={
               Object {
@@ -858,7 +858,7 @@ exports[`Orderbook should render correctly 1`] = `
         >
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="96302967355552289024967882824636622547821090945630919770220103279947185869454"
+            key="96302967355552289024967882824636622547821090945630919770220103279947185869454-0"
             onClick={[Function]}
             style={
               Object {
@@ -893,7 +893,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="71419178349408508286422820083917115708971497327642429272764937832088207492971"
+            key="71419178349408508286422820083917115708971497327642429272764937832088207492971-1"
             onClick={[Function]}
             style={
               Object {
@@ -928,7 +928,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="269638644306083619498395204910965153249475175197150846272235434328185974335"
+            key="269638644306083619498395204910965153249475175197150846272235434328185974335-2"
             onClick={[Function]}
             style={
               Object {
@@ -963,7 +963,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="11237167879966232763183679966800023000333042005442680810034960123858343145310"
+            key="11237167879966232763183679966800023000333042005442680810034960123858343145310-3"
             onClick={[Function]}
             style={
               Object {
@@ -998,7 +998,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="14154721986762677035650990823345620946275899562927278438693307924695347344745"
+            key="14154721986762677035650990823345620946275899562927278438693307924695347344745-4"
             onClick={[Function]}
             style={
               Object {
@@ -1033,7 +1033,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="90624116958836631220516209284885658559310621026154292720396243182305185376953"
+            key="90624116958836631220516209284885658559310621026154292720396243182305185376953-5"
             onClick={[Function]}
             style={
               Object {
@@ -1068,7 +1068,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="96984606670502401008398164020895826389427215450890718580579115369194040537072"
+            key="96984606670502401008398164020895826389427215450890718580579115369194040537072-6"
             onClick={[Function]}
             style={
               Object {
@@ -1103,7 +1103,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="4604886630858074681010333900934157298352445667281895938132549745140729661927"
+            key="4604886630858074681010333900934157298352445667281895938132549745140729661927-7"
             onClick={[Function]}
             style={
               Object {
@@ -1138,7 +1138,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="53240587075232308532158794728103004523642036280233110642393823050523708831112"
+            key="53240587075232308532158794728103004523642036280233110642393823050523708831112-8"
             onClick={[Function]}
             style={
               Object {
@@ -1173,7 +1173,7 @@ exports[`Orderbook should render correctly 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="1233177404392475891618488288211937198800448430268037754937622680273608094462"
+            key="1233177404392475891618488288211937198800448430268037754937622680273608094462-9"
             onClick={[Function]}
             style={
               Object {
@@ -1316,7 +1316,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
         >
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35181"
+            key="35181-0"
             onClick={[Function]}
             style={
               Object {
@@ -1351,7 +1351,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35180"
+            key="35180-1"
             onClick={[Function]}
             style={
               Object {
@@ -1386,7 +1386,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="82308000392722064780839831843676531186157865405440223968573990222569806632804"
+            key="82308000392722064780839831843676531186157865405440223968573990222569806632804-2"
             onClick={[Function]}
             style={
               Object {
@@ -1421,7 +1421,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35208"
+            key="35208-3"
             onClick={[Function]}
             style={
               Object {
@@ -1456,7 +1456,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35209"
+            key="35209-4"
             onClick={[Function]}
             style={
               Object {
@@ -1491,7 +1491,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="113800866172774416504623384277397812966239744209968072974179274104386711996"
+            key="113800866172774416504623384277397812966239744209968072974179274104386711996-5"
             onClick={[Function]}
             style={
               Object {
@@ -1526,7 +1526,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35210"
+            key="35210-6"
             onClick={[Function]}
             style={
               Object {
@@ -1561,7 +1561,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="96776313600780594239625648986583570374390282304979507394055377602011602578406"
+            key="96776313600780594239625648986583570374390282304979507394055377602011602578406-7"
             onClick={[Function]}
             style={
               Object {
@@ -1596,7 +1596,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="62745833173228774081066255167991918157047470531730258564989614196330867701429"
+            key="62745833173228774081066255167991918157047470531730258564989614196330867701429-8"
             onClick={[Function]}
             style={
               Object {
@@ -1631,7 +1631,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35211"
+            key="35211-9"
             onClick={[Function]}
             style={
               Object {
@@ -1666,7 +1666,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35212"
+            key="35212-10"
             onClick={[Function]}
             style={
               Object {
@@ -1701,7 +1701,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="65765178849432166838664565564223588120931810247755896294500846507735706768778"
+            key="65765178849432166838664565564223588120931810247755896294500846507735706768778-11"
             onClick={[Function]}
             style={
               Object {
@@ -1736,7 +1736,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="7615851857606809569329377127359118203606056606422405268266811601217946939114"
+            key="7615851857606809569329377127359118203606056606422405268266811601217946939114-12"
             onClick={[Function]}
             style={
               Object {
@@ -1771,7 +1771,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35213"
+            key="35213-13"
             onClick={[Function]}
             style={
               Object {
@@ -1806,7 +1806,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35214"
+            key="35214-14"
             onClick={[Function]}
             style={
               Object {
@@ -1841,7 +1841,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="67251964846712113589105067487459297212505430254706952884314748608752903382916"
+            key="67251964846712113589105067487459297212505430254706952884314748608752903382916-15"
             onClick={[Function]}
             style={
               Object {
@@ -1876,7 +1876,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35215"
+            key="35215-16"
             onClick={[Function]}
             style={
               Object {
@@ -1911,7 +1911,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="74548636906738055573517807206275655438527861345553564536259842939483268685658"
+            key="74548636906738055573517807206275655438527861345553564536259842939483268685658-17"
             onClick={[Function]}
             style={
               Object {
@@ -1946,7 +1946,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35216"
+            key="35216-18"
             onClick={[Function]}
             style={
               Object {
@@ -1981,7 +1981,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="25598525409006788019377570006798783760140035732676827506219796205888225011364"
+            key="25598525409006788019377570006798783760140035732676827506219796205888225011364-19"
             onClick={[Function]}
             style={
               Object {
@@ -2016,7 +2016,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="3706839253204025122373570205042155544336209410007250498015918615454407753340"
+            key="3706839253204025122373570205042155544336209410007250498015918615454407753340-20"
             onClick={[Function]}
             style={
               Object {
@@ -2051,7 +2051,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="35217"
+            key="35217-21"
             onClick={[Function]}
             style={
               Object {
@@ -2121,7 +2121,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
         >
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="96302967355552289024967882824636622547821090945630919770220103279947185869454"
+            key="96302967355552289024967882824636622547821090945630919770220103279947185869454-0"
             onClick={[Function]}
             style={
               Object {
@@ -2156,7 +2156,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="71419178349408508286422820083917115708971497327642429272764937832088207492971"
+            key="71419178349408508286422820083917115708971497327642429272764937832088207492971-1"
             onClick={[Function]}
             style={
               Object {
@@ -2191,7 +2191,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="269638644306083619498395204910965153249475175197150846272235434328185974335"
+            key="269638644306083619498395204910965153249475175197150846272235434328185974335-2"
             onClick={[Function]}
             style={
               Object {
@@ -2226,7 +2226,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="11237167879966232763183679966800023000333042005442680810034960123858343145310"
+            key="11237167879966232763183679966800023000333042005442680810034960123858343145310-3"
             onClick={[Function]}
             style={
               Object {
@@ -2261,7 +2261,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="14154721986762677035650990823345620946275899562927278438693307924695347344745"
+            key="14154721986762677035650990823345620946275899562927278438693307924695347344745-4"
             onClick={[Function]}
             style={
               Object {
@@ -2296,7 +2296,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="90624116958836631220516209284885658559310621026154292720396243182305185376953"
+            key="90624116958836631220516209284885658559310621026154292720396243182305185376953-5"
             onClick={[Function]}
             style={
               Object {
@@ -2331,7 +2331,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="96984606670502401008398164020895826389427215450890718580579115369194040537072"
+            key="96984606670502401008398164020895826389427215450890718580579115369194040537072-6"
             onClick={[Function]}
             style={
               Object {
@@ -2366,7 +2366,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="4604886630858074681010333900934157298352445667281895938132549745140729661927"
+            key="4604886630858074681010333900934157298352445667281895938132549745140729661927-7"
             onClick={[Function]}
             style={
               Object {
@@ -2401,7 +2401,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="53240587075232308532158794728103004523642036280233110642393823050523708831112"
+            key="53240587075232308532158794728103004523642036280233110642393823050523708831112-8"
             onClick={[Function]}
             style={
               Object {
@@ -2436,7 +2436,7 @@ exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
           </div>
           <div
             className="jsx-__scopedHash orderbook__body-row"
-            key="1233177404392475891618488288211937198800448430268037754937622680273608094462"
+            key="1233177404392475891618488288211937198800448430268037754937622680273608094462-9"
             onClick={[Function]}
             style={
               Object {
