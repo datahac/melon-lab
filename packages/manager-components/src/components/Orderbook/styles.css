@@ -106,3 +106,18 @@
 .orderbook__table-sell .orderbook__head-cell:nth-child(1) {
   padding-left: var(--space-m);
 }
+
+.orderbook__exchanges {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-xs);
+}
+
+.orderbook__exchange-label {
+  font-weight: var(--font-weight-bold);
+  margin: 0 var(--space-m) var(--space-xs) 0;
+}
+
+.orderbook__exchange {
+  margin: 0 var(--space-m) var(--space-xs) 0;
+}
