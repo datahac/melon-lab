@@ -45,7 +45,7 @@ const randomString = (length = 4) =>
         .toString(36)
         .substr(2, length);
 
-fit(
+xit(
     'Create fund, invest, take order, redeem',
     async () => {
         console.log('\n');

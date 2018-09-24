@@ -5,6 +5,7 @@ export default {
       case 'ERC_DEX':
         return 'ZeroExOrder';
       case 'OASIS_DEX':
+      case 'KYBER_NETWORK':
         return 'OasisDexOrder';
       default:
         return null;

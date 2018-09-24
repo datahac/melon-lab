@@ -76,7 +76,7 @@ const getConfig = async (environment): Promise<Config> => {
         versionAddress: addressBook[mode].Version,
         governanceAddress: addressBook[mode].Governance,
         olympiadAddress: addressBook[mode].Competition,
-        kyberNetworkAddress: addressBook[mode].KyberNetwork,
+        kyberNetworkAddress: addressBook[mode].KyberNetworkProxy,
         kyberAdapter: addressBook[mode].KyberAdapter,
     }
 

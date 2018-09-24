@@ -31,7 +31,7 @@ import toReadable from './assets/utils/toReadable';
 import getActiveOrders from './exchange/calls/getActiveOrders';
 import getConversionRate from './exchange/calls/getConversionRate';
 import getFundRecentTrades from './exchange/calls/getFundRecentTrades';
-import getKyberOrderBook from './exchange/calls/getKyberOrderBook';
+import getKyberOrderbook from './exchange/calls/getKyberOrderbook';
 import getLastOrderId from './exchange/calls/getLastOrderId';
 import getOrder from './exchange/calls/getOrder';
 import getOrderbook from './exchange/calls/getOrderbook';
@@ -261,7 +261,7 @@ export {
   getActiveOrders,
   getConversionRate,
   getFundRecentTrades,
-  getKyberOrderBook,
+  getKyberOrderbook,
   getLastOrderId,
   getOrder,
   getOrderbook,
