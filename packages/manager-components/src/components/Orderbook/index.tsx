@@ -27,7 +27,7 @@ const exchanges = [
     text: 'ERC Dex',
   },
   {
-    alue: 'oasisDex',
+    value: 'oasisDex',
     text: 'OasisDex',
   },
   {

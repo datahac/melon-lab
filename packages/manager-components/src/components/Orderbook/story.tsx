@@ -960,6 +960,7 @@ const data = {
     ],
   },
   onClick: action('onClick'),
+  onChangeExchange: action('onClickExchange'),
 };
 
 const noData = {
@@ -974,6 +975,7 @@ const noData = {
     sellEntries: [],
   },
   onClick: action('onClick'),
+  onChangeExchange: action('onClickExchange'),
 };
 
 storiesOf('Components|Orderbook', module)
