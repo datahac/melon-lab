@@ -52,7 +52,7 @@ export const Orderbook: StatelessComponent<OrderbookProps> = ({
   availableExchanges,
 }) => {
   const onChangeExchange = e => {
-    let newExchange = exchanges;
+    const newExchange = exchanges;
     if (!exchanges.includes(e.target.value)) {
       newExchange.push(e.target.value);
     } else {
