@@ -18,12 +18,15 @@ const getWhiteListedAssets = async (environment, network) => {
       [asset.address],
     );
 
-
     // HACK: different format of returned value depending on if  assets was registered with web3 or parity .js ...
     return {
       address: asset.address,
-      name: Utils.toUtf8String(Utils.stripZeros(Utils.stripZeros(info[1]).reverse()).reverse()),
-      symbol: Utils.toUtf8String(Utils.stripZeros(Utils.stripZeros(info[2]).reverse()).reverse()),
+      name: Utils.toUtf8String(
+        Utils.stripZeros(Utils.stripZeros(info[1]).reverse()).reverse(),
+      ),
+      symbol: Utils.toUtf8String(
+        Utils.stripZeros(Utils.stripZeros(info[2]).reverse()).reverse(),
+      ),
       decimals: parseInt(info[3], 10),
       url: info[4],
       ipfsHash: info[5],
@@ -33,7 +36,10 @@ const getWhiteListedAssets = async (environment, network) => {
 
   const allAssetsInfos = await Promise.all(promiseForInfo);
 
-  return allAssetsInfos.filter(asset => asset.isWhiteListed && asset.symbol !== "CHF" && asset.symbol !== "CHF-T");
+  return allAssetsInfos.filter(
+    asset =>
+      asset.isWhiteListed && asset.symbol !== 'CHF' && asset.symbol !== 'CHF-T',
+  );
 };
 
 export default getWhiteListedAssets;

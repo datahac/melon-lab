@@ -29,7 +29,7 @@ const redeemAllOwnedAssets = async (
   ensure(
     participation.personalStake.gte(numShares),
     `You cannot redeem more shares than you have. You own ${
-    participation.personalStake
+      participation.personalStake
     }`,
   );
 

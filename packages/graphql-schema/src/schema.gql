@@ -127,7 +127,7 @@ type Subscription {
   orderbook(
     baseTokenSymbol: Symbol!
     quoteTokenSymbol: Symbol!
-    exchanges: [ExchangeEnum] = ["RADAR_RELAY", "OASIS_DEX", "ERC_DEX"]
+    exchanges: [ExchangeEnum] = ["RADAR_RELAY", "OASIS_DEX", "ERC_DEX", "KYBER_NETWORK"]
   ): Orderbook
 }
 

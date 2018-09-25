@@ -26,27 +26,45 @@ type Fund = {
  * Setup a new fund with `name` and an array of `exchangeNames`  */
 const setupFund = async (
   environment: Environment,
-  { name, signature, exchangeNames = ['MatchingMarket', 'ZeroExExchange'], track = "kovan-demo" },
+  {
+    name,
+    signature,
+    exchangeNames = ['MatchingMarket', 'ZeroExExchange', 'KyberNetworkProxy'],
+    track = 'kovan-demo',
+  },
 ): Promise<Fund> => {
   const config = await getConfig(environment);
-  const { quoteAssetSymbol, noComplianceAddress, competitionComplianceAddress, riskManagementAddress } = config;
+  const {
+    quoteAssetSymbol,
+    noComplianceAddress,
+    competitionComplianceAddress,
+    riskManagementAddress,
+  } = config;
   let complianceAddress;
-  if (track === "kovan-demo") complianceAddress = noComplianceAddress
-  else if (track === "kovan-competition") complianceAddress = competitionComplianceAddress
-  else if (track === "live") complianceAddress = competitionComplianceAddress
+  if (track === 'kovan-demo') complianceAddress = noComplianceAddress;
+  else if (track === 'kovan-competition')
+    complianceAddress = competitionComplianceAddress;
+  else if (track === 'live') complianceAddress = competitionComplianceAddress;
 
   const quoteAsset = getAddress(config, quoteAssetSymbol);
-  const melonAsset = getAddress(config, config.melonAssetSymbol)
+  const melonAsset = getAddress(config, config.melonAssetSymbol);
   const managementReward = 0;
   const performanceReward = 0;
 
   const versionContract = await getVersionContract(environment, config);
 
-  if (track === "kovan-competition" || track === "live") {
-    const competitionComplianceContract = await getCompetitionComplianceContract(environment);
-    const isCompetitionAllowed = await competitionComplianceContract.instance.isCompetitionAllowed.call({}, [environment.account.address])
-    ensure(isCompetitionAllowed, 'Address not whitelisted cannot create a fund on this version');
-
+  if (track === 'kovan-competition' || track === 'live') {
+    const competitionComplianceContract = await getCompetitionComplianceContract(
+      environment,
+    );
+    const isCompetitionAllowed = await competitionComplianceContract.instance.isCompetitionAllowed.call(
+      {},
+      [environment.account.address],
+    );
+    ensure(
+      isCompetitionAllowed,
+      'Address not whitelisted cannot create a fund on this version',
+    );
   }
 
   const isVersionShutDown = await versionContract.instance.isShutDown.call();

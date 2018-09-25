@@ -46,7 +46,7 @@ const findHttpProvider = (rpcEndpointList, connectionTimeout) =>
 const getParityProvider = async endpoint => {
   ensure(
     protocolPackage.version ===
-    pkg.dependencies['@melonproject/smart-contracts'],
+      pkg.dependencies['@melonproject/smart-contracts'],
     'Fatal: Inconsistency: Protocol version mismatch',
   );
 
@@ -77,10 +77,10 @@ const getParityProvider = async endpoint => {
 
   const provider = injectedProvider
     ? {
-      provider: injectedProvider,
-      api: new Api(injectedProvider),
-      providerType: providers.INJECTED,
-    }
+        provider: injectedProvider,
+        api: new Api(injectedProvider),
+        providerType: providers.INJECTED,
+      }
     : findHttpProvider(rpcEndpointList);
 
   return provider || { providerType: providers.NONE };

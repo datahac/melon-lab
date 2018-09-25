@@ -18,7 +18,7 @@ const formatOrder = (config, type, buySymbol, sellSymbol, buyQuantity, price): O
     price,
     type,
     exchangeContractAddress: config.kyberNetworkAddress,
-    exchange: "Kyber"
+    exchange: 'Kyber',
   };
 
   const sellQuantity = (type === 'buy') ? buyQuantity.mul(price) : buyQuantity.div(price);
@@ -41,7 +41,7 @@ const formatOrder = (config, type, buySymbol, sellSymbol, buyQuantity, price): O
 const getKyberOrderbook = async (
   environment,
   { baseTokenSymbol, quoteTokenSymbol, granularity = 1, depth = 5 },
-) : [Order] => {
+): [Order] => {
   const orderbook = [];
   const config = await getConfig(environment);
   const nativeAssetSymbol = await getNativeAssetSymbol(environment);
@@ -49,7 +49,7 @@ const getKyberOrderbook = async (
   // To get the srcAmount to be equivalent to the worth of i native asset (Ether) for i = 1..depth
   let [nativeAssetToBaseTokenPrice] = await getConversionRate(environment, { srcTokenSymbol: nativeAssetSymbol, destTokenSymbol: baseTokenSymbol, srcAmount: 1 });
   nativeAssetToBaseTokenPrice = toReadable(config, nativeAssetToBaseTokenPrice, nativeAssetSymbol);
-  
+
   let [nativeAssetToQuoteTokenPrice] = await getConversionRate(environment, { srcTokenSymbol: nativeAssetSymbol, destTokenSymbol: quoteTokenSymbol, srcAmount: 1 });
   nativeAssetToQuoteTokenPrice = toReadable(config, nativeAssetToQuoteTokenPrice, nativeAssetSymbol);
 
@@ -62,10 +62,10 @@ const getKyberOrderbook = async (
     const askBuyQuantity = nativeAssetToQuoteTokenPrice.mul(i);
     const [, quoteToBaseSlippageRate] = await getConversionRate(environment, { srcTokenSymbol: quoteTokenSymbol, destTokenSymbol: baseTokenSymbol, srcAmount: askBuyQuantity });
     const askRate = new BigNumber(10 ** 18).div(quoteToBaseSlippageRate);
-    
+
     orderbook.push(formatOrder(config, 'buy', baseTokenSymbol, quoteTokenSymbol, bidBuyQuantity, bidRate));
     orderbook.push(formatOrder(config, 'sell', quoteTokenSymbol, baseTokenSymbol, askBuyQuantity, askRate));
-  } 
+  }
   return orderbook;
 };
 

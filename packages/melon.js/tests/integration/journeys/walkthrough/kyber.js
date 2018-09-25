@@ -28,83 +28,132 @@ const randomString = (length = 4) =>
     .toString(36)
     .substr(2, length);
 
-fit('swapTokens from account', async () => {
-  const { providerType, api } = await getParityProvider();
-  const wallet = importWalletFromMnemonic('dinosaur pulse rice lumber machine entry tackle off require draw edge almost');
+fit(
+  'swapTokens from account',
+  async () => {
+    const { providerType, api } = await getParityProvider();
+    const wallet = importWalletFromMnemonic(
+      'dinosaur pulse rice lumber machine entry tackle off require draw edge almost',
+    );
 
-  setEnvironment({ api, account: wallet, providerType });
-  const environment = getEnvironment();
-  const config = await getConfig(environment);
+    setEnvironment({ api, account: wallet, providerType });
+    const environment = getEnvironment();
+    const config = await getConfig(environment);
 
-  // const orderbook = await getKyberOrderBook(environment, { baseTokenSymbol: "WETH-T", quoteTokenSymbol: "DAI-T" });
-  // console.log(JSON.stringify(orderbook, null, 4));
+    // const orderbook = await getKyberOrderBook(environment, { baseTokenSymbol: "WETH-T", quoteTokenSymbol: "DAI-T" });
+    // console.log(JSON.stringify(orderbook, null, 4));
 
-  const srcAmount = 0.1;
-  const [, slippageRate] = await getConversionRate(environment, { srcTokenSymbol: "WETH-T", destTokenSymbol: "DAI-T", srcAmount });
-  const expectedDestAmount = srcAmount * slippageRate;
+    const srcAmount = 0.1;
+    const [, slippageRate] = await getConversionRate(environment, {
+      srcTokenSymbol: 'WETH-T',
+      destTokenSymbol: 'DAI-T',
+      srcAmount,
+    });
+    const expectedDestAmount = srcAmount * slippageRate;
 
-  const actualDestAmount = await swapTokensFromAccount(environment, { srcTokenSymbol: "WETH-T", srcAmount: srcAmount, destTokenSymbol: "DAI-T", minConversionRate: slippageRate });
+    const actualDestAmount = await swapTokensFromAccount(environment, {
+      srcTokenSymbol: 'WETH-T',
+      srcAmount: srcAmount,
+      destTokenSymbol: 'DAI-T',
+      minConversionRate: slippageRate,
+    });
 
-  expect(Number(actualDestAmount.params.actualDestAmount.value)).toBeGreaterThan(
-    expectedDestAmount,
-  );
-},  10 * 60 * 1000);
+    expect(
+      Number(actualDestAmount.params.actualDestAmount.value),
+    ).toBeGreaterThan(expectedDestAmount);
+  },
+  10 * 60 * 1000,
+);
 
-fit('Create fund, swapTokens from WETH to DAI, swap back', async () => {
+fit(
+  'Create fund, swapTokens from WETH to DAI, swap back',
+  async () => {
+    const environment = getEnvironment();
+    const config = await getConfig(environment);
 
-  const environment = getEnvironment();
-  const config = await getConfig(environment);
+    const signature = await signTermsAndConditions(environment);
+    const shared = {};
 
-  const signature = await signTermsAndConditions(environment);
-  const shared = {};
+    shared.fundName = randomString();
+    const versionContract = await getVersionContract(environment);
+    let managerToFunds = await versionContract.instance.managerToFunds.call(
+      {},
+      [environment.account.address],
+    );
 
-  shared.fundName = randomString();
-  const versionContract = await getVersionContract(environment);
-  let managerToFunds = await versionContract.instance.managerToFunds.call(
-    {},
-    [environment.account.address],
-  );
+    if (managerToFunds !== '0x0000000000000000000000000000000000000000') {
+      console.log('Existing fund needs to be shut down: ', managerToFunds);
+      await shutDownFund(environment, { fundAddress: managerToFunds });
+      console.log('Shutting down existing fund');
+      managerToFunds = await versionContract.instance.managerToFunds.call({}, [
+        environment.account.address,
+      ]);
+    }
 
-  if (managerToFunds !== '0x0000000000000000000000000000000000000000') {
-    shared.fund = { address: managerToFunds };
-  }
-  else {
     shared.fund = await setupFund(environment, {
       name: shared.fundName,
       signature,
-      exchangeNames: ['KyberNetwork'],
+      // exchangeNames: ['KyberNetworkProxy'],
     });
-  }
 
-  const srcToken = "WETH-T";
-  const destToken = "DAI-T"
-  const srcAmount = 0.1;
-  const [, slippageRate] = await getConversionRate(environment, { srcTokenSymbol: srcToken, destTokenSymbol: destToken, srcAmount });
-  const minDestAmount = toReadable(config, slippageRate.mul(srcAmount), destToken);
-  await transferTo(environment, { symbol: srcToken, toAddress: shared.fund.address, quantity: srcAmount });
-  const eventLog = await swapTokens(environment, {
-    fundAddress: shared.fund.address, exchangeAddress: config.kyberNetworkAddress, srcTokenSymbol: srcToken,
-    destTokenSymbol: destToken,
-    srcAmount: srcAmount,
-    destAmount: minDestAmount
-  });
-  const actualDestAmount = toReadable(config, eventLog.params.actualDestAmount.value, destToken);
-  expect(Number(actualDestAmount)).toBeGreaterThan(
-    minDestAmount,
-  );
-  trace({ message: `Sold  ${srcAmount} ${srcToken} and bought ${actualDestAmount} ${destToken}` });
+    const srcToken = 'WETH-T';
+    const destToken = 'DAI-T';
+    const srcAmount = new BigNumber(0.1);
+    const [, slippageRate] = await getConversionRate(environment, {
+      srcTokenSymbol: srcToken,
+      destTokenSymbol: destToken,
+      srcAmount,
+    });
+    const minDestAmount = toReadable(
+      config,
+      slippageRate.mul(srcAmount),
+      destToken,
+    );
+    await transferTo(environment, {
+      symbol: srcToken,
+      toAddress: shared.fund.address,
+      quantity: srcAmount,
+    });
+    const eventLog = await swapTokens(environment, {
+      fundAddress: shared.fund.address,
+      exchangeAddress: config.kyberNetworkAddress,
+      srcTokenSymbol: srcToken,
+      destTokenSymbol: destToken,
+      srcAmount: srcAmount,
+      destAmount: minDestAmount,
+    });
+    const actualDestAmount = toReadable(
+      config,
+      eventLog.params.actualDestAmount.value,
+      destToken,
+    );
+    expect(Number(actualDestAmount)).toBeGreaterThan(minDestAmount);
+    trace({
+      message: `Sold  ${srcAmount} ${srcToken} and bought ${actualDestAmount} ${destToken}`,
+    });
 
-  // Swap back the swapped tokens
-  const swapBackMinDestAmount = srcAmount - (0.2 * srcAmount);
-  const swapBackLog = await swapTokens(environment, { fundAddress: shared.fund.address, exchangeAddress: config.kyberNetworkAddress,  srcTokenSymbol: destToken,
+    // Swap back the swapped tokens
+    const swapBackMinDestAmount = srcAmount - 0.2 * srcAmount;
+    const swapBackLog = await swapTokens(environment, {
+      fundAddress: shared.fund.address,
+      exchangeAddress: config.kyberNetworkAddress,
+      srcTokenSymbol: destToken,
       destTokenSymbol: srcToken,
       srcAmount: actualDestAmount,
-      destAmount: swapBackMinDestAmount });
-  const swapBackActualDestAmount = toReadable(config, swapBackLog.params.actualDestAmount.value, srcToken);
+      destAmount: swapBackMinDestAmount,
+    });
+    const swapBackActualDestAmount = toReadable(
+      config,
+      swapBackLog.params.actualDestAmount.value,
+      srcToken,
+    );
 
-  expect(Number(swapBackActualDestAmount)).toBeGreaterThan(
+    expect(Number(swapBackActualDestAmount)).toBeGreaterThan(
       swapBackMinDestAmount,
-  );
-  trace({ message: `Sold  ${actualDestAmount} ${destToken} and bought ${swapBackActualDestAmount} ${srcToken}` });
-
-}, 10 * 60 * 1000);
+    );
+    trace({
+      message: `Sold  ${actualDestAmount} ${destToken} and bought ${swapBackActualDestAmount} ${srcToken}`,
+    });
+  },
+  10 * 60 * 1000,
+);

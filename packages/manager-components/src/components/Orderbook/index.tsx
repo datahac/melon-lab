@@ -14,27 +14,10 @@ export interface OrderbookProps {
   onClick: (index) => void;
   orderbook?: any;
   quoteToken?: string;
-  onChangeExchange: (e) => void;
+  setExchange: (e) => void;
+  exchanges: any;
+  availableExchanges: any;
 }
-
-const exchanges = [
-  {
-    value: 'radarRelay',
-    text: 'Radar Relay',
-  },
-  {
-    value: 'ercDex',
-    text: 'ERC Dex',
-  },
-  {
-    value: 'oasisDex',
-    text: 'OasisDex',
-  },
-  {
-    value: 'Kyber',
-    text: 'Kyber',
-  },
-];
 
 const Bar = ({ widthBar, widthBorder, leftSpaceBorder }) => {
   return (
@@ -64,8 +47,31 @@ export const Orderbook: StatelessComponent<OrderbookProps> = ({
   onClick,
   orderbook,
   quoteToken,
-  onChangeExchange,
+  setExchange,
+  exchanges,
+  availableExchanges,
 }) => {
+  const onChangeExchange = e => {
+    availableExchanges = availableExchanges.map(exchange => exchange.value);
+    const selectedExchanges = exchanges;
+    const value = e.target.value;
+    if (value === 'ALL') {
+      if (exchanges.length === availableExchanges.length) {
+        return setExchange([]);
+      } else {
+        return setExchange(availableExchanges);
+      }
+    } else {
+      if (!exchanges.includes(value)) {
+        selectedExchanges.push(value);
+      } else {
+        const index = selectedExchanges.indexOf(value);
+        selectedExchanges.splice(index, 1);
+      }
+    }
+    return setExchange(selectedExchanges);
+  };
+
   const calculateBar = (prevEntry, entry) => {
     const getPercentage = (cumulativeVolume, totalVolume) => {
       return new BigNumber(cumulativeVolume).div(totalVolume).times(100);
@@ -98,6 +104,37 @@ export const Orderbook: StatelessComponent<OrderbookProps> = ({
         Orderbook for {baseToken}/{quoteToken}
       </h3>
 
+      {availableExchanges && (
+        <div className="orderbook__exchanges">
+          <div className="orderbook__exchange-label">Exchanges:</div>
+          <div className="orderbook__exchange">
+            <Checkbox
+              onInputChange={onChangeExchange}
+              name="exchanges"
+              value="ALL"
+              text="All"
+              defaultChecked={
+                exchanges.length ===
+                availableExchanges.map(exchange => exchange.value).length
+              }
+              disabled={loading}
+            />
+          </div>
+          {availableExchanges.map(exchange => (
+            <div className="orderbook__exchange" key={exchange.value}>
+              <Checkbox
+                onInputChange={onChangeExchange}
+                name="exchanges"
+                value={exchange.value}
+                text={exchange.text}
+                defaultChecked={exchanges.indexOf(exchange.value) !== -1}
+                disabled={loading}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
       {loading ? (
         <div className="orderbook__loading">
           <Spinner icon />
@@ -112,23 +149,6 @@ export const Orderbook: StatelessComponent<OrderbookProps> = ({
             </Notification>
           ) : (
             <Fragment>
-              {exchanges &&
-                onChangeExchange && (
-                  <div className="orderbook__exchanges">
-                    <div className="orderbook__exchange-label">Exchanges:</div>
-                    {exchanges.map(exchange => (
-                      <div className="orderbook__exchange">
-                        <Checkbox
-                          onInputChange={onChangeExchange}
-                          name="exchanges"
-                          value={exchange.value}
-                          text={exchange.text}
-                          defaultChecked
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
               <div className="orderbook__tables">
                 <div className="orderbook__table orderbook__table-buy">
                   <div>
@@ -165,7 +185,7 @@ export const Orderbook: StatelessComponent<OrderbookProps> = ({
                           return (
                             <div
                               className="orderbook__body-row"
-                              key={entry.order.id}
+                              key={`${entry.order.id}-${index}`}
                               onClick={onClickBuyOrder}
                               style={{
                                 cursor: isReadyToTrade ? 'pointer' : 'auto',
@@ -237,7 +257,7 @@ export const Orderbook: StatelessComponent<OrderbookProps> = ({
                           return (
                             <div
                               className="orderbook__body-row"
-                              key={entry.order.id}
+                              key={`${entry.order.id}-${index}`}
                               onClick={onClickSellOrder}
                               style={{
                                 cursor: isReadyToTrade ? 'pointer' : 'auto',

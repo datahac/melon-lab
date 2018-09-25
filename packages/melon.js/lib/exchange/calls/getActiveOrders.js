@@ -16,7 +16,9 @@ const getActiveOrders = async (
   environment,
   { baseTokenSymbol, quoteTokenSymbol, numberOfOrders = 250 },
 ): Promise<[Order]> => {
-  const matchingMarketAdapterContract = await getMatchingMarketAdapterContract(environment);
+  const matchingMarketAdapterContract = await getMatchingMarketAdapterContract(
+    environment,
+  );
   const config = await getConfig(environment);
 
   const lastId: BigNumber = await matchingMarketAdapterContract.instance.getLastOrderId.call(

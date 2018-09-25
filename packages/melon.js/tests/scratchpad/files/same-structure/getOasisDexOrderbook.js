@@ -27,10 +27,14 @@ import trace from '../../../../lib/utils/generic/trace';
 import redeemAllOwnedAssets from '../../../../lib/participation/transactions/redeemAllOwnedAssets';
 import executeRequest from '../../../../lib/participation/transactions/executeRequest';
 import awaitDataFeedUpdates from '../../../../lib/pricefeeds/events/awaitDataFeedUpdates';
-import getOrderbook from '../../../../lib/exchange/calls/getOrderbook'
+import getOrderbook from '../../../../lib/exchange/calls/getOrderbook';
 
-
-const shared = { etherBalance: {}, participation: {}, melonBalance: {}, wethBalance: {} };
+const shared = {
+  etherBalance: {},
+  participation: {},
+  melonBalance: {},
+  wethBalance: {},
+};
 
 const randomString = (length = 4) =>
   Math.random()
@@ -44,13 +48,15 @@ fit(
 
     const { providerType, api } = await getParityProvider();
 
-    setEnvironment({ api, providerType, track: "kovan-demo" });
+    setEnvironment({ api, providerType, track: 'kovan-demo' });
 
     const environment = getEnvironment();
     const config = await getConfig(environment);
-    const orderbook = await getOrderbook(environment, { baseTokenSymbol: "MLN-T", quoteTokenSymbol: "WETH-T" })
-    console.log(orderbook)
-
+    const orderbook = await getOrderbook(environment, {
+      baseTokenSymbol: 'MLN-T',
+      quoteTokenSymbol: 'WETH-T',
+    });
+    console.log(orderbook);
 
     return true;
   },

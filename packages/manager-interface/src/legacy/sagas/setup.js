@@ -95,6 +95,7 @@ function* createFund({ name, OasisDex, ZeroEx }) {
   let exchangeNames = [];
   if (OasisDex) exchangeNames.push('MatchingMarket');
   if (ZeroEx) exchangeNames.push('ZeroExExchange');
+  if (ZeroEx) exchangeNames.push('KyberNetworkProxy');
 
   function* transaction(environment) {
     const signature = yield select(state => state.fund.signature);

@@ -5,8 +5,11 @@ import getConfig from '../../version/calls/getConfig';
  * Get deployed version contract instance
  */
 const getVersionContract = async environment => {
-    const config = await getConfig(environment);
-    return environment.api.newContract(CompetitionComplianceAbi, config.competitionComplianceAddress);
+  const config = await getConfig(environment);
+  return environment.api.newContract(
+    CompetitionComplianceAbi,
+    config.competitionComplianceAddress,
+  );
 };
 
 export default getVersionContract;

@@ -6,10 +6,7 @@ import sendTransaction from '../../../utils/parity/sendTransaction';
  * Update prices with `newPrices` array for the `assets` array.
  * This function can be called by the owner of the pricefeed.
  */
-const withdrawStake = async (
-  environment,
-  { address },
-): Promise<any> => {
+const withdrawStake = async (environment, { address }): Promise<any> => {
   const stakingPriceFeedContract = await getStakingPriceFeedContract(
     environment,
     address,
