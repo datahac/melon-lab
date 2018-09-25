@@ -53,23 +53,23 @@ export const Orderbook: StatelessComponent<OrderbookProps> = ({
 }) => {
   const onChangeExchange = e => {
     availableExchanges = availableExchanges.map(exchange => exchange.value);
-    let newExchange = exchanges;
+    const selectedExchanges = exchanges;
     const value = e.target.value;
     if (value === 'ALL') {
       if (exchanges.length === availableExchanges.length) {
-        newExchange = [];
+        return setExchange([]);
       } else {
-        newExchange = availableExchanges;
+        return setExchange(availableExchanges);
       }
     } else {
       if (!exchanges.includes(value)) {
-        newExchange.push(value);
+        selectedExchanges.push(value);
       } else {
-        const index = newExchange.indexOf(value);
-        newExchange.splice(index, 1);
+        const index = selectedExchanges.indexOf(value);
+        selectedExchanges.splice(index, 1);
       }
     }
-    return setExchange(newExchange);
+    return setExchange(selectedExchanges);
   };
 
   const calculateBar = (prevEntry, entry) => {
