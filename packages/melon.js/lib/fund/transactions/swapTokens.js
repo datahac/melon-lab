@@ -11,6 +11,7 @@ import getMethodNameSignature from '../../exchange/utils/getMethodNameSignature'
 import getNetwork from '../../utils/environment/getNetwork';
 import getAddress from '../../assets/utils/getAddress';
 import getConfig from '../../version/calls/getConfig';
+import preflightTakeOrder from '../preflights/preflightTakeOrder';
 
 import type { Environment } from '../../utils/environment/Environment';
 import type { Order } from '../../exchange/schemas/Order';
@@ -30,14 +31,22 @@ const swapTokens = async (
   const config = await getConfig(environment);
 
   const network = await getNetwork(environment);
-  if (!exchangeAddress) exchangeAddress = addressBook[network].KyberNetwork;
+  if (!exchangeAddress) exchangeAddress = addressBook[network].KyberNetworkProxy;
   const fundContract = await getFundContract(environment, fundAddress);
   const isShutDown = await fundContract.instance.isShutDown.call();
   const owner = await fundContract.instance.owner.call();
 
+  const preflightCheck = await preflightTakeOrder(environment, {
+    fundContract,
+    exchangeAddress,
+    makerAssetSymbol: destTokenSymbol,
+    takerAssetSymbol: srcTokenSymbol,
+    fillMakerQuantity: destAmount,
+    fillTakerQuantity: srcAmount,
+  });
   const method = await getMethodNameSignature(environment, 'swapTokens');
 
-  const orderUdateLog = await callOnExchange(environment, {
+  const orderUpdateLog = await callOnExchange(environment, {
     fundContract,
     exchangeAddress,
     method,
@@ -47,12 +56,11 @@ const swapTokens = async (
     signature: {},
   });
 
-  const receipt = await environment.api.eth.getTransactionReceipt(orderUdateLog.transactionHash);
-  const kyberProxyContract = await getKyberProxyContract(environment);
-  const kyberLogs = await kyberProxyContract.parseEventLogs(receipt.logs);
-  const executedEventLog = kyberLogs.find(log => log.event === 'ExecuteTrade' );
-  
-  return executedEventLog;
+  return {
+    exchange: getExchangeName(environment, orderUpdateLog.params.exchange.value),
+    updateType: orderUpdateLog.params.updateType.value.toNumber() === 3 ? 'swapTokens' : 'unknown',
+    executedQuantity: srcAmount
+  };
 };
 
 export default swapTokens;

@@ -11,6 +11,9 @@ const getExchangeName = async (environment, exchangeAddress) => {
     case addressBook[network].ZeroExExchange.toLowerCase():
       return 'ZeroEx';
 
+    case addressBook[network].KyberNetworkProxy.toLowerCase():
+      return 'KyberNetwork';
+
     default:
       throw new Error(
         `Exchange name not found for exchange with address ${exchangeAddress}`,
