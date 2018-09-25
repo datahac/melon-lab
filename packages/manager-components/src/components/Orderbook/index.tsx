@@ -52,12 +52,22 @@ export const Orderbook: StatelessComponent<OrderbookProps> = ({
   availableExchanges,
 }) => {
   const onChangeExchange = e => {
-    const newExchange = exchanges;
-    if (!exchanges.includes(e.target.value)) {
-      newExchange.push(e.target.value);
+    availableExchanges = availableExchanges.map(exchange => exchange.value);
+    let newExchange = exchanges;
+    const value = e.target.value;
+    if (value === 'ALL') {
+      if (exchanges.length === availableExchanges.length) {
+        newExchange = [];
+      } else {
+        newExchange = availableExchanges;
+      }
     } else {
-      const index = newExchange.indexOf(e.target.value);
-      newExchange.splice(index, 1);
+      if (!exchanges.includes(value)) {
+        newExchange.push(value);
+      } else {
+        const index = newExchange.indexOf(value);
+        newExchange.splice(index, 1);
+      }
     }
     return setExchange(newExchange);
   };
@@ -97,6 +107,19 @@ export const Orderbook: StatelessComponent<OrderbookProps> = ({
       {availableExchanges && (
         <div className="orderbook__exchanges">
           <div className="orderbook__exchange-label">Exchanges:</div>
+          <div className="orderbook__exchange">
+            <Checkbox
+              onInputChange={onChangeExchange}
+              name="exchanges"
+              value="ALL"
+              text="All"
+              defaultChecked={
+                exchanges.length ===
+                availableExchanges.map(exchange => exchange.value).length
+              }
+              disabled={loading}
+            />
+          </div>
           {availableExchanges.map(exchange => (
             <div className="orderbook__exchange" key={exchange.value}>
               <Checkbox
