@@ -12,7 +12,7 @@ import { Order } from '../schemas/Order';
 
 const formatOrder = (config, type, buySymbol, sellSymbol, buyQuantity, price): Order => {
   const order = {
-    id: -1,
+    id: 0,
     owner: 'Kyber',
     isActive: true,
     price,
