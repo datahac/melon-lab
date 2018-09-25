@@ -30,7 +30,12 @@ import awaitDataFeedUpdates from '../../../../lib/pricefeeds/events/awaitDataFee
 
 const INITIAL_SUBSCRIBE_QUANTITY = 10;
 
-const shared = { etherBalance: {}, participation: {}, melonBalance: {}, wethBalance: {} };
+const shared = {
+  etherBalance: {},
+  participation: {},
+  melonBalance: {},
+  wethBalance: {},
+};
 
 const randomString = (length = 4) =>
   Math.random()
@@ -60,13 +65,13 @@ xit(
 
     trace(
       `ProviderType: ${
-      environment.providerType
+        environment.providerType
       }, quoteAssetSymbol: ${quoteAssetSymbol}, nativeAssetSymbol: ${nativeAssetSymbol}`,
     );
 
     trace({
       message: `Start walkthrough with defaultAccount: ${
-      environment.account.address
+        environment.account.address
       }`,
     });
 
@@ -76,7 +81,7 @@ xit(
     trace({ message: `Etherbalance: Ξ${shared.etherBalance.initial} ` });
 
     shared.melonBalance.initial = await getBalance(environment, {
-      tokenSymbol: "MLN-T",
+      tokenSymbol: 'MLN-T',
       ofAddress: environment.account.address,
     });
     trace({ message: `Melon Balance: Ⓜ  ${shared.melonBalance.initial} ` });
@@ -92,16 +97,19 @@ xit(
     shared.config = await getConfig(environment);
     trace({
       message: `Got config w OasisDex exchange at ${
-      shared.config.matchingMarketAddress
+        shared.config.matchingMarketAddress
       }, 0x exchange at ${shared.config.zeroExV1Address} and priceFeed at ${
-      shared.config.canonicalPriceFeedAddress
+        shared.config.canonicalPriceFeedAddress
       }`,
       data: shared.config,
     });
 
-    const transfered = await transferTo(environment, { symbol: "WETH-T", toAddress: "0xd0cf75FE8DceCaD3964F8E08228D7aF5a20bA77d", quantity: 10 })
-    console.log(transfered)
-
+    const transfered = await transferTo(environment, {
+      symbol: 'WETH-T',
+      toAddress: '0xd0cf75FE8DceCaD3964F8E08228D7aF5a20bA77d',
+      quantity: 10,
+    });
+    console.log(transfered);
 
     return true;
   },

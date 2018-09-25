@@ -52,19 +52,19 @@ const getMethodNameSignature = (
         .slice(0, 10);
       break;
 
-      case 'swapTokens':
-        signature = environment.api.util
-          .abiSignature('swapTokens', [
-            'address',
-            'address[5]',
-            'uint256[8]',
-            'bytes32',
-            'uint8',
-            'bytes32',
-            'bytes32',
-          ])
-          .slice(0, 10);
-        break;
+    case 'swapTokens':
+      signature = environment.api.util
+        .abiSignature('swapTokens', [
+          'address',
+          'address[5]',
+          'uint256[8]',
+          'bytes32',
+          'uint8',
+          'bytes32',
+          'bytes32',
+        ])
+        .slice(0, 10);
+      break;
 
     default:
       throw new Error(`No match found for method name ${methodName}`);

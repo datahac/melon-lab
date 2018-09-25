@@ -65,7 +65,7 @@ const makeOrderFromAccount = async (
     getAddress(config, buySymbol),
     0,
   ];
-  
+
   const receipt = await sendTransaction(
     matchingMarketContract,
     'offer',

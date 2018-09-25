@@ -22,9 +22,8 @@ const toProcessable = (
   tokenSymbol: TokenSymbol,
 ): BigNumber => {
   const precision: number = getDecimals(config, tokenSymbol);
-    const roundedQuantity = new BigNumber(quantity).round(precision);
-    return new BigNumber(roundedQuantity).times(10 ** precision);
-
+  const roundedQuantity = new BigNumber(quantity).round(precision);
+  return new BigNumber(roundedQuantity).times(10 ** precision);
 };
 
 export default toProcessable;

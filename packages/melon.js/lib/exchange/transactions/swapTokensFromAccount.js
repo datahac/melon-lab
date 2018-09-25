@@ -10,14 +10,10 @@ import getConfig from '../../version/calls/getConfig';
 /**
  * Cancel an order by `id`
  */
-const swapTokensFromAccount  = async (environment,
-  {
-    srcTokenSymbol,
-    srcAmount,
-    destTokenSymbol,
-    minConversionRate
-  }) => {
-
+const swapTokensFromAccount = async (
+  environment,
+  { srcTokenSymbol, srcAmount, destTokenSymbol, minConversionRate },
+) => {
   const config = await getConfig(environment);
   const srcToken = getAddress(config, srcTokenSymbol);
   const destToken = getAddress(config, destTokenSymbol);
@@ -32,7 +28,12 @@ const swapTokensFromAccount  = async (environment,
   const receipt = await sendTransaction(
     kyberProxyContract,
     'swapTokenToToken',
-    [srcToken, toProcessable(config, srcAmount, srcTokenSymbol), destToken, minConversionRate],
+    [
+      srcToken,
+      toProcessable(config, srcAmount, srcTokenSymbol),
+      destToken,
+      minConversionRate,
+    ],
     environment,
     {},
   );

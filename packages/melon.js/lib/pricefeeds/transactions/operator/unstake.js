@@ -8,10 +8,7 @@ import getSymbol from '../../../assets/utils/getSymbol';
 /**
  * Unstake `amount` on staking pricefeed contract
  */
-const unstake = async (
-  environment,
-  { address, quantity },
-): Promise<any> => {
+const unstake = async (environment, { address, quantity }): Promise<any> => {
   const stakingPriceFeedContract = await getStakingPriceFeedContract(
     environment,
     address,

@@ -44,7 +44,8 @@ const preflightTakeOrder = async (
   const isShutDown = await fundContract.instance.isShutDown.call();
   ensure(isShutDown === false, 'Fund is shut down');
 
-  const methodName = exchangeAddress === config.kyberNetworkAddress ? 'swapTokens' : 'takeOrder'
+  const methodName =
+    exchangeAddress === config.kyberNetworkAddress ? 'swapTokens' : 'takeOrder';
   const method = await getMethodNameSignature(environment, methodName);
   const canonicalPriceFeedContract = await getCanonicalPriceFeedContract(
     environment,
@@ -57,7 +58,7 @@ const preflightTakeOrder = async (
 
   ensure(
     getAddress(config, makerAssetSymbol) !== fundContract.address &&
-    getAddress(config, takerAssetSymbol) !== fundContract.address,
+      getAddress(config, takerAssetSymbol) !== fundContract.address,
     'Fund buying/selling its own fund token is forbidden.',
   );
 

@@ -42,7 +42,7 @@ const executeRequest = async (
   const isShutDown = await fundContract.instance.isShutDown.call();
   ensure(isShutDown === false, 'Fund is shut down');
 
-  ensure(status.toNumber() === 0, "Request is not active anymore.")
+  ensure(status.toNumber() === 0, 'Request is not active anymore.');
 
   receipt = await sendTransaction(
     fundContract,
@@ -51,7 +51,6 @@ const executeRequest = async (
     environment,
   );
   executeRequestLogEntry = findEventInLog('Created', receipt);
-
 
   return toReadable(
     config,

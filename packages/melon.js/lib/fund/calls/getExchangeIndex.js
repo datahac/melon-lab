@@ -15,7 +15,9 @@ const getExchangeIndex = async (
 
   const fundExchanges = await fundContract.instance.getExchangeInfo.call();
   // eslint-disable-next-line no-underscore-dangle
-  const index = fundExchanges[0].findIndex(e => e._value.toLowerCase() === exchangeAddress.toLowerCase());
+  const index = fundExchanges[0].findIndex(
+    e => e._value.toLowerCase() === exchangeAddress.toLowerCase(),
+  );
   ensure(
     index !== -1,
     `Fund with address ${fundAddress} does not authorize exchange with address ${exchangeAddress}`,

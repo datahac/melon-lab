@@ -10,7 +10,7 @@ import ensure from '../../utils/generic/ensure';
 import rush from '../../utils/generic/rush';
 import toProcessable from '../../assets/utils/toProcessable';
 import BigNumber from 'bignumber.js';
-import addressBook from '@melonproject/smart-contracts/addressBook.json'
+import addressBook from '@melonproject/smart-contracts/addressBook.json';
 import TokenAbi from '@melonproject/smart-contracts/out/assets/PreminedAsset.abi.json';
 
 /*
@@ -36,9 +36,9 @@ const make0xOffChainOrder = async (
   buySymbol,
   sellHowMuch,
   buyHowMuch,
-  makerFee = "0",
-  takerFee = "0",
-  feeRecipient = "0x0000000000000000000000000000000000000000",
+  makerFee = '0',
+  takerFee = '0',
+  feeRecipient = '0x0000000000000000000000000000000000000000',
 ) => {
   const sellTokenBalance = await getBalance(environment, {
     tokenSymbol: sellSymbol,
@@ -53,7 +53,7 @@ const make0xOffChainOrder = async (
   // taker fee
   takerFee = toProcessable(config, takerFee, 'ZRX-T');
   makerFee = toProcessable(config, makerFee, 'ZRX-T');
-  
+
   const duration = 60 * 60 * 24;
 
   const salt = ZeroEx.generatePseudoRandomSalt();

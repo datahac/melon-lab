@@ -9,10 +9,7 @@ import type { Environment } from '../../utils/environment/Environment';
  */
 const getKyberProxyContract = async (environment: Environment) => {
   const config = await getConfig(environment);
-  return environment.api.newContract(
-    KyberProxyAbi,
-    config.kyberNetworkAddress,
-  );
+  return environment.api.newContract(KyberProxyAbi, config.kyberNetworkAddress);
 };
 
 export default getKyberProxyContract;

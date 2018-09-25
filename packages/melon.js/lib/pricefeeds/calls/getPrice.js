@@ -21,10 +21,13 @@ const getPrice = async (
   );
   const assetAddress = getAddress(config, tokenSymbol);
 
-  const [isRecent, price, assetDecimals] = await canonicalPriceFeedContract.instance.getPriceInfo.call(
-    {},
-    [assetAddress],
-  );
+  const [
+    isRecent,
+    price,
+    assetDecimals,
+  ] = await canonicalPriceFeedContract.instance.getPriceInfo.call({}, [
+    assetAddress,
+  ]);
 
   return toReadable(config, price, config.quoteAssetSymbol);
 };

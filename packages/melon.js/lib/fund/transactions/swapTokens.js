@@ -25,13 +25,14 @@ const swapTokens = async (
     destTokenSymbol,
     srcAmount,
     destAmount,
-    identifier = '0x0'
+    identifier = '0x0',
   },
 ): Promise<Order> => {
   const config = await getConfig(environment);
 
   const network = await getNetwork(environment);
-  if (!exchangeAddress) exchangeAddress = addressBook[network].KyberNetworkProxy;
+  if (!exchangeAddress)
+    exchangeAddress = addressBook[network].KyberNetworkProxy;
   const fundContract = await getFundContract(environment, fundAddress);
   const isShutDown = await fundContract.instance.isShutDown.call();
   const owner = await fundContract.instance.owner.call();
@@ -57,9 +58,15 @@ const swapTokens = async (
   });
 
   return {
-    exchange: getExchangeName(environment, orderUpdateLog.params.exchange.value),
-    updateType: orderUpdateLog.params.updateType.value.toNumber() === 3 ? 'swapTokens' : 'unknown',
-    executedQuantity: srcAmount
+    exchange: getExchangeName(
+      environment,
+      orderUpdateLog.params.exchange.value,
+    ),
+    updateType:
+      orderUpdateLog.params.updateType.value.toNumber() === 3
+        ? 'swapTokens'
+        : 'unknown',
+    executedQuantity: srcAmount,
   };
 };
 

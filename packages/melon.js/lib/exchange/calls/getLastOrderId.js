@@ -8,7 +8,9 @@ import getConfig from '../../version/calls/getConfig';
  */
 const getLastOrderId = async (environment): number => {
   const config = await getConfig(environment);
-  const exchangeAdapterContract = await getMatchingMarketAdapterContract(environment);
+  const exchangeAdapterContract = await getMatchingMarketAdapterContract(
+    environment,
+  );
   const lastOrderIdBigNumber: BigNumber = await exchangeAdapterContract.instance.getLastOrderId.call(
     {},
     [config.exchangeAddress],

@@ -8,7 +8,7 @@ const getEndTime = async (environment): Promise<any> => {
   const olympiadContract = await getOlympiadContract(environment);
 
   const endTime = await olympiadContract.instance.endTime.call();
-  return endTime
+  return endTime;
 };
 
 export default getEndTime;
