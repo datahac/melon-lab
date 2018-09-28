@@ -127,7 +127,21 @@ const getObservableRadarRelay = (
     .map(value => format(config, value.bids, value.asks))
     .do(value => debug('Emitting order book.', value));
 
-  return messages$;
+  const timeout$ = (new Rx.Observable((observer) => {
+    messages$.subscribe((message) => {
+      observer.next(message);
+    }, (error) => {
+      observer.error(error);
+    });
+  }))
+  .timeout(2000)
+  .catch((error) => {
+    debug('Error', error);
+
+    return Rx.Observable.of([]);
+  });
+
+  return timeout$;
 };
 
 export default getObservableRadarRelay;
