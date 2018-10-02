@@ -46,7 +46,7 @@ class MelonApp extends App {
       <Container>
         <ApolloProvider client={apollo}>
           <EthereumState>
-            {state => !state.loading && <Component {...pageProps} {...state} /> || null}
+            {state => <Component {...pageProps} {...state} />}
           </EthereumState>
         </ApolloProvider>
       </Container>

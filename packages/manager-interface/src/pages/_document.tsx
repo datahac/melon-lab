@@ -29,7 +29,7 @@ export default class MyDocument extends Document {
           />
           {csp && <meta httpEquiv="Content-Security-Policy" content={csp} /> || null}
           <meta name="theme-color" content="#000000" />
-          <link rel="shortcut icon" href="./static/images/favicon.png" />
+          <link rel="shortcut icon" href="/static/images/favicon.png" />
         </Head>
         <body>
           <div dangerouslySetInnerHTML={{ __html: sprites }} />
