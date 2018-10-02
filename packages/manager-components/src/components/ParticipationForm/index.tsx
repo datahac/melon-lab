@@ -15,7 +15,7 @@ interface FormValues {
 }
 
 export interface ParticipationFormProps {
-  dataValid: boolean;
+  priceFeedUp: boolean;
   decimals?: number;
   errors?: any;
   handleBlur?: () => void;
@@ -28,7 +28,7 @@ export interface ParticipationFormProps {
 }
 
 const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
-  dataValid,
+  priceFeedUp,
   decimals,
   errors,
   handleBlur,
@@ -46,7 +46,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
       <style jsx>{styles}</style>
       <h3>Participation</h3>
       <Form onSubmit={handleSubmit}>
-        {!dataValid && (
+        {!priceFeedUp && (
           <Notification isWarning>
             Invest/Redeem not possible when price feed down
           </Notification>
@@ -88,7 +88,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
             required={true}
             formatNumber={true}
             error={touched.quantity && errors.quantity}
-            disabled={!dataValid}
+            disabled={!priceFeedUp}
           />
         </div>
 
@@ -123,14 +123,14 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 required={true}
                 formatNumber={true}
                 error={touched.total && errors.total}
-                disabled={!dataValid}
+                disabled={!priceFeedUp}
               />
             </div>
           </Fragment>
         )}
 
         <div className="participation-form__input">
-          <Button type="submit" disabled={!dataValid}>
+          <Button type="submit" disabled={!priceFeedUp}>
             Submit request
           </Button>
         </div>

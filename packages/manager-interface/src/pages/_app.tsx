@@ -1,12 +1,15 @@
 import App, { Container } from 'next/app';
 import { ApolloProvider } from 'react-apollo';
 import React from 'react';
-import ReactModal from 'react-modal';
-import withApollo from '~/wrappers/withApollo';
+import withApollo from '~/apollo';
+import EthereumState from '+/components/EthereumState';
+
+import '~/static/images/logos.svg';
+import '~/static/images/icons.svg';
 
 const debug = require('debug')('melon-lab:manager-interface:index');
 
-if (typeof window !== 'undefined') {
+if (!!process.browser) {
   debug('Starting frontend:', {
     release: {
       'manager-interface': __MANAGER_INTERFACE_VERSION__,
@@ -21,7 +24,7 @@ if (typeof window !== 'undefined') {
   );
 
   console.log(
-    '%cHello nerd. Checking out the internals of the ipfs-frontend? We like that! If you want to work with us, send us a message: team@melonport.com.',
+    '%cHello nerd. Checking out the internals of our frontend? We like that! If you want to work with us, send us a message: team@melonport.com.',
     'background: rgba(0,0,0,.87); color: #fffdf3; font-size: 12px',
   );
 
@@ -31,12 +34,9 @@ if (typeof window !== 'undefined') {
 
   if (process.env.NODE_ENV !== 'development') {
     window.onbeforeunload = () =>
-      "Your session will be terminated. Did you save your mnemonic and/or JSON wallet?";
+      'Your session will be terminated. Did you save your mnemonic and/or JSON wallet?';
   }
-
-  ReactModal.setAppElement('#__next');
 }
-
 
 class MelonApp extends App {
   public render() {
@@ -45,7 +45,9 @@ class MelonApp extends App {
     return (
       <Container>
         <ApolloProvider client={apollo}>
-          <Component {...pageProps} />
+          <EthereumState>
+            {state => !state.loading && <Component {...pageProps} {...state} /> || null}
+          </EthereumState>
         </ApolloProvider>
       </Container>
     );

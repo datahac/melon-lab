@@ -5,7 +5,7 @@ import formatRelayerOrderbook from '../../formatRelayerOrderbook';
 
 // Isomorphic websocket implementation. Falls back to the standard browser
 // protocol on the client.
-import WebSocket = require('isomorphic-ws');
+import * as WebSocket from 'isomorphic-ws';
 
 const debug = require('debug')('melon-lab:exchange-aggregator:erc-dex');
 

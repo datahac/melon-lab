@@ -15,7 +15,6 @@
       "@melonproject/manager-components": ["../manager-components/src"],
       "@melonproject/exchange-aggregator": ["../exchange-aggregator/src"],
       "~/wrappers/*": ["./src/wrappers/$1"],
-      "~/legacy/*": ["./src/legacy/$1"],
       "~/components/*": ["../manager-components/src/components/$1"],
       "~/blocks/*": ["../manager-components/src/blocks/$1"],
       "~/design/*": ["../manager-components/src/design/$1"]

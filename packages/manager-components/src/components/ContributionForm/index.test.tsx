@@ -6,7 +6,7 @@ const data = {
     amount: '',
     total: '',
   },
-  dataValid: true,
+  priceFeedUp: true,
   melonAssetSymbol: 'MLN',
 };
 
@@ -22,8 +22,8 @@ describe('ContributionForm', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should render correctly without dataValid', () => {
-    tree.setProps({ dataValid: false });
+  it('should render correctly when price feed down', () => {
+    tree.setProps({ priceFeedUp: false });
     expect(tree).toMatchSnapshot();
   });
 });

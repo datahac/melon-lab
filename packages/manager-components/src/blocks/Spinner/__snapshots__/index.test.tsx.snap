@@ -8,12 +8,16 @@ exports[`Spinner should render correctly 1`] = `
     css="__scoped"
     styleId="__scopedHash"
   />
-  <Icon
-    iconClass="spinner__icon"
-    name="logos_without-border"
-  />
   <div
-    className="jsx-__scopedHash spinner__loader"
-  />
+    className="jsx-__scopedHash spinner__wrapper"
+  >
+    <Icon
+      iconClass="spinner__icon"
+      name="logos_without-border"
+    />
+    <div
+      className="jsx-__scopedHash spinner__loader"
+    />
+  </div>
 </div>
 `;

@@ -1,38 +1,89 @@
-import React, { StatelessComponent } from 'react';
+import React, { Fragment, StatelessComponent } from 'react';
 import Dropzone from 'react-dropzone';
 import Button from '~/blocks/Button';
+import Form from '~/blocks/Form';
+import Input from '~/blocks/Input';
+import Spinner from '~/blocks/Spinner';
+import Notification from '../../blocks/Notification';
 
 import styles from './styles.css';
 
+interface FormValues {
+  password: string;
+}
+
 export interface ImportWalletProps {
-  goToAccount: () => void;
-  parseWallet: () => void;
+  errors?: any;
+  handleBlur?: () => void;
+  handleSubmit?: () => void;
+  handleChange?: () => void;
+  touched?: any;
+  values: FormValues;
+  loading?: boolean;
+  onImportFile: () => void;
+  file?: string;
+  serverError?: string;
 }
 
 export const ImportWallet: StatelessComponent<ImportWalletProps> = ({
-  goToAccount,
-  parseWallet,
+  errors,
+  handleBlur,
+  handleSubmit,
+  handleChange,
+  touched,
+  values,
+  loading,
+  onImportFile,
+  file,
+  serverError,
 }) => (
   <div className="import-wallet">
     <style jsx>{styles}</style>
     <h3>Import wallet</h3>
-    <div className="import-wallet__dropzone">
-      <Dropzone
-        onDrop={parseWallet}
-        style={{
-          width: '100%',
-          border: '1px dotted black',
-          padding: 10,
-          textAlign: 'center',
-          cursor: 'pointer',
-        }}
-      >
-        <p>Select a wallet JSON file from your computer</p>
-      </Dropzone>
+    <div className="import-wallet__error">
+      {serverError && <Notification isError>{serverError}</Notification>}
     </div>
-    <Button style="secondary" onClick={goToAccount}>
-      Cancel
-    </Button>
+    {loading ? (
+      <Spinner icon size="small" text="Import Wallet..." />
+    ) : (
+      <Fragment>
+        {!file ? (
+          <div className="import-wallet__dropzone">
+            <Dropzone
+              onDrop={onImportFile}
+              style={{
+                width: '100%',
+                border: '1px dotted black',
+                padding: 10,
+                textAlign: 'center',
+                cursor: 'pointer',
+              }}
+            >
+              <p>Select a wallet JSON file from your computer</p>
+            </Dropzone>
+          </div>
+        ) : (
+          <Form onSubmit={handleSubmit}>
+            <div className="import-wallet__input">
+              <Input
+                maxlength={64}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+                required={true}
+                name="password"
+                type="password"
+                placeholder="Password"
+                error={touched.password && errors.password}
+              />
+            </div>
+            <Button type="submit" style="secondary">
+              Import
+            </Button>
+          </Form>
+        )}
+      </Fragment>
+    )}
   </div>
 );
 

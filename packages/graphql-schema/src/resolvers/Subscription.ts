@@ -69,8 +69,23 @@ export const orderbook = {
   },
 };
 
+const block = {
+  resolve: (block) => {
+    return block;
+  },
+  subscribe: async (parent, args, context) => {
+    const { pubsub, block$ } = context;
+
+    const channel = 'block';
+    const iterator = pubsub.asyncIterator(channel);
+    const publish = value => pubsub.publish(channel, value);
+    return withUnsubscribe(block$, iterator, publish);
+  },
+};
+
 export { Order };
 
 export default {
   orderbook,
+  block,
 };

@@ -9,24 +9,54 @@ enum ExchangeEnum {
   KYBER_NETWORK
 }
 
+enum TokenEnum {
+  WETH
+  ETH
+  MLN
+}
+
+enum ProviderEnum {
+  INJECTED
+  LOCAL
+  HOSTED
+  CUSTOM
+  NONE
+}
+
+type Wallet {
+  address: String
+  privateKey: String
+  encryptedWallet: String
+}
+
+type Ranking {
+  rank: Int
+  address: String!
+  name: String!
+  inception: DateTime!
+  fund: Fund
+  sharePrice: String!
+}
+
 type Fund {
   rank: Int
   address: String!
   name: String!
-  sharePrice: Float!
-  inception: String!
-  gav: Float!
-  nav: Float!
+  inception: DateTime!
+  gav: String!
+  nav: String!
   owner: String
-  totalSupply: Float
   modules: [String]
-  managementReward: Float
-  performanceReward: Float
-  unclaimedRewards: Float
-  rewardsShareQuantity: Float
+  holdings: [Holding]
+  sharePrice: String!
+  totalSupply: String
+  personalStake(investor: String!): String
+  managementReward: String
+  performanceReward: String
+  unclaimedRewards: String
+  rewardsShareQuantity: String
   subscriptionAllowed: Boolean
   redemptionAllowed: Boolean
-  holdings: [Holding]
 }
 
 type Holding {
@@ -39,6 +69,13 @@ type Holding {
 type HowMuchOfAsset {
   symbol: Symbol!
   howMuch: String!
+}
+
+type Trade {
+  price: String
+  quantity: String
+  timestamp: String
+  type: String
 }
 
 interface Order {
@@ -61,14 +98,15 @@ type ZeroExOrder implements Order {
   buy: HowMuchOfAsset!
   sell: HowMuchOfAsset!
   price: String!
-  exchangeContractAddress: String
-  exchange: String
   expiration: String
   salt: String!
   makerFee: String!
   takerFee: String!
   signature: Signature
   feeRecipient: String
+  timestamp: DateTime
+  exchange: String
+  exchangeContractAddress: String
 }
 
 type OasisDexOrder implements Order {
@@ -79,9 +117,10 @@ type OasisDexOrder implements Order {
   buy: HowMuchOfAsset!
   sell: HowMuchOfAsset!
   price: String!
-  exchangeContractAddress: String
-  exchange: String
   id: String!
+  timestamp: DateTime
+  exchange: String
+  exchangeContractAddress: String
 }
 
 type Orderbook {
@@ -97,41 +136,69 @@ type OrderbookEntry {
   order: Order
 }
 
-type Price {
-  symbol: String!
-  price: Quantity
-}
-
 type Signature {
   r: String!
   s: String!
   v: Int!
 }
 
-type RankingEntry {
-  rank: Int!
-  address: String!
-  name: String!
-  sharePrice: Float!
-  inception: String!
+type Status {
+  nodeSyncing: Boolean!
+  blockOverdue: Boolean!
+  priceFeedUp: Boolean!
+}
+
+type Config {
+  canonicalPriceFeedAddress: String!
+  competitionComplianceAddress: String!
+  onlyManagerCompetitionAddress: String!
 }
 
 type Query {
-  price(symbol: Symbol!): String!
-  ranking: [RankingEntry]
-  fund(address: String!): Fund!
-  funds(addresses: [String]): [Fund!]!
+  config: Config!
+  status: Status!
+  network: String!
+  provider: String!
+  block: String
+  balance(token: TokenEnum!, address: String!): String
+  price(symbol: Symbol!): String
+  fund(address: String!): Fund
+  funds(addresses: [String]): [Fund]
+  rankings: [Ranking]
+  totalFunds: Int!
+  openOrders(address: String!): [Order]
+  recentTrades(baseTokenSymbol: String!, quoteTokenSymbol: String!): [Trade]
+}
+
+type Mutation {
+  cancelOpenOrder(
+    orderId: String!
+    fundAddress: String!
+    makerAssetSymbol: String!
+    takerAssetSymbol: String!
+  ): [Order]
+  createFund(name: String!): Fund
+  loadWallet(file: String!, password: String!): Wallet
+  restoreWallet(mnemonic: String!, password: String!): Wallet
 }
 
 type Subscription {
+  state: Status
+  block: String
   orderbook(
     baseTokenSymbol: Symbol!
     quoteTokenSymbol: Symbol!
-    exchanges: [ExchangeEnum] = ["RADAR_RELAY", "OASIS_DEX", "ERC_DEX", "KYBER_NETWORK"]
+    exchanges: [ExchangeEnum] = [
+      "RADAR_RELAY"
+      "OASIS_DEX"
+      "ERC_DEX"
+      "KYBER_NETWORK"
+    ]
   ): Orderbook
 }
 
 schema {
   query: Query
   subscription: Subscription
+  mutation: Mutation
 }

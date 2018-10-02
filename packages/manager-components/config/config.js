@@ -9,6 +9,7 @@ const CenterDecorator = storyFn => {
   const a = storyFn()
   return <Layout>{a}</Layout>;
 };
+
 addDecorator(CenterDecorator);
 
 configure(() => {

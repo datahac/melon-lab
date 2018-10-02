@@ -3,6 +3,8 @@ import BigNumber from 'bignumber.js';
 
 import type { BuyOrSell } from './BuyOrSell';
 
+export default {};
+
 /**
  * Shape of a normalised order.
  * `cumulativeVolume` is only populated in the orderbook

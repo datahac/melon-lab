@@ -25,7 +25,8 @@ const resolveWorkspaces = pairs => {
 
 module.exports = {
   webpack: (config, options, webpack) => {
-    config.output.path = path.resolve(process.cwd(), 'dist');
+    config.mode = 'none';
+    config.output.path = path.resolve(__dirname, 'dist');
     config.entry = { index: './src/index.ts' };
 
     config.resolve.extensions.push('.ts');
@@ -34,6 +35,15 @@ module.exports = {
       ['@melonproject/graphql-schema', 'src'],
       ['@melonproject/exchange-aggregator', 'src'],
     ]);
+
+    // Remove json-loader (not needed anymore).
+    config.module.rules = config.module.rules.filter((rule) => {
+      if (rule.loader && rule.loader.indexOf('json-loader') !== -1) {
+        return false;
+      }
+
+      return true;
+    });
 
     config.module.rules.map(rule => {
       if (rule.loader && rule.loader.match('babel-loader')) {
@@ -59,13 +69,6 @@ module.exports = {
               cacheDirectory: true,
             },
           },
-          {
-            loader: 'ts-loader',
-            options: {
-              configFile: path.resolve(__dirname, 'tsconfig.json'),
-              transpileOnly: true,
-            },
-          },
         ],
       },
       {
@@ -76,7 +79,7 @@ module.exports = {
     );
 
     config.externals = externals({
-      modulesDir: path.resolve(process.cwd(), '..', '..', 'node_modules'),
+      modulesDir: path.resolve(__dirname, '..', '..', 'node_modules'),
       whitelist: [/^@melonproject\//],
     });
 

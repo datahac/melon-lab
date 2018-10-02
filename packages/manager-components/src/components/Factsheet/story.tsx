@@ -4,9 +4,9 @@ import React from 'react';
 import Factsheet from './index';
 
 const data = {
-  aum: '0.9824',
+  gav: '0.9824',
   creationDate: '24. Jul 2018 09:19',
-  dataValid: false,
+  priceFeedUp: false,
   expectedPrize: '0.54321',
   isCompetition: false,
   loading: false,

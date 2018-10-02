@@ -10,3 +10,8 @@
 .holdings :global(.holdings__action-cell) {
   width: 130px;
 }
+
+.holdings__loading {
+  margin: 0 auto;
+  width: 100px;
+}

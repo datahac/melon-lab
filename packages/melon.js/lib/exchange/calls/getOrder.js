@@ -46,8 +46,8 @@ const getOrder = async (environment: Environment, { id }): Promise<Order> => {
       isActive &&
       sellWhichToken !== '0x0000000000000000000000000000000000000000' &&
       buyWhichToken !== '0x0000000000000000000000000000000000000000' &&
-      isKnownAssetAddress(config, sellWhichToken) &&
-      isKnownAssetAddress(config, buyWhichToken),
+      !!isKnownAssetAddress(config, sellWhichToken) &&
+      !!isKnownAssetAddress(config, buyWhichToken),
   };
 
   if (enhancedOrder.isActive) {

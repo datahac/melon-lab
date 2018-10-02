@@ -5,7 +5,6 @@ require('dotenv').config({
 const path = require('path');
 const R = require('ramda');
 const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const withTypeScript = require('@zeit/next-typescript');
 const withQueryFiles = require('@melonproject/manager-interface/config/withQueryFiles');
 const withLinkedDependencies = require('@melonproject/manager-interface/config/withLinkedDependencies');
@@ -22,6 +21,8 @@ const smartContractsPkg = require('@melonproject/smart-contracts/package.json');
 const managerComponents = path.resolve(path.dirname(require.resolve('@melonproject/manager-components/package.json')));
 const managerInterface = path.resolve(path.dirname(require.resolve('@melonproject/manager-interface/package.json')));
 
+const isElectron = !!JSON.parse(process.env.ELECTRON || 'false');
+
 module.exports = withComposedConfig({
   linkedDependencies: [
     ['@melonproject/melon.js', 'lib'],
@@ -30,17 +31,35 @@ module.exports = withComposedConfig({
     ['@melonproject/exchange-aggregator', 'src'],
   ],
   distDir: path.join('..', 'build'),
-  exportPathMap: () => ({
-    '/': { page: '/' },
-  }),
+  exportPathMap: () => require('./next.routes.js'),
+  publicRuntimeConfig: {
+    graphqlRemoteWs: process.env.GRAPHQL_REMOTE_WS,
+    graphqlRemoteHttp: process.env.GRAPHQL_REMOTE_HTTP,
+    jsonRpcEndpoint: process.env.JSON_RPC_ENDPOINT,
+    track: process.env.TRACK,
+    isElectron: isElectron,
+  },
   webpack: (config, options) => {
     config.resolve.alias = Object.assign({}, config.resolve.alias || {}, {
-      '~/legacy': path.join(managerInterface, 'src', 'legacy'),
-      '~/wrappers': path.join(managerInterface, 'src', 'wrappers'),
+      // Override the mock link component used in the manager components.
+      '~/link': 'next/link',
+
+      // Aliases for paths within the manager components package.
       '~/blocks': path.join(managerComponents, 'src', 'blocks'),
       '~/components': path.join(managerComponents, 'src', 'components'),
+      '~/templates': path.join(managerComponents, 'src', 'templates'),
       '~/design': path.join(managerComponents, 'src', 'design'),
       '~/static': path.join(managerComponents, 'public', 'static'),
+
+      // Aliases for paths within the manager interface package.
+      '+/components': path.join(managerInterface, 'src', 'components'),
+      '~/utils': path.join(managerInterface, 'src', 'shared', 'utils'),
+      '~/electron': path.join(managerInterface, 'src', 'electron'),
+
+      // Special alias for importing the apollo web transport.
+      '~/apollo': isElectron ?
+        path.join(managerInterface, 'src', 'shared', 'apollo', 'index.app') :
+        path.join(managerInterface, 'src', 'shared', 'apollo', 'index.web'),
     });
 
     config.plugins.push(
@@ -51,7 +70,12 @@ module.exports = withComposedConfig({
       }),
     );
 
+    config.plugins.push(new webpack.DefinePlugin({
+      ELECTRON: isElectron,
+    }));
+
     if (!options.isServer) {
+      const CopyWebpackPlugin = require('copy-webpack-plugin');
       config.plugins.push(
         new CopyWebpackPlugin([
           {
@@ -62,40 +86,33 @@ module.exports = withComposedConfig({
           },
         ]),
       );
+
+      if (options.dev) {
+        const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+        config.plugins.push(new BundleAnalyzerPlugin({
+          analyzerPort: 3001,
+          openAnalyzer: false,
+        }));
+      }
     }
 
-    config.module.rules.push(
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: 'emit-file-loader',
-            options: {
-              name: 'dist/[folder]-[name].[ext].js',
-            },
+    config.module.rules.push({
+      test: /\.css$/,
+      use: [
+        options.defaultLoaders.babel,
+        {
+          loader: require('styled-jsx/webpack').loader,
+          options: {
+            type: 'scoped'
           },
-          {
-            loader: 'babel-loader',
-            options: {
-              babelrc: false,
-              plugins: [
-                [
-                  'styled-jsx/babel',
-                  { plugins: ['styled-jsx-plugin-postcss'] },
-                ],
-              ],
-            },
-          },
-          'styled-jsx-css-loader',
-        ],
-      },
-      {
-        test: /\.svg$/,
-        loader: 'svg-sprite-loader',
-      },
-    );
+        },
+      ]
+    });
 
-    config.plugins.push(new webpack.DefinePlugin({ ELECTRON: false }));
+    config.module.rules.push({
+      test: /\.svg$/,
+      loader: 'svg-sprite-loader',
+    });
 
     return config;
   },

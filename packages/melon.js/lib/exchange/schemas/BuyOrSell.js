@@ -1,5 +1,7 @@
 // @flow
 
+export default {};
+
 /**
  * Simple buy or sell switch
  */

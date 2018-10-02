@@ -1,11 +1,13 @@
-import AppContainer from '~/legacy/containers/App';
-import withReduxStore from '~/wrappers/withReduxStore';
-import { Provider as ReduxProvider } from 'react-redux';
+import React from 'react';
+import Layout from '+/components/Layout';
+import Ranking from '+/components/Ranking';
+import GetStarted from '+/components/GetStarted';
 
-const Index = ({ redux, ...props }) => (
-  <ReduxProvider store={redux}>
-    <AppContainer {...props} />
-  </ReduxProvider>
+const Page = props => (
+  <Layout {...props}>
+    <GetStarted isHome {...props} />
+    <Ranking {...props} />
+  </Layout>
 );
 
-export default withReduxStore(Index);
+export default Page;

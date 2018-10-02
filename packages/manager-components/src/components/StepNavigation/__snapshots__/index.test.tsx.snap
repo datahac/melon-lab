@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StepNavigation should render correctly 1`] = `
+<ul
+  className="jsx-__scopedHash step-navigation"
+  data-c-name="StepNavigation"
+>
+  <JSXStyle
+    css="__scoped"
+    styleId="__scopedHash"
+  />
+</ul>
+`;

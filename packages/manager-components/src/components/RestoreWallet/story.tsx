@@ -6,6 +6,7 @@ import RestoreWallet from './container';
 const data = {
   initialValues: {
     mnemonic: '',
+    password: '',
   },
   onSubmit: action('onSubmit'),
 };

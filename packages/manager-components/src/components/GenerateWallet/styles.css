@@ -14,4 +14,10 @@
   font-family: monospace;
   font-weight: var(--font-weight-bold);
   margin-top: var(--space-m);
+  background-color: var(--color-secondary);
+  padding: var(--space-l) var(--space-xl);
+}
+
+.generate-wallet__input {
+  margin-bottom: var(--space-m);
 }

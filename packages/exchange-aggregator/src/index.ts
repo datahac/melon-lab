@@ -23,6 +23,4 @@ export type ExchangeEnum = 'RADAR_RELAY' | 'OASIS_DEX' | 'ERC_DEX' | 'KYBER_NETW
 
 export type NetworkEnum = 'KOVAN' | 'LIVE';
 
-export {
-  default as getAggregatedObservable,
-} from './orderbooks/getAggregatedObservable';
+export { default as getAggregatedObservable } from './orderbooks/getAggregatedObservable';

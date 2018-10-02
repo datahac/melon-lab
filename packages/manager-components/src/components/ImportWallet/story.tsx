@@ -1,11 +1,14 @@
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import ImportWallet from './index';
+import ImportWallet from './container';
 
 const data = {
-  parseWallet: action('parseWallet'),
-  goToAccount: action('goToAccount'),
+  initialValues: {
+    password: '',
+  },
+  onSubmit: action('onSubmit'),
+  onImportFile: action('parseWallet'),
 };
 
 storiesOf('Components|Import Wallet', module).add('Default', () => {

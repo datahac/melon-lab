@@ -1,0 +1,29 @@
+.orderbook__loading {
+  margin: 0 auto;
+  width: 100px;
+}
+
+.orderbook__tables {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.orderbook__tables :global(.orderbook-table) {
+  flex: 0 0 50%;
+}
+
+.orderbook__exchanges {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-xs);
+}
+
+.orderbook__exchange-label {
+  font-weight: var(--font-weight-bold);
+  margin: 0 var(--space-m) var(--space-xs) 0;
+}
+
+.orderbook__exchange {
+  margin: 0 var(--space-m) var(--space-xs) 0;
+}

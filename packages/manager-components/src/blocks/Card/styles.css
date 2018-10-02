@@ -91,21 +91,7 @@
   }
 }
 
-.card__report-link {
-  display: inline-block;
-  white-space: nowrap;
-  font-size: var(--font-size-xs);
-  padding: var(--space-xs) var(--space-l);
-  color: var(--color-black);
-  border: 1px solid currentColor;
-  font-family: var(--font-family-primary);
-  cursor: pointer;
-  text-transform: uppercase;
-  line-height: 1;
-  transition-duration: var(--transition-duration-default);
-}
-
-.card__report-link:hover {
-  color: var(--color-white);
-  background-color: var(--color-black);
+.card__report :global(.link) {
+  display: block;
+  z-index: 999;
 }

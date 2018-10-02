@@ -14,7 +14,7 @@ exports[`Factsheet should render correctly 1`] = `
     Melon Fund
     <a
       className="jsx-__scopedHash factsheet__title-link"
-      href="melonport"
+      href="https://twitter.com/intent/tweet?text=My%20%23MelonFund%20%22Melon%20Fund%22%20has%20a%20share%20price%20currently%20of%200.9824.%20Have%20a%20look%3A&url=https%3A%2F%2Fmelon.fund%2F%23undefined&hashtags=TechnologyRegulatedFunds%2CMelon%2CMelonFund&via=melonport&related=melonport"
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -29,12 +29,7 @@ exports[`Factsheet should render correctly 1`] = `
     className="jsx-__scopedHash"
   >
     Creation date:
-     
-    <Loading
-      loading={false}
-    >
-      24. Jul 2018 09:19
-    </Loading>
+    24. Jul 2018 09:19
     <br
       className="jsx-__scopedHash"
     />
@@ -43,13 +38,7 @@ exports[`Factsheet should render correctly 1`] = `
       style="clear"
     >
       AUM:
-       
-      <Loading
-        dataAvailable={false}
-        loading={false}
-      >
-        0.9824
-      </Loading>
+      0.9824
        
       WETH-T
     </Button>
@@ -58,76 +47,41 @@ exports[`Factsheet should render correctly 1`] = `
       style="clear"
     >
       Share price:
-       
-      <Loading
-        dataAvailable={false}
-        loading={false}
-      >
-        0.9824
-      </Loading>
+      0.9824
        
       WETH-T
       /Share
     </Button>
     <a
       className="jsx-__scopedHash"
-      href="#/ranking"
+      href="/"
     >
       Ranking: 
-      <Loading
-        loading={false}
-      >
-        1
-      </Loading>
+      1
        out of
-       
-      <Loading
-        loading={false}
-      >
-        12
-      </Loading>
+      12
     </a>
     <br
       className="jsx-__scopedHash"
     />
     Total number of shares:
-     
-    <Loading
-      loading={false}
-    >
-      1.0000
-    </Loading>
+    1.0000
     <br
       className="jsx-__scopedHash"
     />
     Shares owned by me:
-     
-    <Loading
-      loading={false}
-    >
-      1.0000
-    </Loading>
+    1
     <hr
       className="jsx-__scopedHash"
     />
     Management Reward:
-     
-    <Loading
-      loading={false}
-    >
-      0.0000
-    </Loading>
+    0
     %
     <br
       className="jsx-__scopedHash"
     />
     Performance Reward:
-     
-    <Loading
-      loading={false}
-    >
-      0.0000
-    </Loading>
+    0
     %
     <hr
       className="jsx-__scopedHash"
@@ -178,7 +132,7 @@ exports[`Factsheet should render correctly with isCompetition 1`] = `
     Melon Fund
     <a
       className="jsx-__scopedHash factsheet__title-link"
-      href="melonport"
+      href="https://twitter.com/intent/tweet?text=My%20%23MelonFund%20%22Melon%20Fund%22%20has%20a%20share%20price%20currently%20of%200.9824.%20Have%20a%20look%3A&url=https%3A%2F%2Fmelon.fund%2F%23undefined&hashtags=TechnologyRegulatedFunds%2CMelon%2CMelonFund&via=melonport&related=melonport"
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -193,12 +147,7 @@ exports[`Factsheet should render correctly with isCompetition 1`] = `
     className="jsx-__scopedHash"
   >
     Creation date:
-     
-    <Loading
-      loading={false}
-    >
-      24. Jul 2018 09:19
-    </Loading>
+    24. Jul 2018 09:19
     <br
       className="jsx-__scopedHash"
     />
@@ -207,13 +156,7 @@ exports[`Factsheet should render correctly with isCompetition 1`] = `
       style="clear"
     >
       AUM:
-       
-      <Loading
-        dataAvailable={false}
-        loading={false}
-      >
-        0.9824
-      </Loading>
+      0.9824
        
       WETH-T
     </Button>
@@ -222,76 +165,41 @@ exports[`Factsheet should render correctly with isCompetition 1`] = `
       style="clear"
     >
       Share price:
-       
-      <Loading
-        dataAvailable={false}
-        loading={false}
-      >
-        0.9824
-      </Loading>
+      0.9824
        
       WETH-T
       /Share
     </Button>
     <a
       className="jsx-__scopedHash"
-      href="#/ranking"
+      href="/"
     >
       Ranking: 
-      <Loading
-        loading={false}
-      >
-        1
-      </Loading>
+      1
        out of
-       
-      <Loading
-        loading={false}
-      >
-        12
-      </Loading>
+      12
     </a>
     <br
       className="jsx-__scopedHash"
     />
     Total number of shares:
-     
-    <Loading
-      loading={false}
-    >
-      1.0000
-    </Loading>
+    1.0000
     <br
       className="jsx-__scopedHash"
     />
     Shares owned by me:
-     
-    <Loading
-      loading={false}
-    >
-      1.0000
-    </Loading>
+    1
     <hr
       className="jsx-__scopedHash"
     />
     Management Reward:
-     
-    <Loading
-      loading={false}
-    >
-      0.0000
-    </Loading>
+    0
     %
     <br
       className="jsx-__scopedHash"
     />
     Performance Reward:
-     
-    <Loading
-      loading={false}
-    >
-      0.0000
-    </Loading>
+    0
     %
     <hr
       className="jsx-__scopedHash"
@@ -318,9 +226,6 @@ exports[`Factsheet should render correctly with isCompetition 1`] = `
     <hr
       className="jsx-__scopedHash"
     />
-    <div
-      className="jsx-__scopedHash"
-    />
   </div>
 </div>
 `;
@@ -339,7 +244,7 @@ exports[`Factsheet should render correctly with loading 1`] = `
     Melon Fund
     <a
       className="jsx-__scopedHash factsheet__title-link"
-      href="melonport"
+      href="https://twitter.com/intent/tweet?text=My%20%23MelonFund%20%22Melon%20Fund%22%20has%20a%20share%20price%20currently%20of%200.9824.%20Have%20a%20look%3A&url=https%3A%2F%2Fmelon.fund%2F%23undefined&hashtags=TechnologyRegulatedFunds%2CMelon%2CMelonFund&via=melonport&related=melonport"
       rel="noopener noreferrer"
       target="_blank"
     >

@@ -19,6 +19,11 @@
   animation: load 2s infinite linear;
 }
 
+.spinner__text {
+  margin-top: var(--space-s);
+  text-align: center;
+}
+
 @-webkit-keyframes load {
   0% {
     transform: rotate(0deg);
@@ -37,6 +42,11 @@
   }
 }
 
+.spinner__wrapper {
+  margin: 0 auto;
+}
+
+.spinner--default .spinner__wrapper,
 .spinner--default .spinner__loader,
 .spinner--default :global(.spinner__icon) {
   width: 100px;
@@ -47,6 +57,7 @@
   border-width: 2px;
 }
 
+.spinner--small .spinner__wrapper,
 .spinner--small .spinner__loader,
 .spinner--small :global(.spinner__icon) {
   width: 50px;
@@ -57,6 +68,7 @@
   border-width: 1px;
 }
 
+.spinner--inflated .spinner__wrapper,
 .spinner--inflated .spinner__loader,
 .spinner--inflated :global(.spinner__icon) {
   width: 50px;

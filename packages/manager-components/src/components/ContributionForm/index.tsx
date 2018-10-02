@@ -12,7 +12,7 @@ interface FormValues {
 }
 
 export interface ContributionFormProps {
-  dataValid: boolean;
+  priceFeedUp: boolean;
   errors?: any;
   handleBlur?: () => void;
   handleSubmit?: () => void;
@@ -24,7 +24,7 @@ export interface ContributionFormProps {
 }
 
 export const ContributionForm: StatelessComponent<ContributionFormProps> = ({
-  dataValid,
+  priceFeedUp,
   errors,
   handleBlur,
   handleSubmit,
@@ -54,7 +54,7 @@ export const ContributionForm: StatelessComponent<ContributionFormProps> = ({
           required={true}
           formatNumber={true}
           error={touched.amount && errors.amount}
-          disabled={!dataValid}
+          disabled={!priceFeedUp}
         />
       </div>
       <div className="contribution-form__input">
@@ -68,11 +68,11 @@ export const ContributionForm: StatelessComponent<ContributionFormProps> = ({
           required={true}
           formatNumber={true}
           error={touched.total && errors.total}
-          disabled={!dataValid}
+          disabled={!priceFeedUp}
         />
       </div>
 
-      {!dataValid && (
+      {!priceFeedUp && (
         <p style={{ color: 'rgb(209, 102, 102)' }}>
           Contribution not authorized when price feed down
         </p>
@@ -104,7 +104,7 @@ export const ContributionForm: StatelessComponent<ContributionFormProps> = ({
         </Notification>
       </div>
 
-      <Button style="secondary" disabled={!dataValid} type="submit">
+      <Button style="secondary" disabled={!priceFeedUp} type="submit">
         I agree, sign and contribute
       </Button>
     </Form>

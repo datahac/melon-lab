@@ -5,7 +5,6 @@ import styles from './styles.css';
 const Footer: StatelessComponent = () => (
   <div className="footer">
     <style jsx>{styles}</style>
-    <span className="footer__item">Hosted with ❤ on IPFS</span>
     <span className="footer__item">
       <a
         className="footer__item-link"

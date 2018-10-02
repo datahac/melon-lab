@@ -27,7 +27,7 @@ const data = {
   selectedExchange: 'RadarRelay',
   selectedOrderType: 'Buy',
   decimals: 6,
-  dataValid: true,
+  priceFeedUp: true,
   total: '',
 };
 

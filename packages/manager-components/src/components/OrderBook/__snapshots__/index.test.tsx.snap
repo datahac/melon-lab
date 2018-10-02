@@ -1,0 +1,2469 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Orderbook should render correctly 1`] = `
+<div
+  className="jsx-__scopedHash orderbook"
+>
+  <JSXStyle
+    css="__scoped"
+    styleId="__scopedHash"
+  />
+  <h3
+    className="jsx-__scopedHash"
+  >
+    Orderbook for 
+    /
+  </h3>
+  <div
+    className="jsx-__scopedHash orderbook__tables"
+  >
+    <div
+      className="jsx-__scopedHash orderbook__table orderbook__table-buy"
+    >
+      <div
+        className="jsx-__scopedHash"
+      >
+        <div
+          className="jsx-__scopedHash orderbook__head"
+        >
+          <div
+            className="jsx-__scopedHash orderbook__head-row"
+          >
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Cum. Vol.
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Vol.
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Bid
+            </div>
+          </div>
+        </div>
+        <div
+          className="jsx-__scopedHash orderbook__body"
+        >
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35181-0"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1.0000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1.0000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              1.5000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 0.016625206078721099% false)"
+                widthBar="0.016625206078721099%"
+                widthBorder="undefined%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35180-1"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2.0000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1.0000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.5000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 0.033250412157442199% false)"
+                widthBar="0.033250412157442199%"
+                widthBorder="0.016625206078721099%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="82308000392722064780839831843676531186157865405440223968573990222569806632804-2"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              290.4192
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              288.4192
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0347
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 4.828278692464548774% false)"
+                widthBar="4.828278692464548774%"
+                widthBorder="4.795028280307106575%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35208-3"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              578.8384
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              288.4192
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0347
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 9.623306972771655349% + 1px)"
+                widthBar="9.623306972771655349%"
+                widthBorder="4.795028280307106575%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35209-4"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              868.9881
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              290.1497
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0345
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 14.447105422760604554% + 1px)"
+                widthBar="14.447105422760604554%"
+                widthBorder="4.823798449988949205%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="113800866172774416504623384277397812966239744209968072974179274104386711996-5"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1159.1377
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              290.1497
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0345
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 19.270903872749553759% + 1px)"
+                widthBar="19.270903872749553759%"
+                widthBorder="4.823798449988949205%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35210-6"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1452.4600
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              293.3223
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0341
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 24.147447633821881146% + 1px)"
+                widthBar="24.147447633821881146%"
+                widthBorder="4.876543761072327387%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="96776313600780594239625648986583570374390282304979507394055377602011602578406-7"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1745.7824
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              293.3223
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0341
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 29.023991394894208533% + 1px)"
+                widthBar="29.023991394894208533%"
+                widthBorder="4.876543761072327387%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="62745833173228774081066255167991918157047470531730258564989614196330867701429-8"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2042.8541
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              297.0718
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0337
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 33.962870523610528306% + 1px)"
+                widthBar="33.962870523610528306%"
+                widthBorder="4.938879128716319773%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35211-9"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2339.9259
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              297.0718
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0337
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 38.901749652326848079% + 1px)"
+                widthBar="38.901749652326848079%"
+                widthBorder="4.938879128716319773%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35212-10"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2637.5745
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              297.6486
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0336
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 43.850218837603782057% + 1px)"
+                widthBar="43.850218837603782057%"
+                widthBorder="4.948469185276933978%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="65765178849432166838664565564223588120931810247755896294500846507735706768778-11"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2935.2230
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              297.6486
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0336
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 48.798688022880716034% + 1px)"
+                widthBar="48.798688022880716034%"
+                widthBorder="4.948469185276933978%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="7615851857606809569329377127359118203606056606422405268266811601217946939114-12"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              3236.6211
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              301.3980
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0332
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 53.809492575801642398% + 1px)"
+                widthBar="53.809492575801642398%"
+                widthBorder="5.010804552920926364%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35213-13"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              3538.0191
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              301.3980
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0332
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 58.820297128722568762% + 1px)"
+                widthBar="58.820297128722568762%"
+                widthBorder="5.010804552920926364%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35214-14"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              3843.4550
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              305.4359
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0327
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 63.898232077567794623% + 1px)"
+                widthBar="63.898232077567794623%"
+                widthBorder="5.077934948845225861%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="67251964846712113589105067487459297212505430254706952884314748608752903382916-15"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              4148.8909
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              305.4359
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0327
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 68.976167026413020484% + 1px)"
+                widthBar="68.976167026413020484%"
+                widthBorder="5.077934948845225861%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35215-16"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              4456.9226
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              308.0317
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0325
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 74.097257229781010306% + 1px)"
+                widthBar="74.097257229781010306%"
+                widthBorder="5.121090203367989822%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="74548636906738055573517807206275655438527861345553564536259842939483268685658-17"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              4764.9543
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              308.0317
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0325
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 79.218347433149000128% + 1px)"
+                widthBar="79.218347433149000128%"
+                widthBorder="5.121090203367989822%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35216-18"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              5076.4470
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              311.4927
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0321
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 84.396977975880675226% + 1px)"
+                widthBar="84.396977975880675226%"
+                widthBorder="5.178630542731675098%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="25598525409006788019377570006798783760140035732676827506219796205888225011364-19"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              5387.9397
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              311.4927
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0321
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 89.575608518612350324% + 1px)"
+                widthBar="89.575608518612350324%"
+                widthBorder="5.178630542731675098%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="3706839253204025122373570205042155544336209410007250498015918615454407753340-20"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              5701.4514
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              313.5116
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0319
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 94.787804259306175162% + 1px)"
+                widthBar="94.787804259306175162%"
+                widthBorder="5.212195740693824838%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35217-21"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              6014.9630
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              313.5116
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0319
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 100% + 1px)"
+                widthBar="100%"
+                widthBorder="5.212195740693824838%"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="jsx-__scopedHash orderbook__table orderbook__table-sell"
+    >
+      <div
+        className="jsx-__scopedHash"
+      >
+        <div
+          className="jsx-__scopedHash orderbook__head"
+        >
+          <div
+            className="jsx-__scopedHash orderbook__head-row"
+          >
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Ask
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Vol.
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Cum. Vol.
+            </div>
+          </div>
+        </div>
+        <div
+          className="jsx-__scopedHash orderbook__body"
+        >
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="96302967355552289024967882824636622547821090945630919770220103279947185869454-0"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0347
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              287.8429
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              287.8429
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(4.785447804222576885% - undefined% false)"
+                widthBar="4.785447804222576885%"
+                widthBorder="undefined%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="71419178349408508286422820083917115708971497327642429272764937832088207492971-1"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0350
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              286.1159
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              573.9588
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(9.542182921619818311% - 4.756735117397241425% - 1px)"
+                widthBar="9.542182921619818311%"
+                widthBorder="4.756735117397241425%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="269638644306083619498395204910965153249475175197150846272235434328185974335-2"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0353
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              282.9496
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              856.9084
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(14.246278113170611395% - 4.704095191550793085% - 1px)"
+                widthBar="14.246278113170611395%"
+                widthBorder="4.704095191550793085%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="11237167879966232763183679966800023000333042005442680810034960123858343145310-3"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0358
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              279.2076
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1136.1160
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(18.888162483266510981% - 4.641884370095899586% - 1px)"
+                widthBar="18.888162483266510981%"
+                widthBorder="4.641884370095899586%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="14154721986762677035650990823345620946275899562927278438693307924695347344745-4"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0359
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              278.6319
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1414.7479
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(23.520475957753965408% - 4.632313474487454427% - 1px)"
+                widthBar="23.520475957753965408%"
+                widthBorder="4.632313474487454427%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="90624116958836631220516209284885658559310621026154292720396243182305185376953-5"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0364
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              274.8900
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1689.6379
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(28.090578610786526335% - 4.570102653032560927% - 1px)"
+                widthBar="28.090578610786526335%"
+                widthBorder="4.570102653032560927%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="96984606670502401008398164020895826389427215450890718580579115369194040537072-6"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0369
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              270.8602
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1960.4981
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(32.593684994559971184% - 4.503106383773444849% - 1px)"
+                widthBar="32.593684994559971184%"
+                widthBorder="4.503106383773444849%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="4604886630858074681010333900934157298352445667281895938132549745140729661927-7"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0373
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              268.2696
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2228.7677
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(37.053722348095412834% - 4.46003735353544165% - 1px)"
+                widthBar="37.053722348095412834%"
+                widthBorder="4.46003735353544165%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="53240587075232308532158794728103004523642036280233110642393823050523708831112-8"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0378
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              264.8155
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2493.5832
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(41.456334327980183565% - 4.40261197988477073% - 1px)"
+                widthBar="41.456334327980183565%"
+                widthBorder="4.40261197988477073%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="1233177404392475891618488288211937198800448430268037754937622680273608094462-9"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0381
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              262.8006
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2756.3838
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(45.825448173235396256% - 4.369113845255212691% - 1px)"
+                widthBar="45.825448173235396256%"
+                widthBorder="4.369113845255212691%"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Orderbook should render correctly with loading 1`] = `
+<div
+  className="jsx-__scopedHash orderbook"
+>
+  <JSXStyle
+    css="__scoped"
+    styleId="__scopedHash"
+  />
+  <h3
+    className="jsx-__scopedHash"
+  >
+    Orderbook for 
+    /
+  </h3>
+  <div
+    className="jsx-__scopedHash orderbook__loading"
+  >
+    <Spinner
+      icon={true}
+    />
+  </div>
+</div>
+`;
+
+exports[`Orderbook should render correctly without entries 1`] = `
+<div
+  className="jsx-__scopedHash orderbook"
+>
+  <JSXStyle
+    css="__scoped"
+    styleId="__scopedHash"
+  />
+  <h3
+    className="jsx-__scopedHash"
+  >
+    Orderbook for 
+    /
+  </h3>
+  <Notification
+    isWarning={true}
+  >
+    No orders on the orderbook for this trading pair
+  </Notification>
+</div>
+`;
+
+exports[`Orderbook should render correctly without isReadyToTrade 1`] = `
+<div
+  className="jsx-__scopedHash orderbook"
+>
+  <JSXStyle
+    css="__scoped"
+    styleId="__scopedHash"
+  />
+  <h3
+    className="jsx-__scopedHash"
+  >
+    Orderbook for 
+    /
+  </h3>
+  <div
+    className="jsx-__scopedHash orderbook__tables"
+  >
+    <div
+      className="jsx-__scopedHash orderbook__table orderbook__table-buy"
+    >
+      <div
+        className="jsx-__scopedHash"
+      >
+        <div
+          className="jsx-__scopedHash orderbook__head"
+        >
+          <div
+            className="jsx-__scopedHash orderbook__head-row"
+          >
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Cum. Vol.
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Vol.
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Bid
+            </div>
+          </div>
+        </div>
+        <div
+          className="jsx-__scopedHash orderbook__body"
+        >
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35181-0"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1.0000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1.0000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              1.5000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 0.016625206078721099% false)"
+                widthBar="0.016625206078721099%"
+                widthBorder="undefined%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35180-1"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2.0000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1.0000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.5000
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 0.033250412157442199% false)"
+                widthBar="0.033250412157442199%"
+                widthBorder="0.016625206078721099%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="82308000392722064780839831843676531186157865405440223968573990222569806632804-2"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              290.4192
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              288.4192
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0347
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 4.828278692464548774% false)"
+                widthBar="4.828278692464548774%"
+                widthBorder="4.795028280307106575%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35208-3"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              578.8384
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              288.4192
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0347
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 9.623306972771655349% + 1px)"
+                widthBar="9.623306972771655349%"
+                widthBorder="4.795028280307106575%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35209-4"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              868.9881
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              290.1497
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0345
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 14.447105422760604554% + 1px)"
+                widthBar="14.447105422760604554%"
+                widthBorder="4.823798449988949205%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="113800866172774416504623384277397812966239744209968072974179274104386711996-5"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1159.1377
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              290.1497
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0345
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 19.270903872749553759% + 1px)"
+                widthBar="19.270903872749553759%"
+                widthBorder="4.823798449988949205%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35210-6"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1452.4600
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              293.3223
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0341
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 24.147447633821881146% + 1px)"
+                widthBar="24.147447633821881146%"
+                widthBorder="4.876543761072327387%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="96776313600780594239625648986583570374390282304979507394055377602011602578406-7"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1745.7824
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              293.3223
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0341
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 29.023991394894208533% + 1px)"
+                widthBar="29.023991394894208533%"
+                widthBorder="4.876543761072327387%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="62745833173228774081066255167991918157047470531730258564989614196330867701429-8"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2042.8541
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              297.0718
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0337
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 33.962870523610528306% + 1px)"
+                widthBar="33.962870523610528306%"
+                widthBorder="4.938879128716319773%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35211-9"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2339.9259
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              297.0718
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0337
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 38.901749652326848079% + 1px)"
+                widthBar="38.901749652326848079%"
+                widthBorder="4.938879128716319773%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35212-10"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2637.5745
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              297.6486
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0336
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 43.850218837603782057% + 1px)"
+                widthBar="43.850218837603782057%"
+                widthBorder="4.948469185276933978%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="65765178849432166838664565564223588120931810247755896294500846507735706768778-11"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2935.2230
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              297.6486
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0336
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 48.798688022880716034% + 1px)"
+                widthBar="48.798688022880716034%"
+                widthBorder="4.948469185276933978%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="7615851857606809569329377127359118203606056606422405268266811601217946939114-12"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              3236.6211
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              301.3980
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0332
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 53.809492575801642398% + 1px)"
+                widthBar="53.809492575801642398%"
+                widthBorder="5.010804552920926364%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35213-13"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              3538.0191
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              301.3980
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0332
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 58.820297128722568762% + 1px)"
+                widthBar="58.820297128722568762%"
+                widthBorder="5.010804552920926364%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35214-14"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              3843.4550
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              305.4359
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0327
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 63.898232077567794623% + 1px)"
+                widthBar="63.898232077567794623%"
+                widthBorder="5.077934948845225861%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="67251964846712113589105067487459297212505430254706952884314748608752903382916-15"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              4148.8909
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              305.4359
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0327
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 68.976167026413020484% + 1px)"
+                widthBar="68.976167026413020484%"
+                widthBorder="5.077934948845225861%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35215-16"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              4456.9226
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              308.0317
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0325
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 74.097257229781010306% + 1px)"
+                widthBar="74.097257229781010306%"
+                widthBorder="5.121090203367989822%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="74548636906738055573517807206275655438527861345553564536259842939483268685658-17"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              4764.9543
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              308.0317
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0325
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 79.218347433149000128% + 1px)"
+                widthBar="79.218347433149000128%"
+                widthBorder="5.121090203367989822%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35216-18"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              5076.4470
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              311.4927
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0321
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 84.396977975880675226% + 1px)"
+                widthBar="84.396977975880675226%"
+                widthBorder="5.178630542731675098%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="25598525409006788019377570006798783760140035732676827506219796205888225011364-19"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              5387.9397
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              311.4927
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0321
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 89.575608518612350324% + 1px)"
+                widthBar="89.575608518612350324%"
+                widthBorder="5.178630542731675098%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="3706839253204025122373570205042155544336209410007250498015918615454407753340-20"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              5701.4514
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              313.5116
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0319
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 94.787804259306175162% + 1px)"
+                widthBar="94.787804259306175162%"
+                widthBorder="5.212195740693824838%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="35217-21"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              6014.9630
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              313.5116
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--buy"
+            >
+              0.0319
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--buy"
+            >
+              <Bar
+                leftSpaceBorder="calc(100% - 100% + 1px)"
+                widthBar="100%"
+                widthBorder="5.212195740693824838%"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="jsx-__scopedHash orderbook__table orderbook__table-sell"
+    >
+      <div
+        className="jsx-__scopedHash"
+      >
+        <div
+          className="jsx-__scopedHash orderbook__head"
+        >
+          <div
+            className="jsx-__scopedHash orderbook__head-row"
+          >
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Ask
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Vol.
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__head-cell"
+            >
+              Cum. Vol.
+            </div>
+          </div>
+        </div>
+        <div
+          className="jsx-__scopedHash orderbook__body"
+        >
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="96302967355552289024967882824636622547821090945630919770220103279947185869454-0"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0347
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              287.8429
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              287.8429
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(4.785447804222576885% - undefined% false)"
+                widthBar="4.785447804222576885%"
+                widthBorder="undefined%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="71419178349408508286422820083917115708971497327642429272764937832088207492971-1"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0350
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              286.1159
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              573.9588
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(9.542182921619818311% - 4.756735117397241425% - 1px)"
+                widthBar="9.542182921619818311%"
+                widthBorder="4.756735117397241425%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="269638644306083619498395204910965153249475175197150846272235434328185974335-2"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0353
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              282.9496
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              856.9084
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(14.246278113170611395% - 4.704095191550793085% - 1px)"
+                widthBar="14.246278113170611395%"
+                widthBorder="4.704095191550793085%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="11237167879966232763183679966800023000333042005442680810034960123858343145310-3"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0358
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              279.2076
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1136.1160
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(18.888162483266510981% - 4.641884370095899586% - 1px)"
+                widthBar="18.888162483266510981%"
+                widthBorder="4.641884370095899586%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="14154721986762677035650990823345620946275899562927278438693307924695347344745-4"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0359
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              278.6319
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1414.7479
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(23.520475957753965408% - 4.632313474487454427% - 1px)"
+                widthBar="23.520475957753965408%"
+                widthBorder="4.632313474487454427%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="90624116958836631220516209284885658559310621026154292720396243182305185376953-5"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0364
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              274.8900
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1689.6379
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(28.090578610786526335% - 4.570102653032560927% - 1px)"
+                widthBar="28.090578610786526335%"
+                widthBorder="4.570102653032560927%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="96984606670502401008398164020895826389427215450890718580579115369194040537072-6"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0369
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              270.8602
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              1960.4981
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(32.593684994559971184% - 4.503106383773444849% - 1px)"
+                widthBar="32.593684994559971184%"
+                widthBorder="4.503106383773444849%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="4604886630858074681010333900934157298352445667281895938132549745140729661927-7"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0373
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              268.2696
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2228.7677
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(37.053722348095412834% - 4.46003735353544165% - 1px)"
+                widthBar="37.053722348095412834%"
+                widthBorder="4.46003735353544165%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="53240587075232308532158794728103004523642036280233110642393823050523708831112-8"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0378
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              264.8155
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2493.5832
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(41.456334327980183565% - 4.40261197988477073% - 1px)"
+                widthBar="41.456334327980183565%"
+                widthBorder="4.40261197988477073%"
+              />
+            </div>
+          </div>
+          <div
+            className="jsx-__scopedHash orderbook__body-row"
+            key="1233177404392475891618488288211937198800448430268037754937622680273608094462-9"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "auto",
+              }
+            }
+          >
+            <div
+              className="jsx-__scopedHash orderbook__body-cell orderbook__body-cell--sell"
+            >
+              0.0381
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              262.8006
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__body-cell"
+            >
+              2756.3838
+            </div>
+            <div
+              className="jsx-__scopedHash orderbook__bar orderbook__bar--sell"
+            >
+              <Bar
+                leftSpaceBorder="calc(45.825448173235396256% - 4.369113845255212691% - 1px)"
+                widthBar="45.825448173235396256%"
+                widthBorder="4.369113845255212691%"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

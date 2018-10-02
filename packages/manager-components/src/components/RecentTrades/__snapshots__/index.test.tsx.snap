@@ -12,9 +12,7 @@ exports[`RecentTrades should render correctly 1`] = `
     className="jsx-__scopedHash"
   >
     Recent trades for 
-    MLN-T
     /
-    WETH-T
   </h3>
   <div
     className="jsx-__scopedHash recent-trades__table-wrap"
@@ -34,16 +32,13 @@ exports[`RecentTrades should render correctly 1`] = `
             textAlign="right"
           >
             Price (
-            MLN-T
             /
-            WETH-T
             )
           </CellHead>
           <CellHead
             textAlign="right"
           >
             Amount (
-            MLN-T
             )
           </CellHead>
         </Row>
@@ -1603,9 +1598,7 @@ exports[`RecentTrades should render correctly without trades 1`] = `
     className="jsx-__scopedHash"
   >
     Recent trades for 
-    MLN-T
     /
-    WETH-T
   </h3>
   <div
     className="jsx-__scopedHash recent-trades__table-wrap"

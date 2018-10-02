@@ -7,7 +7,7 @@ import {
   max,
   min,
   multiply,
-} from '../../utils/functionalBigNumber';
+} from '~/utils/functionalBigNumber';
 import OrderForm from './index';
 
 const calculateInputs = (props, field, value) => {
@@ -78,8 +78,18 @@ const validation = props => {
   });
 };
 
+const initialValues = {
+  price: '',
+  orderType: 'Buy',
+  strategy: 'Market',
+  quantity: '',
+  total: '',
+  exchange: '',
+};
+
 const withFormValidation = withFormik({
-  mapPropsToValues: props => ({ ...props.values }),
+  mapPropsToValues: props =>
+    props.formValues ? { ...props.formValues } : initialValues,
   validationSchema: props => validation(props),
   enableReinitialize: true,
   handleSubmit: (values, form) =>

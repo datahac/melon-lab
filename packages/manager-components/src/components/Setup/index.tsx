@@ -15,7 +15,7 @@ export interface SetupProps {
   config: {
     canonicalPriceFeedAddress: string;
     noComplianceAddress: string;
-    onlyManagerCompetitionAddress: string;
+    competitionComplianceAddress: string;
   };
   errors?: any;
   handleBlur?: () => void;

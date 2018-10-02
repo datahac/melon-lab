@@ -24,10 +24,13 @@
     "Sebastian Siemssen <fubhy@fubhy.com>"
   ],
   "resolutions": {
-    "@babel/preset-typescript": "7.0.0-beta.42",
     "@melonproject/smart-contracts": "0.8.10",
-    "bignumber.js": "4.1.0",
-    "babel-core": "7.0.0-bridge.0",
-    "subscriptions-transport-ws": "0.9.12"
+    "babel-core": "^7.0.0-bridge.0",
+    "bignumber.js": "^4.1.0",
+    "find-up": "^3.0.0",
+    "graphql": "^14.0.2",
+    "webpack": "4.19.0",
+    "lodash": "^4.3.0",
+    "subscriptions-transport-ws": "^0.9.12"
   }
 }

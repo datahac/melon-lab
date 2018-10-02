@@ -1,5 +1,9 @@
 import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
+import format from 'date-fns/format';
+import displayNumber from '~/utils/displayNumber';
+import StyledLink from '~/blocks/Link';
+import Link from '~/link';
 
 import styles from './styles.css';
 
@@ -7,24 +11,28 @@ export interface CardProps {
   inception?: string;
   isActive?: boolean;
   name?: string;
-  onClick?: (id) => void;
   rank?: number;
   sharePrice?: string;
   reportUrl?: string;
+  onClick?: React.MouseEventHandler;
 }
 
 const Card: StatelessComponent<CardProps> = ({
   inception,
   isActive,
   name,
-  onClick,
   rank,
   sharePrice,
   reportUrl,
+  onClick,
 }) => {
   const cardClassNames = classNames('card', {
     'card--active': isActive,
   });
+
+  const handleReportClick = e => {
+    e.stopPropagation();
+  };
 
   return (
     <div onClick={onClick} className={cardClassNames}>
@@ -38,16 +46,20 @@ const Card: StatelessComponent<CardProps> = ({
           <div className="card__name">{name}</div>
           <div className="card__info">
             <div className="card__share-price">
-              <span className="card__label">Share price</span> {sharePrice}
+              <span className="card__label">Share price</span>{' '}
+              {displayNumber(sharePrice)}
             </div>
             <div className="card__inception-date">
-              <span className="card__label">Inception Date</span> {inception}
+              <span className="card__label">Inception Date</span>{' '}
+              {format(inception, 'DD. MMM YYYY HH:mm')}
             </div>
           </div>
-          <div className="card__report">
-            <a className="card__report-link" href={reportUrl} target="_blank">
-              Show Report
-            </a>
+          <div className="card__report" onClick={handleReportClick}>
+            <Link href={reportUrl} passHref>
+              <StyledLink style="secondary" size="small" target="_blank">
+                Show Report
+              </StyledLink>
+            </Link>
           </div>
         </div>
       </div>

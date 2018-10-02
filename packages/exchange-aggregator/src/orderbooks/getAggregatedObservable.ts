@@ -98,18 +98,25 @@ const getAggregatedObservable = (
   const baseTokenAddress = getAddress(config, baseTokenSymbol);
   const quoteTokenAddress = getAddress(config, quoteTokenSymbol);
 
-  const exchanges$ = Rx.Observable.from<ExchangeEnum>(exchanges);
-  const orderbooks$ = exchanges$
-    .map(name => exchangeToCreatorFunction[name])
-    .map(create =>
-      create(baseTokenSymbol, quoteTokenSymbol, baseTokenAddress, quoteTokenAddress, network, environment, config),
-  )
-    .combineAll<Rx.Observable<Order[]>, Order[][]>()
-    .do(value => debug('Emitting combined order book.', value))
+  const orderbooks = exchanges
+    .map((name) => exchangeToCreatorFunction[name])
+    .map(create => create(
+      baseTokenSymbol,
+      quoteTokenSymbol,
+      baseTokenAddress,
+      quoteTokenAddress,
+      network,
+      environment,
+      config
+    ).startWith([]));
+
+  const combined$ = Rx.Observable.combineLatest(orderbooks)
+    .skip(1)
+    .do(value => debug('Emitting combined order book.'))
     .distinctUntilChanged(R.equals);
 
   // Concat and sort orders across all order books.
-  return orderbooks$.map(
+  return combined$.map(
     R.compose(
       sortOrderBooks,
       concatOrderbooks,

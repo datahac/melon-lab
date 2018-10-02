@@ -5,6 +5,8 @@
   ],
   "plugins": [
     "@babel/plugin-proposal-object-rest-spread",
-    "styled-jsx/babel"
+    ["styled-jsx/babel", {
+      "plugins": ["styled-jsx-plugin-postcss"]
+    }]
   ]
 }

@@ -9,7 +9,7 @@ const data = {
   },
   decimals: 4,
   setup: true,
-  dataValid: true,
+  priceFeedUp: true,
   quoteAsset: 'WETH-T',
   fund: {
     sharePrice: 5,

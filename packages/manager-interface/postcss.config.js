@@ -9,6 +9,9 @@ module.exports = {
       browsers: '> 0.5%, last 2 versions, Firefox ESR, not dead',
       features: {
         'nesting-rules': true,
+        'color-mod-function': {
+          unresolved: 'warn'
+        },
         'custom-properties': {
           preserve: false,
           variables: variables,

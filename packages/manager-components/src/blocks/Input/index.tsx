@@ -20,6 +20,7 @@ export interface InputProps {
   step?: string;
   type?: string;
   value?: string;
+  maxlength?: number;
 }
 
 const Input: StatelessComponent<InputProps> = ({
@@ -38,6 +39,7 @@ const Input: StatelessComponent<InputProps> = ({
   step,
   type = 'text',
   value,
+  maxlength,
 }) => {
   const inputClassNames = classNames('input', {
     'input--inside-label': insideLabel,
@@ -67,6 +69,7 @@ const Input: StatelessComponent<InputProps> = ({
         />
       ) : (
         <input
+          maxLength={maxlength}
           hidden={hidden}
           name={name}
           pattern={pattern}

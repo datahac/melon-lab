@@ -8,18 +8,20 @@ import {
   TableBody,
   TableHead,
 } from '~/blocks/Table';
+import format from 'date-fns/format';
+import displayNumber from '~/utils/displayNumber';
 
 import styles from './styles.css';
 
 export interface RecentTradesProps {
-  baseTokenSymbol: string;
-  quoteTokenSymbol: string;
+  baseAsset: string;
+  quoteAsset: string;
   trades?: any;
 }
 
 export const RecentTrades: StatelessComponent<RecentTradesProps> = ({
-  baseTokenSymbol,
-  quoteTokenSymbol,
+  baseAsset,
+  quoteAsset,
   trades,
 }) => {
   const typeCellClassNames = (type: string) =>
@@ -37,7 +39,7 @@ export const RecentTrades: StatelessComponent<RecentTradesProps> = ({
     <div className="recent-trades">
       <style jsx>{styles}</style>
       <h3>
-        Recent trades for {baseTokenSymbol}/{quoteTokenSymbol}
+        Recent trades for {baseAsset}/{quoteAsset}
       </h3>
       <div className="recent-trades__table-wrap">
         {trades.length > 0 ? (
@@ -47,25 +49,29 @@ export const RecentTrades: StatelessComponent<RecentTradesProps> = ({
                 <CellHead>Time</CellHead>
                 <CellHead>Type</CellHead>
                 <CellHead textAlign="right">
-                  Price ({baseTokenSymbol}/{quoteTokenSymbol})
+                  Price ({baseAsset}/{quoteAsset})
                 </CellHead>
-                <CellHead textAlign="right">
-                  Amount ({baseTokenSymbol})
-                </CellHead>
+                <CellHead textAlign="right">Amount ({baseAsset})</CellHead>
               </Row>
             </TableHead>
             <TableBody>
               {trades.length > 0 &&
-                trades.reverse().map((trade, index) => (
+                trades.map((trade, index) => (
                   <Row key={index}>
-                    <CellBody>{trade.timestamp}</CellBody>
+                    <CellBody>
+                      {format(trade.timestamp, 'DD. MMM YYYY HH:mm')}
+                    </CellBody>
                     <CellBody>
                       <span className={typeCellClassNames(trade.type)}>
                         {trade.type}
                       </span>
                     </CellBody>
-                    <CellBody textAlign="right">{trade.price}</CellBody>
-                    <CellBody textAlign="right">{trade.quantity}</CellBody>
+                    <CellBody textAlign="right">
+                      {displayNumber(trade.price)}
+                    </CellBody>
+                    <CellBody textAlign="right">
+                      {displayNumber(trade.quantity)}
+                    </CellBody>
                   </Row>
                 ))}
             </TableBody>

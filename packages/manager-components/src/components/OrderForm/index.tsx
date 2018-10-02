@@ -12,7 +12,7 @@ import styles from './styles.css';
 
 interface FormValues {
   exchange: string;
-  orderType: string;
+  type: string;
   price: string;
   quantity: string;
   strategy: string;
@@ -20,8 +20,8 @@ interface FormValues {
 }
 
 export interface OrderFormProps {
-  baseTokenSymbol?: string;
-  dataValid?: boolean;
+  baseAsset?: string;
+  priceFeedUp?: boolean;
   decimals?: number;
   errors: any;
   exchanges: Array<{
@@ -34,16 +34,15 @@ export interface OrderFormProps {
   isCompetition?: boolean;
   isManager?: boolean;
   onChange?: React.ChangeEvent<any>;
-  quoteTokenSymbol?: string;
-  selectedOrder?: () => void;
+  quoteAsset?: string;
   touched: any;
   type?: string;
   values: FormValues;
 }
 
 export const OrderForm: StatelessComponent<OrderFormProps> = ({
-  baseTokenSymbol,
-  dataValid,
+  baseAsset,
+  priceFeedUp,
   decimals,
   errors,
   exchanges,
@@ -53,8 +52,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
   isCompetition,
   isManager,
   onChange,
-  quoteTokenSymbol,
-  selectedOrder,
+  quoteAsset,
   touched,
   values,
 }) => {
@@ -66,7 +64,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
       <style jsx>{styles}</style>
       <h3>Trade</h3>
       <Form onSubmit={handleSubmit}>
-        {!dataValid && (
+        {!priceFeedUp && (
           <Notification isWarning>
             Trading not possible when price feed down
           </Notification>
@@ -94,13 +92,13 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
 
         <div className="order-form__switch">
           <Switch
-            options={[baseTokenSymbol, quoteTokenSymbol]}
+            options={[baseAsset, quoteAsset]}
             labels={['Buy', 'Sell']}
             onChange={onChange}
-            name="orderType"
-            value={values.orderType}
-            isChecked={values.orderType === 'Sell' ? true : false}
-            disabled={isMarket || !dataValid || !isManager}
+            name="type"
+            value={values.type}
+            isChecked={values.type === 'sell' ? true : false}
+            disabled={isMarket || !priceFeedUp || !isManager}
           />
         </div>
         {/* <div className="order-form__dropdown">
@@ -110,7 +108,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             options={exchanges}
             label="Exchange"
             onChange={onChange}
-            disabled={isMarket || !dataValid}
+            disabled={isMarket || !priceFeedUp}
           />
         </div> */}
         <div className="order-form__order-info">
@@ -119,7 +117,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         <div className="order-form__input">
           <Input
             value={values.price}
-            disabled={isMarket || !dataValid || !isManager}
+            disabled={isMarket || !priceFeedUp || !isManager}
             label="Price"
             name="price"
             insideLabel="true"
@@ -145,7 +143,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             required={true}
             formatNumber={true}
             error={touched.quantity && errors.quantity}
-            disabled={(isMarket && !values.price) || !dataValid || !isManager}
+            disabled={(isMarket && !values.price) || !priceFeedUp || !isManager}
           />
         </div>
         <div className="order-form__input">
@@ -161,14 +159,14 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             required={true}
             formatNumber={true}
             error={touched.total && errors.total}
-            disabled={(isMarket && !values.price) || !dataValid || !isManager}
+            disabled={(isMarket && !values.price) || !priceFeedUp || !isManager}
           />
         </div>
         <Button
-          disabled={(isMarket && !values.price) || !dataValid || !isManager}
+          disabled={(isMarket && !values.price) || !priceFeedUp || !isManager}
           type="submit"
         >
-          {values.orderType}
+          {values.type === 'sell' ? 'Sell' : 'Buy'}
         </Button>
       </Form>
     </div>

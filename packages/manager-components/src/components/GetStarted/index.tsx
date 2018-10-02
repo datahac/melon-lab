@@ -1,28 +1,24 @@
 import classNames from 'classnames';
 import React, { Fragment, StatelessComponent } from 'react';
-import Button from '~/blocks/Button';
+import StyledLink from '~/blocks/Link';
+import Link from '~/link';
+
 import styles from './styles.css';
 
 export interface GetStartedProps {
   isHome?: boolean;
-  linkAction?: {
-    payload: { address: string };
-    type: string;
-  };
-  linkCaption: string;
   networkId?: string;
-  onClick: (action) => void;
+  link: {
+    href: string;
+    text: string;
+  };
 }
 
 export const GetStarted: StatelessComponent<GetStartedProps> = ({
   isHome,
-  linkAction,
-  linkCaption,
   networkId,
-  onClick,
+  link,
 }) => {
-  const onStart = () => onClick && onClick(linkAction);
-
   const getStartedClassNames = classNames('get-started', {
     [`get-started--is-home`]: isHome,
   });
@@ -72,7 +68,14 @@ export const GetStarted: StatelessComponent<GetStartedProps> = ({
             </p>
           </Fragment>
         )}
-        <Button onClick={onStart}>{linkCaption}</Button>
+
+        {link && (
+          <Link href={link.href} passHref>
+            <StyledLink style="secondary" size="medium">
+              {link.text}
+            </StyledLink>
+          </Link>
+        )}
       </div>
     </div>
   );

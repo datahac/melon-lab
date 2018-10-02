@@ -37,7 +37,7 @@ const data = {
   selectedExchange: 'RadarRelay',
   selectedOrderType: 'Buy',
   decimals: 4,
-  dataValid: true,
+  priceFeedUp: true,
 };
 
 storiesOf('Components|Order Form', module).add('Default', () => {

@@ -11,11 +11,6 @@ exports[`Footer should render correctly 1`] = `
   <span
     className="jsx-__scopedHash footer__item"
   >
-    Hosted with ❤ on IPFS
-  </span>
-  <span
-    className="jsx-__scopedHash footer__item"
-  >
     <a
       className="jsx-__scopedHash footer__item-link"
       href="https://github.com/melonproject/melon-lab/issues"

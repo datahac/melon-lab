@@ -28,10 +28,4 @@ describe('GetStarted', () => {
     wrapper.setProps({ isHome: true });
     expect(wrapper).toMatchSnapshot();
   });
-
-  it('onClick action', () => {
-    wrapper.find('Button').simulate('click');
-    expect(mockCallback.mock.calls.length).toBe(1);
-    expect(mockCallback.mock.calls[0][0]).toBe(data.linkAction);
-  });
 });

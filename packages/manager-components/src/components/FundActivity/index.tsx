@@ -1,8 +1,6 @@
 import React, { StatelessComponent } from 'react';
 import Button from '~/blocks/Button';
 
-import styles from './styles.css';
-
 export interface FundActivityProps {
   requestFullParticipationHistory: () => void;
 }
@@ -15,7 +13,6 @@ export const FundActivity: StatelessComponent<FundActivityProps> = ({
   */
 }) => (
   <div className="fund-activity">
-    <style jsx>{styles}</style>
     <h3>Fund Activity</h3>
     <p>
       Recent Subscriptions

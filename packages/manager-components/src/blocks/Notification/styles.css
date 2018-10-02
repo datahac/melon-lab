@@ -29,3 +29,7 @@
   cursor: pointer;
   font-weight: var(--font-weight-bold);
 }
+
+.notification :global(p:first-child) {
+  margin-top: 0;
+}

@@ -72,7 +72,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="ANT-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -107,7 +106,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="BAT-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -142,7 +140,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="DGD-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -177,7 +174,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="DGX-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -212,7 +208,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="GNO-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -247,7 +242,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="REP-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -282,7 +276,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="ZRX-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -317,7 +310,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="REQ-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -382,7 +374,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="MLN-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -417,7 +408,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="MKR-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -452,7 +442,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="DAI-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -487,7 +476,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="KNC-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -522,7 +510,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="JNT-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -557,7 +544,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="OMG-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -592,7 +578,6 @@ exports[`Holdings should render correctly 1`] = `
             textAlign="right"
           >
             <Button
-              buttonValue="NMR-T"
               onClick={[Function]}
               size="small"
               style="secondary"
@@ -666,24 +651,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0035
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="ANT-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -700,24 +685,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0007
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="BAT-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -734,24 +719,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="DGD-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -768,24 +753,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="DGX-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -802,24 +787,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.1113
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="GNO-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -836,24 +821,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0648
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="REP-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -870,24 +855,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0024
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="ZRX-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -904,24 +889,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0001
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="REQ-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -938,12 +923,13 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            50.5764
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            1.0000
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
@@ -967,24 +953,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            49.4236
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0470
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="MLN-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -1001,24 +987,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            1.3430
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="MKR-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -1035,24 +1021,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0021
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="DAI-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -1069,24 +1055,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0276
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="KNC-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -1103,24 +1089,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0003
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="JNT-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -1137,24 +1123,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0150
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="OMG-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>
@@ -1171,24 +1157,24 @@ exports[`Holdings should render correctly without dataValid  1`] = `
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0000
+            %
           </CellBody>
           <CellBody
             textAlign="right"
           >
-            <Loading />
+            0.0184
           </CellBody>
           <CellBody
             cellClass="holdings__action-cell"
             textAlign="right"
           >
             <Button
-              buttonValue="NMR-T"
               onClick={[Function]}
               size="small"
               style="secondary"
             >
-              See Orderbook
+              Buy/Sell
             </Button>
           </CellBody>
         </Row>

@@ -7,7 +7,7 @@ const data = {
     amount: '',
     total: '',
   },
-  dataValid: true,
+  priceFeedUp: true,
   melonAssetSymbol: 'MLN',
 };
 

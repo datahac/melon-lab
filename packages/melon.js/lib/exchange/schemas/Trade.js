@@ -4,6 +4,8 @@ import BigNumber from 'bignumber.js';
 import type { BuyOrSell } from './BuyOrSell';
 import type { Address } from '../../assets/schemas/Address';
 
+export default {};
+
 /**
  * An executed trade == a taken order
  */

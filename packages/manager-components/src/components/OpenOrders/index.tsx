@@ -9,6 +9,8 @@ import {
   TableBody,
   TableHead,
 } from '~/blocks/Table';
+import format from 'date-fns/format';
+import displayNumber from '~/utils/displayNumber';
 
 import styles from './styles.css';
 
@@ -34,7 +36,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
   isManager,
   isReadyToTrade,
   onClick,
-  orders,
+  orders = [],
 }) => {
   const typeCellClassNames = (type: string) =>
     classNames(
@@ -70,12 +72,11 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
             <TableBody>
               {orders &&
                 orders.map(order => {
-                  const onCancel = (): void =>
-                    onClick(order.id, order.buySymbol, order.sellSymbol);
-
                   return (
                     <Row key={order.id} size={isManager && 'small'}>
-                      <CellBody>{order.timestamp}</CellBody>
+                      <CellBody>
+                        {format(order.timestamp, 'DD. MMM YYYY HH:mm')}
+                      </CellBody>
                       <CellBody>{order.id}</CellBody>
                       <CellBody>
                         <span className={typeCellClassNames(order.type)}>
@@ -84,15 +85,21 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                       </CellBody>
                       <CellBody>{order.sellSymbol}</CellBody>
                       <CellBody>{order.buySymbol}</CellBody>
-                      <CellBody>{order.price}</CellBody>
-                      <CellBody>{order.sellHowMuch}</CellBody>
-                      <CellBody>{order.buyHowMuch}</CellBody>
+                      <CellBody>{displayNumber(order.price)}</CellBody>
+                      <CellBody>{displayNumber(order.sellHowMuch)}</CellBody>
+                      <CellBody>{displayNumber(order.buyHowMuch)}</CellBody>
                       {isManager && (
                         <CellBody>
                           <Button
                             size="small"
                             style="secondary"
-                            onClick={onCancel}
+                            onClick={() =>
+                              onClick(
+                                order.id,
+                                order.buySymbol,
+                                order.sellSymbol,
+                              )
+                            }
                             disabled={!isReadyToTrade}
                           >
                             Cancel

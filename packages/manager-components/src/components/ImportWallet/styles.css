@@ -6,3 +6,8 @@
 .import-wallet__dropzone {
   margin-bottom: var(--space-m);
 }
+
+.import-wallet__input,
+.import-wallet__error {
+  margin-bottom: var(--space-m);
+}

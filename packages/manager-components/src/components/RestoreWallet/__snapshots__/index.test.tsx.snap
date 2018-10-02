@@ -5,8 +5,10 @@ exports[`RestoreWallet should render correctly 1`] = `
   initialValues={
     Object {
       "mnemonic": "",
+      "password": "",
     }
   }
+  loading={false}
   onSubmit={[MockFunction]}
 >
   <Formik
@@ -15,9 +17,11 @@ exports[`RestoreWallet should render correctly 1`] = `
     initialValues={
       Object {
         "mnemonic": "",
+        "password": "",
       }
     }
     isInitialValid={false}
+    loading={false}
     onSubmit={[Function]}
     render={[Function]}
     validateOnBlur={true}
@@ -34,11 +38,13 @@ exports[`RestoreWallet should render correctly 1`] = `
       initialValues={
         Object {
           "mnemonic": "",
+          "password": "",
         }
       }
       isSubmitting={false}
       isValid={false}
       isValidating={false}
+      loading={false}
       onSubmit={[MockFunction]}
       registerField={[Function]}
       resetForm={[Function]}
@@ -63,6 +69,7 @@ exports[`RestoreWallet should render correctly 1`] = `
       values={
         Object {
           "mnemonic": "",
+          "password": "",
         }
       }
     >
@@ -76,13 +83,8 @@ exports[`RestoreWallet should render correctly 1`] = `
         <h3
           className="jsx-__scopedHash"
         >
-          Confirm mnemonic
+          Restore Wallet
         </h3>
-        <p
-          className="jsx-__scopedHash"
-        >
-          Please type your 12-words mnemonic:
-        </p>
         <Form
           onSubmit={[Function]}
         >
@@ -90,6 +92,11 @@ exports[`RestoreWallet should render correctly 1`] = `
             className="form"
             onSubmit={[Function]}
           >
+            <p
+              className="jsx-__scopedHash"
+            >
+              Please type your 12-words mnemonic:
+            </p>
             <div
               className="jsx-__scopedHash restore-wallet__input"
             >
@@ -124,6 +131,42 @@ exports[`RestoreWallet should render correctly 1`] = `
                 </div>
               </Input>
             </div>
+            <div
+              className="jsx-__scopedHash restore-wallet__input"
+            >
+              <Input
+                maxlength={64}
+                name="password"
+                onBlur={[Function]}
+                onChange={[Function]}
+                placeholder="Set a Password"
+                required={true}
+                type="password"
+                value=""
+              >
+                <div
+                  className="jsx-__scopedHash input"
+                >
+                  <JSXStyle
+                    css="__scoped"
+                    styleId="__scopedHash"
+                  />
+                  <input
+                    className="jsx-__scopedHash input__field"
+                    maxLength={64}
+                    name="password"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    placeholder="Set a Password"
+                    type="password"
+                    value=""
+                  />
+                  <div
+                    className="jsx-__scopedHash input__error"
+                  />
+                </div>
+              </Input>
+            </div>
             <Button
               style="secondary"
               type="submit"
@@ -137,7 +180,7 @@ exports[`RestoreWallet should render correctly 1`] = `
                   css="__scoped"
                   styleId="__scopedHash"
                 />
-                Import
+                Restore
               </button>
             </Button>
           </form>

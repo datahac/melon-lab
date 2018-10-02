@@ -1,0 +1,23 @@
+
+copyright: Melonport AG
+appId: com.melonproject.app
+productName: Melon Manager Interface
+artifactName: melon-manager-interface-${version}-${os}.${ext}
+asar: true
+extends: null
+
+directories:
+  output: app/package
+  buildResources: src/static
+
+linux:
+  category: Finance
+  target:
+    - deb
+    - AppImage
+
+mac:
+  category: public.app-category.finance
+  target:
+    - dmg
+    - zip

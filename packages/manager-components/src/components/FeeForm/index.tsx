@@ -10,7 +10,7 @@ import {
   TableBody,
   TableHead,
 } from '~/blocks/Table';
-import { add, toBigNumber } from '../../utils/functionalBigNumber';
+import { add, toBigNumber } from '~/utils/functionalBigNumber';
 
 import styles from './styles.css';
 

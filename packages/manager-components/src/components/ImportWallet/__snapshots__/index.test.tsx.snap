@@ -14,6 +14,9 @@ exports[`ImportWallet should render correctly 1`] = `
     Import wallet
   </h3>
   <div
+    className="jsx-__scopedHash import-wallet__error"
+  />
+  <div
     className="jsx-__scopedHash import-wallet__dropzone"
   >
     <t
@@ -25,7 +28,6 @@ exports[`ImportWallet should render correctly 1`] = `
       maxSize={Infinity}
       minSize={0}
       multiple={true}
-      onDrop={[Function]}
       preventDropOnDocument={true}
       style={
         Object {
@@ -44,11 +46,5 @@ exports[`ImportWallet should render correctly 1`] = `
       </p>
     </t>
   </div>
-  <Button
-    onClick={[Function]}
-    style="secondary"
-  >
-    Cancel
-  </Button>
 </div>
 `;

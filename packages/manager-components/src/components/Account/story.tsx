@@ -8,12 +8,6 @@ const data = {
   networkId: '42',
   isCompetition: false,
   deleteWallet: action('deleteWallet'),
-  gotoAccountGenerate: action('gotoAccountGenerate'),
-  gotoAccountRestore: action('gotoAccountRestore'),
-  gotoImportJSON: action('gotoImportJSON'),
-  gotoSetup: action('gotoSetup'),
-  downloadJSON: action('downloadJSON'),
-  goToFund: action('goToFund'),
 };
 
 storiesOf('Components|Account', module)

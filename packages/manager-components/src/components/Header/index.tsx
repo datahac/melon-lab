@@ -1,18 +1,18 @@
 import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
 import Icon from '~/blocks/Icon';
+import Link from '~/link';
+import displayNumber from '~/utils/displayNumber';
 
 import styles from './styles.css';
 
 export interface HeaderProps {
-  accountAddress?: string;
+  address?: string;
   balances: {
     eth: number;
   };
-  goToHome: () => void;
-  goToWallet: () => void;
   network?: string;
-  status?: {
+  message?: {
     message?: string;
     link?: string;
     type?: string;
@@ -20,61 +20,60 @@ export interface HeaderProps {
 }
 
 export const Header: StatelessComponent<HeaderProps> = ({
-  accountAddress,
+  address,
   balances,
-  goToHome,
-  goToWallet,
   network,
-  status,
+  message,
 }) => {
-  const onClickGoToHome = (e: any): void => {
-    e.preventDefault(e);
-    goToHome();
-  };
-
-  const onClickGoToWallet = (e: any): void => {
-    e.preventDefault(e);
-    goToWallet();
-  };
-
   const statusClassName = classNames('header__account-status', {
-    'header__account-status--warning': status && status.type === 'WARNING',
-    'header__account-status--error': status && status.type === 'ERROR',
+    'header__account-status--warning': message && message.type === 'WARNING',
+    'header__account-status--error': message && message.type === 'ERROR',
   });
 
   return (
     <div className="header">
       <style jsx>{styles}</style>
       <div className="header__logo">
-        <a href="#" onClick={onClickGoToHome}>
-          <span className="header__logo-default">
-            <Icon width="115px" height="30px" name="logos_with-text" />
-          </span>
-          <span className="header__logo-small">
-            <Icon width="30px" height="30px" name="logos_default" />
-          </span>
-        </a>
+        <Link href="/">
+          <a href="/">
+            <span className="header__logo-default">
+              <Icon width="115px" height="30px" name="logos_with-text" />
+            </span>
+            <span className="header__logo-small">
+              <Icon width="30px" height="30px" name="logos_default" />
+            </span>
+          </a>
+        </Link>
       </div>
       <div className="header__account">
         <div className="header__account-name">{''}</div>
         <div className="header__account-info">
           <span className="header__account-address">
-            <a href="#" onClick={onClickGoToWallet}>
-              {accountAddress}
-            </a>
+            <Link href="/wallet">
+              <a href="/wallet">{address}</a>
+            </Link>
           </span>
-          <span className="header__account-balances">
-            <span className="header__account-balance">ETH {balances.eth}</span>
-          </span>
-          <span className="header__account-network">{network}</span>
-          {status && (
+          {balances &&
+            balances.eth && (
+              <span className="header__account-balances">
+                <span className="header__account-balance">
+                  ETH {displayNumber(balances.eth)}
+                </span>
+              </span>
+            )}
+          {network && (
+            <span className="header__account-network">{network}</span>
+          )}
+          {message && (
             <span className={statusClassName}>
-              {status.link ? (
-                <a href={status.link} target="_blank">
-                  {status.message}
-                </a>
+              {message.link ? (
+                <Link href={message.link}>
+                  <a href={message.link} target="_blank">
+                    {message.message}
+                  </a>
+                </Link>
               ) : (
-                <React.Fragment>{status.message}</React.Fragment>
+                <React.Fragment>{message.message}</React.Fragment>
               )}
             </span>
           )}

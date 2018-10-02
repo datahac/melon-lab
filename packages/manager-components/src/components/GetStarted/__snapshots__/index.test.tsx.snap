@@ -42,11 +42,7 @@ exports[`GetStarted should render correctly 1`] = `
     >
       Set up your own technology regulated fund and discover the future of asset management.
     </p>
-    <Button
-      onClick={[Function]}
-    >
-      Setup your fund
-    </Button>
+    <Component />
   </div>
 </div>
 `;
@@ -102,11 +98,7 @@ exports[`GetStarted should render correctly with isHome 1`] = `
     >
       Set up your own technology regulated fund and discover the future of asset management.
     </p>
-    <Button
-      onClick={[Function]}
-    >
-      Setup your fund
-    </Button>
+    <Component />
   </div>
 </div>
 `;

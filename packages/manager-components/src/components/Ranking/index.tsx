@@ -3,27 +3,26 @@ import Card from '~/blocks/Card';
 import Dropdown from '~/blocks/Dropdown';
 import Input from '~/blocks/Input';
 import Spinner from '~/blocks/Spinner';
+import Link from '~/link';
 
 import styles from './styles.css';
 
 export interface RankingProps {
-  goToFund: (address) => void;
   loading?: boolean;
-  onFilterChange: () => void;
+  funds?: any;
   ordering?: string;
-  rankingList?: any;
   search?: string;
-  setOrdering: (field) => void;
+  setSearch: (search: string) => void;
+  setOrdering: (field: string) => void;
   usersFund?: string;
 }
 
 export const Ranking: StatelessComponent<RankingProps> = ({
-  goToFund,
   loading,
-  onFilterChange,
+  funds,
   ordering,
-  rankingList,
   search,
+  setSearch,
   setOrdering,
   usersFund,
 }) => {
@@ -80,7 +79,7 @@ export const Ranking: StatelessComponent<RankingProps> = ({
                 name="search"
                 placeholder="Search fund"
                 value={search}
-                onChange={onFilterChange && onFilterChange}
+                onChange={e => setSearch(e.target.value)}
               />
             </div>
             <div className="ranking__sort">
@@ -93,19 +92,20 @@ export const Ranking: StatelessComponent<RankingProps> = ({
             </div>
           </div>
           <div className="ranking__funds">
-            {rankingList.length > 0 &&
-              rankingList.map(fund => {
-                const onFundClick = () => goToFund && goToFund(fund.address);
-
-                return (
+            {funds &&
+              funds.map(fund => (
+                <Link
+                  key={fund.address}
+                  href={`/manage?address=${
+                    fund.address
+                  }&base=MLN-T&quote=WETH-T`}
+                >
                   <Card
                     isActive={fund.address === usersFund && true}
-                    onClick={onFundClick}
-                    key={fund.address}
                     {...fund}
                   />
-                );
-              })}
+                </Link>
+              ))}
           </div>
         </div>
       )}

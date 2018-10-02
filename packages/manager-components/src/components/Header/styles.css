@@ -53,15 +53,13 @@
   }
 }
 
-.header__account-status,
-.header__account-network,
-.header__account-balance {
-  &:before {
-    content: '|';
-    margin-right: var(--space-xxs);
-    padding-left: var(--space-xxs);
-    color: var(--color-grey);
-  }
+.header__account-status::before,
+.header__account-network::before,
+.header__account-balance::before {
+  content: '|';
+  margin-right: var(--space-xxs);
+  padding-left: var(--space-xxs);
+  color: var(--color-grey);
 }
 
 .header__account-link {
@@ -69,7 +67,7 @@
   text-decoration: none;
 }
 
-.header__account-status:after {
+.header__account-status::after {
   content: '';
   margin-right: 0;
   padding-left: 0;

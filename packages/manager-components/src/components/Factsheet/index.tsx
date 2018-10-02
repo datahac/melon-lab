@@ -1,16 +1,16 @@
 import React, { StatelessComponent } from 'react';
 import Button from '~/blocks/Button';
 import Icon from '~/blocks/Icon';
-import Loading from '~/blocks/Loading';
 import Spinner from '~/blocks/Spinner';
+import Link from '~/link';
+import displayNumber from '~/utils/displayNumber';
+import format from 'date-fns/format';
 
 import styles from './styles.css';
 
 export interface FactsheetProps {
-  aum?: string;
-  creationDate?: string;
-  dataValid?: boolean;
-  expectedPrize?: string;
+  gav?: string;
+  inception?: string;
   isCompetition?: boolean;
   loading?: boolean;
   managementReward?: string;
@@ -21,18 +21,20 @@ export interface FactsheetProps {
   quoteAsset?: string;
   rank?: string;
   reportUrl?: string;
-  scrollTo?: (id) => void;
   sharePrice?: string;
   shutdown: () => void;
   totalSupply?: string;
   tweetHref?: string;
+  address?: string;
+  track?: string;
+  owner?: boolean;
+  account?: string;
+  decimals?: number;
 }
 
 const Factsheet: StatelessComponent<FactsheetProps> = ({
-  aum,
-  creationDate,
-  dataValid,
-  expectedPrize,
+  gav,
+  inception,
   isCompetition,
   loading,
   managementReward,
@@ -43,13 +45,42 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
   quoteAsset,
   rank,
   reportUrl,
-  scrollTo,
   sharePrice,
   shutdown,
   totalSupply,
-  tweetHref,
+  address,
+  track,
+  owner,
+  account,
+  decimals = 5,
 }) => {
-  const scrolltoHoldings = () => scrollTo && scrollTo('holdings');
+  const isOwner = owner === account;
+
+  const buildTwitterUrl = () => {
+    const text = isOwner
+      ? track !== 'live'
+        ? `My #MelonFund "${name}" has a share price currently of ${sharePrice}. Have a look:`
+        : `Check out my on-chain decentralized hedge fund "${name}". ` +
+          `It currently has a share price of ${sharePrice}. Have a look:`
+      : track !== 'live'
+        ? `The #MelonFund "${name}" has a share price currently of ${sharePrice}. Have a look:`
+        : `Check out this on-chain decentralized hedge fund "${name}". ` +
+          `It currently has a share price of ${sharePrice}. Have a look:`;
+
+    const url =
+      track === 'live'
+        ? `https://olympiad.melon.fund/#${address}`
+        : `https://melon.fund/#${address}`;
+    const hashtags = 'TechnologyRegulatedFunds,Melon,MelonFund';
+    const via = 'melonport';
+    const related = 'melonport';
+
+    return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      text,
+    )}&url=${encodeURIComponent(url)}&hashtags=${encodeURIComponent(
+      hashtags,
+    )}&via=${encodeURIComponent(via)}&related=${encodeURIComponent(related)}`;
+  };
 
   return (
     <div className="factsheet">
@@ -58,7 +89,7 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
         {name}
         <a
           className="factsheet__title-link"
-          href={tweetHref}
+          href={buildTwitterUrl()}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -69,45 +100,26 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
         <Spinner icon size="small" />
       ) : (
         <div>
-          Creation date:{' '}
-          <Loading loading={creationDate === '...'}>{creationDate}</Loading>
+          Creation date: {format(inception, 'DD. MMM YYYY HH:mm')}
           <br />
-          <Button onClick={scrolltoHoldings} style="clear">
-            AUM:{' '}
-            <Loading dataAvailable={dataValid} loading={aum === '...'}>
-              {aum}
-            </Loading>{' '}
-            {quoteAsset}
-          </Button>
-          <Button onClick={scrolltoHoldings} style="clear">
-            Share price:{' '}
-            <Loading dataAvailable={dataValid} loading={sharePrice === '...'}>
-              {sharePrice}
-            </Loading>{' '}
-            {quoteAsset}
-            /Share
-          </Button>
-          <a href="#/ranking">
-            Ranking: <Loading loading={rank === '...'}>{rank}</Loading> out of{' '}
-            <Loading loading={numberOfFunds === '...'}>{numberOfFunds}</Loading>
-          </a>
+          AUM: {displayNumber(gav, decimals)} {quoteAsset}
           <br />
-          Total number of shares:{' '}
-          <Loading loading={totalSupply === '...'}>{totalSupply}</Loading>
+          Share price: {displayNumber(sharePrice, decimals)} {quoteAsset}
+          /Share
+          <br />
+          <Link href="/">
+            <a href="/">
+              Ranking: {rank} out of {numberOfFunds}
+            </a>
+          </Link>
+          <br />
+          Total number of shares: {totalSupply}
           <br />
           Shares owned by me:{' '}
-          <Loading loading={personalStake === '...'}>{personalStake}</Loading>
+          {displayNumber(personalStake ? personalStake : '0')}
           <hr />
-          Management Reward:{' '}
-          <Loading loading={managementReward === '...'}>
-            {managementReward}
-          </Loading>
-          %<br />
-          Performance Reward:{' '}
-          <Loading loading={performanceReward === '...'}>
-            {performanceReward}
-          </Loading>
-          %<hr />
+          Management Reward: {managementReward}%<br />
+          Performance Reward: {performanceReward}%<hr />
           <a
             href="https://ipfs.io/ipfs/Qmc9JRw4zarrs6gJwu6tC58UAgeEujNg9VMWcH8MUEd5TW/"
             target="_blank"
@@ -116,17 +128,18 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
             Contact Investors/Managers
           </a>
           <hr />
-          <a href={reportUrl} target="_blank" rel="noopener noreferrer">
-            Generate fund report
-          </a>
+          <Link href={reportUrl}>
+            <a target="_blank" rel="noopener noreferrer">
+              Generate fund report
+            </a>
+          </Link>
           <hr />
-          {!isCompetition ? (
-            <Button onClick={shutdown} style="clear">
-              Irreversibly shut down fund
-            </Button>
-          ) : (
-            <div />
-          )}
+          {!isCompetition &&
+            isOwner && (
+              <Button onClick={shutdown} style="clear">
+                Irreversibly shut down fund
+              </Button>
+            )}
         </div>
       )}
     </div>
