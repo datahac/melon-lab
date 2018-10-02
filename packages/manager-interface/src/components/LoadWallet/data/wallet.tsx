@@ -18,7 +18,7 @@ const query = gql`
 `;
 
 const cacheQuery = gql`
-  query getWallet {
+  query GetWallet {
     accountAddress @client
     privateKey @client
   }

@@ -12,7 +12,7 @@ const mutation = gql`
 `;
 
 const cacheQuery = gql`
-  query GetAccountAddress {
+  query GetWallet {
     accountAddress @client
     privateKey @client
   }
