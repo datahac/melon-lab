@@ -13,7 +13,7 @@ import withApollo from 'next-with-apollo';
 import { defaults, resolvers, withContext } from './state';
 import getConfig from 'next/config';
 
-const { publicRuntimeConfig: config } = getConfig();
+const { publicRuntimeConfig: config, serverRuntimeConfig: serverConfig } = getConfig();
 
 // We must disable SSR in the electron app. Hence, we re-export
 // the query components here so we can override the ssr flag.
@@ -26,7 +26,7 @@ const isSubscription = ({ query }) => {
 
 const createLink = (options, cache) => {
   const httpLink = new HttpLink({
-    uri: config.graphqlRemoteHttp,
+    uri: serverConfig.graphqlLocalHttp || config.graphqlRemoteHttp,
     headers: options.headers,
   });
 
@@ -46,7 +46,7 @@ const createLink = (options, cache) => {
   }
 
   const wsLink = new WebSocketLink({
-    uri: config.graphqlRemoteWs,
+    uri: serverConfig.graphqlLocalWs || config.graphqlRemoteWs,
     options: {
       reconnect: true,
     },

@@ -12,4 +12,8 @@ module.exports = {
     jsonRpcEndpoint: process.env.JSON_RPC_ENDPOINT,
     track: process.env.TRACK,
   },
+  serverRuntimeConfig: {
+    graphqlLocalWs: process.env.GRAPHQL_LOCAL_WS,
+    graphqlLocalHttp: process.env.GRAPHQL_LOCAL_HTTP,
+  },
 };

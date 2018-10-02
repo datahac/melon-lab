@@ -39,6 +39,10 @@ module.exports = withComposedConfig({
     track: process.env.TRACK,
     isElectron: isElectron,
   },
+  serverRuntimeConfig: {
+    graphqlLocalWs: process.env.GRAPHQL_LOCAL_WS,
+    graphqlLocalHttp: process.env.GRAPHQL_LOCAL_HTTP,
+  },
   webpack: (config, options) => {
     config.resolve.alias = Object.assign({}, config.resolve.alias || {}, {
       // Override the mock link component used in the manager components.

@@ -8,7 +8,7 @@ const { publicRuntimeConfig: config } = getConfig();
 const sprites = spriteBuild.stringify();
 
 const csp = config.isElectron && (require('electron-is-dev') ?
-  `default-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src http://localhost:3000 ${config.graphqlRemoteWs} ${config.graphqlRemoteHttp} ${config.jsonRpcEndpoint}; font-src data: http://localhost:3000;` :
+  `default-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src http://localhost:3000 ${config.jsonRpcEndpoint}; font-src data: http://localhost:3000;` :
   `default-src 'self' 'unsafe-inline'; connect-src ${config.jsonRpcEndpoint}; font-src data: file:;`
 );
 
