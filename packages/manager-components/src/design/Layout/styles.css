@@ -34,14 +34,6 @@
   margin: 0;
 }
 
-.layout {
-  margin: 70px 16px;
-
-  @media (--viewport-s) {
-    margin: 70px 7%;
-  }
-}
-
 :global(*),
 :global(:before),
 :global(:after) {

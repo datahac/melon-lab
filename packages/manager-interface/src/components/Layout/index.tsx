@@ -10,24 +10,38 @@ const displayNetwork = network => {
   return values[key] && values[key].toLocaleLowerCase();
 };
 
-const fixedTop = {
-  position: 'fixed',
-  width: '100%',
-  top: 0,
-  zIndex: 1,
-};
-
-const fixedBottom = {
-  position: 'fixed',
-  width: '100%',
-  bottom: 0,
-  zIndex: 1,
-};
+const content = noHeader => ({
+  margin: noHeader ? '10px 0' : '70px 0',
+});
 
 const Layout = ({ children, noHeader = false, ...props }) => (
   <Fragment>
+    <style jsx>{`
+      .header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        zindex: 1;
+      }
+
+      .footer {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        zindex: 1;
+      }
+
+      .content {
+        margin: ${noHeader ? '24px 16px' : '70px 16px'};
+
+        @media (--viewport-s) {
+          margin: ${noHeader ? '32px 7%' : '70px 7%'};
+        }
+      }
+    `}</style>
+
     {!noHeader && (
-      <div style={fixedTop}>
+      <div className="header">
         <Header
           network={props.network && displayNetwork(props.network)}
           message={props.message}
@@ -37,9 +51,11 @@ const Layout = ({ children, noHeader = false, ...props }) => (
       </div>
     )}
 
-    <Content>{children}</Content>
+    <div className="content">
+      <Content>{children}</Content>
+    </div>
 
-    <div style={fixedBottom}>
+    <div className="footer">
       <Footer />
     </div>
   </Fragment>
