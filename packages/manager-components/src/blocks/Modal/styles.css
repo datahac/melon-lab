@@ -33,20 +33,24 @@
   justify-content: center;
 }
 
-:global(.modal__actions) {
+.modal__actions {
+  margin-top: var(--space-m);
   display: flex;
   width: 100%;
   justify-content: space-between;
 }
 
-:global(.modal__action) {
+.modal__action {
   flex: 0 0 40%;
 }
 
-:global(.modal__spinner) {
-  width: 50px;
-  height: 50px;
-  margin: var(--space-s) auto;
+.modal__action:first-child:nth-last-child(1) {
+  flex: 0 0 100%;
+}
+
+.modal__action:first-child:nth-last-child(2),
+.modal__action:first-child:nth-last-child(2) ~ li {
+  flex: 0 0 40%;
 }
 
 .modal__title {
