@@ -21,14 +21,14 @@ const Layout = ({ children, noHeader = false, ...props }) => (
         position: fixed;
         width: 100%;
         top: 0;
-        zindex: 1;
+        z-index: 1;
       }
 
       .footer {
         position: fixed;
         width: 100%;
         bottom: 0;
-        zindex: 1;
+        z-index: 1;
       }
 
       .content {
