@@ -29,6 +29,7 @@ services:
     build:
       context: .
       dockerfile: ./packages/melon.js/Dockerfile
+      target: development
     command: "/bin/sh -c 'trap : TERM INT; sleep 365d & wait'"
     volumes:
       - *workspace-package
@@ -56,6 +57,7 @@ services:
     build:
       context: .
       dockerfile: ./packages/exchange-aggregator/Dockerfile
+      target: development
     command: "/bin/sh -c 'trap : TERM INT; sleep 365d & wait'"
     volumes:
       - *workspace-package
@@ -82,6 +84,7 @@ services:
     build:
       context: .
       dockerfile: ./packages/graphql-schema/Dockerfile
+      target: development
     command: "/bin/sh -c 'trap : TERM INT; sleep 365d & wait'"
     volumes:
       - *workspace-package
@@ -102,6 +105,7 @@ services:
       - ./packages/graphql-schema/tsconfig.json:/app/packages/graphql-schema/tsconfig.json
       - ./packages/graphql-schema/tslint.json:/app/packages/graphql-schema/tslint.json
       - ./packages/graphql-schema/.babelrc:/app/packages/graphql-schema/.babelrc
+      - ./packages/graphql-schema/introspect.js:/app/packages/graphql-schema/introspect.js
 
       # Mount the node modules of this package with the .cache directory mounted into a volume.
       # - ./packages/graphql-schema/node_modules:/app/packages/graphql-schema/node_modules:delegated
@@ -134,6 +138,7 @@ services:
       - ./packages/graphql-server/tslint.json:/app/packages/graphql-server/tslint.json
       - ./packages/graphql-server/jest.config.js:/app/packages/graphql-server/jest.config.js
       - ./packages/graphql-server/backpack.config.js:/app/packages/graphql-server/backpack.config.js
+      - ./packages/graphql-server/babel.config.js:/app/packages/graphql-server/babel.config.js
       - ./packages/graphql-server/.babelrc:/app/packages/graphql-server/.babelrc
 
       # Mount the node modules of this package with the .cache directory mounted into a volume.
@@ -165,15 +170,18 @@ services:
       - *package-graphql-schema
       - *package-exchange-aggregator
       - *package-manager-components
+      - ./packages/manager-interface/server.js:/app/packages/manager-interface/server.js
       - ./packages/manager-interface/src:/app/packages/manager-interface/src
       - ./packages/manager-interface/config:/app/packages/manager-interface/config
       - ./packages/manager-interface/tests:/app/packages/manager-interface/tests
       - ./packages/manager-interface/package.json:/app/packages/manager-interface/package.json
       - ./packages/manager-interface/tsconfig.json:/app/packages/manager-interface/tsconfig.json
       - ./packages/manager-interface/tslint.json:/app/packages/manager-interface/tslint.json
-      - ./packages/manager-interface/introspect.js:/app/packages/manager-interface/introspect.js
       - ./packages/manager-interface/jest.config.js:/app/packages/manager-interface/jest.config.js
       - ./packages/manager-interface/next.config.js:/app/packages/manager-interface/next.config.js
+      - ./packages/manager-interface/next.routes.js:/app/packages/manager-interface/next.routes.js
+      - ./packages/manager-interface/babel.config.js:/app/packages/manager-interface/babel.config.js
+      - ./packages/manager-interface/postcss.config.js:/app/packages/manager-interface/postcss.config.js
       - ./packages/manager-interface/.babelrc:/app/packages/manager-interface/.babelrc
 
       # Mount the node modules of this package with the .cache directory mounted into a volume.
@@ -188,6 +196,7 @@ services:
     build:
       context: .
       dockerfile: ./packages/manager-components/Dockerfile
+      target: development
     volumes:
       - *workspace-package
       - *workspace-yarn-lock

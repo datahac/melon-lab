@@ -1,13 +1,6 @@
 # Ignore as many files as possible. This keeps the build context small.
 *
 
-!packages/exchange-aggregator/Dockerfile
-!packages/graphql-schema/Dockerfile
-!packages/graphql-server/Dockerfile
-!packages/manager-components/Dockerfile
-!packages/manager-interface/Dockerfile
-!packages/melon.js/Dockerfile
-
 # White-list packages.
 !packages/exchange-aggregator/package.json
 !packages/graphql-schema/package.json

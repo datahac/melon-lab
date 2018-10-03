@@ -29,7 +29,7 @@ COPY --from=build /app/packages/manager-interface/build build
 COPY --from=build /app/packages/manager-interface/src/static src/static
 
 COPY .env.defaults /app/
-COPY packages/manager-interface/package.json packages/manager-interface/server.js packages/manager-interface/config ./
+COPY packages/manager-interface/package.json packages/manager-interface/server.js ./
 COPY packages/manager-interface/next.config.dist.js next.config.js
 
 CMD ["yarn", "start"]
