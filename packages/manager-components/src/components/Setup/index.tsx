@@ -10,7 +10,7 @@ import styles from './styles.css';
 
 interface FormValues {
   name: string;
-  signature: string;
+  signed: boolean;
 }
 
 export interface SetupProps {
@@ -29,8 +29,7 @@ export interface SetupProps {
   networkId?: string;
   touched?: any;
   values: FormValues;
-  onSign: () => void;
-  signature?: string;
+  setFieldValue: (name, value) => void;
 }
 
 export const Setup: StatelessComponent<SetupProps> = ({
@@ -45,12 +44,11 @@ export const Setup: StatelessComponent<SetupProps> = ({
   networkId,
   touched,
   values,
-  onSign,
-  signature
+  setFieldValue,
 }) => {
   const onClickAccept = async e => {
     e.preventDefault();
-    return onSign();
+    return setFieldValue('signed', true);
   };
 
   return (
@@ -59,11 +57,9 @@ export const Setup: StatelessComponent<SetupProps> = ({
       <h3>Setup your fund</h3>
       {loading && <p>Deploying your fund to the Ethereum blockchain</p>}
 
-      {JSON.stringify(signature)}
-
       <Modal
         title="Terms and Conditions"
-        isOpen={!signature}
+        isOpen={!values.signed}
         primaryInteraction="Accept"
         interactionHandler={onClickAccept}
       >

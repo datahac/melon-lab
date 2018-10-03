@@ -172,12 +172,6 @@ type Query {
   wallet: Wallet
 }
 
-input SignatureInput {
-  r: String!
-  s: String!
-  v: Int!
-}
-
 type Mutation {
   cancelOpenOrder(
     orderId: String!
@@ -185,8 +179,7 @@ type Mutation {
     makerAssetSymbol: String!
     takerAssetSymbol: String!
   ): [Order]
-  createFund(name: String!, signature: SignatureInput!): Fund
-  sign(privateKey: String!): Signature
+  createFund(name: String!, signed: Boolean!, privateKey: String!): Fund
   deleteWallet: Boolean!
   decryptWallet(wallet: String!, password: String!): Wallet
   restoreWallet(mnemonic: String!, password: String!): Wallet

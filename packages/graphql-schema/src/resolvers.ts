@@ -176,7 +176,6 @@ export default {
   Mutation: {
     cancelOpenOrder: require('./resolvers/Mutation/cancelOpenOrder').default,
     createFund: require('./resolvers/Mutation/createFund').default,
-    sign: require('./resolvers/Mutation/sign').default,
     decryptWallet: require('./resolvers/Mutation/decryptWallet').default,
     restoreWallet: require('./resolvers/Mutation/restoreWallet').default,
     deleteWallet: () => {

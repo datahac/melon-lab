@@ -4,6 +4,7 @@ import Setup from './index';
 
 const initialValues = {
   name: '',
+  signed: false,
 };
 
 const withFormValidation = withFormik({

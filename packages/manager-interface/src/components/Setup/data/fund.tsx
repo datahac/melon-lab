@@ -2,8 +2,8 @@ import { Mutation } from '~/apollo';
 import gql from 'graphql-tag';
 
 const mutation = gql`
-  mutation createFund($name: String!, $signature: SignatureInput!) {
-    createFund(name: $name, signature: $signature) {
+  mutation createFund($name: String!, $signed: Boolean!, $privateKey: String!) {
+    createFund(name: $name, signed: $signed, privateKey: $privateKey) {
       name
     }
   }
