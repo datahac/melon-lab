@@ -1,5 +1,11 @@
 import gql from 'graphql-tag';
-import { Mutation } from '~/apollo';
+import { Mutation, Query } from '~/apollo';
+
+const query = gql`
+  query GetMnemonic {
+    mnemonic
+  }
+`;
 
 const mutation = gql`
   mutation restoreWallet($mnemonic: String!, $password: String!) {
@@ -18,6 +24,12 @@ const cacheQuery = gql`
   }
 `;
 
+const WalletQuery = ({ children }) => (
+  <Query query={query} ssr={false} fetchPolicy="network-only">
+    {children}
+  </Query>
+);
+
 const WalletMutation = ({ onCompleted, children }) => (
   <Mutation
     mutation={mutation}
@@ -33,4 +45,4 @@ const WalletMutation = ({ onCompleted, children }) => (
   </Mutation>
 );
 
-export default WalletMutation;
+export { WalletQuery, WalletMutation };

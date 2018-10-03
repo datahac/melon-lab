@@ -11,6 +11,7 @@ export default {
   Query: {
     openOrders: require('./resolvers/Query/openOrders').default,
     recentTrades: require('./resolvers/Query/recentTrades').default,
+    mnemonic: require('./resolvers/Query/mnemonic').default,
     totalFunds: async (parent, _, { loaders }) => {
       const ranking = await loaders.fundRankings();
       return (ranking && ranking.length) || 0;

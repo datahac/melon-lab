@@ -161,6 +161,7 @@ type Query {
   network: String!
   provider: String!
   block: String
+  mnemonic: String
   balance(token: TokenEnum!, address: String!): String
   price(symbol: Symbol!): String
   fund(address: String!): Fund

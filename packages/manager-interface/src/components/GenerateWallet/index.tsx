@@ -1,12 +1,7 @@
 import GenerateWallet from '~/components/GenerateWallet/container';
-import { compose, defaultProps } from 'recompose';
+import { compose } from 'recompose';
 import Router from 'next/router';
-import generateMnemonic from '~/utils/generateMnemonic';
-import WalletMutation from './data/wallet';
-
-const withGenerateWalletProps = defaultProps({
-  mnenomic: generateMnemonic(),
-});
+import { WalletQuery, WalletMutation } from './data/wallet';
 
 const redirect = () =>
   Router.replace({
@@ -14,22 +9,23 @@ const redirect = () =>
   });
 
 const withGenerateWallet = BaseComponent => baseProps => (
-  <WalletMutation onCompleted={redirect}>
-    {(restoreWallet, walletProps) => (
-      <BaseComponent
-        mnemonic={baseProps.mnenomic}
-        onSubmit={values =>
-          restoreWallet({
-            variables: { ...values },
-          })
-        }
-        loading={walletProps.loading}
-      />
+  <WalletQuery>
+    {walletProps => (
+      <WalletMutation onCompleted={redirect}>
+        {(restoreWallet, restoreWalletProps) => (
+          <BaseComponent
+            mnemonic={walletProps.data && walletProps.data.mnemonic}
+            onSubmit={values =>
+              restoreWallet({
+                variables: { ...values },
+              })
+            }
+            loading={restoreWalletProps.loading || walletProps.loading}
+          />
+        )}
+      </WalletMutation>
     )}
-  </WalletMutation>
+  </WalletQuery>
 );
 
-export default compose(
-  withGenerateWalletProps,
-  withGenerateWallet,
-)(GenerateWallet);
+export default compose(withGenerateWallet)(GenerateWallet);
