@@ -131,15 +131,6 @@ export const Account: StatelessComponent<AccountProps> = ({
                     </strong>{' '}
                     after performing one of the below actions.
                   </p>
-                  <p>
-                    If you do not wish to continue,{' '}
-                    <Link href="/">
-                      <a href="/">
-                        click here to go back to your fund&#39;s page
-                      </a>
-                    </Link>
-                    .
-                  </p>
                 </Fragment>
               )}
             </Fragment>
