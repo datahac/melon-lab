@@ -36,6 +36,7 @@
 !packages/manager-interface/src/
 !packages/manager-interface/config/
 !packages/manager-interface/.babelrc
+!packages/manager-interface/server.js
 !packages/manager-interface/babel.config.js
 !packages/manager-interface/postcss.config.js
 !packages/manager-interface/electron-builder.yml
