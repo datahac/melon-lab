@@ -1,14 +1,14 @@
-.account {
+.wallet {
   max-width: 400px;
   margin: 0 auto var(--space-xl) auto;
 }
 
-.account__loading {
+.wallet__loading {
   margin: var(--space-s) auto;
   text-align: center;
 }
 
-.account__wallet {
+.wallet__wallet {
   background-color: var(--color-border);
   padding: var(--space-xxs) var(--space-m);
 }

@@ -15,15 +15,13 @@ async function createFund(parent, args, context) {
   const signature = await signTermsAndConditions(environment);
 
   let exchangeNames = [];
-  if (true) exchangeNames.push('MatchingMarket');
-  if (true) exchangeNames.push('ZeroExExchange');
-  if (true) exchangeNames.push('KyberNetworkProxy');
 
-  console.log(args.name, signature, exchangeNames, environment.track)
-
-  const fund = await setupFund(args.name, signature, exchangeNames, environment.track);
-
-  console.log(fund)
+  const fund = await setupFund(
+    args.name,
+    signature,
+    exchangeNames,
+    environment.track,
+  );
 
   return fund;
 }

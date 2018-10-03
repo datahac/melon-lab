@@ -7,7 +7,7 @@ import Link from '~/link';
 
 import styles from './styles.css';
 
-export interface AccountProps {
+export interface WalletProps {
   associatedFund?: string;
   currentAddress?: string;
   deleteWallet: () => void;
@@ -18,7 +18,7 @@ export interface AccountProps {
   loading?: boolean;
 }
 
-export const Account: StatelessComponent<AccountProps> = ({
+export const Wallet: StatelessComponent<WalletProps> = ({
   associatedFund,
   currentAddress,
   deleteWallet,
@@ -28,10 +28,11 @@ export const Account: StatelessComponent<AccountProps> = ({
   hasWallet,
   loading,
 }) => {
+  console.log(networkId);
   const isDanger = currentAddress ? 'danger' : 'secondary';
 
   return (
-    <div className="account">
+    <div className="wallet">
       <style jsx>{styles}</style>
       <h3>Your Wallet</h3>
       {loading ? (
@@ -40,7 +41,7 @@ export const Account: StatelessComponent<AccountProps> = ({
         <Fragment>
           {currentAddress ? (
             <Fragment>
-              <div className="account__wallet">
+              <div className="wallet__wallet">
                 <p>
                   Your ethereum address. Use this for white listing on{' '}
                   <a href="https://ico.bitcoinsuisse.ch/" target="_blank">
@@ -50,7 +51,7 @@ export const Account: StatelessComponent<AccountProps> = ({
                   <code>
                     <a
                       href={`https://${
-                        networkId === '42' ? 'kovan.' : ''
+                        networkId === 'KOVAN' ? 'kovan.' : ''
                       }etherscan.io/address/${currentAddress}`}
                       target="_blank"
                     >
@@ -66,7 +67,7 @@ export const Account: StatelessComponent<AccountProps> = ({
                   <strong>
                     <a
                       href={`https://${
-                        networkId === '42' ? 'kovan.' : ''
+                        networkId === 'KOVAN' ? 'kovan.' : ''
                       }etherscan.io/address/${associatedFund}`}
                       target="_blank"
                     >
@@ -200,4 +201,4 @@ export const Account: StatelessComponent<AccountProps> = ({
   );
 };
 
-export default Account;
+export default Wallet;

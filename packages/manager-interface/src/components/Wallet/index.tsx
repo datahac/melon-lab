@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import Account from '@melonproject/manager-components/components/Account';
+import Wallet from '@melonproject/manager-components/components/Wallet';
 import { WalletQuery, WalletMutation } from './data/wallet';
 
 const hasWallet = R.pathSatisfies((value) => !!value, ['data', 'wallet', 'encryptedWallet']);
@@ -23,4 +23,4 @@ const withSetup = BaseComponent => baseProps => (
     )}
   </WalletQuery>
 );
-export default withSetup(Account);
+export default withSetup(Wallet);

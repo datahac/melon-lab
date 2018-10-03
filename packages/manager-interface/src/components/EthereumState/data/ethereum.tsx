@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import gql from 'graphql-tag';
 
 const accountQuery = gql`
-  query AccountQuery {
+  query WalletQuery {
     wallet {
       encryptedWallet @client
       accountAddress @client
