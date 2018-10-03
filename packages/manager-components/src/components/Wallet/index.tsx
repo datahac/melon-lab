@@ -28,7 +28,6 @@ export const Wallet: StatelessComponent<WalletProps> = ({
   hasWallet,
   loading,
 }) => {
-  console.log(networkId);
   const isDanger = currentAddress ? 'danger' : 'secondary';
 
   return (
