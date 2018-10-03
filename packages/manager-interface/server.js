@@ -18,7 +18,7 @@ const handle = app.getRequestHandler();
 // Create a HTTP v2 capable server in production.
 const createServer = (server) => {
   if (process.env.NODE_ENV === 'production') {
-    if (process.env.SSL_KEY_FILE && process.env.SSL_CERT_FILE) {
+    if (process.env.CERTIFICATE_KEY_FILE && process.env.CERTIFICATE_CRT_FILE) {
       const options = {
         key: fs.readFileSync(process.env.CERTIFICATE_KEY_FILE),
         cert: fs.readFileSync(process.env.CERTIFICATE_CRT_FILE),
