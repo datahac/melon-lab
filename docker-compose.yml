@@ -236,6 +236,7 @@ services:
       # - *workspace-node-modules-cache
       - ./packages/manager-components/src:/app/packages/manager-components/src
       - ./packages/manager-components/config:/app/packages/manager-components/config
+      - ./packages/manager-components/public:/app/packages/manager-components/public
       - ./packages/manager-components/postcss.config.js:/app/packages/manager-components/postcss.config.js
       - ./packages/manager-components/jest.config.js:/app/packages/manager-components/jest.config.js
       - ./packages/manager-components/package.json:/app/packages/manager-components/package.json
