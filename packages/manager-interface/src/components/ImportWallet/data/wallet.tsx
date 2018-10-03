@@ -2,29 +2,36 @@ import gql from 'graphql-tag';
 import { Mutation } from '~/apollo';
 
 const mutation = gql`
-  mutation LoadWallet($file: String!, $password: String!) {
-    loadWallet(file: $file, password: $password) {
+  mutation DecryptWallet($file: String!, $password: String!) {
+    decryptWallet(wallet: $file, password: $password) {
+      encryptedWallet
       accountAddress
       privateKey
-      encryptedWallet
     }
   }
 `;
 
 const cacheQuery = gql`
   query GetWallet {
-    accountAddress @client
-    privateKey @client
+    wallet {
+      encryptedWallet @client
+      accountAddress @client
+      privateKey @client
+    }
   }
 `;
 
 const WalletMutation = ({ onCompleted, children }) => (
   <Mutation
     mutation={mutation}
-    update={(cache, { data: { loadWallet } }) => {
+    update={(cache, { data: { decryptWallet } }) => {
+      localStorage.setItem('wallet:melon:fund', decryptWallet.encryptedWallet);
+
       cache.writeQuery({
         query: cacheQuery,
-        data: loadWallet,
+        data: {
+          wallet: decryptWallet,
+        },
       });
     }}
     onCompleted={onCompleted}

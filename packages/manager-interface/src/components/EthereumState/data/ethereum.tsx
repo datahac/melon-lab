@@ -4,8 +4,11 @@ import gql from 'graphql-tag';
 
 const accountQuery = gql`
   query AccountQuery {
-    accountAddress @client
-    privateKey @client
+    wallet {
+      encryptedWallet @client
+      accountAddress @client
+      privateKey @client
+    }
   }
 `;
 
@@ -31,8 +34,8 @@ const connectionQuery = gql`
 `;
 
 const resultData = R.propOr({}, 'data');
-const accountAddress = R.path(['data', 'accountAddress']);
-const privateKey = R.path(['data', 'privateKey']);
+const accountAddress = R.path(['data', 'wallet', 'accountAddress']);
+const privateKey = R.path(['data', 'wallet', 'privateKey']);
 
 const EthereumQuery = ({ children }) => (
   <Query query={accountQuery} ssr={false}>

@@ -5,12 +5,10 @@ import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemo
 import { withClientState } from 'apollo-link-state';
 import ApolloClient from 'apollo-client';
 import { split, from } from 'apollo-link';
-import { setContext } from 'apollo-link-context';
 import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import withApollo from 'next-with-apollo';
-import { defaults, resolvers, withContext } from './state';
 import getConfig from 'next/config';
 
 const { publicRuntimeConfig: config, serverRuntimeConfig: serverConfig } = getConfig();
@@ -30,15 +28,29 @@ const createLink = (options, cache) => {
     headers: options.headers,
   });
 
-  const clientContext = setContext(withContext(cache));
   const stateLink = withClientState({
     cache,
-    resolvers,
-    defaults,
+    resolvers: {
+      Mutation: {
+        deleteWallet: () => {
+          return true;
+        },
+      },
+      Wallet: {
+        encryptedWallet: () => {
+          return process.browser && localStorage.getItem('wallet:melon:fund');
+        },
+        accountAddress: () => {
+          return null;
+        },
+        privateKey: () => {
+          return null;
+        },
+      },
+    },
   });
 
-  const stateLinkWithContext = from([clientContext, stateLink]);
-  const httpAndStateLink = from([stateLinkWithContext, httpLink]);
+  const httpAndStateLink = from([stateLink, httpLink]);
 
   // Do not use the websocket link on the server.
   if (!process.browser) {

@@ -155,7 +155,6 @@ type Config {
 }
 
 type Query {
-  wallet: Wallet
   config: Config!
   status: Status!
   network: String!
@@ -170,6 +169,7 @@ type Query {
   totalFunds: Int!
   openOrders(address: String!): [Order]
   recentTrades(baseTokenSymbol: String!, quoteTokenSymbol: String!): [Trade]
+  wallet: Wallet
 }
 
 input SignatureInput {
@@ -187,7 +187,8 @@ type Mutation {
   ): [Order]
   createFund(name: String!, signature: SignatureInput!): Fund
   sign(privateKey: String!): Signature
-  loadWallet(file: String!, password: String!): Wallet
+  deleteWallet: Boolean!
+  decryptWallet(wallet: String!, password: String!): Wallet
   restoreWallet(mnemonic: String!, password: String!): Wallet
 }
 

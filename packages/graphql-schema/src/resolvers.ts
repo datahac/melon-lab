@@ -12,13 +12,13 @@ export default {
     openOrders: require('./resolvers/Query/openOrders').default,
     recentTrades: require('./resolvers/Query/recentTrades').default,
     mnemonic: require('./resolvers/Query/mnemonic').default,
-    totalFunds: async (parent, _, { loaders }) => {
+    totalFunds: async (_, __, { loaders }) => {
       const ranking = await loaders.fundRankings();
       return (ranking && ranking.length) || 0;
     },
-    config: (_, __, { config }) => {
+    config: () => {
       // We need to return something other than null.
-      return '';
+      return {};
     },
     status: (_, __, { loaders }) => {
       return {
@@ -27,11 +27,9 @@ export default {
         blockOverdue: false,
       };
     },
-    wallet: (_, __, { loaders }) => {
-      return {
-        accountAdress: undefined,
-        privateKey: undefined,
-      };
+    wallet: () => {
+      // This needs to be implemented in the concrete client.
+      return {};
     },
     provider: (_, __, { provider }) => {
       return provider;
@@ -179,8 +177,12 @@ export default {
     cancelOpenOrder: require('./resolvers/Mutation/cancelOpenOrder').default,
     createFund: require('./resolvers/Mutation/createFund').default,
     sign: require('./resolvers/Mutation/sign').default,
-    loadWallet: require('./resolvers/Mutation/loadWallet').default,
+    decryptWallet: require('./resolvers/Mutation/decryptWallet').default,
     restoreWallet: require('./resolvers/Mutation/restoreWallet').default,
+    deleteWallet: () => {
+      // This needs to be implement in the concrete client implementation.
+      return true;
+    },
   },
   Subscription,
   Order,

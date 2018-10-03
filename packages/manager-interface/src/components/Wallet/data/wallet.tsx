@@ -3,8 +3,11 @@ import gql from 'graphql-tag';
 
 const query = gql`
   query GetWallet {
-    accountAddress @client
-    privateKey @client
+    wallet {
+      encryptedWallet @client
+      accountAddress @client
+      privateKey @client
+    }
   }
 `;
 
@@ -24,9 +27,17 @@ const WalletMutation = ({ children }) => (
   <Mutation
     mutation={mutation}
     update={(cache, { data: { deleteWallet } }) => {
+      if (!deleteWallet) {
+        throw new Error('Failed to delete wallet.');
+      }
+
+      localStorage.removeItem('wallet:melon:fund');
+    
       cache.writeQuery({
         query,
-        data: { ...deleteWallet },
+        data: {
+          wallet: null,
+        },
       });
     }}
   >

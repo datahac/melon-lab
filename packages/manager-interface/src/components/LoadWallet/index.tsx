@@ -20,7 +20,7 @@ const withLoadWallet = BaseComponent => baseProps => (
             onSubmit={values =>
               loadWallet({
                 variables: {
-                  file: props.data.storedWallet,
+                  file: props.data && props.data.wallet && props.data.wallet.encryptedWallet,
                   password: values.password,
                 },
               }).catch(error => baseProps.setError(error.message))
