@@ -40,24 +40,26 @@ export const Account: StatelessComponent<AccountProps> = ({
         <Fragment>
           {currentAddress ? (
             <Fragment>
-              <p>
-                Your ethereum address. Use this for white listing on{' '}
-                <a href="https://ico.bitcoinsuisse.ch/" target="_blank">
-                  ico.bitcoinsuisse.ch
-                </a>
-                :
-                <strong>
-                  <a
-                    href={`https://${
-                      networkId === '42' ? 'kovan.' : ''
-                    }etherscan.io/address/${currentAddress}`}
-                    target="_blank"
-                  >
-                    {' '}
-                    {currentAddress}{' '}
+              <div className="account__wallet">
+                <p>
+                  Your ethereum address. Use this for white listing on{' '}
+                  <a href="https://ico.bitcoinsuisse.ch/" target="_blank">
+                    ico.bitcoinsuisse.ch
                   </a>
-                </strong>
-              </p>
+                  :<br />
+                  <code>
+                    <a
+                      href={`https://${
+                        networkId === '42' ? 'kovan.' : ''
+                      }etherscan.io/address/${currentAddress}`}
+                      target="_blank"
+                    >
+                      {currentAddress}
+                    </a>
+                  </code>
+                </p>
+              </div>
+              <hr />
               {associatedFund && (
                 <p>
                   Associated fund address:{' '}
@@ -113,7 +115,7 @@ export const Account: StatelessComponent<AccountProps> = ({
                   </Link>
                 </p>
               )}
-              <br />
+              <hr />
               {!isCompetition && (
                 <Fragment>
                   <p>

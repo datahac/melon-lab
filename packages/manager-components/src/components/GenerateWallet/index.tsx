@@ -37,7 +37,7 @@ export const GenerateWallet: StatelessComponent<GenerateWalletProps> = ({
 }) => (
   <div className="generate-wallet">
     <style jsx>{styles}</style>
-    <h3>Generate Account</h3>
+    <h3>Create Wallet</h3>
     {loading ? (
       <Spinner icon size="small" text="Generating Wallet..." />
     ) : (
@@ -90,7 +90,7 @@ export const GenerateWallet: StatelessComponent<GenerateWalletProps> = ({
               />
             </div>
             <Button type="submit" style="secondary">
-              Generate
+              Create
             </Button>
           </Form>
         )}

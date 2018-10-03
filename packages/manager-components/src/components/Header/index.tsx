@@ -50,7 +50,7 @@ export const Header: StatelessComponent<HeaderProps> = ({
         <div className="header__account-info">
           <span className="header__account-address">
             <Link href="/wallet">
-              <a href="/wallet">{address}</a>
+              <a href="/wallet">Your Wallet</a>
             </Link>
           </span>
           {balances &&

@@ -7,3 +7,8 @@
   margin: var(--space-s) auto;
   text-align: center;
 }
+
+.account__wallet {
+  background-color: var(--color-border);
+  padding: var(--space-xxs) var(--space-m);
+}
