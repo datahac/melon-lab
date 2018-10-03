@@ -4,16 +4,20 @@ require('dotenv').config({
 
 const path = require('path');
 
+const isElectron = !!JSON.parse(process.env.ELECTRON || 'false');
+
 module.exports = {
   distDir: path.join('..', 'build'),
-  publicRuntimeConfig: {
+  publicRuntimeConfig: Object.assign({
+    isElectron,
+  }, isElectron ? {} : {
     graphqlRemoteWs: process.env.GRAPHQL_REMOTE_WS,
     graphqlRemoteHttp: process.env.GRAPHQL_REMOTE_HTTP,
-    jsonRpcEndpoint: process.env.JSON_RPC_ENDPOINT,
-    track: process.env.TRACK,
-  },
-  serverRuntimeConfig: {
+  }),
+  serverRuntimeConfig: Object.assign({
+    isElectron,
+  }, isElectron ? {} : {
     graphqlLocalWs: process.env.GRAPHQL_LOCAL_WS,
     graphqlLocalHttp: process.env.GRAPHQL_LOCAL_HTTP,
-  },
+  }),
 };

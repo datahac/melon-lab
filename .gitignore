@@ -15,4 +15,8 @@ coverage/
 *.log*
 .vscode
 
+# Parity data
+.parity
+
+# Editor files.
 .DS_Store

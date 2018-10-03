@@ -25,6 +25,23 @@ volumes:
   node_modules_cache:
 
 services:
+  parity:
+    image: parity/parity:stable
+    command:
+      - --jsonrpc-interface=all
+      - --jsonrpc-cors=all
+      - --chain=kovan
+      - --base-path=/data
+    volumes:
+      - ./.parity:/data
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+      - "30303:30303"
+      - "30303:30303/udp"
+    networks:
+      - melonproject
+
   melon-js:
     build:
       context: .
@@ -112,6 +129,8 @@ services:
       # - node_modules_cache:/app/packages/graphql-schema/node_modules/.cache
 
   graphql-server:
+    depends_on:
+      - parity
     build:
       context: .
       dockerfile: ./packages/graphql-server/Dockerfile
@@ -148,8 +167,12 @@ services:
       - "3030:3030"
     networks:
       - melonproject
+    environment:
+      JSON_RPC_ENDPOINT: http://parity:8545
 
   manager-interface:
+    depends_on:
+      - graphql-server
     build:
       context: .
       dockerfile: ./packages/manager-interface/Dockerfile
@@ -179,6 +202,7 @@ services:
       - ./packages/manager-interface/tslint.json:/app/packages/manager-interface/tslint.json
       - ./packages/manager-interface/jest.config.js:/app/packages/manager-interface/jest.config.js
       - ./packages/manager-interface/next.config.js:/app/packages/manager-interface/next.config.js
+      - ./packages/manager-interface/next.config.dist.js:/app/packages/manager-interface/next.config.dist.js
       - ./packages/manager-interface/next.routes.js:/app/packages/manager-interface/next.routes.js
       - ./packages/manager-interface/babel.config.js:/app/packages/manager-interface/babel.config.js
       - ./packages/manager-interface/postcss.config.js:/app/packages/manager-interface/postcss.config.js
@@ -191,6 +215,9 @@ services:
       - "3000:3000"
     networks:
       - melonproject
+    environment:
+      GRAPHQL_LOCAL_WS: ws://graphql-server:3030
+      GRAPHQL_LOCAL_HTTP: http://graphql-server:3030
 
   manager-components:
     build:

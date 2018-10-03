@@ -22,27 +22,16 @@ const managerComponents = path.resolve(path.dirname(require.resolve('@melonproje
 const managerInterface = path.resolve(path.dirname(require.resolve('@melonproject/manager-interface/package.json')));
 
 const isElectron = !!JSON.parse(process.env.ELECTRON || 'false');
+const distConfig = require('./next.config.dist.js');
 
-module.exports = withComposedConfig({
+module.exports = withComposedConfig(Object.assign({}, distConfig, {
   linkedDependencies: [
     ['@melonproject/melon.js', 'lib'],
     ['@melonproject/graphql-schema', 'src'],
     ['@melonproject/manager-components', 'src'],
     ['@melonproject/exchange-aggregator', 'src'],
   ],
-  distDir: path.join('..', 'build'),
   exportPathMap: () => require('./next.routes.js'),
-  publicRuntimeConfig: {
-    graphqlRemoteWs: process.env.GRAPHQL_REMOTE_WS,
-    graphqlRemoteHttp: process.env.GRAPHQL_REMOTE_HTTP,
-    jsonRpcEndpoint: process.env.JSON_RPC_ENDPOINT,
-    track: process.env.TRACK,
-    isElectron: isElectron,
-  },
-  serverRuntimeConfig: {
-    graphqlLocalWs: process.env.GRAPHQL_LOCAL_WS,
-    graphqlLocalHttp: process.env.GRAPHQL_LOCAL_HTTP,
-  },
   webpack: (config, options) => {
     config.resolve.alias = Object.assign({}, config.resolve.alias || {}, {
       // Override the mock link component used in the manager components.
@@ -120,4 +109,4 @@ module.exports = withComposedConfig({
 
     return config;
   },
-});
+}));
