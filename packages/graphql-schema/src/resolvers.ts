@@ -178,6 +178,7 @@ export default {
   Mutation: {
     cancelOpenOrder: require('./resolvers/Mutation/cancelOpenOrder').default,
     createFund: require('./resolvers/Mutation/createFund').default,
+    sign: require('./resolvers/Mutation/sign').default,
     loadWallet: require('./resolvers/Mutation/loadWallet').default,
     restoreWallet: require('./resolvers/Mutation/restoreWallet').default,
   },

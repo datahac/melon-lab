@@ -1,14 +1,12 @@
 import React, { Fragment, StatelessComponent } from 'react';
-import Button from '~/blocks/Button';
 
 export interface TermsAndConditionsProps {
   networkId?: string;
-  sign: () => void;
 }
 
 export const TermsAndConditions: StatelessComponent<
   TermsAndConditionsProps
-> = ({ networkId, sign }) => (
+> = ({ networkId }) => (
   <div className="conditions">
     {networkId === '1' ? (
       <Fragment>
@@ -162,7 +160,6 @@ export const TermsAndConditions: StatelessComponent<
       </Fragment>
     ) : (
       <Fragment>
-        <h4>TERMS AND CONDITIONS</h4>
         <p>
           The following terms and conditions have been deployed to IPFS and
           resolve to the following hash:{' '}
@@ -222,9 +219,6 @@ export const TermsAndConditions: StatelessComponent<
         </p>
       </Fragment>
     )}
-    <Button style="secondary" onClick={sign}>
-      I understand and agree to sign the above terms and conditions.
-    </Button>
   </div>
 );
 

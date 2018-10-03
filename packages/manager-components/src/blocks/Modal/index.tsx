@@ -76,6 +76,7 @@ const Modal: StatelessComponent<ModalProps> = ({
     overlayClassName="modal__overlay"
     onAfterOpen={onAfterOpen}
     isOpen={isOpen}
+    ariaHideApp={false}
   >
     <style jsx>{styles}</style>
     <div className="modal__title">{title}</div>

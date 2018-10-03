@@ -172,6 +172,12 @@ type Query {
   recentTrades(baseTokenSymbol: String!, quoteTokenSymbol: String!): [Trade]
 }
 
+input SignatureInput {
+  r: String!
+  s: String!
+  v: Int!
+}
+
 type Mutation {
   cancelOpenOrder(
     orderId: String!
@@ -179,7 +185,8 @@ type Mutation {
     makerAssetSymbol: String!
     takerAssetSymbol: String!
   ): [Order]
-  createFund(name: String!): Fund
+  createFund(name: String!, signature: SignatureInput!): Fund
+  sign(privateKey: String!): Signature
   loadWallet(file: String!, password: String!): Wallet
   restoreWallet(mnemonic: String!, password: String!): Wallet
 }
