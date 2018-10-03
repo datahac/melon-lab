@@ -2,10 +2,9 @@ import { Query, Mutation } from '~/apollo';
 import gql from 'graphql-tag';
 
 const query = gql`
-  query GetAccountAddress {
+  query GetWallet {
     accountAddress @client
     privateKey @client
-    storedWallet @client
   }
 `;
 

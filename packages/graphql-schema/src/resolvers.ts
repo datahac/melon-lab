@@ -26,6 +26,12 @@ export default {
         blockOverdue: false,
       };
     },
+    wallet: (_, __, { loaders }) => {
+      return {
+        accountAdress: undefined,
+        privateKey: undefined,
+      };
+    },
     provider: (_, __, { provider }) => {
       return provider;
     },

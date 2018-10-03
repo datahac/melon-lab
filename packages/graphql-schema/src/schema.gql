@@ -24,7 +24,7 @@ enum ProviderEnum {
 }
 
 type Wallet {
-  address: String
+  accountAddress: String
   privateKey: String
   encryptedWallet: String
 }
@@ -155,6 +155,7 @@ type Config {
 }
 
 type Query {
+  wallet: Wallet
   config: Config!
   status: Status!
   network: String!

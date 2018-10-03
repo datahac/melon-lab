@@ -4,7 +4,7 @@ import { Mutation } from '~/apollo';
 const mutation = gql`
   mutation restoreWallet($mnemonic: String!, $password: String!) {
     restoreWallet(mnemonic: $mnemonic, password: $password) {
-      address
+      accountAddress
       privateKey
       encryptedWallet
     }
@@ -22,13 +22,9 @@ const WalletMutation = ({ onCompleted, children }) => (
   <Mutation
     mutation={mutation}
     update={(cache, { data: { restoreWallet } }) => {
-      localStorage.setItem('wallet:melon.fund', restoreWallet.encryptedWallet);
       cache.writeQuery({
         query: cacheQuery,
-        data: {
-          accountAddress: restoreWallet.address,
-          privateKey: restoreWallet.privateKey,
-        },
+        data: restoreWallet,
       });
     }}
     onCompleted={onCompleted}

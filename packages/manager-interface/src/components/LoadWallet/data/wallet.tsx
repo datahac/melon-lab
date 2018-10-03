@@ -2,9 +2,9 @@ import gql from 'graphql-tag';
 import { Mutation, Query } from '~/apollo';
 
 const mutation = gql`
-  mutation loadWallet($file: String!, $password: String!) {
+  mutation LoadWallet($file: String!, $password: String!) {
     loadWallet(file: $file, password: $password) {
-      address
+      accountAddress
       privateKey
       encryptedWallet
     }
@@ -34,13 +34,9 @@ const WalletMutation = ({ onCompleted, children }) => (
   <Mutation
     mutation={mutation}
     update={(cache, { data: { loadWallet } }) => {
-      localStorage.setItem('wallet:melon.fund', loadWallet.encryptedWallet);
       cache.writeQuery({
         query: cacheQuery,
-        data: {
-          accountAddress: loadWallet.address,
-          privateKey: loadWallet.privateKey,
-        },
+        data: loadWallet,
       });
     }}
     onCompleted={onCompleted}
