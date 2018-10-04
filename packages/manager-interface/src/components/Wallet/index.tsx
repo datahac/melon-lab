@@ -3,7 +3,11 @@ import * as R from 'ramda';
 import Wallet from '@melonproject/manager-components/components/Wallet';
 import { WalletQuery, WalletMutation } from './data/wallet';
 
-const hasWallet = R.pathSatisfies((value) => !!value, ['data', 'wallet', 'encryptedWallet']);
+const hasWallet = R.pathSatisfies(value => !!value, [
+  'data',
+  'wallet',
+  'encryptedWallet',
+]);
 
 const withSetup = BaseComponent => baseProps => (
   <WalletQuery>
@@ -11,6 +15,7 @@ const withSetup = BaseComponent => baseProps => (
       <WalletMutation>
         {deleteWallet => (
           <BaseComponent
+            associatedFund={baseProps.usersFund}
             deleteWallet={deleteWallet}
             loading={walletProps.loading}
             hasAccount={baseProps.authenticated}

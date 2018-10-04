@@ -72,7 +72,7 @@ export const GetStarted: StatelessComponent<GetStartedProps> = ({
 
         {link && (
           <Link href={{ pathname: link.href, query: link.query }} passHref>
-            <StyledLink style="secondary" size="medium">
+            <StyledLink style="primary" size="medium">
               {link.text}
             </StyledLink>
           </Link>
