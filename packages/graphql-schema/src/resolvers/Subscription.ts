@@ -4,7 +4,9 @@ import {
 } from '@melonproject/exchange-aggregator';
 import BigNumber from 'bignumber.js';
 import * as R from 'ramda';
+import * as Rx from 'rxjs';
 import withUnsubscribe from '../utils/withUnsubscribe';
+
 const debug = require('debug')('melon-lab:graphql-schema:subscription');
 
 const filterBuyOrders = R.filter<Order>(R.propEq('type', 'buy'));
@@ -83,9 +85,45 @@ const block = {
   },
 };
 
+const balance = {
+  resolve: (block) => {
+    return block;
+  },
+  subscribe: async (parent, args, context) => {
+    const { pubsub, loaders, block$ } = context;
+
+    const getBalance = (address, token) => {
+      switch (token) {
+        case 'WETH':
+          return loaders.nativeBalanceUncached(address);
+        case 'ETH':
+          return loaders.etherBalanceUncached(address);
+        case 'MLN':
+          return loaders.melonBalanceUncached(address);
+      }
+
+      return null;
+    };
+
+    const balance$ = block$
+      .debounceTime(5000)
+      .switchMap(() => {
+        return Rx.Observable.fromPromise(getBalance(args.address, args.token));
+      })
+      .startWith(await getBalance(args.address, args.token))
+      .distinctUntilChanged(R.equals);
+
+    const channel = 'block';
+    const iterator = pubsub.asyncIterator(channel);
+    const publish = value => pubsub.publish(channel, value);
+    return withUnsubscribe(balance$, iterator, publish);
+  },
+};
+
 export { Order };
 
 export default {
   orderbook,
   block,
+  balance,
 };

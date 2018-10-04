@@ -189,6 +189,7 @@ type Mutation {
 type Subscription {
   state: Status
   block: String
+  balance(token: TokenEnum!, address: String!): String
   orderbook(
     baseTokenSymbol: Symbol!
     quoteTokenSymbol: Symbol!

@@ -169,42 +169,39 @@ export default context => {
     );
   });
 
-  const etherBalance = new DataLoader(async addresses => {
+  const etherBalanceUncached = async (address) => {
     const { config, environment } = context;
     const api = environment.api.eth;
+    const balance = await api.getBalance(address);
+    return toReadable(config, balance, config.nativeAssetSymbol);
+  };
 
-    return Promise.all(
-      addresses.map(async address => {
-        const balance = await api.getBalance(address);
-        return toReadable(config, balance, config.nativeAssetSymbol);
-      }),
-    );
+  const etherBalance = new DataLoader(async addresses => {
+    return Promise.all(addresses.map(etherBalanceUncached));
   });
+
+  const melonBalanceUncached = (address) => {
+    const { config, environment } = context;
+    return getBalance(environment, {
+      tokenSymbol: config.melonAssetSymbol,
+      ofAddress: address,
+    });
+  };
 
   const melonBalance = new DataLoader(async addresses => {
-    const { config, environment } = context;
-
-    return Promise.all(
-      addresses.map(address => {
-        return getBalance(environment, {
-          tokenSymbol: config.melonAssetSymbol,
-          ofAddress: address,
-        });
-      }),
-    );
+    return Promise.all(addresses.map(melonBalanceUncached));
   });
 
-  const nativeBalance = new DataLoader(async addresses => {
+  const nativeBalanceUncached = (address) => {
     const { config, environment } = context;
+    return getBalance(environment, {
+      tokenSymbol: config.nativeAssetSymbol,
+      ofAddress: address,
+    });
+  };
 
-    return Promise.all(
-      addresses.map(address => {
-        return getBalance(environment, {
-          tokenSymbol: config.nativeAssetSymbol,
-          ofAddress: address,
-        });
-      }),
-    );
+  const nativeBalance = new DataLoader(async addresses => {
+    return Promise.all(addresses.map(nativeBalanceUncached));
   });
 
   const currentBlock = () => {
@@ -227,8 +224,11 @@ export default context => {
     fundParticipation,
     symbolPrice,
     nativeBalance,
+    nativeBalanceUncached,
     melonBalance,
+    melonBalanceUncached,
     etherBalance,
+    etherBalanceUncached,
     currentBlock,
     usersFund,
   };
