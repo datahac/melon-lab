@@ -10,7 +10,6 @@ import styles from './styles.css';
 
 interface FormValues {
   name: string;
-  signed: boolean;
 }
 
 export interface SetupProps {
