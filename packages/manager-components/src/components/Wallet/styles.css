@@ -8,7 +8,11 @@
   text-align: center;
 }
 
-.wallet__wallet {
+.wallet__info {
   background-color: var(--color-border);
   padding: var(--space-xxs) var(--space-m);
+}
+
+.wallet__info-value {
+  font-weight: var(--font-weight-bold);
 }

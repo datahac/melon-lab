@@ -16,6 +16,10 @@ export interface WalletProps {
   hasAccount?: boolean;
   hasWallet?: boolean;
   loading?: boolean;
+  balances?: {
+    eth?: string;
+    mln?: string;
+  };
 }
 
 export const Wallet: StatelessComponent<WalletProps> = ({
@@ -27,6 +31,7 @@ export const Wallet: StatelessComponent<WalletProps> = ({
   hasAccount,
   hasWallet,
   loading,
+  balances,
 }) => {
   const isDanger = currentAddress ? 'danger' : 'secondary';
 
@@ -40,13 +45,13 @@ export const Wallet: StatelessComponent<WalletProps> = ({
         <Fragment>
           {currentAddress ? (
             <Fragment>
-              <div className="wallet__wallet">
+              <div className="wallet__info">
                 <p>
                   Your ethereum address. Use this for white listing on{' '}
                   <a href="https://ico.bitcoinsuisse.ch/" target="_blank">
                     ico.bitcoinsuisse.ch
                   </a>
-                  :<br />
+                  <br />
                   <code>
                     <a
                       href={`https://${
@@ -54,8 +59,19 @@ export const Wallet: StatelessComponent<WalletProps> = ({
                       }etherscan.io/address/${currentAddress}`}
                       target="_blank"
                     >
-                      {currentAddress}
+                      <span className="wallet__info-value">
+                        {currentAddress}
+                      </span>
                     </a>
+                  </code>
+                </p>
+                <p>
+                  ETH
+                  <br />
+                  <code>
+                    <span className="wallet__info-value">
+                      {balances && balances.eth}
+                    </span>
                   </code>
                 </p>
               </div>

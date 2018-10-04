@@ -46,7 +46,10 @@ const Layout = ({ children, noHeader = false, ...props }) => (
           network={props.network && displayNetwork(props.network)}
           message={props.message}
           address={props.account}
-          balances={props.balances}
+          balances={{
+            eth: props.eth,
+            mln: props.mln
+          }}
         />
       </div>
     )}

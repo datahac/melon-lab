@@ -16,6 +16,10 @@ const withSetup = BaseComponent => baseProps => (
         {deleteWallet => (
           <BaseComponent
             associatedFund={baseProps.usersFund}
+            balances={{
+              eth: baseProps.eth,
+              mln: baseProps.mln,
+            }}
             deleteWallet={deleteWallet}
             loading={walletProps.loading}
             hasAccount={baseProps.authenticated}
