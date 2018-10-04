@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '+/components/Layout';
 import Ranking from '+/components/Ranking';
 import GetStarted from '+/components/GetStarted';
+import { lifecycle } from 'recompose';
 
 const Page = props => (
   <Layout {...props}>
@@ -10,4 +11,10 @@ const Page = props => (
   </Layout>
 );
 
-export default Page;
+const withPageLifecycle = lifecycle({
+  componentDidMount() {
+    this.props.account && this.props.subscribeToNewBalance();
+  },
+});
+
+export default withPageLifecycle(Page);

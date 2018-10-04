@@ -6,6 +6,10 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig: config } = getConfig();
 
 class Page extends Component {
+  componentDidMount() {
+    this.props.account && this.props.subscribeToNewBalance();
+  }
+
   static async getInitialProps({ req, query }) {
     const parameters = req && req.query || query;
 

@@ -9,12 +9,7 @@ export const statusTypes = {
   GOOD: 'GOOD',
 };
 
-const getStatus = ({
-  config,
-  block,
-  network,
-  status,
-}) => {
+const getStatus = ({ config, block, network, status }) => {
   if (!block) {
     return {
       message: 'Block overdue',

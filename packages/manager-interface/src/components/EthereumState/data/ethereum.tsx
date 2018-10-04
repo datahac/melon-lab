@@ -34,6 +34,12 @@ const connectionQuery = gql`
   }
 `;
 
+const connectionSubscription = gql`
+  subscription connectionSubscription($address: String!) {
+    balance(token: ETH, address: $address)
+  }
+`;
+
 const resultData = R.propOr({}, 'data');
 const accountAddress = R.path(['data', 'wallet', 'accountAddress']);
 const privateKey = R.path(['data', 'wallet', 'privateKey']);
@@ -53,7 +59,7 @@ const EthereumQuery = ({ children }) => (
             authenticated,
           }}
         >
-          {connectionProps => {
+          {({ subscribeToMore, ...connectionProps }) => {
             const data = resultData(connectionProps);
 
             return children({
@@ -61,6 +67,21 @@ const EthereumQuery = ({ children }) => (
               account,
               privateKey: key,
               loading: accountProps.loading || connectionProps.loading,
+              subscribeToNewBalance: () => {
+                subscribeToMore({
+                  document: connectionSubscription,
+                  variables: { address: account || '' },
+                  updateQuery: (prev, { subscriptionData }) => {
+                    if (!subscriptionData.data) return prev;
+
+                    const newBalance = subscriptionData.data.balance;
+
+                    return Object.assign({}, prev, {
+                      eth: newBalance,
+                    });
+                  },
+                });
+              },
             });
           }}
         </Query>

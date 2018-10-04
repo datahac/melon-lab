@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '+/components/Layout';
 import Setup from '+/components/Setup';
 import { withRouter } from 'next/router';
+import { compose, lifecycle } from 'recompose';
 
 // const mapOnboardingStateToMainContainer = (onboardingState) => {
 //   const map = {
@@ -32,4 +33,13 @@ const Page = props => (
   </Layout>
 );
 
-export default withRouter(Page);
+const withPageLifecycle = lifecycle({
+  componentDidMount() {
+    this.props.account && this.props.subscribeToNewBalance();
+  },
+});
+
+export default compose(
+  withRouter,
+  withPageLifecycle,
+)(Page);
