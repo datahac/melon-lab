@@ -13,6 +13,10 @@ const data = {
     onlyManagerCompetitionAddress: 'foo',
   },
   onSubmit: action('onSubmit'),
+  signed: true,
+  balances: {
+    eth: 0.1
+  }
 };
 
 storiesOf('Components|Setup', module).add('Default', () => {

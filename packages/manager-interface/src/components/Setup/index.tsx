@@ -21,6 +21,11 @@ const withSetup = BaseComponent => baseProps => (
   <FundMutation>
     {createFund => (
       <BaseComponent
+        address={baseProps.account}
+        balances={{
+          eth: baseProps.eth,
+          mln: baseProps.mln,
+        }}
         onClickDecline={baseProps.onClickDecline}
         signed={baseProps.signed}
         onClickAccept={baseProps.onClickAccept}

@@ -51,7 +51,7 @@ export const Wallet: StatelessComponent<WalletProps> = ({
                   <a href="https://ico.bitcoinsuisse.ch/" target="_blank">
                     ico.bitcoinsuisse.ch
                   </a>
-                  <br />
+                  :<br />
                   <code>
                     <a
                       href={`https://${
@@ -66,7 +66,7 @@ export const Wallet: StatelessComponent<WalletProps> = ({
                   </code>
                 </p>
                 <p>
-                  ETH
+                  ETH:
                   <br />
                   <code>
                     <span className="wallet__info-value">
