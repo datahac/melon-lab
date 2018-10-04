@@ -60,8 +60,11 @@ export const Setup: StatelessComponent<SetupProps> = ({
       <Modal
         title="Terms and Conditions"
         isOpen={!values.signed}
-        primaryInteraction="Accept"
-        interactionHandler={onClickAccept}
+        PrimaryAction={Button}
+        PrimaryActionProps={{
+          children: 'Accept',
+          onClick: onClickAccept,
+        }}
       >
         <TermsAndConditions />
       </Modal>

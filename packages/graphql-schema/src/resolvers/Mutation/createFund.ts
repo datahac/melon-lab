@@ -16,12 +16,12 @@ async function createFund(parent, args, context) {
 
   let exchangeNames = [];
 
-  const fund = await setupFund(
-    args.name,
+  const fund = await setupFund(environment, {
+    name: args.name,
     signature,
     exchangeNames,
-    environment.track,
-  );
+    track: environment.track,
+  });
 
   return fund;
 }
