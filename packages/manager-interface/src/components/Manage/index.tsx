@@ -49,7 +49,6 @@ const Manage = ({
   baseAsset,
   address,
   account,
-  authenticated,
   status,
   exchanges,
   setExchanges,
@@ -59,7 +58,7 @@ const Manage = ({
 }) => (
   <HoldingsQuery address={address}>
     {holdingsProps => (
-      <FundQuery address={address} account={account} authenticated={authenticated}>
+      <FundQuery address={address} account={account}>
         {fundProps => (
           <OrderBookQuery
             exchanges={exchanges}
@@ -91,10 +90,7 @@ const Manage = ({
                   baseAsset,
                   priceFeedUp: R.propOr(false, 'priceFeedUp')(status),
                   formValues: order,
-                  isManager: authenticated && R.compose(
-                    (fund) => isSameAddress(account, fund),
-                    R.path(['data', 'fund', 'address'])
-                  ),
+                  isManager: !!address && !!account && isSameAddress(account, address),
                 }}
                 OrderBook={OrderBook}
                 OrderBookProps={{
@@ -109,6 +105,12 @@ const Manage = ({
                   holdings: R.pathOr([], ['data', 'fund', 'holdings'])(holdingsProps),
                 }}
                 OpenOrders={OpenOrders}
+                OpenOrdersProps={{
+                  address,
+                  isManager: !!address && !!account && isSameAddress(account, address),
+                  // TODO: Compute this properly.
+                  isReadyToTrade: true,
+                }}
                 RecentTrades={RecentTrades}
                 RecentTradesProps={{
                   quoteAsset,

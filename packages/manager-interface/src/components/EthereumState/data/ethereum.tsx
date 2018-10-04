@@ -59,7 +59,6 @@ const EthereumQuery = ({ children }) => (
             return children({
               ...data,
               account,
-              authenticated,
               privateKey: key,
               loading: accountProps.loading || connectionProps.loading,
             });

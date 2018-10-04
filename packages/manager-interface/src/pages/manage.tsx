@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 import Layout from '+/components/Layout';
 import Manage from '+/components/Manage';
-import {
-  extractAddress,
-  extractBaseSymbol,
-  extractQuoteSymbol,
-} from '~/utils/parseUrl';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig: config } = getConfig();
 
 class Page extends Component {
-  static async getInitialProps({ asPath }) {
-    const address = extractAddress(asPath);
-    const quoteAsset = extractQuoteSymbol(asPath);
-    const baseAsset = extractBaseSymbol(asPath);
+  static async getInitialProps({ req, query }) {
+    const parameters = req && req.query || query;
 
     return {
-      address,
-      quoteAsset,
-      baseAsset,
+      address: parameters.address,
+      quoteAsset: parameters.quote || config.quoteTokenDefault,
+      baseAsset: parameters.base || config.baseTokenDefault,
     };
   }
 

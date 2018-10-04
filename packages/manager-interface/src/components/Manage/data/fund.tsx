@@ -22,13 +22,13 @@ const query = gql`
   }
 `;
 
-const FundQuery = ({ address, account, authenticated, children }) => (
+const FundQuery = ({ address, account, children }) => (
   <Query
     query={query}
     variables={{
       address,
       account: account || '',
-      authenticated,
+      authenticated: !!account,
     }}
     skip={!address}
   >

@@ -12,6 +12,7 @@ const Fund = ({
   OrderBook,
   OrderBookProps,
   OpenOrders,
+  OpenOrdersProps,
   RecentTrades,
   RecentTradesProps,
 }) => {
@@ -35,7 +36,7 @@ const Fund = ({
         </div>
       </div>
       <div className="trade__open-orders">
-        <OpenOrders />
+        <OpenOrders {...OpenOrdersProps} />
       </div>
       <div className="trade__recent-trades">
         <RecentTrades {...RecentTradesProps} />

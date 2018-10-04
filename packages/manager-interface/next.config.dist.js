@@ -13,6 +13,8 @@ module.exports = {
   }, isElectron ? {} : {
     graphqlRemoteWs: process.env.GRAPHQL_REMOTE_WS,
     graphqlRemoteHttp: process.env.GRAPHQL_REMOTE_HTTP,
+    baseTokenDefault: `MLN${process.env.TRACK !== 'live' ? '-T' : ''}`,
+    quoteTokenDefault: `WETH${process.env.TRACK !== 'live' ? '-T' : ''}`,
   }),
   serverRuntimeConfig: Object.assign({
     isElectron,

@@ -22,7 +22,7 @@ const withSetup = BaseComponent => baseProps => (
             }}
             deleteWallet={deleteWallet}
             loading={walletProps.loading}
-            hasAccount={baseProps.authenticated}
+            hasAccount={!!baseProps.account}
             hasWallet={hasWallet(walletProps)}
             currentAddress={baseProps.account}
             networkId={baseProps.network}
