@@ -11,6 +11,7 @@ export interface GetStartedProps {
   link: {
     href: string;
     text: string;
+    query: string;
   };
 }
 
@@ -70,7 +71,7 @@ export const GetStarted: StatelessComponent<GetStartedProps> = ({
         )}
 
         {link && (
-          <Link href={link.href} passHref>
+          <Link href={{ pathname: link.href, query: link.query }} passHref>
             <StyledLink style="secondary" size="medium">
               {link.text}
             </StyledLink>

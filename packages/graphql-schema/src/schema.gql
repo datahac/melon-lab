@@ -170,6 +170,7 @@ type Query {
   openOrders(address: String!): [Order]
   recentTrades(baseTokenSymbol: String!, quoteTokenSymbol: String!): [Trade]
   wallet: Wallet
+  usersFund(address: String!): String
 }
 
 type Mutation {

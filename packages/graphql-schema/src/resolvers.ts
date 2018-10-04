@@ -56,6 +56,9 @@ export default {
     price: (_, { symbol }, { loaders }) => {
       return loaders.symbolPrice.load(symbol);
     },
+    usersFund: (_, { address }, { loaders }) => {
+      return loaders.usersFund(address);
+    },
     balance: (_, { address, token }, { loaders }) => {
       switch (token) {
         case 'WETH':

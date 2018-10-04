@@ -11,6 +11,16 @@ const getLink = props => {
       };
     }
 
+    if (props.usersFund) {
+      return {
+        query: {
+          address: props.usersFund
+        },
+        href: '/manage',
+        text: 'Go to your fund',
+      };
+    }
+
     return {
       href: '/setup',
       text: 'Setup your fund',

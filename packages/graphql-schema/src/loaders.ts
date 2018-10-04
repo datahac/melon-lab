@@ -7,10 +7,11 @@ import {
   getBalance,
   getParticipation,
   toReadable,
+  getFundForManager,
 } from '@melonproject/melon.js';
 
-export default (context) => {
-  const contractAddressCacheKey = (contract) => {
+export default context => {
+  const contractAddressCacheKey = contract => {
     return contract.instance.address;
   };
 
@@ -20,29 +21,39 @@ export default (context) => {
     });
   };
 
-  const fundContract = new DataLoader(
-    async (addresses) => {
-      return addresses.map((address) => {
-        return getFundContract(context.environment, address);
-      });
-    },
-  );
+  const usersFund = async address => {
+    return getFundForManager(context.environment, {
+      managerAddress: address,
+    });
+  };
 
-  const fundRanking = new DataLoader(async (contracts) => {
+  const fundContract = new DataLoader(async addresses => {
+    return addresses.map(address => {
+      return getFundContract(context.environment, address);
+    });
+  });
+
+  const fundRanking = new DataLoader(async contracts => {
     const rankings = await fundRankings();
 
-    return Promise.all(contracts.map((contract) => {
-      const address = contract.instance.address;
-      return rankings.find((rank) => rank.address === address)
-    }));
+    return Promise.all(
+      contracts.map(contract => {
+        const address = contract.instance.address;
+        return rankings.find(rank => rank.address === address);
+      }),
+    );
   });
 
   const fundName = new DataLoader(
-    async (contracts) => {
-      return Promise.all(contracts.map(async (contract) => {
-        const bytes = await contract.instance.getName.call();
-        return Utils.toUtf8String(Utils.stripZeros(bytes.reverse()).reverse());
-      }));
+    async contracts => {
+      return Promise.all(
+        contracts.map(async contract => {
+          const bytes = await contract.instance.getName.call();
+          return Utils.toUtf8String(
+            Utils.stripZeros(bytes.reverse()).reverse(),
+          );
+        }),
+      );
     },
     {
       cacheKeyFn: contractAddressCacheKey,
@@ -50,10 +61,12 @@ export default (context) => {
   );
 
   const fundInception = new DataLoader(
-    async (contracts) => {
-      return Promise.all(contracts.map((contract) => {
-        return contract.instance.getCreationTime.call();
-      }));
+    async contracts => {
+      return Promise.all(
+        contracts.map(contract => {
+          return contract.instance.getCreationTime.call();
+        }),
+      );
     },
     {
       cacheKeyFn: contractAddressCacheKey,
@@ -61,10 +74,12 @@ export default (context) => {
   );
 
   const fundModules = new DataLoader(
-    async (contracts) => {
-      return Promise.all(contracts.map((contract) => {
-        return contract.instance.getModules.call();
-      }));
+    async contracts => {
+      return Promise.all(
+        contracts.map(contract => {
+          return contract.instance.getModules.call();
+        }),
+      );
     },
     {
       cacheKeyFn: contractAddressCacheKey,
@@ -72,29 +87,33 @@ export default (context) => {
   );
 
   const fundOwner = new DataLoader(
-    async (contracts) => {
-      return Promise.all(contracts.map((contract) => {
-        return contract.instance.owner.call();
-      }));
+    async contracts => {
+      return Promise.all(
+        contracts.map(contract => {
+          return contract.instance.owner.call();
+        }),
+      );
     },
     {
       cacheKeyFn: contractAddressCacheKey,
     },
   );
 
-  const symbolPrice = new DataLoader(
-    async (symbols) => {
-      return Promise.all(symbols.map((symbol) => {
+  const symbolPrice = new DataLoader(async symbols => {
+    return Promise.all(
+      symbols.map(symbol => {
         return getPrice(symbol);
-      }));
-    }
-  );
+      }),
+    );
+  });
 
   const fundTotalSupply = new DataLoader(
-    async (contracts) => {
-      return Promise.all(contracts.map((contract) => {
-        return contract.instance.totalSupply.call();
-      }));
+    async contracts => {
+      return Promise.all(
+        contracts.map(contract => {
+          return contract.instance.totalSupply.call();
+        }),
+      );
     },
     {
       cacheKeyFn: contractAddressCacheKey,
@@ -102,10 +121,12 @@ export default (context) => {
   );
 
   const fundCalculations = new DataLoader(
-    async (contracts) => {
-      return Promise.all(contracts.map((contract) => {
-        return contract.instance.performCalculations.call();
-      }));
+    async contracts => {
+      return Promise.all(
+        contracts.map(contract => {
+          return contract.instance.performCalculations.call();
+        }),
+      );
     },
     {
       cacheKeyFn: contractAddressCacheKey,
@@ -113,74 +134,78 @@ export default (context) => {
   );
 
   const fundHoldings = new DataLoader(
-    async (contracts) => {
-      return Promise.all(contracts.map(async (contract) => {
-        const address = contract.instance.address;
-        return (await getHoldingsAndPrices(context.environment, {
-          fundAddress: address,
-        }) || []).map(holding => ({
-          ...holding,
-          fund: address,
-        }));
-      }));
+    async contracts => {
+      return Promise.all(
+        contracts.map(async contract => {
+          const address = contract.instance.address;
+          return (
+            (await getHoldingsAndPrices(context.environment, {
+              fundAddress: address,
+            })) || []
+          ).map(holding => ({
+            ...holding,
+            fund: address,
+          }));
+        }),
+      );
     },
     {
       cacheKeyFn: contractAddressCacheKey,
     },
   );
 
-  const fundParticipation = new DataLoader(
-    async (pairs) => {
-      const { environment } = context;
+  const fundParticipation = new DataLoader(async pairs => {
+    const { environment } = context;
 
-      return Promise.all(pairs.map(async (pair) => {
+    return Promise.all(
+      pairs.map(async pair => {
         const { fund, investor } = pair;
 
         return getParticipation(environment, {
           fundAddress: fund.instance.address,
           investorAddress: investor,
         });
-      }));
-    },
-  );
+      }),
+    );
+  });
 
-  const etherBalance = new DataLoader(
-    async (addresses) => {
-      const { config, environment } = context;
-      const api = environment.api.eth;
+  const etherBalance = new DataLoader(async addresses => {
+    const { config, environment } = context;
+    const api = environment.api.eth;
 
-      return Promise.all(addresses.map(async (address) => {
+    return Promise.all(
+      addresses.map(async address => {
         const balance = await api.getBalance(address);
         return toReadable(config, balance, config.nativeAssetSymbol);
-      }));
-    }
-  );
+      }),
+    );
+  });
 
-  const melonBalance = new DataLoader(
-    async (addresses) => {
-      const { config, environment } = context;
+  const melonBalance = new DataLoader(async addresses => {
+    const { config, environment } = context;
 
-      return Promise.all(addresses.map((address) => {
+    return Promise.all(
+      addresses.map(address => {
         return getBalance(environment, {
           tokenSymbol: config.melonAssetSymbol,
           ofAddress: address,
         });
-      }));
-    }
-  );
+      }),
+    );
+  });
 
-  const nativeBalance = new DataLoader(
-    async (addresses) => {
-      const { config, environment } = context;
+  const nativeBalance = new DataLoader(async addresses => {
+    const { config, environment } = context;
 
-      return Promise.all(addresses.map((address) => {
+    return Promise.all(
+      addresses.map(address => {
         return getBalance(environment, {
           tokenSymbol: config.nativeAssetSymbol,
           ofAddress: address,
         });
-      }));
-    }
-  );
+      }),
+    );
+  });
 
   const currentBlock = () => {
     return new Promise((resolve, reject) => {
@@ -205,5 +230,6 @@ export default (context) => {
     melonBalance,
     etherBalance,
     currentBlock,
+    usersFund,
   };
 };

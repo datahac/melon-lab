@@ -27,9 +27,10 @@ const connectionQuery = gql`
       priceFeedUp
     }
 
-    eth:balance(address: $account, token: ETH) @include(if: $authenticated)
-    weth:balance(address: $account, token: WETH) @include(if: $authenticated)
-    mln:balance(address: $account, token: MLN) @include(if: $authenticated)
+    usersFund(address: $account)
+    eth: balance(address: $account, token: ETH) @include(if: $authenticated)
+    weth: balance(address: $account, token: WETH) @include(if: $authenticated)
+    mln: balance(address: $account, token: MLN) @include(if: $authenticated)
   }
 `;
 
@@ -39,17 +40,20 @@ const privateKey = R.path(['data', 'wallet', 'privateKey']);
 
 const EthereumQuery = ({ children }) => (
   <Query query={accountQuery} ssr={false}>
-    {(accountProps) => {
+    {accountProps => {
       const account = accountAddress(accountProps);
       const key = privateKey(accountProps);
       const authenticated = !!account;
 
       return (
-        <Query query={connectionQuery} variables={{
-          account: account || '',
-          authenticated,
-        }}>
-          {(connectionProps) => {
+        <Query
+          query={connectionQuery}
+          variables={{
+            account: account || '',
+            authenticated,
+          }}
+        >
+          {connectionProps => {
             const data = resultData(connectionProps);
 
             return children({
