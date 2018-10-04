@@ -4,6 +4,7 @@ import Notification from '~/blocks/Notification';
 import StyledLink from '~/blocks/Link';
 import Spinner from '~/blocks/Spinner';
 import Link from '~/link';
+import displayNumber from '~/utils/displayNumber';
 
 import styles from './styles.css';
 
@@ -70,7 +71,8 @@ export const Wallet: StatelessComponent<WalletProps> = ({
                   <br />
                   <code>
                     <span className="wallet__info-value">
-                      {balances && balances.eth}
+                      {balances &&
+                        displayNumber(balances.eth ? balances.eth : 0)}
                     </span>
                   </code>
                 </p>
@@ -112,7 +114,7 @@ export const Wallet: StatelessComponent<WalletProps> = ({
               {!associatedFund ? (
                 <p>
                   <Link href="/setup" passHref>
-                    <StyledLink style="secondary" size="medium" passHref>
+                    <StyledLink style="primary" size="medium" passHref>
                       Setup your fund
                     </StyledLink>
                   </Link>

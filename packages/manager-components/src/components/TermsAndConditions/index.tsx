@@ -141,7 +141,7 @@ export const TermsAndConditions: StatelessComponent<
           is excluded.
         </p>
         <p>
-          BY SIGNING THE HASH OF{' '}
+          BY ACCEPTING {' '}
           <strong>
             <a
               href={
