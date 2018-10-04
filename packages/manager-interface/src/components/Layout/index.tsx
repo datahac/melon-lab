@@ -10,58 +10,23 @@ const displayNetwork = network => {
   return values[key] && values[key].toLocaleLowerCase();
 };
 
-const content = noHeader => ({
-  margin: noHeader ? '10px 0' : '70px 0',
-});
-
 const Layout = ({ children, noHeader = false, ...props }) => (
-  <Fragment>
-    <style jsx>{`
-      .header {
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1;
-      }
-
-      .footer {
-        position: fixed;
-        width: 100%;
-        bottom: 0;
-        z-index: 1;
-      }
-
-      .content {
-        margin: ${noHeader ? '24px 16px' : '70px 16px'};
-
-        @media (--viewport-s) {
-          margin: ${noHeader ? '32px 7%' : '70px 7%'};
-        }
-      }
-    `}</style>
-
-    {!noHeader && (
-      <div className="header">
-        <Header
-          network={props.network && displayNetwork(props.network)}
-          message={props.message}
-          address={props.account}
-          balances={{
-            eth: props.eth,
-            mln: props.mln
-          }}
-        />
-      </div>
-    )}
-
-    <div className="content">
-      <Content>{children}</Content>
-    </div>
-
-    <div className="footer">
-      <Footer />
-    </div>
-  </Fragment>
+  <Content
+    Header={Header}
+    HeaderProps={{
+      network: props.network && displayNetwork(props.network),
+      message: props.message,
+      address: props.account,
+      balances: {
+        eth: props.eth,
+        mln: props.mln,
+      },
+    }}
+    Footer={Footer}
+    FooterProps
+  >
+    {children}
+  </Content>
 );
 
 export default Layout;

@@ -71,3 +71,33 @@
   border-top: 1px solid var(--color-border);
   margin: var(--space-s) 0;
 }
+
+:global(.header) {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+}
+
+:global(.footer) {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 1;
+}
+
+.layout__content {
+  margin: 70px 16px;
+
+  @media (--viewport-s) {
+    margin: 70px 7%;
+  }
+}
+
+.layout--no-header .layout__content {
+  margin: 24px 16px;
+
+  @media (--viewport-s) {
+    margin: 32px 7%;
+  }
+}
