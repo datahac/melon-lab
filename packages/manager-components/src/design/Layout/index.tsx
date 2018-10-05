@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { StatelessComponent } from 'react';
 import classNames from 'classnames';
 
 import styles from './styles.css';
 
-const Layout = ({
+export interface LayoutProps {
+  noHeader: boolean;
+}
+
+const Layout: StatelessComponent<LayoutProps> = ({
   children,
   noHeader,
   Header,
@@ -12,17 +16,17 @@ const Layout = ({
   FooterProps,
 }) => {
   const layoutClassNames = classNames('layout', {
-    "layout--no-header": noHeader,
+    'layout--no-header': noHeader,
   });
 
   return (
     <div className={layoutClassNames}>
       <style jsx>{styles}</style>
-      {!noHeader && <Header {...HeaderProps} />}
+      {!noHeader && Header && <Header {...HeaderProps} />}
 
       <div className="layout__content">{children}</div>
 
-      <Footer {...FooterProps} />
+      {Footer && <Footer {...FooterProps} />}
     </div>
   );
 };
