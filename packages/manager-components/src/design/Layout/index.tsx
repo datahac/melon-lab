@@ -22,11 +22,15 @@ const Layout: StatelessComponent<LayoutProps> = ({
   return (
     <div className={layoutClassNames}>
       <style jsx>{styles}</style>
-      {!noHeader && Header && <Header {...HeaderProps} />}
+      <div className="layout__header">
+        {!noHeader && Header && <Header {...HeaderProps} />}
+      </div>
 
       <div className="layout__content">{children}</div>
 
-      {Footer && <Footer {...FooterProps} />}
+      <div className="layout__footer">
+        {Footer && <Footer {...FooterProps} />}
+      </div>
     </div>
   );
 };
