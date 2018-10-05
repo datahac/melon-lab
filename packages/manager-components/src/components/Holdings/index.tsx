@@ -23,6 +23,7 @@ export interface Holding {
 export interface HoldingsProps {
   holdings?: Holding[];
   quoteAsset?: string;
+  baseAsset?: string;
   loading?: boolean;
   onClick: (asset) => void;
   isReadyToTrade?: boolean;
@@ -31,6 +32,7 @@ export interface HoldingsProps {
 export const Holdings: StatelessComponent<HoldingsProps> = ({
   holdings,
   quoteAsset,
+  baseAsset,
   loading,
   onClick,
   isReadyToTrade,
@@ -58,7 +60,11 @@ export const Holdings: StatelessComponent<HoldingsProps> = ({
             <TableBody>
               {holdings &&
                 holdings.map(asset => (
-                  <Row key={asset.symbol} size="small">
+                  <Row
+                    key={asset.symbol}
+                    size="small"
+                    active={baseAsset === asset.symbol}
+                  >
                     <CellBody>{asset.symbol}</CellBody>
                     <CellBody>{displayNumber(asset.balance)}</CellBody>
                     <CellBody textAlign="right">

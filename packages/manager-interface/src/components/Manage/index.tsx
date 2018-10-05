@@ -69,7 +69,7 @@ const Manage = ({
               <FundTemplate
                 FactSheet={FactSheet}
                 FactSheetProps={{
-                  ...(R.pathOr({}, ['data', 'fund'])(fundProps)),
+                  ...R.pathOr({}, ['data', 'fund'])(fundProps),
                   network,
                   quoteAsset,
                   numberOfFunds: R.path(['data', 'totalFunds'])(fundProps),
@@ -78,23 +78,27 @@ const Manage = ({
                 Holdings={Holdings}
                 HoldingsProps={{
                   address,
-                  holdings: R.pathOr([], ['data', 'fund', 'holdings'])(holdingsProps),
+                  holdings: R.pathOr([], ['data', 'fund', 'holdings'])(
+                    holdingsProps,
+                  ),
                   quoteAsset,
+                  baseAsset,
                   loading: fundProps.loading || holdingsProps.loading,
-                  nav: R.path(['data', 'fund', 'nav'])(fundProps)
+                  nav: R.path(['data', 'fund', 'nav'])(fundProps),
                 }}
                 OrderForm={OrderForm}
                 OrderFormProps={{
-                  ...(R.pathOr([], ['data', 'fund'])(orderBookProps)),
+                  ...R.pathOr([], ['data', 'fund'])(orderBookProps),
                   quoteAsset,
                   baseAsset,
                   priceFeedUp: R.propOr(false, 'priceFeedUp')(status),
                   formValues: order,
-                  isManager: !!address && !!account && isSameAddress(account, address),
+                  isManager:
+                    !!address && !!account && isSameAddress(account, address),
                 }}
                 OrderBook={OrderBook}
                 OrderBookProps={{
-                  ...(R.pathOr({}, ['data', 'orderbook'])(orderBookProps)),
+                  ...R.pathOr({}, ['data', 'orderbook'])(orderBookProps),
                   quoteAsset,
                   baseAsset,
                   loading: orderBookProps.loading,
@@ -102,12 +106,15 @@ const Manage = ({
                   setExchanges,
                   exchanges,
                   setOrder,
-                  holdings: R.pathOr([], ['data', 'fund', 'holdings'])(holdingsProps),
+                  holdings: R.pathOr([], ['data', 'fund', 'holdings'])(
+                    holdingsProps,
+                  ),
                 }}
                 OpenOrders={OpenOrders}
                 OpenOrdersProps={{
                   address,
-                  isManager: !!address && !!account && isSameAddress(account, address),
+                  isManager:
+                    !!address && !!account && isSameAddress(account, address),
                   // TODO: Compute this properly.
                   isReadyToTrade: true,
                 }}
