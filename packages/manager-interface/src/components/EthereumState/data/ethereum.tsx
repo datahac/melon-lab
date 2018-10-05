@@ -33,11 +33,6 @@ const ethereumQuery = gql`
   }
 `;
 
-<<<<<<< HEAD
-const connectionSubscription = gql`
-  subscription connectionSubscription($address: String!) {
-    balance(token: ETH, address: $address)
-=======
 const currentBlockSubscription = gql`
   subscription CurrentBlockSubscription {
     currentBlock
@@ -65,7 +60,6 @@ const peerCountSubscription = gql`
 const balanceSubscription = gql`
   subscription BalanceSubscription($account: String!, $token: TokenEnum!) {
     balance(address: $account, token: $token)
->>>>>>> Stream based graphql api.
   }
 `;
 
@@ -88,32 +82,6 @@ const EthereumQuery = ({ children }) => (
             authenticated,
           }}
         >
-<<<<<<< HEAD
-          {({ subscribeToMore, ...connectionProps }) => {
-            const data = resultData(connectionProps);
-
-            return children({
-              ...data,
-              account,
-              privateKey: key,
-              loading: accountProps.loading || connectionProps.loading,
-              subscribeToNewBalance: () => {
-                subscribeToMore({
-                  document: connectionSubscription,
-                  variables: { address: account || '' },
-                  updateQuery: (prev, { subscriptionData }) => {
-                    if (!subscriptionData.data) return prev;
-
-                    const newBalance = subscriptionData.data.balance;
-
-                    return Object.assign({}, prev, {
-                      eth: newBalance,
-                    });
-                  },
-                });
-              },
-            });
-=======
           {({ subscribeToMore, ...ethereumProps }) => {
             const subscribeToState = () => {
               const subscribeToField = (subscription, field) => {
@@ -167,7 +135,6 @@ const EthereumQuery = ({ children }) => (
                 })}
               </SubscriptionHandler>
             )
->>>>>>> Stream based graphql api.
           }}
         </Query>
       );
