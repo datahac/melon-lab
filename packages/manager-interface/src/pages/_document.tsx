@@ -22,6 +22,7 @@ export default class MyDocument extends Document {
   public render() {
     return (
       <html lang="en">
+        <title>Melon Asset Management</title>
         <Head>
           <meta
             name="viewport"
