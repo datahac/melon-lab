@@ -23,6 +23,12 @@ enum ProviderEnum {
   NONE
 }
 
+enum ConfigKeyEnum {
+  CANONICAL_PRICE_FEED_ADDRESS
+  COMPETITION_COMPLIANCE_ADDRESS
+  ONLY_MANAGER_COMPETITION_ADDRESS
+}
+
 type Wallet {
   accountAddress: String
   privateKey: String
@@ -150,34 +156,24 @@ type Signature {
   v: Int!
 }
 
-type Status {
-  nodeSyncing: Boolean!
-  blockOverdue: Boolean!
-  priceFeedUp: Boolean!
-}
-
-type Config {
-  canonicalPriceFeedAddress: String!
-  competitionComplianceAddress: String!
-  onlyManagerCompetitionAddress: String!
-}
-
 type Query {
-  config: Config!
-  status: Status!
-  network: String!
-  provider: String!
-  block: String
   mnemonic: String
+  network: String
+  provider: String
+  currentBlock: String
+  nodeSynced: Boolean
+  priceFeedUp: Boolean
+  peerCount: String
+  versionConfig(key: ConfigKeyEnum!): String
+  totalFunds: Int
   balance(token: TokenEnum!, address: String!): String
   price(symbol: Symbol!): String
+  wallet: Wallet
   fund(address: String!): Fund
   funds(addresses: [String]): [Fund]
   rankings: [Ranking]
-  totalFunds: Int!
   openOrders(address: String!): [Order]
   recentTrades(baseTokenSymbol: String!, quoteTokenSymbol: String!): [Trade]
-  wallet: Wallet
   usersFund(address: String!): String
 }
 
@@ -195,8 +191,15 @@ type Mutation {
 }
 
 type Subscription {
-  state: Status
-  block: String
+  network: String
+  provider: String
+  currentBlock: String
+  nodeSynced: Boolean
+  priceFeedUp: Boolean
+  peerCount: String
+  versionConfig(key: ConfigKeyEnum!): String
+  totalFunds: Int
+  rankings: [Ranking]
   balance(token: TokenEnum!, address: String!): String
   orderbook(
     baseTokenSymbol: Symbol!

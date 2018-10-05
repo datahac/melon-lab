@@ -14,9 +14,9 @@ const mutation = gql`
 const cacheQuery = gql`
   query GetWallet {
     wallet {
-      encryptedWallet @client
-      accountAddress @client
-      privateKey @client
+      encryptedWallet
+      accountAddress
+      privateKey
     }
   }
 `;
@@ -25,8 +25,6 @@ const WalletMutation = ({ onCompleted, children }) => (
   <Mutation
     mutation={mutation}
     update={(cache, { data: { decryptWallet } }) => {
-      localStorage.setItem('wallet:melon:fund', decryptWallet.encryptedWallet);
-
       cache.writeQuery({
         query: cacheQuery,
         data: {

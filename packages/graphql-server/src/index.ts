@@ -3,7 +3,6 @@ require('dotenv').config({
 });
 
 import schema, { createContext } from '@melonproject/graphql-schema';
-import { getConfig, getParityProvider } from '@melonproject/melon.js';
 import { graphqlExpress } from 'apollo-server-express';
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
@@ -18,20 +17,17 @@ async function start(port: number) {
 
   const pubsub = new PubSub();
   const track = process.env.TRACK || 'kovan-demo';
-  const environment = {
-    ...(await getParityProvider(process.env.JSON_RPC_ENDPOINT)),
-    track,
-  };
-
-  const config = await getConfig(environment);
-  const context = createContext(environment, config, pubsub);
+  const endpoint = process.env.JSON_RPC_ENDPOINT;
+  const context = await createContext(track, endpoint, pubsub);
 
   const json = bodyParser.json();
   const urlencoded = bodyParser.urlencoded({ extended: true });
 
-  const gql = graphqlExpress({
-    schema,
-    context,
+  const gql = graphqlExpress(async (req) => {
+    return {
+      schema,
+      context: await context(),
+    };
   });
 
   app.use(cors())
@@ -45,9 +41,9 @@ async function start(port: number) {
       execute,
       subscribe,
       schema,
-      onOperation: (message, params, socket) => ({
+      onOperation: async (message, params, socket) => ({
         ...params,
-        context: context(),
+        context: await context(),
       }),
     },
     {

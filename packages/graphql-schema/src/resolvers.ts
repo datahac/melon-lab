@@ -1,8 +1,12 @@
+import * as R from 'ramda';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import Order from './resolvers/Order';
 import Quantity from './resolvers/Quantity';
 import Subscription from './resolvers/Subscription';
 import Symbol from './resolvers/Symbol';
+import subscribeStream from './utils/subscribeStream';
+import takeLast from './utils/takeLast';
+import sameBlock from './utils/sameBlock';
 
 export default {
   DateTime,
@@ -12,36 +16,32 @@ export default {
     openOrders: require('./resolvers/Query/openOrders').default,
     recentTrades: require('./resolvers/Query/recentTrades').default,
     mnemonic: require('./resolvers/Query/mnemonic').default,
-    totalFunds: async (_, __, { loaders }) => {
-      const ranking = await loaders.fundRankings();
-      return (ranking && ranking.length) || 0;
+    currentBlock: (_, __, { streams }) => {
+      return takeLast(streams.block$);
     },
-    config: () => {
-      // We need to return something other than null.
-      return {};
+    nodeSynced: (_, __, { streams }) => {
+      return takeLast(streams.synced$);
     },
-    status: (_, __, { loaders }) => {
-      return {
-        priceFeedUp: true,
-        nodeSyncing: false,
-        blockOverdue: false,
-      };
+    totalFunds: (_, __, { streams }) => {
+      return takeLast(streams.ranking$).then((value) => value && value.length);
     },
-    wallet: () => {
-      // This needs to be implemented in the concrete client.
-      return {};
+    priceFeedUp: (_, __, { streams }) => {
+      return takeLast(streams.priceFeed$);
     },
-    provider: (_, __, { provider }) => {
-      return provider;
+    peerCount: (_, __, { streams }) => {
+      return takeLast(streams.peers$);
     },
-    network: (_, __, { network }) => {
-      return network;
+    versionConfig: (_, { key }, { streams }) => {
+      return takeLast(streams.config$).then((config) => config && config[key]);
     },
-    block: (_, __, { loaders }) => {
-      return loaders.currentBlock();
+    provider: (_, __, { streams }) => {
+      return takeLast(streams.provider$);
     },
-    rankings: (_, __, { loaders }) => {
-      return loaders.fundRankings();
+    network: (_, __, { streams }) => {
+      return takeLast(streams.network$);
+    },
+    rankings: (_, __, { streams }) => {
+      return takeLast(streams.ranking$);
     },
     fund: (_, { address }, { loaders }) => {
       return loaders.fundContract.load(address);
@@ -56,10 +56,8 @@ export default {
     price: (_, { symbol }, { loaders }) => {
       return loaders.symbolPrice.load(symbol);
     },
-    usersFund: async (_, { address }, { loaders }) => {
-      const fundAddress = await loaders.usersFund(address);
-      if (fundAddress) return fundAddress;
-      return null;
+    usersFund: (_, { address }, { loaders }) => {
+      return loaders.usersFund(address);
     },
     balance: (_, { address, token }, { loaders }) => {
       switch (token) {
@@ -83,9 +81,12 @@ export default {
     address: parent => {
       return parent.instance.address;
     },
-    rank: async (parent, _, { loaders }) => {
-      const ranking = await loaders.fundRanking.load(parent);
-      return ranking && ranking.rank;
+    rank: async (parent, _, { streams }) => {
+      return takeLast(streams.ranking$).then((ranking) => {
+        const address = parent.instance.address;
+        const entry = (ranking || []).find(rank => rank.address === address);
+        return entry && entry.rank;
+      });
     },
     name: (parent, _, { loaders }) => {
       return loaders.fundName.load(parent);
@@ -167,17 +168,6 @@ export default {
       return nav.div(parent.balance.times(parent.price));
     },
   },
-  Config: {
-    canonicalPriceFeedAddress: (_, __, { config }) => {
-      return config.canonicalPriceFeedAddress;
-    },
-    competitionComplianceAddress: (_, __, { config }) => {
-      return config.competitionComplianceAddress;
-    },
-    onlyManagerCompetitionAddress: (_, __, { config }) => {
-      return config.onlyManagerCompetitionAddress;
-    },
-  },
   Mutation: {
     cancelOpenOrder: require('./resolvers/Mutation/cancelOpenOrder').default,
     createFund: require('./resolvers/Mutation/createFund').default,
@@ -188,6 +178,100 @@ export default {
       return true;
     },
   },
-  Subscription,
+  Subscription: {
+    ...Subscription,
+    currentBlock: {
+      resolve: (value) => value,
+      subscribe: (_, __, { pubsub, streams }) => {
+        const stream$ = streams.block$
+          .skip(1)
+          .distinctUntilChanged(sameBlock);
+
+        return subscribeStream(pubsub, 'current-block', stream$);
+      },
+    },
+    nodeSynced: {
+      resolve: (value) => value,
+      subscribe: (_, __, { pubsub, streams }) => {
+        const stream$ = streams.synced$
+          .skip(1)
+          .distinctUntilChanged(R.equals);
+
+        return subscribeStream(pubsub, 'node-synced', stream$);
+      },
+    },
+    totalFunds: {
+      resolve: (value) => value,
+      subscribe: (_, __, { pubsub, streams }) => {
+        const stream$ = streams.ranking$
+          .skip(1)
+          .map((rankings) => rankings.length)
+          .distinctUntilChanged(R.equals);
+
+        return subscribeStream(pubsub, 'total-funds', stream$);
+      },
+    },
+    priceFeedUp: {
+      resolve: (value) => value,
+      subscribe: (_, __, { pubsub, streams }) => {
+        const stream$ = streams.priceFeed$
+          .skip(1)
+          .distinctUntilChanged(R.equals);
+
+        return subscribeStream(pubsub, 'price-feed', stream$);
+      },
+    },
+    peerCount: {
+      resolve: (value) => value,
+      subscribe: (_, __, { pubsub, streams }) => {
+        const stream$ = streams.provider$
+          .skip(1)
+          .distinctUntilChanged(R.equals);
+
+        return subscribeStream(pubsub, 'provider', stream$);
+      },
+    },
+    versionConfig: {
+      resolve: (value) => value,
+      subscribe: (_, { key }, { pubsub, streams }) => {
+        const stream$ = streams.config$
+          .skip(1)
+          .map((config) => config && config[key])
+          .distinctUntilChanged(R.equals);
+
+        return subscribeStream(pubsub, `version-config:${key}`, stream$);
+      },
+    },
+    provider: {
+      resolve: (value) => value,
+      subscribe: (_, __, { pubsub, streams }) => {
+        const stream$ = streams.provider$
+          .skip(1)
+          .distinctUntilChanged(R.equals);
+
+        return subscribeStream(pubsub, 'peer-count', stream$);
+      },
+    },
+    network: {
+      resolve: (value) => value,
+      subscribe: (_, __, { pubsub, streams }) => {
+        const stream$ = streams.network$
+          .skip(1)
+          .distinctUntilChanged(R.equals);
+
+        return subscribeStream(pubsub, 'network', stream$);
+      },
+    },
+    rankings: {
+      resolve: (value) => value,
+      subscribe: (_, __, { pubsub, streams }) => {
+        const stream$ = streams.ranking$
+          .skip(1)
+          .distinctUntilChanged(R.equals);
+
+        return subscribeStream(pubsub, 'rankings', stream$);
+      },
+    },
+  },
   Order,
 };

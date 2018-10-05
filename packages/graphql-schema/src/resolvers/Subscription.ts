@@ -5,6 +5,7 @@ import {
 import BigNumber from 'bignumber.js';
 import * as R from 'ramda';
 import * as Rx from 'rxjs';
+import takeLast from '../utils/takeLast';
 import withUnsubscribe from '../utils/withUnsubscribe';
 
 const debug = require('debug')('melon-lab:graphql-schema:subscription');
@@ -47,8 +48,11 @@ export const orderbook = {
     };
   },
   subscribe: async (parent, args, context) => {
-    const { pubsub, network, config, environment } = context;
+    const { pubsub, streams } = context;
     const { baseTokenSymbol, quoteTokenSymbol, exchanges } = args;
+    const environment = await takeLast(streams.environment$);
+    const config = await takeLast(streams.config$);
+    const network = await takeLast(streams.network$);
 
     debug('Processed symbols.', {
       baseTokenSymbol,
@@ -71,26 +75,12 @@ export const orderbook = {
   },
 };
 
-const block = {
-  resolve: (block) => {
-    return block;
-  },
-  subscribe: async (parent, args, context) => {
-    const { pubsub, block$ } = context;
-
-    const channel = 'block';
-    const iterator = pubsub.asyncIterator(channel);
-    const publish = value => pubsub.publish(channel, value);
-    return withUnsubscribe(block$, iterator, publish);
-  },
-};
-
 const balance = {
-  resolve: (block) => {
-    return block;
+  resolve: (balance) => {
+    return balance;
   },
   subscribe: async (parent, args, context) => {
-    const { pubsub, loaders, block$ } = context;
+    const { pubsub, loaders, streams } = context;
 
     const getBalance = (address, token) => {
       switch (token) {
@@ -105,15 +95,12 @@ const balance = {
       return null;
     };
 
-    const balance$ = block$
+    const balance$ = streams.block$
       .debounceTime(5000)
-      .switchMap(() => {
-        return Rx.Observable.fromPromise(getBalance(args.address, args.token));
-      })
-      .startWith(await getBalance(args.address, args.token))
+      .switchMap(() => Rx.Observable.fromPromise(getBalance(args.address, args.token)))
       .distinctUntilChanged(R.equals);
 
-    const channel = 'block';
+    const channel = 'balance';
     const iterator = pubsub.asyncIterator(channel);
     const publish = value => pubsub.publish(channel, value);
     return withUnsubscribe(balance$, iterator, publish);
@@ -124,6 +111,5 @@ export { Order };
 
 export default {
   orderbook,
-  block,
   balance,
 };

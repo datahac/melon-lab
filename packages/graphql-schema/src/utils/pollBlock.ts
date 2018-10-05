@@ -13,17 +13,10 @@ const requestBlock = (environment) => {
 };
 
 const pollBlock = (environment) => {
-  return requestBlock(environment).expand(() => {
-    return Rx.Observable
-      .timer(1000)
-      .concatMap(() => requestBlock(environment));
-  }).distinctUntilChanged((a, b) => {
-    if (a !== b) {
-      return a && b && a.toString() === b.toString();
-    }
-
-    return false;
-  }).share();
+  return requestBlock(environment).expand(() => Rx.Observable
+    .timer(5000)
+    .concatMap(() => requestBlock(environment))
+  );
 }
 
 export default pollBlock;

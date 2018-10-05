@@ -1,5 +1,6 @@
 import React from 'react';
 import { networks } from '@melonproject/melon.js';
+import { isZero } from '~/utils/functionalBigNumber';
 import EthereumQuery from './data/ethereum';
 
 export const statusTypes = {
@@ -9,51 +10,60 @@ export const statusTypes = {
   GOOD: 'GOOD',
 };
 
-const getStatus = ({ config, block, network, status }) => {
-  if (!block) {
+const getStatus = ({
+  canonicalPriceFeedAddress,
+  network,
+  canInteract,
+  canInvest,
+  hasCurrentBlock,
+  blockOverdue,
+  nodeSynced,
+  priceFeedUp,
+}) => {
+  if (!hasCurrentBlock) {
+    return {
+      message: 'Not ready',
+      type: statusTypes.WARNING,
+    };
+  }
+
+  if (blockOverdue) {
     return {
       message: 'Block overdue',
       type: statusTypes.WARNING,
     };
   }
 
-  // if (!isNetworkValid) {
-  //   return {
-  //     message: 'Not ready',
-  //     type: statusTypes.WARNING,
-  //   };
-  // }
-
-  if (status.isSyncing) {
+  if (!nodeSynced) {
     return {
       message: 'Node not synced',
       type: statusTypes.WARNING,
     };
   }
 
-  if (!status.priceFeedUp) {
+  if (!priceFeedUp) {
     return {
       message: 'Price feed down',
       type: statusTypes.ERROR,
       link: `https://${
         network === networks.KOVAN ? 'kovan.' : ''
-      }etherscan.io/address/${config.canonicalPriceFeedAddress}`,
+      }etherscan.io/address/${canonicalPriceFeedAddress}`,
     };
   }
 
-  // if (!isReadyToInteract) {
-  //   return {
-  //     message: 'Insufficent ETH',
-  //     type: statusTypes.WARNING,
-  //   };
-  // }
+  if (!canInteract) {
+    return {
+      message: 'Insufficent ETH',
+      type: statusTypes.WARNING,
+    };
+  }
 
-  // if (!isReadyToInvest) {
-  //   return {
-  //     message: 'Insufficent MLN',
-  //     type: statusTypes.WARNING,
-  //   };
-  // }
+  if (!canInvest) {
+    return {
+      message: 'Insufficent MLN',
+      type: statusTypes.WARNING,
+    };
+  }
 
   return {
     message: 'Melon Node',
@@ -65,33 +75,29 @@ const EthereumState = ({ children }) => (
   <EthereumQuery>
     {props => {
       const { loading, ...data } = props;
-      // const isSyncing = !!data.isSyncing;
-      // const isNetworkValid =
-      //   (!!data.ethereumNetwork && data.ethereumNetwork === '42') ||
-      //   data.ethereumNetwork === '1';
-      // const hasAccount = !!data.accountAddress;
-      // const hasEth = data.ethBalance && !isZero(data.ethBalance);
-      // const hasCurrentBlock = data.currentBlock && !isZero(data.currentBlock);
+      const { nodeSynced, currentBlock, wallet = {}, eth, weth } = data;
+      const { accountAddress } = wallet;
 
-      // const isReadyToInteract =
-      //   !isSyncing && isNetworkValid && hasAccount && hasCurrentBlock && hasEth;
+      const hasAccount = !!accountAddress;
+      const hasEth = eth && !isZero(eth);
+      const hasCurrentBlock = currentBlock && !isZero(data.currentBlock);
+      const isSynced = !!nodeSynced;
+      const isCompetition = false;
+      const canInteract = isSynced && hasAccount && hasCurrentBlock && hasEth;
+      const canInvest = canInteract && isCompetition ? true : weth && !isZero(weth);
 
-      // const isCompetition = true;
-      // const isReadyToInvest =
-      //   isReadyToInteract && isCompetition
-      //     ? true
-      //     : data.wethBalance && !isZero(data.wethBalance);
-
-      // const state = {
-      //   ...data,
-      //   isNetworkValid,
-      //   isReadyToInteract,
-      //   isReadyToInvest,
-      // };
+      const state = {
+        ...data,
+        // TODO: Add a time interval that watches currentBlock changes.
+        blockOverdue: false,
+        hasCurrentBlock,
+        canInvest,
+        canInteract,
+      };
 
       return children({
         ...data,
-        message: !loading && getStatus(data),
+        message: !loading && getStatus(state),
         loading,
       });
     }}

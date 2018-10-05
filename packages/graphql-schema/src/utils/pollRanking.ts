@@ -8,17 +8,16 @@ const requestRanking = (environment) => {
     .timeout(1000)
     .catch((error) => {
       // TODO: Add logging.
-      return Rx.Observable.of([]);
+      return Rx.Observable.of(null);
     })
     .last();
 };
 
 const pollRanking = (environment) => {
-  return requestRanking(environment).expand(() => {
-    return Rx.Observable
-      .timer(60000)
-      .concatMap(() => requestRanking(environment));
-  }).share();
+  return requestRanking(environment).expand(() => Rx.Observable
+    .timer(60000)
+    .concatMap(() => requestRanking(environment))
+  );
 }
 
 export default pollRanking;

@@ -17,11 +17,9 @@ interface FormValues {
 
 export interface SetupProps {
   competitionName?: string;
-  config: {
-    canonicalPriceFeedAddress: string;
-    noComplianceAddress: string;
-    competitionComplianceAddress: string;
-  };
+  canonicalPriceFeedAddress: string;
+  competitionComplianceAddress: string;
+  noComplianceAddress: string;
   errors?: any;
   handleBlur?: () => void;
   handleChange?: () => void;
@@ -43,7 +41,9 @@ export interface SetupProps {
 
 export const Setup: StatelessComponent<SetupProps> = ({
   competitionName = 'Naxos',
-  config,
+  canonicalPriceFeedAddress,
+  competitionComplianceAddress,
+  noComplianceAddress,
   errors,
   handleBlur,
   handleChange,
@@ -152,7 +152,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
               <a
                 href={`https://${
                   networkId === '42' ? 'kovan.' : ''
-                }etherscan.io/address/${config.canonicalPriceFeedAddress}`}
+                }etherscan.io/address/${canonicalPriceFeedAddress}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -168,7 +168,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
                     href={`https://${
                       networkId === '42' ? 'kovan.' : ''
                     }etherscan.io/address/${
-                      config.competitionComplianceAddress
+                      competitionComplianceAddress
                     }`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -184,7 +184,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
                   <a
                     href={`https://${
                       networkId === '42' ? 'kovan.' : ''
-                    }etherscan.io/address/${config.noComplianceAddress}`}
+                    }etherscan.io/address/${noComplianceAddress}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

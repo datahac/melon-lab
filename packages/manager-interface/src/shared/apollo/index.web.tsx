@@ -2,9 +2,8 @@
 // for the schema.
 import introspection from '@melonproject/graphql-schema/schema.gql';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { withClientState } from 'apollo-link-state';
 import ApolloClient from 'apollo-client';
-import { split, from } from 'apollo-link';
+import { split } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
@@ -28,33 +27,9 @@ const createLink = (options, cache) => {
     headers: options.headers,
   });
 
-  const stateLink = withClientState({
-    cache,
-    resolvers: {
-      Mutation: {
-        deleteWallet: () => {
-          return true;
-        },
-      },
-      Wallet: {
-        encryptedWallet: () => {
-          return process.browser && localStorage.getItem('wallet:melon:fund');
-        },
-        accountAddress: () => {
-          return null;
-        },
-        privateKey: () => {
-          return null;
-        },
-      },
-    },
-  });
-
-  const httpAndStateLink = from([stateLink, httpLink]);
-
   // Do not use the websocket link on the server.
   if (!process.browser) {
-    return httpAndStateLink;
+    return httpLink;
   }
 
   const wsLink = new WebSocketLink({
@@ -64,7 +39,7 @@ const createLink = (options, cache) => {
     },
   });
 
-  return split(isSubscription, wsLink, httpAndStateLink);
+  return split(isSubscription, wsLink, httpLink);
 };
 
 export const createClient = options => {

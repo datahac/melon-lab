@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import Wallet from '@melonproject/manager-components/components/Wallet';
+import Wallet from '~/components/Wallet';
 import { WalletQuery, WalletMutation } from './data/wallet';
 
 const hasWallet = R.pathSatisfies(value => !!value, [
@@ -11,7 +11,7 @@ const hasWallet = R.pathSatisfies(value => !!value, [
 
 const withSetup = BaseComponent => baseProps => (
   <WalletQuery>
-    {walletProps => (
+    {walletProps => console.log(walletProps) || (
       <WalletMutation>
         {deleteWallet => (
           <BaseComponent

@@ -1,31 +1,30 @@
+import React from 'react';
 import { Query } from '~/apollo';
+import { lifecycle } from 'recompose';
 import * as R from 'ramda';
 import gql from 'graphql-tag';
 
 const accountQuery = gql`
   query WalletQuery {
     wallet {
-      encryptedWallet @client
-      accountAddress @client
-      privateKey @client
+      encryptedWallet
+      accountAddress
+      privateKey
     }
   }
 `;
 
-const connectionQuery = gql`
-  query ConnectionQuery($account: String!, $authenticated: Boolean!) {
-    block
+const ethereumQuery = gql`
+  query EthereumQuery($account: String!, $authenticated: Boolean!) {
     network
-    config {
-      canonicalPriceFeedAddress
-      competitionComplianceAddress
-      onlyManagerCompetitionAddress
-    }
-    status {
-      nodeSyncing
-      blockOverdue
-      priceFeedUp
-    }
+    currentBlock
+    nodeSynced
+    priceFeedUp
+    peerCount
+
+    canonicalPriceFeedAddress:versionConfig(key: CANONICAL_PRICE_FEED_ADDRESS)
+    competitionComplianceAddress:versionConfig(key: COMPETITION_COMPLIANCE_ADDRESS)
+    onlyManagerCompetitionAddress:versionConfig(key: ONLY_MANAGER_COMPETITION_ADDRESS)
 
     usersFund(address: $account) @include(if: $authenticated)
     eth: balance(address: $account, token: ETH) @include(if: $authenticated)
@@ -34,9 +33,39 @@ const connectionQuery = gql`
   }
 `;
 
+<<<<<<< HEAD
 const connectionSubscription = gql`
   subscription connectionSubscription($address: String!) {
     balance(token: ETH, address: $address)
+=======
+const currentBlockSubscription = gql`
+  subscription CurrentBlockSubscription {
+    currentBlock
+  }
+`;
+
+const nodeSyncedSubscription = gql`
+  subscription NodeSyncedSubscription {
+    nodeSynced
+  }
+`;
+
+const priceFeedUpSubscription = gql`
+  subscription PriceFeedSubscription {
+    priceFeedUp
+  }
+`;
+
+const peerCountSubscription = gql`
+  subscription PeerCountSubscription {
+    peerCount
+  }
+`;
+
+const balanceSubscription = gql`
+  subscription BalanceSubscription($account: String!, $token: TokenEnum!) {
+    balance(address: $account, token: $token)
+>>>>>>> Stream based graphql api.
   }
 `;
 
@@ -53,12 +82,13 @@ const EthereumQuery = ({ children }) => (
 
       return (
         <Query
-          query={connectionQuery}
+          query={ethereumQuery}
           variables={{
             account: account || '',
             authenticated,
           }}
         >
+<<<<<<< HEAD
           {({ subscribeToMore, ...connectionProps }) => {
             const data = resultData(connectionProps);
 
@@ -83,11 +113,90 @@ const EthereumQuery = ({ children }) => (
                 });
               },
             });
+=======
+          {({ subscribeToMore, ...ethereumProps }) => {
+            const subscribeToState = () => {
+              const subscribeToField = (subscription, field) => {
+                return subscribeToMore({
+                  document: subscription,
+                  updateQuery: (previous, { subscriptionData: result }) => {
+                    return {
+                      ...(previous || {}),
+                      [field]: result && result.data && result.data[field],
+                    };
+                  },
+                });
+              };
+
+              return [
+                subscribeToField(nodeSyncedSubscription, 'nodeSynced'),
+                subscribeToField(currentBlockSubscription, 'currentBlock'),
+                subscribeToField(peerCountSubscription, 'peerCount'),
+                subscribeToField(priceFeedUpSubscription, 'priceFeedUp'),
+              ];
+            };
+
+            const subscribeToBalance = () => {
+              const subscribeToToken = (token, field) => {
+                return subscribeToMore({
+                  document: balanceSubscription,
+                  variables: { account, token },
+                  updateQuery: (previous, { subscriptionData: result }) => {
+                    return {
+                      ...(previous || {}),
+                      [field]: result && result.data && result.data.balance,
+                    };
+                  },
+                });
+              };
+
+              return [
+                subscribeToToken('ETH', 'eth'),
+                subscribeToToken('WETH', 'weth'),
+                subscribeToToken('MLN', 'mln'),
+              ];
+            };
+
+            return (
+              <SubscriptionHandler account={account} subscribeToState={subscribeToState} subscribeToBalance={subscribeToBalance}>
+                {children({
+                  ...resultData(ethereumProps),
+                  account,
+                  privateKey: key,
+                  loading: accountProps.loading || ethereumProps.loading,
+                })}
+              </SubscriptionHandler>
+            )
+>>>>>>> Stream based graphql api.
           }}
         </Query>
       );
     }}
   </Query>
 );
+
+const SubscriptionHandler = lifecycle({
+  componentDidMount() {
+    this.stateSubscriptions = this.props.subscribeToState();
+  },
+  componentDidUpdate(prevProps) {
+    if (this.props.account && this.props.account !== prevProps.account) {
+      (this.balanceSubscription || []).forEach((unsubscribe) => {
+        unsubscribe();
+      });
+
+      this.balanceSubscriptions = this.props.subscribeToBalance();
+    }
+  },
+  componentWillUnmount() {
+    (this.balanceSubscription || []).forEach((unsubscribe) => {
+      unsubscribe();
+    });
+
+    (this.stateSubscriptions || []).forEach((unsubscribe) => {
+      unsubscribe();
+    });
+  }
+})(({ children }) => React.Children.only(children));
 
 export default EthereumQuery;
