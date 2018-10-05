@@ -17,9 +17,16 @@ const withSetupHandlers = withHandlers({
   },
 });
 
+// Redirect to created fund
+const redirect = address =>
+  Router.replace({
+    pathname: '/manage',
+    query: { address: address },
+  });
+
 const withSetup = BaseComponent => baseProps => (
-  <FundMutation>
-    {createFund => (
+  <FundMutation onCompleted={redirect} account={baseProps.account}>
+    {(createFund, createFundProps) => (
       <BaseComponent
         address={baseProps.account}
         balances={{
@@ -39,6 +46,7 @@ const withSetup = BaseComponent => baseProps => (
             },
           })
         }
+        loading={createFundProps.loading}
       />
     )}
   </FundMutation>

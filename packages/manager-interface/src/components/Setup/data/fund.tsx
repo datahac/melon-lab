@@ -4,13 +4,35 @@ import gql from 'graphql-tag';
 const mutation = gql`
   mutation createFund($name: String!, $signed: Boolean!, $privateKey: String!) {
     createFund(name: $name, signed: $signed, privateKey: $privateKey) {
-      name
+      address
     }
   }
 `;
 
-const FundMutation = ({ children }) => (
-  <Mutation mutation={mutation}>{children}</Mutation>
+const query = gql`
+  query ConnectionQuery($account: String!) {
+    usersFund(address: $account)
+  }
+`;
+
+const FundMutation = ({ onCompleted, account, children }) => (
+  <Mutation
+    mutation={mutation}
+    update={(cache, { data: { createFund } }) => {
+      cache.writeQuery({
+        query,
+        variables: {
+          account,
+        },
+        data: {
+          usersFund: createFund.address,
+        },
+      });
+    }}
+    onCompleted={({ createFund }) => onCompleted(createFund.address)}
+  >
+    {children}
+  </Mutation>
 );
 
 export default FundMutation;

@@ -38,6 +38,14 @@ type Ranking {
   sharePrice: String!
 }
 
+type NewFund {
+  address: String
+  name: String
+  inception: DateTime
+  owner: String
+  modules: [String]
+}
+
 type Fund {
   rank: Int
   address: String!
@@ -180,7 +188,7 @@ type Mutation {
     makerAssetSymbol: String!
     takerAssetSymbol: String!
   ): [Order]
-  createFund(name: String!, signed: Boolean!, privateKey: String!): Fund
+  createFund(name: String!, signed: Boolean!, privateKey: String!): NewFund
   deleteWallet: Boolean!
   decryptWallet(wallet: String!, password: String!): Wallet
   restoreWallet(mnemonic: String!, password: String!): Wallet
