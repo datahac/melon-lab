@@ -56,12 +56,8 @@ export default {
     price: (_, { symbol }, { loaders }) => {
       return loaders.symbolPrice.load(symbol);
     },
-    usersFund: async (_, { address }, { loaders }) => {
-      const fundAddress = await loaders.usersFund(address);
-      if (fundAddress) {
-        return fundAddress;
-      }
-      return null;
+    usersFund: (_, { address }, { loaders }) => {
+      return loaders.usersFund(address);
     },
     balance: (_, { address, token }, { loaders }) => {
       switch (token) {

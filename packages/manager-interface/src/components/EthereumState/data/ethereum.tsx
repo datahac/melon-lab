@@ -27,7 +27,7 @@ const connectionQuery = gql`
       priceFeedUp
     }
 
-    usersFund(address: $account)
+    usersFund(address: $account) @include(if: $authenticated)
     eth: balance(address: $account, token: ETH) @include(if: $authenticated)
     weth: balance(address: $account, token: WETH) @include(if: $authenticated)
     mln: balance(address: $account, token: MLN) @include(if: $authenticated)

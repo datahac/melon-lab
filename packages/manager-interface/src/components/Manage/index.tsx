@@ -38,7 +38,15 @@ const withExchangeState = withState(
   availableExchanges.map(exchange => exchange.value),
 );
 
-const withSelectedOrderState = withState('order', 'setOrder', {});
+const withSelectedOrderState = withState('order', 'setOrder', {
+  price: '',
+  orderType: 'Buy',
+  strategy: 'Market',
+  quantity: '',
+  total: '',
+  exchange: '',
+});
+
 const withOrderBookProps = withProps({
   availableExchanges,
 });
@@ -94,7 +102,12 @@ const Manage = ({
                   priceFeedUp: R.propOr(false, 'priceFeedUp')(status),
                   formValues: order,
                   isManager:
-                    !!address && !!account && isSameAddress(account, address),
+                    !!R.path(['data', 'usersFund'])(fundProps) &&
+                    !!R.path(['data', 'fund', 'address'])(fundProps) &&
+                    isSameAddress(
+                      fundProps.data.usersFund,
+                      fundProps.data.fund.address,
+                    ),
                 }}
                 OrderBook={OrderBook}
                 OrderBookProps={{
@@ -114,7 +127,12 @@ const Manage = ({
                 OpenOrdersProps={{
                   address,
                   isManager:
-                    !!address && !!account && isSameAddress(account, address),
+                    !!R.path(['data', 'usersFund'])(fundProps) &&
+                    !!R.path(['data', 'fund', 'address'])(fundProps) &&
+                    isSameAddress(
+                      fundProps.data.usersFund,
+                      fundProps.data.fund.address,
+                    ),
                   // TODO: Compute this properly.
                   isReadyToTrade: true,
                 }}
