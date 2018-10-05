@@ -97,6 +97,9 @@ const Manage = ({
                 OrderForm={OrderForm}
                 OrderFormProps={{
                   ...R.pathOr([], ['data', 'fund'])(orderBookProps),
+                  holdings: R.pathOr([], ['data', 'fund', 'holdings'])(
+                    holdingsProps,
+                  ),
                   quoteAsset,
                   baseAsset,
                   priceFeedUp: R.propOr(false, 'priceFeedUp')(status),
