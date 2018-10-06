@@ -3,23 +3,32 @@ import {
   signTermsAndConditions,
   getWallet,
 } from '@melonproject/melon.js';
+import takeLast from '../../utils/takeLast';
 
-async function createFund(parent, args, context) {
-  const { environment } = context;
+async function createFund(_, { signed, name, privateKey }, { streams }) {
+  const environment = await takeLast(streams.environment$);
 
-  if (!args.signed) {
-    throw Error('Terms and conditions are not signed');
+  if (!environment) {
+    // TODO: Return a proper mutation response object with an error field.
+    throw new Error('Environment not ready.');
   }
 
-  environment.account = getWallet(args.privateKey);
-  const signature = await signTermsAndConditions(environment);
+  if (!signed) {
+    // TODO: Return a proper mutation response object with an error field.
+    throw new Error('Terms and conditions are not signed.');
+  }
 
-  let exchangeNames = [];
+  const account = getWallet(privateKey);
+  const accountEnvironment = {
+    ...environment,
+    account,
+  };
 
-  const fund = await setupFund(environment, {
-    name: args.name,
+  const signature = await signTermsAndConditions(accountEnvironment);
+  const fund = await setupFund(accountEnvironment, {
+    name: name,
     signature,
-    exchangeNames,
+    exchangeNames: [],
     track: environment.track,
   });
 

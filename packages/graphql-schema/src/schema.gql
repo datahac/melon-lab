@@ -27,6 +27,18 @@ enum ConfigKeyEnum {
   CANONICAL_PRICE_FEED_ADDRESS
   COMPETITION_COMPLIANCE_ADDRESS
   ONLY_MANAGER_COMPETITION_ADDRESS
+  NO_COMPLIANCE_ADDRESS
+  MATCHING_MARKET_ADDRESS
+  MATCHING_MARKET_ADAPTER
+  ZERO_EX_V1_ADDRESS
+  ZERO_EX_V1_ADAPTER_ADDRESS
+  RANKING_ADDRESS
+  RISK_MANAGEMENT_ADDRESS
+  VERSION_ADDRESS
+  GOVERNANCE_ADDRESS
+  OLYMPIAD_ADDRESS
+  KYBER_NETWORK_ADDRESS
+  KYBER_ADAPTER
 }
 
 type Wallet {
@@ -172,8 +184,12 @@ type Query {
   fund(address: String!): Fund
   funds(addresses: [String]): [Fund]
   rankings: [Ranking]
+
+  # TODO: Move this to the Fund type.
   openOrders(address: String!): [Order]
   recentTrades(baseTokenSymbol: String!, quoteTokenSymbol: String!): [Trade]
+
+  # TODO: Make this return a Fund type.
   usersFund(address: String!): String
 }
 

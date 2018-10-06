@@ -7,8 +7,11 @@ import {
   getPrice,
   getBalance,
   getParticipation,
-  toReadable,
   getFundForManager,
+  getRecentTrades,
+  getOpenOrders,
+  createWallet,
+  toReadable,
 } from '@melonproject/melon.js';
 
 const contractCache = contract => contract.instance.address;
@@ -115,15 +118,49 @@ export default async (streams) => {
     },
   );
 
+  const fundOpenOrders = new DataLoader(
+    async (contracts) => Promise.all(contracts.map(async (contract) => {
+      const address = contract.instance.address;
+      const environment = await takeLast(streams.environment$);
+      const config = await takeLast(streams.config$);
+      const orders = environment && await getOpenOrders(environment, {
+        fundAddress: address,
+      }) || [];
+      
+      return orders.map((order) => ({
+        id: order.exchangeOrderId,
+        isActive: true,
+        exchange: 'OASIS_DEX',
+        exchangeContractAddress: config && config.matchingMarketAddress,
+        type: order.type,
+        price: order.price,
+        buy: {
+          symbol: order.buySymbol,
+          howMuch: order.buyHowMuch,
+        },
+        sell: {
+          symbol: order.sellSymbol,
+          howMuch: order.sellHowMuch,
+        },
+        timestamp: order.timestamp,
+      }));
+    })),
+    {
+      cacheKeyFn: contractCache,
+    }
+  );
+
   const fundParticipation = new DataLoader(
-    async (pairs) => Promise.all(pairs.map(async pair => {
+    async (pairs) => {
       const environment = await takeLast(streams.environment$);
 
-      return environment && getParticipation(environment, {
-        fundAddress: pair.fund.instance.address,
-        investorAddress: pair.investor,
-      });
-    })),
+      return Promise.all(pairs.map(async pair => {
+        return environment && getParticipation(environment, {
+          fundAddress: pair.fund.instance.address,
+          investorAddress: pair.investor,
+        });
+      }));
+    },
   );
 
   const etherBalanceUncached = async (address) => {
@@ -168,6 +205,24 @@ export default async (streams) => {
   const nativeBalance = new DataLoader(
     async (addresses) => Promise.all(addresses.map(nativeBalanceUncached)),
   );
+  
+  const recentTrades = new DataLoader(
+    async (pairs) => {
+      const environment = await takeLast(streams.environment$);
+
+      return Promise.all(pairs.map(async pair => {
+        return environment && await getRecentTrades(environment, {
+          baseTokenSymbol: pair.baseTokenSymbol,
+          quoteTokenSymbol: pair.quoteTokenSymbol,
+        });
+      }));
+    },
+  );
+
+  const generateMnemonic = async () => {
+    const wallet = await createWallet();
+    return wallet && wallet.mnemonic;
+  };  
 
   return {
     takeLast,
@@ -179,7 +234,9 @@ export default async (streams) => {
     fundTotalSupply,
     fundCalculations,
     fundHoldings,
+    fundOpenOrders,
     fundParticipation,
+    recentTrades,
     symbolPrice,
     nativeBalance,
     nativeBalanceUncached,
@@ -188,5 +245,6 @@ export default async (streams) => {
     etherBalance,
     etherBalanceUncached,
     usersFund,
+    generateMnemonic,
   };
 };

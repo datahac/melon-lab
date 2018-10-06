@@ -1,11 +1,14 @@
 import { cancelOrder } from '@melonproject/melon.js';
+import takeLast from '../../utils/takeLast';
 
-async function cancelOpenOrder(parent, args, context) {
-  return cancelOrder(context.environment, {
-    identifier: args.orderId,
-    fundAddress: args.fundAddress,
-    makerAssetSymbol: args.makerAssetSymbol,
-    takerAssetSymbol: args.takerAssetSymbol,
+async function cancelOpenOrder(_, { orderId, fundAddress, makerAssetSymbol, takerAssetSymbol }, { streams }) {
+  const environment = await takeLast(streams.environment$);
+
+  return environment && cancelOrder(environment, {
+    identifier: orderId,
+    fundAddress: fundAddress,
+    makerAssetSymbol: makerAssetSymbol,
+    takerAssetSymbol: takerAssetSymbol,
   });
 }
 

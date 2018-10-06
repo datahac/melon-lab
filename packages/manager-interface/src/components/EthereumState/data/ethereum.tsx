@@ -96,12 +96,18 @@ const EthereumQuery = ({ children }) => (
                 });
               };
 
-              return [
+              const subscriptions = [
                 subscribeToField(nodeSyncedSubscription, 'nodeSynced'),
                 subscribeToField(currentBlockSubscription, 'currentBlock'),
                 subscribeToField(peerCountSubscription, 'peerCount'),
                 subscribeToField(priceFeedUpSubscription, 'priceFeedUp'),
               ];
+
+              return () => {
+                subscriptions.forEach((unsubscribe) => {
+                  unsubscribe();
+                });
+              };
             };
 
             const subscribeToBalance = () => {
@@ -118,11 +124,17 @@ const EthereumQuery = ({ children }) => (
                 });
               };
 
-              return [
+              const subscriptions = [
                 subscribeToToken('ETH', 'eth'),
                 subscribeToToken('WETH', 'weth'),
                 subscribeToToken('MLN', 'mln'),
               ];
+
+              return () => {
+                subscriptions.forEach((unsubscribe) => {
+                  unsubscribe();
+                });
+              };
             };
 
             return (
@@ -144,25 +156,17 @@ const EthereumQuery = ({ children }) => (
 
 const SubscriptionHandler = lifecycle({
   componentDidMount() {
-    this.stateSubscriptions = this.props.subscribeToState();
+    this.unsubscribeState = this.props.subscribeToState();
   },
   componentDidUpdate(prevProps) {
     if (this.props.account && this.props.account !== prevProps.account) {
-      (this.balanceSubscription || []).forEach((unsubscribe) => {
-        unsubscribe();
-      });
-
-      this.balanceSubscriptions = this.props.subscribeToBalance();
+      this.unsubscribeBalances && this.unsubscribeBalances();
+      this.unsubscribeBalances = this.props.subscribeToBalance();
     }
   },
   componentWillUnmount() {
-    (this.balanceSubscription || []).forEach((unsubscribe) => {
-      unsubscribe();
-    });
-
-    (this.stateSubscriptions || []).forEach((unsubscribe) => {
-      unsubscribe();
-    });
+    this.unsubscribeState && this.unsubscribeState();
+    this.unsubscribeBalances && this.unsubscribeBalances();
   }
 })(({ children }) => React.Children.only(children));
 

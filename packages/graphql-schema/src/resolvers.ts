@@ -12,10 +12,34 @@ export default {
   DateTime,
   Symbol,
   Quantity,
+  ConfigKeyEnum: {
+    CANONICAL_PRICE_FEED_ADDRESS: 'onlyManagerCompetitionAddress',
+    COMPETITION_COMPLIANCE_ADDRESS: 'competitionComplianceAddress',
+    ONLY_MANAGER_COMPETITION_ADDRESS: 'onlyManagerCompetitionAddress',
+    NO_COMPLIANCE_ADDRESS: 'noComplianceAddress',
+    MATCHING_MARKET_ADDRESS: 'matchingMarketAddress',
+    MATCHING_MARKET_ADAPTER: 'matchingMarketAdapter',
+    ZERO_EX_V1_ADDRESS: 'zeroExV1Address',
+    ZERO_EX_V1_ADAPTER_ADDRESS: 'zeroExV1AdapterAddress',
+    RANKING_ADDRESS: 'rankingAddress',
+    RISK_MANAGEMENT_ADDRESS: 'riskManagementAddress',
+    VERSION_ADDRESS: 'versionAddress',
+    GOVERNANCE_ADDRESS: 'governanceAddress',
+    OLYMPIAD_ADDRESS: 'olympiadAddress',
+    KYBER_NETWORK_ADDRESS: 'kyberNetworkAddress',
+    KYBER_ADAPTER: 'kyberAdapter',
+  },
   Query: {
-    openOrders: require('./resolvers/Query/openOrders').default,
-    recentTrades: require('./resolvers/Query/recentTrades').default,
-    mnemonic: require('./resolvers/Query/mnemonic').default,
+    mnemonic: (_, __, { loaders }) => {
+      return loaders.generateMnemonic();
+    },
+    openOrders: async (_, { address }, { loaders }) => {
+      const contract = await loaders.fundContract.load(address);
+      return loaders.fundOpenOrders.load(contract);
+    },
+    recentTrades: (_, { baseTokenSymbol, quoteTokenSymbol }, { loaders }) => {
+      return loaders.recentTrades.load({ baseTokenSymbol, quoteTokenSymbol });
+    },
     currentBlock: (_, __, { streams }) => {
       return takeLast(streams.block$);
     },
@@ -32,7 +56,7 @@ export default {
       return takeLast(streams.peers$);
     },
     versionConfig: (_, { key }, { streams }) => {
-      return takeLast(streams.config$).then((config) => config && config[key]);
+      return takeLast(streams.config$).then((config) => console.log(config, key) || config && config[key]);
     },
     provider: (_, __, { streams }) => {
       return takeLast(streams.provider$);
