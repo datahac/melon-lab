@@ -11,7 +11,7 @@ const hasWallet = R.pathSatisfies(value => !!value, [
 
 const withSetup = BaseComponent => baseProps => (
   <WalletQuery>
-    {walletProps => console.log(walletProps) || (
+    {walletProps => (
       <WalletMutation>
         {deleteWallet => (
           <BaseComponent
