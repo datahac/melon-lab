@@ -76,13 +76,14 @@ export const orderbook = {
 };
 
 const balance = {
-  resolve: (balance) => {
+  resolve: balance => {
     return balance;
   },
   subscribe: async (parent, args, context) => {
     const { pubsub, loaders, streams } = context;
+    const { address, token } = args;
 
-    const getBalance = (address, token) => {
+    const getBalance = () => {
       switch (token) {
         case 'WETH':
           return loaders.nativeBalanceUncached(address);
@@ -97,10 +98,10 @@ const balance = {
 
     const balance$ = streams.block$
       .debounceTime(5000)
-      .switchMap(() => Rx.Observable.fromPromise(getBalance(args.address, args.token)))
+      .switchMap(() => Rx.Observable.fromPromise(getBalance()))
       .distinctUntilChanged(R.equals);
 
-    const channel = 'balance';
+    const channel = `balance:${address}:${token}`;
     const iterator = pubsub.asyncIterator(channel);
     const publish = value => pubsub.publish(channel, value);
     return withUnsubscribe(balance$, iterator, publish);
