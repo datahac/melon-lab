@@ -19,6 +19,7 @@ const withSetup = BaseComponent => baseProps => (
             balances={{
               eth: baseProps.eth,
               mln: baseProps.mln,
+              weth: baseProps.weth,
             }}
             deleteWallet={deleteWallet}
             loading={walletProps.loading}

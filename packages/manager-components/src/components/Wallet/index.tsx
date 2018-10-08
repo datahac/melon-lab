@@ -20,6 +20,7 @@ export interface WalletProps {
   balances?: {
     eth?: string;
     mln?: string;
+    weth?: string;
   };
 }
 
@@ -73,6 +74,26 @@ export const Wallet: StatelessComponent<WalletProps> = ({
                     <span className="wallet__info-value">
                       {balances &&
                         displayNumber(balances.eth ? balances.eth : 0)}
+                    </span>
+                  </code>
+                </p>
+                <p>
+                  MLN:
+                  <br />
+                  <code>
+                    <span className="wallet__info-value">
+                      {balances &&
+                        displayNumber(balances.mln ? balances.mln : 0)}
+                    </span>
+                  </code>
+                </p>
+                <p>
+                  WETH:
+                  <br />
+                  <code>
+                    <span className="wallet__info-value">
+                      {balances &&
+                        displayNumber(balances.weth ? balances.weth : 0)}
                     </span>
                   </code>
                 </p>
