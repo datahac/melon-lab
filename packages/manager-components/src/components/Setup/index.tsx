@@ -4,6 +4,7 @@ import Checkbox from '~/blocks/Checkbox';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Modal from '~/blocks/Modal';
+import FeeForm from '~/components/FeeForm/container';
 import Spinner from '~/blocks/Spinner';
 import TermsAndConditions from '~/components/TermsAndConditions';
 import StyledLink from '~/blocks/Link';
@@ -31,12 +32,17 @@ export interface SetupProps {
   values: FormValues;
   onClickAccept: () => void;
   onClickDecline: () => void;
+  onClickConfirmFees: () => void;
+  onClickDeclineFees: () => void;
   signed?: boolean;
   balances: {
     eth?: string;
     mln?: string;
   };
   address: string;
+  fees?: any;
+  FeeFormModal;
+  FeeFormModalProps;
 }
 
 export const Setup: StatelessComponent<SetupProps> = ({
@@ -58,6 +64,8 @@ export const Setup: StatelessComponent<SetupProps> = ({
   onClickDecline,
   balances,
   address,
+  FeeFormModal,
+  FeeFormModalProps = {},
 }) => (
   <div className="setup">
     <style jsx>{styles}</style>
@@ -81,8 +89,14 @@ export const Setup: StatelessComponent<SetupProps> = ({
       <TermsAndConditions />
     </Modal>
 
+    <FeeFormModal {...FeeFormModalProps} />
+
     {loading ? (
-      <Spinner icon size="small" text="Deploying your fund to the Ethereum blockchain..." />
+      <Spinner
+        icon
+        size="small"
+        text="Deploying your fund to the Ethereum blockchain..."
+      />
     ) : (
       <Fragment>
         {balances && balances.eth === '0' ? (
@@ -167,9 +181,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
                   <a
                     href={`https://${
                       networkId === '42' ? 'kovan.' : ''
-                    }etherscan.io/address/${
-                      competitionComplianceAddress
-                    }`}
+                    }etherscan.io/address/${competitionComplianceAddress}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

@@ -1,6 +1,4 @@
 import React, { StatelessComponent } from 'react';
-import Button from '~/blocks/Button';
-import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import {
   CellBody,
@@ -35,90 +33,71 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   fees,
   handleBlur,
   handleChange,
-  handleReset,
-  handleSubmit,
-  onCancel,
   touched,
   values,
 }) => {
-  const handleCancel = () => {
-    handleReset();
-    onCancel();
-  };
-
   const calcEntryTotal = (gasLimit: number) =>
     toBigNumber((values.gasPrice * gasLimit) / 10 ** 9).toFixed(4);
 
-  const total = toBigNumber(
-    add(...fees.map(e => (e.gasLimit * values.gasPrice) / 10 ** 9)),
-  ).toFixed(4);
+  const total =
+    fees &&
+    toBigNumber(
+      add(...fees.map(e => (e.gasLimit * values.gasPrice) / 10 ** 9)),
+    ).toFixed(4);
 
   return (
     <div className="fee-form">
       <style jsx>{styles}</style>
-      <Form onSubmit={handleSubmit}>
-        <div className="fee-form__input">
-          <Input
-            value={values.gasPrice}
-            label="Gas price"
-            name="gasPrice"
-            insideLabel="true"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            required={true}
-            formatNumber={true}
-            error={touched.gasPrice && errors.gasPrice}
-          />
-        </div>
+      <div className="fee-form__input">
+        <Input
+          value={values.gasPrice}
+          label="Gas price"
+          name="gasPrice"
+          insideLabel="true"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          required={true}
+          formatNumber={true}
+          error={touched.gasPrice && errors.gasPrice}
+        />
+      </div>
 
-        {fees && (
-          <div>
-            <Table>
-              <TableHead>
-                <Row isHead>
-                  <CellHead>Description</CellHead>
-                  <CellHead>Gas Limit</CellHead>
-                  <CellHead>Total</CellHead>
+      {fees && (
+        <div>
+          <Table>
+            <TableHead>
+              <Row isHead>
+                <CellHead>Description</CellHead>
+                <CellHead>Gas Limit</CellHead>
+                <CellHead>Total</CellHead>
+              </Row>
+            </TableHead>
+            <TableBody>
+              {fees.map((entry, i: number) => (
+                <Row key={`fee-${i}`}>
+                  <CellBody>{entry.description}</CellBody>
+                  <CellBody>{entry.gasLimit}</CellBody>
+                  <CellBody>Ξ {calcEntryTotal(entry.gasLimit)}</CellBody>
                 </Row>
-              </TableHead>
-              <TableBody>
-                {fees.map((entry, i: number) => (
-                  <Row key={`fee-${i}`}>
-                    <CellBody>{entry.description}</CellBody>
-                    <CellBody>{entry.gasLimit}</CellBody>
-                    <CellBody>Ξ {calcEntryTotal(entry.gasLimit)}</CellBody>
-                  </Row>
-                ))}
+              ))}
 
-                <Row>
-                  <CellHead />
-                  <CellHead />
-                  <CellHead>Ξ {total}</CellHead>
-                </Row>
-              </TableBody>
-            </Table>
-            <p>
-              If you do not change the gas price field, the default gas price
-              will be used. If you wish to set the gas price according to
-              network conditions, please refer to{' '}
-              <a href="https://ethgasstation.info/" target="_blank">
-                Eth Gas Station.
-              </a>
-            </p>
-          </div>
-        )}
-
-        <div className="fee-form__buttons">
-          <div className="fee-form__button">
-            <Button type="button" style="secondary" onClick={handleCancel}>
-              Cancel
-            </Button>
-          </div>
-          <div className="fee-form__button">
-            <Button type="submit">Confirm</Button>
-          </div>
+              <Row>
+                <CellHead />
+                <CellHead />
+                <CellHead>Ξ {total}</CellHead>
+              </Row>
+            </TableBody>
+          </Table>
+          <p>
+            If you do not change the gas price field, the default gas price will
+            be used. If you wish to set the gas price according to network
+            conditions, please refer to{' '}
+            <a href="https://ethgasstation.info/" target="_blank">
+              Eth Gas Station.
+            </a>
+          </p>
         </div>
-      </Form>
+      )}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import Setup from '@melonproject/manager-components/components/Setup/container';
+import FeeFormModal from '+/components/FeeFormModal';
 import FundMutation from './data/fund';
 import { compose, withHandlers, withState } from 'recompose';
 import Router from 'next/router';
@@ -12,6 +13,7 @@ const withSetupHandlers = withHandlers({
       pathname: '/wallet',
     });
   },
+
   onClickAccept: props => e => {
     props.setSigned(true);
   },
@@ -24,7 +26,7 @@ const redirect = address =>
     query: { address: address },
   });
 
-const withSetup = BaseComponent => baseProps => console.log(baseProps) || (
+const withSetup = BaseComponent => baseProps => (
   <FundMutation onCompleted={redirect} account={baseProps.account}>
     {(createFund, createFundProps) => (
       <BaseComponent
@@ -33,6 +35,8 @@ const withSetup = BaseComponent => baseProps => console.log(baseProps) || (
           eth: baseProps.eth,
           mln: baseProps.mln,
         }}
+        FeeFormModal={FeeFormModal}
+        FeeFormModalProps={{}}
         onClickDecline={baseProps.onClickDecline}
         signed={baseProps.signed}
         onClickAccept={baseProps.onClickAccept}
@@ -43,7 +47,6 @@ const withSetup = BaseComponent => baseProps => console.log(baseProps) || (
           createFund({
             variables: {
               name: values.name,
-              signed: baseProps.signed,
               privateKey: baseProps.privateKey,
             },
           })

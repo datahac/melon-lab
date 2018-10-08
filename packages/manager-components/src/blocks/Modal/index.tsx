@@ -1,4 +1,4 @@
-import React, { StatelessComponent } from 'react';
+import React, { StatelessComponent, Fragment } from 'react';
 import ReactModal from 'react-modal';
 
 import styles from './styles.css';
@@ -9,13 +9,17 @@ export interface ModalProps {
   PrimaryActionProps;
   SecondaryAction;
   SecondaryActionProps;
+  ContentWrapper;
+  ContentWrapperProps;
 }
 
 const Modal: StatelessComponent<ModalProps> = ({
   PrimaryAction,
-  PrimaryActionProps,
+  PrimaryActionProps = {},
   SecondaryAction,
-  SecondaryActionProps,
+  SecondaryActionProps = {},
+  ContentWrapper,
+  ContentWrapperProps = {},
   children,
   title,
   ...props
@@ -29,21 +33,43 @@ const Modal: StatelessComponent<ModalProps> = ({
     <style jsx>{styles}</style>
     <div className="modal__title">{title}</div>
     <div className="modal__content">
-      {children}
+      {ContentWrapper ? (
+        <ContentWrapper {...ContentWrapperProps}>
+          {children}
 
-      <div className="modal__actions">
-        {PrimaryAction && (
-          <div className="modal__action">
-            <PrimaryAction {...PrimaryActionProps} />
-          </div>
-        )}
+          <div className="modal__actions">
+            {PrimaryAction && (
+              <div className="modal__action">
+                <PrimaryAction {...PrimaryActionProps} />
+              </div>
+            )}
 
-        {SecondaryAction && (
-          <div className="modal__action">
-            <SecondaryAction {...SecondaryActionProps} />
+            {SecondaryAction && (
+              <div className="modal__action">
+                <SecondaryAction {...SecondaryActionProps} />
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </ContentWrapper>
+      ) : (
+        <Fragment>
+          {children}
+
+          <div className="modal__actions">
+            {PrimaryAction && (
+              <div className="modal__action">
+                <PrimaryAction {...PrimaryActionProps} />
+              </div>
+            )}
+
+            {SecondaryAction && (
+              <div className="modal__action">
+                <SecondaryAction {...SecondaryActionProps} />
+              </div>
+            )}
+          </div>
+        </Fragment>
+      )}
     </div>
   </ReactModal>
 );

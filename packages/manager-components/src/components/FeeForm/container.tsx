@@ -3,8 +3,13 @@ import * as Yup from 'yup';
 
 import FeeForm from './index';
 
+const initialValues = {
+  gasPrice: '',
+};
+
 const withFormValidation = withFormik({
-  mapPropsToValues: props => ({ ...props.initialValues }),
+  mapPropsToValues: props =>
+    props.formValues ? { ...props.formValues } : initialValues,
   enableReinitialize: true,
   validationSchema: Yup.object().shape({
     gasPrice: Yup.number()
