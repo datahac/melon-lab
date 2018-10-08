@@ -75,10 +75,9 @@ const EthereumState = ({ children }) => (
   <EthereumQuery>
     {props => {
       const { loading, ...data } = props;
-      const { nodeSynced, currentBlock, wallet = {}, eth, weth } = data;
-      const { accountAddress } = wallet;
+      const { account, nodeSynced, currentBlock, eth, weth } = data;
 
-      const hasAccount = !!accountAddress;
+      const hasAccount = !!account;
       const hasEth = eth && !isZero(eth);
       const hasCurrentBlock = currentBlock && !isZero(data.currentBlock);
       const isSynced = !!nodeSynced;

@@ -24,7 +24,7 @@ const redirect = address =>
     query: { address: address },
   });
 
-const withSetup = BaseComponent => baseProps => (
+const withSetup = BaseComponent => baseProps => console.log(baseProps) || (
   <FundMutation onCompleted={redirect} account={baseProps.account}>
     {(createFund, createFundProps) => (
       <BaseComponent
@@ -36,7 +36,9 @@ const withSetup = BaseComponent => baseProps => (
         onClickDecline={baseProps.onClickDecline}
         signed={baseProps.signed}
         onClickAccept={baseProps.onClickAccept}
-        config={baseProps.config}
+        canonicalPriceFeedAddress={baseProps.canonicalPriceFeedAddress}
+        competitionComplianceAddress={baseProps.competitionComplianceAddress}
+        noComplianceAddress={baseProps.noComplianceAddress}
         onSubmit={values =>
           createFund({
             variables: {

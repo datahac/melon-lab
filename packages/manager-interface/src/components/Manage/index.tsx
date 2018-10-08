@@ -57,12 +57,12 @@ const Manage = ({
   baseAsset,
   address,
   account,
-  status,
   exchanges,
   setExchanges,
   availableExchanges,
   order,
   setOrder,
+  priceFeedUp,
 }) => (
   <HoldingsQuery address={address}>
     {holdingsProps => (
@@ -102,7 +102,7 @@ const Manage = ({
                   ),
                   quoteAsset,
                   baseAsset,
-                  priceFeedUp: R.propOr(false, 'priceFeedUp')(status),
+                  priceFeedUp,
                   formValues: order,
                   isManager:
                     !!R.path(['data', 'usersFund'])(fundProps) &&
