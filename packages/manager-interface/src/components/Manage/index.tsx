@@ -105,10 +105,10 @@ const Manage = ({
                   priceFeedUp,
                   formValues: order,
                   isManager:
-                    !!R.path(['data', 'usersFund'])(fundProps) &&
+                    !!R.path(['data', 'associatedFund'])(fundProps) &&
                     !!R.path(['data', 'fund', 'address'])(fundProps) &&
                     isSameAddress(
-                      fundProps.data.usersFund,
+                      fundProps.data.associatedFund,
                       fundProps.data.fund.address,
                     ),
                 }}
@@ -130,10 +130,10 @@ const Manage = ({
                 OpenOrdersProps={{
                   address,
                   isManager:
-                    !!R.path(['data', 'usersFund'])(fundProps) &&
+                    !!R.path(['data', 'associatedFund'])(fundProps) &&
                     !!R.path(['data', 'fund', 'address'])(fundProps) &&
                     isSameAddress(
-                      fundProps.data.usersFund,
+                      fundProps.data.associatedFund,
                       fundProps.data.fund.address,
                     ),
                   // TODO: Compute this properly.

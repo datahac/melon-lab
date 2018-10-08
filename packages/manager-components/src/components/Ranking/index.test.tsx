@@ -27,7 +27,7 @@ const data = {
       rank: 3,
     },
   ],
-  usersFund: '0x5bBA9263Ab1eA26FF9c0FeE3619e7AAf7C79E02b',
+  associatedFund: '0x5bBA9263Ab1eA26FF9c0FeE3619e7AAf7C79E02b',
   search: '',
   ordering: '+rank',
   goToFund: mockCallbackFund,

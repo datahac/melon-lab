@@ -19,7 +19,7 @@ import {
 const contractCache = contract => contract.instance.address;
 
 export default async (streams) => {
-  const usersFund = async (address) => {
+  const associatedFund = async (address) => {
     const environment = await takeLast(streams.environment$);
     const fund = environment && await getFundForManager(environment, {
       managerAddress: address,
@@ -241,7 +241,7 @@ export default async (streams) => {
     melonBalanceUncached,
     etherBalance,
     etherBalanceUncached,
-    usersFund,
+    associatedFund,
     generateMnemonic,
     decryptWallet,
     restoreWallet,

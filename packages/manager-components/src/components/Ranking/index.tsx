@@ -14,7 +14,7 @@ export interface RankingProps {
   search?: string;
   setSearch: (search: string) => void;
   setOrdering: (field: string) => void;
-  usersFund?: string;
+  associatedFund?: string;
 }
 
 export const Ranking: StatelessComponent<RankingProps> = ({
@@ -24,7 +24,7 @@ export const Ranking: StatelessComponent<RankingProps> = ({
   search,
   setSearch,
   setOrdering,
-  usersFund,
+  associatedFund,
 }) => {
   const onOrdering = (field, e) => {
     if (setOrdering) {
@@ -101,7 +101,7 @@ export const Ranking: StatelessComponent<RankingProps> = ({
                   }&base=MLN-T&quote=WETH-T`}
                 >
                   <Card
-                    isActive={fund.address === usersFund && true}
+                    isActive={fund.address === associatedFund && true}
                     {...fund}
                   />
                 </Link>

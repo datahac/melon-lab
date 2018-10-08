@@ -189,7 +189,7 @@ type Query {
   recentTrades(baseTokenSymbol: String!, quoteTokenSymbol: String!): [Trade]
 
   # TODO: Make this return a Fund type.
-  usersFund(address: String!): String
+  associatedFund(address: String!): String
 }
 
 type Mutation {

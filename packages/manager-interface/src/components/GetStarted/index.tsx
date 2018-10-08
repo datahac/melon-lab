@@ -11,10 +11,10 @@ const getLink = props => {
       };
     }
 
-    if (props.usersFund) {
+    if (props.associatedFund) {
       return {
         query: {
-          address: props.usersFund
+          address: props.associatedFund
         },
         href: '/manage',
         text: 'Go to your fund',

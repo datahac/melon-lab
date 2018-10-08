@@ -27,7 +27,7 @@ const ethereumQuery = gql`
     onlyManagerCompetitionAddress:versionConfig(key: ONLY_MANAGER_COMPETITION_ADDRESS)
     noComplianceAddress:versionConfig(key: NO_COMPLIANCE_ADDRESS)
 
-    usersFund(address: $account) @include(if: $authenticated)
+    associatedFund(address: $account) @include(if: $authenticated)
     eth: balance(address: $account, token: ETH) @include(if: $authenticated)
     weth: balance(address: $account, token: WETH) @include(if: $authenticated)
     mln: balance(address: $account, token: MLN) @include(if: $authenticated)

@@ -11,7 +11,7 @@ const mutation = gql`
 
 const query = gql`
   query ConnectionQuery($account: String!) {
-    usersFund(address: $account)
+    associatedFund(address: $account)
   }
 `;
 
@@ -25,7 +25,7 @@ const FundMutation = ({ onCompleted, account, children }) => (
           account,
         },
         data: {
-          usersFund: createFund.address,
+          associatedFund: createFund.address,
         },
       });
     }}

@@ -77,8 +77,8 @@ export default {
     price: (_, { symbol }, { loaders }) => {
       return loaders.symbolPrice.load(symbol);
     },
-    usersFund: (_, { address }, { loaders }) => {
-      return loaders.usersFund(address);
+    associatedFund: (_, { address }, { loaders }) => {
+      return loaders.associatedFund(address);
     },
     balance: (_, { address, token }, { loaders }) => {
       switch (token) {

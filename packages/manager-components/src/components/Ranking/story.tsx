@@ -42,7 +42,7 @@ const data = {
     },
   ],
   loading: false,
-  usersFund: '0xce35Be39A76706f314B2B430e80DaCB77c886242',
+  associatedFund: '0xce35Be39A76706f314B2B430e80DaCB77c886242',
   search: '',
   ordering: '+rank',
   goToFund: action('goToFund'),
