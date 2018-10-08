@@ -47,7 +47,7 @@ export default {
       return takeLast(streams.synced$);
     },
     totalFunds: (_, __, { streams }) => {
-      return takeLast(streams.ranking$).then((value) => value && value.length);
+      return takeLast(streams.ranking$).then(value => value && value.length);
     },
     priceFeedUp: (_, __, { streams }) => {
       return takeLast(streams.priceFeed$);
@@ -56,7 +56,7 @@ export default {
       return takeLast(streams.peers$);
     },
     versionConfig: (_, { key }, { streams }) => {
-      return takeLast(streams.config$).then((config) => console.log(config, key) || config && config[key]);
+      return takeLast(streams.config$).then(config => config && config[key]);
     },
     provider: (_, __, { streams }) => {
       return takeLast(streams.provider$);
@@ -106,7 +106,7 @@ export default {
       return parent.instance.address;
     },
     rank: async (parent, _, { streams }) => {
-      return takeLast(streams.ranking$).then((ranking) => {
+      return takeLast(streams.ranking$).then(ranking => {
         const address = parent.instance.address;
         const entry = (ranking || []).find(rank => rank.address === address);
         return entry && entry.rank;
@@ -205,38 +205,34 @@ export default {
   Subscription: {
     ...Subscription,
     currentBlock: {
-      resolve: (value) => value,
+      resolve: value => value,
       subscribe: (_, __, { pubsub, streams }) => {
-        const stream$ = streams.block$
-          .skip(1)
-          .distinctUntilChanged(sameBlock);
+        const stream$ = streams.block$.skip(1).distinctUntilChanged(sameBlock);
 
         return subscribeStream(pubsub, 'current-block', stream$);
       },
     },
     nodeSynced: {
-      resolve: (value) => value,
+      resolve: value => value,
       subscribe: (_, __, { pubsub, streams }) => {
-        const stream$ = streams.synced$
-          .skip(1)
-          .distinctUntilChanged(R.equals);
+        const stream$ = streams.synced$.skip(1).distinctUntilChanged(R.equals);
 
         return subscribeStream(pubsub, 'node-synced', stream$);
       },
     },
     totalFunds: {
-      resolve: (value) => value,
+      resolve: value => value,
       subscribe: (_, __, { pubsub, streams }) => {
         const stream$ = streams.ranking$
           .skip(1)
-          .map((rankings) => rankings.length)
+          .map(rankings => rankings.length)
           .distinctUntilChanged(R.equals);
 
         return subscribeStream(pubsub, 'total-funds', stream$);
       },
     },
     priceFeedUp: {
-      resolve: (value) => value,
+      resolve: value => value,
       subscribe: (_, __, { pubsub, streams }) => {
         const stream$ = streams.priceFeed$
           .skip(1)
@@ -246,7 +242,7 @@ export default {
       },
     },
     peerCount: {
-      resolve: (value) => value,
+      resolve: value => value,
       subscribe: (_, __, { pubsub, streams }) => {
         const stream$ = streams.provider$
           .skip(1)
@@ -256,18 +252,18 @@ export default {
       },
     },
     versionConfig: {
-      resolve: (value) => value,
+      resolve: value => value,
       subscribe: (_, { key }, { pubsub, streams }) => {
         const stream$ = streams.config$
           .skip(1)
-          .map((config) => config && config[key])
+          .map(config => config && config[key])
           .distinctUntilChanged(R.equals);
 
         return subscribeStream(pubsub, `version-config:${key}`, stream$);
       },
     },
     provider: {
-      resolve: (value) => value,
+      resolve: value => value,
       subscribe: (_, __, { pubsub, streams }) => {
         const stream$ = streams.provider$
           .skip(1)
@@ -277,21 +273,17 @@ export default {
       },
     },
     network: {
-      resolve: (value) => value,
+      resolve: value => value,
       subscribe: (_, __, { pubsub, streams }) => {
-        const stream$ = streams.network$
-          .skip(1)
-          .distinctUntilChanged(R.equals);
+        const stream$ = streams.network$.skip(1).distinctUntilChanged(R.equals);
 
         return subscribeStream(pubsub, 'network', stream$);
       },
     },
     rankings: {
-      resolve: (value) => value,
+      resolve: value => value,
       subscribe: (_, __, { pubsub, streams }) => {
-        const stream$ = streams.ranking$
-          .skip(1)
-          .distinctUntilChanged(R.equals);
+        const stream$ = streams.ranking$.skip(1).distinctUntilChanged(R.equals);
 
         return subscribeStream(pubsub, 'rankings', stream$);
       },

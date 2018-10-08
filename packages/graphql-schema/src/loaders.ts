@@ -126,7 +126,7 @@ export default async (streams) => {
       const orders = environment && await getOpenOrders(environment, {
         fundAddress: address,
       }) || [];
-      
+
       return orders.map((order) => ({
         id: order.exchangeOrderId,
         isActive: true,
@@ -205,7 +205,7 @@ export default async (streams) => {
   const nativeBalance = new DataLoader(
     async (addresses) => Promise.all(addresses.map(nativeBalanceUncached)),
   );
-  
+
   const recentTrades = new DataLoader(
     async (pairs) => {
       const environment = await takeLast(streams.environment$);
@@ -222,7 +222,7 @@ export default async (streams) => {
   const generateMnemonic = async () => {
     const wallet = await createWallet();
     return wallet && wallet.mnemonic;
-  };  
+  };
 
   return {
     takeLast,
