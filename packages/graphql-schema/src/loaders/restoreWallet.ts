@@ -3,7 +3,7 @@ import {
   importWalletFromMnemonic,
 } from '@melonproject/melon.js';
 
-async function restoreWallet(_, { mnemonic, password }) {
+async function restoreWallet(mnemonic, password) {
   const decryptedWallet = await importWalletFromMnemonic(mnemonic);
   const encryptedWallet = await encryptWallet(decryptedWallet, password);
 

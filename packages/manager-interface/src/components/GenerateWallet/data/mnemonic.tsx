@@ -1,16 +1,16 @@
 import gql from 'graphql-tag';
-import { Query } from '~/apollo';
+import { Mutation } from '~/apollo';
 
-const query = gql`
-  query GetMnemonic {
-    mnemonic
+const mutation = gql`
+  mutation GenerateMnemonic {
+    generateMnemonic @client
   }
 `;
 
 const MnemonicQuery = ({ children }) => (
-  <Query query={query} ssr={false} fetchPolicy="network-only">
+  <Mutation mutation={mutation}>
     {children}
-  </Query>
+  </Mutation>
 );
 
 export default MnemonicQuery;

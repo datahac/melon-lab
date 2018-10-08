@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 
 const accountQuery = gql`
   query WalletQuery {
-    wallet {
+    wallet @client {
       encryptedWallet
       accountAddress
       privateKey

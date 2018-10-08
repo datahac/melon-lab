@@ -3,7 +3,7 @@ import { Mutation } from '~/apollo';
 
 const mutation = gql`
   mutation DecryptWallet($file: String!, $password: String!) {
-    decryptWallet(wallet: $file, password: $password) {
+    decryptWallet(wallet: $file, password: $password) @client {
       encryptedWallet
       accountAddress
       privateKey
@@ -13,7 +13,7 @@ const mutation = gql`
 
 const cacheQuery = gql`
   query GetWallet {
-    wallet {
+    wallet @client {
       encryptedWallet
       accountAddress
       privateKey

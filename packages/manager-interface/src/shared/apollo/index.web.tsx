@@ -1,9 +1,13 @@
 // Import the introspection results (handled with a custom webpack loader)
 // for the schema.
 import introspection from '@melonproject/graphql-schema/schema.gql';
+import generateMnemonic from '@melonproject/graphql-schema/loaders/generateMnemonic';
+import restoreWallet from '@melonproject/graphql-schema/loaders/restoreWallet';
+import decryptWallet from '@melonproject/graphql-schema/loaders/decryptWallet';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import { withClientState } from 'apollo-link-state';
 import ApolloClient from 'apollo-client';
-import { split } from 'apollo-link';
+import { split, from } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
@@ -27,9 +31,37 @@ const createLink = (options, cache) => {
     headers: options.headers,
   });
 
+  const stateLink = withClientState({
+    cache,
+    defaults: {
+      wallet: null,
+    },
+    resolvers: {
+      Mutation: {
+        generateMnemonic: () => {
+          return generateMnemonic();
+        },
+        decryptWallet: (_, { wallet, password }) => {
+          return decryptWallet(wallet, password).then((result) => ({
+            ...result,
+            __typename: 'Wallet',
+          }));
+        },
+        restoreWallet: (_, { mnemonic, password }) => {
+          return restoreWallet(mnemonic, password).then((result) => ({
+            ...result,
+            __typename: 'Wallet',
+          }));
+        },
+      },
+    },
+  });
+
+  const httpAndStateLink = from([stateLink, httpLink]);
+
   // Do not use the websocket link on the server.
   if (!process.browser) {
-    return httpLink;
+    return httpAndStateLink;
   }
 
   const wsLink = new WebSocketLink({
@@ -39,7 +71,7 @@ const createLink = (options, cache) => {
     },
   });
 
-  return split(isSubscription, wsLink, httpLink);
+  return split(isSubscription, wsLink, httpAndStateLink);
 };
 
 export const createClient = options => {

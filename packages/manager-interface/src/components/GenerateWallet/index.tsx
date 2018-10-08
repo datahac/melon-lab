@@ -1,7 +1,8 @@
 import GenerateWallet from '~/components/GenerateWallet/container';
+import { compose, lifecycle } from 'recompose';
 import Router from 'next/router';
 import WalletMutation from './data/wallet';
-import MnemonicQuery from './data/mnemonic';
+import MnemonicMutation from './data/mnemonic';
 
 const redirect = () =>
   Router.replace({
@@ -9,12 +10,13 @@ const redirect = () =>
   });
 
 const withGenerateWallet = BaseComponent => baseProps => (
-  <MnemonicQuery>
-    {mnemonicProps => (
+  <MnemonicMutation>
+    {(generateMnemonic, mnemonicProps) => (
       <WalletMutation onCompleted={redirect}>
         {(restoreWallet, restoreWalletProps) => (
           <BaseComponent
-            mnemonic={mnemonicProps.data && mnemonicProps.data.mnemonic}
+            generateMnemonic={generateMnemonic}
+            mnemonic={mnemonicProps.data && mnemonicProps.data.generateMnemonic}
             onSubmit={values =>
               restoreWallet({
                 variables: { ...values },
@@ -25,7 +27,16 @@ const withGenerateWallet = BaseComponent => baseProps => (
         )}
       </WalletMutation>
     )}
-  </MnemonicQuery>
+  </MnemonicMutation>
 );
 
-export default withGenerateWallet(GenerateWallet);
+const withMnemonic = lifecycle({
+  componentDidMount() {
+    this.props.generateMnemonic();
+  },
+});
+
+export default compose(
+  withGenerateWallet,
+  withMnemonic,
+)(GenerateWallet);

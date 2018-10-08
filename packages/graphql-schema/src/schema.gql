@@ -169,7 +169,6 @@ type Signature {
 }
 
 type Query {
-  mnemonic: String
   network: String
   provider: String
   currentBlock: String
@@ -204,6 +203,7 @@ type Mutation {
   deleteWallet: Boolean!
   decryptWallet(wallet: String!, password: String!): Wallet
   restoreWallet(mnemonic: String!, password: String!): Wallet
+  generateMnemonic: String
 }
 
 type Subscription {

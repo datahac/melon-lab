@@ -30,9 +30,6 @@ export default {
     KYBER_ADAPTER: 'kyberAdapter',
   },
   Query: {
-    mnemonic: (_, __, { loaders }) => {
-      return loaders.generateMnemonic();
-    },
     openOrders: async (_, { address }, { loaders }) => {
       const contract = await loaders.fundContract.load(address);
       return loaders.fundOpenOrders.load(contract);
@@ -195,8 +192,15 @@ export default {
   Mutation: {
     cancelOpenOrder: require('./resolvers/Mutation/cancelOpenOrder').default,
     createFund: require('./resolvers/Mutation/createFund').default,
-    decryptWallet: require('./resolvers/Mutation/decryptWallet').default,
-    restoreWallet: require('./resolvers/Mutation/restoreWallet').default,
+    decryptWallet: (_, { wallet, password }, { loaders }) => {
+      return loaders.decryptWallet(wallet, password);
+    },
+    restoreWallet: (_, { mnemonic, password }, { loaders }) => {
+      return loaders.restoreWallet(mnemonic, password);
+    },
+    generateMnemonic: (_, __, { loaders }) => {
+      return loaders.generateMnemonic();
+    },
     deleteWallet: () => {
       // This needs to be implement in the concrete client implementation.
       return true;

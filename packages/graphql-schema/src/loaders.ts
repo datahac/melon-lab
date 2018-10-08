@@ -1,6 +1,9 @@
 import DataLoader from 'dataloader';
 import Utils from 'ethers-utils';
 import takeLast from './utils/takeLast';
+import decryptWallet from './loaders/decryptWallet';
+import restoreWallet from './loaders/restoreWallet';
+import generateMnemonic from './loaders/generateMnemonic';
 import {
   getHoldingsAndPrices,
   getFundContract,
@@ -10,7 +13,6 @@ import {
   getFundForManager,
   getRecentTrades,
   getOpenOrders,
-  createWallet,
   toReadable,
 } from '@melonproject/melon.js';
 
@@ -219,11 +221,6 @@ export default async (streams) => {
     },
   );
 
-  const generateMnemonic = async () => {
-    const wallet = await createWallet();
-    return wallet && wallet.mnemonic;
-  };
-
   return {
     takeLast,
     fundContract,
@@ -246,5 +243,7 @@ export default async (streams) => {
     etherBalanceUncached,
     usersFund,
     generateMnemonic,
+    decryptWallet,
+    restoreWallet,
   };
 };

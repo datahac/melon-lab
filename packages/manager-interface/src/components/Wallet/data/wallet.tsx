@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 
 const query = gql`
   query GetWallet {
-    wallet {
+    wallet @client {
       encryptedWallet
       accountAddress
       privateKey
