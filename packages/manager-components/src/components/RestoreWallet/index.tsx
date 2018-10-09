@@ -32,7 +32,7 @@ export const RestoreWallet: StatelessComponent<RestoreWalletProps> = ({
 }) => (
   <div className="restore-wallet">
     <style jsx>{styles}</style>
-    <h3>Restore Wallet</h3>
+    <h1>Restore Wallet</h1>
     {loading ? (
       <Spinner icon size="small" text="Restore Wallet..." />
     ) : (

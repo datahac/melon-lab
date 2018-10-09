@@ -9,7 +9,10 @@ import displayNumber from '~/utils/displayNumber';
 import styles from './styles.css';
 
 export interface WalletProps {
-  associatedFund?: string;
+  associatedFund?: {
+    address: string;
+    name: string;
+  };
   currentAddress?: string;
   deleteWallet: () => void;
   isCompetition?: boolean;
@@ -40,7 +43,7 @@ export const Wallet: StatelessComponent<WalletProps> = ({
   return (
     <div className="wallet">
       <style jsx>{styles}</style>
-      <h3>Your Wallet</h3>
+      <h1>Your Wallet</h1>
       {loading ? (
         <Spinner icon size="small" />
       ) : (
@@ -98,22 +101,45 @@ export const Wallet: StatelessComponent<WalletProps> = ({
                   </code>
                 </p>
               </div>
-              <hr />
-              {associatedFund && (
+              {associatedFund ? (
+                <Fragment>
+                  <h2>Your fund</h2>
+
+                  <Link
+                    href={{
+                      pathname: '/manage',
+                      query: { address: associatedFund.address },
+                    }}
+                  >
+                    <StyledLink style="primary" size="medium" passHref>
+                      {associatedFund.name}
+                    </StyledLink>
+                  </Link>
+                  <p>
+                    Fund address:{' '}
+                    <strong>
+                      <a
+                        href={`https://${
+                          networkId === 'KOVAN' ? 'kovan.' : ''
+                        }etherscan.io/address/${associatedFund.address}`}
+                        target="_blank"
+                      >
+                        {associatedFund.address}
+                      </a>
+                    </strong>
+                  </p>
+                </Fragment>
+              ) : (
                 <p>
-                  Associated fund address:{' '}
-                  <strong>
-                    <a
-                      href={`https://${
-                        networkId === 'KOVAN' ? 'kovan.' : ''
-                      }etherscan.io/address/${associatedFund}`}
-                      target="_blank"
-                    >
-                      {associatedFund}
-                    </a>
-                  </strong>
+                  <Link href="/setup" passHref>
+                    <StyledLink style="primary" size="medium" passHref>
+                      Setup your fund
+                    </StyledLink>
+                  </Link>
                 </p>
               )}
+
+              <hr />
 
               <p>
                 <strong>
@@ -132,28 +158,6 @@ export const Wallet: StatelessComponent<WalletProps> = ({
                   </StyledLink>
                 </Link>
               </p>
-              {!associatedFund ? (
-                <p>
-                  <Link href="/setup" passHref>
-                    <StyledLink style="primary" size="medium" passHref>
-                      Setup your fund
-                    </StyledLink>
-                  </Link>
-                </p>
-              ) : (
-                <p>
-                  <Link
-                    href={{
-                      pathname: '/manage',
-                      query: { address: associatedFund },
-                    }}
-                  >
-                    <StyledLink style="secondary" size="medium" passHref>
-                      Go to your fund
-                    </StyledLink>
-                  </Link>
-                </p>
-              )}
               <hr />
               {!isCompetition && (
                 <Fragment>

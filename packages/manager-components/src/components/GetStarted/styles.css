@@ -23,6 +23,10 @@
   }
 }
 
+.get-started__title::after {
+  border: none;
+}
+
 .get-started__welcome {
   padding-right: var(--space-l);
   flex: 0 0 50%;

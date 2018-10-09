@@ -40,12 +40,29 @@
   box-sizing: border-box;
 }
 
-:global(h3) {
+:global(h2) {
+  font-size: var(--font-size-l);
+  position: relative;
+}
+
+:global(h2):after {
+  content: ' ';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+:global(h3),
+:global(h1) {
   font-size: var(--font-size-xl);
   position: relative;
 }
 
-:global(h3):after {
+:global(h3):after,
+:global(h1):after {
   content: ' ';
   position: absolute;
   bottom: -5px;

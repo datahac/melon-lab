@@ -31,7 +31,7 @@ export const DownloadWallet: StatelessComponent<DownloadWalletProps> = ({
 }) => (
   <div className="download-wallet">
     <style jsx>{styles}</style>
-    <h3>Download Wallet</h3>
+    <h1>Download Wallet</h1>
     {loading ? (
       <Spinner icon size="small" text="Preparing download" />
     ) : (

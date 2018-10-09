@@ -29,6 +29,7 @@ const ethereumQuery = gql`
 
     associatedFund(address: $account) @include(if: $authenticated) {
       address
+      name
     }
     eth: balance(address: $account, token: ETH) @include(if: $authenticated)
     weth: balance(address: $account, token: WETH) @include(if: $authenticated)

@@ -39,7 +39,7 @@ export const ImportWallet: StatelessComponent<ImportWalletProps> = ({
 }) => (
   <div className="import-wallet">
     <style jsx>{styles}</style>
-    <h3>Import wallet</h3>
+    <h1>Import wallet</h1>
     <div className="import-wallet__error">
       {serverError && <Notification isError>{serverError}</Notification>}
     </div>
