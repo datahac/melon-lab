@@ -68,7 +68,6 @@ export const Setup: StatelessComponent<SetupProps> = ({
 }) => (
   <div className="setup">
     <style jsx>{styles}</style>
-    <h1>Setup your fund</h1>
 
     <Modal
       title="Terms and Conditions"
