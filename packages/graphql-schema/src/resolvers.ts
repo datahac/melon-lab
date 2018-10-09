@@ -69,7 +69,9 @@ export default {
     },
     associatedFund: async (_, { address }, { loaders }) => {
       const fundAddress = await loaders.fundAddressFromManager.load(address);
-      return fundAddress && await loaders.fundContract.load(fundAddress) || null;
+      return (
+        (fundAddress && (await loaders.fundContract.load(fundAddress))) || null
+      );
     },
     funds: async (_, args, { loaders }) => {
       const addresses = await (args.addresses ||

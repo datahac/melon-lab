@@ -23,9 +23,16 @@ export default {
       return null;
     };
 
-    const balance$ = Rx.Observable.combineLatest(streams.environment$, streams.config$, streams.block$, (environment, config) => [environment, config])
+    const balance$ = Rx.Observable.combineLatest(
+      streams.environment$,
+      streams.config$,
+      streams.block$,
+      (environment, config) => [environment, config],
+    )
       .debounceTime(5000)
-      .switchMap(([environment, config]) => Rx.Observable.fromPromise(getBalance(environment, config)))
+      .switchMap(([environment, config]) =>
+        Rx.Observable.fromPromise(getBalance(environment, config)),
+      )
       .distinctUntilChanged(R.equals);
 
     const channel = `balance:${address}:${token}`;

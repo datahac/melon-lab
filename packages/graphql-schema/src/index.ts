@@ -20,50 +20,36 @@ export async function createContext(track, endpoint, pubsub) {
     errors.delay(1000),
   );
 
-  const network$ = environment$.map(
-    environment => environment && getNetwork(environment),
-  );
-
-  const provider$ = environment$.map(
-    environment => environment && getProviderType(environment),
-  );
-
-  const config$ = environment$.switchMap(
-    environment => environment && getConfig(environment),
-  );
-
-  const block$ = environment$.switchMap(
-    environment => environment && pollBlock(environment),
-  );
-
-  const ranking$ = environment$.switchMap(
-    environment => environment && pollRanking(environment),
-  );
-
-  const synced$ = environment$.switchMap(
-    environment => environment && pollSynced(environment),
-  );
-
-  const peers$ = environment$.switchMap(
-    environment => environment && pollPeers(environment),
-  );
-
-  const priceFeed$ = environment$.switchMap(
-    environment => environment && pollPriceFeed(environment),
-  );
-
   const timeout = timeoutAfter(5000, null);
-  const streams = {
-    environment$: environment$.race(timeout).shareReplay(1),
-    block$: block$.race(timeout).shareReplay(1),
-    synced$: synced$.race(timeout).shareReplay(1),
-    config$: config$.race(timeout).shareReplay(1),
-    provider$: provider$.race(timeout).shareReplay(1),
-    network$: network$.race(timeout).shareReplay(1),
-    ranking$: ranking$.race(timeout).shareReplay(1),
-    peers$: peers$.race(timeout).shareReplay(1),
-    priceFeed$: priceFeed$.race(timeout).shareReplay(1),
+  const factory = {
+    network$: environment => environment && getNetwork(environment),
+    provider$: environment => environment && getProviderType(environment),
+    config$: environment => environment && getConfig(environment),
+    block$: environment => environment && pollBlock(environment),
+    ranking$: environment => environment && pollRanking(environment),
+    synced$: environment => environment && pollSynced(environment),
+    peers$: environment => environment && pollPeers(environment),
+    priceFeed$: environment => environment && pollPriceFeed(environment),
   };
+
+  const streams = Object.keys(factory).reduce(
+    (acc, key) => {
+      const stream$ = environment$
+        .switchMap(factory[key])
+        .race(timeout)
+        .publishReplay(1);
+
+      return {
+        ...acc,
+        [key]: stream$,
+      };
+    },
+    {
+      environment$: environment$.race(timeout).publishReplay(1),
+    },
+  );
+
+  Object.values(streams).forEach(stream$ => stream$.connect());
 
   return async () => {
     const loaders = await createLoaders(streams);
