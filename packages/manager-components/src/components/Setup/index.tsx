@@ -204,7 +204,24 @@ export const Setup: StatelessComponent<SetupProps> = ({
               )}
               Risk Management: <strong>Disabled (all trades allowed)</strong>
             </div>
-            <Button type="submit">Create and deploy my fund!</Button>
+            <div className="setup__actions">
+              <div className="setup__action">
+                <Link
+                  style="secondary"
+                  size="medium"
+                  href={{
+                    pathname: '/wallet',
+                  }}
+                >
+                  Cancel
+                </Link>
+              </div>
+              <div className="setup__action">
+                <Button type="submit" style="primary">
+                  Create fund
+                </Button>
+              </div>
+            </div>
           </Form>
         )}
       </Fragment>
