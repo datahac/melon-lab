@@ -5,6 +5,7 @@ import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Spinner from '~/blocks/Spinner';
 import Notification from '../../blocks/Notification';
+import Link from '~/blocks/Link';
 
 import styles from './styles.css';
 
@@ -76,9 +77,24 @@ export const ImportWallet: StatelessComponent<ImportWalletProps> = ({
                 error={touched.password && errors.password}
               />
             </div>
-            <Button type="submit" style="secondary">
-              Import
-            </Button>
+            <div className="import-wallet__actions">
+              <div className="import-wallet__action">
+                <Link
+                  style="secondary"
+                  size="medium"
+                  href={{
+                    pathname: '/wallet',
+                  }}
+                >
+                  Cancel
+                </Link>
+              </div>
+              <div className="import-wallet__action">
+                <Button type="submit" style="primary">
+                  Import
+                </Button>
+              </div>
+            </div>
           </Form>
         )}
       </Fragment>

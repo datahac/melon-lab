@@ -6,3 +6,8 @@
 .import-wallet__error {
   margin-bottom: var(--space-m);
 }
+
+.import-wallet__actions {
+  display: flex;
+  justify-content: space-between;
+}

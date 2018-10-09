@@ -49,10 +49,12 @@ export const GenerateWallet: StatelessComponent<GenerateWalletProps> = ({
               which your wallet will be cryptographically derived.
             </p>
             <p>
-              Please write down the following mnemonic and store it in a safe
-              place! If you loose your mnemonic you will not be able to access
-              your fund again. If someone else gets a copy of this, they can
-              take over your wallet & fund and steal your price!
+              <b>
+                Please write down the following mnemonic and store it in a safe
+                place! If you loose your mnemonic you will not be able to access
+                your fund again. If someone else gets a copy of this, they can
+                take over your wallet & fund and steal your price!
+              </b>
             </p>
             <p className="generate-wallet__mnemonic">{mnemonic}</p>
 
@@ -70,7 +72,7 @@ export const GenerateWallet: StatelessComponent<GenerateWalletProps> = ({
               </div>
               <div className="generate-wallet__action">
                 <Button style="primary" onClick={() => setShowForm(true)}>
-                  I have written down the mnemonic
+                  Confirm
                 </Button>
               </div>
             </div>
