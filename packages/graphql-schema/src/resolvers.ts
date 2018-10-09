@@ -217,12 +217,12 @@ export default {
   Mutation: {
     // TODO: Inline these.
     cancelOpenOrder: require('./resolvers/Mutation/cancelOpenOrder').default,
-    setupFundPrepare: async (_, { name, account, signature, exchanges }, { streams }) => {
+    prepareSetupFund: async (_, { name, account, signature, exchanges }, { streams }) => {
       const environment = await takeLast(streams.environment$);
       const config = await takeLast(streams.config$);
       return prepareSetupFund(environment, config, name, account, signature, exchanges);
     },
-    setupFundExecute: async (_, { transaction }, { streams }) => {
+    executeSetupFund: async (_, { transaction }, { streams }) => {
       const environment = await takeLast(streams.environment$);
       const config = await takeLast(streams.config$);
       return executeSetupFund(environment, config, transaction);
