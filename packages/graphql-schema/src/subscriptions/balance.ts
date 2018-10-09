@@ -10,22 +10,22 @@ export default {
     return balance;
   },
   subscribe: async (_, { address, token }, { pubsub, streams }) => {
-    const getBalance = async (environment) => {
+    const getBalance = async (environment, config) => {
       switch (token) {
         case 'WETH':
-          return nativeBalance(environment, address);
+          return nativeBalance(environment, config, address);
         case 'ETH':
-          return etherBalance(environment, address);
+          return etherBalance(environment, config, address);
         case 'MLN':
-          return melonBalance(environment, address);
+          return melonBalance(environment, config, address);
       }
 
       return null;
     };
 
-    const balance$ = Rx.Observable.combineLatest(streams.environment$, streams.block$, (environment) => environment)
+    const balance$ = Rx.Observable.combineLatest(streams.environment$, streams.config$, streams.block$, (environment, config) => [environment, config])
       .debounceTime(5000)
-      .switchMap((environment) => Rx.Observable.fromPromise(getBalance(environment)))
+      .switchMap(([environment, config]) => Rx.Observable.fromPromise(getBalance(environment, config)))
       .distinctUntilChanged(R.equals);
 
     const channel = `balance:${address}:${token}`;
