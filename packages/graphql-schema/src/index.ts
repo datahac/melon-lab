@@ -20,34 +20,30 @@ export async function createContext(track, endpoint, pubsub) {
     errors.delay(1000),
   );
 
+  const derive = fn => environment => environment && fn(environment);
   const timeout = timeoutAfter(5000, null);
   const factory = {
-    network$: environment => environment && getNetwork(environment),
-    provider$: environment => environment && getProviderType(environment),
-    config$: environment => environment && getConfig(environment),
-    block$: environment => environment && pollBlock(environment),
-    ranking$: environment => environment && pollRanking(environment),
-    synced$: environment => environment && pollSynced(environment),
-    peers$: environment => environment && pollPeers(environment),
-    priceFeed$: environment => environment && pollPriceFeed(environment),
+    environment$: environment$ => environment$,
+    network$: environment$ => environment$.map(derive(getNetwork)),
+    provider$: environment$ => environment$.map(derive(getProviderType)),
+    config$: environment$ => environment$.switchMap(derive(getConfig)),
+    block$: environment$ => environment$.switchMap(derive(pollBlock)),
+    ranking$: environment$ => environment$.switchMap(derive(pollRanking)),
+    synced$: environment$ => environment$.switchMap(derive(pollSynced)),
+    peers$: environment$ => environment$.switchMap(derive(pollPeers)),
+    priceFeed$: environment$ => environment$.switchMap(derive(pollPriceFeed)),
   };
 
-  const streams = Object.keys(factory).reduce(
-    (acc, key) => {
-      const stream$ = environment$
-        .switchMap(factory[key])
-        .race(timeout)
-        .publishReplay(1);
+  const streams = Object.keys(factory).reduce((acc, key) => {
+    const stream$ = factory[key](environment$)
+      .race(timeout)
+      .publishReplay(1);
 
-      return {
-        ...acc,
-        [key]: stream$,
-      };
-    },
-    {
-      environment$: environment$.race(timeout).publishReplay(1),
-    },
-  );
+    return {
+      ...acc,
+      [key]: stream$,
+    };
+  }, {});
 
   Object.values(streams).forEach(stream$ => stream$.connect());
 
