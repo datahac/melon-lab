@@ -43,12 +43,11 @@ export const Wallet: StatelessComponent<WalletProps> = ({
   return (
     <div className="wallet">
       <style jsx>{styles}</style>
-      <h1>Your Wallet</h1>
       {loading ? (
         <Spinner icon size="small" />
       ) : (
         <Fragment>
-          {currentAddress ? (
+          {currentAddress && (
             <Fragment>
               <div className="wallet__info">
                 <p>
@@ -176,13 +175,6 @@ export const Wallet: StatelessComponent<WalletProps> = ({
                   </p>
                 </Fragment>
               )}
-            </Fragment>
-          ) : (
-            <Fragment>
-              <p>
-                Before you can setup your fund, you need to import, restore or
-                create a wallet:
-              </p>
             </Fragment>
           )}
 

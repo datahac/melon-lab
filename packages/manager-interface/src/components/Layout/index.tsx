@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '~/components/Header';
 import Footer from '~/components/Footer';
+import Title from '~/blocks/Title';
 import Content from '~/design/Layout';
 import { networks } from '@melonproject/melon.js';
 
@@ -24,6 +25,12 @@ const Layout = ({ children, noHeader = false, ...props }) => (
     }}
     Footer={Footer}
     FooterProps
+    Title={Title}
+    TitleProps={{
+      title: props.title,
+      text: props.text,
+      icon: props.icon,
+    }}
   >
     {children}
   </Content>

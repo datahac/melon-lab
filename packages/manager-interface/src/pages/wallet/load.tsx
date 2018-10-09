@@ -3,7 +3,7 @@ import Layout from '+/components/Layout';
 import LoadWallet from '+/components/LoadWallet';
 
 const Page = props => (
-  <Layout {...props}>
+  <Layout {...props} title="Load Wallet">
     <LoadWallet />
   </Layout>
 );

@@ -3,7 +3,7 @@ import Layout from '+/components/Layout';
 import DownloadWallet from '+/components/DownloadWallet';
 
 const Page = props => (
-  <Layout {...props}>
+  <Layout {...props} title="Download Wallet">
     <DownloadWallet {...props} />
   </Layout>
 );

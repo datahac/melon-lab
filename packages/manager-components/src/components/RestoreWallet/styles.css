@@ -1,12 +1,12 @@
-.restore-wallet {
-  max-width: 400px;
-  margin: 0 auto var(--space-xl) auto;
-}
-
 .restore-wallet__input {
   margin-bottom: var(--space-m);
 }
 
 .restore-wallet__error {
   color: var(--color-loss);
+}
+
+.restore-wallet__actions {
+  display: flex;
+  justify-content: space-between;
 }

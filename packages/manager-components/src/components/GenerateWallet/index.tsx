@@ -3,6 +3,8 @@ import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Spinner from '~/blocks/Spinner';
+import StyledLink from '~/blocks/Link';
+import Link from '~/link';
 
 import styles from './styles.css';
 
@@ -37,7 +39,6 @@ export const GenerateWallet: StatelessComponent<GenerateWalletProps> = ({
 }) => (
   <div className="generate-wallet">
     <style jsx>{styles}</style>
-    <h1>Create Wallet</h1>
     {loading ? (
       <Spinner icon size="small" text="Generating Wallet..." />
     ) : (
@@ -56,11 +57,24 @@ export const GenerateWallet: StatelessComponent<GenerateWalletProps> = ({
             </p>
             <p className="generate-wallet__mnemonic">{mnemonic}</p>
 
-            <p>
-              <Button style="secondary" onClick={() => setShowForm(true)}>
-                I have written down the mnemonic
-              </Button>
-            </p>
+            <div className="generate-wallet__actions">
+              <div className="generate-wallet__action">
+                <Link
+                  href={{
+                    pathname: '/wallet',
+                  }}
+                >
+                  <StyledLink style="secondary" size="medium" passHref>
+                    Cancel
+                  </StyledLink>
+                </Link>
+              </div>
+              <div className="generate-wallet__action">
+                <Button style="primary" onClick={() => setShowForm(true)}>
+                  I have written down the mnemonic
+                </Button>
+              </div>
+            </div>
           </Fragment>
         ) : (
           <Form onSubmit={handleSubmit}>
@@ -89,9 +103,25 @@ export const GenerateWallet: StatelessComponent<GenerateWalletProps> = ({
                 error={touched.password && errors.password}
               />
             </div>
-            <Button type="submit" style="secondary">
-              Create
-            </Button>
+
+            <div className="generate-wallet__actions">
+              <div className="generate-wallet__action">
+                <Link
+                  href={{
+                    pathname: '/wallet',
+                  }}
+                >
+                  <StyledLink style="secondary" size="medium" passHref>
+                    Cancel
+                  </StyledLink>
+                </Link>
+              </div>
+              <div className="generate-wallet__action">
+                <Button type="submit" style="primary">
+                  Create
+                </Button>
+              </div>
+            </div>
           </Form>
         )}
       </Fragment>

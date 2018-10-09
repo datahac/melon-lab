@@ -3,6 +3,8 @@ import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Spinner from '~/blocks/Spinner';
+import StyledLink from '~/blocks/Link';
+import Link from '~/link';
 
 import styles from './styles.css';
 
@@ -31,7 +33,6 @@ export const DownloadWallet: StatelessComponent<DownloadWalletProps> = ({
 }) => (
   <div className="download-wallet">
     <style jsx>{styles}</style>
-    <h1>Download Wallet</h1>
     {loading ? (
       <Spinner icon size="small" text="Preparing download" />
     ) : (
@@ -49,9 +50,24 @@ export const DownloadWallet: StatelessComponent<DownloadWalletProps> = ({
             error={touched.password && errors.password}
           />
         </div>
-        <Button type="submit" style="secondary">
-          Download
-        </Button>
+        <div className="download-wallet__actions">
+          <div className="download-wallet__action">
+            <Link
+              href={{
+                pathname: '/wallet',
+              }}
+            >
+              <StyledLink style="secondary" size="medium" passHref>
+                Cancel
+              </StyledLink>
+            </Link>
+          </div>
+          <div className="download-wallet__action">
+            <Button type="submit" style="primary">
+              Download
+            </Button>
+          </div>
+        </div>
       </Form>
     )}
   </div>

@@ -1,0 +1,26 @@
+.title {
+  position: relative;
+  display: flex;
+}
+
+.title__title {
+  margin: 0;
+}
+
+.title__title::after {
+  border: none;
+}
+
+.title__icon {
+  height: 62px;
+  padding: var(--space-xs) 0;
+  flex: 0 0 80px;
+}
+
+.title__headline {
+  align-self: center;
+}
+
+.title__text {
+  margin-top: var(--space-xs);
+}

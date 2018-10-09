@@ -3,6 +3,8 @@ import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Spinner from '~/blocks/Spinner';
+import StyledLink from '~/blocks/Link';
+import Link from '~/link';
 
 import styles from './styles.css';
 
@@ -32,7 +34,6 @@ export const RestoreWallet: StatelessComponent<RestoreWalletProps> = ({
 }) => (
   <div className="restore-wallet">
     <style jsx>{styles}</style>
-    <h1>Restore Wallet</h1>
     {loading ? (
       <Spinner icon size="small" text="Restore Wallet..." />
     ) : (
@@ -63,9 +64,25 @@ export const RestoreWallet: StatelessComponent<RestoreWalletProps> = ({
             error={touched.password && errors.password}
           />
         </div>
-        <Button type="submit" style="secondary">
-          Restore
-        </Button>
+
+        <div className="restore-wallet__actions">
+          <div className="restore-wallet__action">
+            <Link
+              href={{
+                pathname: '/wallet',
+              }}
+            >
+              <StyledLink style="secondary" size="medium" passHref>
+                Cancel
+              </StyledLink>
+            </Link>
+          </div>
+          <div className="restore-wallet__action">
+            <Button type="submit" style="primary">
+              Restore
+            </Button>
+          </div>
+        </div>
       </Form>
     )}
   </div>

@@ -6,6 +6,13 @@ const data = {
   name: 'logos_default',
 };
 
-storiesOf('Blocks|Icon', module).add('Default', () => {
-  return <Icon {...data} />;
-});
+storiesOf('Blocks|Icon', module)
+  .add('Logo', () => {
+    return <Icon {...data} />;
+  })
+  .add('Wallet', () => {
+    return <Icon name="icons_wallet" />;
+  })
+  .add('Twitter', () => {
+    return <Icon name="icons_twitter" />;
+  });

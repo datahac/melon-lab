@@ -5,15 +5,23 @@ import styles from './styles.css';
 
 export interface LayoutProps {
   noHeader: boolean;
+  Header;
+  HeaderProps;
+  Footer;
+  FooterProps;
+  Title;
+  TitleProps;
 }
 
 const Layout: StatelessComponent<LayoutProps> = ({
   children,
   noHeader,
   Header,
-  HeaderProps,
+  HeaderProps = {},
   Footer,
-  FooterProps,
+  FooterProps = {},
+  Title,
+  TitleProps = {},
 }) => {
   const layoutClassNames = classNames('layout', {
     'layout--no-header': noHeader,
@@ -22,15 +30,28 @@ const Layout: StatelessComponent<LayoutProps> = ({
   return (
     <div className={layoutClassNames}>
       <style jsx>{styles}</style>
-      <div className="layout__header">
-        {!noHeader && Header && <Header {...HeaderProps} />}
+      {!noHeader &&
+        Header && (
+          <div className="layout__header">
+            <Header {...HeaderProps} />
+          </div>
+        )}
+
+      <div className="layout__content-wrap">
+        {TitleProps.title && (
+          <div className="layout__title">
+            <Title {...TitleProps} />
+          </div>
+        )}
+
+        <div className="layout__content">{children}</div>
       </div>
 
-      <div className="layout__content">{children}</div>
-
-      <div className="layout__footer">
-        {Footer && <Footer {...FooterProps} />}
-      </div>
+      {Footer && (
+        <div className="layout__footer">
+          <Footer {...FooterProps} />
+        </div>
+      )}
     </div>
   );
 };

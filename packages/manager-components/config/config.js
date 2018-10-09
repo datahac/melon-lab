@@ -7,7 +7,11 @@ const stories = require.context('../src', true, /\/story\.(tsx?)$/);
 
 const CenterDecorator = storyFn => {
   const a = storyFn()
-  return <Layout>{a}</Layout>;
+  if(storyFn().type.name !== "Layout") {
+    return <Layout>{a}</Layout>;
+  } else {
+    return a
+  }
 };
 
 addDecorator(CenterDecorator);
