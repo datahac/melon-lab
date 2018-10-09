@@ -68,7 +68,7 @@ export default {
       return loaders.fundContract.load(address);
     },
     associatedFund: async (_, { address }, { loaders }) => {
-      const fundAddress = await loaders.fundAddress(address);
+      const fundAddress = await loaders.fundAddress.load(address);
       return loaders.fundContract.load(fundAddress);
     },
     funds: async (_, args, { loaders }) => {

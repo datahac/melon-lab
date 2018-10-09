@@ -19,16 +19,16 @@ import {
 const contractCache = contract => contract.instance.address;
 
 export default async streams => {
-  const fundAddress = async managerAddress => {
+  const fundAddress = new DataLoader(async addresses => {
     const environment = await takeLast(streams.environment$);
 
     return (
       environment &&
-      (await getFundForManager(environment, {
-        managerAddress,
-      }))
+      addresses.map(address => {
+        return getFundForManager(environment, { managerAddress: address });
+      })
     );
-  };
+  });
 
   const fundContract = new DataLoader(async addresses => {
     const environment = await takeLast(streams.environment$);
