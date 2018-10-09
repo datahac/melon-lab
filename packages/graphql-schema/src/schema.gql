@@ -1,3 +1,5 @@
+directive @insecure on FIELD_DEFINITION
+
 scalar DateTime
 scalar Quantity
 scalar Symbol
@@ -42,9 +44,9 @@ enum ConfigKeyEnum {
 }
 
 type Wallet {
-  accountAddress: String
-  privateKey: String
-  encryptedWallet: String
+  accountAddress: String @insecure
+  privateKey: String @insecure
+  encryptedWallet: String @insecure
 }
 
 type Ranking {
@@ -161,6 +163,7 @@ type Signature {
 }
 
 type Query {
+  wallet: Wallet @insecure
   network: String
   provider: String
   currentBlock: String
@@ -171,7 +174,6 @@ type Query {
   totalFunds: Int
   balance(token: TokenEnum!, address: String!): String
   price(symbol: Symbol!): String
-  wallet: Wallet
   fund(address: String!): Fund
   funds(addresses: [String]): [Fund]
   rankings: [Ranking]
@@ -190,10 +192,10 @@ type Mutation {
     takerAssetSymbol: String!
   ): [Order]
   createFund(name: String!, privateKey: String!): Fund
-  deleteWallet: Boolean!
-  decryptWallet(wallet: String!, password: String!): Wallet
-  restoreWallet(mnemonic: String!, password: String!): Wallet
-  generateMnemonic: String
+  deleteWallet: Boolean! @insecure
+  decryptWallet(wallet: String!, password: String!): Wallet @insecure
+  restoreWallet(mnemonic: String!, password: String!): Wallet @insecure
+  generateMnemonic: String @insecure
 }
 
 type Subscription {

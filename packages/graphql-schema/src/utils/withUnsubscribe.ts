@@ -8,10 +8,13 @@ function withUnsubscribe<T, V>(
   publish: (value: T) => void,
 ): AsyncIterator<T> {
   const end$ = new Rx.Subject<boolean>();
-  observable$.takeUntil(end$).catch((error) => {
-    // Transport any errors into the response.
-    return Rx.Observable.of(error);
-  }).subscribe(publish);
+  observable$
+    .takeUntil(end$)
+    .catch(error => {
+      // Transport any errors into the response.
+      return Rx.Observable.of(error);
+    })
+    .subscribe(publish);
 
   // @ts-ignore: $$asyncIterator is considered the same as Symbol.asyncIterator by TypeScript.
   return {
@@ -21,18 +24,18 @@ function withUnsubscribe<T, V>(
       return iterator.return
         ? iterator.return(value)
         : {
-          done: true,
-          value,
-        };
+            done: true,
+            value,
+          };
     },
     throw(error) {
       end$.error(error);
       return iterator.throw
         ? iterator.throw(error)
         : {
-          done: true,
-          value: undefined,
-        };
+            done: true,
+            value: undefined,
+          };
     },
     [$$asyncIterator]() {
       return this;

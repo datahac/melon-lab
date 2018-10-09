@@ -1,9 +1,9 @@
 // Import the introspection results (handled with a custom webpack loader)
 // for the schema.
 import introspection from '@melonproject/graphql-schema/schema.gql';
-import generateMnemonic from '@melonproject/graphql-schema/loaders/generateMnemonic';
-import restoreWallet from '@melonproject/graphql-schema/loaders/restoreWallet';
-import decryptWallet from '@melonproject/graphql-schema/loaders/decryptWallet';
+import generateMnemonic from '@melonproject/graphql-schema/loaders/wallet/generateMnemonic';
+import restoreWallet from '@melonproject/graphql-schema/loaders/wallet/restoreWallet';
+import decryptWallet from '@melonproject/graphql-schema/loaders/wallet/decryptWallet';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
 import ApolloClient from 'apollo-client';

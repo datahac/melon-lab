@@ -1,9 +1,8 @@
 import * as R from 'ramda';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
-import Order from './resolvers/Order';
-import Quantity from './resolvers/Quantity';
-import Subscription from './resolvers/Subscription';
-import Symbol from './resolvers/Symbol';
+import Order from './types/Order';
+import Quantity from './types/Quantity';
+import Symbol from './types/Symbol';
 import subscribeStream from './utils/subscribeStream';
 import takeLast from './utils/takeLast';
 import sameBlock from './utils/sameBlock';
@@ -12,6 +11,7 @@ export default {
   DateTime,
   Symbol,
   Quantity,
+  Order,
   ConfigKeyEnum: {
     CANONICAL_PRICE_FEED_ADDRESS: 'onlyManagerCompetitionAddress',
     COMPETITION_COMPLIANCE_ADDRESS: 'competitionComplianceAddress',
@@ -68,10 +68,8 @@ export default {
       return loaders.fundContract.load(address);
     },
     associatedFund: async (_, { address }, { loaders }) => {
-      const fundAddress = await loaders.fundAddress.load(address);
-      if (fundAddress) {
-        return loaders.fundContract.load(fundAddress);
-      }
+      const fundAddress = await loaders.fundAddressFromManager.load(address);
+      return fundAddress && loaders.fundContract.load(fundAddress);
     },
     funds: async (_, args, { loaders }) => {
       const addresses = await (args.addresses ||
@@ -125,10 +123,6 @@ export default {
     owner: (parent, _, { loaders }) => {
       return loaders.fundOwner.load(parent);
     },
-    gav: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations[0].div(10 ** precision);
-    },
     personalStake: async (parent, { investor }, { loaders }) => {
       const participation = await loaders.fundParticipation.load({
         fund: parent,
@@ -136,6 +130,10 @@ export default {
       });
 
       return participation && participation.personalStake;
+    },
+    gav: async (parent, _, { loaders, precision = 18 }) => {
+      const calculations = await loaders.fundCalculations.load(parent);
+      return calculations[0].div(10 ** precision);
     },
     managementReward: async (parent, _, { loaders, precision = 18 }) => {
       const calculations = await loaders.fundCalculations.load(parent);
@@ -193,6 +191,7 @@ export default {
     },
   },
   Mutation: {
+    // TODO: Inline these.
     cancelOpenOrder: require('./resolvers/Mutation/cancelOpenOrder').default,
     createFund: require('./resolvers/Mutation/createFund').default,
     decryptWallet: (_, { wallet, password }, { loaders }) => {
@@ -204,13 +203,11 @@ export default {
     generateMnemonic: (_, __, { loaders }) => {
       return loaders.generateMnemonic();
     },
-    deleteWallet: () => {
-      // This needs to be implement in the concrete client implementation.
-      return true;
-    },
   },
   Subscription: {
-    ...Subscription,
+    // TODO: Inline these.
+    balance: require('./subscriptions/balance').default,
+    orderbook: require('./subscriptions/orderbook').default,
     currentBlock: {
       resolve: value => value,
       subscribe: (_, __, { pubsub, streams }) => {
@@ -296,5 +293,4 @@ export default {
       },
     },
   },
-  Order,
 };

@@ -4,7 +4,6 @@ import {
 } from '@melonproject/exchange-aggregator';
 import BigNumber from 'bignumber.js';
 import * as R from 'ramda';
-import * as Rx from 'rxjs';
 import takeLast from '../utils/takeLast';
 import withUnsubscribe from '../utils/withUnsubscribe';
 
@@ -23,7 +22,7 @@ const accumulateBuys = (accumulator: BigNumber, order: Order) => {
   return [volume, { order, volume }];
 };
 
-export const orderbook = {
+export default {
   resolve: (orders: Order[] | Error) => {
     if (orders instanceof Error) {
       throw orders;
@@ -73,44 +72,4 @@ export const orderbook = {
     const publish = value => pubsub.publish(channel, value);
     return withUnsubscribe(orderbook$, iterator, publish);
   },
-};
-
-const balance = {
-  resolve: balance => {
-    return balance;
-  },
-  subscribe: async (parent, args, context) => {
-    const { pubsub, loaders, streams } = context;
-    const { address, token } = args;
-
-    const getBalance = () => {
-      switch (token) {
-        case 'WETH':
-          return loaders.nativeBalanceUncached(address);
-        case 'ETH':
-          return loaders.etherBalanceUncached(address);
-        case 'MLN':
-          return loaders.melonBalanceUncached(address);
-      }
-
-      return null;
-    };
-
-    const balance$ = streams.block$
-      .debounceTime(5000)
-      .switchMap(() => Rx.Observable.fromPromise(getBalance()))
-      .distinctUntilChanged(R.equals);
-
-    const channel = `balance:${address}:${token}`;
-    const iterator = pubsub.asyncIterator(channel);
-    const publish = value => pubsub.publish(channel, value);
-    return withUnsubscribe(balance$, iterator, publish);
-  },
-};
-
-export { Order };
-
-export default {
-  orderbook,
-  balance,
 };

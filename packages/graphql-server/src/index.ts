@@ -23,14 +23,14 @@ async function start(port: number) {
   const json = bodyParser.json();
   const urlencoded = bodyParser.urlencoded({ extended: true });
 
-  const gql = graphqlExpress(async (req) => {
+  const gql = graphqlExpress(async req => {
     return {
       schema,
       context: await context(),
     };
   });
 
-  app.use(cors())
+  app.use(cors());
   app.use('/', cors(), urlencoded, json, gql);
 
   const server = createServer(app);

@@ -10,6 +10,6 @@ function getNetwork(environment) {
     default:
       return 'KOVAN';
   }
-};
+}
 
 export default getNetwork;
