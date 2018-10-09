@@ -121,17 +121,17 @@
 }
 
 .layout--no-header .layout__content-wrap {
-  margin: 24px 0;
+  padding: 24px 0;
 
   @media (--viewport-s) {
-    margin: 32px 0;
+    padding: 32px 0;
   }
 }
 
 .layout__content {
-  margin: 16px 16px;
+  padding: 16px;
 
   @media (--viewport-s) {
-    margin: 16px 7%;
+    padding: 16px 7%;
   }
 }
