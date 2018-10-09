@@ -3,15 +3,33 @@ import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import Order from './types/Order';
 import Quantity from './types/Quantity';
 import Symbol from './types/Symbol';
+import SignatureHash from './types/SignatureHash';
+import SignedTransaction from './types/SignedTransaction';
+import UnsignedTransaction from './types/UnsignedTransaction';
+import SignedMessage from './types/SignedMessage';
+import UnsignedMessage from './types/UnsignedMessage';
 import subscribeStream from './utils/subscribeStream';
 import takeLast from './utils/takeLast';
 import sameBlock from './utils/sameBlock';
+import prepareSetupFund from './loaders/transaction/prepareSetupFund';
+import termsAndConditions from './loaders/termsAndConditions';
+import executeSetupFund from './loaders/transaction/executeSetupFund';
 
 export default {
   DateTime,
   Symbol,
   Quantity,
   Order,
+  SignatureHash,
+  SignedTransaction,
+  UnsignedTransaction,
+  SignedMessage,
+  UnsignedMessage,
+  ExchangeContractEnum: {
+    ZERO_EX_EXCHANGE: 'ZeroExExchange',
+    KYBER_NETWORK_PROXY: 'KyberNetworkProxy',
+    MATCHING_MARKET: 'MatchingMarket',
+  },
   ConfigKeyEnum: {
     CANONICAL_PRICE_FEED_ADDRESS: 'onlyManagerCompetitionAddress',
     COMPETITION_COMPLIANCE_ADDRESS: 'competitionComplianceAddress',
@@ -30,6 +48,10 @@ export default {
     KYBER_ADAPTER: 'kyberAdapter',
   },
   Query: {
+    termsAndConditions: async (_, __, { streams }) => {
+      const environment = await takeLast(streams.environment$);
+      return environment && termsAndConditions(environment) || null;
+    },
     openOrders: async (_, { address }, { loaders }) => {
       const contract = await loaders.fundContract.load(address);
       return loaders.fundOpenOrders.load(contract);
@@ -195,7 +217,20 @@ export default {
   Mutation: {
     // TODO: Inline these.
     cancelOpenOrder: require('./resolvers/Mutation/cancelOpenOrder').default,
-    createFund: require('./resolvers/Mutation/createFund').default,
+    setupFundPrepare: async (_, { name, account, signature, exchanges }, { streams }) => {
+      const environment = await takeLast(streams.environment$);
+      const config = await takeLast(streams.config$);
+      return prepareSetupFund(environment, config, name, account, signature, exchanges);
+    },
+    setupFundExecute: async (_, { transaction }, { streams }) => {
+      const environment = await takeLast(streams.environment$);
+      const config = await takeLast(streams.config$);
+      return executeSetupFund(environment, config, transaction);
+    },
+    signMessage: async (_, { transaction }, { loaders }) => {
+      const account = loaders.account();
+    },
+    signTransaction: async () => {},
     decryptWallet: (_, { wallet, password }, { loaders }) => {
       return loaders.decryptWallet(wallet, password);
     },

@@ -2,12 +2,11 @@ import { Mutation } from '~/apollo';
 import gql from 'graphql-tag';
 
 const mutation = gql`
-  mutation createFund($name: String!, $privateKey: String!) {
-    createFund(name: $name, privateKey: $privateKey) {
-      address
-    }
+  mutation prepareSetupFund($name: String!, $account: String!, $signature: SignatureInput!) {
+    prepareSetupFund(account: $account, name: $name, signature: $signature)
   }
 `;
+
 
 const query = gql`
   query ConnectionQuery($account: String!) {
@@ -20,16 +19,16 @@ const query = gql`
 const FundMutation = ({ onCompleted, account, children }) => (
   <Mutation
     mutation={mutation}
-    update={(cache, { data: { createFund } }) => {
-      cache.writeQuery({
-        query,
-        variables: {
-          account,
-        },
-        data: {
-          associatedFund: createFund.address,
-        },
-      });
+    update={(cache, { data: { prepareSetupFund } }) => {
+      // cache.writeQuery({
+      //   query,
+      //   variables: {
+      //     account,
+      //   },
+      //   data: {
+      //     associatedFund: prepareSetupFund.address,
+      //   },
+      // });
     }}
     onCompleted={({ createFund }) => onCompleted(createFund.address)}
   >

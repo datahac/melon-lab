@@ -3,12 +3,23 @@ directive @insecure on FIELD_DEFINITION
 scalar DateTime
 scalar Quantity
 scalar Symbol
+scalar SignatureHash
+scalar UnsignedMessage
+scalar SignedMessage
+scalar UnsignedTransaction
+scalar SignedTransaction
 
 enum ExchangeEnum {
   RADAR_RELAY
   OASIS_DEX
   ERC_DEX
   KYBER_NETWORK
+}
+
+enum ExchangeContractEnum {
+  ZERO_EX_EXCHANGE
+  KYBER_NETWORK_PROXY
+  MATCHING_MARKET
 }
 
 enum TokenEnum {
@@ -178,6 +189,7 @@ type Query {
   funds(addresses: [String]): [Fund]
   rankings: [Ranking]
   associatedFund(address: String!): Fund
+  termsAndConditions: UnsignedMessage
 
   # TODO: Move this to the Fund type.
   openOrders(address: String!): [Order]
@@ -191,7 +203,16 @@ type Mutation {
     makerAssetSymbol: String!
     takerAssetSymbol: String!
   ): [Order]
-  createFund(name: String!, privateKey: String!): Fund
+
+  # Generic transactions
+  signTransaction(key: String!, transaction: UnsignedTransaction!): SignedTransaction @insecure
+  signMessage(key: String!, message: UnsignedMessage!): SignedMessage @insecure
+
+  # Fund setup
+  prepareSetupFund(account: String!, signature: SignedMessage!, exchanges: [ExchangeContractEnum]!, name: String!): UnsignedTransaction
+  executeSetupFund(transaction: SignedTransaction!): Fund
+
+  # Wallet
   deleteWallet: Boolean! @insecure
   decryptWallet(wallet: String!, password: String!): Wallet @insecure
   restoreWallet(mnemonic: String!, password: String!): Wallet @insecure

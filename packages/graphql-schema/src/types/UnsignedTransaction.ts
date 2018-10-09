@@ -1,12 +1,12 @@
 import { GraphQLScalarType, Kind } from 'graphql';
 
 export default new GraphQLScalarType({
-  name: 'Quantity',
-  serialize: value => value.toString(),
-  parseValue: value => value,
+  name: 'UnsignedTransaction',
+  serialize: value => JSON.stringify(value),
+  parseValue: value => JSON.parse(value),
   parseLiteral: ast => {
     if (ast.kind === Kind.STRING) {
-      return ast.value.toString();
+      return JSON.parse(ast.value.toString());
     }
 
     return null;

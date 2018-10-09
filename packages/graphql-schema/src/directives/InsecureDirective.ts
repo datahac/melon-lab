@@ -8,7 +8,7 @@ class InsecureDirective extends SchemaDirectiveVisitor {
       field.resolve = (_, __, ___, info) => {
         throw new Error(
           `The field "${info.fieldName}" on "${
-            info.parentType
+          info.parentType
           }" cannot be accessed through the public api.`,
         );
       };

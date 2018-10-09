@@ -4,6 +4,8 @@ import introspection from '@melonproject/graphql-schema/schema.gql';
 import generateMnemonic from '@melonproject/graphql-schema/loaders/wallet/generateMnemonic';
 import restoreWallet from '@melonproject/graphql-schema/loaders/wallet/restoreWallet';
 import decryptWallet from '@melonproject/graphql-schema/loaders/wallet/decryptWallet';
+import signTransaction from '@melonproject/graphql-schema/loaders/transaction/signTransaction';
+import signMessage from '@melonproject/graphql-schema/loaders/transaction/signMessage';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
 import ApolloClient from 'apollo-client';
@@ -38,6 +40,12 @@ const createLink = (options, cache) => {
     },
     resolvers: {
       Mutation: {
+        signMessage: (_, { key, message }, { cache }) => {
+          return signMessage(key, message);
+        },
+        signTransaction: (_, { key, transaction }, { cache }) => {
+          return signTransaction(key, transaction);
+        },
         generateMnemonic: () => {
           return generateMnemonic();
         },

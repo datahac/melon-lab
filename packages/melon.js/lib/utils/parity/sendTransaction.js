@@ -13,8 +13,8 @@ const sendTransaction = async (
 ) => {
   const nonce = environment.account.sign
     ? (await environment.api.eth.getTransactionCount(
-        environment.account.address,
-      )).toNumber()
+      environment.account.address,
+    )).toNumber()
     : undefined;
 
   // Prepare raw transaction

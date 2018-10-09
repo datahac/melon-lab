@@ -1,7 +1,7 @@
 import { GraphQLScalarType, Kind } from 'graphql';
 
 export default new GraphQLScalarType({
-  name: 'Quantity',
+  name: 'SignedMessage',
   serialize: value => value.toString(),
   parseValue: value => value,
   parseLiteral: ast => {
