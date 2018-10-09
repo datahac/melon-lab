@@ -19,8 +19,10 @@ const Title: StatelessComponent<SpinnerProps> = ({ title, icon, text }) => {
     <div className="title">
       <style jsx>{styles}</style>
       {icon && (
-        <div className="title__icon">
-          <Icon width="50px" height="50px" name={icon} />
+        <div className="title__icon-wrapper">
+          <div className="title__icon">
+          <Icon width="30px" height="30px" name={icon} />
+          </div>
         </div>
       )}
       <div className="title__headline">

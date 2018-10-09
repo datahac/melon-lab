@@ -11,10 +11,17 @@
   border: none;
 }
 
-.title__icon {
-  height: 62px;
+.title__icon-wrapper {
   padding: var(--space-xs) 0;
   flex: 0 0 80px;
+}
+
+.title__icon {
+  display: inline-block;
+  padding: 15px;
+  background-color: color-mod(var(--color-secondary-dark) a(30%));
+  font-size: 0;
+  border-radius: 50%;
 }
 
 .title__headline {
