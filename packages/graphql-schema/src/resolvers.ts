@@ -67,6 +67,9 @@ export default {
     fund: (_, { address }, { loaders }) => {
       return loaders.fundContract.load(address);
     },
+    associatedFund: (_, { address }, { loaders }) => {
+      return loaders.associatedFund.load(address);
+    },
     funds: async (_, args, { loaders }) => {
       const addresses = await (args.addresses ||
         ((await loaders.fundRankings()) || []).map(fund => fund.address) ||
@@ -76,9 +79,6 @@ export default {
     },
     price: (_, { symbol }, { loaders }) => {
       return loaders.symbolPrice.load(symbol);
-    },
-    associatedFund: (_, { address }, { loaders }) => {
-      return loaders.associatedFund(address);
     },
     balance: (_, { address, token }, { loaders }) => {
       switch (token) {

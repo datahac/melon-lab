@@ -108,7 +108,7 @@ const Manage = ({
                     !!R.path(['data', 'associatedFund'])(fundProps) &&
                     !!R.path(['data', 'fund', 'address'])(fundProps) &&
                     isSameAddress(
-                      fundProps.data.associatedFund,
+                      fundProps.data.associatedFund.address,
                       fundProps.data.fund.address,
                     ),
                 }}
@@ -133,7 +133,7 @@ const Manage = ({
                     !!R.path(['data', 'associatedFund'])(fundProps) &&
                     !!R.path(['data', 'fund', 'address'])(fundProps) &&
                     isSameAddress(
-                      fundProps.data.associatedFund,
+                      fundProps.data.associatedFund.address,
                       fundProps.data.fund.address,
                     ),
                   // TODO: Compute this properly.

@@ -56,14 +56,6 @@ type Ranking {
   sharePrice: String!
 }
 
-type NewFund {
-  address: String
-  name: String
-  inception: DateTime
-  owner: String
-  modules: [String]
-}
-
 type Fund {
   rank: Int
   address: String!
@@ -183,13 +175,11 @@ type Query {
   fund(address: String!): Fund
   funds(addresses: [String]): [Fund]
   rankings: [Ranking]
+  associatedFund(address: String!): Fund
 
   # TODO: Move this to the Fund type.
   openOrders(address: String!): [Order]
   recentTrades(baseTokenSymbol: String!, quoteTokenSymbol: String!): [Trade]
-
-  # TODO: Make this return a Fund type.
-  associatedFund(address: String!): String
 }
 
 type Mutation {
@@ -199,7 +189,7 @@ type Mutation {
     makerAssetSymbol: String!
     takerAssetSymbol: String!
   ): [Order]
-  createFund(name: String!, privateKey: String!): NewFund
+  createFund(name: String!, privateKey: String!): Fund
   deleteWallet: Boolean!
   decryptWallet(wallet: String!, password: String!): Wallet
   restoreWallet(mnemonic: String!, password: String!): Wallet

@@ -64,7 +64,7 @@ const withRanking = BaseComponent => baseProps => (
   <RankingQuery>
     {rankingProps => (
       <BaseComponent
-        associatedFund={baseProps.associatedFund && baseProps.associatedFund}
+        associatedFund={baseProps.associatedFund && baseProps.associatedFund.address}
         setOrdering={order => baseProps.setOrdering({ variables: { order } })}
         setSearch={search => baseProps.setSearch({ variables: { search } })}
         ordering={baseProps.ordering}

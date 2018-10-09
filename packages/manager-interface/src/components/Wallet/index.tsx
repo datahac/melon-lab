@@ -15,7 +15,7 @@ const withSetup = BaseComponent => baseProps => (
       <WalletMutation>
         {deleteWallet => (
           <BaseComponent
-            associatedFund={baseProps.associatedFund}
+            associatedFund={baseProps.associatedFund && baseProps.associatedFund.address}
             balances={{
               eth: baseProps.eth,
               mln: baseProps.mln,
