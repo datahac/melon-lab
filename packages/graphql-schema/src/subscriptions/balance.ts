@@ -4,16 +4,13 @@ import nativeBalance from '../loaders/balance/nativeBalance';
 import etherBalance from '../loaders/balance/etherBalance';
 import melonBalance from '../loaders/balance/melonBalance';
 import withUnsubscribe from '../utils/withUnsubscribe';
-import takeLast from '../utils/takeLast';
 
 export default {
   resolve: balance => {
     return balance;
   },
   subscribe: async (_, { address, token }, { pubsub, streams }) => {
-    const getBalance = async () => {
-      const environment = await takeLast(streams.environment$);
-
+    const getBalance = async (environment) => {
       switch (token) {
         case 'WETH':
           return nativeBalance(environment, address);
@@ -26,9 +23,9 @@ export default {
       return null;
     };
 
-    const balance$ = streams.block$
+    const balance$ = Rx.Observable.combineLatest(streams.environment$, streams.block$, (environment) => environment)
       .debounceTime(5000)
-      .switchMap(() => Rx.Observable.fromPromise(getBalance()))
+      .switchMap((environment) => Rx.Observable.fromPromise(getBalance(environment)))
       .distinctUntilChanged(R.equals);
 
     const channel = `balance:${address}:${token}`;

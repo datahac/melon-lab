@@ -13,6 +13,7 @@ import getFundTotalSupply from './loaders/fund/fundTotalSupply';
 import getFundCalculations from './loaders/fund/fundCalculations';
 import getFundOpenOrders from './loaders/fund/fundOpenOrders';
 import getFundParticipation from './loaders/fund/fundParticipation';
+import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
 import getNativeBalance from './loaders/balance/nativeBalance';
 import getEtherBalance from './loaders/balance/etherBalance';
 import getMelonBalance from './loaders/balance/melonBalance';
@@ -31,7 +32,7 @@ export default async streams => {
 
   const fundAddressFromManager = new DataLoader(async addresses => {
     const environment = await takeLast(streams.environment$);
-    const fn = fundAddressFromManager(environment);
+    const fn = getFundAddressFromManager(environment);
     return environment && addresses.map(fn);
   });
 

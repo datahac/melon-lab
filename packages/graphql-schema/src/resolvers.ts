@@ -44,7 +44,7 @@ export default {
       return takeLast(streams.synced$);
     },
     totalFunds: (_, __, { streams }) => {
-      return takeLast(streams.ranking$).then(value => value && value.length);
+      return takeLast(streams.ranking$).then(R.propOr(null, 'length'));
     },
     priceFeedUp: (_, __, { streams }) => {
       return takeLast(streams.priceFeed$);
@@ -53,7 +53,7 @@ export default {
       return takeLast(streams.peers$);
     },
     versionConfig: (_, { key }, { streams }) => {
-      return takeLast(streams.config$).then(config => config && config[key]);
+      return takeLast(streams.config$).then(R.propOr(null, key));
     },
     provider: (_, __, { streams }) => {
       return takeLast(streams.provider$);
@@ -69,7 +69,7 @@ export default {
     },
     associatedFund: async (_, { address }, { loaders }) => {
       const fundAddress = await loaders.fundAddressFromManager.load(address);
-      return fundAddress && loaders.fundContract.load(fundAddress);
+      return fundAddress && await loaders.fundContract.load(fundAddress) || null;
     },
     funds: async (_, args, { loaders }) => {
       const addresses = await (args.addresses ||
@@ -107,7 +107,7 @@ export default {
       return takeLast(streams.ranking$).then(ranking => {
         const address = parent.instance.address;
         const entry = (ranking || []).find(rank => rank.address === address);
-        return entry && entry.rank;
+        return R.propOr(null, 'rank', entry);
       });
     },
     name: (parent, _, { loaders }) => {
