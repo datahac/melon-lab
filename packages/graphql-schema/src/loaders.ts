@@ -19,22 +19,16 @@ import {
 const contractCache = contract => contract.instance.address;
 
 export default async streams => {
-  const associatedFund = new DataLoader(async addresses => {
+  const fundAddress = async managerAddress => {
     const environment = await takeLast(streams.environment$);
-
-    const fundAddress =
-      environment &&
-      (await getFundForManager(environment, {
-        managerAddress: addresses[0],
-      }));
 
     return (
       environment &&
-      [fundAddress].map(address => {
-        return getFundContract(environment, address);
-      })
+      (await getFundForManager(environment, {
+        managerAddress,
+      }))
     );
-  });
+  };
 
   const fundContract = new DataLoader(async addresses => {
     const environment = await takeLast(streams.environment$);
@@ -295,7 +289,7 @@ export default async streams => {
     melonBalanceUncached,
     etherBalance,
     etherBalanceUncached,
-    associatedFund,
+    fundAddress,
     generateMnemonic,
     decryptWallet,
     restoreWallet,

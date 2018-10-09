@@ -64,11 +64,12 @@ export default {
     rankings: (_, __, { streams }) => {
       return takeLast(streams.ranking$);
     },
-    fund: (_, { address }, { loaders }) => {
+    fund: async (_, { address }, { loaders }) => {
       return loaders.fundContract.load(address);
     },
-    associatedFund: (_, { address }, { loaders }) => {
-      return loaders.associatedFund.load(address);
+    associatedFund: async (_, { address }, { loaders }) => {
+      const fundAddress = await loaders.fundAddress(address);
+      return loaders.fundContract.load(fundAddress);
     },
     funds: async (_, args, { loaders }) => {
       const addresses = await (args.addresses ||
