@@ -4,10 +4,9 @@ import Checkbox from '~/blocks/Checkbox';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Modal from '~/blocks/Modal';
-import FeeForm from '~/components/FeeForm/container';
 import Spinner from '~/blocks/Spinner';
 import TermsAndConditions from '~/components/TermsAndConditions';
-import StyledLink from '~/blocks/Link';
+import Link from '~/blocks/Link';
 
 import styles from './styles.css';
 import Notification from '../../blocks/Notification/index';
@@ -113,14 +112,14 @@ export const Setup: StatelessComponent<SetupProps> = ({
               Melon fund.
             </p>
 
-            <StyledLink
+            <Link
               target="_blank"
               style="secondary"
               size="medium"
               href={`https://faucet.melon.fund/?address=${address}`}
             >
               Go to faucet
-            </StyledLink>
+            </Link>
           </Notification>
         ) : (
           <Form onSubmit={handleSubmit}>

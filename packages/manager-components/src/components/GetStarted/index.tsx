@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import React, { Fragment, StatelessComponent } from 'react';
-import StyledLink from '~/blocks/Link';
-import Link from '~/link';
+import Link from '~/blocks/Link';
 
 import styles from './styles.css';
 
@@ -71,10 +70,12 @@ export const GetStarted: StatelessComponent<GetStartedProps> = ({
         )}
 
         {link && (
-          <Link href={{ pathname: link.href, query: link.query }} passHref>
-            <StyledLink style="primary" size="medium">
-              {link.text}
-            </StyledLink>
+          <Link
+            style="primary"
+            size="medium"
+            href={{ pathname: link.href, query: link.query }}
+          >
+            {link.text}
           </Link>
         )}
       </div>

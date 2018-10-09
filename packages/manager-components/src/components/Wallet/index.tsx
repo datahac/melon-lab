@@ -1,9 +1,8 @@
 import React, { Fragment, StatelessComponent } from 'react';
 import Button from '~/blocks/Button';
 import Notification from '~/blocks/Notification';
-import StyledLink from '~/blocks/Link';
+import Link from '~/blocks/Link';
 import Spinner from '~/blocks/Spinner';
-import Link from '~/link';
 import displayNumber from '~/utils/displayNumber';
 
 import styles from './styles.css';
@@ -103,16 +102,15 @@ export const Wallet: StatelessComponent<WalletProps> = ({
               {associatedFund ? (
                 <Fragment>
                   <h2>Your fund</h2>
-
                   <Link
+                    style="primary"
+                    size="medium"
                     href={{
                       pathname: '/manage',
                       query: { address: associatedFund.address },
                     }}
                   >
-                    <StyledLink style="primary" size="medium" passHref>
-                      {associatedFund.name}
-                    </StyledLink>
+                    {associatedFund.name}
                   </Link>
                   <p>
                     Fund address:{' '}
@@ -130,10 +128,8 @@ export const Wallet: StatelessComponent<WalletProps> = ({
                 </Fragment>
               ) : (
                 <p>
-                  <Link href="/setup" passHref>
-                    <StyledLink style="primary" size="medium" passHref>
-                      Setup your fund
-                    </StyledLink>
+                  <Link style="primary" size="medium" href="/setup">
+                    Setup your fund
                   </Link>
                 </p>
               )}
@@ -151,10 +147,8 @@ export const Wallet: StatelessComponent<WalletProps> = ({
                 </strong>
               </p>
               <p>
-                <Link href="/wallet/download" passHref>
-                  <StyledLink style="secondary" size="medium">
-                    Download wallet backup JSON
-                  </StyledLink>
+                <Link style="secondary" size="medium" href="/wallet/download">
+                  Download wallet backup JSON
                 </Link>
               </p>
               <hr />
@@ -186,10 +180,8 @@ export const Wallet: StatelessComponent<WalletProps> = ({
                     <p>
                       We found a Wallet on your Computer. You can load it here:
                     </p>
-                    <Link href="/wallet/load" passHref>
-                      <StyledLink style="secondary" size="medium">
-                        Load Wallet
-                      </StyledLink>
+                    <Link style="secondary" size="medium" href="/wallet/load">
+                      Load Wallet
                     </Link>
                   </Notification>
 
@@ -199,25 +191,19 @@ export const Wallet: StatelessComponent<WalletProps> = ({
 
             {!isCompetition && (
               <p>
-                <Link href="/wallet/generate" passHref>
-                  <StyledLink style={isDanger} size="medium">
-                    Create a new wallet
-                  </StyledLink>
+                <Link style={isDanger} size="medium" href="/wallet/generate">
+                  Create a new wallet
                 </Link>
               </p>
             )}
             <p>
-              <Link href="/wallet/restore" passHref>
-                <StyledLink style={isDanger} size="medium">
-                  Restore from mnemonic
-                </StyledLink>
+              <Link style={isDanger} size="medium" href="/wallet/restore">
+                Restore from mnemonic
               </Link>
             </p>
             <p>
-              <Link href="/wallet/import" passHref>
-                <StyledLink style={isDanger} size="medium">
-                  Import wallet JSON
-                </StyledLink>
+              <Link style={isDanger} size="medium" href="/wallet/import">
+                Import wallet JSON
               </Link>
             </p>
             {currentAddress &&

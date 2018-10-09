@@ -2,8 +2,7 @@ import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
 import format from 'date-fns/format';
 import displayNumber from '~/utils/displayNumber';
-import StyledLink from '~/blocks/Link';
-import Link from '~/link';
+import Link from '~/blocks/Link';
 
 import styles from './styles.css';
 
@@ -55,10 +54,13 @@ const Card: StatelessComponent<CardProps> = ({
             </div>
           </div>
           <div className="card__report" onClick={handleReportClick}>
-            <Link href={reportUrl} passHref>
-              <StyledLink style="secondary" size="small" target="_blank">
-                Show Report
-              </StyledLink>
+            <Link
+              style="secondary"
+              size="small"
+              target="_blank"
+              href={reportUrl}
+            >
+              Show Report
             </Link>
           </div>
         </div>

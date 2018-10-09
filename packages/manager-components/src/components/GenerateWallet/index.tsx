@@ -3,8 +3,7 @@ import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Spinner from '~/blocks/Spinner';
-import StyledLink from '~/blocks/Link';
-import Link from '~/link';
+import Link from '~/blocks/Link';
 
 import styles from './styles.css';
 
@@ -60,13 +59,13 @@ export const GenerateWallet: StatelessComponent<GenerateWalletProps> = ({
             <div className="generate-wallet__actions">
               <div className="generate-wallet__action">
                 <Link
+                  style="secondary"
+                  size="medium"
                   href={{
                     pathname: '/wallet',
                   }}
                 >
-                  <StyledLink style="secondary" size="medium" passHref>
-                    Cancel
-                  </StyledLink>
+                  Cancel
                 </Link>
               </div>
               <div className="generate-wallet__action">
@@ -107,13 +106,13 @@ export const GenerateWallet: StatelessComponent<GenerateWalletProps> = ({
             <div className="generate-wallet__actions">
               <div className="generate-wallet__action">
                 <Link
+                  style="secondary"
+                  size="medium"
                   href={{
                     pathname: '/wallet',
                   }}
                 >
-                  <StyledLink style="secondary" size="medium" passHref>
-                    Cancel
-                  </StyledLink>
+                  Cancel
                 </Link>
               </div>
               <div className="generate-wallet__action">

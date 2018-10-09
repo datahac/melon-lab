@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
+import NextLink from '~/link';
 
 import styles from './styles.css';
 
@@ -25,10 +26,17 @@ const Link: StatelessComponent<LinkProps> = ({
   });
 
   return (
-    <a onClick={onClick} href={href} target={target} className={linkClassNames}>
-      <style jsx>{styles}</style>
-      {children}
-    </a>
+    <NextLink href={href} passHref>
+      <a
+        onClick={onClick}
+        href={href}
+        target={target}
+        className={linkClassNames}
+      >
+        <style jsx>{styles}</style>
+        {children}
+      </a>
+    </NextLink>
   );
 };
 

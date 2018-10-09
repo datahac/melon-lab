@@ -3,8 +3,7 @@ import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Spinner from '~/blocks/Spinner';
-import StyledLink from '~/blocks/Link';
-import Link from '~/link';
+import Link from '~/blocks/Link';
 
 import styles from './styles.css';
 
@@ -53,13 +52,13 @@ export const DownloadWallet: StatelessComponent<DownloadWalletProps> = ({
         <div className="download-wallet__actions">
           <div className="download-wallet__action">
             <Link
+              style="secondary"
+              size="medium"
               href={{
                 pathname: '/wallet',
               }}
             >
-              <StyledLink style="secondary" size="medium" passHref>
-                Cancel
-              </StyledLink>
+              Cancel
             </Link>
           </div>
           <div className="download-wallet__action">
