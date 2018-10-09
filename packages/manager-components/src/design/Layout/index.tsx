@@ -9,8 +9,8 @@ export interface LayoutProps {
   HeaderProps;
   Footer;
   FooterProps;
-  Title;
-  TitleProps;
+  Headline;
+  HeadlineProps;
 }
 
 const Layout: StatelessComponent<LayoutProps> = ({
@@ -20,8 +20,8 @@ const Layout: StatelessComponent<LayoutProps> = ({
   HeaderProps = {},
   Footer,
   FooterProps = {},
-  Title,
-  TitleProps = {},
+  Headline,
+  HeadlineProps = {},
 }) => {
   const layoutClassNames = classNames('layout', {
     'layout--no-header': noHeader,
@@ -38,9 +38,9 @@ const Layout: StatelessComponent<LayoutProps> = ({
         )}
 
       <div className="layout__content-wrap">
-        {TitleProps.title && (
+        {HeadlineProps.title && (
           <div className="layout__title">
-            <Title {...TitleProps} />
+            <Headline {...HeadlineProps} />
           </div>
         )}
 

@@ -50,25 +50,6 @@ export const Wallet: StatelessComponent<WalletProps> = ({
             <Fragment>
               <div className="wallet__info">
                 <p>
-                  Your ethereum address. Use this for white listing on{' '}
-                  <a href="https://ico.bitcoinsuisse.ch/" target="_blank">
-                    ico.bitcoinsuisse.ch
-                  </a>
-                  :<br />
-                  <code>
-                    <a
-                      href={`https://${
-                        networkId === 'KOVAN' ? 'kovan.' : ''
-                      }etherscan.io/address/${currentAddress}`}
-                      target="_blank"
-                    >
-                      <span className="wallet__info-value">
-                        {currentAddress}
-                      </span>
-                    </a>
-                  </code>
-                </p>
-                <p>
                   ETH:
                   <br />
                   <code>

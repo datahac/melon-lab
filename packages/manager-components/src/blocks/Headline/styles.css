@@ -1,22 +1,22 @@
-.title {
+.headline {
   position: relative;
   display: flex;
 }
 
-.title__title {
+.headline__title {
   margin: 0;
 }
 
-.title__title::after {
+.headline__title::after {
   border: none;
 }
 
-.title__icon-wrapper {
+.headline__icon-wrapper {
   padding: var(--space-xs) 0;
   flex: 0 0 80px;
 }
 
-.title__icon {
+.headline__icon {
   display: inline-block;
   padding: 15px;
   background-color: color-mod(var(--color-secondary-dark) a(30%));
@@ -24,10 +24,14 @@
   border-radius: 50%;
 }
 
-.title__headline {
+.headline__headline {
   align-self: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.title__text {
+.headline__text {
   margin-top: var(--space-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import Title from './index';
+import Headline from './index';
 
 const data = {
   title: 'Your Wallet',
@@ -10,6 +10,6 @@ const data = {
 
 storiesOf('Blocks|Title', module).add('Default', () => {
   return (
-    <Title {...data} />
+    <Headline {...data} />
   );
 });

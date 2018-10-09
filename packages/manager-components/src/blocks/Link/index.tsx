@@ -10,6 +10,7 @@ export interface LinkProps {
   href?: string;
   target?: string;
   onClick?: () => void;
+  title?: string;
 }
 
 const Link: StatelessComponent<LinkProps> = ({
@@ -19,6 +20,7 @@ const Link: StatelessComponent<LinkProps> = ({
   href,
   target = '_self',
   onClick,
+  title,
 }) => {
   const linkClassNames = classNames('link', {
     [`link--${size}`]: size,
@@ -28,6 +30,7 @@ const Link: StatelessComponent<LinkProps> = ({
   return (
     <NextLink href={href} passHref>
       <a
+        title={title}
         onClick={onClick}
         href={href}
         target={target}
