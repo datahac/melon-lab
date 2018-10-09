@@ -7,7 +7,7 @@ const { publicRuntimeConfig: config } = getConfig();
 
 class Page extends Component {
   static async getInitialProps({ req, query }) {
-    const parameters = (req && req.query) || query;
+    const parameters = req && req.query || query;
 
     return {
       address: parameters.address,
@@ -18,10 +18,7 @@ class Page extends Component {
 
   public render() {
     return (
-      <Layout
-        {...this.props}
-        title={this.props.associatedFund && this.props.associatedFund.name}
-      >
+      <Layout {...this.props}>
         <Manage {...this.props} />
       </Layout>
     );

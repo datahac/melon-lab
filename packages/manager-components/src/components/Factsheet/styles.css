@@ -1,0 +1,8 @@
+.factsheet__title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.factsheet__title-link {
+  text-decoration: none;
+}
