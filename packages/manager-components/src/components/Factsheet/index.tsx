@@ -1,12 +1,9 @@
 import React, { StatelessComponent } from 'react';
 import Button from '~/blocks/Button';
-import Icon from '~/blocks/Icon';
 import Spinner from '~/blocks/Spinner';
 import Link from '~/link';
 import displayNumber from '~/utils/displayNumber';
 import format from 'date-fns/format';
-
-import styles from './styles.css';
 
 export interface FactsheetProps {
   gav?: string;
@@ -84,18 +81,6 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
 
   return (
     <div className="factsheet">
-      <style jsx>{styles}</style>
-      <h3 className="factsheet__title">
-        {name}
-        <a
-          className="factsheet__title-link"
-          href={buildTwitterUrl()}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon width="12px" height="12px" name="icons_twitter" />
-        </a>
-      </h3>
       {loading ? (
         <Spinner icon size="small" />
       ) : (
@@ -126,6 +111,15 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
             rel="noopener noreferrer"
           >
             Contact Investors/Managers
+          </a>
+          <br />
+          <a
+            className="factsheet__title-link"
+            href={buildTwitterUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Tweet your Fund
           </a>
           <hr />
           <Link href={reportUrl}>

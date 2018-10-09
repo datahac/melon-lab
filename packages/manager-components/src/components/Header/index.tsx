@@ -17,6 +17,7 @@ export interface HeaderProps {
     link?: string;
     type?: string;
   };
+  fundName?: string;
 }
 
 export const Header: StatelessComponent<HeaderProps> = ({
@@ -24,6 +25,7 @@ export const Header: StatelessComponent<HeaderProps> = ({
   balances,
   network,
   message,
+  fundName,
 }) => {
   const statusClassName = classNames('header__account-status', {
     'header__account-status--warning': message && message.type === 'WARNING',
@@ -46,11 +48,13 @@ export const Header: StatelessComponent<HeaderProps> = ({
         </Link>
       </div>
       <div className="header__account">
-        <div className="header__account-name">{''}</div>
+        <div className="header__account-name">{fundName}</div>
         <div className="header__account-info">
           <span className="header__account-address">
             <Link href="/wallet">
-              <a href="/wallet" title={address}>Your Wallet</a>
+              <a href="/wallet" title={address}>
+                Your Wallet
+              </a>
             </Link>
           </span>
           {balances &&
