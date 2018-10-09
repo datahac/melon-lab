@@ -3,7 +3,8 @@
 }
 
 .link--primary,
-.link--secondary {
+.link--secondary,
+.link--danger {
   font-style: normal;
   text-align: center;
   display: block;
@@ -37,6 +38,16 @@
   border: 1px solid var(--color-black);
   color: var(--color-white);
   background-color: var(--color-black);
+}
+
+.link--danger {
+  color: var(--color-white);
+  border: 1px solid color-mod(var(--color-loss) a(75%));
+  background-color: color-mod(var(--color-loss) a(75%));
+}
+
+.link--danger:hover:enabled {
+  background-color: var(--color-loss);
 }
 
 .link--small {

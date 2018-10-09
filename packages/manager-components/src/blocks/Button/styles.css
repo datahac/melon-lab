@@ -43,13 +43,13 @@
 }
 
 .button--danger {
-  color: var(--color-loss);
-  border: 1px solid currentColor;
+  color: var(--color-white);
+  border: 1px solid color-mod(var(--color-loss) a(75%));
+  background-color: color-mod(var(--color-loss) a(75%));
 }
 
 .button--danger:hover:enabled {
   background-color: var(--color-loss);
-  color: var(--color-white);
 }
 
 .button--success {

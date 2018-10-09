@@ -38,7 +38,7 @@ export const Wallet: StatelessComponent<WalletProps> = ({
   loading,
   balances,
 }) => {
-  const isDanger = currentAddress ? 'danger' : 'secondary';
+  const isDanger = currentAddress ? 'danger' : 'primary';
 
   return (
     <div className="wallet">
@@ -208,7 +208,7 @@ export const Wallet: StatelessComponent<WalletProps> = ({
             {!isCompetition && (
               <p>
                 <Link href="/wallet/generate" passHref>
-                  <StyledLink style="secondary" size="medium">
+                  <StyledLink style={isDanger} size="medium">
                     Create a new wallet
                   </StyledLink>
                 </Link>
@@ -216,14 +216,14 @@ export const Wallet: StatelessComponent<WalletProps> = ({
             )}
             <p>
               <Link href="/wallet/restore" passHref>
-                <StyledLink style="secondary" size="medium">
+                <StyledLink style={isDanger} size="medium">
                   Restore from mnemonic
                 </StyledLink>
               </Link>
             </p>
             <p>
               <Link href="/wallet/import" passHref>
-                <StyledLink style="secondary" size="medium">
+                <StyledLink style={isDanger} size="medium">
                   Import wallet JSON
                 </StyledLink>
               </Link>
