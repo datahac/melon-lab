@@ -8,7 +8,7 @@ import SignedTransaction from './types/SignedTransaction';
 import UnsignedTransaction from './types/UnsignedTransaction';
 import SignedMessage from './types/SignedMessage';
 import UnsignedMessage from './types/UnsignedMessage';
-import subscribeStream from './utils/subscribeStream';
+import toAsyncIterator from './utils/toAsyncIterator';
 import takeLast from './utils/takeLast';
 import sameBlock from './utils/sameBlock';
 import prepareSetupFund from './loaders/transaction/prepareSetupFund';
@@ -20,7 +20,7 @@ export default {
   Symbol,
   Quantity,
   Order,
-  SignatureHash,
+  SignatureHash, 
   SignedTransaction,
   UnsignedTransaction,
   SignedMessage,
@@ -247,86 +247,82 @@ export default {
     orderbook: require('./subscriptions/orderbook').default,
     currentBlock: {
       resolve: value => value,
-      subscribe: (_, __, { pubsub, streams }) => {
+      subscribe: (_, __, { streams }) => {
         const stream$ = streams.block$.distinctUntilChanged(sameBlock).skip(1);
-
-        return subscribeStream(pubsub, 'current-block', stream$);
+        return toAsyncIterator(stream$);
       },
     },
     nodeSynced: {
       resolve: value => value,
-      subscribe: (_, __, { pubsub, streams }) => {
+      subscribe: (_, __, { streams }) => {
         const stream$ = streams.synced$.distinctUntilChanged(R.equals).skip(1);
-
-        return subscribeStream(pubsub, 'node-synced', stream$);
+        return toAsyncIterator(stream$);
       },
     },
     totalFunds: {
       resolve: value => value,
-      subscribe: (_, __, { pubsub, streams }) => {
+      subscribe: (_, __, { streams }) => {
         const stream$ = streams.ranking$
           .map(rankings => rankings.length)
           .distinctUntilChanged(R.equals)
           .skip(1);
 
-        return subscribeStream(pubsub, 'total-funds', stream$);
+        return toAsyncIterator(stream$);
       },
     },
     priceFeedUp: {
       resolve: value => value,
-      subscribe: (_, __, { pubsub, streams }) => {
+      subscribe: (_, __, { streams }) => {
         const stream$ = streams.priceFeed$
           .distinctUntilChanged(R.equals)
           .skip(1);
 
-        return subscribeStream(pubsub, 'price-feed', stream$);
+        return toAsyncIterator(stream$);
       },
     },
     peerCount: {
       resolve: value => value,
-      subscribe: (_, __, { pubsub, streams }) => {
+      subscribe: (_, __, { streams }) => {
         const stream$ = streams.provider$
           .distinctUntilChanged(R.equals)
           .skip(1);
 
-        return subscribeStream(pubsub, 'provider', stream$);
+        return toAsyncIterator(stream$);
       },
     },
     versionConfig: {
       resolve: value => value,
-      subscribe: (_, { key }, { pubsub, streams }) => {
+      subscribe: (_, { key }, { streams }) => {
         const stream$ = streams.config$
           .map(config => config && config[key])
           .distinctUntilChanged(R.equals)
           .skip(1);
 
-        return subscribeStream(pubsub, `version-config:${key}`, stream$);
+        return toAsyncIterator(stream$);
       },
     },
     provider: {
       resolve: value => value,
-      subscribe: (_, __, { pubsub, streams }) => {
+      subscribe: (_, __, { streams }) => {
         const stream$ = streams.provider$
           .distinctUntilChanged(R.equals)
           .skip(1);
 
-        return subscribeStream(pubsub, 'peer-count', stream$);
+        return toAsyncIterator(stream$);
       },
     },
     network: {
       resolve: value => value,
-      subscribe: (_, __, { pubsub, streams }) => {
+      subscribe: (_, __, { streams }) => {
         const stream$ = streams.network$.distinctUntilChanged(R.equals).skip(1);
-
-        return subscribeStream(pubsub, 'network', stream$);
+        return toAsyncIterator(stream$);
       },
     },
     rankings: {
       resolve: value => value,
-      subscribe: (_, __, { pubsub, streams }) => {
+      subscribe: (_, __, { streams }) => {
         const stream$ = streams.ranking$.distinctUntilChanged(R.equals).skip(1);
-
-        return subscribeStream(pubsub, 'rankings', stream$);
+        return toAsyncIterator(stream$);
       },
     },
   },

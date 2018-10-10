@@ -5,7 +5,7 @@ import {
 import BigNumber from 'bignumber.js';
 import * as R from 'ramda';
 import takeLast from '../utils/takeLast';
-import withUnsubscribe from '../utils/withUnsubscribe';
+import toAsyncIterator from '../utils/toAsyncIterator';
 
 const debug = require('debug')('melon-lab:graphql-schema:subscription');
 
@@ -47,7 +47,7 @@ export default {
     };
   },
   subscribe: async (parent, args, context) => {
-    const { pubsub, streams } = context;
+    const { streams } = context;
     const { baseTokenSymbol, quoteTokenSymbol, exchanges } = args;
     const environment = await takeLast(streams.environment$);
     const config = await takeLast(streams.config$);
@@ -67,9 +67,6 @@ export default {
       config,
     );
 
-    const channel = `orderbook:${baseTokenSymbol}/${quoteTokenSymbol}`;
-    const iterator = pubsub.asyncIterator(channel);
-    const publish = value => pubsub.publish(channel, value);
-    return withUnsubscribe(orderbook$, iterator, publish);
+    return toAsyncIterator(orderbook$);
   },
 };

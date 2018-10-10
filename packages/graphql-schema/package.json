@@ -20,10 +20,9 @@
     "dataloader": "^1.4.0",
     "debug": "2.6.9",
     "graphql": "^14.0.2",
-    "graphql-fields": "^1.0.2",
     "graphql-iso-date": "^3.5.0",
     "graphql-subscriptions": "^0.5.8",
-    "graphql-tools": "^2.23.1",
+    "graphql-tools": "^3.1.1",
     "memoize-one": "^4.0.2"
   },
   "devDependencies": {

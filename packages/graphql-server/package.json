@@ -20,7 +20,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@melonproject/graphql-schema": "*",
-    "apollo-server-express": "^1.4.0",
+    "apollo-server-express": "^2.1.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "cross-env": "^5.1.5",

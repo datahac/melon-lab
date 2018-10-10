@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import nativeBalance from '../loaders/balance/nativeBalance';
 import etherBalance from '../loaders/balance/etherBalance';
 import melonBalance from '../loaders/balance/melonBalance';
-import withUnsubscribe from '../utils/withUnsubscribe';
+import toAsyncIterator from '../utils/toAsyncIterator';
 
 export default {
   resolve: balance => {
@@ -35,9 +35,6 @@ export default {
       )
       .distinctUntilChanged(R.equals);
 
-    const channel = `balance:${address}:${token}`;
-    const iterator = pubsub.asyncIterator(channel);
-    const publish = value => pubsub.publish(channel, value);
-    return withUnsubscribe(balance$, iterator, publish);
+    return toAsyncIterator(balance$);
   },
 };
