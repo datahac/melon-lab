@@ -2,23 +2,33 @@ import React from 'react';
 import Header from '+/components/Header';
 import Template from '~/templates/DefaultTemplate';
 
-const DefaultLayout = ({ children, ...props }) => (
+const DefaultLayout = ({
+  children,
+  network,
+  message,
+  account,
+  eth,
+  mln,
+  title,
+  text,
+  icon,
+}) => (
   <Template
     Header={Header}
     HeaderProps={{
-      network: props.network,
-      message: props.message,
-      address: props.account,
+      network,
+      message,
+      address: account,
       balances: {
-        eth: props.eth,
-        mln: props.mln,
+        eth,
+        mln,
       },
     }}
     HeadlineProps={
-      props.title && {
-        title: props.title,
-        text: props.text,
-        icon: props.icon,
+      title && {
+        title,
+        text,
+        icon,
       }
     }
   >

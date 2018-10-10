@@ -12,14 +12,7 @@ import FundQuery from './data/fund';
 import HoldingsQuery from './data/holdings';
 import { compose, withState, withProps } from 'recompose';
 import isSameAddress from '~/utils/isSameAddress';
-import { networks } from '@melonproject/melon.js';
 import Header from '+/components/Header';
-
-const displayNetwork = network => {
-  const key = Object.values(networks).indexOf(network);
-  const values = Object.keys(networks);
-  return values[key] && values[key].toLocaleLowerCase();
-};
 
 const availableExchanges = [
   {
@@ -88,13 +81,13 @@ const FundTemplate = ({
               <Template
                 Header={Header}
                 HeaderProps={{
-                  network: network && displayNetwork(network),
-                  message: message,
+                  network,
+                  message,
                   address: account,
                   fundName: R.path(['data', 'fund', 'name'])(fundProps),
                   balances: {
-                    eth: eth,
-                    mln: mln,
+                    eth,
+                    mln,
                   },
                 }}
                 FactSheet={FactSheet}
