@@ -5,11 +5,13 @@
   display: flex;
   flex-wrap: nowrap;
   border-bottom: 1px solid var(--color-border);
-  justify-content: space-between;
+
+  @media (--viewport-m) {
+    justify-content: space-between;
+  }
 }
 
 .header__logo {
-  float: left;
   display: flex;
   align-items: center;
   padding: var(--space-xs);
@@ -35,6 +37,11 @@
 .header__account-name {
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-m);
+  margin-bottom: var(--space-xxs);
+
+  @media (--viewport-m) {
+    margin-bottom: 0;
+  }
 }
 
 .header__account {
