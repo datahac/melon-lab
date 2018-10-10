@@ -1,11 +1,11 @@
 import React from 'react';
 import GenerateWallet from '+/components/GenerateWallet';
-import Layout from '+/components/Layout';
+import DefaultTemplate from '+/components/DefaultTemplate';
 
 const Page = props => (
-  <Layout {...props} title="Create Wallet">
+  <DefaultTemplate {...props} title="Create Wallet">
     <GenerateWallet {...props} />
-  </Layout>
+  </DefaultTemplate>
 );
 
 export default Page;

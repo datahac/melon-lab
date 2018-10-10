@@ -1,8 +1,7 @@
 import React from 'react';
 import Header from '~/components/Header';
-import Footer from '~/components/Footer';
 import Headline from '~/blocks/Headline';
-import Content from '~/design/Layout';
+import Template from '~/templates/DefaultTemplate';
 import { networks } from '@melonproject/melon.js';
 
 const displayNetwork = network => {
@@ -11,8 +10,8 @@ const displayNetwork = network => {
   return values[key] && values[key].toLocaleLowerCase();
 };
 
-const Layout = ({ children, noHeader = false, ...props }) => (
-  <Content
+const DefaultLayout = ({ children, ...props }) => (
+  <Template
     Header={Header}
     HeaderProps={{
       network: props.network && displayNetwork(props.network),
@@ -23,17 +22,17 @@ const Layout = ({ children, noHeader = false, ...props }) => (
         mln: props.mln,
       },
     }}
-    Footer={Footer}
-    FooterProps
     Headline={Headline}
-    HeadlineProps={{
-      title: props.title,
-      text: props.text,
-      icon: props.icon,
-    }}
+    HeadlineProps={
+      props.title && {
+        title: props.title,
+        text: props.text,
+        icon: props.icon,
+      }
+    }
   >
     {children}
-  </Content>
+  </Template>
 );
 
-export default Layout;
+export default DefaultLayout;

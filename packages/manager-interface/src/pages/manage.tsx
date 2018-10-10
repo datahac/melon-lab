@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import Layout from '+/components/Layout';
-import Manage from '+/components/Manage';
+import FundTemplate from '+/components/FundTemplate';
 import getConfig from 'next/config';
 
 const { publicRuntimeConfig: config } = getConfig();
 
 class Page extends Component {
   static async getInitialProps({ req, query }) {
-    const parameters = req && req.query || query;
+    const parameters = (req && req.query) || query;
 
     return {
       address: parameters.address,
@@ -17,11 +16,7 @@ class Page extends Component {
   }
 
   public render() {
-    return (
-      <Layout {...this.props}>
-        <Manage {...this.props} />
-      </Layout>
-    );
+    return <FundTemplate {...this.props} />;
   }
 }
 

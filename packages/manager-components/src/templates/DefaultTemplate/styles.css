@@ -1,0 +1,38 @@
+.default-template__header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+}
+
+.default-template__footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 1;
+}
+
+.default-template__content-wrap {
+  margin: 50px 0;
+
+  @media (--viewport-s) {
+    margin: 50px 0;
+  }
+}
+
+.default-template__title {
+  background-color: var(--color-secondary);
+  padding: 12px 16px 12px;
+
+  @media (--viewport-s) {
+    padding: 12px 7% 12px;
+  }
+}
+
+.default-template__content {
+  padding: 16px;
+
+  @media (--viewport-s) {
+    padding: 16px 7%;
+  }
+}

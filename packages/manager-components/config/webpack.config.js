@@ -9,6 +9,7 @@ module.exports = config => {
     '~/design': path.join(base, 'design'),
     '~/components': path.join(base, 'components'),
     '~/blocks': path.join(base, 'blocks'),
+    '~/templates': path.join(base, 'templates'),
     '~/containers': path.join(base, 'containers'),
     '~/utils': path.join(base, 'utils'),
     '~/static': path.join(public, 'static'),

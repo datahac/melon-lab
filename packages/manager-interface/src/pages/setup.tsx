@@ -1,15 +1,11 @@
 import React from 'react';
-import Layout from '+/components/Layout';
+import DefaultTemplate from '+/components/DefaultTemplate';
 import Setup from '+/components/Setup';
-import { withRouter } from 'next/router';
-import { compose } from 'recompose';
 
 const Page = props => (
-  <Layout {...props} title="Setup your Fund">
+  <DefaultTemplate {...props} title="Setup your Fund">
     <Setup {...props} />
-  </Layout>
+  </DefaultTemplate>
 );
 
-export default compose(
-  withRouter,
-)(Page);
+export default Page;

@@ -1,0 +1,105 @@
+.fund-template__info {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 0 calc(var(--space-m) * -1);
+}
+
+.fund-template__info-item {
+  margin: 0;
+  padding: 0;
+  width: auto;
+  padding: 0 var(--space-m);
+}
+
+.fund-template__info-item:nth-last-child(1) {
+  flex: 0 0 100%;
+}
+
+.fund-template__info-item:nth-last-child(2),
+.fund-template__info-item:nth-last-child(2) ~ .fund-template__info-item {
+  flex: 0 0 100%;
+
+  @media (--viewport-s) {
+    flex: 0 0 50%;
+  }
+}
+
+.fund-template__info-item:nth-last-child(3),
+.fund-template__info-item:nth-last-child(3) ~ .fund-template__info-item {
+  flex: 0 0 100%;
+
+  @media (--viewport-s) {
+    flex: 0 0 33.3333%;
+  }
+}
+
+.fund-template__order {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: var(--space-m) calc(var(--space-m) * -1);
+
+  @media (--viewport-l) {
+    flex-wrap: nowrap;
+  }
+}
+
+.fund-template__order-book {
+  flex: 1 0 66.66%;
+  overflow: hidden;
+  padding: var(--space-m);
+}
+
+.fund-template__order-form {
+  flex: 1 0 33.33%;
+  min-width: 300px;
+  padding: var(--space-m);
+}
+
+.fund-template__open-orders {
+  margin-top: var(--space-xl);
+}
+
+.fund-template__recent-trades {
+  margin-top: var(--space-xl);
+}
+
+.fund-template__header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+}
+
+.fund-template__footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 1;
+}
+
+.fund-template__content-wrap {
+  margin: 50px 0;
+
+  @media (--viewport-s) {
+    margin: 50px 0;
+  }
+}
+
+.fund-template__title {
+  background-color: var(--color-secondary);
+  padding: 12px 16px 12px;
+
+  @media (--viewport-s) {
+    padding: 12px 7% 12px;
+  }
+}
+
+.fund-template__content {
+  padding: 16px;
+
+  @media (--viewport-s) {
+    padding: 16px 7%;
+  }
+}

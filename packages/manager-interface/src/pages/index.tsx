@@ -1,13 +1,13 @@
 import React from 'react';
-import Layout from '+/components/Layout';
+import DefaultTemplate from '+/components/DefaultTemplate';
 import Ranking from '+/components/Ranking';
 import GetStarted from '+/components/GetStarted';
 
 const Page = props => (
-  <Layout {...props}>
+  <DefaultTemplate {...props}>
     <GetStarted isHome {...props} />
     <Ranking {...props} />
-  </Layout>
+  </DefaultTemplate>
 );
 
 export default Page;

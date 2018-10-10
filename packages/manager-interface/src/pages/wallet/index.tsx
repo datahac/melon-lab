@@ -1,10 +1,10 @@
 import React from 'react';
 import Wallet from '+/components/Wallet';
-import Layout from '+/components/Layout';
+import DefaultTemplate from '+/components/DefaultTemplate';
 import Link from '~/blocks/Link';
 
 const Page = props => (
-  <Layout
+  <DefaultTemplate
     {...props}
     title={!props.account ? 'Setup your Wallet' : 'Your Wallet'}
     text={
@@ -27,7 +27,7 @@ const Page = props => (
     icon="icons_wallet"
   >
     <Wallet {...props} />
-  </Layout>
+  </DefaultTemplate>
 );
 
 export default Page;

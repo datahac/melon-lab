@@ -1,11 +1,11 @@
 import React from 'react';
-import Layout from '+/components/Layout';
+import DefaultTemplate from '+/components/DefaultTemplate';
 import RestoreWallet from '+/components/RestoreWallet';
 
 const Page = props => (
-  <Layout {...props} title="Restore Wallet">
+  <DefaultTemplate {...props} title="Restore Wallet">
     <RestoreWallet />
-  </Layout>
+  </DefaultTemplate>
 );
 
 export default Page;

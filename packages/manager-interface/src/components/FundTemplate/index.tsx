@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import FundTemplate from '~/templates/Fund';
+import Template from '~/templates/FundTemplate';
 import FactSheet from '+/components/FactSheet';
 import OrderBook from '+/components/OrderBook';
 import OpenOrders from '+/components/OpenOrders';
@@ -12,6 +12,13 @@ import FundQuery from './data/fund';
 import HoldingsQuery from './data/holdings';
 import { compose, withState, withProps } from 'recompose';
 import isSameAddress from '~/utils/isSameAddress';
+import { networks } from '@melonproject/melon.js';
+
+const displayNetwork = network => {
+  const key = Object.values(networks).indexOf(network);
+  const values = Object.keys(networks);
+  return values[key] && values[key].toLocaleLowerCase();
+};
 
 const availableExchanges = [
   {
@@ -51,7 +58,7 @@ const withOrderBookProps = withProps({
   availableExchanges,
 });
 
-const Manage = ({
+const FundTemplate = ({
   network,
   quoteAsset,
   baseAsset,
@@ -63,6 +70,9 @@ const Manage = ({
   order,
   setOrder,
   priceFeedUp,
+  message,
+  eth,
+  mln,
 }) => (
   <HoldingsQuery address={address}>
     {holdingsProps => (
@@ -74,7 +84,17 @@ const Manage = ({
             quoteAsset={quoteAsset}
           >
             {orderBookProps => (
-              <FundTemplate
+              <Template
+                HeaderProps={{
+                  network: network && displayNetwork(network),
+                  message: message,
+                  address: account,
+                  fundName: R.path(['data', 'fund', 'name'])(fundProps),
+                  balances: {
+                    eth: eth,
+                    mln: mln,
+                  },
+                }}
                 FactSheet={FactSheet}
                 FactSheetProps={{
                   ...R.pathOr({}, ['data', 'fund'])(fundProps),
@@ -157,4 +177,4 @@ export default compose(
   withExchangeState,
   withSelectedOrderState,
   withOrderBookProps,
-)(Manage);
+)(FundTemplate);
