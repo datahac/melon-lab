@@ -7,10 +7,12 @@ import decryptWallet from '@melonproject/graphql-schema/loaders/wallet/decryptWa
 import signTransaction from '@melonproject/graphql-schema/loaders/transaction/signTransaction';
 import signMessage from '@melonproject/graphql-schema/loaders/transaction/signMessage';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-client';
+import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
-import ApolloClient from 'apollo-client';
-import { from } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
+import { Query as QueryBase } from 'react-apollo';
+import { createErrorLink } from './common';
 import withApollo from 'next-with-apollo';
 import getConfig from 'next/config';
 
@@ -18,7 +20,10 @@ const { publicRuntimeConfig: config, serverRuntimeConfig: serverConfig } = getCo
 
 // We must disable SSR in the electron app. Hence, we re-export
 // the query components here so we can override the ssr flag.
-export { Query, Subscription, Mutation } from 'react-apollo';
+export { Subscription, Mutation } from 'react-apollo';
+export const Query = ({ errorPolicy, ...props }) => (
+  <QueryBase {...props} errorPolicy={errorPolicy || 'all'} />
+);
 
 const createLink = (options, cache) => {
   const stateLink = withClientState({
@@ -60,7 +65,8 @@ const createLink = (options, cache) => {
     },
   });
 
-  return from([stateLink, dataLink]);
+  const errorLink = createErrorLink();
+  return ApolloLink.from([errorLink, stateLink, dataLink]);
 };
 
 export const createClient = options => {

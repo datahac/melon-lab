@@ -5,16 +5,14 @@ require('dotenv').config({
 import schema, { createContext } from '@melonproject/graphql-schema';
 import * as express from 'express';
 import { createServer } from 'http';
-import { ApolloServer, PubSub } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 
 async function start(port: number) {
   const app = express();
   const server = createServer(app);
-  
-  const pubsub = new PubSub();
   const track = process.env.TRACK || 'kovan-demo';
   const endpoint = process.env.JSON_RPC_ENDPOINT;
-  const context = await createContext(track, endpoint, pubsub);
+  const context = await createContext(track, endpoint);
 
   const apollo = new ApolloServer({
     schema,

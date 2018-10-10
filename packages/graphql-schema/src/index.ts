@@ -15,7 +15,7 @@ import timeoutAfter from './utils/timeoutAfter';
 import InsecureDirective from './directives/InsecureDirective';
 import * as typeDefs from './schema.gql';
 
-export async function createContext(track, endpoint, pubsub) {
+export async function createContext(track, endpoint) {
   const environment$ = getEnvironment(track, endpoint).retryWhen(errors =>
     errors.delay(1000),
   );
@@ -51,7 +51,6 @@ export async function createContext(track, endpoint, pubsub) {
     const loaders = await createLoaders(streams);
 
     return {
-      pubsub,
       loaders,
       streams,
     };

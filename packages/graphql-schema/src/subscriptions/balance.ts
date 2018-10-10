@@ -9,7 +9,7 @@ export default {
   resolve: balance => {
     return balance;
   },
-  subscribe: async (_, { address, token }, { pubsub, streams }) => {
+  subscribe: async (_, { address, token }, { streams }) => {
     const getBalance = async (environment, config) => {
       switch (token) {
         case 'WETH':
