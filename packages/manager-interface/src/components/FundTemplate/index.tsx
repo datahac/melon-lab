@@ -12,7 +12,6 @@ import FundQuery from './data/fund';
 import HoldingsQuery from './data/holdings';
 import { compose, withState, withProps } from 'recompose';
 import isSameAddress from '~/utils/isSameAddress';
-import Header from '+/components/Header';
 
 const availableExchanges = [
   {
@@ -79,7 +78,6 @@ const FundTemplate = ({
           >
             {orderBookProps => (
               <Template
-                Header={Header}
                 HeaderProps={{
                   network,
                   message,

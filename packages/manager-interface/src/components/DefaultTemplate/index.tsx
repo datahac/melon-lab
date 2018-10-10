@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '+/components/Header';
 import Template from '~/templates/DefaultTemplate';
 
 const DefaultLayout = ({
@@ -14,7 +13,6 @@ const DefaultLayout = ({
   icon,
 }) => (
   <Template
-    Header={Header}
     HeaderProps={{
       network,
       message,

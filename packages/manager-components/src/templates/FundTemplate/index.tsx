@@ -1,5 +1,6 @@
 import React from 'react';
 import Footer from '~/components/Footer';
+import Header from '~/components/Header';
 import Headline from '~/blocks/Headline';
 import Layout from '~/design/Layout';
 
@@ -18,7 +19,6 @@ const Fund = ({
   OpenOrdersProps,
   RecentTrades,
   RecentTradesProps,
-  Header,
   HeaderProps = {},
   HeadlineProps,
 }) => {

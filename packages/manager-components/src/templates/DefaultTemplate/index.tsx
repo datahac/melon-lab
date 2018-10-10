@@ -1,12 +1,12 @@
 import React from 'react';
 import Footer from '~/components/Footer';
+import Header from '~/components/Header';
 import Headline from '~/blocks/Headline';
 import Layout from '~/design/Layout';
 
 import styles from './styles.css';
 
 const DefaultTemplate = ({
-  Header,
   HeaderProps = {},
   HeadlineProps,
   children,
