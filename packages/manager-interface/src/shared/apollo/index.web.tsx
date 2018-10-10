@@ -9,10 +9,8 @@ import signMessage from '@melonproject/graphql-schema/loaders/transaction/signMe
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
 import ApolloClient from 'apollo-client';
-import { split, from } from 'apollo-link';
-import { HttpLink } from 'apollo-link-http';
+import { from } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
-import { getMainDefinition } from 'apollo-utilities';
 import withApollo from 'next-with-apollo';
 import getConfig from 'next/config';
 
@@ -22,17 +20,7 @@ const { publicRuntimeConfig: config, serverRuntimeConfig: serverConfig } = getCo
 // the query components here so we can override the ssr flag.
 export { Query, Subscription, Mutation } from 'react-apollo';
 
-const isSubscription = ({ query }) => {
-  const { kind, operation } = getMainDefinition(query);
-  return kind === 'OperationDefinition' && operation === 'subscription';
-};
-
 const createLink = (options, cache) => {
-  const httpLink = new HttpLink({
-    uri: serverConfig.graphqlLocalHttp || config.graphqlRemoteHttp,
-    headers: options.headers,
-  });
-
   const stateLink = withClientState({
     cache,
     defaults: {
@@ -65,21 +53,14 @@ const createLink = (options, cache) => {
     },
   });
 
-  const httpAndStateLink = from([stateLink, httpLink]);
-
-  // Do not use the websocket link on the server.
-  if (!process.browser) {
-    return httpAndStateLink;
-  }
-
-  const wsLink = new WebSocketLink({
+  const dataLink = new WebSocketLink({
     uri: serverConfig.graphqlLocalWs || config.graphqlRemoteWs,
     options: {
       reconnect: true,
     },
   });
 
-  return split(isSubscription, wsLink, httpAndStateLink);
+  return from([stateLink, dataLink]);
 };
 
 export const createClient = options => {
