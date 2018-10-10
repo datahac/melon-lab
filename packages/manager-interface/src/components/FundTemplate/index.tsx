@@ -13,6 +13,7 @@ import HoldingsQuery from './data/holdings';
 import { compose, withState, withProps } from 'recompose';
 import isSameAddress from '~/utils/isSameAddress';
 import { networks } from '@melonproject/melon.js';
+import Header from '+/components/Header';
 
 const displayNetwork = network => {
   const key = Object.values(networks).indexOf(network);
@@ -85,6 +86,7 @@ const FundTemplate = ({
           >
             {orderBookProps => (
               <Template
+                Header={Header}
                 HeaderProps={{
                   network: network && displayNetwork(network),
                   message: message,
