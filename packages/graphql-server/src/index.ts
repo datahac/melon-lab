@@ -9,6 +9,8 @@ import { ApolloServer } from 'apollo-server-express';
 
 const development = process.env.NODE_ENV === 'development';
 const playground = JSON.parse(process.env.GRAPHQL_PLAYGROUND || 'false');
+const tracing = JSON.parse(process.env.GRAPHQL_DEBUG || 'false');
+const debug = JSON.parse(process.env.GRAPHQL_TRACING || 'false');
 
 async function start(port: number) {
   const app = express();
@@ -20,8 +22,8 @@ async function start(port: number) {
   const apollo = new ApolloServer({
     schema,
     context: await context(),
-    tracing: development,
-    debug: development,
+    tracing: development || tracing,
+    debug: development || debug,
     introspection: development || playground,
     playground: development || playground,
     subscriptions: {
