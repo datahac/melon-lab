@@ -19,10 +19,12 @@
   line-height: 1;
   padding-top: var(--space-xxs);
   justify-content: space-between;
+  flex-grow: 1;
 
   @media (--viewport-m) {
     padding: 0;
     width: 50%;
+    flex-grow: unset;
   }
 }
 
@@ -37,10 +39,12 @@
 .card__name {
   font-weight: var(--font-weight-bold);
   line-height: 1;
+  width: 100%;
 
   @media (--viewport-m) {
     flex-grow: 1;
     margin-right: var(--space-m);
+    width: auto;
   }
 }
 
@@ -61,9 +65,8 @@
   flex-grow: 1;
   align-items: center;
 
-  @media (--viewport-m) {
-    display: flex;
-  }
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .card__label {
@@ -77,21 +80,15 @@
 }
 
 .card__report {
-  width: 100%;
-  margin-top: var(--space-xs);
-  padding-top: var(--space-xs);
-  border-top: 1px solid var(--color-border);
-
-  @media (--viewport-m) {
-    width: auto;
-    border-top: none;
-    border-left: 1px solid var(--color-border);
-    padding: 0 0 0 var(--space-m);
-    margin: 0 0 0 var(--space-m);
-  }
+  width: auto;
+  border-top: none;
+  border-left: 1px solid var(--color-border);
+  padding: 0 0 0 var(--space-m);
+  margin: 0 0 0 var(--space-m);
 }
 
 .card__report :global(.link) {
   display: block;
   z-index: 999;
+  display: flex;
 }

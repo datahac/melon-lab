@@ -3,6 +3,7 @@ import React, { StatelessComponent } from 'react';
 import format from 'date-fns/format';
 import displayNumber from '~/utils/displayNumber';
 import Link from '~/blocks/Link';
+import Icon from '~/blocks/Icon';
 
 import styles from './styles.css';
 
@@ -54,13 +55,8 @@ const Card: StatelessComponent<CardProps> = ({
             </div>
           </div>
           <div className="card__report" onClick={handleReportClick}>
-            <Link
-              style="secondary"
-              size="small"
-              target="_blank"
-              href={reportUrl}
-            >
-              Show Report
+            <Link target="_blank" href={reportUrl} title="Show Report">
+              <Icon width="20px" height="20px" name="icons_report" />
             </Link>
           </div>
         </div>
