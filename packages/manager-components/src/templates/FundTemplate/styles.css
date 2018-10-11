@@ -73,10 +73,10 @@
 }
 
 .fund-template__footer {
-  position: fixed;
-  width: 100%;
+  position: absolute;
+  right: 0;
   bottom: 0;
-  z-index: 1;
+  left: 0;
 }
 
 .fund-template__content-wrap {
