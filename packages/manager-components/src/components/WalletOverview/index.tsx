@@ -37,37 +37,37 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
           {currentAddress && (
             <Fragment>
               <h2>Balances</h2>
-              <div className="wallet-overview__info">
-                <p>
+              <div className="wallet-overview__balances">
+                <div className="wallet-overview__balance">
                   ETH:
                   <br />
                   <code>
-                    <span className="wallet-overview__info-value">
+                    <span className="wallet-overview__balance-value">
                       {balances &&
                         displayNumber(balances.eth ? balances.eth : 0)}
                     </span>
                   </code>
-                </p>
-                <p>
+                </div>
+                <div className="wallet-overview__balance">
                   MLN:
                   <br />
                   <code>
-                    <span className="wallet-overview__info-value">
+                    <span className="wallet-overview__balance-value">
                       {balances &&
                         displayNumber(balances.mln ? balances.mln : 0)}
                     </span>
                   </code>
-                </p>
-                <p>
+                </div>
+                <div className="wallet-overview__balance">
                   WETH:
                   <br />
                   <code>
-                    <span className="wallet-overview__info-value">
+                    <span className="wallet-overview__balance-value">
                       {balances &&
                         displayNumber(balances.weth ? balances.weth : 0)}
                     </span>
                   </code>
-                </p>
+                </div>
               </div>
               <h2>Fund</h2>
               {associatedFund ? (

@@ -8,11 +8,22 @@
   text-align: center;
 }
 
-.wallet-overview__info {
+.wallet-overview__balances {
   background-color: var(--color-border);
-  padding: var(--space-xxs) var(--space-m);
+  padding: var(--space-m) 0;
+  display: flex;
+  text-align: center;
 }
 
-.wallet-overview__info-value {
+.wallet-overview__balance {
+  flex: 0 0 33%;
+}
+
+.wallet-overview__balance:not(:last-child) {
+  content: '';
+  border-right: 1px solid var(--color-primary);
+}
+
+.wallet-overview__balance-value {
   font-weight: var(--font-weight-bold);
 }
