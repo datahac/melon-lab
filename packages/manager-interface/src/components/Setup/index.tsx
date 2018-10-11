@@ -28,7 +28,7 @@ const redirect = address =>
 
 const withSetup = BaseComponent => baseProps => (
   <FundMutation onCompleted={redirect} account={baseProps.account}>
-    {(createFund, createFundProps) => console.log(createFundProps) || (
+    {(createFund, createFundProps) => (
       <BaseComponent
         address={baseProps.account}
         balances={{
