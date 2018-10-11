@@ -19,7 +19,7 @@ async function start(port: number) {
     context: await context(),
     tracing: process.env.NODE_ENV === 'development',
     debug: process.env.NODE_ENV === 'development',
-    playground: process.env.NODE_ENV === 'development',
+    playground: JSON.parse(process.env.GRAPHQL_PLAYGROUND || 'false'),
     subscriptions: {
       path: '/',
     },
