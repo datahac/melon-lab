@@ -97,11 +97,9 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
                   </p>
                 </Fragment>
               ) : (
-                <p>
-                  <Link style="primary" size="medium" href="/setup">
-                    Setup your fund
-                  </Link>
-                </p>
+                <Link style="primary" size="medium" href="/setup">
+                  Setup your fund
+                </Link>
               )}
             </Fragment>
           )}

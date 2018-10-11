@@ -1,6 +1,5 @@
 import React, { Fragment, StatelessComponent } from 'react';
 import Button from '~/blocks/Button';
-import Notification from '~/blocks/Notification';
 import Link from '~/blocks/Link';
 import Spinner from '~/blocks/Spinner';
 
@@ -10,8 +9,6 @@ export interface WalletSettingsProps {
   currentAddress?: string;
   deleteWallet: () => void;
   isCompetition?: boolean;
-  hasAccount?: boolean;
-  hasWallet?: boolean;
   loading?: boolean;
 }
 
@@ -19,11 +16,8 @@ export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
   currentAddress,
   deleteWallet,
   isCompetition,
-  hasAccount,
-  hasWallet,
   loading,
 }) => {
-  console.log();
   const isDanger = currentAddress ? 'danger' : 'primary';
 
   return (
@@ -46,11 +40,11 @@ export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
                   or Parity.
                 </strong>
               </p>
-              <p>
+              <div className="wallet__link">
                 <Link style="secondary" size="medium" href="/wallet/download">
                   Download wallet backup JSON
                 </Link>
-              </p>
+              </div>
               <hr />
               {!isCompetition && (
                 <Fragment>
@@ -72,46 +66,30 @@ export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
             </Fragment>
           )}
 
-          {!hasAccount &&
-            hasWallet && (
-              <Fragment>
-                <Notification isWarning>
-                  <p>
-                    We found a Wallet on your Computer. You can load it here:
-                  </p>
-                  <Link style="secondary" size="medium" href="/wallet/load">
-                    Load Wallet
-                  </Link>
-                </Notification>
-
-                <hr />
-              </Fragment>
-            )}
-
           {!isCompetition && (
-            <p>
+            <div className="wallet__button">
               <Link style={isDanger} size="medium" href="/wallet/generate">
                 Create a new wallet
               </Link>
-            </p>
+            </div>
           )}
-          <p>
+          <div className="wallet__button">
             <Link style={isDanger} size="medium" href="/wallet/restore">
               Restore from mnemonic
             </Link>
-          </p>
-          <p>
+          </div>
+          <div className="wallet__button">
             <Link style={isDanger} size="medium" href="/wallet/import">
               Import wallet JSON
             </Link>
-          </p>
+          </div>
           {currentAddress &&
             !isCompetition && (
-              <p>
+              <div className="wallet__button">
                 <Button style={isDanger} onClick={deleteWallet}>
                   Delete wallet
                 </Button>
-              </p>
+              </div>
             )}
         </Fragment>
       )}

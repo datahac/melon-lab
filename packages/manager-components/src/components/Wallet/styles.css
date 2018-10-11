@@ -16,3 +16,8 @@
 .wallet__info-value {
   font-weight: var(--font-weight-bold);
 }
+
+.wallet__button,
+.wallet__link {
+  margin-bottom: var(--space-m);
+}
