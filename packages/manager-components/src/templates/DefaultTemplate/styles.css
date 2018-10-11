@@ -6,18 +6,14 @@
 }
 
 .default-template__footer {
-  position: fixed;
-  width: 100%;
+  position: absolute;
+  right: 0;
   bottom: 0;
-  z-index: 1;
+  left: 0;
 }
 
 .default-template__content-wrap {
-  margin: 50px 0;
-
-  @media (--viewport-s) {
-    margin: 50px 0;
-  }
+  margin-top: 50px;
 }
 
 .default-template__title {
@@ -30,9 +26,9 @@
 }
 
 .default-template__content {
-  padding: 16px;
+  margin: 16px;
 
   @media (--viewport-s) {
-    padding: 16px 7%;
+    margin: 16px 7%;
   }
 }

@@ -26,12 +26,20 @@
     url('./static/fonts/source-serif-pro-v5-latin-700.woff') format('woff');
 }
 
+:global(html) {
+  height: 100%;
+  box-sizing: border-box;
+}
+
 :global(body) {
+  position: relative;
   font-family: 'Source Serif Pro', serif;
   background: #fffdf3;
   font-size: 14px;
   line-height: 1.4;
   margin: 0;
+  min-height: calc(100% - 50px);
+  padding-bottom: 33px;
 }
 
 :global(*),
