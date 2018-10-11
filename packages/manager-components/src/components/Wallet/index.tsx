@@ -3,40 +3,27 @@ import Button from '~/blocks/Button';
 import Notification from '~/blocks/Notification';
 import Link from '~/blocks/Link';
 import Spinner from '~/blocks/Spinner';
-import displayNumber from '~/utils/displayNumber';
 
 import styles from './styles.css';
 
-export interface WalletProps {
-  associatedFund?: {
-    address: string;
-    name: string;
-  };
+export interface WalletSettingsProps {
   currentAddress?: string;
   deleteWallet: () => void;
   isCompetition?: boolean;
-  networkId: string;
   hasAccount?: boolean;
   hasWallet?: boolean;
   loading?: boolean;
-  balances?: {
-    eth?: string;
-    mln?: string;
-    weth?: string;
-  };
 }
 
-export const Wallet: StatelessComponent<WalletProps> = ({
-  associatedFund,
+export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
   currentAddress,
   deleteWallet,
   isCompetition,
-  networkId,
   hasAccount,
   hasWallet,
   loading,
-  balances,
 }) => {
+  console.log();
   const isDanger = currentAddress ? 'danger' : 'primary';
 
   return (
@@ -48,75 +35,7 @@ export const Wallet: StatelessComponent<WalletProps> = ({
         <Fragment>
           {currentAddress && (
             <Fragment>
-              <div className="wallet__info">
-                <p>
-                  ETH:
-                  <br />
-                  <code>
-                    <span className="wallet__info-value">
-                      {balances &&
-                        displayNumber(balances.eth ? balances.eth : 0)}
-                    </span>
-                  </code>
-                </p>
-                <p>
-                  MLN:
-                  <br />
-                  <code>
-                    <span className="wallet__info-value">
-                      {balances &&
-                        displayNumber(balances.mln ? balances.mln : 0)}
-                    </span>
-                  </code>
-                </p>
-                <p>
-                  WETH:
-                  <br />
-                  <code>
-                    <span className="wallet__info-value">
-                      {balances &&
-                        displayNumber(balances.weth ? balances.weth : 0)}
-                    </span>
-                  </code>
-                </p>
-              </div>
-              {associatedFund ? (
-                <Fragment>
-                  <h2>Your fund</h2>
-                  <Link
-                    style="primary"
-                    size="medium"
-                    href={{
-                      pathname: '/manage',
-                      query: { address: associatedFund.address },
-                    }}
-                  >
-                    {associatedFund.name}
-                  </Link>
-                  <p>
-                    Fund address:{' '}
-                    <strong>
-                      <a
-                        href={`https://${
-                          networkId === 'KOVAN' ? 'kovan.' : ''
-                        }etherscan.io/address/${associatedFund.address}`}
-                        target="_blank"
-                      >
-                        {associatedFund.address}
-                      </a>
-                    </strong>
-                  </p>
-                </Fragment>
-              ) : (
-                <p>
-                  <Link style="primary" size="medium" href="/setup">
-                    Setup your fund
-                  </Link>
-                </p>
-              )}
-
-              <hr />
-
+              <h2>Settings</h2>
               <p>
                 <strong>
                   It is highly recommended to download a backup of your wallet.
@@ -153,53 +72,51 @@ export const Wallet: StatelessComponent<WalletProps> = ({
             </Fragment>
           )}
 
-          <Fragment>
-            {!hasAccount &&
-              hasWallet && (
-                <Fragment>
-                  <Notification isWarning>
-                    <p>
-                      We found a Wallet on your Computer. You can load it here:
-                    </p>
-                    <Link style="secondary" size="medium" href="/wallet/load">
-                      Load Wallet
-                    </Link>
-                  </Notification>
+          {!hasAccount &&
+            hasWallet && (
+              <Fragment>
+                <Notification isWarning>
+                  <p>
+                    We found a Wallet on your Computer. You can load it here:
+                  </p>
+                  <Link style="secondary" size="medium" href="/wallet/load">
+                    Load Wallet
+                  </Link>
+                </Notification>
 
-                  <hr />
-                </Fragment>
-              )}
+                <hr />
+              </Fragment>
+            )}
 
-            {!isCompetition && (
+          {!isCompetition && (
+            <p>
+              <Link style={isDanger} size="medium" href="/wallet/generate">
+                Create a new wallet
+              </Link>
+            </p>
+          )}
+          <p>
+            <Link style={isDanger} size="medium" href="/wallet/restore">
+              Restore from mnemonic
+            </Link>
+          </p>
+          <p>
+            <Link style={isDanger} size="medium" href="/wallet/import">
+              Import wallet JSON
+            </Link>
+          </p>
+          {currentAddress &&
+            !isCompetition && (
               <p>
-                <Link style={isDanger} size="medium" href="/wallet/generate">
-                  Create a new wallet
-                </Link>
+                <Button style={isDanger} onClick={deleteWallet}>
+                  Delete wallet
+                </Button>
               </p>
             )}
-            <p>
-              <Link style={isDanger} size="medium" href="/wallet/restore">
-                Restore from mnemonic
-              </Link>
-            </p>
-            <p>
-              <Link style={isDanger} size="medium" href="/wallet/import">
-                Import wallet JSON
-              </Link>
-            </p>
-            {currentAddress &&
-              !isCompetition && (
-                <p>
-                  <Button style={isDanger} onClick={deleteWallet}>
-                    Delete wallet
-                  </Button>
-                </p>
-              )}
-          </Fragment>
         </Fragment>
       )}
     </div>
   );
 };
 
-export default Wallet;
+export default WalletSettings;

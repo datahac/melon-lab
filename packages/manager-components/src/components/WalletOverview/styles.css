@@ -1,0 +1,18 @@
+.wallet-overview {
+  max-width: 400px;
+  margin: 0 auto var(--space-xl) auto;
+}
+
+.wallet-overview__loading {
+  margin: var(--space-s) auto;
+  text-align: center;
+}
+
+.wallet-overview__info {
+  background-color: var(--color-border);
+  padding: var(--space-xxs) var(--space-m);
+}
+
+.wallet-overview__info-value {
+  font-weight: var(--font-weight-bold);
+}

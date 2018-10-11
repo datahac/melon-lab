@@ -10,7 +10,7 @@ const data = {
   deleteWallet: action('deleteWallet'),
 };
 
-storiesOf('Components|Account', module)
+storiesOf('Components|Wallet', module)
   .add('Default', () => {
     return (
       <Wallet

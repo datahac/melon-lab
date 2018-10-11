@@ -1,5 +1,5 @@
 import React from 'react';
-import Wallet from '+/components/Wallet';
+import WalletOverview from '+/components/WalletOverview';
 import WalletTemplate from '+/components/WalletTemplate';
 import Link from '~/blocks/Link';
 import redirect from '~/utils/redirect';
@@ -9,8 +9,8 @@ export default class Index extends React.Component {
   static async getInitialProps(context) {
     const { hasWallet } = await checkHasWallet(context.apolloClient);
 
-    if (hasWallet.wallet) {
-      redirect(context, '/wallet/overview');
+    if (!hasWallet.wallet) {
+      redirect(context, '/wallet');
     }
 
     return { hasWallet };
@@ -40,7 +40,7 @@ export default class Index extends React.Component {
         }
         icon="icons_wallet"
       >
-        <Wallet {...this.props} />
+        <WalletOverview {...this.props} />
       </WalletTemplate>
     );
   }

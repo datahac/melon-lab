@@ -9,8 +9,8 @@ export default class Index extends React.Component {
   static async getInitialProps(context) {
     const { hasWallet } = await checkHasWallet(context.apolloClient);
 
-    if (hasWallet.wallet) {
-      redirect(context, '/wallet/overview');
+    if (!hasWallet.wallet) {
+      redirect(context, '/wallet');
     }
 
     return { hasWallet };

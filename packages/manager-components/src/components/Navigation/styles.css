@@ -1,0 +1,29 @@
+.navigation {
+  width: 100%;
+}
+
+.navigation__list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: inline-block;
+}
+
+.navigation__item {
+  position: relative;
+  display: inline-block;
+}
+
+.navigation__link {
+  display: block;
+  padding: var(--space-s) var(--space-xl);
+}
+
+.navigation__item--active::after {
+  position: absolute;
+  content: '';
+  border-bottom: 2px solid var(--color-secondary-dark);
+  bottom: -2px;
+  right: 0;
+  left: 0;
+}

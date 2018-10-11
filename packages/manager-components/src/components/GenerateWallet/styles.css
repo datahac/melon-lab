@@ -1,3 +1,8 @@
+.generate-wallet {
+  max-width: 768px;
+  margin: 0 auto var(--space-xl) auto;
+}
+
 .generate-wallet__warning {
   padding: var(--space-m);
   background-color: var(--color-warning);
