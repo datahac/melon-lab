@@ -195,7 +195,7 @@ type Query {
   rankings: [Ranking]
   associatedFund(address: String!): Fund
   termsAndConditions: UnsignedMessage
-  exchanges: [Exchange]
+  availableExchanges: [Exchange]
 
   # TODO: Move this to the Fund type.
   openOrders(address: String!): [Order]

@@ -118,7 +118,7 @@ export default {
 
       return null;
     },
-    exchanges: async () => getExchanges(),
+    availableExchanges: async () => getExchanges(),
   },
   Ranking: {
     fund: (parent, _, { loaders }) => {

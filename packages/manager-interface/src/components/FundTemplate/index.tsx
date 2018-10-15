@@ -13,30 +13,9 @@ import HoldingsQuery from './data/holdings';
 import { compose, withState, withProps } from 'recompose';
 import isSameAddress from '~/utils/isSameAddress';
 
-const availableExchanges = [
-  {
-    value: 'RADAR_RELAY',
-    text: 'Radar Relay',
-  },
-  {
-    value: 'ERC_DEX',
-    text: 'ERC Dex',
-  },
-  {
-    value: 'OASIS_DEX',
-    text: 'OasisDex',
-  },
-  {
-    value: 'KYBER_NETWORK',
-    text: 'Kyber',
-  },
-];
-
-const withExchangeState = withState(
-  'exchanges',
-  'setExchanges',
-  availableExchanges.map(exchange => exchange.value),
-);
+const withExchangeState = withState('exchanges', 'setExchanges', props => {
+  return props.availableExchanges.map(exchange => exchange.value);
+});
 
 const withSelectedOrderState = withState('order', 'setOrder', {
   price: '',
@@ -47,19 +26,15 @@ const withSelectedOrderState = withState('order', 'setOrder', {
   exchange: '',
 });
 
-const withOrderBookProps = withProps({
-  availableExchanges,
-});
-
 const FundTemplate = ({
   network,
   quoteAsset,
   baseAsset,
   address,
   account,
+  availableExchanges,
   exchanges,
   setExchanges,
-  availableExchanges,
   order,
   setOrder,
   priceFeedUp,
@@ -169,5 +144,4 @@ const FundTemplate = ({
 export default compose(
   withExchangeState,
   withSelectedOrderState,
-  withOrderBookProps,
 )(FundTemplate);
