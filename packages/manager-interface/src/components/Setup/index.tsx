@@ -1,9 +1,26 @@
 import React from 'react';
-import Setup from '@melonproject/manager-components/components/Setup/container';
+import Setup from '@melonproject/manager-components/components/Setup';
 import FeeFormModal from '+/components/FeeFormModal';
 import FundMutation from './data/fund';
 import { compose, withHandlers, withState } from 'recompose';
 import Router from 'next/router';
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+
+const initialValues = {
+  name: '',
+};
+
+const withFormValidation = withFormik({
+  mapPropsToValues: props =>
+    props.formValues ? { ...props.formValues } : initialValues,
+  validationSchema: Yup.object().shape({
+    name: Yup.string().required('name is required.'),
+  }),
+  enableReinitialize: true,
+  handleSubmit: (values, form) =>
+    form.props.onSubmit && form.props.onSubmit(values),
+});
 
 const withSignedState = withState('signed', 'setSigned', false);
 
@@ -61,4 +78,5 @@ export default compose(
   withSignedState,
   withSetupHandlers,
   withSetup,
+  withFormValidation,
 )(Setup);

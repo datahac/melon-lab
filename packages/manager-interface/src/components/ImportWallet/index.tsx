@@ -1,7 +1,24 @@
-import ImportWallet from '~/components/ImportWallet/container';
+import ImportWallet from '~/components/ImportWallet';
 import { compose, withState, withHandlers } from 'recompose';
 import Router from 'next/router';
 import WalletMutation from './data/wallet';
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
+
+const initialValues = {
+  password: '',
+};
+
+const withFormValidation = withFormik({
+  mapPropsToValues: props =>
+    props.formValues ? { ...props.formValues } : initialValues,
+  validationSchema: Yup.object().shape({
+    password: Yup.string().required('Password is required.'),
+  }),
+  enableReinitialize: true,
+  handleSubmit: (values, form) =>
+    form.props.onSubmit && form.props.onSubmit(values),
+});
 
 const withImportWalletHandlers = withHandlers({
   onImportFile: props => file => {
@@ -49,4 +66,5 @@ export default compose(
   withImportWalleteErrorState,
   withImportWalletHandlers,
   withImportWallet,
+  withFormValidation,
 )(ImportWallet);

@@ -1,9 +1,0 @@
-.load-wallet {
-  max-width: 400px;
-  margin: 0 auto var(--space-xl) auto;
-}
-
-.load-wallet__input,
-.load-wallet__error {
-  margin-bottom: var(--space-m);
-}

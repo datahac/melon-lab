@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import Setup from './container';
+import Setup from './index';
 
 const data = {
   initialValues: {

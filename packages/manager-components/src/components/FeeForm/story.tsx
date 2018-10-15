@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import FeeForm from './container';
+import FeeForm from './index';
 
 const data = {
   initialValues: {
