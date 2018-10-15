@@ -2,10 +2,6 @@ import React from 'react';
 import { compose, withProps, withPropsOnChange } from 'recompose';
 import OrderForm from '~/components/OrderForm/container';
 
-const withOrderFormProps = withProps(props => ({
-  decimals: 4,
-}));
-
 const withMappedProps = withPropsOnChange(
   ['holdings', 'baseAsset', 'quoteAsset'],
   props => ({
@@ -42,7 +38,6 @@ const withGetStarted = BaseComponent => baseProps => (
 );
 
 export default compose(
-  withOrderFormProps,
   withMappedProps,
   withGetStarted,
 )(OrderForm);
