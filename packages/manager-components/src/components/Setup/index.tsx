@@ -89,7 +89,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
       <TermsAndConditions />
     </Modal>
 
-    <FeeFormModal {...FeeFormModalProps} />
+    {FeeFormModal && <FeeFormModal {...FeeFormModalProps} />}
 
     {loading ? (
       <Spinner
