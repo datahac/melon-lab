@@ -4,11 +4,18 @@ import React from 'react';
 import ImportWallet from './index';
 
 const data = {
-  initialValues: {
+  values: {
     password: '',
   },
-  onSubmit: action('onSubmit'),
+  touched: {
+    password: null,
+  },
+  error: {
+    password: null,
+  },
+  handleSubmit: action('onSubmit'),
   onImportFile: action('parseWallet'),
+  file: true,
 };
 
 storiesOf('Components|Import Wallet', module).add('Default', () => {

@@ -4,11 +4,19 @@ import React from 'react';
 import RestoreWallet from './index';
 
 const data = {
-  initialValues: {
+  values: {
     mnemonic: '',
     password: '',
   },
-  onSubmit: action('onSubmit'),
+  touched: {
+    mnemonic: null,
+    password: null,
+  },
+  error: {
+    mnemonic: null,
+    password: null,
+  },
+  handleSubmit: action('onSubmit'),
 };
 
 storiesOf('Components|Restore Wallet', module).add('Default', () => {

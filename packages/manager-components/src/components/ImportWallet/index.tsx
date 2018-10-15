@@ -40,9 +40,11 @@ export const ImportWallet: StatelessComponent<ImportWalletProps> = ({
 }) => (
   <div className="import-wallet">
     <style jsx>{styles}</style>
-    <div className="import-wallet__error">
-      {serverError && <Notification isError>{serverError}</Notification>}
-    </div>
+    {serverError && (
+      <div className="import-wallet__error">
+        <Notification isError>{serverError}</Notification>
+      </div>
+    )}
     {loading ? (
       <Spinner icon size="small" text="Import Wallet..." />
     ) : (

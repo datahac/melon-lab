@@ -4,8 +4,14 @@ import React from 'react';
 import FeeForm from './index';
 
 const data = {
-  initialValues: {
+  values: {
     gasPrice: '20.000',
+  },
+  touched: {
+    gasPrice: null,
+  },
+  error: {
+    gasPrice: null,
   },
   fees: [
     {
@@ -21,7 +27,7 @@ const data = {
       gasTotal: '0.0006',
     },
   ],
-  onSubmit: action('onSubmit'),
+  handleSubmit: action('onSubmit'),
   onCancel: action('onCancel'),
 };
 

@@ -6,11 +6,21 @@ import GenerateWallet from './index';
 const data = {
   mnemonic:
     'next glass shell collect erupt image drive tumble motor gym glove inside',
-  initialValues: {
+  values: {
     mnemonic: '',
     password: '',
   },
+  touched: {
+    mnemonic: null,
+    password: null,
+  },
+  error: {
+    mnemonic: null,
+    password: null,
+  },
+
   onSubmit: action('onSubmit'),
+  showForm: true,
 };
 
 storiesOf('Components|Generate Wallet', module).add('Default', () => {

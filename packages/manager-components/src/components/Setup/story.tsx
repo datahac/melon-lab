@@ -4,8 +4,14 @@ import React from 'react';
 import Setup from './index';
 
 const data = {
-  initialValues: {
+  values: {
     name: '',
+  },
+  touched: {
+    name: null,
+  },
+  error: {
+    name: null,
   },
   config: {
     canonicalPriceFeedAddress: 'foo',

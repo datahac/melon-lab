@@ -4,10 +4,16 @@ import React from 'react';
 import DownloadWallet from './index';
 
 const data = {
-  initialValues: {
+  values: {
     password: '',
   },
-  onSubmit: action('onSubmit'),
+  touched: {
+    password: null,
+  },
+  error: {
+    password: null,
+  },
+  handleSubmit: action('onSubmit'),
 };
 
 storiesOf('Components|Download Wallet', module).add('Default', () => {
