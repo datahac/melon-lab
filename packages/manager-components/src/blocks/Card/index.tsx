@@ -56,7 +56,7 @@ const Card: StatelessComponent<CardProps> = ({
           </div>
           <div className="card__report" onClick={handleReportClick}>
             <Link target="_blank" href={reportUrl} title="Show Report">
-              <Icon width="20px" height="20px" name="icons_report" />
+              <Icon width="16px" height="20px" name="icons_report" />
             </Link>
           </div>
         </div>
