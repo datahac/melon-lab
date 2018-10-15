@@ -3,21 +3,7 @@ import gql from 'graphql-tag';
 
 const mutation = gql`
   mutation RestoreWallet($mnemonic: String!, $password: String!) {
-    restoreWallet(mnemonic: $mnemonic, password: $password) @client {
-      accountAddress
-      privateKey
-      encryptedWallet
-    }
-  }
-`;
-
-const query = gql`
-  query GetWallet {
-    wallet @client {
-      accountAddress
-      privateKey
-      encryptedWallet
-    }
+    restoreWallet(mnemonic: $mnemonic, password: $password) @client
   }
 `;
 
@@ -25,10 +11,22 @@ const WalletMutation = ({ onCompleted, children }) => (
   <Mutation
     mutation={mutation}
     update={(cache, { data: { restoreWallet } }) => {
+      const allAccounts = restoreWallet || null;
+      const defaultAccount = restoreWallet && restoreWallet[0] || null;
+
       cache.writeQuery({
-        query,
+        query: gql`{
+          allAccounts
+          defaultAccount
+          hasStoredWallet
+        }`,
         data: {
-          wallet: restoreWallet,
+          // We can safely set this to "true" even on the web client because
+          // on the next refresh it will be automatically set to "false" through
+          // the defaults anyways.
+          hasStoredWallet: true,
+          allAccounts,
+          defaultAccount,
         },
       });
     }}

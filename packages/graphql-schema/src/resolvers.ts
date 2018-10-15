@@ -118,7 +118,9 @@ export default {
 
       return null;
     },
-    availableExchanges: async () => getExchanges(),
+    availableExchanges: async () => {
+      return getExchanges();
+    },
   },
   Ranking: {
     fund: (parent, _, { loaders }) => {
@@ -191,11 +193,11 @@ export default {
     },
     subscriptionAllowed: () => {
       // TODO: Where does this come from?
-      return false;
+      throw new Error('This is not implemented yet');
     },
     redemptionAllowed: () => {
       // TODO: Where does this come from?
-      return false;
+      throw new Error('This is not implemented yet');
     },
     holdings: (parent, _, { loaders }) => {
       return loaders.fundHoldings.load(parent);
@@ -217,13 +219,11 @@ export default {
     },
   },
   Mutation: {
-    // TODO: Inline these.
-    cancelOpenOrder: require('./resolvers/Mutation/cancelOpenOrder').default,
-    prepareSetupFund: async (
-      _,
-      { name, account, signature, exchanges },
-      { streams },
-    ) => {
+    cancelOpenOrder: () => {
+      // TODO: Cancel open orders.
+      throw new Error('This is not implemented yet');
+    },
+    prepareSetupFund: async (_, { name, account, signature, exchanges }, { streams }) => {
       const environment = await takeLast(streams.environment$);
       const config = await takeLast(streams.config$);
       return prepareSetupFund(
@@ -240,15 +240,43 @@ export default {
       const config = await takeLast(streams.config$);
       return executeSetupFund(environment, config, transaction);
     },
-    signMessage: async (_, { transaction }, { loaders }) => {
-      const account = loaders.account();
+    signMessage: async () => {
+      // TODO: Sign a message using the currently logged in wallet.
+      throw new Error('This is not implemented yet');
     },
-    signTransaction: async () => {},
-    decryptWallet: (_, { wallet, password }, { loaders }) => {
-      return loaders.decryptWallet(wallet, password);
+    signTransaction: async () => {
+      // TODO: Sign a transaction using the currently logged in wallet.
+      throw new Error('This is not implemented yet');
+    },
+    loginWallet: (_, { password }, { loaders }) => {
+      // TODO: Load wallet from keytar storage.
+      throw new Error('This is not implemented yet');
+
+      const wallet = null;
+      return loaders.importWallet(wallet, password, (decrypted, encrypted) => {
+        // TODO: Store encrypted wallet in keytar storage and save current
+        // decrypted wallet and private key in memory.
+        throw new Error('This is not implemented yet');
+      });
+    },
+    exportWallet: (_, { password }, { loaders }) => {
+      // TODO: Load decrypted wallet from memory.
+      throw new Error('This is not implemented yet');
+      return wallet.encrypt(password);
+    },
+    importWallet: (_, { wallet, password }, { loaders }) => {
+      return loaders.importWallet(wallet, password, (decrypted, encrypted) => {
+        // TODO: Store encrypted wallet in keytar storage and save current
+        // decrypted wallet and private key in memory.
+        throw new Error('This is not implemented yet');
+      });
     },
     restoreWallet: (_, { mnemonic, password }, { loaders }) => {
-      return loaders.restoreWallet(mnemonic, password);
+      return loaders.restoreWallet(mnemonic, password, (decrypted, encrypted) => {
+        // TODO: Store encrypted wallet in keytar storage and save current
+        // decrypted wallet and private key in memory.
+        throw new Error('This is not implemented yet');
+      });
     },
     generateMnemonic: (_, __, { loaders }) => {
       return loaders.generateMnemonic();

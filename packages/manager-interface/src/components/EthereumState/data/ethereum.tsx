@@ -5,12 +5,8 @@ import * as R from 'ramda';
 import gql from 'graphql-tag';
 
 const accountQuery = gql`
-  query WalletQuery {
-    wallet @client {
-      encryptedWallet
-      accountAddress
-      privateKey
-    }
+  query AccountQuery {
+    defaultAccount @client
   }
 `;
 
@@ -72,14 +68,12 @@ const balanceSubscription = gql`
 `;
 
 const resultData = R.propOr({}, 'data');
-const accountAddress = R.path(['data', 'wallet', 'accountAddress']);
-const privateKey = R.path(['data', 'wallet', 'privateKey']);
+const accountAddress = R.path(['data', 'defaultAccount']);
 
 const EthereumQuery = ({ children }) => (
   <Query query={accountQuery} ssr={false}>
     {accountProps => {
       const account = accountAddress(accountProps);
-      const key = privateKey(accountProps);
       const authenticated = !!account;
 
       return (
@@ -150,7 +144,6 @@ const EthereumQuery = ({ children }) => (
                 {children({
                   ...resultData(ethereumProps),
                   account,
-                  privateKey: key,
                   loading: accountProps.loading || ethereumProps.loading,
                 })}
               </SubscriptionHandler>

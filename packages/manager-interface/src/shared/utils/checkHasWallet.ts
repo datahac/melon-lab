@@ -5,18 +5,14 @@ export default apolloClient =>
     .query({
       query: gql`
         query WalletQuery {
-          wallet {
-            encryptedWallet
-            accountAddress
-            privateKey
-          }
+          hasStoredWallet @client
         }
       `,
     })
     .then(({ data }) => {
-      return { hasWallet: data };
+      return { hasWallet: data && data.hasStoredWallet };
     })
     .catch(() => {
       // Fail gracefully
-      return { hasWallet: {} };
+      return { hasWallet: false };
     });

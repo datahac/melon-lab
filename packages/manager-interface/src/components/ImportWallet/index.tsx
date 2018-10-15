@@ -33,7 +33,7 @@ const withImportWalletHandlers = withHandlers({
 });
 
 const withImportWalletFileState = withState('file', 'setFile', null);
-const withImportWalleteErrorState = withState('error', 'setError', null);
+const withImportWalletErrorState = withState('error', 'setError', null);
 
 const redirect = () =>
   Router.replace({
@@ -63,7 +63,7 @@ const withImportWallet = BaseComponent => baseProps => (
 
 export default compose(
   withImportWalletFileState,
-  withImportWalleteErrorState,
+  withImportWalletErrorState,
   withImportWalletHandlers,
   withImportWallet,
   withFormValidation,

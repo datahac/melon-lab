@@ -1,13 +1,6 @@
 import React from 'react';
-import * as R from 'ramda';
 import WalletOverview from '~/components/WalletOverview';
 import { WalletQuery, WalletMutation } from './data/wallet';
-
-const hasWallet = R.pathSatisfies(value => !!value, [
-  'data',
-  'wallet',
-  'encryptedWallet',
-]);
 
 const withSetup = BaseComponent => baseProps => (
   <WalletQuery>
@@ -26,7 +19,7 @@ const withSetup = BaseComponent => baseProps => (
             deleteWallet={deleteWallet}
             loading={walletProps.loading}
             hasAccount={!!baseProps.account}
-            hasWallet={hasWallet(walletProps)}
+            hasWallet={walletProps.data && walletProps.data.hasStoredWallet}
             currentAddress={baseProps.account}
             networkId={baseProps.network}
           />

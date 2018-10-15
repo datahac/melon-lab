@@ -3,15 +3,13 @@ import {
   importWalletFromMnemonic,
 } from '@melonproject/melon.js';
 
-async function restoreWallet(mnemonic, password) {
-  const decryptedWallet = await importWalletFromMnemonic(mnemonic);
-  const encryptedWallet = await encryptWallet(decryptedWallet, password);
+const noop = (decrypted, encrypted) => {};
+async function restoreWallet(mnemonic, password, callback = noop) {
+  const decrypted = await importWalletFromMnemonic(mnemonic);
+  const encrypted = await encryptWallet(decrypted, password);
+  await callback(decrypted, encrypted);
 
-  return {
-    accountAddress: decryptedWallet.address,
-    privateKey: decryptedWallet.privateKey,
-    encryptedWallet,
-  };
+  return [decrypted.address];
 }
 
 export default restoreWallet;

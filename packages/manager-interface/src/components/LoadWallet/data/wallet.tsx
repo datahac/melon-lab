@@ -1,18 +1,30 @@
 import gql from 'graphql-tag';
-import { Mutation } from '~/apollo';
+import { Mutation, Query } from '~/apollo';
 
-const mutation = gql`
-  mutation ImportWallet($file: String!, $password: String!) {
-    importWallet(wallet: $file, password: $password) @client
+const loadWalletMutation = gql`
+  mutation LoadWallet($password: String!) {
+    loginWallet(password: $password) @client
   }
 `;
 
+const storedWalletQuery = gql`
+  query GetWalletQuery {
+    hasStoredWallet @client
+  }
+`;
+
+const WalletQuery = ({ children }) => (
+  <Query query={storedWalletQuery} ssr={false}>
+    {children}
+  </Query>
+);
+
 const WalletMutation = ({ onCompleted, children }) => (
   <Mutation
-    mutation={mutation}
-    update={(cache, { data: { importWallet } }) => {
-      const allAccounts = importWallet || null;
-      const defaultAccount = importWallet && importWallet[0] || null;
+    mutation={loadWalletMutation}
+    update={(cache, { data: { loginWallet } }) => {
+      const allAccounts = loginWallet || null;
+      const defaultAccount = loginWallet && loginWallet[0] || null;
 
       cache.writeQuery({
         query: gql`{
@@ -36,4 +48,4 @@ const WalletMutation = ({ onCompleted, children }) => (
   </Mutation>
 );
 
-export default WalletMutation;
+export { WalletQuery, WalletMutation };

@@ -1,3 +1,5 @@
+# Fields that are only safe within the native app environment and are blocked
+# from execution in the hosted / web environment.
 directive @insecure on FIELD_DEFINITION
 
 scalar DateTime
@@ -52,12 +54,6 @@ enum ConfigKeyEnum {
   OLYMPIAD_ADDRESS
   KYBER_NETWORK_ADDRESS
   KYBER_ADAPTER
-}
-
-type Wallet {
-  accountAddress: String @insecure
-  privateKey: String @insecure
-  encryptedWallet: String @insecure
 }
 
 type Ranking {
@@ -179,7 +175,10 @@ type Exchange {
 }
 
 type Query {
-  wallet: Wallet @insecure
+  defaultAccount: String @insecure
+  allAccounts: [String] @insecure
+  hasStoredWallet: Boolean @insecure
+
   network: String
   provider: String
   currentBlock: String
@@ -219,9 +218,60 @@ type Mutation {
   executeSetupFund(transaction: SignedTransaction!): Fund
 
   # Wallet
+  setDefaultAccount(address: String!): Boolean! @insecure
+
+  """
+  Export the currently active wallet in its encrypted form.
+  """
+  exportWallet(
+    "The password for decrypting the wallet."
+    password: String!
+  ): String @insecure
+
+  """
+  Log out of the current wallet and delete its encrypted representation
+  from local storage. This requires the user to either re-upload the
+  encrypted wallet or restore it from its mnemonic when attempting to
+  log in again.
+  """
   deleteWallet: Boolean! @insecure
-  decryptWallet(wallet: String!, password: String!): Wallet @insecure
-  restoreWallet(mnemonic: String!, password: String!): Wallet @insecure
+
+  """
+  Log in to a previously stored wallet. Returns a list of possible account
+  addresses from the wallet.
+  """
+  loginWallet(
+    "The password for decrypting the wallet."
+    password: String!
+  ): [String] @insecure
+
+  """
+  Import and log in to wallet using a wallet JSON. Within the native app
+  environment, this will cause the encrypted wallet to be stored locally
+  for future use.
+  """
+  importWallet(
+    "The encrypted wallet."
+    wallet: String!
+    "The password for decrypting the wallet."
+    password: String!
+  ): [String] @insecure
+
+  """
+  Restore and login to a wallet using a mnemonic. Within the native app
+  environment,this will cause the encrypted wallet to be stored locally
+  for future use.
+  """
+  restoreWallet(
+    "The mnemonic to restore the wallet with."
+    mnemonic: String!
+    "The password for decrypting the wallet."
+    password: String!
+  ): [String] @insecure
+
+  """
+  Randomly generate a new mnemonic phrase.
+  """
   generateMnemonic: String @insecure
 }
 

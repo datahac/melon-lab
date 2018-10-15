@@ -3,13 +3,14 @@
 import introspection from '@melonproject/graphql-schema/schema.gql';
 import generateMnemonic from '@melonproject/graphql-schema/loaders/wallet/generateMnemonic';
 import restoreWallet from '@melonproject/graphql-schema/loaders/wallet/restoreWallet';
-import decryptWallet from '@melonproject/graphql-schema/loaders/wallet/decryptWallet';
+import importWallet from '@melonproject/graphql-schema/loaders/wallet/decryptWallet';
 import signTransaction from '@melonproject/graphql-schema/loaders/transaction/signTransaction';
 import signMessage from '@melonproject/graphql-schema/loaders/transaction/signMessage';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
+import { setContext } from 'apollo-link-context';
 import { WebSocketLink } from 'apollo-link-ws';
 import { Query as QueryBase } from 'react-apollo';
 import { createErrorLink } from './common';
@@ -29,34 +30,56 @@ const createLink = (options, cache) => {
   const stateLink = withClientState({
     cache,
     defaults: {
-      wallet: null,
+      hasStoredWallet: false,
+      defaultAccount: null,
+      allAccounts: null,
     },
     resolvers: {
       Mutation: {
-        signMessage: (_, { key, message }, { cache }) => {
-          return signMessage(key, message);
+        deleteWallet: () => {
+          return true;
         },
-        signTransaction: (_, { key, transaction }, { cache }) => {
-          return signTransaction(key, transaction);
+        signMessage: (_, { message }, { getWallet }) => {
+          const wallet = getWallet();
+          return signMessage(message);
+        },
+        signTransaction: (_, { transaction }, { getWallet }) => {
+          const wallet = getWallet();
+          return signTransaction(transaction);
         },
         generateMnemonic: () => {
           return generateMnemonic();
         },
-        decryptWallet: (_, { wallet, password }) => {
-          return decryptWallet(wallet, password).then((result) => ({
-            ...result,
-            __typename: 'Wallet',
-          }));
+        exportWallet: (_, { password }, { getWallet }) => {
+          const wallet = getWallet();
+          return wallet && wallet.encrypt(password) || null;
         },
-        restoreWallet: (_, { mnemonic, password }) => {
-          return restoreWallet(mnemonic, password).then((result) => ({
-            ...result,
-            __typename: 'Wallet',
-          }));
+        importWallet: (_, { wallet, password }, { setWallet }) => {
+          return importWallet(wallet, password, (wallet) => {
+            setWallet(wallet);
+          });
+        },
+        restoreWallet: (_, { mnemonic, password }, { setWallet }) => {
+          return restoreWallet(mnemonic, password, (wallet) => {
+            setWallet(wallet);
+          });
+        },
+        loginWallet: () => {
+          throw new Error('The in-browser app does not support storing of wallets for security reasons.');
         },
       },
     },
   });
+
+  let activeWallet = null;
+  const stateContext = setContext(() => ({
+    getWallet: () => activeWallet,
+    setWallet: (wallet) => {
+      activeWallet = wallet;
+    },
+  }));
+
+  const stateLinkWithContext = ApolloLink.from([stateContext, stateLink]);
 
   const dataLink = new WebSocketLink({
     uri: serverConfig.graphqlLocalWs || config.graphqlRemoteWs,
@@ -66,7 +89,7 @@ const createLink = (options, cache) => {
   });
 
   const errorLink = createErrorLink();
-  return ApolloLink.from([errorLink, stateLink, dataLink]);
+  return ApolloLink.from([errorLink, stateLinkWithContext, dataLink]);
 };
 
 export const createClient = options => {

@@ -16,6 +16,7 @@ export interface DownloadWalletProps {
   handleBlur?: () => void;
   handleSubmit?: () => void;
   handleChange?: () => void;
+  hasStoredWallet: boolean;
   touched?: any;
   values: FormValues;
   loading?: boolean;

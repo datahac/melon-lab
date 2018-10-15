@@ -1,9 +1,9 @@
 import DownloadWallet from '~/components/DownloadWallet';
-import { compose, withState } from 'recompose';
-import { downloadWallet } from '~/utils/createDownload';
-import Router from 'next/router';
+import { compose } from 'recompose';
 import { withFormik } from 'formik';
+import { withRouter } from 'next/router';
 import * as Yup from 'yup';
+import ExportWalletMutation from './data/export';
 
 const initialValues = {
   password: '',
@@ -22,29 +22,25 @@ const withFormValidation = withFormik({
   },
 });
 
-const withLoadingState = withState('loading', 'setLoading', false);
-
 const withDownloadWallet = BaseComponent => baseProps => (
-  <BaseComponent
-    loading={baseProps.loading}
-    onSubmit={values => {
-      baseProps.setLoading(true);
-      downloadWallet(
-        values.password,
-        baseProps.privateKey,
-        baseProps.account,
-      ).then(() => {
-        Router.replace({
-          pathname: '/wallet',
-        });
-        baseProps.setLoading(false);
-      });
-    }}
-  />
+  <ExportWalletMutation account={baseProps.account} router={baseProps.router}>
+    {(exportWallet, exportProps) => (
+      <BaseComponent
+        loading={exportProps.loading}
+        onSubmit={values => {
+          exportWallet({
+            variables: {
+              password: values.password,
+            },
+          });
+        }}
+      />
+    )}
+  </ExportWalletMutation>
 );
 
 export default compose(
-  withLoadingState,
+  withRouter,
   withDownloadWallet,
   withFormValidation,
 )(DownloadWallet);

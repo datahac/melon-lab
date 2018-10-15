@@ -3,17 +3,13 @@ import gql from 'graphql-tag';
 
 const query = gql`
   query GetWallet {
-    wallet @client {
-      encryptedWallet
-      accountAddress
-      privateKey
-    }
+    hasStoredWallet @client
   }
 `;
 
 const mutation = gql`
   mutation DeleteWalletMutation {
-    deleteWallet
+    deleteWallet @client
   }
 `;
 
@@ -32,9 +28,15 @@ const WalletMutation = ({ children }) => (
       }
 
       cache.writeQuery({
-        query,
+        query: gql`{
+          hasStoredWallet
+          defaultAccount
+          allAccounts
+        }`,
         data: {
-          wallet: null,
+          hasStoredWallet: false,
+          defaultAccount: null,
+          allAccounts: null,
         },
       });
     }}

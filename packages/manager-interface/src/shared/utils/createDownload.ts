@@ -1,5 +1,3 @@
-import { encryptWallet, getWallet } from '@melonproject/melon.js';
-
 // from https://github.com/kennethjiang/js-file-download/blob/master/file-download.js
 export const createDownload = (data, filename, mime) => {
   var blob = new Blob([data], { type: mime || 'application/octet-stream' });
@@ -32,11 +30,9 @@ export const createDownload = (data, filename, mime) => {
   }
 };
 
-export const downloadWallet = async (password, privateKey, address) => {
-  const wallet = getWallet(privateKey);
-  const encryptedWallet = await encryptWallet(wallet, password);
+export const downloadWallet = async (wallet, address) => {
   return createDownload(
-    encryptedWallet,
+    wallet,
     `olympiad.melon.fund-${address}.json`,
     'application/json',
   );

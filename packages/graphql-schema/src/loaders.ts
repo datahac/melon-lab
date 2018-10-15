@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
 import takeLast from './utils/takeLast';
-import decryptWallet from './loaders/wallet/decryptWallet';
+import importWallet from './loaders/wallet/decryptWallet';
 import restoreWallet from './loaders/wallet/restoreWallet';
 import generateMnemonic from './loaders/wallet/generateMnemonic';
 import getFundContract from './loaders/fund/fundContract';
@@ -174,7 +174,7 @@ export default async streams => {
     melonBalance,
     etherBalance,
     generateMnemonic,
-    decryptWallet,
+    importWallet,
     restoreWallet,
   };
 };
