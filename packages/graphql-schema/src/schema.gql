@@ -173,6 +173,11 @@ type Signature {
   v: Int!
 }
 
+type Exchange {
+  value: String
+  text: String
+}
+
 type Query {
   wallet: Wallet @insecure
   network: String
@@ -190,6 +195,7 @@ type Query {
   rankings: [Ranking]
   associatedFund(address: String!): Fund
   termsAndConditions: UnsignedMessage
+  exchanges: [Exchange]
 
   # TODO: Move this to the Fund type.
   openOrders(address: String!): [Order]

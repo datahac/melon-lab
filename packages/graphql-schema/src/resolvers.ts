@@ -11,6 +11,7 @@ import UnsignedMessage from './types/UnsignedMessage';
 import toAsyncIterator from './utils/toAsyncIterator';
 import takeLast from './utils/takeLast';
 import sameBlock from './utils/sameBlock';
+import getExchanges from './utils/getExchanges';
 import prepareSetupFund from './loaders/transaction/prepareSetupFund';
 import termsAndConditions from './loaders/termsAndConditions';
 import executeSetupFund from './loaders/transaction/executeSetupFund';
@@ -20,7 +21,7 @@ export default {
   Symbol,
   Quantity,
   Order,
-  SignatureHash, 
+  SignatureHash,
   SignedTransaction,
   UnsignedTransaction,
   SignedMessage,
@@ -50,7 +51,7 @@ export default {
   Query: {
     termsAndConditions: async (_, __, { streams }) => {
       const environment = await takeLast(streams.environment$);
-      return environment && termsAndConditions(environment) || null;
+      return (environment && termsAndConditions(environment)) || null;
     },
     openOrders: async (_, { address }, { loaders }) => {
       const contract = await loaders.fundContract.load(address);
@@ -117,6 +118,7 @@ export default {
 
       return null;
     },
+    exchanges: async () => getExchanges(),
   },
   Ranking: {
     fund: (parent, _, { loaders }) => {
@@ -217,10 +219,21 @@ export default {
   Mutation: {
     // TODO: Inline these.
     cancelOpenOrder: require('./resolvers/Mutation/cancelOpenOrder').default,
-    prepareSetupFund: async (_, { name, account, signature, exchanges }, { streams }) => {
+    prepareSetupFund: async (
+      _,
+      { name, account, signature, exchanges },
+      { streams },
+    ) => {
       const environment = await takeLast(streams.environment$);
       const config = await takeLast(streams.config$);
-      return prepareSetupFund(environment, config, name, account, signature, exchanges);
+      return prepareSetupFund(
+        environment,
+        config,
+        name,
+        account,
+        signature,
+        exchanges,
+      );
     },
     executeSetupFund: async (_, { transaction }, { streams }) => {
       const environment = await takeLast(streams.environment$);
