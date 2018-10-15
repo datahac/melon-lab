@@ -52,6 +52,7 @@ const withSetup = BaseComponent => baseProps => (
           eth: baseProps.eth,
           mln: baseProps.mln,
         }}
+        availableExchanges={baseProps.availableExchanges}
         FeeFormModal={FeeFormModal}
         FeeFormModalProps={{}}
         onClickDecline={baseProps.onClickDecline}

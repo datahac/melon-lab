@@ -42,6 +42,7 @@ export interface SetupProps {
   fees?: any;
   FeeFormModal;
   FeeFormModalProps;
+  availableExchanges: any;
 }
 
 export const Setup: StatelessComponent<SetupProps> = ({
@@ -65,6 +66,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
   address,
   FeeFormModal,
   FeeFormModalProps = {},
+  availableExchanges,
 }) => (
   <div className="setup">
     <style jsx>{styles}</style>
@@ -140,24 +142,21 @@ export const Setup: StatelessComponent<SetupProps> = ({
             </p>
             <div className="setup__exchanges">
               <h4>Exchange:</h4>
-              <div className="setup__exchanges-checkbox">
-                <Checkbox
-                  name="exchanges"
-                  value="OasisDex"
-                  text="OasisDex"
-                  disabled
-                  defaultChecked
-                />
-              </div>
-              <div className="setup__exchanges-checkbox">
-                <Checkbox
-                  name="exchanges"
-                  value="0x relayers"
-                  text="0x relayers"
-                  disabled
-                  defaultChecked
-                />
-              </div>
+              {availableExchanges &&
+                availableExchanges.map(exchange => (
+                  <div
+                    key={exchange.value}
+                    className="setup__exchanges-checkbox"
+                  >
+                    <Checkbox
+                      name="exchanges"
+                      value={exchange.value}
+                      text={exchange.text}
+                      disabled
+                      defaultChecked
+                    />
+                  </div>
+                ))}
             </div>
             <div className="setup__info">
               Pricefeed:{' '}
