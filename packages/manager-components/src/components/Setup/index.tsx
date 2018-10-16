@@ -3,9 +3,7 @@ import Button from '~/blocks/Button';
 import Checkbox from '~/blocks/Checkbox';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
-import Modal from '~/blocks/Modal';
 import Spinner from '~/blocks/Spinner';
-import TermsConditions from '~/components/TermsConditions';
 import Link from '~/blocks/Link';
 
 import styles from './styles.css';
@@ -26,7 +24,7 @@ export interface SetupProps {
   handleSubmit?: () => void;
   isCompetition?: boolean;
   loading?: boolean;
-  networkId?: string;
+  network?: string;
   touched?: any;
   values: FormValues;
   balances: {
@@ -53,7 +51,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
   handleSubmit,
   isCompetition,
   loading,
-  networkId,
+  network,
   touched,
   values,
   balances,
@@ -144,7 +142,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
               Pricefeed:{' '}
               <a
                 href={`https://${
-                  networkId === '42' ? 'kovan.' : ''
+                  network === 'KOVAN' ? 'kovan.' : ''
                 }etherscan.io/address/${canonicalPriceFeedAddress}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -159,7 +157,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
                   Compliance (invest/redeem):{' '}
                   <a
                     href={`https://${
-                      networkId === '42' ? 'kovan.' : ''
+                      network === 'KOVAN' ? 'kovan.' : ''
                     }etherscan.io/address/${competitionComplianceAddress}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -174,7 +172,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
                   Compliance (invest/redeem):{' '}
                   <a
                     href={`https://${
-                      networkId === '42' ? 'kovan.' : ''
+                      network === 'KOVAN' ? 'kovan.' : ''
                     }etherscan.io/address/${noComplianceAddress}`}
                     target="_blank"
                     rel="noopener noreferrer"

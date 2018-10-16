@@ -34,6 +34,7 @@ const withSetup = BaseComponent => baseProps => (
   <FundMutation onCompleted={redirect} account={baseProps.account}>
     {(createFund, createFundProps) => (
       <BaseComponent
+        network={baseProps.network}
         address={baseProps.account}
         balances={{
           eth: baseProps.eth,
