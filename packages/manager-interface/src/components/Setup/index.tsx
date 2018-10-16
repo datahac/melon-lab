@@ -3,10 +3,20 @@ import Setup from '@melonproject/manager-components/components/Setup';
 import FeeFormModal from '+/components/FeeFormModal';
 import TermsConditionsModal from '+/components/TermsConditionsModal';
 import FundMutation from './data/fund';
-import { compose } from 'recompose';
+import { compose, withState, withHandlers } from 'recompose';
 import Router from 'next/router';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
+
+const withSignedState = withState('signed', 'setSigned', false);
+
+const withSetupHandlers = withHandlers({
+  onClickDecline: props => e => {
+    Router.replace({
+      pathname: '/wallet',
+    });
+  },
+});
 
 const initialValues = {
   name: '',
@@ -44,7 +54,11 @@ const withSetup = BaseComponent => baseProps => (
         FeeFormModal={FeeFormModal}
         FeeFormModalProps={{}}
         TermsConditionsModal={TermsConditionsModal}
-        TermsConditionsModalProps={{}}
+        TermsConditionsModalProps={{
+          signed: baseProps.signed,
+          setSigned: () => baseProps.setSigned(true),
+          onClickDecline: () => baseProps.onClickDecline(),
+        }}
         onClickDecline={baseProps.onClickDecline}
         signed={baseProps.signed}
         onClickAccept={baseProps.onClickAccept}
@@ -66,6 +80,8 @@ const withSetup = BaseComponent => baseProps => (
 );
 
 export default compose(
+  withSignedState,
+  withSetupHandlers,
   withSetup,
   withFormValidation,
 )(Setup);
