@@ -2,8 +2,6 @@ import * as R from 'ramda';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import GraphQLJSON from 'graphql-type-json';
 import Order from './types/Order';
-import Quantity from './types/Quantity';
-import Symbol from './types/Symbol';
 import toAsyncIterator from './utils/toAsyncIterator';
 import takeLast from './utils/takeLast';
 import sameBlock from './utils/sameBlock';
