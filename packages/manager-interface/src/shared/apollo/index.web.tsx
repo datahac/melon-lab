@@ -28,6 +28,14 @@ export const Query = ({ errorPolicy, ...props }) => (
 );
 
 const createStateLink = (cache) => {
+  // We only need the local overrides for the schema within the browser.
+  // The server won't ever run these since the affected fields are generally
+  // mutations or don't pose any security relevant thread. Even if they did,
+  // they would be protected through our directives in the schema.
+  if (!process.browser) {
+    return withClientState({ cache });
+  }
+
   const stateLink = withClientState({
     cache,
     defaults: {
@@ -104,11 +112,7 @@ export const createClient = options => {
     }),
   });
 
-  // We only need the local overrides for the schema within the browser.
-  // The server won't ever run these since the affected fields are generally
-  // mutations or don't pose any security relevant thread. Even if they did,
-  // they would be protected through our directives in the schema.
-  const stateLink = process.browser && createStateLink(cache);
+  const stateLink = createStateLink(cache);
   const errorLink = createErrorLink();
   const dataLink = new WebSocketLink({
     uri: process.browser ? config.graphqlRemoteWs : serverConfig.graphqlLocalWs,
@@ -117,16 +121,10 @@ export const createClient = options => {
     },
   });
 
+  const link = ApolloLink.from([errorLink, stateLink, dataLink]);
   const client = new ApolloClient({
     ssrMode: !process.browser,
-    link: process.browser ? ApolloLink.from([
-      errorLink,
-      stateLink,
-      dataLink,
-    ]) : ApolloLink.from([
-      errorLink,
-      dataLink,
-    ]),
+    link,
     cache,
   });
 
