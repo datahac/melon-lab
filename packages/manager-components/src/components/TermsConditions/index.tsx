@@ -1,11 +1,11 @@
 import React, { Fragment, StatelessComponent } from 'react';
 
-export interface TermsAndConditionsProps {
+export interface TermsConditionsProps {
   networkId?: string;
 }
 
-export const TermsAndConditions: StatelessComponent<
-  TermsAndConditionsProps
+export const TermsConditions: StatelessComponent<
+  TermsConditionsProps
 > = ({ networkId }) => (
   <div className="conditions">
     {networkId === '1' ? (
@@ -222,4 +222,4 @@ export const TermsAndConditions: StatelessComponent<
   </div>
 );
 
-export default TermsAndConditions;
+export default TermsConditions;

@@ -1,8 +1,9 @@
 import React from 'react';
 import Setup from '@melonproject/manager-components/components/Setup';
 import FeeFormModal from '+/components/FeeFormModal';
+import TermsConditionsModal from '+/components/TermsConditionsModal';
 import FundMutation from './data/fund';
-import { compose, withHandlers, withState } from 'recompose';
+import { compose } from 'recompose';
 import Router from 'next/router';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
@@ -20,20 +21,6 @@ const withFormValidation = withFormik({
   enableReinitialize: true,
   handleSubmit: (values, form) =>
     form.props.onSubmit && form.props.onSubmit(values),
-});
-
-const withSignedState = withState('signed', 'setSigned', false);
-
-const withSetupHandlers = withHandlers({
-  onClickDecline: props => e => {
-    Router.replace({
-      pathname: '/wallet',
-    });
-  },
-
-  onClickAccept: props => e => {
-    props.setSigned(true);
-  },
 });
 
 // Redirect to created fund
@@ -55,6 +42,8 @@ const withSetup = BaseComponent => baseProps => (
         availableExchanges={baseProps.availableExchanges}
         FeeFormModal={FeeFormModal}
         FeeFormModalProps={{}}
+        TermsConditionsModal={TermsConditionsModal}
+        TermsConditionsModalProps={{}}
         onClickDecline={baseProps.onClickDecline}
         signed={baseProps.signed}
         onClickAccept={baseProps.onClickAccept}
@@ -76,8 +65,6 @@ const withSetup = BaseComponent => baseProps => (
 );
 
 export default compose(
-  withSignedState,
-  withSetupHandlers,
   withSetup,
   withFormValidation,
 )(Setup);

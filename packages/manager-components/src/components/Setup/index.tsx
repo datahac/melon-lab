@@ -5,7 +5,7 @@ import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Modal from '~/blocks/Modal';
 import Spinner from '~/blocks/Spinner';
-import TermsAndConditions from '~/components/TermsAndConditions';
+import TermsConditions from '~/components/TermsConditions';
 import Link from '~/blocks/Link';
 
 import styles from './styles.css';
@@ -29,11 +29,6 @@ export interface SetupProps {
   networkId?: string;
   touched?: any;
   values: FormValues;
-  onClickAccept: () => void;
-  onClickDecline: () => void;
-  onClickConfirmFees: () => void;
-  onClickDeclineFees: () => void;
-  signed?: boolean;
   balances: {
     eth?: string;
     mln?: string;
@@ -42,6 +37,8 @@ export interface SetupProps {
   fees?: any;
   FeeFormModal;
   FeeFormModalProps;
+  TermsConditionsModal;
+  TermsConditionsModalProps;
   availableExchanges: any;
 }
 
@@ -59,35 +56,20 @@ export const Setup: StatelessComponent<SetupProps> = ({
   networkId,
   touched,
   values,
-  signed,
-  onClickAccept,
-  onClickDecline,
   balances,
   address,
   FeeFormModal,
   FeeFormModalProps = {},
+  TermsConditionsModal,
+  TermsConditionsModalProps = {},
   availableExchanges,
 }) => (
   <div className="setup">
     <style jsx>{styles}</style>
 
-    <Modal
-      title="Terms and Conditions"
-      isOpen={!signed}
-      PrimaryAction={Button}
-      PrimaryActionProps={{
-        children: 'Decline',
-        style: 'secondary',
-        onClick: onClickDecline,
-      }}
-      SecondaryAction={Button}
-      SecondaryActionProps={{
-        children: 'Accept',
-        onClick: onClickAccept,
-      }}
-    >
-      <TermsAndConditions />
-    </Modal>
+    {TermsConditionsModal && (
+      <TermsConditionsModal {...TermsConditionsModalProps} />
+    )}
 
     {FeeFormModal && <FeeFormModal {...FeeFormModalProps} />}
 
