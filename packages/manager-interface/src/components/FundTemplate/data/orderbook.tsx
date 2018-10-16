@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 
 const subscription = gql`
   subscription OrderBookQuery(
-    $baseToken: Symbol!
-    $quoteToken: Symbol!
+    $baseToken: String!
+    $quoteToken: String!
     $exchanges: [ExchangeEnum]
   ) {
     orderbook(
