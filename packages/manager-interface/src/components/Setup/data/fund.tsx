@@ -1,25 +1,31 @@
 import { Mutation } from '~/apollo';
 import gql from 'graphql-tag';
 
-const mutation = gql`
-  mutation prepareSetupFund($name: String!, $account: String!, $signature: SignatureInput!) {
-    prepareSetupFund(account: $account, name: $name, signature: $signature)
+const prepareMutation = gql`
+  mutation PrepareSetupFund($name: String!) {
+    prepareSetupFund(name: $name) @client
   }
 `;
 
-
-const query = gql`
-  query ConnectionQuery($account: String!) {
-    associatedFund(address: $account) {
-      address
-    }
+const executeMutation = gql`
+  mutation ExecuteSetupFund($transaction: Json!) {
+    executeSetupFund(transaction: $transaction) @client
   }
 `;
 
-const FundMutation = ({ onCompleted, account, children }) => (
+export const PrepareSetupMutation = ({ onCompleted, children }) => (
   <Mutation
-    mutation={mutation}
-    update={(cache, { data: { prepareSetupFund } }) => {
+    mutation={prepareMutation}
+    onCompleted={({ prepareSetupFund }) => onCompleted(prepareSetupFund)}
+  >
+    {children}
+  </Mutation>
+);
+
+export const ExecuteSetupMutation = ({ onCompleted, children }) => (
+  <Mutation
+    mutation={executeMutation}
+    update={(cache, { data: { executeSetupFund } }) => {
       // cache.writeQuery({
       //   query,
       //   variables: {
@@ -30,10 +36,8 @@ const FundMutation = ({ onCompleted, account, children }) => (
       //   },
       // });
     }}
-    onCompleted={({ createFund }) => onCompleted(createFund.address)}
+    onCompleted={({ executeSetupFund }) => onCompleted(executeSetupFund)}
   >
     {children}
   </Mutation>
 );
-
-export default FundMutation;

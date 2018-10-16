@@ -3,10 +3,10 @@ import Modal from '~/blocks/Modal';
 import Button from '~/blocks/Button';
 import TermsConditions from '~/components/TermsConditions';
 
-const TermsConditionsModal = ({ onClickDecline, signed, setSigned }) => (
+const TermsConditionsModal = ({ onClickDecline, onClickConfirm, showModal }) => (
   <Modal
     title="Terms and Conditions"
-    isOpen={!signed}
+    isOpen={showModal}
     PrimaryAction={Button}
     PrimaryActionProps={{
       children: 'Decline',
@@ -16,7 +16,7 @@ const TermsConditionsModal = ({ onClickDecline, signed, setSigned }) => (
     SecondaryAction={Button}
     SecondaryActionProps={{
       children: 'Accept',
-      onClick: setSigned,
+      onClick: onClickConfirm,
     }}
   >
     <TermsConditions />

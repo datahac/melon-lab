@@ -2,21 +2,13 @@ import React from 'react';
 import Setup from '@melonproject/manager-components/components/Setup';
 import FeeFormModal from '+/components/FeeFormModal';
 import TermsConditionsModal from '+/components/TermsConditionsModal';
-import FundMutation from './data/fund';
-import { compose, withState, withHandlers } from 'recompose';
-import Router from 'next/router';
+import { PrepareSetupMutation, ExecuteSetupMutation } from './data/fund';
+import { compose, withState } from 'recompose';
+import { withRouter } from 'next/router';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
-const withSignedState = withState('signed', 'setSigned', false);
-
-const withSetupHandlers = withHandlers({
-  onClickDecline: props => e => {
-    Router.replace({
-      pathname: '/wallet',
-    });
-  },
-});
+const withProgress = withState('setupProgress', 'setSetupProgress', 'TERMS_AND_CONDITIONS');
 
 const initialValues = {
   name: '',
@@ -33,55 +25,57 @@ const withFormValidation = withFormik({
     form.props.onSubmit && form.props.onSubmit(values),
 });
 
-// Redirect to created fund
-const redirect = address =>
-  Router.replace({
-    pathname: '/manage',
-    query: { address: address },
-  });
-
 const withSetup = BaseComponent => baseProps => (
-  <FundMutation onCompleted={redirect} account={baseProps.account}>
-    {(createFund, createFundProps) => (
-      <BaseComponent
-        network={baseProps.network}
-        address={baseProps.account}
-        balances={{
-          eth: baseProps.eth,
-          mln: baseProps.mln,
-        }}
-        availableExchanges={baseProps.availableExchanges}
-        FeeFormModal={FeeFormModal}
-        FeeFormModalProps={{}}
-        TermsConditionsModal={TermsConditionsModal}
-        TermsConditionsModalProps={{
-          signed: baseProps.signed,
-          setSigned: () => baseProps.setSigned(true),
-          onClickDecline: () => baseProps.onClickDecline(),
-        }}
-        onClickDecline={baseProps.onClickDecline}
-        signed={baseProps.signed}
-        onClickAccept={baseProps.onClickAccept}
-        canonicalPriceFeedAddress={baseProps.canonicalPriceFeedAddress}
-        competitionComplianceAddress={baseProps.competitionComplianceAddress}
-        noComplianceAddress={baseProps.noComplianceAddress}
-        onSubmit={values =>
-          createFund({
-            variables: {
-              name: values.name,
-              account: baseProps.account,
-            },
-          })
-        }
-        loading={createFundProps.loading}
-      />
+  <PrepareSetupMutation onCompleted={() => baseProps.setSetupProgress('CONFIRM_FUND_SETUP')}>
+    {(prepareSetup, prepareProps) => (
+    <PrepareSetupMutation onCompleted={() => baseProps.router.replace({ pathname: '/manage', query: { address: '' /* TODO: Add address */ } })}>
+      {(executeSetup, executeProps) => (
+        <BaseComponent
+          network={baseProps.network}
+          address={baseProps.account}
+          balances={{
+            eth: baseProps.eth,
+            mln: baseProps.mln,
+          }}
+          availableExchanges={baseProps.availableExchanges}
+          TermsConditionsModal={TermsConditionsModal}
+          TermsConditionsModalProps={{
+            showModal: baseProps.setupProgress === 'TERMS_AND_CONDITIONS',
+            onClickConfirm: () => baseProps.setSetupProgress('PREPARE_FUND_SETUP'),
+            onClickDecline: () => baseProps.router.replace({ pathname: '/wallet' }),
+          }}
+          FeeFormModal={FeeFormModal}
+          FeeFormModalProps={{
+            showModal: !prepareProps.loading && baseProps.setupProgress === 'CONFIRM_FUND_SETUP',
+            onClickConfirm: () => executeSetup({ variables: { transaction: prepareProps.data && prepareProps.data.prepareSetupFund } }),
+            onClickDecline: () => baseProps.router.replace({ pathname: '/wallet' }),
+            fees: [],
+          }}
+          onClickDecline={baseProps.onClickDecline}
+          signed={baseProps.signed}
+          onClickAccept={baseProps.onClickAccept}
+          canonicalPriceFeedAddress={baseProps.canonicalPriceFeedAddress}
+          competitionComplianceAddress={baseProps.competitionComplianceAddress}
+          noComplianceAddress={baseProps.noComplianceAddress}
+          onSubmit={values => {
+            prepareSetup({
+              variables: {
+                name: values.name,
+                exchanges: baseProps.availableExchanges.map((item) => item.value),
+              },
+            })
+          }}
+          loading={prepareProps.loading || executeProps.loading}
+        />
+      )}
+    </PrepareSetupMutation>
     )}
-  </FundMutation>
+  </PrepareSetupMutation>
 );
 
 export default compose(
-  withSignedState,
-  withSetupHandlers,
+  withRouter,
+  withProgress,
   withSetup,
   withFormValidation,
 )(Setup);

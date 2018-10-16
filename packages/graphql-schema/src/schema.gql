@@ -12,12 +12,6 @@ enum ExchangeEnum {
   KYBER_NETWORK
 }
 
-enum ExchangeContractEnum {
-  ZERO_EX_EXCHANGE
-  KYBER_NETWORK_PROXY
-  MATCHING_MARKET
-}
-
 enum TokenEnum {
   WETH
   ETH
@@ -202,8 +196,8 @@ type Mutation {
     takerAssetSymbol: String!
   ): [Order]
 
-  prepareSetupFund(exchanges: [ExchangeContractEnum]!, name: String!): Json
-  executeSetupFund(transaction: Json!): String
+  prepareSetupFund(name: String!): Json @insecure
+  executeSetupFund(transaction: Json!): String @insecure
 
   """
   Export the currently active wallet in its encrypted form.

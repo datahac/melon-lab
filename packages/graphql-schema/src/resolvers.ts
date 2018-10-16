@@ -6,17 +6,10 @@ import toAsyncIterator from './utils/toAsyncIterator';
 import takeLast from './utils/takeLast';
 import sameBlock from './utils/sameBlock';
 import getExchanges from './utils/getExchanges';
-import prepareSetupFund from './loaders/transaction/prepareSetupFund';
-import executeSetupFund from './loaders/transaction/executeSetupFund';
 
 export default {
   DateTime,
   Json: GraphQLJSON,
-  ExchangeContractEnum: {
-    ZERO_EX_EXCHANGE: 'ZeroExExchange',
-    KYBER_NETWORK_PROXY: 'KyberNetworkProxy',
-    MATCHING_MARKET: 'MatchingMarket',
-  },
   ConfigKeyEnum: {
     CANONICAL_PRICE_FEED_ADDRESS: 'onlyManagerCompetitionAddress',
     COMPETITION_COMPLIANCE_ADDRESS: 'competitionComplianceAddress',
@@ -206,22 +199,13 @@ export default {
       // TODO: Cancel open orders.
       throw new Error('This is not implemented yet');
     },
-    prepareSetupFund: async (_, { name, account, signature, exchanges }, { streams }) => {
-      const environment = await takeLast(streams.environment$);
-      const config = await takeLast(streams.config$);
-      return prepareSetupFund(
-        environment,
-        config,
-        name,
-        account,
-        signature,
-        exchanges,
-      );
+    prepareSetupFund: async (_, { name }, { streams }) => {
+      // TODO: Prepare setup fund.
+      throw new Error('This is not implemented yet');
     },
     executeSetupFund: async (_, { transaction }, { streams }) => {
-      const environment = await takeLast(streams.environment$);
-      const config = await takeLast(streams.config$);
-      return executeSetupFund(environment, config, transaction);
+      // TODO: Execute setup fund.
+      throw new Error('This is not implemented yet');
     },
     loginWallet: (_, { password }, { loaders }) => {
       // TODO: Load wallet from keytar storage.

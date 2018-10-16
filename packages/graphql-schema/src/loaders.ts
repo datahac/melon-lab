@@ -27,19 +27,19 @@ export default async streams => {
   const symbolPrice = new DataLoader(async symbols => {
     const environment = await takeLast(streams.environment$);
     const fn = getPrice(environment);
-    return Promise.all(symbols.map(fn));
+    return Promise.all(environment && symbols.map(fn) || []);
   });
 
   const fundAddressFromManager = new DataLoader(async addresses => {
     const environment = await takeLast(streams.environment$);
     const fn = getFundAddressFromManager(environment);
-    return environment && addresses.map(fn);
+    return Promise.all(environment && addresses.map(fn) || []);
   });
 
   const fundContract = new DataLoader(async addresses => {
     const environment = await takeLast(streams.environment$);
     const fn = getFundContract(environment);
-    return environment && addresses.map(fn);
+    return Promise.all(environment && addresses.map(fn) || []);
   });
 
   const fundName = new DataLoader(
@@ -88,7 +88,7 @@ export default async streams => {
     async contracts => {
       const environment = await takeLast(streams.environment$);
       const fn = getFundHoldings(environment);
-      return Promise.all(contracts.map(fn));
+      return Promise.all(environment && contracts.map(fn) || []);
     },
     {
       cacheKeyFn: contractCache,
@@ -100,7 +100,7 @@ export default async streams => {
       const environment = await takeLast(streams.environment$);
       const config = await takeLast(streams.config$);
       const fn = getFundOpenOrders(environment, config);
-      return environment && config && Promise.all(contracts.map(fn));
+      return Promise.all(environment && config && contracts.map(fn) || []);
     },
     {
       cacheKeyFn: contractCache,
@@ -112,8 +112,7 @@ export default async streams => {
       const environment = await takeLast(streams.environment$);
       const fn = getFundParticipation(environment);
       const result = pairs.map(pair => fn(pair.fund, pair.investor));
-
-      return environment && Promise.all(result);
+      return Promise.all(environment && result || []);
     },
     {
       cacheKeyFn: pair => `${contractCache(pair.fund)}:${pair.investor}`,
@@ -124,21 +123,21 @@ export default async streams => {
     const environment = await takeLast(streams.environment$);
     const config = await takeLast(streams.config$);
     const fn = getEtherBalance(environment, config);
-    return environment && config && Promise.all(addresses.map(fn));
+    return Promise.all(environment && config && addresses.map(fn) || []);
   });
 
   const melonBalance = new DataLoader(async addresses => {
     const environment = await takeLast(streams.environment$);
     const config = await takeLast(streams.config$);
     const fn = getMelonBalance(environment, config);
-    return environment && config && Promise.all(addresses.map(fn));
+    return Promise.all(environment && config && addresses.map(fn) || []);
   });
 
   const nativeBalance = new DataLoader(async addresses => {
     const environment = await takeLast(streams.environment$);
     const config = await takeLast(streams.config$);
     const fn = getNativeBalance(environment, config);
-    return environment && config && Promise.all(addresses.map(fn));
+    return Promise.all(environment && config && addresses.map(fn) || []);
   });
 
   const recentTrades = new DataLoader(
@@ -149,7 +148,7 @@ export default async streams => {
         fn(pair.baseTokenSymbol, pair.quoteTokenSymbol),
       );
 
-      return environment && Promise.all(result);
+      return Promise.all(environment && result || []);
     },
     {
       cacheKeyFn: pair => `${pair.baseTokenSymbol}:${pair.quoteTokenSymbol}`,

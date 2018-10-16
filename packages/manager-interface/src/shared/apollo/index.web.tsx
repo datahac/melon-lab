@@ -4,9 +4,9 @@ import introspection from '@melonproject/graphql-schema/schema.gql';
 import generateMnemonic from '@melonproject/graphql-schema/loaders/wallet/generateMnemonic';
 import restoreWallet from '@melonproject/graphql-schema/loaders/wallet/restoreWallet';
 import importWallet from '@melonproject/graphql-schema/loaders/wallet/decryptWallet';
-import signTransaction from '@melonproject/graphql-schema/loaders/transaction/signTransaction';
-import signMessage from '@melonproject/graphql-schema/loaders/transaction/signMessage';
-import { getParityProvider } from '@melonproject/melon.js';
+import prepareSetupFund from '@melonproject/graphql-schema/loaders/transaction/prepareSetupFund';
+import executeSetupFund from '@melonproject/graphql-schema/loaders/transaction/executeSetupFund';
+import { getParityProvider, getConfig } from '@melonproject/melon.js';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
@@ -16,9 +16,9 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { Query as QueryBase } from 'react-apollo';
 import { createErrorLink } from './common';
 import withApollo from 'next-with-apollo';
-import getConfig from 'next/config';
+import { default as getNextConfig } from 'next/config';
 
-const { publicRuntimeConfig: config, serverRuntimeConfig: serverConfig } = getConfig();
+const { publicRuntimeConfig: config, serverRuntimeConfig: serverConfig } = getNextConfig();
 
 // We must disable SSR in the electron app. Hence, we re-export
 // the query components here so we can override the ssr flag.
@@ -45,19 +45,11 @@ const createStateLink = (cache) => {
     },
     resolvers: {
       Mutation: {
-        deleteWallet: () => {
-          return true;
-        },
-        signMessage: (_, { message }, { getWallet }) => {
-          const wallet = getWallet();
-          return signMessage(message);
-        },
-        signTransaction: (_, { transaction }, { getWallet }) => {
-          const wallet = getWallet();
-          return signTransaction(transaction);
-        },
         generateMnemonic: () => {
           return generateMnemonic();
+        },
+        deleteWallet: () => {
+          return true;
         },
         exportWallet: (_, { password }, { getWallet }) => {
           const wallet = getWallet();
@@ -75,6 +67,31 @@ const createStateLink = (cache) => {
         },
         loginWallet: () => {
           throw new Error('The in-browser app does not support storing of wallets for security reasons.');
+        },
+        prepareSetupFund: async (_, { name }, { environment, getWallet }) => {
+          const wallet = getWallet();
+          const account = wallet && wallet.address;
+          const config = await getConfig(environment);
+
+          // TODO: Add signature.
+          const signature = null;
+  
+          return prepareSetupFund(
+            environment,
+            config,
+            name,
+            account,
+            signature,
+          );
+        },
+        executeSetupFund: async (_, { transaction }, { environment }) => {
+          const config = await getConfig(environment);
+
+          return executeSetupFund(
+            environment,
+            config,
+            transaction,
+          );
         },
       },
     },
