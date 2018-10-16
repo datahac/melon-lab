@@ -17,4 +17,7 @@ storiesOf('Blocks|Checkbox', module)
   })
   .add('Checked', () => {
     return <Checkbox {...data} defaultChecked={true} />;
+  })
+  .add('Boxes', () => {
+    return <Checkbox {...data} style="boxed" />;
   });

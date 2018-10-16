@@ -5,6 +5,13 @@
   color: var(--color-primary-dark);
 }
 
+.checkbox--boxed {
+  border: 1px solid var(--color-border);
+  padding: var(--space-m);
+  cursor: pointer;
+  text-align: center;
+}
+
 .checkbox:hover input:enabled ~ .checkbox__checkmark {
   background-color: var(--color-primary-dark);
 }
@@ -67,4 +74,15 @@
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.checkbox--boxed .checkbox__checkmark {
+  display: block;
+  position: relative;
+  margin: 0 auto var(--space-s) auto;
+}
+
+.checkbox--boxed .checkbox__text {
+  display: block;
+  margin-top: var(--space-s);
 }
