@@ -16,7 +16,7 @@ async function start(port: number) {
   const app = express();
   const server = createServer(app);
   const track = process.env.TRACK || 'kovan-demo';
-  const endpoint = process.env.JSON_RPC_ENDPOINT;
+  const endpoint = process.env.JSON_RPC_LOCAL || process.env.JSON_RPC_REMOTE;
   const context = await createContext(track, endpoint);
 
   const apollo = new ApolloServer({

@@ -193,7 +193,6 @@ type Query {
   funds(addresses: [String]): [Fund]
   rankings: [Ranking]
   associatedFund(address: String!): Fund
-  termsAndConditions: UnsignedMessage
   availableExchanges: [Exchange]
 
   # TODO: Move this to the Fund type.

@@ -13,7 +13,6 @@ import takeLast from './utils/takeLast';
 import sameBlock from './utils/sameBlock';
 import getExchanges from './utils/getExchanges';
 import prepareSetupFund from './loaders/transaction/prepareSetupFund';
-import termsAndConditions from './loaders/termsAndConditions';
 import executeSetupFund from './loaders/transaction/executeSetupFund';
 
 export default {
@@ -49,10 +48,6 @@ export default {
     KYBER_ADAPTER: 'kyberAdapter',
   },
   Query: {
-    termsAndConditions: async (_, __, { streams }) => {
-      const environment = await takeLast(streams.environment$);
-      return (environment && termsAndConditions(environment)) || null;
-    },
     openOrders: async (_, { address }, { loaders }) => {
       const contract = await loaders.fundContract.load(address);
       return loaders.fundOpenOrders.load(contract);

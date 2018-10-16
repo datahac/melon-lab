@@ -6,6 +6,7 @@ import restoreWallet from '@melonproject/graphql-schema/loaders/wallet/restoreWa
 import importWallet from '@melonproject/graphql-schema/loaders/wallet/decryptWallet';
 import signTransaction from '@melonproject/graphql-schema/loaders/transaction/signTransaction';
 import signMessage from '@melonproject/graphql-schema/loaders/transaction/signMessage';
+import { getParityProvider } from '@melonproject/melon.js';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
@@ -26,7 +27,7 @@ export const Query = ({ errorPolicy, ...props }) => (
   <QueryBase {...props} errorPolicy={errorPolicy || 'all'} />
 );
 
-const createLink = (options, cache) => {
+const createStateLink = (cache) => {
   const stateLink = withClientState({
     cache,
     defaults: {
@@ -71,25 +72,29 @@ const createLink = (options, cache) => {
     },
   });
 
-  let activeWallet = null;
-  const stateContext = setContext(() => ({
-    getWallet: () => activeWallet,
-    setWallet: (wallet) => {
-      activeWallet = wallet;
-    },
-  }));
+  let contextSingleton;
+  const stateContext = setContext(async () => {
+    if (contextSingleton) {
+      return contextSingleton;
+    }
 
-  const stateLinkWithContext = ApolloLink.from([stateContext, stateLink]);
+    let activeWallet;
 
-  const dataLink = new WebSocketLink({
-    uri: serverConfig.graphqlLocalWs || config.graphqlRemoteWs,
-    options: {
-      reconnect: true,
-    },
+    contextSingleton = {
+      environment: {
+        ...(await getParityProvider(config.jsonRpcRemote)),
+        track: config.track,
+      },
+      getWallet: () => activeWallet,
+      setWallet: (wallet) => {
+        activeWallet = wallet;
+      },
+    };
+
+    return contextSingleton;
   });
 
-  const errorLink = createErrorLink();
-  return ApolloLink.from([errorLink, stateLinkWithContext, dataLink]);
+  return ApolloLink.from([stateContext, stateLink]);
 };
 
 export const createClient = options => {
@@ -99,10 +104,29 @@ export const createClient = options => {
     }),
   });
 
-  const link = createLink(options, cache);
+  // We only need the local overrides for the schema within the browser.
+  // The server won't ever run these since the affected fields are generally
+  // mutations or don't pose any security relevant thread. Even if they did,
+  // they would be protected through our directives in the schema.
+  const stateLink = process.browser && createStateLink(cache);
+  const errorLink = createErrorLink();
+  const dataLink = new WebSocketLink({
+    uri: process.browser ? config.graphqlRemoteWs : serverConfig.graphqlLocalWs,
+    options: {
+      reconnect: true,
+    },
+  });
+
   const client = new ApolloClient({
     ssrMode: !process.browser,
-    link,
+    link: process.browser ? ApolloLink.from([
+      errorLink,
+      stateLink,
+      dataLink,
+    ]) : ApolloLink.from([
+      errorLink,
+      dataLink,
+    ]),
     cache,
   });
 
