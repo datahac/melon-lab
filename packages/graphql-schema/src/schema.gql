@@ -2,14 +2,8 @@
 # from execution in the hosted / web environment.
 directive @insecure on FIELD_DEFINITION
 
+scalar Json
 scalar DateTime
-scalar Quantity
-scalar Symbol
-scalar SignatureHash
-scalar UnsignedMessage
-scalar SignedMessage
-scalar UnsignedTransaction
-scalar SignedTransaction
 
 enum ExchangeEnum {
   RADAR_RELAY
@@ -94,7 +88,7 @@ type Holding {
 }
 
 type HowMuchOfAsset {
-  symbol: Symbol!
+  symbol: String!
   howMuch: String!
 }
 
@@ -154,12 +148,12 @@ type Orderbook {
   allOrders: [Order]
   sellEntries: [OrderbookEntry]
   buyEntries: [OrderbookEntry]
-  totalBuyVolume: Quantity
-  totalSellVolume: Quantity
+  totalBuyVolume: String
+  totalSellVolume: String
 }
 
 type OrderbookEntry {
-  volume: Quantity
+  volume: String
   order: Order
 }
 
@@ -188,7 +182,7 @@ type Query {
   versionConfig(key: ConfigKeyEnum!): String
   totalFunds: Int
   balance(token: TokenEnum!, address: String!): String
-  price(symbol: Symbol!): String
+  price(symbol: String!): String
   fund(address: String!): Fund
   funds(addresses: [String]): [Fund]
   rankings: [Ranking]
@@ -208,16 +202,8 @@ type Mutation {
     takerAssetSymbol: String!
   ): [Order]
 
-  # Generic transactions
-  signTransaction(key: String!, transaction: UnsignedTransaction!): SignedTransaction @insecure
-  signMessage(key: String!, message: UnsignedMessage!): SignedMessage @insecure
-
-  # Fund setup
-  prepareSetupFund(account: String!, signature: SignedMessage!, exchanges: [ExchangeContractEnum]!, name: String!): UnsignedTransaction
-  executeSetupFund(transaction: SignedTransaction!): Fund
-
-  # Wallet
-  setDefaultAccount(address: String!): Boolean! @insecure
+  prepareSetupFund(exchanges: [ExchangeContractEnum]!, name: String!): Json
+  executeSetupFund(transaction: Json!): String
 
   """
   Export the currently active wallet in its encrypted form.
@@ -286,8 +272,8 @@ type Subscription {
   rankings: [Ranking]
   balance(token: TokenEnum!, address: String!): String
   orderbook(
-    baseTokenSymbol: Symbol!
-    quoteTokenSymbol: Symbol!
+    baseTokenSymbol: String!
+    quoteTokenSymbol: String!
     exchanges: [ExchangeEnum] = [
       "RADAR_RELAY"
       "OASIS_DEX"

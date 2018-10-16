@@ -1,13 +1,9 @@
 import * as R from 'ramda';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
+import GraphQLJSON from 'graphql-type-json';
 import Order from './types/Order';
 import Quantity from './types/Quantity';
 import Symbol from './types/Symbol';
-import SignatureHash from './types/SignatureHash';
-import SignedTransaction from './types/SignedTransaction';
-import UnsignedTransaction from './types/UnsignedTransaction';
-import SignedMessage from './types/SignedMessage';
-import UnsignedMessage from './types/UnsignedMessage';
 import toAsyncIterator from './utils/toAsyncIterator';
 import takeLast from './utils/takeLast';
 import sameBlock from './utils/sameBlock';
@@ -17,14 +13,7 @@ import executeSetupFund from './loaders/transaction/executeSetupFund';
 
 export default {
   DateTime,
-  Symbol,
-  Quantity,
-  Order,
-  SignatureHash,
-  SignedTransaction,
-  UnsignedTransaction,
-  SignedMessage,
-  UnsignedMessage,
+  Json: GraphQLJSON,
   ExchangeContractEnum: {
     ZERO_EX_EXCHANGE: 'ZeroExExchange',
     KYBER_NETWORK_PROXY: 'KyberNetworkProxy',
@@ -47,6 +36,7 @@ export default {
     KYBER_NETWORK_ADDRESS: 'kyberNetworkAddress',
     KYBER_ADAPTER: 'kyberAdapter',
   },
+  Order,
   Query: {
     openOrders: async (_, { address }, { loaders }) => {
       const contract = await loaders.fundContract.load(address);
@@ -234,14 +224,6 @@ export default {
       const environment = await takeLast(streams.environment$);
       const config = await takeLast(streams.config$);
       return executeSetupFund(environment, config, transaction);
-    },
-    signMessage: async () => {
-      // TODO: Sign a message using the currently logged in wallet.
-      throw new Error('This is not implemented yet');
-    },
-    signTransaction: async () => {
-      // TODO: Sign a transaction using the currently logged in wallet.
-      throw new Error('This is not implemented yet');
     },
     loginWallet: (_, { password }, { loaders }) => {
       // TODO: Load wallet from keytar storage.
