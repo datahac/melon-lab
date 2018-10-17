@@ -20,4 +20,7 @@ storiesOf('Blocks|Checkbox', module)
   })
   .add('Boxes', () => {
     return <Checkbox {...data} style="boxed" />;
+  })
+  .add('Rounded corners', () => {
+    return <Checkbox {...data} style="boxed" roundedCorners />;
   });

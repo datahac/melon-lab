@@ -25,6 +25,7 @@ export const Selector: StatelessComponent<SelectorProps> = ({
           availableItems.map(item => (
             <div key={item.value} className="selector__item">
               <Checkbox
+                roundedCorners
                 style="boxed"
                 name="blabla"
                 text={item.text}

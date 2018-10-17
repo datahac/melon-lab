@@ -13,6 +13,7 @@ export interface CheckboxProps {
   style?: 'default' | 'boxed';
   Additional;
   AdditionalProps;
+  roundedCorners?: boolean;
 }
 
 const Checkbox: StatelessComponent<CheckboxProps> = ({
@@ -25,9 +26,11 @@ const Checkbox: StatelessComponent<CheckboxProps> = ({
   Additional,
   AdditionalProps = {},
   style,
+  roundedCorners,
 }) => {
   const checkboxClassNames = classNames('checkbox', {
     [`checkbox--${style}`]: style,
+    'checkbox--rounded-corners': roundedCorners,
   });
 
   return (
