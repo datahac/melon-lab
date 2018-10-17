@@ -129,7 +129,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
               record, below are the predefined modules for this version.
             </p>
             <div className="setup__exchanges">
-              <h4>Risk Profile:</h4>
+              <h4>Exchanges:</h4>
 
               <Tile
                 active={values.exchanges.length > 0}
@@ -152,6 +152,12 @@ export const Setup: StatelessComponent<SetupProps> = ({
                   : 'None'}
               </Tile>
             </div>
+
+            <div className="setup__exchanges">
+              <h4>Risk Profile:</h4>
+              <p>Rules are coming soon!</p>
+            </div>
+
             <div className="setup__info">
               Pricefeed:{' '}
               <a
