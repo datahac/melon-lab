@@ -5,6 +5,7 @@ import styles from './styles.css';
 
 export interface StepNavigationProps {
   steps: Array<{
+    key: string;
     name: string;
   }>;
   activeStep: number;
@@ -12,10 +13,11 @@ export interface StepNavigationProps {
 
 export const StepNavigation: StatelessComponent<StepNavigationProps> = ({
   steps,
+  activeStep,
 }) => {
-  const activeStepClassName = step =>
+  const activeStepClassName = (step, i) =>
     classNames('step-navigation__step', {
-      'step-navigation__step--active': step.isActive,
+      'step-navigation__step--active': i === activeStep,
       'step-navigation__step--completed': step.isCompleted,
     });
 
@@ -24,7 +26,7 @@ export const StepNavigation: StatelessComponent<StepNavigationProps> = ({
       <style jsx>{styles}</style>
       {steps &&
         steps.map((step, i) => (
-          <li key={i} className={activeStepClassName(step)}>
+          <li key={step.key} className={activeStepClassName(step, i)}>
             <span className="step-navigation__wrap">
               <span className="step-navigation__counter" />
               <span className="step-navigation__text">{step.name}</span>
