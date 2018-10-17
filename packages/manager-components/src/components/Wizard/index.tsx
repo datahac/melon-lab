@@ -18,14 +18,6 @@ export const Wizard: StatelessComponent<WizardProps> = ({
   onSubmit,
   steps,
 }) => {
-  const next = () => {
-    setPage(page + 1);
-  };
-
-  const prev = () => {
-    setPage(page - 1);
-  };
-
   const activePage = React.Children.toArray(children)[0];
   const isLastPage = page === React.Children.count(children) - 1;
   const isFirstPage = page === 0;
@@ -35,7 +27,7 @@ export const Wizard: StatelessComponent<WizardProps> = ({
     if (isLastPage) {
       return onSubmit();
     } else {
-      next();
+      setPage(page + 1);
     }
   };
 
@@ -50,7 +42,7 @@ export const Wizard: StatelessComponent<WizardProps> = ({
       <div className="wizard__actions">
         {!isFirstPage && (
           <div className="wizard__action">
-            <Button onClick={prev} type="button">
+            <Button onClick={setPage(page - 1)} type="button">
               Back
             </Button>
           </div>
