@@ -51,6 +51,8 @@ const Checkbox: StatelessComponent<CheckboxProps> = ({
       )}
 
       <span className="checkbox__text">{text}</span>
+
+      {style === 'boxed' && <div className="checkbox__border" />}
     </label>
   );
 };

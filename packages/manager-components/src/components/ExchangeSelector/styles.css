@@ -1,0 +1,11 @@
+.exchange-selector__exchanges {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 -8px;
+}
+
+.exchange-selector__exchange {
+  flex: 0 0 50%;
+  padding: 8px;
+}

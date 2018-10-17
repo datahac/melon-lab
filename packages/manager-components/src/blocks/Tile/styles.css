@@ -1,0 +1,9 @@
+.tile {
+  border: 1px solid var(--color-border);
+  padding: var(--space-m);
+  cursor: pointer;
+}
+
+.tile:hover {
+  border: 1px solid var(--color-secondary-dark);
+}
