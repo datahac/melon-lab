@@ -1,10 +1,10 @@
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import ExchangeSelector from './index';
+import Selector from './index';
 
 const data = {
-  availableExchanges: [
+  availableItems: [
     {
       value: 'One',
       text: 'One',
@@ -20,6 +20,6 @@ const data = {
   ],
 };
 
-storiesOf('Components|Exchnage selector', module).add('Default', () => {
-  return <ExchangeSelector {...data} />;
+storiesOf('Components|Selector', module).add('Default', () => {
+  return <Selector {...data} />;
 });

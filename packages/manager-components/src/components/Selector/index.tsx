@@ -3,7 +3,7 @@ import Checkbox from '~/blocks/Checkbox';
 
 import styles from './styles.css';
 
-export interface GetStartedProps {
+export interface SelectorProps {
   availableItems?: Array<{
     value: string;
     text: string;
@@ -12,25 +12,25 @@ export interface GetStartedProps {
   onChange: () => void;
 }
 
-export const GetStarted: StatelessComponent<GetStartedProps> = ({
+export const Selector: StatelessComponent<SelectorProps> = ({
   availableItems = [],
   selectedItems = [],
   onChange,
 }) => {
   return (
-    <div className="exchange-selector">
-      {selectedItems.length} Exchange(s) selected
-      <div className="exchange-selector__exchanges">
+    <div className="selector">
+      {selectedItems.length} Item(s) selected
+      <div className="selector__items">
         {availableItems &&
-          availableItems.map(exchange => (
-            <div key={exchange.value} className="exchange-selector__exchange">
+          availableItems.map(item => (
+            <div key={item.value} className="selector__item">
               <Checkbox
                 style="boxed"
                 name="blabla"
-                text={exchange.text}
-                value={exchange.value}
+                text={item.text}
+                value={item.value}
                 onInputChange={onChange}
-                defaultChecked={selectedItems.indexOf(exchange.value) !== -1}
+                defaultChecked={selectedItems.indexOf(item.value) !== -1}
               />
             </div>
           ))}
@@ -40,4 +40,4 @@ export const GetStarted: StatelessComponent<GetStartedProps> = ({
   );
 };
 
-export default GetStarted;
+export default Selector;

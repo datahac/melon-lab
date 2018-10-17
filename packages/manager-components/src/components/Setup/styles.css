@@ -14,3 +14,7 @@
   display: flex;
   justify-content: space-between;
 }
+
+.setup__selected-exchange:not(:last-child)::after {
+  content: ', ';
+}

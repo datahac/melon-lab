@@ -1,6 +1,6 @@
 import React, { StatelessComponent, Fragment } from 'react';
 import Button from '~/blocks/Button';
-import Checkbox from '~/blocks/Checkbox';
+import Tile from '~/blocks/Tile';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Spinner from '~/blocks/Spinner';
@@ -11,6 +11,7 @@ import Notification from '../../blocks/Notification/index';
 
 interface FormValues {
   name: string;
+  exchanges: any;
 }
 
 export interface SetupProps {
@@ -37,6 +38,8 @@ export interface SetupProps {
   FeeFormModalProps;
   TermsConditionsModal;
   TermsConditionsModalProps;
+  PolicyModalModal;
+  PolicyModalModalProps;
   availableExchanges: any;
 }
 
@@ -60,7 +63,10 @@ export const Setup: StatelessComponent<SetupProps> = ({
   FeeFormModalProps = {},
   TermsConditionsModal,
   TermsConditionsModalProps = {},
+  PolicyModal,
+  PolicyModalProps = {},
   availableExchanges,
+  setShowPolicyModal,
 }) => (
   <div className="setup">
     <style jsx>{styles}</style>
@@ -70,6 +76,8 @@ export const Setup: StatelessComponent<SetupProps> = ({
     )}
 
     {FeeFormModal && <FeeFormModal {...FeeFormModalProps} />}
+
+    {PolicyModal && <PolicyModal {...PolicyModalProps} />}
 
     {loading ? (
       <Spinner
@@ -121,22 +129,28 @@ export const Setup: StatelessComponent<SetupProps> = ({
               record, below are the predefined modules for this version.
             </p>
             <div className="setup__exchanges">
-              <h4>Exchange:</h4>
-              {availableExchanges &&
-                availableExchanges.map(exchange => (
-                  <div
-                    key={exchange.value}
-                    className="setup__exchanges-checkbox"
-                  >
-                    <Checkbox
-                      name="exchanges"
-                      value={exchange.value}
-                      text={exchange.text}
-                      disabled
-                      defaultChecked
-                    />
-                  </div>
-                ))}
+              <h4>Risk Profile:</h4>
+
+              <Tile
+                active={values.exchanges.length > 0}
+                error={errors.exchanges}
+                onClick={() => setShowPolicyModal('exchangeSelector')}
+              >
+                <b>Allowed Exchnages:</b>{' '}
+                {values.exchanges.length > 0
+                  ? values.exchanges.map(exchange => (
+                      <span
+                        className="setup__selected-exchange"
+                        key={`list-${exchange}`}
+                      >
+                        {
+                          availableExchanges.find(o => o.value === exchange)
+                            .text
+                        }
+                      </span>
+                    ))
+                  : 'None'}
+              </Tile>
             </div>
             <div className="setup__info">
               Pricefeed:{' '}

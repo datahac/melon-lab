@@ -1,29 +1,12 @@
 import React from 'react';
-import Setup from '@melonproject/manager-components/components/Setup';
+import SetupForm from '+/components/SetupForm';
 import FeeFormModal from '+/components/FeeFormModal';
 import TermsConditionsModal from '+/components/TermsConditionsModal';
 import { PrepareSetupMutation, ExecuteSetupMutation } from './data/fund';
 import { compose, withState } from 'recompose';
 import { withRouter } from 'next/router';
-import { withFormik } from 'formik';
-import * as Yup from 'yup';
 
 const withProgress = withState('setupProgress', 'setSetupProgress', 'TERMS_AND_CONDITIONS');
-
-const initialValues = {
-  name: '',
-};
-
-const withFormValidation = withFormik({
-  mapPropsToValues: props =>
-    props.formValues ? { ...props.formValues } : initialValues,
-  validationSchema: Yup.object().shape({
-    name: Yup.string().required('name is required.'),
-  }),
-  enableReinitialize: true,
-  handleSubmit: (values, form) =>
-    form.props.onSubmit && form.props.onSubmit(values),
-});
 
 const withSetup = BaseComponent => baseProps => (
   <PrepareSetupMutation onCompleted={() => baseProps.setSetupProgress('CONFIRM_FUND_SETUP')}>
@@ -77,5 +60,4 @@ export default compose(
   withRouter,
   withProgress,
   withSetup,
-  withFormValidation,
-)(Setup);
+)(SetupForm);

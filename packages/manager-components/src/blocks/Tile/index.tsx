@@ -5,10 +5,20 @@ import styles from './styles.css';
 
 export interface ButtonProps {
   onClick: () => void;
+  active?: boolean;
+  error?: boolean;
 }
 
-const Button: StatelessComponent<ButtonProps> = ({ children, onClick }) => {
-  const buttonClassNames = classNames('tile', {});
+const Button: StatelessComponent<ButtonProps> = ({
+  children,
+  onClick,
+  active,
+  error,
+}) => {
+  const buttonClassNames = classNames('tile', {
+    'tile--active': active,
+    'tile--error': error,
+  });
 
   return (
     <div onClick={onClick} className={buttonClassNames}>
