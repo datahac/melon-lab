@@ -1,12 +1,29 @@
-import { getVersionContract } from '@melonproject/melon.js';
+import {
+  constructTransactionObject,
+  getVersionContract,
+  getConfig,
+} from '@melonproject/melon.js';
 
 const sendTransaction = async (
   environment,
-  config,
-  transaction,
+  wallet,
+  method,
+  parameters,
+  options,
 ) => {
+  const config = await getConfig(environment);
   const contract = await getVersionContract(environment, config);
-  const transactionHash = await environment.api.eth.sendRawTransaction(transaction);
+
+  // Construct raw transaction.
+  const transaction = constructTransactionObject(
+    contract,
+    method,
+    parameters,
+    options,
+  );
+
+  const signed = await wallet.sign(transaction);
+  const transactionHash = await environment.api.eth.sendRawTransaction(signed);
   // eslint-disable-next-line no-underscore-dangle
   const rawReceipt = await contract._pollTransactionReceipt(transactionHash);
   const logs = rawReceipt.logs.filter(

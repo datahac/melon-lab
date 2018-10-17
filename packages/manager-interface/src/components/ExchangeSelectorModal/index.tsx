@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from '~/blocks/Modal';
 import Button from '~/blocks/Button';
 import Selector from '~/components/Selector';
+import availableExchangeContracts from '~/utils/availableExchangeContracts';
 import { withHandlers, compose, withState } from 'recompose';
 
 const withItemsState = withState(
@@ -29,7 +30,6 @@ const withSelectorHandlers = withHandlers({
 });
 
 const ExchangeSelectorModal = ({
-  availableExchanges,
   onCancelExchanges,
   onSaveExchanges,
   onChangeExchanges,
@@ -53,7 +53,7 @@ const ExchangeSelectorModal = ({
   >
     <Selector
       onChange={onChangeExchanges}
-      availableItems={availableExchanges}
+      availableItems={availableExchangeContracts}
       selectedItems={items}
     />
   </Modal>

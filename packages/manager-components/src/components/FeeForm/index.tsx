@@ -36,14 +36,12 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   touched,
   values,
 }) => {
-  const calcEntryTotal = (gasLimit: number) =>
-    toBigNumber((values.gasPrice * gasLimit) / 10 ** 9).toFixed(4);
+  const calcEntryTotal = (gasLimit: number) => {
+    return gasLimit && values.gasPrice && toBigNumber((values.gasPrice * gasLimit) / 10 ** 9).toFixed(4);
+  };
 
-  const total =
-    fees &&
-    toBigNumber(
-      add(...fees.map(e => (e.gasLimit * values.gasPrice) / 10 ** 9)),
-    ).toFixed(4);
+  const mapped = fees.map(e => (e.gasLimit * values.gasPrice) / 10 ** 9);
+  const total = mapped && mapped.length && toBigNumber(add(...mapped)).toFixed(4);
 
   return (
     <div className="fee-form">

@@ -17,10 +17,6 @@ const ethereumQuery = gql`
     nodeSynced
     priceFeedUp
     peerCount
-    availableExchanges {
-      value
-      text
-    }
 
     canonicalPriceFeedAddress:versionConfig(key: CANONICAL_PRICE_FEED_ADDRESS)
     competitionComplianceAddress:versionConfig(key: COMPETITION_COMPLIANCE_ADDRESS)

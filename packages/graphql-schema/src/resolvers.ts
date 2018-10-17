@@ -5,11 +5,15 @@ import Order from './types/Order';
 import toAsyncIterator from './utils/toAsyncIterator';
 import takeLast from './utils/takeLast';
 import sameBlock from './utils/sameBlock';
-import getExchanges from './utils/getExchanges';
 
 export default {
   DateTime,
   Json: GraphQLJSON,
+  ExchangeContractEnum: {
+    MATCHING_MARKET: 'MatchingMarket',
+    ZERO_EX_EXCHANGE: 'ZeroExExchange',
+    KYBER_NETWORK_PROXY: 'KyberNetworkProxy',
+  },
   ConfigKeyEnum: {
     CANONICAL_PRICE_FEED_ADDRESS: 'onlyManagerCompetitionAddress',
     COMPETITION_COMPLIANCE_ADDRESS: 'competitionComplianceAddress',
@@ -93,9 +97,6 @@ export default {
       }
 
       return null;
-    },
-    availableExchanges: async () => {
-      return getExchanges();
     },
   },
   Ranking: {
@@ -199,11 +200,11 @@ export default {
       // TODO: Cancel open orders.
       throw new Error('This is not implemented yet');
     },
-    prepareSetupFund: async (_, { name }, { streams }) => {
+    estimateSetupFund: async (_, { name, exchanges }) => {
       // TODO: Prepare setup fund.
       throw new Error('This is not implemented yet');
     },
-    executeSetupFund: async (_, { transaction }, { streams }) => {
+    executeSetupFund: async (_, { name, exchanges, gasLimit, gasPrice }) => {
       // TODO: Execute setup fund.
       throw new Error('This is not implemented yet');
     },

@@ -1,42 +1,50 @@
 import { Mutation } from '~/apollo';
 import gql from 'graphql-tag';
 
-const prepareMutation = gql`
-  mutation PrepareSetupFund($name: String!) {
-    prepareSetupFund(name: $name) @client
+const estimateMutation = gql`
+  mutation EstimateSetupFund($name: String!, $exchanges: [String]!) {
+    estimateSetupFund(name: $name, exchanges: $exchanges) @client
   }
 `;
 
 const executeMutation = gql`
-  mutation ExecuteSetupFund($transaction: Json!) {
-    executeSetupFund(transaction: $transaction) @client
+  mutation ExecuteSetupFund($name: String!, $exchanges: [String]!, $gasPrice: String!, $gasLimit: String!) {
+    executeSetupFund(name: $name, exchanges: $exchanges, gasPrice: $gasPrice, gasLimit: $gasLimit) @client
   }
 `;
 
-export const PrepareSetupMutation = ({ onCompleted, children }) => (
+export const EstimateSetupMutation = ({ onCompleted, children }) => (
   <Mutation
-    mutation={prepareMutation}
-    onCompleted={({ prepareSetupFund }) => onCompleted(prepareSetupFund)}
+    mutation={estimateMutation}
+    onCompleted={onCompleted}
   >
     {children}
   </Mutation>
 );
 
-export const ExecuteSetupMutation = ({ onCompleted, children }) => (
+export const ExecuteSetupMutation = ({ onCompleted, account, children }) => (
   <Mutation
     mutation={executeMutation}
+    onCompleted={onCompleted}
     update={(cache, { data: { executeSetupFund } }) => {
-      // cache.writeQuery({
-      //   query,
-      //   variables: {
-      //     account,
-      //   },
-      //   data: {
-      //     associatedFund: prepareSetupFund.address,
-      //   },
-      // });
+      cache.writeQuery({
+        query: gql`
+          query AssociatedFundQuery($account: String!) {
+            associatedFund(address: $account) {
+              address
+            }
+          }
+        `,
+        variables: {
+          account,
+        },
+        data: {
+          associatedFund: {
+            address: executeSetupFund,
+          },
+        },
+      });
     }}
-    onCompleted={({ executeSetupFund }) => onCompleted(executeSetupFund)}
   >
     {children}
   </Mutation>

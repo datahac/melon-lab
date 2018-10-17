@@ -4,9 +4,12 @@ import introspection from '@melonproject/graphql-schema/schema.gql';
 import generateMnemonic from '@melonproject/graphql-schema/loaders/wallet/generateMnemonic';
 import restoreWallet from '@melonproject/graphql-schema/loaders/wallet/restoreWallet';
 import importWallet from '@melonproject/graphql-schema/loaders/wallet/decryptWallet';
-import prepareSetupFund from '@melonproject/graphql-schema/loaders/transaction/prepareSetupFund';
-import executeSetupFund from '@melonproject/graphql-schema/loaders/transaction/executeSetupFund';
-import { getParityProvider, getConfig } from '@melonproject/melon.js';
+import estimateTransaction from '@melonproject/graphql-schema/loaders/transaction/estimateTransaction';
+import sendTransaction from '@melonproject/graphql-schema/loaders/transaction/sendTransaction';
+import createTransactionOptions from '@melonproject/graphql-schema/loaders/transaction/createTransactionOptions';
+import createSetupFundParameters from '@melonproject/graphql-schema/loaders/transaction/setupFund/createParameters';
+import postProcessSetupFund from '@melonproject/graphql-schema/loaders/transaction/setupFund/postProcess';
+import { getParityProvider } from '@melonproject/melon.js';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
@@ -16,9 +19,9 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { Query as QueryBase } from 'react-apollo';
 import { createErrorLink } from './common';
 import withApollo from 'next-with-apollo';
-import { default as getNextConfig } from 'next/config';
+import getConfig from 'next/config';
 
-const { publicRuntimeConfig: config, serverRuntimeConfig: serverConfig } = getNextConfig();
+const { publicRuntimeConfig: config, serverRuntimeConfig: serverConfig } = getConfig();
 
 // We must disable SSR in the electron app. Hence, we re-export
 // the query components here so we can override the ssr flag.
@@ -68,30 +71,24 @@ const createStateLink = (cache) => {
         loginWallet: () => {
           throw new Error('The in-browser app does not support storing of wallets for security reasons.');
         },
-        prepareSetupFund: async (_, { name }, { environment, getWallet }) => {
+        estimateSetupFund: async (_, { name, exchanges }, { environment, getWallet }) => {
           const wallet = getWallet();
-          const account = wallet && wallet.address;
-          const config = await getConfig(environment);
-
-          // TODO: Add signature.
-          const signature = null;
-  
-          return prepareSetupFund(
-            environment,
-            config,
-            name,
-            account,
-            signature,
-          );
+          const parameters = await createSetupFundParameters(environment, wallet, name);
+          const options = await createTransactionOptions(environment, wallet);
+          return await estimateTransaction(environment, 'setupFund', parameters, options);
         },
-        executeSetupFund: async (_, { transaction }, { environment }) => {
-          const config = await getConfig(environment);
+        executeSetupFund: async (_, { name, exchanges, gasPrice, gasLimit }, { environment, getWallet }) => {
+          const wallet = getWallet();
+          const parameters = await createSetupFundParameters(environment, wallet, name);
+          const options = await createTransactionOptions(environment, wallet);
+          const receipt = await sendTransaction(environment, wallet, 'setupFund', parameters, {
+            ...options,
+            // TODO: Remove the parseInt() calls in the new melon.js.
+            gasLimit: parseInt(gasLimit, 10),
+            gasPrice: parseInt(gasPrice, 10),
+          });
 
-          return executeSetupFund(
-            environment,
-            config,
-            transaction,
-          );
+          return postProcessSetupFund(receipt);
         },
       },
     },

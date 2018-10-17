@@ -3,7 +3,7 @@ import { getBalance } from '@melonproject/melon.js';
 
 function nativeBalance(environment, config, address) {
   const symbol = config && config.nativeAssetSymbol;
-  console.log(environment);
+
   return (
     environment &&
     symbol &&

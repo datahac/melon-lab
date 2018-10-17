@@ -10,12 +10,11 @@ import RecentTrades from '+/components/RecentTrades';
 import OrderBookQuery from './data/orderbook';
 import FundQuery from './data/fund';
 import HoldingsQuery from './data/holdings';
-import { compose, withState, withProps } from 'recompose';
+import { compose, withState } from 'recompose';
 import isSameAddress from '~/utils/isSameAddress';
+import availableExchanges from '~/utils/availableExchanges';
 
-const withExchangeState = withState('exchanges', 'setExchanges', props => {
-  return props.availableExchanges.map(exchange => exchange.value);
-});
+const withExchangeState = withState('exchanges', 'setExchanges', availableExchanges.map(exchange => exchange.value));
 
 const withSelectedOrderState = withState('order', 'setOrder', {
   price: '',
@@ -32,7 +31,6 @@ const FundTemplate = ({
   baseAsset,
   address,
   account,
-  availableExchanges,
   exchanges,
   setExchanges,
   order,

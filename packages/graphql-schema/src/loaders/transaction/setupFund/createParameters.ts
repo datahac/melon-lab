@@ -1,14 +1,15 @@
 import addressBook from '@melonproject/smart-contracts/addressBook.json';
 import {
   ensure,
+  getConfig,
   getAddress,
   getNetwork,
   getVersionContract,
   getCompetitionComplianceContract,
+  signTermsAndConditions,
 } from '@melonproject/melon.js';
-import prepareTransaction from './prepareTransaction';
 
-const deriveComplianceAddress = (config, environment) => {
+const deriveComplianceAddress = (environment, config) => {
   if (environment.track === 'kovan-demo') {
     return config.noComplianceAddress;
   }
@@ -22,17 +23,16 @@ const deriveComplianceAddress = (config, environment) => {
   }
 };
 
-const prepareSetupFundTransaction = async (
+const createParameters = async (
   environment,
-  config,
+  wallet,
   name,
-  account,
-  signature,
   exchanges = ['MatchingMarket', 'ZeroExExchange', 'KyberNetworkProxy'],
 ) => {
+  const config = await getConfig(environment);
+  const contract = await getVersionContract(environment, config);
   const complianceAddress = deriveComplianceAddress(environment, config);
   const riskManagementAddress = config.riskManagementAddress;
-  const versionContract = await getVersionContract(environment, config);
   const quoteAsset = getAddress(config, config.quoteAssetSymbol);
   const melonAsset = getAddress(config, config.melonAssetSymbol);
   const managementReward = 0;
@@ -45,7 +45,7 @@ const prepareSetupFundTransaction = async (
 
     const isCompetitionAllowed = await competitionComplianceContract.instance.isCompetitionAllowed.call(
       {},
-      [account],
+      [wallet.address],
     );
 
     ensure(
@@ -54,11 +54,12 @@ const prepareSetupFundTransaction = async (
     );
   }
 
-  const isVersionShutDown = await versionContract.instance.isShutDown.call();
+  const isVersionShutDown = await contract.instance.isShutDown.call();
   ensure(!isVersionShutDown, 'Version is shut down.');
 
-  const termsAndConditionsAreSigned = await versionContract.instance.termsAndConditionsAreSigned.call(
-    { from: account },
+  const signature = await signTermsAndConditions({ ...environment, account: wallet });
+  const termsAndConditionsAreSigned = await contract.instance.termsAndConditionsAreSigned.call(
+    { from: wallet.address },
     [signature.v, signature.r, signature.s],
   );
 
@@ -67,9 +68,9 @@ const prepareSetupFundTransaction = async (
     'Invalid signature of terms and conditions on contract level',
   );
 
-  const managerToFunds = await versionContract.instance.managerToFunds.call(
+  const managerToFunds = await contract.instance.managerToFunds.call(
     {},
-    [account],
+    [wallet.address],
   );
 
   ensure(
@@ -82,7 +83,7 @@ const prepareSetupFundTransaction = async (
     exchange => addressBook[network][exchange],
   );
 
-  const params = [
+  const parameters = [
     name,
     quoteAsset,
     managementReward,
@@ -96,8 +97,7 @@ const prepareSetupFundTransaction = async (
     signature.s,
   ];
 
-  return prepareTransaction(account, versionContract, 'setupFund', params, environment);
+  return parameters;
 };
 
-
-export default prepareSetupFundTransaction;
+export default createParameters;

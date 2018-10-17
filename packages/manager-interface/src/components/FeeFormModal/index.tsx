@@ -1,13 +1,11 @@
 import { withFormik } from 'formik';
-import { compose, withState } from 'recompose';
+import { compose } from 'recompose';
 import * as Yup from 'yup';
 import React from 'react';
 import Modal from '~/blocks/Modal';
 import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import FeeForm from '~/components/FeeForm';
-
-const withModalState = withState('showModal', 'setShowModal', false);
 
 const initialValues = {
   gasPrice: '',
@@ -42,7 +40,7 @@ const FeeFormModal = ({
     PrimaryActionProps={{
       children: 'Cancel',
       style: 'secondary',
-      onClick: () => setShowModal(false),
+      onClick: onClickDecline,
     }}
     SecondaryAction={Button}
     SecondaryActionProps={{
@@ -60,5 +58,4 @@ const FeeFormModal = ({
 
 export default compose(
   withFormValidation,
-  withModalState,
 )(FeeFormModal);

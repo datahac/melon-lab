@@ -2,16 +2,17 @@ import React from 'react';
 import SetupForm from '+/components/SetupForm';
 import FeeFormModal from '+/components/FeeFormModal';
 import TermsConditionsModal from '+/components/TermsConditionsModal';
-import { PrepareSetupMutation, ExecuteSetupMutation } from './data/fund';
+import { EstimateSetupMutation, ExecuteSetupMutation } from './data/fund';
 import { compose, withState } from 'recompose';
 import { withRouter } from 'next/router';
+import availableExchangeContracts from '~/utils/availableExchangeContracts';
 
 const withProgress = withState('setupProgress', 'setSetupProgress', 'TERMS_AND_CONDITIONS');
 
 const withSetup = BaseComponent => baseProps => (
-  <PrepareSetupMutation onCompleted={() => baseProps.setSetupProgress('CONFIRM_FUND_SETUP')}>
+  <EstimateSetupMutation onCompleted={() => baseProps.setSetupProgress('CONFIRM_FUND_SETUP')}>
     {(prepareSetup, prepareProps) => (
-    <PrepareSetupMutation onCompleted={() => baseProps.router.replace({ pathname: '/manage', query: { address: '' /* TODO: Add address */ } })}>
+    <ExecuteSetupMutation account={baseProps.account} onCompleted={() => baseProps.router.replace({ pathname: '/manage', query: { address: '' /* TODO: Add address */ } })}>
       {(executeSetup, executeProps) => (
         <BaseComponent
           network={baseProps.network}
@@ -20,7 +21,7 @@ const withSetup = BaseComponent => baseProps => (
             eth: baseProps.eth,
             mln: baseProps.mln,
           }}
-          availableExchanges={baseProps.availableExchanges}
+          availableExchanges={availableExchangeContracts}
           TermsConditionsModal={TermsConditionsModal}
           TermsConditionsModalProps={{
             showModal: baseProps.setupProgress === 'TERMS_AND_CONDITIONS',
@@ -30,7 +31,14 @@ const withSetup = BaseComponent => baseProps => (
           FeeFormModal={FeeFormModal}
           FeeFormModalProps={{
             showModal: !prepareProps.loading && baseProps.setupProgress === 'CONFIRM_FUND_SETUP',
-            onClickConfirm: () => executeSetup({ variables: { transaction: prepareProps.data && prepareProps.data.prepareSetupFund } }),
+            onClickConfirm: () => executeSetup({
+              variables: {
+                name: 'test',
+                exchanges: availableExchangeContracts.map((item) => item.value),
+                gasPrice: 2000,
+                gasLimit: prepareProps.data && prepareProps.data.estimateSetupFund,
+              },
+            }),
             onClickDecline: () => baseProps.router.replace({ pathname: '/wallet' }),
             fees: [],
           }}
@@ -44,16 +52,16 @@ const withSetup = BaseComponent => baseProps => (
             prepareSetup({
               variables: {
                 name: values.name,
-                exchanges: baseProps.availableExchanges.map((item) => item.value),
+                exchanges: availableExchangeContracts.map((item) => item.value),
               },
             })
           }}
           loading={prepareProps.loading || executeProps.loading}
         />
       )}
-    </PrepareSetupMutation>
+    </ExecuteSetupMutation>
     )}
-  </PrepareSetupMutation>
+  </EstimateSetupMutation>
 );
 
 export default compose(

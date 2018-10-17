@@ -5,6 +5,12 @@ directive @insecure on FIELD_DEFINITION
 scalar Json
 scalar DateTime
 
+enum ExchangeContractEnum {
+  ZERO_EX_EXCHANGE
+  KYBER_NETWORK_PROXY
+  MATCHING_MARKET
+}
+
 enum ExchangeEnum {
   RADAR_RELAY
   OASIS_DEX
@@ -181,7 +187,6 @@ type Query {
   funds(addresses: [String]): [Fund]
   rankings: [Ranking]
   associatedFund(address: String!): Fund
-  availableExchanges: [Exchange]
 
   # TODO: Move this to the Fund type.
   openOrders(address: String!): [Order]
@@ -196,8 +201,15 @@ type Mutation {
     takerAssetSymbol: String!
   ): [Order]
 
-  prepareSetupFund(name: String!): Json @insecure
-  executeSetupFund(transaction: Json!): String @insecure
+  """
+  Estimates the number of gas units required for the "setup fund" transaction.
+  """
+  estimateSetupFund(name: String!, exchanges: [ExchangeContractEnum]!): String
+
+  """
+  Executes the "setup fund" transaction with the given gas price per unit.
+  """
+  executeSetupFund(name: String!, exchanges: [ExchangeContractEnum]!, gasPrice: String!, gasLimit: String!): String
 
   """
   Export the currently active wallet in its encrypted form.
