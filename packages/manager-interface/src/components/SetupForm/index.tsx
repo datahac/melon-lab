@@ -1,4 +1,4 @@
-import { compose, withState } from 'recompose';
+import { compose, withState, withHandlers } from 'recompose';
 import Setup from '~/components/Setup';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
@@ -15,6 +15,20 @@ const initialValues = {
   exchanges: [],
 };
 
+const withFormHandlers = withHandlers({
+  onChangeExchanges: props => event => {
+    const value = event.target.value;
+    const { exchanges } = props.values;
+    if (!exchanges.includes(value)) {
+      props.setFieldValue('exchanges', [...exchanges, value]);
+    } else {
+      props.setFieldValue('exchanges', [
+        ...exchanges.filter(item => item !== value),
+      ]);
+    }
+  },
+});
+
 const withFormValidation = withFormik({
   mapPropsToValues: () => initialValues,
   validationSchema: Yup.object().shape({
@@ -26,26 +40,8 @@ const withFormValidation = withFormik({
     form.props.onSubmit && form.props.onSubmit(values),
 });
 
-const SetupWithModals = props => {
-  let PolicyModal;
-
-  if (props.showPolicyModal === 'exchangeSelector') {
-    PolicyModal = {
-      PolicyModal: ExchangeSelectorModal,
-      PolicyModalProps: {
-        availableExchanges: props.availableExchanges,
-        selectedExchanges: props.values.exchanges,
-        isOpen: !!props.showPolicyModal,
-        setIsOpen: props.setShowPolicyModal,
-        setFieldValue: props.setFieldValue,
-      },
-    };
-  }
-
-  return <Setup {...props} {...PolicyModal} />;
-};
-
 export default compose(
   withFormValidation,
   withPolicyModalState,
-)(SetupWithModals);
+  withFormHandlers,
+)(Setup);

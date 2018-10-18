@@ -48,6 +48,7 @@ const withSetup = BaseComponent => baseProps => (
           canonicalPriceFeedAddress={baseProps.canonicalPriceFeedAddress}
           competitionComplianceAddress={baseProps.competitionComplianceAddress}
           noComplianceAddress={baseProps.noComplianceAddress}
+          availableExchangeContracts={availableExchangeContracts}
           onSubmit={values => {
             prepareSetup({
               variables: {

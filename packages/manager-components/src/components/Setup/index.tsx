@@ -5,6 +5,7 @@ import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Spinner from '~/blocks/Spinner';
 import Link from '~/blocks/Link';
+import Selector from '~/components/Selector';
 
 import styles from './styles.css';
 import Notification from '../../blocks/Notification/index';
@@ -41,6 +42,10 @@ export interface SetupProps {
   PolicyModalModal;
   PolicyModalModalProps;
   availableExchanges: any;
+  PolicyModal;
+  PolicyModalProps;
+  availableExchangeContracts;
+  onChangeExchanges;
 }
 
 export const Setup: StatelessComponent<SetupProps> = ({
@@ -65,8 +70,8 @@ export const Setup: StatelessComponent<SetupProps> = ({
   TermsConditionsModalProps = {},
   PolicyModal,
   PolicyModalProps = {},
-  availableExchanges,
-  setShowPolicyModal,
+  availableExchangeContracts,
+  onChangeExchanges,
 }) => (
   <div className="setup">
     <style jsx>{styles}</style>
@@ -130,27 +135,11 @@ export const Setup: StatelessComponent<SetupProps> = ({
             </p>
             <div className="setup__exchanges">
               <h4>Exchanges:</h4>
-
-              <Tile
-                active={values.exchanges.length > 0}
-                error={errors.exchanges}
-                onClick={() => setShowPolicyModal('exchangeSelector')}
-              >
-                <b>Allowed Exchnages:</b>{' '}
-                {values.exchanges.length > 0
-                  ? values.exchanges.map(exchange => (
-                      <span
-                        className="setup__selected-exchange"
-                        key={`list-${exchange}`}
-                      >
-                        {
-                          availableExchanges.find(o => o.value === exchange)
-                            .text
-                        }
-                      </span>
-                    ))
-                  : 'None'}
-              </Tile>
+              <Selector
+                onChange={onChangeExchanges}
+                availableItems={availableExchangeContracts}
+                selectedItems={values.exchanges}
+              />
             </div>
 
             <div className="setup__exchanges">
