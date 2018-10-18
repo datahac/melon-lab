@@ -10,16 +10,19 @@ export interface SelectorProps {
   }>;
   selectedItems?: Array<string>;
   onChange: () => void;
+  errors;
 }
 
 export const Selector: StatelessComponent<SelectorProps> = ({
   availableItems = [],
   selectedItems = [],
   onChange,
+  errors,
 }) => {
   return (
     <div className="selector">
       {selectedItems.length} Item(s) selected
+      {errors && <div className="selector__error">{errors}</div>}
       <div className="selector__items">
         {availableItems &&
           availableItems.map(item => (

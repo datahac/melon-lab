@@ -136,6 +136,7 @@ export const Setup: StatelessComponent<SetupProps> = ({
             <div className="setup__exchanges">
               <h4>Exchanges:</h4>
               <Selector
+                errors={errors.exchanges}
                 onChange={onChangeExchanges}
                 availableItems={availableExchangeContracts}
                 selectedItems={values.exchanges}

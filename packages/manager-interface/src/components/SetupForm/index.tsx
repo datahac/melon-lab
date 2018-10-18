@@ -2,7 +2,6 @@ import { compose, withState, withHandlers } from 'recompose';
 import Setup from '~/components/Setup';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
-import ExchangeSelectorModal from '+/components/ExchangeSelectorModal';
 
 const withPolicyModalState = withState(
   'showPolicyModal',
