@@ -1,22 +1,22 @@
-.checkbox {
+.checkbox__label {
   display: block;
   position: relative;
   padding-left: var(--space-l);
   color: var(--color-primary-dark);
 }
 
-.checkbox--boxed {
+.checkbox__label--boxed {
   border: 1px solid var(--color-border);
   padding: var(--space-m);
   cursor: pointer;
   text-align: center;
 }
 
-.checkbox--boxed:hover {
+.checkbox__label--boxed:hover {
   border: 1px solid var(--color-secondary-dark);
 }
 
-.checkbox--boxed input:checked ~ .checkbox__border {
+.checkbox__label--boxed input:checked ~ .checkbox__border {
   position: absolute;
   top: -1px;
   left: -1px;
@@ -25,30 +25,30 @@
   border: 2px solid var(--color-secondary-dark);
 }
 
-.checkbox:hover input:enabled ~ .checkbox__checkmark {
+.checkbox__label:hover input:enabled ~ .checkbox__checkmark {
   background-color: var(--color-primary-dark);
 }
 
-.checkbox input:checked ~ .checkbox__checkmark {
+.checkbox__label input:checked ~ .checkbox__checkmark {
   background-color: var(--color-primary-dark);
 }
 
-.checkbox input:checked ~ .checkbox__checkmark:after {
+.checkbox__label input:checked ~ .checkbox__checkmark:after {
   display: block;
 }
 
-.checkbox input:disabled ~ .checkbox__text {
+.checkbox__label input:disabled ~ .checkbox__text {
   color: var(--color-grey);
   cursor: not-allowed;
 }
 
-.checkbox input:disabled ~ .checkbox__checkmark {
+.checkbox__label input:disabled ~ .checkbox__checkmark {
   border-color: var(--color-grey);
   background-color: var(--color-grey);
   cursor: not-allowed;
 }
 
-.checkbox input:focus ~ .checkbox__checkmark {
+.checkbox__label input:focus ~ .checkbox__checkmark {
   outline: auto;
 }
 
@@ -89,24 +89,34 @@
   transform: rotate(45deg);
 }
 
-.checkbox--boxed .checkbox__checkmark {
+.checkbox__label--boxed .checkbox__checkmark {
   display: block;
   position: relative;
   margin: 0 auto var(--space-s) auto;
 }
 
-.checkbox--boxed .checkbox__text {
+.checkbox__label--boxed .checkbox__text {
   display: block;
   margin-top: var(--space-s);
 }
 
-.checkbox--rounded-corners .checkbox__checkmark {
+.checkbox__label--rounded-corners .checkbox__checkmark {
   border-radius: 50%;
   height: 20px;
   width: 20px;
 }
 
-.checkbox--rounded-corners .checkbox__checkmark::after {
+.checkbox__label--rounded-corners .checkbox__checkmark::after {
   left: 7px;
   top: 4px;
+}
+
+.checkbox__error {
+  border: 1px solid var(--color-loss);
+  background-color: var(--color-loss);
+  font-size: var(--font-size-s);
+  color: var(--color-white);
+  padding: var(--space-xs);
+  line-height: 1;
+  margin-bottom: var(--space-m)
 }
