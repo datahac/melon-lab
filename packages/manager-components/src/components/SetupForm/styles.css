@@ -1,20 +1,20 @@
-.setup__info {
+.setup-form__info {
   margin-top: var(--space-l);
 }
 
-.setup__exchanges {
+.setup-form__exchanges {
   margin-bottom: var(--space-l);
 }
 
-.setup__exchanges-checkbox {
+.setup-form__exchanges-checkbox {
   margin: var(--space-xxs) 0;
 }
 
-.setup__actions {
+.setup-form__actions {
   display: flex;
   justify-content: space-between;
 }
 
-.setup__selected-exchange:not(:last-child)::after {
+.setup-form__selected-exchange:not(:last-child)::after {
   content: ', ';
 }

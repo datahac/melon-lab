@@ -17,3 +17,7 @@
 .wizard__action:first-child:nth-last-child(2) ~ li {
   flex: 0 0 40%;
 }
+
+.wizard__step-navigation {
+  margin-bottom: var(--space-m);
+}

@@ -1,17 +1,40 @@
-import { compose, withState, withHandlers } from 'recompose';
-import Setup from '~/components/Setup';
+import { compose, withState, withHandlers, withProps } from 'recompose';
+import SetupForm from '~/components/SetupForm';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
-const withPolicyModalState = withState(
-  'showPolicyModal',
-  'setShowPolicyModal',
-  false,
-);
+const withFormProps = withProps(props => {
+  return {
+    steps: [
+      {
+        key: 'name',
+        name: 'Name',
+        fields: ['name'],
+      },
+      {
+        key: 'exchanges',
+        name: 'Exchanges',
+        fields: ['exchanges'],
+      },
+      {
+        key: 'policies',
+        name: 'Policies',
+      },
+      {
+        key: 'terms',
+        name: 'Terms & Conditions',
+        fields: ['terms'],
+      },
+    ],
+  };
+});
+
+const withPageState = withState('page', 'setPage', 0);
 
 const initialValues = {
   name: '',
   exchanges: [],
+  terms: false,
 };
 
 const withFormHandlers = withHandlers({
@@ -26,13 +49,26 @@ const withFormHandlers = withHandlers({
       ]);
     }
   },
+  onClickNext: props => event => {
+    const pageFields = props.steps[props.page].fields;
+    if (pageFields) {
+      pageFields.map(item => props.setFieldTouched(item));
+      return props.validateForm().then(errors => {
+        if (pageFields.some(item => errors[item])) {
+          return true;
+        }
+        return false;
+      });
+    }
+  },
 });
 
-const withFormValidation = withFormik({
+const withFormikForm = withFormik({
   mapPropsToValues: () => initialValues,
   validationSchema: Yup.object().shape({
-    name: Yup.string().required('name is required.'),
-    exchanges: Yup.array().required('exchanges are required.'),
+    name: Yup.string().required('Name is required.'),
+    exchanges: Yup.array().required('Exchanges are required.'),
+    terms: Yup.boolean().required('Terms ire required.'),
   }),
   enableReinitialize: true,
   handleSubmit: (values, form) =>
@@ -40,7 +76,8 @@ const withFormValidation = withFormik({
 });
 
 export default compose(
-  withFormValidation,
-  withPolicyModalState,
+  withFormikForm,
+  withPageState,
+  withFormProps,
   withFormHandlers,
-)(Setup);
+)(SetupForm);
