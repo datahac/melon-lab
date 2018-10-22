@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import Setup from './index';
+import SetupForm from './index';
 
 const data = {
   values: {
@@ -43,6 +43,6 @@ const data = {
   ],
 };
 
-storiesOf('Components|Setup', module).add('Default', () => {
-  return <Setup {...data} />;
+storiesOf('Components|Setup Form', module).add('Default', () => {
+  return <SetupForm {...data} />;
 });

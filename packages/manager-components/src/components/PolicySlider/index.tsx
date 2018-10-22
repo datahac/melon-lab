@@ -3,7 +3,7 @@ import Slider from '~/blocks/Slider';
 
 import styles from './styles.css';
 
-export interface SelectorProps {
+export interface PolicySliderProps {
   name;
   description;
   defaultValue;
@@ -11,7 +11,7 @@ export interface SelectorProps {
   unit;
 }
 
-export const Selector: StatelessComponent<SelectorProps> = ({
+export const PolicySlider: StatelessComponent<PolicySliderProps> = ({
   name,
   description,
   defaultValue,
@@ -19,19 +19,19 @@ export const Selector: StatelessComponent<SelectorProps> = ({
   unit = '%',
 }) => {
   return (
-    <div className="slider-policy">
+    <div className="policy-slider">
       <style jsx>{styles}</style>
-      <div className="slider-policy__name">{name}</div>
-      <div className="slider-policy__value">
+      <div className="policy-slider__name">{name}</div>
+      <div className="policy-slider__value">
         {value}
         {unit}
       </div>
-      <div className="slider-policy__slider">
+      <div className="policy-slider__slider">
         <Slider defaultValue={defaultValue} />
       </div>
-      <div className="slider-policy__desc">{description}</div>
+      <div className="policy-slider__desc">{description}</div>
     </div>
   );
 };
 
-export default Selector;
+export default PolicySlider;

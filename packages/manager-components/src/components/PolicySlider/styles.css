@@ -1,19 +1,20 @@
-.slider-policy {
+.policy-slider {
   text-align: center;
+  width: 100%;
 }
 
-.slider-policy__value {
+.policy-slider__value {
   font-size: var(--font-size-xxl);
 }
 
-.slider-policy__slider {
+.policy-slider__slider {
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
   padding: var(--space-m) 0;
   margin: var(--space-s) 0 var(--space-m) 0;
 }
 
-.slider-policy__name {
+.policy-slider__name {
   font-weight: var(--font-weight-bold);
   margin-bottom: var(--space-m);
 }

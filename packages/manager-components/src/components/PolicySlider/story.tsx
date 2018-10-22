@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import SliderPolicy from './index';
+import PolicySlider from './index';
 
 const data = {
   name: 'Max Position',
@@ -10,5 +10,5 @@ const data = {
 };
 
 storiesOf('Components|Slider Policy', module).add('Default', () => {
-  return <SliderPolicy {...data} />;
+  return <PolicySlider {...data} />;
 });

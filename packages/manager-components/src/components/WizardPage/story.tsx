@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import Wizard from './';
+import WizardPage from './';
 
 const data = {
   initialValues: {
@@ -11,6 +11,6 @@ const data = {
   onCancel: action('onCancel'),
 };
 
-storiesOf('Components|Wizard', module).add('Default', () => {
-  return <Wizard {...data} />;
+storiesOf('Components|Wizard Page', module).add('Default', () => {
+  return <WizardPage {...data} />;
 });
