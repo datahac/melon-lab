@@ -5,10 +5,18 @@ import styles from './styles.css';
 export interface SliderProps {
   min: number;
   max: number;
-  value?: number;
+  defaultValue?: string;
+  onChange?: () => void;
+  step?: number;
 }
 
-const Slider: StatelessComponent<SliderProps> = ({ min, max, value }) => {
+const Slider: StatelessComponent<SliderProps> = ({
+  min,
+  max,
+  step = 1,
+  defaultValue,
+  onChange,
+}) => {
   return (
     <div className="slider">
       <style jsx>{styles}</style>
@@ -16,8 +24,10 @@ const Slider: StatelessComponent<SliderProps> = ({ min, max, value }) => {
         type="range"
         min={min}
         max={max}
-        value={value}
+        defaultValue={defaultValue}
         className="slider__item"
+        onChange={onChange}
+        step={step}
       />
     </div>
   );
