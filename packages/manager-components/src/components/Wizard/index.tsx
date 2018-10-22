@@ -14,6 +14,7 @@ export interface WizardProps {
   LastAction;
   LastActionProps;
   onClickNext;
+  onClickPrev;
 }
 
 export const Wizard: StatelessComponent<WizardProps> = ({
@@ -26,20 +27,11 @@ export const Wizard: StatelessComponent<WizardProps> = ({
   LastAction = Button,
   LastActionProps = {},
   onClickNext,
+  onClickPrev,
 }) => {
   const activePage = React.Children.toArray(children)[page];
   const isLastPage = page === React.Children.count(children) - 1;
   const isFirstPage = page === 0;
-
-  const goToPrevPage = () => setPage(page - 1);
-  const goToNextPage = async e => {
-    e.preventDefault();
-    const isInvalid = onClickNext && (await onClickNext());
-    if (isInvalid) {
-      return setPage(page);
-    }
-    return setPage(page + 1);
-  };
 
   return (
     <div className="wizard">
@@ -56,7 +48,7 @@ export const Wizard: StatelessComponent<WizardProps> = ({
           {isFirstPage ? (
             <FirstAction {...FirstActionProps} />
           ) : (
-            <Button style="secondary" onClick={goToPrevPage} type="button">
+            <Button style="secondary" onClick={onClickPrev} type="button">
               Back
             </Button>
           )}
@@ -66,7 +58,7 @@ export const Wizard: StatelessComponent<WizardProps> = ({
           {isLastPage ? (
             <LastAction {...LastActionProps} />
           ) : (
-            <Button onClick={goToNextPage} type="submit">
+            <Button onClick={onClickNext} type="submit">
               Next
             </Button>
           )}

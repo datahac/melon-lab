@@ -9,12 +9,12 @@ const withFormProps = withProps(props => {
       {
         key: 'name',
         name: 'Name',
-        fields: ['name'],
+        validateFields: ['name'],
       },
       {
         key: 'exchanges',
         name: 'Exchanges',
-        fields: ['exchanges'],
+        validateFields: ['exchanges'],
       },
       {
         key: 'policies',
@@ -23,7 +23,7 @@ const withFormProps = withProps(props => {
       {
         key: 'terms',
         name: 'Terms & Conditions',
-        fields: ['terms'],
+        validateFields: ['terms'],
       },
     ],
   };
@@ -49,17 +49,21 @@ const withFormHandlers = withHandlers({
       ]);
     }
   },
-  onClickNext: props => event => {
-    const pageFields = props.steps[props.page].fields;
-    if (pageFields) {
-      pageFields.map(item => props.setFieldTouched(item));
-      return props.validateForm().then(errors => {
-        if (pageFields.some(item => errors[item])) {
-          return true;
+  onClickNext: props => e => {
+    const fields = props.steps[props.page].validateFields;
+    if (fields) {
+      fields.map(item => props.setFieldTouched(item));
+      props.validateForm().then(errors => {
+        if (fields.some(item => errors[item])) {
+          return props.setPage(props.page);
         }
-        return false;
+        return props.setPage(props.page + 1);
       });
     }
+    return props.setPage(props.page + 1);
+  },
+  onClickPrev: props => e => {
+    return props.setPage(props.page - 1);
   },
 });
 
@@ -68,7 +72,7 @@ const withFormikForm = withFormik({
   validationSchema: Yup.object().shape({
     name: Yup.string().required('Name is required.'),
     exchanges: Yup.array().required('Exchanges are required.'),
-    terms: Yup.boolean().required('Terms ire required.'),
+    terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
   }),
   enableReinitialize: true,
   handleSubmit: (values, form) =>

@@ -36,6 +36,9 @@ export interface SetupFormProps {
   page;
   steps;
   onClickNext;
+  onClickPrev;
+  SetupForm;
+  SetupFormProps;
 }
 
 export const SetupForm: StatelessComponent<SetupFormProps> = ({
@@ -57,12 +60,15 @@ export const SetupForm: StatelessComponent<SetupFormProps> = ({
   page,
   steps,
   onClickNext,
+  onClickPrev,
 }) => {
   return (
     <Form>
       <style jsx>{styles}</style>
+
       <Wizard
         onClickNext={onClickNext}
+        onClickPrev={onClickPrev}
         steps={steps}
         setPage={setPage}
         page={page}
