@@ -30,8 +30,10 @@ const Button: StatelessComponent<ButtonProps> = ({
   });
 
   const onButtonClick = (e: any): void => {
-    e.preventDefault();
-    return onClick(e, buttonValue);
+    if (onClick) {
+      e.preventDefault();
+      return onClick(e, buttonValue);
+    }
   };
 
   return (
