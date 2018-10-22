@@ -1,5 +1,12 @@
 import { compose, withState, withHandlers, withProps } from 'recompose';
+import Wizard from '~/components/Wizard';
+import WizardPage from '~/components/WizardPage';
+import StepFund from '~/components/SetupForm/StepFund';
+import StepPolicies from '~/components/SetupForm/StepPolicies';
+import StepTerms from '~/components/SetupForm/StepTerms';
+import StepOverview from '~/components/SetupForm/StepOverview';
 import SetupForm from '~/components/SetupForm';
+import Link from '~/blocks/Link';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -7,14 +14,9 @@ const withFormProps = withProps(props => {
   return {
     steps: [
       {
-        key: 'name',
-        name: 'Name',
-        validateFields: ['name'],
-      },
-      {
-        key: 'exchanges',
-        name: 'Exchanges',
-        validateFields: ['exchanges'],
+        key: 'fund',
+        name: 'Fund',
+        validateFields: ['name', 'exchanges'],
       },
       {
         key: 'policies',
@@ -24,6 +26,10 @@ const withFormProps = withProps(props => {
         key: 'terms',
         name: 'Terms & Conditions',
         validateFields: ['terms'],
+      },
+      {
+        key: 'overview',
+        name: 'Overview',
       },
     ],
   };
@@ -79,9 +85,51 @@ const withFormikForm = withFormik({
     form.props.onSubmit && form.props.onSubmit(values),
 });
 
+const SetupFormWizard = props => (
+  <SetupForm {...props}>
+    <Wizard page={props.page} steps={props.steps}>
+      <WizardPage
+        onClickNext={props.onClickNext}
+        FirstAction={Link}
+        FirstActionProps={{
+          children: 'Cancel',
+          style: 'secondary',
+          size: 'medium',
+          href: {
+            pathname: '/wallet',
+          },
+        }}
+      >
+        <StepFund {...props} />
+      </WizardPage>
+      <WizardPage
+        onClickNext={props.onClickNext}
+        onClickPrev={props.onClickPrev}
+      >
+        <StepPolicies {...props} />
+      </WizardPage>
+      <WizardPage
+        onClickNext={props.onClickNext}
+        onClickPrev={props.onClickPrev}
+      >
+        <StepTerms {...props} />
+      </WizardPage>
+      <WizardPage
+        onClickPrev={props.onClickPrev}
+        LastActionProps={{
+          children: 'Create Fund',
+          type: 'submit',
+        }}
+      >
+        <StepOverview {...props} />
+      </WizardPage>
+    </Wizard>
+  </SetupForm>
+);
+
 export default compose(
   withFormikForm,
   withPageState,
   withFormProps,
   withFormHandlers,
-)(SetupForm);
+)(SetupFormWizard);

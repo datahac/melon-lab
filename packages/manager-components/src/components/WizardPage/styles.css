@@ -1,0 +1,19 @@
+.wizard-page__actions {
+  margin-top: var(--space-m);
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.wizard-page__action {
+  flex: 0 0 40%;
+}
+
+.wizard-page__action:first-child:nth-last-child(1) {
+  flex: 0 0 100%;
+}
+
+.wizard-page__action:first-child:nth-last-child(2),
+.wizard-page__action:first-child:nth-last-child(2) ~ li {
+  flex: 0 0 40%;
+}
