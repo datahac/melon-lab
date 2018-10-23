@@ -25,7 +25,7 @@ export const Wizard: StatelessComponent<WizardProps> = ({
       text="Waiting for transaction ..."
     />
   ) : React.Children.toArray(children)[page];
-  console.log(loading);
+
   return (
     <div className="wizard">
       <style jsx>{styles}</style>

@@ -2,7 +2,7 @@ import React from 'react';
 import WalletOverview from '~/components/WalletOverview';
 import { WalletQuery, WalletMutation } from './data/wallet';
 
-const withSetup = BaseComponent => baseProps => console.log(baseProps) || (
+const withSetup = BaseComponent => baseProps => (
   <WalletQuery>
     {walletProps => (
       <WalletMutation>
