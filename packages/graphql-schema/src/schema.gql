@@ -174,7 +174,16 @@ type Query {
   hasStoredWallet: Boolean @insecure
 
   "Fetch the associated fund of an account."
-  associatedFund(account: String!): String
+  associatedFund(
+    "The address of the account to load the fund for."
+    account: String!
+  ): String
+
+  "Loads a fund by its name."
+  fundByName(
+    "The name of the fund to load."
+    name: String!
+  ): Fund
 
   network: String
   provider: String

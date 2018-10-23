@@ -70,13 +70,18 @@ export default {
     fund: async (_, { address }, { loaders }) => {
       return loaders.fundContract.load(address);
     },
+    fundByName: async (_, { name }, { loaders, streams }) => {
+      const rankings = await takeLast(streams.ranking$) || [];
+      const fund = rankings.find((fund) => fund.name === name);
+      return fund && loaders.fundContract.load(fund.address);
+    },
     associatedFund: async (_, { account }, { loaders }) => {
       const fundAddress = await loaders.fundAddressFromManager.load(account);
       return fundAddress || null;
     },
-    funds: async (_, args, { loaders }) => {
-      const addresses = await (args.addresses ||
-        ((await loaders.fundRankings()) || []).map(fund => fund.address) ||
+    funds: async (_, args, { loaders, streams }) => {
+      const addresses = await (args.addresses || (
+        await takeLast(streams.ranking$) || []).map(fund => fund.address) ||
         []);
 
       return loaders.fundContract.loadMany(addresses);

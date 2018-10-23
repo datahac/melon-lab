@@ -14,7 +14,9 @@ import StepOverview from '~/components/SetupForm/StepOverview';
 import SetupForm from '~/components/SetupForm';
 import FeeFormModal from '+/components/FeeFormModal';
 import Link from '~/blocks/Link';
+import { withApollo } from 'react-apollo';
 import { withFormik } from 'formik';
+import gql from 'graphql-tag';
 import * as Yup from 'yup';
 
 const withFormProps = withProps(props => {
@@ -86,10 +88,27 @@ const withFormHandlers = withHandlers({
   },
 });
 
+const uniqueFundQuery = gql`
+  query UniqueFundQuery($name: String!) {
+    fundByName(name: $name) {
+      address
+    }
+  }
+`;
+
 const withFormikForm = withFormik({
   mapPropsToValues: () => initialValues,
-  validationSchema: Yup.object().shape({
-    name: Yup.string().required('Name is required.'),
+  validationSchema: (props) => Yup.object().shape({
+    name: Yup.string().required('Name is required.').test('is-unique', 'There is already a fund with this name.', async (value) => {
+      const { data } = value && await props.client.query({
+        query: uniqueFundQuery,
+        variables: {
+          name: value,
+        },
+      });
+
+      return !data.fundByName;
+    }),
     exchanges: Yup.array().required('Exchanges are required.'),
     terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
     gasPrice: Yup.number()
@@ -202,6 +221,8 @@ const SetupFormWizard = props => (
         {(executeSetup, executeProps) => (
           <FormikSetupFormWizard
             {...props}
+            validateOnBlur={true}
+            validateOnChange={false}
             prepareSetup={prepareSetup}
             executeSetup={executeSetup}
             gasLimit={prepareProps.data && prepareProps.data.estimateSetupFund}
@@ -214,6 +235,7 @@ const SetupFormWizard = props => (
 );
 
 const SetupFormContainer = compose(
+  withApollo,
   withRouter,
   withConfirmationModal,
   withPageState,
