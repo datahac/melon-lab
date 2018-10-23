@@ -49,7 +49,7 @@ const initialValues = {
   name: '',
   exchanges: [],
   terms: false,
-  gasPrice: '',
+  gasPrice: '5',
 };
 
 const withFormHandlers = withHandlers({
