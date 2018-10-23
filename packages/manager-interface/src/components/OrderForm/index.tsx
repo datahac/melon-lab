@@ -81,7 +81,7 @@ const validation = props => {
 
 const initialValues = {
   price: '',
-  orderType: 'Buy',
+  type: 'sell',
   strategy: 'Market',
   quantity: '',
   total: '',
