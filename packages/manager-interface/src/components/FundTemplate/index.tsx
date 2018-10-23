@@ -91,6 +91,7 @@ const FundTemplate = ({
                   holdings: R.pathOr([], ['data', 'fund', 'holdings'])(
                     holdingsProps,
                   ),
+                  decimals: 4,
                   quoteAsset,
                   baseAsset,
                   priceFeedUp,
