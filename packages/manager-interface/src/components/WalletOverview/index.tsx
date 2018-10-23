@@ -2,15 +2,13 @@ import React from 'react';
 import WalletOverview from '~/components/WalletOverview';
 import { WalletQuery, WalletMutation } from './data/wallet';
 
-const withSetup = BaseComponent => baseProps => (
+const withSetup = BaseComponent => baseProps => console.log(baseProps) || (
   <WalletQuery>
     {walletProps => (
       <WalletMutation>
         {deleteWallet => (
           <BaseComponent
-            associatedFund={
-              baseProps.associatedFund && baseProps.associatedFund
-            }
+            associatedFund={baseProps.associatedFund}
             balances={{
               eth: baseProps.eth,
               mln: baseProps.mln,

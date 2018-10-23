@@ -14,7 +14,7 @@ const getLink = props => {
     if (props.associatedFund) {
       return {
         query: {
-          address: props.associatedFund.address
+          address: props.associatedFund
         },
         href: '/manage',
         text: 'Go to your fund',

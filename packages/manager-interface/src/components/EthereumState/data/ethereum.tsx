@@ -10,7 +10,7 @@ const accountQuery = gql`
   }
 `;
 
-const ethereumQuery = gql`
+export const ethereumQuery = gql`
   query EthereumQuery($account: String!, $authenticated: Boolean!) {
     network
     currentBlock
@@ -23,10 +23,7 @@ const ethereumQuery = gql`
     onlyManagerCompetitionAddress:versionConfig(key: ONLY_MANAGER_COMPETITION_ADDRESS)
     noComplianceAddress:versionConfig(key: NO_COMPLIANCE_ADDRESS)
 
-    associatedFund(address: $account) @include(if: $authenticated) {
-      address
-      name
-    }
+    associatedFund(account: $account) @include(if: $authenticated)
     eth: balance(address: $account, token: ETH) @include(if: $authenticated)
     weth: balance(address: $account, token: WETH) @include(if: $authenticated)
     mln: balance(address: $account, token: MLN) @include(if: $authenticated)

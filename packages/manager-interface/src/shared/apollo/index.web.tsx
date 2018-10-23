@@ -1,6 +1,3 @@
-// Import the introspection results (handled with a custom webpack loader)
-// for the schema.
-import introspection from '@melonproject/graphql-schema/schema.gql';
 import generateMnemonic from '@melonproject/graphql-schema/loaders/wallet/generateMnemonic';
 import restoreWallet from '@melonproject/graphql-schema/loaders/wallet/restoreWallet';
 import importWallet from '@melonproject/graphql-schema/loaders/wallet/decryptWallet';
@@ -10,14 +7,13 @@ import createTransactionOptions from '@melonproject/graphql-schema/loaders/trans
 import createSetupFundParameters from '@melonproject/graphql-schema/loaders/transaction/setupFund/createParameters';
 import postProcessSetupFund from '@melonproject/graphql-schema/loaders/transaction/setupFund/postProcess';
 import { getParityProvider } from '@melonproject/melon.js';
-import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
 import { setContext } from 'apollo-link-context';
 import { WebSocketLink } from 'apollo-link-ws';
 import { Query as QueryBase } from 'react-apollo';
-import { createErrorLink } from './common';
+import { createErrorLink, createCache } from './common';
 import withApollo from 'next-with-apollo';
 import getConfig from 'next/config';
 
@@ -120,12 +116,7 @@ const createStateLink = (cache) => {
 };
 
 export const createClient = options => {
-  const cache = new InMemoryCache({
-    fragmentMatcher: new IntrospectionFragmentMatcher({
-      introspectionQueryResultData: introspection,
-    }),
-  });
-
+  const cache = createCache();
   const stateLink = createStateLink(cache);
   const errorLink = createErrorLink();
   const dataLink = new WebSocketLink({

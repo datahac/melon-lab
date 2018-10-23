@@ -6,10 +6,7 @@ import displayNumber from '~/utils/displayNumber';
 import styles from './styles.css';
 
 export interface WalletOverviewProps {
-  associatedFund?: {
-    address: string;
-    name: string;
-  };
+  associatedFund?: string;
   currentAddress?: string;
   networkId: string;
   loading?: boolean;
@@ -71,31 +68,7 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
               </div>
               <h2>Fund</h2>
               {associatedFund ? (
-                <Fragment>
-                  <Link
-                    style="primary"
-                    size="medium"
-                    href={{
-                      pathname: '/manage',
-                      query: { address: associatedFund.address },
-                    }}
-                  >
-                    {associatedFund.name}
-                  </Link>
-                  <p>
-                    Fund address:{' '}
-                    <strong>
-                      <a
-                        href={`https://${
-                          networkId === 'KOVAN' ? 'kovan.' : ''
-                        }etherscan.io/address/${associatedFund.address}`}
-                        target="_blank"
-                      >
-                        {associatedFund.address}
-                      </a>
-                    </strong>
-                  </p>
-                </Fragment>
+                <AssociatedFund associatedFund={associatedFund} networkId={networkId} />
               ) : (
                 <Link style="primary" size="medium" href="/setup">
                   Setup your fund
@@ -108,5 +81,36 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
     </div>
   );
 };
+
+const AssociatedFund = ({
+  associatedFund,
+  networkId,
+}) => (
+  <Fragment>
+    <Link
+      style="primary"
+      size="medium"
+      href={{
+        pathname: '/manage',
+        query: { address: associatedFund },
+      }}
+    >
+      Go to your fund
+    </Link>
+    <p>
+      Fund address:{' '}
+      <strong>
+        <a
+          href={`https://${
+            networkId === 'KOVAN' ? 'kovan.' : ''
+          }etherscan.io/address/${associatedFund}`}
+          target="_blank"
+        >
+          {associatedFund}
+        </a>
+      </strong>
+    </p>
+  </Fragment>
+);
 
 export default WalletOverview;

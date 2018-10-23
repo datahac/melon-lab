@@ -1,3 +1,7 @@
+// Import the introspection results (handled with a custom webpack loader)
+// for the schema.
+import introspection from '@melonproject/graphql-schema/schema.gql';
+import { InMemoryCache, IntrospectionFragmentMatcher, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 import { onError } from 'apollo-link-error';
 
 export const createErrorLink = () => onError(({ graphQLErrors, networkError }) => {
@@ -11,3 +15,32 @@ export const createErrorLink = () => onError(({ graphQLErrors, networkError }) =
     console.log('[GQL NETWORK ERROR]: %s', networkError);
   }
 });
+
+export const createCache = () => {
+  const cache = new InMemoryCache({
+    addTypename: true,
+    fragmentMatcher: new IntrospectionFragmentMatcher({
+      introspectionQueryResultData: introspection,
+    }),
+    dataIdFromObject: object => {
+      switch (object.__typename) {
+        case 'Fund': {
+          return object.address || defaultDataIdFromObject(object);
+        }
+
+        default: {
+          return defaultDataIdFromObject(object);
+        }
+      }
+    },
+    cacheRedirects: {
+      Query: {
+        fund: (_, args, { getCacheKey }) => {
+          return getCacheKey({ __typename: 'Fund', address: args.address });
+        },
+      },
+    },
+  });
+
+  return cache;
+};

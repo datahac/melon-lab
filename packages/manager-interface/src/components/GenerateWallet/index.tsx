@@ -1,6 +1,6 @@
 import GenerateWallet from '~/components/GenerateWallet';
 import { compose, lifecycle, withState } from 'recompose';
-import Router from 'next/router';
+import { withRouter } from 'next/router';
 import WalletMutation from './data/wallet';
 import MnemonicMutation from './data/mnemonic';
 import bip39 from 'bip39';
@@ -45,15 +45,14 @@ const withFormValidation = withFormik({
     form.props.onSubmit && form.props.onSubmit(values),
 });
 
-const redirect = () =>
-  Router.replace({
-    pathname: '/wallet',
-  });
-
 const withGenerateWallet = BaseComponent => baseProps => (
   <MnemonicMutation>
     {(generateMnemonic, mnemonicProps) => (
-      <WalletMutation onCompleted={redirect}>
+      <WalletMutation onCompleted={() => {
+        baseProps.router.replace({
+          pathname: '/wallet',
+        })
+      }}>
         {(restoreWallet, restoreWalletProps) => (
           <BaseComponent
             generateMnemonic={generateMnemonic}
@@ -78,6 +77,7 @@ const withMnemonic = lifecycle({
 });
 
 export default compose(
+  withRouter,
   withGenerateWallet,
   withMnemonic,
   withGenerateWalletState,

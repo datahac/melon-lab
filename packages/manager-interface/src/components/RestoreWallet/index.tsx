@@ -1,5 +1,5 @@
 import RestoreWallet from '~/components/RestoreWallet';
-import Router from 'next/router';
+import { withRouter } from 'next/router';
 import WalletMutation from './data/wallet';
 import bip39 from 'bip39';
 import { withFormik } from 'formik';
@@ -33,13 +33,12 @@ const withFormValidation = withFormik({
     form.props.onSubmit && form.props.onSubmit(values),
 });
 
-const redirect = () =>
-  Router.replace({
-    pathname: '/wallet',
-  });
-
 const withRestoreWallet = BaseComponent => baseProps => (
-  <WalletMutation onCompleted={redirect}>
+  <WalletMutation onCompleted={() => {
+    baseProps.router.replace({
+      pathname: '/wallet',
+    });
+  }}>
     {(storeWallet, mutationProps) => (
       <BaseComponent
         onSubmit={values =>
@@ -54,6 +53,7 @@ const withRestoreWallet = BaseComponent => baseProps => (
 );
 
 export default compose(
+  withRouter,
   withRestoreWallet,
   withFormValidation,
 )(RestoreWallet);

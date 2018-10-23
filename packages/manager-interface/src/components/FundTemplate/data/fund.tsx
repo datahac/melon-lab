@@ -8,9 +8,6 @@ const query = gql`
     $authenticated: Boolean!
   ) {
     totalFunds
-    associatedFund(address: $account) @include(if: $authenticated) {
-      address
-    }
 
     fund(address: $address) {
       rank

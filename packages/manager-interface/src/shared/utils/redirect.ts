@@ -1,11 +1,11 @@
 import Router from 'next/router';
 
 export default (context, target) => {
-  if (context.res) {
+  if (!process.browser) {
     // server
     context.res.writeHead(303, { Location: target });
     context.res.end();
   } else {
-    Router.replace(target);
+    Router.replace({ pathname: target });
   }
 };

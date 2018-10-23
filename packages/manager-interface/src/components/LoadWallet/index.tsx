@@ -1,19 +1,18 @@
 import LoadWallet from '~/components/LoadWallet/container';
 import { compose, withState } from 'recompose';
-import Router from 'next/router';
+import { withRouter } from 'next/router';
 import { WalletQuery, WalletMutation } from './data/wallet';
 
 const withLoadWalletErrorState = withState('error', 'setError', null);
 
-const redirect = () =>
-  Router.replace({
-    pathname: '/wallet',
-  });
-
 const withLoadWallet = BaseComponent => baseProps => (
   <WalletQuery>
     {props => (
-      <WalletMutation onCompleted={redirect}>
+      <WalletMutation onCompleted={() => {
+        baseProps.router.replace({
+          pathname: '/wallet',
+        });
+      }}>
         {(loadWallet, mutationProps) => (
           <BaseComponent
             hasStoredWallet={props.data && props.data.hasStoredWallet}
@@ -34,6 +33,7 @@ const withLoadWallet = BaseComponent => baseProps => (
 );
 
 export default compose(
+  withRouter,
   withLoadWalletErrorState,
   withLoadWallet,
 )(LoadWallet);

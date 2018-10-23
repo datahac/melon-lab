@@ -91,7 +91,6 @@
   display: block;
   z-index: 999;
   display: flex;
-  position: relative;
 }
 
 .card__report :global(.link):hover::before {

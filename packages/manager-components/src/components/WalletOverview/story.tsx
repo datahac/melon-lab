@@ -3,10 +3,8 @@ import React from 'react';
 import WalletOverview from './index';
 
 const data = {
-  associatedFund: {
-    name: 'My fund',
-    address: '0x0890b03f83629B397F6E5E5075400fe6Ddb4255F',
-  },
+  associatedFund: 'My fund',
+  associatedFundName: '0x0890b03f83629B397F6E5E5075400fe6Ddb4255F',
   currentAddress: '0x0890b03f83629B397F6E5E5075400fe6Ddb4255F',
   networkId: 'KOVAN',
   balances: {

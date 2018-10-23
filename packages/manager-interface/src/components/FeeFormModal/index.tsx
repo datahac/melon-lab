@@ -1,28 +1,8 @@
-import { withFormik } from 'formik';
-import { compose } from 'recompose';
-import * as Yup from 'yup';
 import React from 'react';
 import Modal from '~/blocks/Modal';
 import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import FeeForm from '~/components/FeeForm';
-
-const initialValues = {
-  gasPrice: '',
-};
-
-const withFormValidation = withFormik({
-  mapPropsToValues: props =>
-    props.formValues ? { ...props.formValues } : initialValues,
-  enableReinitialize: true,
-  validationSchema: Yup.object().shape({
-    gasPrice: Yup.number()
-      .required('Gas price is required.')
-      .moreThan(0, 'Please enter a valid  gas price'),
-  }),
-  handleSubmit: (values, form) =>
-    form.props.onSubmit && form.props.onSubmit(values),
-});
 
 const FeeFormModal = ({
   onClickDecline,
@@ -56,6 +36,4 @@ const FeeFormModal = ({
   </Modal>
 );
 
-export default compose(
-  withFormValidation,
-)(FeeFormModal);
+export default FeeFormModal;

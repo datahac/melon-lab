@@ -1,6 +1,6 @@
 import ImportWallet from '~/components/ImportWallet';
 import { compose, withState, withHandlers } from 'recompose';
-import Router from 'next/router';
+import { withRouter } from 'next/router';
 import WalletMutation from './data/wallet';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
@@ -35,13 +35,12 @@ const withImportWalletHandlers = withHandlers({
 const withImportWalletFileState = withState('file', 'setFile', null);
 const withImportWalletErrorState = withState('error', 'setError', null);
 
-const redirect = () =>
-  Router.replace({
-    pathname: '/wallet',
-  });
-
 const withImportWallet = BaseComponent => baseProps => (
-  <WalletMutation onCompleted={redirect}>
+  <WalletMutation onCompleted={() => {
+    baseProps.router.replace({
+      pathname: '/wallet',
+    });
+  }}>
     {(importWallet, walletProps) => (
       <BaseComponent
         onImportFile={baseProps.onImportFile}
@@ -62,6 +61,7 @@ const withImportWallet = BaseComponent => baseProps => (
 );
 
 export default compose(
+  withRouter,
   withImportWalletFileState,
   withImportWalletErrorState,
   withImportWalletHandlers,

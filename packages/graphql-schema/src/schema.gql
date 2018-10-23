@@ -173,6 +173,9 @@ type Query {
   allAccounts: [String] @insecure
   hasStoredWallet: Boolean @insecure
 
+  "Fetch the associated fund of an account."
+  associatedFund(account: String!): String
+
   network: String
   provider: String
   currentBlock: String
@@ -186,7 +189,6 @@ type Query {
   fund(address: String!): Fund
   funds(addresses: [String]): [Fund]
   rankings: [Ranking]
-  associatedFund(address: String!): Fund
 
   # TODO: Move this to the Fund type.
   openOrders(address: String!): [Order]
