@@ -14,7 +14,11 @@ import { compose, withState } from 'recompose';
 import isSameAddress from '~/utils/isSameAddress';
 import availableExchanges from '~/utils/availableExchanges';
 
-const withExchangeState = withState('exchanges', 'setExchanges', availableExchanges.map(exchange => exchange.value));
+const withExchangeState = withState(
+  'exchanges',
+  'setExchanges',
+  availableExchanges.map(exchange => exchange.value),
+);
 
 const withSelectedOrderState = withState('order', 'setOrder', {
   price: '',
@@ -37,6 +41,7 @@ const FundTemplate = ({
   setOrder,
   priceFeedUp,
   message,
+  associatedFund,
   eth,
   mln,
 }) => (
@@ -91,12 +96,9 @@ const FundTemplate = ({
                   priceFeedUp,
                   formValues: order,
                   isManager:
-                    !!R.path(['data', 'associatedFund'])(fundProps) &&
+                    !!associatedFund &&
                     !!R.path(['data', 'fund', 'address'])(fundProps) &&
-                    isSameAddress(
-                      fundProps.data.associatedFund,
-                      fundProps.data.fund.address,
-                    ),
+                    isSameAddress(associatedFund, fundProps.data.fund.address),
                 }}
                 OrderBook={OrderBook}
                 OrderBookProps={{
@@ -116,12 +118,9 @@ const FundTemplate = ({
                 OpenOrdersProps={{
                   address,
                   isManager:
-                    !!R.path(['data', 'associatedFund'])(fundProps) &&
+                    !!associatedFund &&
                     !!R.path(['data', 'fund', 'address'])(fundProps) &&
-                    isSameAddress(
-                      fundProps.data.associatedFund,
-                      fundProps.data.fund.address,
-                    ),
+                    isSameAddress(associatedFund, fundProps.data.fund.address),
                   // TODO: Compute this properly.
                   isReadyToTrade: true,
                 }}
