@@ -59,8 +59,7 @@ const withFormHandlers = withHandlers({
 
     if (!exchanges.includes(value)) {
       props.setFieldValue('exchanges', [...exchanges, value]);
-    }
-    else {
+    } else {
       props.setFieldValue('exchanges', [
         ...exchanges.filter(item => item !== value),
       ]);
@@ -105,14 +104,14 @@ const withFormikForm = withFormik({
         gasPrice: values.gasPrice,
         gasLimit: form.props.gasLimit,
       },
-    });;
+    });
   },
 });
 
 const FormikSetupFormWizard = compose(
   withFormikForm,
   withFormHandlers,
-)((props) => (
+)(props => (
   <SetupForm handleSubmit={props.handleSubmit}>
     <Wizard page={props.page} steps={props.steps} loading={props.loading}>
       <WizardPage
@@ -127,7 +126,10 @@ const FormikSetupFormWizard = compose(
           },
         }}
       >
-        <StepFund {...props} availableExchangeContracts={availableExchangeContracts} />
+        <StepFund
+          {...props}
+          availableExchangeContracts={availableExchangeContracts}
+        />
       </WizardPage>
       <WizardPage
         onClickNext={props.onClickNext}
@@ -152,11 +154,15 @@ const FormikSetupFormWizard = compose(
                 exchanges: props.values.exchanges,
               },
             });
-          }
+          },
         }}
       >
-        <StepOverview {...props} />
-        <FeeFormModal {...props}
+        <StepOverview
+          {...props}
+          availableExchangeContracts={availableExchangeContracts}
+        />
+        <FeeFormModal
+          {...props}
           showModal={props.showModal}
           onClickConfirm={() => {
             props.submitForm();
@@ -165,10 +171,12 @@ const FormikSetupFormWizard = compose(
           onClickDecline={() => {
             props.setShowModal(false);
           }}
-          fees={[{
-            // TODO: Does this still have to be a list?
-            gasLimit: props.gasLimit
-          }]}
+          fees={[
+            {
+              // TODO: Does this still have to be a list?
+              gasLimit: props.gasLimit,
+            },
+          ]}
         />
       </WizardPage>
     </Wizard>
@@ -184,7 +192,7 @@ const SetupFormWizard = props => (
     {(prepareSetup, prepareProps) => (
       <ExecuteSetupMutation
         account={props.account}
-        onCompleted={(result) => {
+        onCompleted={result => {
           props.router.replace({
             pathname: '/manage',
             query: { address: result.executeSetupFund },
@@ -212,7 +220,7 @@ const SetupFormContainer = compose(
   withFormProps,
 )(SetupFormWizard);
 
-export default (props) => {
+export default props => {
   if (!props.eth || isZero(props.eth)) {
     return <InsufficientEth eth={props.eth} address={props.account} />;
   }
