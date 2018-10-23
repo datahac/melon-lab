@@ -50,7 +50,7 @@ const withGenerateWallet = BaseComponent => baseProps => (
     {(generateMnemonic, mnemonicProps) => (
       <WalletMutation onCompleted={() => {
         baseProps.router.replace({
-          pathname: '/wallet',
+          pathname: '/wallet/overview',
         })
       }}>
         {(restoreWallet, restoreWalletProps) => (

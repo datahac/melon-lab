@@ -1,11 +1,13 @@
 import React from 'react';
-import DefaultTemplate from '+/components/DefaultTemplate';
 import ImportWallet from '+/components/ImportWallet';
+import DefaultTemplate from '+/components/DefaultTemplate';
 
-const Page = props => (
-  <DefaultTemplate {...props} title="Import Wallet">
-    <ImportWallet />
-  </DefaultTemplate>
-);
-
-export default Page;
+export default class WalletImportPage extends React.Component {
+  render() {
+    return (
+      <DefaultTemplate {...this.props} title="Import Wallet">
+        <ImportWallet {...this.props} />
+      </DefaultTemplate>
+    );
+  }
+}

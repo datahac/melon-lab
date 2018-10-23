@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import FundTemplate from '+/components/FundTemplate';
 import getConfig from 'next/config';
 
 const { publicRuntimeConfig: config } = getConfig();
 
-class Page extends Component {
+export default class ManagePage extends React.Component {
   static async getInitialProps({ req, query }) {
     const parameters = (req && req.query) || query;
 
@@ -19,5 +19,3 @@ class Page extends Component {
     return <FundTemplate {...this.props} />;
   }
 }
-
-export default Page;

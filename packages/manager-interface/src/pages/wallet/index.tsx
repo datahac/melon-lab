@@ -1,44 +1,26 @@
 import React from 'react';
 import Wallet from '+/components/Wallet';
 import WalletTemplate from '+/components/WalletTemplate';
-import Link from '~/blocks/Link';
 import redirect from '~/utils/redirect';
-import checkHasWallet from '~/utils/checkHasWallet';
+import checkIsLoggedIn from '~/utils/checkIsLoggedIn';
 
-export default class Index extends React.Component {
+export default class WalletIndexPage extends React.Component {
   static async getInitialProps(context) {
-    const { hasWallet } = await checkHasWallet(context.apolloClient);
-
-    if (hasWallet) {
+    const isLoggedIn = await checkIsLoggedIn(context.apolloClient);
+    if (isLoggedIn) {
       redirect(context, '/wallet/overview');
     }
 
-    return { hasWallet };
+    return {};
   }
 
   render() {
     return (
       <WalletTemplate
         {...this.props}
-        title={!this.props.account ? 'Setup your Wallet' : 'Your Wallet'}
-        text={
-          !this.props.account ? (
-            'Before you can setup your fund, you need to import, restore or create a wallet'
-          ) : (
-            <Link
-              title="Your ethereum address. Use this for white listing on ico.bitcoinsuisse.ch"
-              target="_blank"
-              href={{
-                pathname: `https://${
-                  this.props.network === 'KOVAN' ? 'kovan.' : ''
-                }etherscan.io/address/${this.props.account}`,
-              }}
-            >
-              {this.props.account}
-            </Link>
-          )
-        }
+        title="Setup your Wallet"
         icon="icons_wallet"
+        text="Before you can setup your fund, you need to import, restore or create a wallet."
       >
         <Wallet {...this.props} />
       </WalletTemplate>

@@ -48,6 +48,7 @@ module.exports = withComposedConfig(Object.assign({}, distConfig, {
       '+/components': path.join(managerInterface, 'src', 'components'),
       '~/utils': path.join(managerInterface, 'src', 'shared', 'utils'),
       '~/electron': path.join(managerInterface, 'src', 'electron'),
+      '~/error': path.join(managerInterface, 'src', 'pages', '_error'),
 
       // Special alias for importing the apollo web transport.
       '~/apollo': isElectron ?

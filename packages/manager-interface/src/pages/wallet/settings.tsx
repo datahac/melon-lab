@@ -3,41 +3,37 @@ import Wallet from '+/components/Wallet';
 import WalletTemplate from '+/components/WalletTemplate';
 import Link from '~/blocks/Link';
 import redirect from '~/utils/redirect';
-import checkHasWallet from '~/utils/checkHasWallet';
+import checkIsLoggedIn from '~/utils/checkIsLoggedIn';
 
-export default class Index extends React.Component {
+export default class WalletSettingsPage extends React.Component {
   static async getInitialProps(context) {
-    const { hasWallet } = await checkHasWallet(context.apolloClient);
-
-    if (!hasWallet) {
+    const isLoggedIn = await checkIsLoggedIn(context.apolloClient);
+    if (!isLoggedIn) {
       redirect(context, '/wallet');
     }
 
-    return { hasWallet };
+    return {};
   }
 
   render() {
+    const { network, account } = this.props;
+    const prefix = network === 'KOVAN' ? 'kovan.' : '';
+    const pathname = `https://${prefix}etherscan.io/address/${account}`;
+    const text = (
+      <Link
+        title="Your ethereum address. Use this for white listing on ico.bitcoinsuisse.ch"
+        target="_blank"
+        href={{ pathname }}
+      >
+        {account}
+      </Link>
+    );
+
     return (
       <WalletTemplate
         {...this.props}
-        title={!this.props.account ? 'Setup your Wallet' : 'Your Wallet'}
-        text={
-          !this.props.account ? (
-            'Before you can setup your fund, you need to import, restore or create a wallet'
-          ) : (
-            <Link
-              title="Your ethereum address. Use this for white listing on ico.bitcoinsuisse.ch"
-              target="_blank"
-              href={{
-                pathname: `https://${
-                  this.props.network === 'KOVAN' ? 'kovan.' : ''
-                }etherscan.io/address/${this.props.account}`,
-              }}
-            >
-              {this.props.account}
-            </Link>
-          )
-        }
+        title="Your Wallet"
+        text={text}
         icon="icons_wallet"
       >
         <Wallet {...this.props} />

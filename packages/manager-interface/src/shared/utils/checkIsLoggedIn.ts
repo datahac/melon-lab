@@ -4,13 +4,13 @@ export default apolloClient =>
   apolloClient
     .query({
       query: gql`
-        query WalletQuery {
-          hasStoredWallet @client
+        query IsLoggedInQuery {
+          defaultAccount @client
         }
       `,
     })
     .then(({ data }) => {
-      return data && data.hasStoredWallet;
+      return data && data.defaultAccount;
     })
     .catch(() => {
       // Fail gracefully

@@ -27,21 +27,23 @@ export const Query = ({ errorPolicy, ...props }) => (
 );
 
 const createStateLink = (cache) => {
+  const defaults = {
+    hasStoredWallet: false,
+    defaultAccount: null,
+    allAccounts: null,
+  };
+
   // We only need the local overrides for the schema within the browser.
   // The server won't ever run these since the affected fields are generally
   // mutations or don't pose any security relevant thread. Even if they did,
   // they would be protected through our directives in the schema.
   if (!process.browser) {
-    return withClientState({ cache });
+    return withClientState({ cache, defaults, resolvers: {} });
   }
 
   const stateLink = withClientState({
     cache,
-    defaults: {
-      hasStoredWallet: false,
-      defaultAccount: null,
-      allAccounts: null,
-    },
+    defaults,
     resolvers: {
       Mutation: {
         generateMnemonic: () => {

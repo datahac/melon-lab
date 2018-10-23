@@ -2,10 +2,12 @@ import React from 'react';
 import GenerateWallet from '+/components/GenerateWallet';
 import DefaultTemplate from '+/components/DefaultTemplate';
 
-const Page = props => (
-  <DefaultTemplate {...props} title="Create Wallet">
-    <GenerateWallet {...props} />
-  </DefaultTemplate>
-);
-
-export default Page;
+export default class WalletGeneratePage extends React.Component {
+  render() {
+    return (
+      <DefaultTemplate {...this.props} title="Generate Wallet">
+        <GenerateWallet {...this.props} />
+      </DefaultTemplate>
+    );
+  }
+}

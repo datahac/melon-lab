@@ -1,11 +1,30 @@
 import React from 'react';
 import DefaultTemplate from '+/components/DefaultTemplate';
 import DownloadWallet from '+/components/DownloadWallet';
+import checkIsLoggedIn from '~/utils/checkIsLoggedIn';
+import isError from '~/utils/isError';
+import Error from '~/error';
 
-const Page = props => (
-  <DefaultTemplate {...props} title="Download Wallet">
-    <DownloadWallet {...props} />
-  </DefaultTemplate>
-);
+export default class WalletDownloadPage extends React.Component {
+  static async getInitialProps(context) {
+    const isLoggedIn = await checkIsLoggedIn(context.apolloClient);
+    if (!isLoggedIn) {
+      return { statusCode: 403 };
+    }
 
-export default Page;
+    return {};
+  }
+
+  render() {
+    const { statusCode, ...props } = this.props;
+    if (statusCode && isError(statusCode)) {
+      return (<Error statusCode={statusCode} />);
+    }
+
+    return (
+      <DefaultTemplate {...props} title="Download Wallet">
+        <DownloadWallet {...props} />
+      </DefaultTemplate>
+    );
+  }
+}
