@@ -78,52 +78,55 @@ export const GenerateWallet: StatelessComponent<GenerateWalletProps> = ({
             </div>
           </Fragment>
         ) : (
-          <Form onSubmit={handleSubmit}>
-            <div className="generate-wallet__input">
-              <Input
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.mnemonic}
-                required={true}
-                name="mnemonic"
-                type="text"
-                placeholder="Repeat mnemonic"
-                error={touched.mnemonic && errors.mnemonic}
-              />
-            </div>
-            <div className="generate-wallet__input">
-              <Input
-                maxlength={64}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-                required={true}
-                name="password"
-                type="password"
-                placeholder="Set a Password"
-                error={touched.password && errors.password}
-              />
-            </div>
+          <Fragment>
+            <p>Please repeat your mnemonic and set a password.</p>
+            <Form onSubmit={handleSubmit}>
+              <div className="generate-wallet__input">
+                <Input
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.mnemonic}
+                  required={true}
+                  name="mnemonic"
+                  type="text"
+                  placeholder="Repeat mnemonic"
+                  error={touched.mnemonic && errors.mnemonic}
+                />
+              </div>
+              <div className="generate-wallet__input">
+                <Input
+                  maxlength={64}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  required={true}
+                  name="password"
+                  type="password"
+                  placeholder="Set a Password"
+                  error={touched.password && errors.password}
+                />
+              </div>
 
-            <div className="generate-wallet__actions">
-              <div className="generate-wallet__action">
-                <Link
-                  style="secondary"
-                  size="medium"
-                  href={{
-                    pathname: '/wallet',
-                  }}
-                >
-                  Cancel
-                </Link>
+              <div className="generate-wallet__actions">
+                <div className="generate-wallet__action">
+                  <Link
+                    style="secondary"
+                    size="medium"
+                    href={{
+                      pathname: '/wallet',
+                    }}
+                  >
+                    Cancel
+                  </Link>
+                </div>
+                <div className="generate-wallet__action">
+                  <Button type="submit" style="primary">
+                    Create
+                  </Button>
+                </div>
               </div>
-              <div className="generate-wallet__action">
-                <Button type="submit" style="primary">
-                  Create
-                </Button>
-              </div>
-            </div>
-          </Form>
+            </Form>
+          </Fragment>
         )}
       </Fragment>
     )}
