@@ -46,7 +46,7 @@ if (!!process.browser) {
 
 class MelonApp extends App {
   public render() {
-    const { Component, apollo, pageProps } = this.props;
+    const { Component, pageProps, apollo } = this.props;
 
     return (
       <Container>

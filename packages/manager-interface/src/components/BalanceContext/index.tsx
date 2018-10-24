@@ -29,7 +29,7 @@ class SubscriptionHandler extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.account && this.props.account !== prevProps.account) {
       this.unsubscribe && this.unsubscribe();
-      this.unsubscribe = this.props.unsubscribe();
+      this.unsubscribe = this.props.subscribe();
     }
   }
 

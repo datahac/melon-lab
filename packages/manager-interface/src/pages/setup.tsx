@@ -7,7 +7,6 @@ import redirect from '~/utils/redirect';
 export default class SetupPage extends React.Component {
   static async getInitialProps(context) {
     const hasWallet = await checkHasWallet(context.apolloClient);
-
     if (!hasWallet) {
       redirect(context, '/wallet');
     }
