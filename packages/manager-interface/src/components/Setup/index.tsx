@@ -4,6 +4,7 @@ import { withRouter } from 'next/router';
 import { compose, withState, withHandlers, withProps } from 'recompose';
 import { isZero } from '~/utils/functionalBigNumber';
 import availableExchangeContracts from '~/utils/availableExchangeContracts';
+import availablePolicies from '~/utils/availablePolicies';
 import Wizard from '~/components/Wizard';
 import WizardPage from '~/components/WizardPage';
 import StepFund from '~/components/SetupForm/StepFund';
@@ -18,8 +19,10 @@ import { withApollo } from 'react-apollo';
 import { withFormik } from 'formik';
 import gql from 'graphql-tag';
 import * as Yup from 'yup';
+import * as R from 'ramda';
 
 const withFormProps = withProps(props => {
+  console.log(props);
   return {
     steps: [
       {
@@ -52,9 +55,21 @@ const initialValues = {
   exchanges: [],
   terms: false,
   gasPrice: '5',
+  policies: [],
 };
 
 const withFormHandlers = withHandlers({
+  onActivatePolicy: props => value => {
+    const { policies } = props.values;
+
+    if (!R.find(R.propEq('key', value.key), policies)) {
+      props.setFieldValue('policies', [...policies, value]);
+    } else {
+      props.setFieldValue('policies', [
+        ...policies.filter(item => item.key !== value.key),
+      ]);
+    }
+  },
   onChangeExchanges: props => event => {
     const value = event.target.value;
     const { exchanges } = props.values;
@@ -98,23 +113,32 @@ const uniqueFundQuery = gql`
 
 const withFormikForm = withFormik({
   mapPropsToValues: () => initialValues,
-  validationSchema: (props) => Yup.object().shape({
-    name: Yup.string().required('Name is required.').test('is-unique', 'There is already a fund with this name.', async (value) => {
-      const { data } = value && await props.client.query({
-        query: uniqueFundQuery,
-        variables: {
-          name: value,
-        },
-      });
+  validationSchema: props =>
+    Yup.object().shape({
+      name: Yup.string()
+        .required('Name is required.')
+        .test(
+          'is-unique',
+          'There is already a fund with this name.',
+          async value => {
+            const { data } =
+              value &&
+              (await props.client.query({
+                query: uniqueFundQuery,
+                variables: {
+                  name: value,
+                },
+              }));
 
-      return !data.fundByName;
+            return !data.fundByName;
+          },
+        ),
+      exchanges: Yup.array().required('Exchanges are required.'),
+      terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
+      gasPrice: Yup.number()
+        .required('Gas price is required.')
+        .moreThan(0, 'Please enter a valid gas price'),
     }),
-    exchanges: Yup.array().required('Exchanges are required.'),
-    terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
-    gasPrice: Yup.number()
-      .required('Gas price is required.')
-      .moreThan(0, 'Please enter a valid gas price'),
-  }),
   handleSubmit: (values, form) => {
     form.props.executeSetup({
       variables: {
@@ -154,7 +178,17 @@ const FormikSetupFormWizard = compose(
         onClickNext={props.onClickNext}
         onClickPrev={props.onClickPrev}
       >
-        <StepPolicies {...props} />
+        <StepPolicies
+          {...props}
+          activatedPolicies={props.values.policies}
+          availablePolicies={availablePolicies.filter(
+            availablePolicy =>
+              !props.values.policies
+                .map(policy => policy.val)
+                .includes(availablePolicy.val),
+          )}
+          activatePolicy={props.onActivatePolicy}
+        />
       </WizardPage>
       <WizardPage
         onClickNext={props.onClickNext}
