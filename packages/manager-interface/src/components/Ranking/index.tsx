@@ -62,7 +62,7 @@ const withSearchAndSorting = withPropsOnChange(
 
 const withRanking = BaseComponent => baseProps => (
   <RankingQuery>
-    {rankingProps => (
+    {rankingProps => console.log(rankingProps) || (
       <BaseComponent
         associatedFund={baseProps.associatedFund}
         setOrdering={order => baseProps.setOrdering({ variables: { order } })}

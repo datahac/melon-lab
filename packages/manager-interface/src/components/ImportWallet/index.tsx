@@ -1,5 +1,6 @@
+import React from 'react';
 import ImportWallet from '~/components/ImportWallet';
-import { compose, withState, withHandlers } from 'recompose';
+import Composer from 'react-composer';
 import { withRouter } from 'next/router';
 import WalletMutation from './data/wallet';
 import { withFormik } from 'formik';
@@ -9,7 +10,7 @@ const initialValues = {
   password: '',
 };
 
-const withFormValidation = withFormik({
+const withForm = withFormik({
   mapPropsToValues: props =>
     props.formValues ? { ...props.formValues } : initialValues,
   validationSchema: Yup.object().shape({
@@ -20,51 +21,65 @@ const withFormValidation = withFormik({
     form.props.onSubmit && form.props.onSubmit(values),
 });
 
-const withImportWalletHandlers = withHandlers({
-  onImportFile: props => file => {
-    const reader = new FileReader();
+const ImportWalletForm = withForm(ImportWallet);
 
+class ImportWalletContainer extends React.Component {
+  state = {
+    file: null,
+    error: null,
+  };
+
+  setFile = (file) => {
+    this.setState({ file });
+  }
+
+  setError = (error) => {
+    this.setError({ error });
+  }
+
+  onImportFile = (file) => {
+    const reader = new FileReader();
     reader.onloadend = () => {
-      props.setFile(reader.result);
+      this.setFile(reader.result);
     };
 
     reader.readAsBinaryString(file[0]);
-  },
-});
+  }
 
-const withImportWalletFileState = withState('file', 'setFile', null);
-const withImportWalletErrorState = withState('error', 'setError', null);
+  render() {
+    return (
+      <Composer components={[
+        ({ render }) => (
+          <WalletMutation onCompleted={() => {
+            this.props.router.replace({
+              pathname: '/wallet',
+            });
+          }}>
+            {(a, b) => render([a, b])}
+          </WalletMutation>
+        ),
+      ]}>
+        {([[importWallet, walletProps]]) => {
+          return (
+            <ImportWalletForm
+              onImportFile={this.onImportFile}
+              file={this.state.file}
+              serverError={this.state.error}
+              onSubmit={values =>
+                importWallet({
+                  variables: {
+                    file: this.state.file,
+                    password: values.password,
+                  },
+                }).catch(this.setError)
+              }
+              loading={walletProps.loading}
+            />
+          );
+        }}
+      </Composer>
+    );
+  }
+}
 
-const withImportWallet = BaseComponent => baseProps => (
-  <WalletMutation onCompleted={() => {
-    baseProps.router.replace({
-      pathname: '/wallet',
-    });
-  }}>
-    {(importWallet, walletProps) => (
-      <BaseComponent
-        onImportFile={baseProps.onImportFile}
-        file={baseProps.file}
-        serverError={baseProps.error}
-        onSubmit={values =>
-          importWallet({
-            variables: {
-              file: baseProps.file,
-              password: values.password,
-            },
-          }).catch(error => baseProps.setError(error.message))
-        }
-        loading={walletProps.loading}
-      />
-    )}
-  </WalletMutation>
-);
-
-export default compose(
-  withRouter,
-  withImportWalletFileState,
-  withImportWalletErrorState,
-  withImportWalletHandlers,
-  withImportWallet,
-  withFormValidation,
-)(ImportWallet);
+export default withRouter(ImportWalletContainer);

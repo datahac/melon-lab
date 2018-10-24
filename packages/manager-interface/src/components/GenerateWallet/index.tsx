@@ -1,13 +1,12 @@
+import React from 'react';
 import GenerateWallet from '~/components/GenerateWallet';
-import { compose, lifecycle, withState } from 'recompose';
+import Composer from 'react-composer';
 import { withRouter } from 'next/router';
+import { withFormik } from 'formik';
 import WalletMutation from './data/wallet';
 import MnemonicMutation from './data/mnemonic';
 import bip39 from 'bip39';
-import { withFormik } from 'formik';
 import * as Yup from 'yup';
-
-const withGenerateWalletState = withState('showForm', 'setShowForm', false);
 
 const initialValues = {
   mnemonic: '',
@@ -45,41 +44,59 @@ const withFormValidation = withFormik({
     form.props.onSubmit && form.props.onSubmit(values),
 });
 
-const withGenerateWallet = BaseComponent => baseProps => (
-  <MnemonicMutation>
-    {(generateMnemonic, mnemonicProps) => (
-      <WalletMutation onCompleted={() => {
-        baseProps.router.replace({
-          pathname: '/wallet/overview',
-        })
-      }}>
-        {(restoreWallet, restoreWalletProps) => (
-          <BaseComponent
-            generateMnemonic={generateMnemonic}
-            mnemonic={mnemonicProps.data && mnemonicProps.data.generateMnemonic}
-            onSubmit={values =>
-              restoreWallet({
-                variables: { ...values },
-              })
-            }
-            loading={restoreWalletProps.loading || mnemonicProps.loading}
-          />
-        )}
-      </WalletMutation>
-    )}
-  </MnemonicMutation>
-);
+const GenerateWalletForm = withFormValidation(GenerateWallet);
 
-const withMnemonic = lifecycle({
+class MnemonicHandler extends React.Component {
   componentDidMount() {
     this.props.generateMnemonic();
-  },
-});
+  }
 
-export default compose(
-  withRouter,
-  withGenerateWallet,
-  withMnemonic,
-  withGenerateWalletState,
-  withFormValidation,
-)(GenerateWallet);
+  render() {
+    return React.Children.only(this.props.children);
+  }
+}
+
+class GenerateWalletContainer extends React.Component {
+  state = {
+    showForm: false,
+  };
+
+  setShowForm = (showForm) => {
+    this.setState({
+      showForm,
+    });
+  }
+
+  render() {
+    return (
+      <Composer components={[
+        ({ render }) => <MnemonicMutation>{(a, b) => render([a, b])}</MnemonicMutation>,
+        ({ render }) => <WalletMutation onCompleted={() => {
+          this.props.router.replace({
+            pathname: '/wallet/overview',
+          });
+        }}>{(a, b) => render([a, b])}</WalletMutation>,
+      ]}>
+        {([[generateMnemonic, mnemonicProps], [restoreWallet, restoreWalletProps]]) => {
+          return (
+            <MnemonicHandler generateMnemonic={generateMnemonic}>
+              <GenerateWalletForm
+                showForm={this.state.showForm}
+                setShowForm={this.setShowForm}
+                mnemonic={mnemonicProps.data && mnemonicProps.data.generateMnemonic}
+                loading={restoreWalletProps.loading || mnemonicProps.loading}
+                onSubmit={values => {
+                  restoreWallet({
+                    variables: { ...values },
+                  });
+                }}
+              />
+            </MnemonicHandler>
+          );
+        }}
+      </Composer>
+    )
+  }
+}
+
+export default withRouter(GenerateWalletContainer);

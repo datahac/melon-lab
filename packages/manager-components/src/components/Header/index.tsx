@@ -3,30 +3,117 @@ import React, { StatelessComponent } from 'react';
 import Icon from '~/blocks/Icon';
 import Link from '~/link';
 import displayNumber from '~/utils/displayNumber';
+import { networks } from '@melonproject/melon.js';
 
 import styles from './styles.css';
 
+export const statusTypes = {
+  NEUTRAL: 'NEUTRAL',
+  WARNING: 'WARNING',
+  ERROR: 'ERROR',
+  GOOD: 'GOOD',
+};
+
+export const getStatus = (
+  canonicalPriceFeedAddress,
+  network,
+  currentBlock,
+  blockOverdue,
+  nodeSynced,
+  priceFeedUp,
+  canInteract,
+  canInvest,
+) => {
+  if (!currentBlock) {
+    return {
+      message: 'Not ready',
+      type: statusTypes.WARNING,
+    };
+  }
+
+  if (blockOverdue) {
+    return {
+      message: 'Block overdue',
+      type: statusTypes.WARNING,
+    };
+  }
+
+  if (!nodeSynced) {
+    return {
+      message: 'Node not synced',
+      type: statusTypes.WARNING,
+    };
+  }
+
+  if (!priceFeedUp) {
+    const prefix = network === networks.KOVAN ? 'kovan.' : '';
+    const suffix = canonicalPriceFeedAddress;
+
+    return {
+      message: 'Price feed down',
+      type: statusTypes.ERROR,
+      link: `https://${prefix}etherscan.io/address/${suffix}`,
+    };
+  }
+
+  if (!canInteract) {
+    return {
+      message: 'Insufficent ETH',
+      type: statusTypes.WARNING,
+    };
+  }
+
+  if (!canInvest) {
+    return {
+      message: 'Insufficent MLN',
+      type: statusTypes.WARNING,
+    };
+  }
+
+  return {
+    message: 'Melon Node',
+    type: statusTypes.NEUTRAL,
+  };
+};
+
 export interface HeaderProps {
   address?: string;
-  balances: {
-    eth: number;
-  };
-  network?: string;
-  message?: {
-    message?: string;
-    link?: string;
-    type?: string;
-  };
+  ethBalance: number;
+  canonicalPriceFeedAddress: string;
+  network: string;
+  currentBlock: string;
+  blockOverdue: boolean;
+  nodeSynced: boolean;
+  priceFeedUp: boolean;
+  canInteract: boolean;
+  canInvest: boolean;
   fundName?: string;
 }
 
 export const Header: StatelessComponent<HeaderProps> = ({
   address,
-  balances,
   network,
-  message,
+  ethBalance,
+  canonicalPriceFeedAddress,
+  currentBlock,
+  blockOverdue,
+  nodeSynced,
+  priceFeedUp,
+  canInteract,
+  canInvest,
   fundName,
 }) => {
+  const message = getStatus(
+    canonicalPriceFeedAddress,
+    network,
+    currentBlock,
+    blockOverdue,
+    nodeSynced,
+    priceFeedUp,
+    canInteract,
+    canInvest
+  );
+
   const statusClassName = classNames('header__account-status', {
     'header__account-status--warning': message && message.type === 'WARNING',
     'header__account-status--error': message && message.type === 'ERROR',
@@ -57,14 +144,13 @@ export const Header: StatelessComponent<HeaderProps> = ({
               </a>
             </Link>
           </span>
-          {balances &&
-            balances.eth && (
-              <span className="header__account-balances">
-                <span className="header__account-balance">
-                  ETH {displayNumber(balances.eth)}
-                </span>
+          {ethBalance && (
+            <span className="header__account-balances">
+              <span className="header__account-balance">
+                ETH {displayNumber(ethBalance)}
               </span>
-            )}
+            </span>
+          )}
           {network && (
             <span className="header__account-network">{network}</span>
           )}

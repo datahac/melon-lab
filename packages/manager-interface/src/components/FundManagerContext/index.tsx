@@ -16,7 +16,7 @@ export class FundManagerProvider extends React.PureComponent {
     return (
       <AccountConsumer>
         {(account) => (
-          <Query query={fundManagerQuery} variables={{ account }} skip={!account} ssr={false}>
+          <Query query={fundManagerQuery} variables={{ account }} skip={!account}>
             {props => {
               return (
                 <FundManagerContext.Provider value={account && props.data && props.data.associatedFund}>

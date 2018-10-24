@@ -1,21 +1,23 @@
 import React from 'react';
-import { compose, withPropsOnChange } from 'recompose';
+import Composer from 'react-composer';
 import GetStarted from '~/components/GetStarted';
+import { AccountConsumer } from '+/components/AccountContext';
+import { BalanceConsumer } from '+/components/BalanceContext';
+import { FundManagerConsumer } from '+/components/FundManagerContext';
+import { isZero } from '~/utils/functionalBigNumber';
 
-const getLink = props => {
-  if (props.account) {
-    if (props.balances && props.balances.weth) {
+const getLink = (account, weth, fund) => {
+  if (account) {
+    if (weth && !isZero(weth)) {
       return {
         href: '/wallet',
         text: 'Fund your wallet',
       };
     }
 
-    if (props.associatedFund) {
+    if (fund) {
       return {
-        query: {
-          address: props.associatedFund
-        },
+        query: { address: fund },
         href: '/manage',
         text: 'Go to your fund',
       };
@@ -33,15 +35,23 @@ const getLink = props => {
   };
 };
 
-const withMappedProps = withPropsOnChange(['account', 'balances'], props => ({
-  link: getLink(props),
-}));
+export default class GetStartedContainer extends React.PureComponent {
+  render() {
+    return (
+      <Composer
+        components={[
+          <AccountConsumer />,
+          <BalanceConsumer />,
+          <FundManagerConsumer />,
+        ]}>
+        {([account, balance, fund]) => {
+          const link = getLink(account, balance && balance.weth, fund);
 
-const withGetStarted = BaseComponent => baseProps => (
-  <BaseComponent {...baseProps} />
-);
-
-export default compose(
-  withGetStarted,
-  withMappedProps,
-)(GetStarted);
+          return (
+            <GetStarted link={link} {...this.props} />
+          );
+        }}
+      </Composer>
+    );
+  }
+}

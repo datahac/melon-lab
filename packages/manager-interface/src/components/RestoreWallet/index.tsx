@@ -1,9 +1,9 @@
+import React from 'react';
 import RestoreWallet from '~/components/RestoreWallet';
 import { withRouter } from 'next/router';
+import { withFormik } from 'formik';
 import WalletMutation from './data/wallet';
 import bip39 from 'bip39';
-import { withFormik } from 'formik';
-import { compose } from 'recompose';
 import * as Yup from 'yup';
 
 const initialValues = {
@@ -11,7 +11,7 @@ const initialValues = {
   password: '',
 };
 
-const withFormValidation = withFormik({
+const withForm = withFormik({
   mapPropsToValues: props =>
     props.formValues ? { ...props.formValues } : initialValues,
   validationSchema: Yup.object().shape({
@@ -33,27 +33,34 @@ const withFormValidation = withFormik({
     form.props.onSubmit && form.props.onSubmit(values),
 });
 
-const withRestoreWallet = BaseComponent => baseProps => (
-  <WalletMutation onCompleted={() => {
-    baseProps.router.replace({
-      pathname: '/wallet',
-    });
-  }}>
-    {(storeWallet, mutationProps) => (
-      <BaseComponent
-        onSubmit={values =>
-          storeWallet({
-            variables: { ...values },
-          })
-        }
-        loading={mutationProps.loading}
-      />
-    )}
-  </WalletMutation>
-);
+const RestoreWalletForm = withForm(RestoreWallet);
 
-export default compose(
-  withRouter,
-  withRestoreWallet,
-  withFormValidation,
-)(RestoreWallet);
+class RestoreWalletContainer extends React.Component {
+  render() {
+    return (
+      <WalletMutation onCompleted={() => {
+        this.props.router.replace({
+          pathname: '/wallet/overview',
+        });
+      }}>
+        {(restoreWallet, restoreWalletProps) => {
+          return (
+            <RestoreWalletForm
+              onSubmit={values => {
+                restoreWallet({
+                  variables: {
+                    mnemonic: values.mnemonic,
+                    password: values.password,
+                  },
+                });
+              }}
+              loading={restoreWalletProps.loading}
+            />
+          );
+        }}
+      </WalletMutation>
+    )
+  }
+}
+
+export default withRouter(RestoreWalletContainer);

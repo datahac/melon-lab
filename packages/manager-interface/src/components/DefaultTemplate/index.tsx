@@ -1,37 +1,54 @@
 import React from 'react';
-import Template from '~/templates/DefaultTemplate';
+import Composer from 'react-composer';
+import DefaultTemplate from '~/templates/DefaultTemplate';
+import { AccountConsumer } from '+/components/AccountContext';
+import { BalanceConsumer } from '+/components/BalanceContext';
+import { NetworkConsumer } from '+/components/NetworkContext';
+import { CapabilityConsumer } from '+/components/CapabilityContext';
+import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 
-const DefaultTemplate = ({
-  children,
-  network,
-  message,
-  account,
-  eth,
-  mln,
-  title,
-  text,
-  icon,
-}) => (
-  <Template
-    HeaderProps={{
-      network,
-      message,
-      address: account,
-      balances: {
-        eth,
-        mln,
-      },
-    }}
-    HeadlineProps={
-      title && {
-        title,
-        text,
-        icon,
-      }
-    }
-  >
-    {children}
-  </Template>
-);
+export default class DefaultTemplateContainer extends React.PureComponent {
+  render() {
+    return (
+      <Composer
+        components={[
+          <AccountConsumer />,
+          <BalanceConsumer />,
+          <NetworkConsumer />,
+          <CapabilityConsumer />,
+          <ConfigurationConsumer />,
+        ]}>
+        {([account, balances, network, capabibility, configuration]) => {
+          const { title, text, icon, children } = this.props;
 
-export default DefaultTemplate;
+          return (
+            <DefaultTemplate
+              HeaderProps={{
+                address: account,
+                ethBalance: balances && balances.eth,
+                canInvest: capabibility && capabibility.canInvest,
+                canInteract: capabibility && capabibility.canInteract,
+                canonicalPriceFeedAddress: configuration && configuration.canonicalPriceFeedAddress,
+                network: network && network.network,
+                currentBlock: network && network.currentBlock,
+                blockOverdue: network && network.blockOverdue,
+                nodeSynced: network && network.nodeSynced,
+                priceFeedUp: network && network.priceFeedUp,
+                fundName: account,
+              }}
+              HeadlineProps={
+                title ? {
+                  title,
+                  text,
+                  icon,
+                } : {}
+              }
+            >
+              {children}
+            </DefaultTemplate>
+          );
+        }}
+      </Composer>
+    );
+  }
+}

@@ -81,14 +81,14 @@ class NetworkContextHandler extends React.Component {
   }
 
   render() {
+    const state = this.state;
+    const { subscribe, ...props } = this.props;
+
     return (
       <NetworkContext.Provider value={{
-        blockOverdue: this.state.blockOverdue,
-        network: this.props.network,
-        currentBlock: this.props.currentBlock,
-        nodeSynced: this.props.nodeSynced,
-        priceFeedUp: this.props.priceFeedUp,
-        peerCount: this.props.peerCount,
+        ...defaults,
+        ...state,
+        ...props,
       }}>
         {this.props.children}
       </NetworkContext.Provider>

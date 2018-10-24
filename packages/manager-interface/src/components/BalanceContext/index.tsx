@@ -78,7 +78,10 @@ export class BalanceProvider extends React.PureComponent {
 
               return (
                 <SubscriptionHandler subscribe={subscribe} account={account}>
-                  <BalanceContext.Provider value={account && props.data || defaults}>
+                  <BalanceContext.Provider value={{
+                    ...defaults,
+                    ...(account && props.data || {}),
+                  }}>
                     {this.props.children}
                   </BalanceContext.Provider>
                 </SubscriptionHandler>

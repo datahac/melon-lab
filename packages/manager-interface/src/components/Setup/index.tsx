@@ -20,6 +20,9 @@ import { withFormik } from 'formik';
 import gql from 'graphql-tag';
 import * as Yup from 'yup';
 import * as R from 'ramda';
+import Composer from 'react-composer';
+import { AccountConsumer } from '+/components/AccountContext';
+import { BalanceConsumer } from '+/components/BalanceContext';
 
 const withFormProps = withProps(props => {
   return {
@@ -275,10 +278,17 @@ const SetupFormContainer = compose(
   withFormProps,
 )(SetupFormWizard);
 
-export default props => {
-  if (!props.eth || isZero(props.eth)) {
-    return <InsufficientEth eth={props.eth} address={props.account} />;
-  }
-
-  return <SetupFormContainer {...props} />;
-};
+export default props => (
+  <Composer components={[
+    <AccountConsumer />,
+    <BalanceConsumer />,
+  ]}>
+    {([account, balances]) => {
+      if (!balances.eth || isZero(balances.eth)) {
+        return <InsufficientEth eth={balances.eth} address={account} />;
+      }
+    
+      return <SetupFormContainer {...props} account={account} />;
+    }}
+  </Composer>
+);

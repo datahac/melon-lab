@@ -6,9 +6,9 @@ import GetStarted from '+/components/GetStarted';
 export default class RankingPage extends React.Component {
   render() {
     return (
-      <DefaultTemplate {...this.props}>
-        <GetStarted isHome {...this.props} />
-        <Ranking {...this.props} />
+      <DefaultTemplate>
+        <GetStarted isHome />
+        <Ranking />
       </DefaultTemplate>
     );
   }

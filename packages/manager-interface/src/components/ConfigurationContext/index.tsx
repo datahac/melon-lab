@@ -2,7 +2,14 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from '~/apollo';
 
-export const ConfigurationContext = React.createContext(null);
+const defaults = {
+  canonicalPriceFeedAddress: null,
+  competitionComplianceAddress: null,
+  onlyManagerCompetitionAddress: null,
+  noComplianceAddress: null,
+};
+
+export const ConfigurationContext = React.createContext(defaults);
 
 export const configurationQuery = gql`
   query ConfigurationQuery {
@@ -18,7 +25,10 @@ export class ConfigurationProvider extends React.PureComponent {
     return (
       <Query query={configurationQuery}>
         {props => (
-          <ConfigurationContext.Provider value={props.data}>
+          <ConfigurationContext.Provider value={{
+            ...defaults,
+            ...props.data,
+          }}>
             {this.props.children}
           </ConfigurationContext.Provider>
         )}

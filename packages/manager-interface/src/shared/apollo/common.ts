@@ -12,7 +12,7 @@ export const createErrorLink = () => onError(({ graphQLErrors, networkError }) =
   }
 
   if (networkError) {
-    console.log('[GQL NETWORK ERROR]: %s', networkError);
+    console.log('[GQL NETWORK ERROR]: %o', networkError);
   }
 });
 
@@ -25,7 +25,7 @@ export const createCache = () => {
     dataIdFromObject: object => {
       switch (object.__typename) {
         case 'Fund': {
-          return object.address || defaultDataIdFromObject(object);
+          return object.address ? `fund:${object.address}` : defaultDataIdFromObject(object);
         }
 
         default: {

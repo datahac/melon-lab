@@ -5,8 +5,8 @@ import RestoreWallet from '+/components/RestoreWallet';
 export default class WalletRestorePage extends React.Component {
   render() {
     return (
-      <DefaultTemplate {...this.props} title="Restore Wallet">
-        <RestoreWallet {...this.props} />
+      <DefaultTemplate title="Restore Wallet">
+        <RestoreWallet />
       </DefaultTemplate>
     );
   }

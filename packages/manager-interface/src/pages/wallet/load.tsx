@@ -22,8 +22,8 @@ export default class WalletLoadPage extends React.Component {
     }
 
     return (
-      <DefaultTemplate {...props} title="Load Wallet">
-        <LoadWallet {...props} />
+      <DefaultTemplate title="Load Wallet">
+        <LoadWallet />
       </DefaultTemplate>
     );
   }

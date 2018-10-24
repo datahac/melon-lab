@@ -33,7 +33,7 @@ export class CapabilityProvider extends React.PureComponent {
           const isCompetition = false; // TODO: Make this configurable.
 
           const canInteract = isSynced && hasAccount && hasCurrentBlock && hasEth;
-          const canInvest = canInteract && (isCompetition ? true : hasWeth);
+          const canInvest = isCompetition ? canInteract : (canInteract && hasWeth);
 
           return (
             <CapabilityContext.Provider value={{

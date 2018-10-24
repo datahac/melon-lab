@@ -8,7 +8,6 @@ import { NetworkProvider } from '+/components/NetworkContext';
 import { CapabilityProvider } from '+/components/CapabilityContext';
 import React from 'react';
 import withApollo from '~/apollo';
-import EthereumState from '+/components/EthereumState';
 
 import '~/static/images/logos.svg';
 import '~/static/images/icons.svg';
@@ -57,9 +56,7 @@ class MelonApp extends App {
                 <FundManagerProvider>
                   <BalanceProvider>
                     <CapabilityProvider>
-                      <EthereumState>
-                        {state => <Component {...pageProps} {...state} />}
-                      </EthereumState>
+                      <Component {...pageProps} />
                     </CapabilityProvider>
                   </BalanceProvider>
                 </FundManagerProvider>

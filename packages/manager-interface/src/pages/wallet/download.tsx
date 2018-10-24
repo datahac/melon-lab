@@ -22,8 +22,8 @@ export default class WalletDownloadPage extends React.Component {
     }
 
     return (
-      <DefaultTemplate {...props} title="Download Wallet">
-        <DownloadWallet {...props} />
+      <DefaultTemplate title="Download Wallet">
+        <DownloadWallet />
       </DefaultTemplate>
     );
   }

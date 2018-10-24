@@ -1,6 +1,6 @@
 import { Mutation } from '~/apollo';
 import gql from 'graphql-tag';
-import { ethereumQuery } from '+/components/EthereumState/data/ethereum';
+import { fundManagerQuery } from '+/components/FundManagerContext';
 
 const estimateMutation = gql`
   mutation EstimateSetupFund($name: String!, $exchanges: [String]!) {
@@ -34,12 +34,12 @@ export const ExecuteSetupMutation = ({ onCompleted, account, children }) => (
       };
 
       const data = cache.readQuery({
-        query: ethereumQuery,
+        query: fundManagerQuery,
         variables,
       });
 
       cache.writeQuery({
-        query: ethereumQuery,
+        query: fundManagerQuery,
         variables,
         data: {
           ...data,

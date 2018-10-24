@@ -101,7 +101,7 @@ export const Ranking: StatelessComponent<RankingProps> = ({
                   }&base=MLN-T&quote=WETH-T`}
                 >
                   <Card
-                    isActive={fund.address === associatedFund && true}
+                    isActive={fund.address === associatedFund}
                     {...fund}
                   />
                 </Link>

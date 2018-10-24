@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 import { Mutation } from '~/apollo';
-import { downloadWallet } from '~/utils/createDownload';
 
 const mutation = gql`
   mutation ExportWallet($password: String!) {
@@ -8,16 +7,8 @@ const mutation = gql`
   }
 `;
 
-const EncryptWalletMutation = ({ router, account, children }) => (
-  <Mutation mutation={mutation} onCompleted={(data) => {
-    const wallet = data && data.exportWallet;
-
-    downloadWallet(wallet, account).then(() => {
-      router.replace({
-        pathname: '/wallet',
-      });
-    });
-  }}>
+const EncryptWalletMutation = ({ onCompleted, children }) => (
+  <Mutation mutation={mutation} onCompleted={onCompleted}>
     {children}
   </Mutation>
 );

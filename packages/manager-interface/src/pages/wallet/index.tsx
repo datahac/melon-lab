@@ -17,12 +17,11 @@ export default class WalletIndexPage extends React.Component {
   render() {
     return (
       <WalletTemplate
-        {...this.props}
         title="Setup your Wallet"
         icon="icons_wallet"
         text="Before you can setup your fund, you need to import, restore or create a wallet."
       >
-        <Wallet {...this.props} />
+        <Wallet />
       </WalletTemplate>
     );
   }

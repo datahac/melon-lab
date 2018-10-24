@@ -15,11 +15,9 @@ export default class SetupPage extends React.Component {
   }
 
   render() {
-    const { ...props } = this.props;
-
     return (
-      <DefaultTemplate {...props} title="Setup your Fund">
-        <Setup {...props} />
+      <DefaultTemplate title="Setup your Fund">
+        <Setup />
       </DefaultTemplate>
     );
   }

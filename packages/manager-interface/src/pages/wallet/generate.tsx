@@ -5,8 +5,8 @@ import DefaultTemplate from '+/components/DefaultTemplate';
 export default class WalletGeneratePage extends React.Component {
   render() {
     return (
-      <DefaultTemplate {...this.props} title="Generate Wallet">
-        <GenerateWallet {...this.props} />
+      <DefaultTemplate title="Generate Wallet">
+        <GenerateWallet />
       </DefaultTemplate>
     );
   }

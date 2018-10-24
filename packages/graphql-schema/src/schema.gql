@@ -163,11 +163,6 @@ type Signature {
   v: Int!
 }
 
-type Exchange {
-  value: String
-  text: String
-}
-
 type Query {
   defaultAccount: String @insecure
   allAccounts: [String] @insecure
