@@ -89,7 +89,6 @@ const EthereumState = ({ children }) => (
         ...data,
         // TODO: Add a time interval that watches currentBlock changes.
         blockOverdue: false,
-        hasCurrentBlock,
         canInvest,
         canInteract,
       };

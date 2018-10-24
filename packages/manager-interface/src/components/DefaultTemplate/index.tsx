@@ -1,7 +1,7 @@
 import React from 'react';
 import Template from '~/templates/DefaultTemplate';
 
-const DefaultLayout = ({
+const DefaultTemplate = ({
   children,
   network,
   message,
@@ -34,4 +34,4 @@ const DefaultLayout = ({
   </Template>
 );
 
-export default DefaultLayout;
+export default DefaultTemplate;

@@ -1,5 +1,11 @@
 import App, { Container } from 'next/app';
 import { ApolloProvider } from 'react-apollo';
+import { AccountProvider } from '+/components/AccountContext';
+import { ConfigurationProvider } from '+/components/ConfigurationContext';
+import { BalanceProvider } from '+/components/BalanceContext';
+import { FundManagerProvider } from '+/components/FundManagerContext';
+import { NetworkProvider } from '+/components/NetworkContext';
+import { CapabilityProvider } from '+/components/CapabilityContext';
 import React from 'react';
 import withApollo from '~/apollo';
 import EthereumState from '+/components/EthereumState';
@@ -45,9 +51,21 @@ class MelonApp extends App {
     return (
       <Container>
         <ApolloProvider client={apollo}>
-          <EthereumState>
-            {state => <Component {...pageProps} {...state} />}
-          </EthereumState>
+          <ConfigurationProvider>
+            <NetworkProvider>
+              <AccountProvider>
+                <FundManagerProvider>
+                  <BalanceProvider>
+                    <CapabilityProvider>
+                      <EthereumState>
+                        {state => <Component {...pageProps} {...state} />}
+                      </EthereumState>
+                    </CapabilityProvider>
+                  </BalanceProvider>
+                </FundManagerProvider>
+              </AccountProvider>
+            </NetworkProvider>
+          </ConfigurationProvider>
         </ApolloProvider>
       </Container>
     );
