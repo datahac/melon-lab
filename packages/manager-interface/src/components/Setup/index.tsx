@@ -22,7 +22,6 @@ import * as Yup from 'yup';
 import * as R from 'ramda';
 
 const withFormProps = withProps(props => {
-  console.log(props);
   return {
     steps: [
       {
