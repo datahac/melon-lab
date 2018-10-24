@@ -64,6 +64,7 @@
     "react-dom": "^16.6.0",
     "react-highlighter": "^0.4.2",
     "react-modal": "^3.1.10",
+    "react-number-format": "^3.6.2",
     "recompose": "^0.27.1",
     "rxjs": "^5.5.8",
     "spdy": "^3.4.7",
