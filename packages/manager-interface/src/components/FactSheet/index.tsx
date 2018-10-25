@@ -3,7 +3,7 @@ import Composer from 'react-composer';
 import FactSheet from '~/components/Factsheet';
 import { NetworkConsumer } from '+/components/NetworkContext';
 
-export default class WalletContainer extends React.PureComponent {
+export default class FactsheetContainer extends React.PureComponent {
   render() {
     return (
       <Composer components={[<NetworkConsumer />]}>
