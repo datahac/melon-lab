@@ -21,7 +21,7 @@ async function start(port: number) {
 
   const apollo = new ApolloServer({
     schema,
-    context: await context(),
+    context,
     tracing: development || tracing,
     debug: development || debug,
     introspection: development || playground,
