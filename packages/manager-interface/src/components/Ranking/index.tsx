@@ -88,7 +88,6 @@ export default class RankingContainer extends React.PureComponent {
           return (
             <Ranking
               associatedFund={associatedFund}
-              network={network}
               funds={funds}
               loading={rankingProps.loading}
               search={this.state.search}
