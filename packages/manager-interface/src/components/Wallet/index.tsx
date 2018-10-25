@@ -6,8 +6,9 @@ import { BalanceConsumer } from '+/components/BalanceContext';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import { WalletQuery, WalletMutation } from './data/wallet';
+import { withRouter } from 'next/router';
 
-export default class WalletContainer extends React.PureComponent {
+class WalletContainer extends React.PureComponent {
   render() {
     return (
       <Composer
@@ -17,10 +18,25 @@ export default class WalletContainer extends React.PureComponent {
           <BalanceConsumer />,
           <NetworkConsumer />,
           <WalletQuery />,
-          <WalletMutation />,
-        ]}>
-        {([account, associatedFund, balances, network, walletProps, deleteWallet]) => {
-          const hasWallet = walletProps.data && walletProps.data.hasStoredWallet;
+          <WalletMutation
+            onCompleted={() => {
+              this.props.router.replace({
+                pathname: '/wallet',
+              });
+            }}
+          />,
+        ]}
+      >
+        {([
+          account,
+          associatedFund,
+          balances,
+          network,
+          walletProps,
+          deleteWallet,
+        ]) => {
+          const hasWallet =
+            walletProps.data && walletProps.data.hasStoredWallet;
 
           return (
             <Wallet
@@ -43,3 +59,5 @@ export default class WalletContainer extends React.PureComponent {
     );
   }
 }
+
+export default withRouter(WalletContainer);

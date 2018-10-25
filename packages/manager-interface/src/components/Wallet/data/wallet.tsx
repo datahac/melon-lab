@@ -19,20 +19,23 @@ const WalletQuery = ({ children }) => (
   </Query>
 );
 
-const WalletMutation = ({ children }) => (
+const WalletMutation = ({ onCompleted, children }) => (
   <Mutation
     mutation={mutation}
+    onCompleted={onCompleted}
     update={(cache, { data: { deleteWallet } }) => {
       if (!deleteWallet) {
         throw new Error('Failed to delete wallet.');
       }
 
       cache.writeQuery({
-        query: gql`{
-          hasStoredWallet
-          defaultAccount
-          allAccounts
-        }`,
+        query: gql`
+          {
+            hasStoredWallet
+            defaultAccount
+            allAccounts
+          }
+        `,
         data: {
           hasStoredWallet: false,
           defaultAccount: null,
