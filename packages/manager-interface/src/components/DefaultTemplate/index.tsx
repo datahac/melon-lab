@@ -36,7 +36,6 @@ export default class DefaultTemplateContainer extends React.PureComponent {
                 blockOverdue: network && network.blockOverdue,
                 nodeSynced: network && network.nodeSynced,
                 priceFeedUp: network && network.priceFeedUp,
-                fundName: account,
               }}
               HeadlineProps={
                 title
