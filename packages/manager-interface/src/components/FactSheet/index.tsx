@@ -1,13 +1,12 @@
 import React from 'react';
-import Composer from 'react-composer';
 import FactSheet from '~/components/Factsheet';
 import { NetworkConsumer } from '+/components/NetworkContext';
 
 export default class FactsheetContainer extends React.PureComponent {
   render() {
     return (
-      <Composer components={[<NetworkConsumer />]}>
-        {([network]) => {
+      <NetworkConsumer>
+        {network => {
           const { address, fund, totalFunds, loading } = this.props;
           const reportUrl =
             address &&
@@ -24,7 +23,7 @@ export default class FactsheetContainer extends React.PureComponent {
             />
           );
         }}
-      </Composer>
+      </NetworkConsumer>
     );
   }
 }
