@@ -129,12 +129,11 @@ export default class FundTemplateContainer extends React.Component {
                     }}
                     OrderForm={OrderForm}
                     OrderFormProps={{
-                      holdings: holdingsData,
+                      address,
                       quoteAsset,
                       baseAsset,
-                      priceFeedUp: network && network.priceFeedUp,
+                      holdings: holdingsData,
                       formValues: this.state.order,
-                      address,
                     }}
                     OrderBook={OrderBook}
                     OrderBookProps={{
