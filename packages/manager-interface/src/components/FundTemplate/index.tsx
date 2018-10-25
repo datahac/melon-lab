@@ -112,10 +112,10 @@ export default class FundTemplateContainer extends React.Component {
                     }}
                     FactSheet={FactSheet}
                     FactSheetProps={{
-                      ...fundData,
-                      network,
+                      fund: fundData,
                       quoteAsset,
-                      numberOfFunds: totalFunds,
+                      address,
+                      totalFunds,
                       loading: fundProps.loading,
                     }}
                     Holdings={Holdings}
