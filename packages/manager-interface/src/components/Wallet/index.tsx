@@ -20,6 +20,8 @@ export default class WalletContainer extends React.PureComponent {
           <WalletMutation />,
         ]}>
         {([account, associatedFund, balances, network, walletProps, deleteWallet]) => {
+          const hasWallet = walletProps.data && walletProps.data.hasStoredWallet;
+
           return (
             <Wallet
               associatedFund={associatedFund}
@@ -31,7 +33,7 @@ export default class WalletContainer extends React.PureComponent {
               deleteWallet={deleteWallet}
               loading={walletProps.loading}
               hasAccount={!!account}
-              hasWallet={walletProps.data && walletProps.data.hasStoredWallet}
+              hasWallet={hasWallet}
               currentAddress={account}
               networkId={network && network.network}
             />

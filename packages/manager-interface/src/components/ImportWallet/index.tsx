@@ -59,24 +59,22 @@ class ImportWalletContainer extends React.Component {
           </WalletMutation>
         ),
       ]}>
-        {([[importWallet, walletProps]]) => {
-          return (
-            <ImportWalletForm
-              onImportFile={this.onImportFile}
-              file={this.state.file}
-              serverError={this.state.error}
-              onSubmit={values =>
-                importWallet({
-                  variables: {
-                    file: this.state.file,
-                    password: values.password,
-                  },
-                }).catch(this.setError)
-              }
-              loading={walletProps.loading}
-            />
-          );
-        }}
+        {([[importWallet, walletProps]]) => (
+          <ImportWalletForm
+            onImportFile={this.onImportFile}
+            file={this.state.file}
+            serverError={this.state.error}
+            onSubmit={values =>
+              importWallet({
+                variables: {
+                  file: this.state.file,
+                  password: values.password,
+                },
+              }).catch(this.setError)
+            }
+            loading={walletProps.loading}
+          />
+        )}
       </Composer>
     );
   }

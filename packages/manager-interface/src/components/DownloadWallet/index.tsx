@@ -45,20 +45,18 @@ class DownloadWalletContainer extends React.PureComponent {
           </ExportWalletMutation>
         ),
       ]}>
-        {([account, [exportWallet, exportProps]]) => {
-          return (
-            <DownloadWalletForm
-              loading={exportProps.loading}
-              onSubmit={values => {
-                exportWallet({
-                  variables: {
-                    password: values.password,
-                  },
-                });
-              }}
-            />
-          );
-        }}
+        {([account, [exportWallet, exportProps]]) => (
+          <DownloadWalletForm
+            loading={exportProps.loading}
+            onSubmit={values => {
+              exportWallet({
+                variables: {
+                  password: values.password,
+                },
+              });
+            }}
+          />
+        )}
       </Composer>
     );
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import Composer from 'react-composer'
 import gql from 'graphql-tag';
 import { Query } from '~/apollo';
 import { AccountConsumer } from '+/components/AccountContext';
@@ -14,19 +15,22 @@ export const fundManagerQuery = gql`
 export class FundManagerProvider extends React.PureComponent {
   render() {
     return (
-      <AccountConsumer>
-        {(account) => (
-          <Query query={fundManagerQuery} variables={{ account }} skip={!account}>
-            {props => {
-              return (
-                <FundManagerContext.Provider value={account && props.data && props.data.associatedFund}>
-                  {this.props.children}
-                </FundManagerContext.Provider>
-              );
-            }}
-          </Query>
-        )}
-      </AccountConsumer>
+      <Composer components={[
+        <AccountConsumer />,
+        ({ results: [account], render }) => (
+          <Query query={fundManagerQuery} variables={{ account }} skip={!account} children={render} />
+        ),
+      ]}>
+        {([account, props]) => {
+          const associatedFund = account && props.data && props.data.associatedFund;
+
+          return (
+            <FundManagerContext.Provider value={associatedFund}>
+              {this.props.children}
+            </FundManagerContext.Provider>
+          );
+        }}
+      </Composer>
     );
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import Composer from 'react-composer';
 import gql from 'graphql-tag';
 import { Query } from '~/apollo';
 import { AccountConsumer } from '+/components/AccountContext';
@@ -45,51 +46,52 @@ class SubscriptionHandler extends React.Component {
 export class BalanceProvider extends React.PureComponent {
   render() {
     return (
-      <AccountConsumer>
-        {(account) => (
-          <Query query={balanceQuery} variables={{ account }} skip={!account} ssr={false}>
-            {props => {
-              const subscribe = () => {
-                const subscribeToToken = (token, field) => {
-                  return props.subscribeToMore({
-                    document: balanceSubscription,
-                    variables: { account, token },
-                    updateQuery: (previous, { subscriptionData: result }) => {
-                      return {
-                        ...(previous || {}),
-                        [field]: result && result.data && result.data.balance,
-                      };
-                    },
-                  });
-                };
+      <Composer components={[
+        <AccountConsumer />,
+        ({ results: [account], render }) => (
+          <Query query={balanceQuery} variables={{ account }} skip={!account} ssr={false} children={render} />
+        ),
+      ]}>
+        {([account, props]) => {
+          const subscribe = () => {
+            const subscribeToToken = (token, field) => {
+              return props.subscribeToMore({
+                document: balanceSubscription,
+                variables: { account, token },
+                updateQuery: (previous, { subscriptionData: result }) => {
+                  return {
+                    ...(previous || {}),
+                    [field]: result && result.data && result.data.balance,
+                  };
+                },
+              });
+            };
 
-                const subscriptions = [
-                  subscribeToToken('ETH', 'eth'),
-                  subscribeToToken('WETH', 'weth'),
-                  subscribeToToken('MLN', 'mln'),
-                ];
+            const subscriptions = [
+              subscribeToToken('ETH', 'eth'),
+              subscribeToToken('WETH', 'weth'),
+              subscribeToToken('MLN', 'mln'),
+            ];
 
-                return () => {
-                  subscriptions.forEach((unsubscribe) => {
-                    unsubscribe();
-                  });
-                };
-              };
+            return () => {
+              subscriptions.forEach((unsubscribe) => {
+                unsubscribe();
+              });
+            };
+          };
 
-              return (
-                <SubscriptionHandler subscribe={subscribe} account={account}>
-                  <BalanceContext.Provider value={{
-                    ...defaults,
-                    ...(account && props.data || {}),
-                  }}>
-                    {this.props.children}
-                  </BalanceContext.Provider>
-                </SubscriptionHandler>
-              );
-            }}
-          </Query>
-        )}
-      </AccountConsumer>
+          return (
+            <SubscriptionHandler subscribe={subscribe} account={account}>
+              <BalanceContext.Provider value={{
+                ...defaults,
+                ...(account && props.data || {}),
+              }}>
+                {this.props.children}
+              </BalanceContext.Provider>
+            </SubscriptionHandler>
+          );
+        }}
+      </Composer>
     );
   }
 }

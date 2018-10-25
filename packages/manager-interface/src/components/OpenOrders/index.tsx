@@ -1,3 +1,5 @@
+import React from 'react';
+import Composer from 'react-composer';
 import { withPropsOnChange } from 'recompose';
 import OpenOrders from '~/components/OpenOrders';
 import { OpenOrdersQuery, OpenOrdersMutation } from './data/openOrders';
@@ -16,30 +18,38 @@ const withMappedOrders = withPropsOnChange(['orders'], props => ({
 
 const OpenOrdersMapped = withMappedOrders(OpenOrders);
 
-const OpenOrdersContainer = ({ address, ...props }) => (
-  <OpenOrdersQuery address={address}>
-    {openOrdersProps => (
-      <OpenOrdersMutation>
-        {cancelOrder => (
-          <OpenOrdersMapped
-            {...props}
-            orders={R.pathOr([], ['data', 'openOrders'])(openOrdersProps)}
-            loading={openOrdersProps.loading}
-            onClick={(orderId, makerAssetSymbol, takerAssetSymbol) =>
-              cancelOrder({
-                variables: {
-                  orderId,
-                  fundAddress: address,
-                  makerAssetSymbol,
-                  takerAssetSymbol,
-                },
-              })
-            }
-          />
-        )}
-      </OpenOrdersMutation>
-    )}
-  </OpenOrdersQuery>
-);
+export default class OpenOrdersContainer extends React.PureComponent {
+  render() {
+    return (
+      <Composer components={[
+        <OpenOrdersQuery address={this.props.address} />,
+        ({ render }) => (
+          <OpenOrdersMutation>{(a, b) => render([a, b])}</OpenOrdersMutation>
+        ),
+      ]}>
+        {([openOrdersProps, [cancelOrder]]) => {
+          const orders = R.pathOr([], ['data', 'openOrders'])(openOrdersProps);
 
+          return (
+            <OpenOrdersMapped
+              {...this.props}
+              orders={orders}
+              loading={openOrdersProps.loading}
+              onClick={(orderId, makerAssetSymbol, takerAssetSymbol) => {
+                cancelOrder({
+                  variables: {
+                    orderId,
+                    fundAddress: this.props.address,
+                    makerAssetSymbol,
+                    takerAssetSymbol,
+                  },
+                });
+              }}
+            />
+          );
+        }}
+      </Composer>
+    )
+  }
+}
 export default OpenOrdersContainer;

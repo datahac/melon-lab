@@ -24,11 +24,7 @@ export default class WalletOverviewContainer extends React.PureComponent {
           return (
             <WalletOverview
               associatedFund={associatedFund}
-              balances={{
-                eth: balances.eth,
-                mln: balances.mln,
-                weth: balances.weth,
-              }}
+              balances={balances}
               deleteWallet={deleteWallet}
               loading={walletProps.loading}
               hasAccount={!!account}

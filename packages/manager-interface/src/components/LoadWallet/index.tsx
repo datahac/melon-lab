@@ -1,39 +1,52 @@
+import React from 'react';
+import Composer from 'react-composer';
 import LoadWallet from '~/components/LoadWallet/container';
-import { compose, withState } from 'recompose';
 import { withRouter } from 'next/router';
 import { WalletQuery, WalletMutation } from './data/wallet';
 
-const withLoadWalletErrorState = withState('error', 'setError', null);
+class LoadWalletContainer extends React.Component {
+  state = {
+    error: null,
+  }
 
-const withLoadWallet = BaseComponent => baseProps => (
-  <WalletQuery>
-    {props => (
-      <WalletMutation onCompleted={() => {
-        baseProps.router.replace({
-          pathname: '/wallet',
-        });
-      }}>
-        {(loadWallet, mutationProps) => (
-          <BaseComponent
-            hasStoredWallet={props.data && props.data.hasStoredWallet}
-            serverError={baseProps.error}
-            onSubmit={values =>
-              loadWallet({
-                variables: {
-                  password: values.password,
-                },
-              }).catch(error => baseProps.setError(error.message))
-            }
-            loading={mutationProps.loading || props.loading}
-          />
-        )}
-      </WalletMutation>
-    )}
-  </WalletQuery>
-);
+  setError = (error) => {
+    this.setState({ error });
+  }
 
-export default compose(
-  withRouter,
-  withLoadWalletErrorState,
-  withLoadWallet,
-)(LoadWallet);
+  render() {
+    return (
+      <Composer components={[
+        <WalletQuery />,
+        <WalletMutation onCompleted={() => {
+          this.props.router.replace({
+            pathname: '/wallet',
+          });
+        }} />
+      ]}>
+        {([walletProps, [loadWallet, mutationProps]]) => {
+          const hasStoredWallet = walletProps.data && walletProps.data.hasStoredWallet;
+          const isLoading = mutationProps.loading || walletProps.loading;
+
+          return (
+            <LoadWallet
+              hasStoredWallet={hasStoredWallet}
+              serverError={this.state.error}
+              onSubmit={values => {
+                loadWallet({
+                  variables: {
+                    password: values.password,
+                  },
+                }).catch(error => {
+                  this.setError(error.message);
+                });
+              }}
+              loading={isLoading}
+            />
+          );
+        }}
+      </Composer>
+    );
+  }
+}
+
+export default withRouter(LoadWalletContainer);
