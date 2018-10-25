@@ -37,7 +37,6 @@ export default class OrderFormContainer extends React.PureComponent {
             quoteAsset,
             baseAsset,
             holdings,
-            decimals = 4,
             formValues,
           } = this.props;
 
@@ -55,7 +54,6 @@ export default class OrderFormContainer extends React.PureComponent {
               isCompetition={false}
               isManager={isManager}
               holdings={holdings}
-              decimals={decimals}
               quoteAsset={quoteAsset}
               baseAsset={baseAsset}
               formValues={formValues}
