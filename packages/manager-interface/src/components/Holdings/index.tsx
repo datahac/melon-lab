@@ -1,14 +1,14 @@
 import Holdings from '~/components/Holdings';
 import { compose, withPropsOnChange, withHandlers } from 'recompose';
 import * as R from 'ramda';
-import Router from 'next/router';
+import { withRouter } from 'next/router';
 import { toBigNumber } from '~/utils/functionalBigNumber';
 
 // TODO: Add isReadyToTrade
 
 const withHoldingHandlers = withHandlers({
   onClick: props => asset => {
-    Router.push({
+    props.router.push({
       pathname: '/manage',
       query: { address: props.address, base: asset.symbol, quote: 'WETH-T' },
     });
@@ -37,6 +37,7 @@ const withMappedProps = withPropsOnChange(
 );
 
 export default compose(
+  withRouter,
   withMappedProps,
   withHoldingHandlers,
 )(Holdings);
