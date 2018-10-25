@@ -8,7 +8,7 @@ import availablePolicies from '~/utils/availablePolicies';
 import Wizard from '~/components/Wizard';
 import WizardPage from '~/components/WizardPage';
 import StepFund from '~/components/SetupForm/StepFund';
-import InsufficientEth from '~/components/InsufficientEth';
+import InsufficientFunds from '~/components/InsufficientFunds';
 import StepPolicies from '~/components/SetupForm/StepPolicies';
 import StepTerms from '~/components/SetupForm/StepTerms';
 import StepOverview from '~/components/SetupForm/StepOverview';
@@ -283,7 +283,7 @@ export default props => (
     {([account, balances]) => {
       if (!balances.eth || isZero(balances.eth)) {
         return (
-          <InsufficientEth
+          <InsufficientFunds
             eth={balances.eth}
             weth={balances.weth}
             address={account}

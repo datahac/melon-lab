@@ -2,32 +2,19 @@ import React from 'react';
 import InsufficientFunds from './index';
 
 const data = {
-  showFaucet: true,
-  walletAddress: '0x0a3d3ea92917Dca8002A3cb5FC2e81D3b5217D50',
-  ethBalance: '0',
-  wethBalance: '0',
+  eth: 0,
+  address: '0x12312451234123123',
 };
 
-describe('InsufficientFunds', () => {
+describe('Setup', () => {
   const defaultElement = <InsufficientFunds {...data} />;
-  let wrapper;
+  let tree;
 
   beforeEach(() => {
-    wrapper = shallow(defaultElement);
-  });
-
-  it('should render correctly without walletAddress', () => {
-    wrapper.setProps({ walletAddress: undefined });
-    expect(wrapper).toMatchSnapshot();
+    tree = mount(defaultElement);
   });
 
   it('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('onClick event', () => {
-    global.open = jest.fn();
-    wrapper.find('Button').simulate('click');
-    expect(global.open).toBeCalled();
+    expect(tree).toMatchSnapshot();
   });
 });
