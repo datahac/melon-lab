@@ -1,43 +1,34 @@
-import { formCalculation, withForm } from './withForm';
-import OrderForm from '~/components/OrderForm';
 import React from 'react';
 import Composer from 'react-composer';
+import OrderForm from '~/components/OrderForm';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
+import { formCalculation, withForm } from './withForm';
 import isSameAddress from '~/utils/isSameAddress';
 
 const WrappedOrderForm = withForm(OrderForm);
 
 export default class OrderFormContainer extends React.PureComponent {
   onChange = event => {
-    this.props.setFieldValue(event.target.name, event.target.value);
-    formCalculation(this.props, event.target.name, event.target.value);
+    const { setFieldValue } = this.props;
+    const { name, value } = event.target;
+
+    setFieldValue(name, value);
+    formCalculation(this.props, name, value);
+  };
+
+  getTokenBalance = asset => {
+    const { holdings } = this.props;
+    return {
+      name: asset,
+      balance:
+        holdings &&
+        holdings.length &&
+        holdings.find(holding => holding.symbol === asset).balance.toString(10),
+    };
   };
 
   render() {
-    const info = {
-      tokens: {
-        baseToken: {
-          name: this.props.baseAsset,
-          balance:
-            this.props.holdings && this.props.holdings.length
-              ? this.props.holdings
-                  .find(a => a.symbol === this.props.baseAsset)
-                  .balance.toString(10)
-              : undefined,
-        },
-        quoteToken: {
-          name: this.props.quoteAsset,
-          balance:
-            this.props.holdings && this.props.holdings.length
-              ? this.props.holdings
-                  .find(a => a.symbol === this.props.quoteAsset)
-                  .balance.toString(10)
-              : undefined,
-        },
-      },
-    };
-
     return (
       <Composer components={[<NetworkConsumer />, <FundManagerConsumer />]}>
         {([network, associatedFund]) => {
@@ -53,9 +44,14 @@ export default class OrderFormContainer extends React.PureComponent {
           const isManager =
             !!associatedFund && isSameAddress(associatedFund, address);
 
+          const tokens = {
+            baseToken: this.getTokenBalance(this.props.baseAsset),
+            quoteToken: this.getTokenBalance(this.props.quoteAsset),
+          };
+
           return (
             <WrappedOrderForm
-              info={info}
+              tokens={tokens}
               isCompetition={false}
               isManager={isManager}
               holdings={holdings}

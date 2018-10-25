@@ -30,7 +30,7 @@ export interface OrderFormProps {
   }>;
   handleBlur?: () => void;
   handleSubmit?: () => void;
-  info?: any;
+  tokens?: any;
   isCompetition?: boolean;
   isManager?: boolean;
   onChange?: React.ChangeEvent<any>;
@@ -48,7 +48,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
   exchanges,
   handleBlur,
   handleSubmit,
-  info,
+  tokens,
   isCompetition,
   isManager,
   onChange,
@@ -112,7 +112,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
           />
         </div> */}
         <div className="order-form__order-info">
-          <OrderInfo {...info} />
+          <OrderInfo tokens={tokens} />
         </div>
         <div className="order-form__input">
           <Input
