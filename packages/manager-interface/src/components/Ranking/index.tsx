@@ -1,9 +1,11 @@
-import { networks } from '@melonproject/melon.js';
-import { compose, withState, withPropsOnChange } from 'recompose';
-import Ranking from '~/components/Ranking';
-import { greaterThan } from '~/utils/functionalBigNumber';
+import React from 'react';
 import * as R from 'ramda';
+import Composer from 'react-composer';
+import { NetworkConsumer } from '+/components/NetworkContext';
+import { FundManagerConsumer } from '+/components/FundManagerContext';
+import Ranking from '~/components/Ranking';
 import RankingQuery from './data/ranking';
+import { greaterThan } from '~/utils/functionalBigNumber';
 
 const filterRankings = R.curryN(2, (search, fund) => {
   return fund.name.toLocaleLowerCase().includes(search);
@@ -14,7 +16,7 @@ const mapRankings = R.curryN(2, (network, fund) => ({
   inception: fund.inception,
   sharePrice: fund.sharePrice,
   reportUrl: `https://${
-    network === networks.KOVAN ? 'melon' : 'olympiad'
+    network === 'KOVAN' ? 'melon' : 'olympiad'
   }-reporting.now.sh/report/${fund.address}`,
 }));
 
@@ -46,43 +48,57 @@ const sortRankings = ordering => (a, b) => {
   return 0;
 };
 
-const withSearchAndSorting = withPropsOnChange(
-  ['loading', 'funds', 'search', 'ordering', 'network'],
-  props => ({
-    funds:
-      (!props.loading &&
-        (props.funds || [])
-          .slice()
-          .filter(filterRankings(props.search.toLocaleLowerCase()))
-          .map(mapRankings(props.network))
-          .sort(sortRankings(props.ordering))) ||
-      [],
-  }),
-);
+export default class RankingContainer extends React.PureComponent {
+  state = {
+    ordering: '+rank',
+    search: '',
+  };
 
-const withRanking = BaseComponent => baseProps => (
-  <RankingQuery>
-    {rankingProps => (
-      <BaseComponent
-        associatedFund={baseProps.associatedFund}
-        setOrdering={order => baseProps.setOrdering({ variables: { order } })}
-        setSearch={search => baseProps.setSearch({ variables: { search } })}
-        ordering={baseProps.ordering}
-        search={baseProps.search}
-        funds={rankingProps.data && rankingProps.data.rankings}
-        network={baseProps.network}
-        loading={rankingProps.loading}
-      />
-    )}
-  </RankingQuery>
-);
+  setOrdering = ordering => {
+    this.setState({
+      ordering,
+    });
+  };
 
-const withOrdering = withState('ordering', 'setOrdering', '+rank');
-const withSearch = withState('search', 'setSearch', '');
+  setSearch = search => {
+    this.setState({
+      search,
+    });
+  };
 
-export default compose(
-  withRanking,
-  withSearch,
-  withOrdering,
-  withSearchAndSorting,
-)(Ranking);
+  render() {
+    return (
+      <Composer
+        components={[
+          <NetworkConsumer />,
+          <FundManagerConsumer />,
+          <RankingQuery />,
+        ]}
+      >
+        {([network, associatedFund, rankingProps]) => {
+          const funds =
+            (!rankingProps.loading &&
+              ((rankingProps.data && rankingProps.data.rankings) || [])
+                .slice()
+                .filter(filterRankings(this.state.search.toLocaleLowerCase()))
+                .map(mapRankings(network.network))
+                .sort(sortRankings(this.state.ordering))) ||
+            [];
+
+          return (
+            <Ranking
+              associatedFund={associatedFund}
+              network={network}
+              funds={funds}
+              loading={rankingProps.loading}
+              search={this.state.search}
+              ordering={this.state.ordering}
+              setSearch={search => this.setSearch(search)}
+              setOrdering={order => this.setOrdering(order)}
+            />
+          );
+        }}
+      </Composer>
+    );
+  }
+}
