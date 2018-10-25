@@ -1,144 +1,73 @@
-import { compose, withHandlers, withPropsOnChange } from 'recompose';
+import { formCalculation, withForm } from './withForm';
 import OrderForm from '~/components/OrderForm';
-import { withFormik } from 'formik';
-import * as Yup from 'yup';
-import {
-  divide,
-  greaterThan,
-  max,
-  min,
-  multiply,
-} from '~/utils/functionalBigNumber';
+import React from 'react';
+import Composer from 'react-composer';
+import { NetworkConsumer } from '+/components/NetworkContext';
+import { FundManagerConsumer } from '+/components/FundManagerContext';
+import isSameAddress from '~/utils/isSameAddress';
 
-const calculateInputs = (props, field, value) => {
-  const { values, info } = props;
-  let maxTotal;
-  let maxQuantity;
+const WrappedOrderForm = withForm(OrderForm);
 
-  const typeValue = field === 'type' ? value : values.orderType;
-  const totalValue = field === 'total' ? value : values.total;
-  const quantityValue = field === 'quantity' ? value : values.quantity;
+export default class OrderFormContainer extends React.PureComponent {
+  onChange = event => {
+    this.props.setFieldValue(event.target.name, event.target.value);
+    formCalculation(this.props, event.target.name, event.target.value);
+  };
 
-  if (values.strategy === 'Market') {
-    maxTotal =
-      typeValue === 'Buy'
-        ? min(info.tokens.quoteToken.balance, totalValue)
-        : totalValue;
-    maxQuantity =
-      typeValue === 'Sell'
-        ? max(info.tokens.baseToken.balance, quantityValue)
-        : quantityValue;
-  } else if (values.strategy === 'Limit') {
-    maxTotal = typeValue === 'Buy' ? info.tokens.quoteToken.balance : Infinity;
-    maxQuantity =
-      typeValue === 'Sell' ? info.tokens.baseToken.balance : Infinity;
-  }
-
-  if (field === 'total') {
-    if (greaterThan(value, maxTotal)) {
-      props.setFieldValue('total', maxTotal);
-    } else if (values.price) {
-      const quantity = divide(value, values.price).toString(10);
-      if (values.quantity !== value) {
-        props.setFieldValue('quantity', quantity);
-      }
-    }
-  }
-
-  if (field === 'quantity') {
-    if (greaterThan(value, maxQuantity)) {
-      props.setFieldValue('quantity', maxQuantity);
-    } else if (values.price) {
-      const total = multiply(value, values.price).toString(10);
-      if (values.total !== value) {
-        props.setFieldValue('total', total);
-      }
-    }
-  }
-
-  if (field === 'price' && values.quantity) {
-    const total = multiply(values.quantity, value).toString(10);
-    props.setFieldValue('total', total);
-  }
-};
-
-const validation = props => {
-  const numberFormat = (0).toFixed(props.decimals);
-  const minNumber = numberFormat.slice(0, -1) + '1';
-
-  return Yup.object().shape({
-    price: Yup.number()
-      .min(minNumber, `Minimum price is ${minNumber}`)
-      .required('Price is required.'),
-    quantity: Yup.number()
-      .min(minNumber, `Minimum quantity is ${minNumber}`)
-      .required('Quantity is required.'),
-    total: Yup.number()
-      .min(minNumber, `Minimum total is ${minNumber}`)
-      .required('Total is required.'),
-  });
-};
-
-const initialValues = {
-  price: '',
-  type: 'sell',
-  strategy: 'Market',
-  quantity: '',
-  total: '',
-  exchange: '',
-};
-
-const withFormValidation = withFormik({
-  mapPropsToValues: props =>
-    props.formValues ? { ...props.formValues } : initialValues,
-  validationSchema: props => validation(props),
-  enableReinitialize: true,
-  handleSubmit: (values, form) =>
-    form.props.onSubmit && form.props.onSubmit(values),
-});
-
-const withFormHandler = compose(
-  withHandlers({
-    onChange: props => event => {
-      props.setFieldValue(event.target.name, event.target.value);
-      calculateInputs(props, event.target.name, event.target.value);
-    },
-  }),
-);
-
-const withMappedProps = withPropsOnChange(
-  ['holdings', 'baseAsset', 'quoteAsset'],
-  props => ({
-    // TODO: isCompetition?
-    isCompetition: false,
-    isManager: props.isManager,
-    info: {
+  render() {
+    const info = {
       tokens: {
         baseToken: {
-          name: props.baseAsset,
+          name: this.props.baseAsset,
           balance:
-            props.holdings && props.holdings.length
-              ? props.holdings
-                  .find(a => a.symbol === props.baseAsset)
+            this.props.holdings && this.props.holdings.length
+              ? this.props.holdings
+                  .find(a => a.symbol === this.props.baseAsset)
                   .balance.toString(10)
               : undefined,
         },
         quoteToken: {
-          name: props.quoteAsset,
+          name: this.props.quoteAsset,
           balance:
-            props.holdings && props.holdings.length
-              ? props.holdings
-                  .find(a => a.symbol === props.quoteAsset)
+            this.props.holdings && this.props.holdings.length
+              ? this.props.holdings
+                  .find(a => a.symbol === this.props.quoteAsset)
                   .balance.toString(10)
               : undefined,
         },
       },
-    },
-  }),
-);
+    };
 
-export default compose(
-  withMappedProps,
-  withFormValidation,
-  withFormHandler,
-)(OrderForm);
+    return (
+      <Composer components={[<NetworkConsumer />, <FundManagerConsumer />]}>
+        {([network, associatedFund]) => {
+          const {
+            address,
+            quoteAsset,
+            baseAsset,
+            holdings,
+            decimals = 4,
+            formValues,
+          } = this.props;
+
+          const isManager =
+            !!associatedFund && isSameAddress(associatedFund, address);
+
+          return (
+            <WrappedOrderForm
+              info={info}
+              isCompetition={false}
+              isManager={isManager}
+              holdings={holdings}
+              decimals={decimals}
+              quoteAsset={quoteAsset}
+              baseAsset={baseAsset}
+              formValues={formValues}
+              priceFeedUp={network && network.priceFeedUp}
+            />
+          );
+        }}
+      </Composer>
+    );
+  }
+}
