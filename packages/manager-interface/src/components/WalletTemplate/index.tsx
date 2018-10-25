@@ -18,7 +18,8 @@ class WalletTemplateContainer extends React.PureComponent {
           <NetworkConsumer />,
           <CapabilityConsumer />,
           <ConfigurationConsumer />,
-        ]}>
+        ]}
+      >
         {([account, balances, network, capabibility, configuration]) => {
           const { router, title, text, icon, children } = this.props;
 
@@ -44,13 +45,13 @@ class WalletTemplateContainer extends React.PureComponent {
                 ethBalance: balances && balances.eth,
                 canInvest: capabibility && capabibility.canInvest,
                 canInteract: capabibility && capabibility.canInteract,
-                canonicalPriceFeedAddress: configuration && configuration.canonicalPriceFeedAddress,
+                canonicalPriceFeedAddress:
+                  configuration && configuration.canonicalPriceFeedAddress,
                 network: network && network.network,
                 currentBlock: network && network.currentBlock,
                 blockOverdue: network && network.blockOverdue,
                 nodeSynced: network && network.nodeSynced,
                 priceFeedUp: network && network.priceFeedUp,
-                fundName: account,
               }}
               HeadlineProps={
                 title && {

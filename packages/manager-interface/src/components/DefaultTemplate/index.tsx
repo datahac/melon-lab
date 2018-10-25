@@ -17,7 +17,8 @@ export default class DefaultTemplateContainer extends React.PureComponent {
           <NetworkConsumer />,
           <CapabilityConsumer />,
           <ConfigurationConsumer />,
-        ]}>
+        ]}
+      >
         {([account, balances, network, capabibility, configuration]) => {
           const { title, text, icon, children } = this.props;
 
@@ -28,7 +29,8 @@ export default class DefaultTemplateContainer extends React.PureComponent {
                 ethBalance: balances && balances.eth,
                 canInvest: capabibility && capabibility.canInvest,
                 canInteract: capabibility && capabibility.canInteract,
-                canonicalPriceFeedAddress: configuration && configuration.canonicalPriceFeedAddress,
+                canonicalPriceFeedAddress:
+                  configuration && configuration.canonicalPriceFeedAddress,
                 network: network && network.network,
                 currentBlock: network && network.currentBlock,
                 blockOverdue: network && network.blockOverdue,
@@ -37,11 +39,13 @@ export default class DefaultTemplateContainer extends React.PureComponent {
                 fundName: account,
               }}
               HeadlineProps={
-                title ? {
-                  title,
-                  text,
-                  icon,
-                } : {}
+                title
+                  ? {
+                      title,
+                      text,
+                      icon,
+                    }
+                  : null
               }
             >
               {children}

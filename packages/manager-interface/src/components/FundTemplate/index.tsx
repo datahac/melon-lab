@@ -33,17 +33,17 @@ export default class FundTemplateContainer extends React.Component {
     },
   };
 
-  setExchanges = (exchanges) => {
+  setExchanges = exchanges => {
     this.setState({
       exchanges,
     });
-  }
+  };
 
-  setOrder = (order) => {
+  setOrder = order => {
     this.setState({
       order,
     });
-  }
+  };
 
   render() {
     return (
@@ -55,8 +55,16 @@ export default class FundTemplateContainer extends React.Component {
           <CapabilityConsumer />,
           <ConfigurationConsumer />,
           <FundManagerConsumer />,
-        ]}>
-        {([account, balances, network, capabibility, configuration, associatedFund]) => {
+        ]}
+      >
+        {([
+          account,
+          balances,
+          network,
+          capabibility,
+          configuration,
+          associatedFund,
+        ]) => {
           const { exchanges } = this.state;
           const { address, quoteAsset, baseAsset } = this.props;
 
@@ -65,88 +73,101 @@ export default class FundTemplateContainer extends React.Component {
               components={[
                 <HoldingsQuery address={address} />,
                 <FundQuery address={address} account={account} />,
-                <OrderBookQuery exchanges={exchanges} baseAsset={baseAsset} quoteAsset={quoteAsset} />,
+                <OrderBookQuery
+                  exchanges={exchanges}
+                  baseAsset={baseAsset}
+                  quoteAsset={quoteAsset}
+                />,
               ]}
             >
-            {([holdingsProps, fundProps, orderBookProps])   => {
-              const holdingsData = R.pathOr([], ['data', 'fund', 'holdings'])(holdingsProps);
-              const fundData = R.pathOr({}, ['data', 'fund'])(fundProps);
-              const orderBookData = R.pathOr({}, ['data', 'orderbook'])(orderBookProps);
-              const totalFunds = R.pathOr(0, ['data', 'totalFunds'])(fundProps);
-              const isManager = !!associatedFund && isSameAddress(associatedFund, address);
+              {([holdingsProps, fundProps, orderBookProps]) => {
+                const holdingsData = R.pathOr([], ['data', 'fund', 'holdings'])(
+                  holdingsProps,
+                );
+                const fundData = R.pathOr({}, ['data', 'fund'])(fundProps);
+                const orderBookData = R.pathOr({}, ['data', 'orderbook'])(
+                  orderBookProps,
+                );
+                const totalFunds = R.pathOr(0, ['data', 'totalFunds'])(
+                  fundProps,
+                );
+                const isManager =
+                  !!associatedFund && isSameAddress(associatedFund, address);
 
-              return (
-                <Template
-                  HeaderProps={{
-                    ethBalance: balances && balances.eth,
-                    canInvest: capabibility && capabibility.canInvest,
-                    canInteract: capabibility && capabibility.canInteract,
-                    canonicalPriceFeedAddress: configuration && configuration.canonicalPriceFeedAddress,
-                    network: network && network.network,
-                    currentBlock: network && network.currentBlock,
-                    blockOverdue: network && network.blockOverdue,
-                    nodeSynced: network && network.nodeSynced,
-                    priceFeedUp: network && network.priceFeedUp,
-                    fundName: account,
-                    address: account,
-                  }}
-                  FactSheet={FactSheet}
-                  FactSheetProps={{
-                    ...fundData,
-                    network,
-                    quoteAsset,
-                    numberOfFunds: totalFunds,
-                    loading: fundProps.loading,
-                  }}
-                  Holdings={Holdings}
-                  HoldingsProps={{
-                    address,
-                    quoteAsset,
-                    baseAsset,
-                    holdings: holdingsData,
-                    loading: fundProps.loading || holdingsProps.loading,
-                    nav: fundData && fundData.nav,
-                  }}
-                  OrderForm={OrderForm}
-                  OrderFormProps={{
-                    ...fundData,
-                    holdings: holdingsData,
-                    decimals: 4,
-                    quoteAsset,
-                    baseAsset,
-                    priceFeedUp: network && network.priceFeedUp,
-                    formValues: this.state.order,
-                    isManager,
-                  }}
-                  OrderBook={OrderBook}
-                  OrderBookProps={{
-                    ...orderBookData,
-                    quoteAsset,
-                    baseAsset,
-                    loading: orderBookProps.loading,
-                    exchanges,
-                    availableExchanges,
-                    setExchanges: this.setExchanges,
-                    setOrder: this.setOrder,
-                    holdings: holdingsData,
-                  }}
-                  OpenOrders={OpenOrders}
-                  OpenOrdersProps={{
-                    address,
-                    isManager,
-                    // TODO: Compute this properly.
-                    isReadyToTrade: true,
-                  }}
-                  RecentTrades={RecentTrades}
-                  RecentTradesProps={{
-                    quoteAsset,
-                    baseAsset,
-                  }}
-                />
-              );
-            }}
-          </Composer>
-        )}}
+                return (
+                  <Template
+                    HeaderProps={{
+                      ethBalance: balances && balances.eth,
+                      canInvest: capabibility && capabibility.canInvest,
+                      canInteract: capabibility && capabibility.canInteract,
+                      canonicalPriceFeedAddress:
+                        configuration &&
+                        configuration.canonicalPriceFeedAddress,
+                      network: network && network.network,
+                      currentBlock: network && network.currentBlock,
+                      blockOverdue: network && network.blockOverdue,
+                      nodeSynced: network && network.nodeSynced,
+                      priceFeedUp: network && network.priceFeedUp,
+                      address: account,
+                    }}
+                    FactSheet={FactSheet}
+                    FactSheetProps={{
+                      ...fundData,
+                      network,
+                      quoteAsset,
+                      numberOfFunds: totalFunds,
+                      loading: fundProps.loading,
+                    }}
+                    Holdings={Holdings}
+                    HoldingsProps={{
+                      address,
+                      quoteAsset,
+                      baseAsset,
+                      holdings: holdingsData,
+                      loading: fundProps.loading || holdingsProps.loading,
+                      nav: fundData && fundData.nav,
+                    }}
+                    OrderForm={OrderForm}
+                    OrderFormProps={{
+                      ...fundData,
+                      holdings: holdingsData,
+                      decimals: 4,
+                      quoteAsset,
+                      baseAsset,
+                      priceFeedUp: network && network.priceFeedUp,
+                      formValues: this.state.order,
+                      isManager,
+                    }}
+                    OrderBook={OrderBook}
+                    OrderBookProps={{
+                      ...orderBookData,
+                      quoteAsset,
+                      baseAsset,
+                      loading: orderBookProps.loading,
+                      exchanges,
+                      availableExchanges,
+                      setExchanges: this.setExchanges,
+                      setOrder: this.setOrder,
+                      holdings: holdingsData,
+                    }}
+                    OpenOrders={OpenOrders}
+                    OpenOrdersProps={{
+                      address,
+                      isManager,
+                      // TODO: Compute this properly.
+                      isReadyToTrade: true,
+                    }}
+                    RecentTrades={RecentTrades}
+                    RecentTradesProps={{
+                      quoteAsset,
+                      baseAsset,
+                    }}
+                  />
+                );
+              }}
+            </Composer>
+          );
+        }}
       </Composer>
     );
   }
