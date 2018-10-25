@@ -16,8 +16,8 @@ export const InsufficientEth: StatelessComponent<InsufficientEthProps> = ({
   <Notification isWarning>
     <b>Insufficient ETH Balance</b>
     <p>
-      You don't have enough Kovan Ether or Kovan W-ETH. Current balances: weth{' '}
-      {weth}, {eth} ETH
+      You don't have enough Kovan Ether or Kovan W-ETH. Current balances: {weth}{' '}
+      WETH-T, {eth} ETH
       <br />
       To get started, head to our faucet to receive Kovan Ether and Kovan Melon
       <br />
