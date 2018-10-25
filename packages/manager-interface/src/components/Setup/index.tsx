@@ -279,15 +279,18 @@ const SetupFormContainer = compose(
 )(SetupFormWizard);
 
 export default props => (
-  <Composer components={[
-    <AccountConsumer />,
-    <BalanceConsumer />,
-  ]}>
+  <Composer components={[<AccountConsumer />, <BalanceConsumer />]}>
     {([account, balances]) => {
       if (!balances.eth || isZero(balances.eth)) {
-        return <InsufficientEth eth={balances.eth} address={account} />;
+        return (
+          <InsufficientEth
+            eth={balances.eth}
+            weth={balances.weth}
+            address={account}
+          />
+        );
       }
-    
+
       return <SetupFormContainer {...props} account={account} />;
     }}
   </Composer>
