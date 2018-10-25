@@ -52,4 +52,3 @@ export default class OpenOrdersContainer extends React.PureComponent {
     )
   }
 }
-export default OpenOrdersContainer;
