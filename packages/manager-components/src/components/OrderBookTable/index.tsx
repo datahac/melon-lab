@@ -80,7 +80,7 @@ const OrderBookTable = ({
             <div
               className="orderbook-table__body-row"
               key={`${entry.order.id}-${index}`}
-              onClick={() => onClickOrder(index)}
+              onClick={() => onClickOrder && onClickOrder(index)}
               style={{
                 cursor: canTrade ? 'pointer' : 'auto',
               }}

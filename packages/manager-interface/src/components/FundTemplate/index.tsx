@@ -146,6 +146,7 @@ export default class FundTemplateContainer extends React.Component {
                       setExchanges: this.setExchanges,
                       setOrder: this.setOrder,
                       holdings: holdingsData,
+                      isManager: isManager,
                     }}
                     OpenOrders={OpenOrders}
                     OpenOrdersProps={{

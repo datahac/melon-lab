@@ -10,7 +10,7 @@ import styles from './styles.css';
 export interface OrderBookProps {
   baseAsset?: string;
   decimals?: number;
-  isReadyToTrade: boolean;
+  isManager: boolean;
   loading: boolean;
   setSellOrder: (volume, exchange, subset, balance) => void;
   setBuyOrder: (volume, exchange, subset, balance) => void;
@@ -28,7 +28,7 @@ export interface OrderBookProps {
 export const OrderBook: StatelessComponent<OrderBookProps> = ({
   baseAsset,
   decimals = 4,
-  isReadyToTrade = true,
+  isManager = false,
   loading,
   setSellOrder: setSellOrderFinal,
   setBuyOrder: setBuyOrderFinal,
@@ -131,16 +131,16 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
                   entries={buyEntries}
                   totalVolume={totalBuyVolume}
                   decimals={decimals}
-                  onClickOrder={setSellOrder}
-                  canTrade={isReadyToTrade}
+                  onClickOrder={isManager && setSellOrder}
+                  canTrade={isManager}
                 />
                 <OrderBookTable
                   style="sell"
                   entries={sellEntries}
                   totalVolume={totalSellVolume}
                   decimals={decimals}
-                  onClickOrder={setBuyOrder}
-                  canTrade={isReadyToTrade}
+                  onClickOrder={isManager && setBuyOrder}
+                  canTrade={isManager}
                 />
               </div>
             </Fragment>
