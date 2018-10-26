@@ -24,6 +24,7 @@ import * as R from 'ramda';
 import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
 import { BalanceConsumer } from '+/components/BalanceContext';
+import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 
 const withFormProps = withProps(props => {
   return {
@@ -180,6 +181,10 @@ const FormikSetupFormWizard = compose(
       >
         <StepFund
           {...props}
+          canonicalPriceFeedAddress={
+            props.configuration.canonicalPriceFeedAddress
+          }
+          noComplianceAddress={props.configuration.noComplianceAddress}
           availableExchangeContracts={availableExchangeContracts}
         />
       </WizardPage>
@@ -292,8 +297,14 @@ const SetupFormContainer = compose(
 )(SetupFormWizard);
 
 export default props => (
-  <Composer components={[<AccountConsumer />, <BalanceConsumer />]}>
-    {([account, balances]) => {
+  <Composer
+    components={[
+      <AccountConsumer />,
+      <BalanceConsumer />,
+      <ConfigurationConsumer />,
+    ]}
+  >
+    {([account, balances, configuration]) => {
       if (!balances.eth || isZero(balances.eth)) {
         return (
           <InsufficientFunds
@@ -304,7 +315,13 @@ export default props => (
         );
       }
 
-      return <SetupFormContainer {...props} account={account} />;
+      return (
+        <SetupFormContainer
+          {...props}
+          account={account}
+          configuration={configuration}
+        />
+      );
     }}
   </Composer>
 );
