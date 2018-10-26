@@ -1,6 +1,8 @@
 .wizard-page {
-  margin: 0 auto;
-  max-width: 60vw;
+  @media (--viewport-m) {
+    margin: 0 auto;
+    max-width: 60vw;
+  }
 }
 
 .wizard-page__actions {
