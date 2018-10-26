@@ -28,7 +28,7 @@ export interface StepNameProps {
 }
 
 export const StepName: StatelessComponent<StepNameProps> = ({
-  competitionName = 'Naxos',
+  competitionName,
   canonicalPriceFeedAddress,
   competitionComplianceAddress,
   noComplianceAddress,
