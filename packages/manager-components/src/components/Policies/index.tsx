@@ -53,7 +53,7 @@ export const Policies: StatelessComponent<PoliciesProps> = ({
             ))}
         </div>
       ) : (
-        <p>No policies available</p>
+        <p>No available policies</p>
       )}
     </div>
   );

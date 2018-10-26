@@ -9,10 +9,11 @@ import Wizard from '~/components/Wizard';
 import WizardPage from '~/components/WizardPage';
 import StepFund from '~/components/SetupForm/StepFund';
 import InsufficientFunds from '~/components/InsufficientFunds';
-import StepPolicies from '~/components/SetupForm/StepPolicies';
+import StepRiskProfile from '~/components/SetupForm/StepRiskProfile';
 import StepTerms from '~/components/SetupForm/StepTerms';
 import StepOverview from '~/components/SetupForm/StepOverview';
 import SetupForm from '~/components/SetupForm';
+// import StepFeeStructure from '~/components/SetupForm/StepFeeStructure';
 import FeeFormModal from '+/components/FeeFormModal';
 import Link from '~/blocks/Link';
 import { withApollo } from 'react-apollo';
@@ -32,12 +33,16 @@ const withFormProps = withProps(props => {
         name: 'Fund',
         validateFields: ['name', 'exchanges'],
       },
+      // {
+      //   key: 'fee-structure',
+      //   name: 'Fee structure',
+      // },
       {
-        key: 'policies',
-        name: 'Policies',
+        key: 'risk-profile',
+        name: 'Risk Profile',
       },
       {
-        key: 'terms',
+        key: 'terms-conditions',
         name: 'Terms & Conditions',
         validateFields: ['terms'],
       },
@@ -58,6 +63,8 @@ const initialValues = {
   terms: false,
   gasPrice: '5',
   policies: [],
+  performanceFee: '',
+  managementFee: '',
 };
 
 const withFormHandlers = withHandlers({
@@ -176,11 +183,17 @@ const FormikSetupFormWizard = compose(
           availableExchangeContracts={availableExchangeContracts}
         />
       </WizardPage>
+      {/* <WizardPage
+        onClickNext={props.onClickNext}
+        onClickPrev={props.onClickPrev}
+      >
+        <StepFeeStructure {...props} />
+      </WizardPage> */}
       <WizardPage
         onClickNext={props.onClickNext}
         onClickPrev={props.onClickPrev}
       >
-        <StepPolicies
+        <StepRiskProfile
           {...props}
           activatedPolicies={props.values.policies}
           availablePolicies={availablePolicies.filter(

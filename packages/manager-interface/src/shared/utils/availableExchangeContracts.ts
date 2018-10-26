@@ -1,15 +1,15 @@
 const availableExchangeContracts = [
   {
     value: 'MATCHING_MARKET',
-    text: 'MatchingMarket',
+    text: 'OasisDex',
   },
   {
     value: 'ZERO_EX_EXCHANGE',
-    text: 'ZeroEx',
+    text: '0x',
   },
   {
     value: 'KYBER_NETWORK_PROXY',
-    text: 'KyberNetwork',
+    text: 'Kyber Network',
   },
 ];
 

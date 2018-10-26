@@ -3,13 +3,13 @@ import Policies from '~/components/Policies';
 
 import styles from './styles.css';
 
-export interface StepPoliciesProps {
+export interface StepRiskProfileProps {
   availablePolicies;
   activatePolicy;
   activatedPolicies;
 }
 
-export const StepPolicies: StatelessComponent<StepPoliciesProps> = ({
+export const StepRiskProfile: StatelessComponent<StepRiskProfileProps> = ({
   availablePolicies,
   activatePolicy,
   activatedPolicies,
@@ -19,9 +19,8 @@ export const StepPolicies: StatelessComponent<StepPoliciesProps> = ({
       <style jsx>{styles}</style>
       <h3>Risk Profile</h3>
       <p>
-        For this version, the modules that your fund will use are predefined ie.
-        you do not need to choose a module. For your record, below are the
-        predefined modules for this version.
+        Configure the risk management profile of your fund and the rules to be
+        enforce by the smart contracts
       </p>
 
       <Policies
@@ -33,4 +32,4 @@ export const StepPolicies: StatelessComponent<StepPoliciesProps> = ({
   );
 };
 
-export default StepPolicies;
+export default StepRiskProfile;
