@@ -1,9 +1,11 @@
 import * as Rx from 'rxjs';
 
 const requestSynced = environment => {
-  const syncing = environment.api.eth.syncing();
+  if (!environment) {
+    return Rx.Observable.of(null);
+  }
 
-  return Rx.Observable.fromPromise(syncing)
+  return Rx.Observable.fromPromise(environment.api.eth.syncing())
     .map(value => !value)
     .timeout(1000)
     .catch(error => {

@@ -6,8 +6,15 @@ import { onError } from 'apollo-link-error';
 
 export const createErrorLink = () => onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
-    graphQLErrors.forEach(({ message, locations, path }) => {
+    graphQLErrors.forEach(({ message, locations, path, extensions }) => {
       console.log('[GQL ERROR]: Message: %s, Path: %s, Locations: %o', message, path && path.join('.'), locations);
+
+      const stacktrace = extensions && extensions.exception && extensions.exception.stacktrace;
+      if (stacktrace && stacktrace.length) {
+        stacktrace.forEach((line) => {
+          console.log(line);
+        });
+      }
     });
   }
 

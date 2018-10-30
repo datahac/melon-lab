@@ -47,7 +47,9 @@ export default {
       return takeLast(streams.synced$);
     },
     totalFunds: (_, __, { streams }) => {
-      return takeLast(streams.ranking$).then(R.propOr(null, 'length'));
+      return takeLast(streams.ranking$).then((rankings) => {
+        return rankings && rankings.length;
+      });
     },
     priceFeedUp: (_, __, { streams }) => {
       return takeLast(streams.priceFeed$);
@@ -56,7 +58,9 @@ export default {
       return takeLast(streams.peers$);
     },
     versionConfig: (_, { key }, { streams }) => {
-      return takeLast(streams.config$).then(R.propOr(null, key));
+      return takeLast(streams.config$).then((config) => {
+        return config && config[key] || null;
+      });
     },
     provider: (_, __, { streams }) => {
       return takeLast(streams.provider$);
@@ -115,7 +119,7 @@ export default {
       return takeLast(streams.ranking$).then(ranking => {
         const address = parent.instance.address;
         const entry = (ranking || []).find(rank => rank.address === address);
-        return R.propOr(null, 'rank', entry);
+        return entry && entry.rank || null;
       });
     },
     name: (parent, _, { loaders }) => {

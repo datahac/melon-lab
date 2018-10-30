@@ -20,18 +20,17 @@ export async function createContext(track, endpoint) {
     errors.delay(1000),
   );
 
-  const derive = fn => environment => environment && fn(environment);
   const timeout = timeoutAfter(5000, null);
   const factory = {
     environment$: environment$ => environment$,
-    network$: environment$ => environment$.map(derive(getNetwork)),
-    provider$: environment$ => environment$.map(derive(getProviderType)),
-    config$: environment$ => environment$.switchMap(derive(getConfig)),
-    block$: environment$ => environment$.switchMap(derive(pollBlock)),
-    ranking$: environment$ => environment$.switchMap(derive(pollRanking)),
-    synced$: environment$ => environment$.switchMap(derive(pollSynced)),
-    peers$: environment$ => environment$.switchMap(derive(pollPeers)),
-    priceFeed$: environment$ => environment$.switchMap(derive(pollPriceFeed)),
+    network$: environment$ => environment$.map(getNetwork),
+    provider$: environment$ => environment$.map(getProviderType),
+    config$: environment$ => environment$.switchMap(getConfig),
+    block$: environment$ => environment$.switchMap(pollBlock),
+    ranking$: environment$ => environment$.switchMap(pollRanking),
+    synced$: environment$ => environment$.switchMap(pollSynced),
+    peers$: environment$ => environment$.switchMap(pollPeers),
+    priceFeed$: environment$ => environment$.switchMap(pollPriceFeed),
   };
 
   const streams = Object.keys(factory).reduce((acc, key) => {

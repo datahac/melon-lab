@@ -2,8 +2,11 @@ import * as Rx from 'rxjs';
 import { hasRecentPrice } from '@melonproject/melon.js';
 
 const requestPriceFeed = environment => {
-  const recentPrice = hasRecentPrice(environment);
+  if (!environment) {
+    return Rx.Observable.of(null);
+  }
 
+  const recentPrice = hasRecentPrice(environment);
   return Rx.Observable.fromPromise(recentPrice)
     .timeout(1000)
     .catch(error => {

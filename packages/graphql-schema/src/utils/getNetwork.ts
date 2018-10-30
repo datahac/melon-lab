@@ -1,5 +1,5 @@
 function getNetwork(environment) {
-  const track = environment.track;
+  const track = environment && environment.track;
 
   switch (track) {
     case 'live':
@@ -8,7 +8,7 @@ function getNetwork(environment) {
     case 'kovan-demo':
       return 'KOVAN';
     default:
-      return 'KOVAN';
+      return null;
   }
 }
 

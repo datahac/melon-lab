@@ -1,9 +1,11 @@
 import * as Rx from 'rxjs';
 
 const requestPeers = environment => {
-  const peers = environment.api.net.peerCount();
+  if (!environment) {
+    return Rx.Observable.of(null);
+  }
 
-  return Rx.Observable.fromPromise(peers)
+  return Rx.Observable.fromPromise(environment.api.net.peerCount())
     .timeout(1000)
     .catch(error => {
       // TODO: Add logging.

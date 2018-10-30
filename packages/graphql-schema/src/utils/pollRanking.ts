@@ -2,8 +2,11 @@ import * as Rx from 'rxjs';
 import { getRanking } from '@melonproject/melon.js';
 
 const requestRanking = environment => {
-  const ranking = getRanking(environment);
+  if (!environment) {
+    return Rx.Observable.of(null);
+  }
 
+  const ranking = getRanking(environment);
   return Rx.Observable.fromPromise(ranking)
     .timeout(1000)
     .catch(error => {

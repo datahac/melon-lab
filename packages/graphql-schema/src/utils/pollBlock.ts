@@ -1,9 +1,11 @@
 import * as Rx from 'rxjs';
 
 const requestBlock = environment => {
-  const blockNumber = environment.api.eth.blockNumber();
+  if (!environment) {
+    return Rx.Observable.of(null);
+  }
 
-  return Rx.Observable.fromPromise(blockNumber)
+  return Rx.Observable.fromPromise(environment.api.eth.blockNumber())
     .timeout(1000)
     .catch(error => {
       // TODO: Add logging.
