@@ -61,8 +61,8 @@ class NetworkContextHandler extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const currentBlock = this.props.network.currentBlock;
-    const previousBlock = prevProps.network.currentBlock;
+    const currentBlock = this.props.currentBlock;
+    const previousBlock = prevProps.currentBlock;
 
     if (currentBlock !== previousBlock) {
       if (this.state.blockOverdue) {

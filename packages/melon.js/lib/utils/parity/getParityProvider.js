@@ -52,7 +52,10 @@ const getParityProvider = async endpoint => {
 
   if (endpoint && endpoint.includes('://')) {
     const environment = await checkHttpProvider(endpoint);
-    environment.providerType = providers.CUSTOM;
+    if (environment) {
+      environment.providerType = providers.CUSTOM;
+    }
+
     return environment;
   }
 
