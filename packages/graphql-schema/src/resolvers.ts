@@ -15,7 +15,7 @@ export default {
     KYBER_NETWORK_PROXY: 'KyberNetworkProxy',
   },
   ConfigKeyEnum: {
-    CANONICAL_PRICE_FEED_ADDRESS: 'onlyManagerCompetitionAddress',
+    CANONICAL_PRICE_FEED_ADDRESS: 'canonicalPriceFeedAddress',
     COMPETITION_COMPLIANCE_ADDRESS: 'competitionComplianceAddress',
     ONLY_MANAGER_COMPETITION_ADDRESS: 'onlyManagerCompetitionAddress',
     NO_COMPLIANCE_ADDRESS: 'noComplianceAddress',
