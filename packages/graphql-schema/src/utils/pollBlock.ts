@@ -6,7 +6,7 @@ const requestBlock = environment => {
   }
 
   return Rx.Observable.fromPromise(environment.api.eth.blockNumber())
-    .timeout(1000)
+    .timeout(10000)
     .catch(error => {
       // TODO: Add logging.
       return Rx.Observable.of(null);
@@ -16,7 +16,7 @@ const requestBlock = environment => {
 
 const pollBlock = environment => {
   return requestBlock(environment).expand(() =>
-    Rx.Observable.timer(5000).concatMap(() => requestBlock(environment)),
+    Rx.Observable.timer(20000).concatMap(() => requestBlock(environment)),
   );
 };
 

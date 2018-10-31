@@ -16,7 +16,7 @@ const getEnvironment = (track, endpoint) => {
   const provider = getParityProvider(endpoint);
   return Rx.Observable.fromPromise(provider)
     .map(providerOrNull(track))
-    .timeout(1000)
+    .timeout(10000)
     .catch(error => {
       // TODO: Add logging.
       return Rx.Observable.of(null);

@@ -8,7 +8,7 @@ const requestPriceFeed = environment => {
 
   const recentPrice = hasRecentPrice(environment);
   return Rx.Observable.fromPromise(recentPrice)
-    .timeout(1000)
+    .timeout(10000)
     .catch(error => {
       // TODO: Add logging.
       return Rx.Observable.of(null);
@@ -18,7 +18,7 @@ const requestPriceFeed = environment => {
 
 const pollPriceFeed = environment => {
   return requestPriceFeed(environment).expand(() =>
-    Rx.Observable.timer(5000).concatMap(() => requestPriceFeed(environment)),
+    Rx.Observable.timer(20000).concatMap(() => requestPriceFeed(environment)),
   );
 };
 

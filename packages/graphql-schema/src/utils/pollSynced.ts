@@ -7,7 +7,7 @@ const requestSynced = environment => {
 
   return Rx.Observable.fromPromise(environment.api.eth.syncing())
     .map(value => !value)
-    .timeout(1000)
+    .timeout(10000)
     .catch(error => {
       // TODO: Add logging.
       return Rx.Observable.of(null);
@@ -17,7 +17,7 @@ const requestSynced = environment => {
 
 const pollSynced = environment => {
   return requestSynced(environment).expand(() =>
-    Rx.Observable.timer(5000).concatMap(() => requestSynced(environment)),
+    Rx.Observable.timer(20000).concatMap(() => requestSynced(environment)),
   );
 };
 

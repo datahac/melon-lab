@@ -8,7 +8,7 @@ const requestRanking = environment => {
 
   const ranking = getRanking(environment);
   return Rx.Observable.fromPromise(ranking)
-    .timeout(1000)
+    .timeout(10000)
     .catch(error => {
       // TODO: Add logging.
       return Rx.Observable.of(null);

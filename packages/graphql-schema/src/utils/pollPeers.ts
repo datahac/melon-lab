@@ -6,7 +6,7 @@ const requestPeers = environment => {
   }
 
   return Rx.Observable.fromPromise(environment.api.net.peerCount())
-    .timeout(1000)
+    .timeout(10000)
     .catch(error => {
       // TODO: Add logging.
       return Rx.Observable.of(null);
@@ -16,7 +16,7 @@ const requestPeers = environment => {
 
 const pollPeers = environment => {
   return requestPeers(environment).expand(() =>
-    Rx.Observable.timer(5000).concatMap(() => requestPeers(environment)),
+    Rx.Observable.timer(20000).concatMap(() => requestPeers(environment)),
   );
 };
 

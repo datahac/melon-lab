@@ -8,7 +8,7 @@ const getConfigObservable = environment => {
 
   const config = getConfig(environment);
   return Rx.Observable.fromPromise(config)
-    .timeout(1000)
+    .timeout(10000)
     .catch(error => {
       // TODO: Add logging.
       return Rx.Observable.of(null);
