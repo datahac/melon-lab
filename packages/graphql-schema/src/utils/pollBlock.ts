@@ -1,22 +1,15 @@
 import * as Rx from 'rxjs';
 
 const requestBlock = environment => {
-  if (!environment) {
-    return Rx.Observable.of(null);
-  }
-
-  return Rx.Observable.fromPromise(environment.api.eth.blockNumber())
+  const block = environment.api.eth.blockNumber();
+  return Rx.Observable.fromPromise(block)
     .timeout(10000)
-    .catch(error => {
-      // TODO: Add logging.
-      return Rx.Observable.of(null);
-    })
-    .last();
+    .retryWhen((errors) => errors.delay(1000));
 };
 
 const pollBlock = environment => {
   return requestBlock(environment).expand(() =>
-    Rx.Observable.timer(20000).concatMap(() => requestBlock(environment)),
+    Rx.Observable.timer(5000).concatMap(() => requestBlock(environment)),
   );
 };
 
