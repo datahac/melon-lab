@@ -6,7 +6,14 @@ const getConfigObservable = environment => {
     return Rx.Observable.of(null);
   }
 
-  return Rx.Observable.fromPromise(getConfig(environment));
+  const config = getConfig(environment);
+  return Rx.Observable.fromPromise(config)
+    .timeout(1000)
+    .catch(error => {
+      // TODO: Add logging.
+      return Rx.Observable.of(null);
+    })
+    .last();
 };
 
 export default getConfigObservable;

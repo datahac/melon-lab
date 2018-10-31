@@ -11,7 +11,6 @@ import getProviderType from './utils/getProviderType';
 import getEnvironment from './utils/getEnvironment';
 import getConfig from './utils/getConfig';
 import getNetwork from './utils/getNetwork';
-import timeoutAfter from './utils/timeoutAfter';
 import InsecureDirective from './directives/InsecureDirective';
 import * as typeDefs from './schema.gql';
 
@@ -20,7 +19,6 @@ export async function createContext(track, endpoint) {
     errors.delay(1000),
   );
 
-  const timeout = timeoutAfter(5000, null);
   const factory = {
     environment$: environment$ => environment$,
     network$: environment$ => environment$.map(getNetwork),
@@ -34,9 +32,7 @@ export async function createContext(track, endpoint) {
   };
 
   const streams = Object.keys(factory).reduce((acc, key) => {
-    const stream$ = factory[key](environment$)
-      .race(timeout)
-      .publishReplay(1);
+    const stream$ = factory[key](environment$).publishReplay(1);
 
     return {
       ...acc,

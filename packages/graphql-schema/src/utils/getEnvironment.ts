@@ -1,18 +1,27 @@
 import * as Rx from 'rxjs';
 import { getParityProvider } from '@melonproject/melon.js';
 
-const getEnvironment = (track, endpoint) => {
-  return Rx.Observable.fromPromise(getParityProvider(endpoint))
-    .map((provider) => {
-      if (!provider) {
-        return null;
-      }
+const providerOrNull = (track) => (provider) => {
+  if (!provider) {
+    return null;
+  }
 
-      return {
-        ...provider,
-        track,
-      };
-    });
+  return {
+    ...provider,
+    track,
+  };
+};
+
+const getEnvironment = (track, endpoint) => {
+  const provider = getParityProvider(endpoint);
+  return Rx.Observable.fromPromise(provider)
+    .map(providerOrNull(track))
+    .timeout(1000)
+    .catch(error => {
+      // TODO: Add logging.
+      return Rx.Observable.of(null);
+    })
+    .last();
 };
 
 export default getEnvironment;
