@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import GraphQLJSON from 'graphql-type-json';
+import { map, distinctUntilChanged, skip } from 'rxjs/operators';
 import Order from './types/Order';
 import toAsyncIterator from './utils/toAsyncIterator';
 import takeLast from './utils/takeLast';
@@ -229,7 +230,6 @@ export default {
     exportWallet: (_, { password }, { loaders }) => {
       // TODO: Load decrypted wallet from memory.
       throw new Error('This is not implemented yet');
-      return wallet.encrypt(password);
     },
     importWallet: (_, { wallet, password }, { loaders }) => {
       return loaders.importWallet(wallet, password, (decrypted, encrypted) => {
@@ -256,24 +256,33 @@ export default {
     currentBlock: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.block$.distinctUntilChanged(sameBlock).skip(1);
+        const stream$ = streams.block$.pipe(
+          distinctUntilChanged(sameBlock),
+          skip(1),
+        );
+
         return toAsyncIterator(stream$);
       },
     },
     nodeSynced: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.synced$.distinctUntilChanged(R.equals).skip(1);
+        const stream$ = streams.synced$.pipe(
+          distinctUntilChanged(R.equals),
+          skip(1),
+        );
+
         return toAsyncIterator(stream$);
       },
     },
     totalFunds: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.ranking$
-          .map(rankings => rankings.length)
-          .distinctUntilChanged(R.equals)
-          .skip(1);
+        const stream$ = streams.ranking$.pipe(
+          map(rankings => rankings.length),
+          distinctUntilChanged(R.equals),
+          skip(1),
+        );
 
         return toAsyncIterator(stream$);
       },
@@ -281,9 +290,10 @@ export default {
     priceFeedUp: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.priceFeed$
-          .distinctUntilChanged(R.equals)
-          .skip(1);
+        const stream$ = streams.priceFeed$.pipe(
+          distinctUntilChanged(R.equals),
+          skip(1),
+        );
 
         return toAsyncIterator(stream$);
       },
@@ -291,9 +301,10 @@ export default {
     peerCount: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.provider$
-          .distinctUntilChanged(R.equals)
-          .skip(1);
+        const stream$ = streams.provider$.pipe(
+          distinctUntilChanged(R.equals),
+          skip(1),
+        );
 
         return toAsyncIterator(stream$);
       },
@@ -301,10 +312,11 @@ export default {
     versionConfig: {
       resolve: value => value,
       subscribe: (_, { key }, { streams }) => {
-        const stream$ = streams.config$
-          .map(config => config && config[key])
-          .distinctUntilChanged(R.equals)
-          .skip(1);
+        const stream$ = streams.config$.pipe(
+          map(config => config && config[key]),
+          distinctUntilChanged(R.equals),
+          skip(1),
+        );
 
         return toAsyncIterator(stream$);
       },
@@ -312,9 +324,10 @@ export default {
     provider: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.provider$
-          .distinctUntilChanged(R.equals)
-          .skip(1);
+        const stream$ = streams.provider$.pipe(
+          distinctUntilChanged(R.equals),
+          skip(1),
+        );
 
         return toAsyncIterator(stream$);
       },
@@ -322,14 +335,22 @@ export default {
     network: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.network$.distinctUntilChanged(R.equals).skip(1);
+        const stream$ = streams.network$.pipe(
+          distinctUntilChanged(R.equals),
+          skip(1),
+        );
+
         return toAsyncIterator(stream$);
       },
     },
     rankings: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.ranking$.distinctUntilChanged(R.equals).skip(1);
+        const stream$ = streams.ranking$.pipe(
+          distinctUntilChanged(R.equals),
+          skip(1),
+        );
+
         return toAsyncIterator(stream$);
       },
     },

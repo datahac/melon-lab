@@ -1,6 +1,7 @@
 import { getOrderbook, getSymbol } from '@melonproject/melon.js';
 import * as R from 'ramda';
 import * as Rx from 'rxjs';
+import { tap, map, repeatWhen, distinctUntilChanged, delay } from 'rxjs/operators';
 
 const debug = require('debug')('melon-lab:exchange-aggregator:oasis-dex');
 
@@ -12,16 +13,17 @@ const getObservableOasisDex = (
   quoteTokenSymbol,
   environment,
 ) => {
-  const orderbook$ = Rx.Observable.defer(() =>
+  const orderbook$ = Rx.defer(() =>
     getOrderbook(environment, { baseTokenSymbol, quoteTokenSymbol }),
-  )
-    .do(value => debug('Receiving values.', value))
-    .distinctUntilChanged(R.equals)
-    .map(labelOrders)
-    .do(value => debug('Emitting order book.', value));
+  ).pipe(
+    tap(value => debug('Receiving values.', value)),
+    distinctUntilChanged(R.equals),
+    map(labelOrders),
+    tap(value => debug('Emitting order book.', value)),
+  );
 
   // Repeat once every minute.
-  return orderbook$.repeatWhen(Rx.operators.delay(60000));
+  return orderbook$.pipe(repeatWhen((notifier) => notifier.pipe(delay(60000))));
 };
 
 export default getObservableOasisDex;

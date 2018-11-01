@@ -1,5 +1,7 @@
 import * as R from 'ramda';
 import * as Rx from 'rxjs';
+import { webSocket } from 'rxjs/webSocket';
+import { distinctUntilChanged, retry, filter, scan, timeout, tap, map, takeUntil, catchError } from 'rxjs/operators';
 import formatRelayerOrderbook from '../../formatRelayerOrderbook';
 
 // Isomorphic websocket implementation. Falls back to the standard browser
@@ -91,7 +93,7 @@ const getObservableRadarRelay = (
 
   const open$ = new Rx.Subject();
   const close$ = new Rx.Subject();
-  const socket$ = Rx.Observable.webSocket({
+  const socket$ = webSocket({
     url,
     WebSocketCtor: WebSocket,
     openObserver: open$,
@@ -103,29 +105,29 @@ const getObservableRadarRelay = (
   open$.subscribe(event => {
     socket$.next(message);
 
-    Rx.Observable.interval(5000)
-      .takeUntil(close$)
-      .subscribe(() => socket$.next('tick'));
+    const observer$ = Rx.interval(5000).pipe(takeUntil(close$));
+    observer$.subscribe(() => socket$.next('tick'));
   });
 
   const format = formatRelayerOrderbook('RADAR_RELAY');
 
-  const messages$ = socket$
-    .retry()
-    .filter(R.propEq('channel', 'orderbook'))
-    .filter(R.anyPass([isSnapshotMessage, isUpdateMessage]) as (
+  const messages$ = socket$.pipe(
+    retry(),
+    filter(R.propEq('channel', 'orderbook')),
+    filter(R.anyPass([isSnapshotMessage, isUpdateMessage]) as (
       value,
-    ) => value is SnapshotMessage | UpdateMessage)
-    .do(value => debug('Processing snapshot or update message.', value))
-    .do(value => socket$.next(message))
-    .scan<SnapshotMessage | UpdateMessage, AsksAndBids>(scanMessages, {
+    ) => value is SnapshotMessage | UpdateMessage),
+    tap(value => debug('Processing snapshot or update message.', value)),
+    tap(value => socket$.next(message)),
+    scan<SnapshotMessage | UpdateMessage, AsksAndBids>(scanMessages, {
       bids: [],
       asks: [],
-    })
-    .distinctUntilChanged(R.equals)
-    .do(value => debug('Extracting bids and asks.', value))
-    .map(value => format(config, value.bids, value.asks))
-    .do(value => debug('Emitting order book.', value));
+    }),
+    distinctUntilChanged(R.equals),
+    tap(value => debug('Extracting bids and asks.', value)),
+    map(value => format(config, value.bids, value.asks)),
+    tap(value => debug('Emitting order book.', value)),
+  );
 
   const timeout$ = (new Rx.Observable((observer) => {
     messages$.subscribe((message) => {
@@ -133,15 +135,15 @@ const getObservableRadarRelay = (
     }, (error) => {
       observer.error(error);
     });
-  }))
-  .timeout(2000)
-  .catch((error) => {
-    debug('Error', error);
+  }));
 
-    return Rx.Observable.of([]);
-  });
-
-  return timeout$;
+  return timeout$.pipe(
+    timeout(2000),
+    catchError((error) => {
+      debug('Error', error);
+      return Rx.of([]);
+    }),
+  );
 };
 
 export default getObservableRadarRelay;

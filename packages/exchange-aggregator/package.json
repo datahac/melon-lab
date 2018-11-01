@@ -21,7 +21,7 @@
     "debug": "2.6.9",
     "isomorphic-ws": "^4.0.1",
     "ramda": "^0.25.0",
-    "rxjs": "^5.5.9"
+    "rxjs": "^6.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

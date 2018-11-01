@@ -1,5 +1,6 @@
 import * as Rx from 'rxjs';
 import * as R from 'ramda';
+import { debounceTime, switchMap, distinctUntilChanged } from 'rxjs/operators';
 import nativeBalance from '../loaders/balance/nativeBalance';
 import etherBalance from '../loaders/balance/etherBalance';
 import melonBalance from '../loaders/balance/melonBalance';
@@ -23,17 +24,16 @@ export default {
       return null;
     };
 
-    const balance$ = Rx.Observable.combineLatest(
+    const balance$ = Rx.combineLatest(
       streams.environment$,
       streams.config$,
       streams.block$,
       (environment, config) => [environment, config],
-    )
-      .debounceTime(5000)
-      .switchMap(([environment, config]) =>
-        Rx.Observable.fromPromise(getBalance(environment, config)),
-      )
-      .distinctUntilChanged(R.equals);
+    ).pipe(
+      debounceTime(5000),
+      switchMap(([environment, config]) => Rx.from(getBalance(environment, config))),
+      distinctUntilChanged(R.equals),
+    );
 
     return toAsyncIterator(balance$);
   },

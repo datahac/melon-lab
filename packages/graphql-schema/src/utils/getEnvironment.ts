@@ -1,10 +1,11 @@
 import * as Rx from 'rxjs';
+import { map, retryWhen, delay } from 'rxjs/operators';
 import { getParityProvider } from '@melonproject/melon.js';
 
 const getEnvironment = (track, endpoint) => {
   const promise = getParityProvider(endpoint);
-  return Rx.Observable.fromPromise(promise)
-    .map((provider) => {
+  return Rx.from(promise).pipe(
+    map((provider) => {
       if (typeof provider === 'undefined' || !provider) {
         throw new Error('Could not determine parity provider.');
       }
@@ -13,8 +14,9 @@ const getEnvironment = (track, endpoint) => {
         ...provider,
         track,
       };
-    })
-    .retryWhen((errors) => errors.delay(1000));
+    }),
+    retryWhen((errors) => errors.pipe(delay(1000))),
+  );
 };
 
 export default getEnvironment;

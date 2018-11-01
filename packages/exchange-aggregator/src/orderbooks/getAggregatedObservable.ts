@@ -1,5 +1,6 @@
 import * as R from 'ramda';
 import * as Rx from 'rxjs';
+import { skip, map, tap, startWith, distinctUntilChanged } from 'rxjs/operators';
 import getObservableErcDex from './ercDex/getObservableErcDex';
 import getObservableOasisDex from './oasisDex/getObservableOasisDex';
 import getObservableRadarRelay from './radarRelay/getObservableRadarRelay';
@@ -108,19 +109,15 @@ const getAggregatedObservable = (
       network,
       environment,
       config
-    ).startWith([]));
+    ).pipe(startWith([])));
 
-  const combined$ = Rx.Observable.combineLatest(orderbooks)
-    .skip(1)
-    .do(value => debug('Emitting combined order book.'))
-    .distinctUntilChanged(R.equals);
-
-  // Concat and sort orders across all order books.
-  return combined$.map(
-    R.compose(
-      sortOrderBooks,
-      concatOrderbooks,
-    ),
+  const combined$ = Rx.combineLatest(orderbooks);
+  return combined$.pipe(
+    skip(1),
+    tap(value => debug('Emitting combined order book.')),
+    distinctUntilChanged(R.equals),
+    // Concat and sort orders across all order books.
+    map(R.compose(sortOrderBooks, concatOrderbooks)),
   );
 };
 

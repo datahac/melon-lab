@@ -13,34 +13,34 @@ import getConfig from './utils/getConfig';
 import getNetwork from './utils/getNetwork';
 import InsecureDirective from './directives/InsecureDirective';
 import * as typeDefs from './schema.gql';
+import { publishReplay, map, switchMap } from 'rxjs/operators';
 
 export async function createContext(track, endpoint) {
-  const environment$ = getEnvironment(track, endpoint).retryWhen(errors =>
-    errors.delay(1000),
-  );
+  const environment$ = getEnvironment(track, endpoint);
 
   const factory = {
     environment$: environment$ => environment$,
-    network$: environment$ => environment$.map(getNetwork),
-    provider$: environment$ => environment$.map(getProviderType),
-    config$: environment$ => environment$.switchMap(getConfig),
-    block$: environment$ => environment$.switchMap(pollBlock),
-    ranking$: environment$ => environment$.switchMap(pollRanking),
-    synced$: environment$ => environment$.switchMap(pollSynced),
-    peers$: environment$ => environment$.switchMap(pollPeers),
-    priceFeed$: environment$ => environment$.switchMap(pollPriceFeed),
+    network$: environment$ => environment$.pipe(map(getNetwork)),
+    provider$: environment$ => environment$.pipe(map(getProviderType)),
+    config$: environment$ => environment$.pipe(switchMap(getConfig)),
+    block$: environment$ => environment$.pipe(switchMap(pollBlock)),
+    ranking$: environment$ => environment$.pipe(switchMap(pollRanking)),
+    synced$: environment$ => environment$.pipe(switchMap(pollSynced)),
+    peers$: environment$ => environment$.pipe(switchMap(pollPeers)),
+    priceFeed$: environment$ => environment$.pipe(switchMap(pollPriceFeed)),
   };
 
   const streams = Object.keys(factory).reduce((acc, key) => {
-    const stream$ = factory[key](environment$).publishReplay(1);
+    const stream$ = factory[key](environment$).pipe(publishReplay(1));
+    stream$.connect();
 
     return {
       ...acc,
       [key]: stream$,
     };
-  }, {});
+  }, {})
 
-  Object.values(streams).forEach(stream$ => stream$.connect());
+  Object.values(streams).forEach(stream$ => stream$);
 
   return async () => {
     const loaders = await createLoaders(streams);

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import * as R from 'ramda';
 import * as Rx from 'rxjs';
+import { takeUntil, repeatWhen, distinctUntilChanged, retry, map, filter, tap, catchError } from 'rxjs/operators';
+import { webSocket } from 'rxjs/webSocket';
 import formatRelayerOrderbook from '../../formatRelayerOrderbook';
 
 // Isomorphic websocket implementation. Falls back to the standard browser
@@ -50,7 +52,7 @@ const getObservableErcDexNotifications = (
 
   const open$ = new Rx.Subject();
   const close$ = new Rx.Subject();
-  const socket$ = Rx.Observable.webSocket({
+  const socket$ = webSocket({
     url: 'wss://api.ercdex.com',
     WebSocketCtor: WebSocket,
     openObserver: open$,
@@ -60,15 +62,15 @@ const getObservableErcDexNotifications = (
   open$.subscribe(event => {
     socket$.next(`sub:${channel}`);
 
-    Rx.Observable.interval(5000)
-      .takeUntil(close$)
-      .subscribe(() => socket$.next('tick'));
+    const observable$ = Rx.interval(5000).pipe(takeUntil(close$));
+    observable$.subscribe(() => socket$.next('tick'));
   });
 
-  const messages$ = socket$
-    .retry()
-    .filter(R.propEq('channel', channel))
-    .do(value => debug(`Received update notification.`, value));
+  const messages$ = socket$.pipe(
+    retry(),
+    filter(R.propEq('channel', channel)),
+    tap(value => debug(`Received update notification.`, value)),
+  );
 
   return messages$;
 };
@@ -80,30 +82,30 @@ const getObservableErcDex = (
   config,
 ) => {
   const format = formatRelayerOrderbook('ERC_DEX');
-
-  const fetch$ = Rx.Observable.defer(() =>
+  const fetch$ = Rx.defer(() =>
     fetchOrderbook(baseTokenAddress, quoteTokenAddress, network),
   );
 
-  const orderbook$ = fetch$
-    .catch((error) => {
+  const orderbook$ = fetch$.pipe(
+    catchError((error) => {
       // If there is any error from the erc-dex api, just swallow it for now.
       // TODO: Revisit this at some point.
-      return Rx.Observable.of({
+      return Rx.of({
         data: {
           bids: [],
           asks: [],
         },
       });
-    })
-    .map(response => response.data)
-    .distinctUntilChanged(R.equals)
-    .do(value => debug('Extracting bids and asks.', value))
-    .map(value => format(config, value.bids, value.asks));
-
-  return orderbook$.repeatWhen(() =>
-    getObservableErcDexNotifications(baseTokenAddress, quoteTokenAddress),
+    }),
+    map(response => response.data),
+    distinctUntilChanged(R.equals),
+    tap(value => debug('Extracting bids and asks.', value)),
+    map(value => format(config, value.bids, value.asks)),
   );
+
+  return orderbook$.pipe(repeatWhen(() =>
+    getObservableErcDexNotifications(baseTokenAddress, quoteTokenAddress),
+  ));
 };
 
 export default getObservableErcDex;
