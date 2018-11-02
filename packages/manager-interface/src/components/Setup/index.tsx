@@ -2,13 +2,11 @@ import React from 'react';
 import { EstimateSetupMutation, ExecuteSetupMutation } from './data/fund';
 import { withRouter } from 'next/router';
 import { compose, withState, withHandlers, withProps } from 'recompose';
-import { isZero } from '~/utils/functionalBigNumber';
 import availableExchangeContracts from '~/utils/availableExchangeContracts';
 import availablePolicies from '~/utils/availablePolicies';
 import Wizard from '~/components/Wizard';
 import WizardPage from '~/components/WizardPage';
 import StepFund from '~/components/SetupForm/StepFund';
-import InsufficientFunds from '~/components/InsufficientFunds';
 import StepRiskProfile from '~/components/SetupForm/StepRiskProfile';
 import StepTerms from '~/components/SetupForm/StepTerms';
 import StepOverview from '~/components/SetupForm/StepOverview';
@@ -305,16 +303,6 @@ export default props => (
     ]}
   >
     {([account, balances, configuration]) => {
-      if (!balances.eth || isZero(balances.eth)) {
-        return (
-          <InsufficientFunds
-            eth={balances.eth}
-            weth={balances.weth}
-            address={account}
-          />
-        );
-      }
-
       return (
         <SetupFormContainer
           {...props}

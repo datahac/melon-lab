@@ -1,7 +1,9 @@
 import React, { Fragment, StatelessComponent } from 'react';
 import Link from '~/blocks/Link';
 import Spinner from '~/blocks/Spinner';
+import InsufficientFunds from '~/components/InsufficientFunds';
 import displayNumber from '~/utils/displayNumber';
+import { isZero } from '~/utils/functionalBigNumber';
 
 import styles from './styles.css';
 
@@ -68,11 +70,24 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
               </div>
               <h2>Fund</h2>
               {associatedFund ? (
-                <AssociatedFund associatedFund={associatedFund} networkId={networkId} />
+                <AssociatedFund
+                  associatedFund={associatedFund}
+                  networkId={networkId}
+                />
               ) : (
-                <Link style="primary" size="medium" href="/setup">
-                  Setup your fund
-                </Link>
+                <Fragment>
+                  {!balances.eth || isZero(balances.eth) ? (
+                    <InsufficientFunds
+                      eth={balances.eth}
+                      weth={balances.weth}
+                      address={currentAddress}
+                    />
+                  ) : (
+                    <Link style="primary" size="medium" href="/setup">
+                      Setup your fund
+                    </Link>
+                  )}
+                </Fragment>
               )}
             </Fragment>
           )}
@@ -82,10 +97,7 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
   );
 };
 
-const AssociatedFund = ({
-  associatedFund,
-  networkId,
-}) => (
+const AssociatedFund = ({ associatedFund, networkId }) => (
   <Fragment>
     <Link
       style="primary"
