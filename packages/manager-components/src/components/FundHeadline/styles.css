@@ -1,0 +1,43 @@
+.fund-headline {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  @media (--viewport-m) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.fund-headline__title {
+  margin: 0;
+}
+
+.fund-headline__title::after {
+  border: none;
+}
+
+.fund-headline__text {
+  margin-top: var(--space-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fund-headline__item-title {
+  color: var(--color-grey);
+  font-size: var(--font-size-s);
+  margin-top: var(--space-xs);
+
+  @media (--viewport-m) {
+    margin-top: 0;
+  }
+}
+
+.fund-headline__twitter :global(.icon) {
+  vertical-align: middle;
+}
+
+.fund-headline__spinner {
+  margin: 0 auto;
+}

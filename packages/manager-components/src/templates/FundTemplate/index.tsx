@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '~/components/Footer';
 import Header from '~/components/Header';
-import Headline from '~/blocks/Headline';
+import FundHeadline from '~/components/FundHeadline';
 import Layout from '~/design/Layout';
 
 import styles from './styles.css';
@@ -20,7 +20,7 @@ const Fund = ({
   RecentTrades,
   RecentTradesProps,
   HeaderProps = {},
-  HeadlineProps,
+  FundHeadlineProps,
 }) => {
   return (
     <Layout>
@@ -33,9 +33,9 @@ const Fund = ({
         )}
 
         <div className="fund-template__content-wrap">
-          {HeadlineProps && (
+          {FundHeadlineProps && (
             <div className="fund-template__title">
-              <Headline {...HeadlineProps} />
+              <FundHeadline {...FundHeadlineProps} />
             </div>
           )}
           <div className="fund-template__content">

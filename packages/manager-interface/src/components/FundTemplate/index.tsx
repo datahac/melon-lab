@@ -30,8 +30,14 @@ const Context = ({ exchanges, address, quoteAsset, baseAsset, children }) => (
       <ConfigurationConsumer />,
       <FundManagerConsumer />,
       <HoldingsQuery address={address} />,
-      <OrderBookQuery exchanges={exchanges} baseAsset={baseAsset} quoteAsset={quoteAsset} />,
-      ({ results: [account], render }) => <FundQuery address={address} account={account} children={render} />,
+      <OrderBookQuery
+        exchanges={exchanges}
+        baseAsset={baseAsset}
+        quoteAsset={quoteAsset}
+      />,
+      ({ results: [account], render }) => (
+        <FundQuery address={address} account={account} children={render} />
+      ),
     ]}
   >
     {children}
@@ -68,7 +74,12 @@ export default class FundTemplateContainer extends React.Component {
     const { address, quoteAsset, baseAsset } = this.props;
 
     return (
-      <Context exchanges={exchanges} address={address} quoteAsset={quoteAsset} baseAsset={baseAsset}>
+      <Context
+        exchanges={exchanges}
+        address={address}
+        quoteAsset={quoteAsset}
+        baseAsset={baseAsset}
+      >
         {([
           account,
           balances,
@@ -84,12 +95,11 @@ export default class FundTemplateContainer extends React.Component {
             holdingsProps,
           );
           const fundData = R.pathOr({}, ['data', 'fund'])(fundProps);
+          console.log(fundData);
           const orderBookData = R.pathOr({}, ['data', 'orderbook'])(
             orderBookProps,
           );
-          const totalFunds = R.pathOr(0, ['data', 'totalFunds'])(
-            fundProps,
-          );
+          const totalFunds = R.pathOr(0, ['data', 'totalFunds'])(fundProps);
           const isManager =
             !!associatedFund && isSameAddress(associatedFund, address);
 
@@ -100,14 +110,20 @@ export default class FundTemplateContainer extends React.Component {
                 canInvest: capabibility && capabibility.canInvest,
                 canInteract: capabibility && capabibility.canInteract,
                 canonicalPriceFeedAddress:
-                  configuration &&
-                  configuration.canonicalPriceFeedAddress,
+                  configuration && configuration.canonicalPriceFeedAddress,
                 network: network && network.network,
                 currentBlock: network && network.currentBlock,
                 blockOverdue: network && network.blockOverdue,
                 nodeSynced: network && network.nodeSynced,
                 priceFeedUp: network && network.priceFeedUp,
                 address: account,
+              }}
+              FundHeadlineProps={{
+                ...fundData,
+                totalFunds,
+                address,
+                quoteAsset,
+                loading: fundProps.loading,
               }}
               FactSheet={FactSheet}
               FactSheetProps={{
