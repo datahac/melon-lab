@@ -95,7 +95,6 @@ export default class FundTemplateContainer extends React.Component {
             holdingsProps,
           );
           const fundData = R.pathOr({}, ['data', 'fund'])(fundProps);
-          console.log(fundData);
           const orderBookData = R.pathOr({}, ['data', 'orderbook'])(
             orderBookProps,
           );
