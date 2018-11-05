@@ -73,14 +73,15 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
           <div className="fund-headline__headline">
             <h1 className="fund-headline__title">
               {name}{' '}
-              <a
-                className="fund-headline__twitter"
-                href={buildTwitterUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon width="14px" height="14px" name="icons_twitter" />
-              </a>
+              <span className="fund-headline__twitter">
+                <a
+                  href={buildTwitterUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon width="14px" height="14px" name="icons_twitter" />
+                </a>
+              </span>
             </h1>
           </div>
           <div className="fund-headline__item">
