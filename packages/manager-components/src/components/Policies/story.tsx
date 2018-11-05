@@ -4,7 +4,7 @@ import Policies from './index';
 import PolicySlider from '~/components/PolicySlider';
 
 const data = {
-  policies: [
+  availablePolicies: [
     {
       name: 'Max positions 1',
       Component: PolicySlider,
