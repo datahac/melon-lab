@@ -8,7 +8,7 @@ const data = {
   text: 'Hello World',
 };
 
-storiesOf('Blocks|Title', module).add('Default', () => {
+storiesOf('Blocks|Headline', module).add('Default', () => {
   return (
     <Headline {...data} />
   );
