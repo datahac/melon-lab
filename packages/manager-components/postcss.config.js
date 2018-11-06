@@ -1,6 +1,6 @@
 const postcssPresetEnv = require('postcss-preset-env');
-const variables = require('./src/design/variables');
-const medias = require('./src/design/medias');
+const customProperties = require('./src/design/properties');
+const customMedia = require('./src/design/media');
 
 module.exports = {
   plugins: [
@@ -16,8 +16,8 @@ module.exports = {
       },
       importFrom: [
         {
-          customProperties: variables,
-          customMedia: medias,
+          customProperties,
+          customMedia,
         },
       ],
     }),
