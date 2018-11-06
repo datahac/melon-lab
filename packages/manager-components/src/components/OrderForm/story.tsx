@@ -3,23 +3,24 @@ import React from 'react';
 import OrderForm from './index';
 
 const data = {
-  baseTokenSymbol: 'ETH-T-M',
-  quoteTokenSymbol: 'MLN-T-M',
+  baseAsset: 'ETH-T-M',
+  quoteAsset: 'MLN-T-M',
   selectedOrder: false,
   isManager: true,
   info: {
     lastPrice: 0.5,
     bid: 0,
     ask: 0,
-    tokens: {
-      baseToken: {
-        name: 'ETH-T',
-        balance: 30.0,
-      },
-      quoteToken: {
-        name: 'MLN-T',
-        balance: 20.0,
-      },
+
+  },
+  tokens: {
+    baseToken: {
+      name: 'ETH-T',
+      balance: 30.0,
+    },
+    quoteToken: {
+      name: 'MLN-T',
+      balance: 20.0,
     },
   },
   exchanges: [
