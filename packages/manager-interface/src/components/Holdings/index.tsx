@@ -18,10 +18,13 @@ const withHoldingHandlers = withHandlers({
 const mapHoldings = R.curryN(2, (nav, asset) => ({
   ...asset,
   price: asset.price,
-  fraction: toBigNumber(asset.balance)
-    .times(asset.price)
-    .div(nav.toString() || 1)
-    .times(100),
+  fraction:
+    asset &&
+    nav &&
+    toBigNumber(asset.balance)
+      .times(asset.price)
+      .div(nav.toString() || 1)
+      .times(100),
   balance: asset.balance,
 }));
 

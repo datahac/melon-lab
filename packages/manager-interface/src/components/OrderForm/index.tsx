@@ -3,20 +3,16 @@ import Composer from 'react-composer';
 import OrderForm from '~/components/OrderForm';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
-import { formCalculation, withForm } from './withForm';
+import { withForm, withFormHandlers } from './withForm';
 import isSameAddress from '~/utils/isSameAddress';
+import { compose } from 'recompose';
 
-const WrappedOrderForm = withForm(OrderForm);
+const WrappedOrderForm = compose(
+  withForm,
+  withFormHandlers,
+)(OrderForm);
 
 export default class OrderFormContainer extends React.PureComponent {
-  onChange = event => {
-    const { setFieldValue } = this.props;
-    const { name, value } = event.target;
-
-    setFieldValue(name, value);
-    formCalculation(this.props, name, value);
-  };
-
   getTokenBalance = asset => {
     const { holdings } = this.props;
     return {

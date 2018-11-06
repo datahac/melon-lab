@@ -7,6 +7,7 @@ import {
   min,
   multiply,
 } from '~/utils/functionalBigNumber';
+import { withHandlers } from 'recompose';
 
 const formCalculation = (props, field, value) => {
   const { values, info } = props;
@@ -61,7 +62,7 @@ const formCalculation = (props, field, value) => {
 };
 
 const validation = props => {
-  const numberFormat = (0).toFixed(props.decimals);
+  const numberFormat = (0).toFixed(props.decimals || 4);
   const minNumber = numberFormat.slice(0, -1) + '1';
 
   return Yup.object().shape({
@@ -95,4 +96,14 @@ const withForm = withFormik({
     form.props.onSubmit && form.props.onSubmit(values),
 });
 
-export { formCalculation, withForm };
+const withFormHandlers = withHandlers({
+  onChange: props => event => {
+    const { setFieldValue } = props;
+    const { name, value } = event.target;
+
+    setFieldValue(name, value);
+    formCalculation(props, name, value);
+  },
+});
+
+export { withForm, withFormHandlers };

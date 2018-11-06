@@ -8,7 +8,7 @@ const data = {
   text: 'Hello World',
 };
 
-storiesOf('Blocks|Fund Headline', module).add('Default', () => {
+storiesOf('Components|Fund Headline', module).add('Default', () => {
   return (
     <FundHeadline {...data} />
   );
