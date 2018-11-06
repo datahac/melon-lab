@@ -29,7 +29,7 @@
     "bignumber.js": "^4.1.0",
     "find-up": "^3.0.0",
     "graphql": "^14.0.2",
-    "webpack": "4.19.0",
+    "webpack": "4.25.1",
     "lodash": "^4.3.0",
     "subscriptions-transport-ws": "^0.9.12"
   }

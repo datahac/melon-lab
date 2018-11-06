@@ -52,8 +52,8 @@
   },
   "homepage": "https://github.com/melonproject/melon.js#readme",
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
     "@babel/node": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "0x.js": "^0.35.0",
-    "@babel/runtime": "^7.0.0",
+    "@babel/runtime": "^7.1.2",
     "@melonproject/smart-contracts": "0.8.10",
     "@parity/api": "^2.1.5",
     "bignumber.js": "4.1.0",
