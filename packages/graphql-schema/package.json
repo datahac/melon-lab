@@ -21,8 +21,8 @@
     "debug": "2.6.9",
     "graphql": "^14.0.2",
     "graphql-iso-date": "^3.5.0",
-    "graphql-subscriptions": "^0.5.8",
-    "graphql-tools": "^3.1.1",
+    "graphql-subscriptions": "^1.0.0",
+    "graphql-tools": "^4.0.3",
     "graphql-type-json": "^0.2.1",
     "memoize-one": "^4.0.2"
   },
