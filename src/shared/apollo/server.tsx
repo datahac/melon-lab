@@ -11,7 +11,6 @@ export { Query } from './common';
 // TODO: This singleton is an ugly hack. Fix it.
 let dataLinkSingleton;
 export const createDataLink = (options) => {
-  console.log(Object.keys(options || {}));
   if (typeof dataLinkSingleton === 'undefined') {
     dataLinkSingleton = new SchemaLink({
       schema: options.ctx.res.schema,
