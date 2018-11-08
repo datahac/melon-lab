@@ -16,21 +16,19 @@ const Slider: StatelessComponent<SliderProps> = ({
   step = 1,
   defaultValue,
   onChange,
-}) => {
-  return (
-    <div className="slider">
-      <style jsx>{styles}</style>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        defaultValue={defaultValue}
-        className="slider__item"
-        onChange={onChange}
-        step={step}
-      />
-    </div>
-  );
-};
+}) => (
+  <div className="slider">
+    <style jsx>{styles}</style>
+    <input
+      type="range"
+      min={min}
+      max={max}
+      defaultValue={defaultValue}
+      className="slider__item"
+      onChange={onChange}
+      step={step}
+    />
+  </div>
+);
 
 export default Slider;

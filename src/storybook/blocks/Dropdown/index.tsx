@@ -14,14 +14,6 @@ export interface DropdownProps {
   value?: string;
 }
 
-const renderOption = (option, index) => {
-  return (
-    <option key={index} value={option.value}>
-      {option.name}
-    </option>
-  );
-};
-
 const Dropdown: StatelessComponent<DropdownProps> = ({
   disabled,
   label,
@@ -30,14 +22,6 @@ const Dropdown: StatelessComponent<DropdownProps> = ({
   options,
   value,
 }) => {
-  const ops =
-    options && options.map((item, index) => renderOption(item, index));
-
-  const handleChange = (e: any): void => {
-    const targetValue: any = e.target.value;
-    onChange({ value: targetValue }, e);
-  };
-
   return (
     <div className="dropdown">
       <style jsx>{styles}</style>
@@ -46,11 +30,16 @@ const Dropdown: StatelessComponent<DropdownProps> = ({
         <select
           name={name}
           className="dropdown__select"
-          onChange={handleChange}
+          onChange={onChange}
           value={value}
           disabled={disabled}
         >
-          {ops}
+          {options &&
+            options.map((item, index) => (
+              <option key={index} value={item.value}>
+                {item.name}
+              </option>
+            ))}
         </select>
       </div>
     </div>

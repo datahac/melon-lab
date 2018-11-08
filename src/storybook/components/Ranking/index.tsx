@@ -50,7 +50,7 @@ export const Ranking: StatelessComponent<RankingProps> = ({
               options={availableOrdering}
               label="Sort by"
               value={ordering}
-              onChange={field => setOrdering(field.value)}
+              onChange={e => setOrdering(e.target.value)}
             />
           </div>
         </div>

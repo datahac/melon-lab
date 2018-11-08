@@ -30,9 +30,7 @@ const Card: StatelessComponent<CardProps> = ({
     'card--active': isActive,
   });
 
-  const handleReportClick = e => {
-    e.stopPropagation();
-  };
+  const handleReportClick = e => e.stopPropagation();
 
   return (
     <div onClick={onClick} className={cardClassNames}>

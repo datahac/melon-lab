@@ -5,8 +5,9 @@ import NextLink from '~/link';
 import styles from './styles.css';
 
 export interface LinkProps {
-  size?: string;
-  style?: string;
+  size?: 'small' | 'medium' | 'large';
+  style?: 'primary' | 'secondary' | 'clear';
+  type?: 'warning' | 'danger' | 'success';
   href?: string;
   target?: string;
   onClick?: () => void;
@@ -21,10 +22,12 @@ const Link: StatelessComponent<LinkProps> = ({
   target = '_self',
   onClick,
   title,
+  type,
 }) => {
   const linkClassNames = classNames('link', {
     [`link--${size}`]: size,
     [`link--${style}`]: style,
+    [`link--${type}`]: type,
   });
 
   return (
