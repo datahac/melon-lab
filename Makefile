@@ -1,53 +1,36 @@
-SUBDIRS=packages
+TOPDIR = $(dir $(lastword $(MAKEFILE_LIST)))
+VERSION = $(or ${TRAVIS_BUILD_ID}, LOCAL)
+REGISTRY ?= $(or ${DOCKER_REGISTRY}, docker.io)
+NAMESPACE ?= melonproject
+PROJECT ?= manager
+TAG ?= latest
 
 .PHONY: all
-all: bootstrap $(SUBDIRS)
+all: build lint test
+
+.PHONY: build
+build:
+	@docker-compose build
+
+.PHONY: lint
+lint:
+	@echo Skipping linting
+	# @docker-compose run --rm manager yarn lint
+
+.PHONY: test
+test:
+	@echo Skipping tests
+	# @docker-compose run --rm manager yarn test
 
 # -----------------------------------------------------------------------------
-# SETUP
+# BUILD - CI
 # -----------------------------------------------------------------------------
-.PHONY: network
-network:
-	@docker network create melonproject > /dev/null 2> /dev/null || true
+.PHONY: tag
+tag:
+	@docker tag ${NAMESPACE}/${PROJECT}:local ${REGISTRY}/${NAMESPACE}/${PROJECT}:${VERSION}
+	@docker tag ${NAMESPACE}/${PROJECT}:local ${REGISTRY}/${NAMESPACE}/${PROJECT}:${TAG}
 
-.PHONY: setup
-setup:
-	@docker build --file Dockerfile.installer --target npm-dependencies --tag melonproject/npm-dependencies .
-	@docker build --file Dockerfile.installer --target node-development --tag melonproject/node-development .
-	@docker build --file Dockerfile.installer --target node-production --tag melonproject/node-production .
-
-.PHONY: bootstrap
-bootstrap: network setup
-
-# -----------------------------------------------------------------------------
-# BUILD
-# -----------------------------------------------------------------------------
-test: $(SUBDIRS)
-lint: $(SUBDIRS)
-build: $(SUBDIRS)
-tag: $(SUBDIRS)
-push: $(SUBDIRS)
-pull: $(SUBDIRS)
-
-$(SUBDIRS):
-	$(MAKE) -C $@ $(MAKECMDGOALS)
-
-.PHONY: build lint test push pull $(SUBDIRS)
-
-# -----------------------------------------------------------------------------
-# DEVELOPMENT
-# -----------------------------------------------------------------------------
-.PHONY: start
-start:
-	@docker-compose up
-
-.PHONY: stop
-stop:
-	@docker-compose kill
-
-.PHONY: restart
-restart: stop start
-
-.PHONY: clean
-clean: stop
-	@docker-compose down --remove-orphans --volume
+.PHONY: push
+push:
+	@docker push ${REGISTRY}/${NAMESPACE}/${PROJECT}:${VERSION}
+	@docker push ${REGISTRY}/${NAMESPACE}/${PROJECT}:${TAG}

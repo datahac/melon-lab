@@ -1,257 +1,36 @@
 version: "3.4"
 
-# Volume definitions for common workspace root dependencies.
-x-workspace-env: &workspace-env ./.env:/app/.env:delegated
-x-workspace-env-defaults: &workspace-env-defaults ./.env.defaults:/app/.env.defaults:delegated
-x-workspace-yarn-lock: &workspace-yarn-lock ./yarn.lock:/app/yarn.lock:delegated
-x-workspace-package: &workspace-package ./package.json:/app/package.json:delegated
-x-workspace-prettier: &workspace-prettier ./.prettierrc:/app/.prettierrc:delegated
-x-workspace-tsconfig: &workspace-tsconfig ./tsconfig.json:/app/tsconfig.json:delegated
-x-workspace-tslint: &workspace-tslint ./tslint.json:/app/tslint.json:delegated
-x-workspace-jest-config: &workspace-jest-config ./jest.config.js:/app/jest.config.js:delegated
-x-workspace-jest-setup: &workspace-jest-setup ./jest.setup.js:/app/jest.setup.js:delegated
-x-workspace-node-modules: &workspace-node-modules ./node_modules:/app/node_modules:delegated
-x-workspace-node-modules-cache: &workspace-node-modules-cache node_modules_cache:/app/node_modules/.cache
-
-# Volume definitions for common linked packages.
-x-package-melon-js: &package-melon-js ./packages/melon.js:/app/packages/melon.js:delegated
-x-package-exchange-aggregator: &package-exchange-aggregator ./packages/exchange-aggregator:/app/packages/exchange-aggregator:delegated
-x-package-graphql-schema: &package-graphql-schema ./packages/graphql-schema:/app/packages/graphql-schema:delegated
-x-package-graphql-server: &package-graphql-server ./packages/graphql-server:/app/packages/graphql-server:delegated
-x-package-manager-components: &package-manager-components ./packages/manager-components:/app/packages/manager-components:delegated
-x-package-manager-interface: &package-manager-interface ./packages/manager-interface:/app/packages/manager-interface:delegated
-
-volumes:
-  node_modules_cache:
-
 services:
-  parity:
-    image: parity/parity:stable
-    command:
-      - --jsonrpc-interface=all
-      - --jsonrpc-cors=all
-      - --chain=kovan
-      - --base-path=/data
-    volumes:
-      - ./.parity:/data
-    ports:
-      - "8545:8545"
-      - "8546:8546"
-      - "30303:30303"
-      - "30303:30303/udp"
-    networks:
-      - melonproject
-
-  melon-js:
+  manager:
     build:
       context: .
-      dockerfile: ./packages/melon.js/Dockerfile
-      target: development
-    command: "/bin/sh -c 'trap : TERM INT; sleep 365d & wait'"
-    volumes:
-      - *workspace-package
-      - *workspace-yarn-lock
-      - *workspace-package
-      - *workspace-prettier
-      - *workspace-tsconfig
-      - *workspace-tslint
-      # - *workspace-node-modules
-      # - *workspace-node-modules-cache
-      - ./packages/melon.js/lib:/app/packages/melon.js/lib
-      - ./packages/melon.js/scripts:/app/packages/melon.js/scripts
-      - ./packages/melon.js/tests:/app/packages/melon.js/tests
-      - ./packages/melon.js/.babelrc:/app/packages/melon.js/.babelrc
-      - ./packages/melon.js/.npmignore:/app/packages/melon.js/.npmignore
-      - ./packages/melon.js/.flowconfig:/app/packages/melon.js/.flowconfig
-      - ./packages/melon.js/.snyk:/app/packages/melon.js/.snyk
-      - ./packages/melon.js/package.json:/app/packages/melon.js/package.json
-
-      # Mount the node modules of this package with the .cache directory mounted into a volume.
-      # - ./packages/melon.js/node_modules:/app/packages/melon.js/node_modules:delegated
-      # - node_modules_cache:/app/packages/melon.js/node_modules/.cache
-
-  exchange-aggregator:
-    build:
-      context: .
-      dockerfile: ./packages/exchange-aggregator/Dockerfile
-      target: development
-    command: "/bin/sh -c 'trap : TERM INT; sleep 365d & wait'"
-    volumes:
-      - *workspace-package
-      - *workspace-yarn-lock
-      - *workspace-prettier
-      - *workspace-tsconfig
-      - *workspace-tslint
-      - *workspace-jest-config
-      - *workspace-jest-setup
-      # - *workspace-node-modules
-      # - *workspace-node-modules-cache
-      - ./packages/exchange-aggregator/src:/app/packages/exchange-aggregator/src
-      - ./packages/exchange-aggregator/tests:/app/packages/exchange-aggregator/tests
-      - ./packages/exchange-aggregator/jest.config.js:/app/packages/exchange-aggregator/jest.config.js
-      - ./packages/exchange-aggregator/package.json:/app/packages/exchange-aggregator/package.json
-      - ./packages/exchange-aggregator/tsconfig.json:/app/packages/exchange-aggregator/tsconfig.json
-      - ./packages/exchange-aggregator/.babelrc:/app/packages/exchange-aggregator/.babelrc
-
-      # Mount the node modules of this package with the .cache directory mounted into a volume.
-      # - ./packages/exchange-aggregator/node_modules:/app/packages/exchange-aggregator/node_modules:delegated
-      # - node_modules_cache:/app/packages/exchange-aggregator/node_modules/.cache
-
-  graphql-schema:
-    build:
-      context: .
-      dockerfile: ./packages/graphql-schema/Dockerfile
-      target: development
-    command: "/bin/sh -c 'trap : TERM INT; sleep 365d & wait'"
-    volumes:
-      - *workspace-package
-      - *workspace-yarn-lock
-      - *workspace-prettier
-      - *workspace-tsconfig
-      - *workspace-tslint
-      - *workspace-jest-config
-      - *workspace-jest-setup
-      # - *workspace-node-modules
-      # - *workspace-node-modules-cache
-      - *package-melon-js
-      - *package-exchange-aggregator
-      - ./packages/graphql-schema/src:/app/packages/graphql-schema/src
-      - ./packages/graphql-schema/tests:/app/packages/graphql-schema/tests
-      - ./packages/graphql-schema/jest.config.js:/app/packages/graphql-schema/jest.config.js
-      - ./packages/graphql-schema/package.json:/app/packages/graphql-schema/package.json
-      - ./packages/graphql-schema/tsconfig.json:/app/packages/graphql-schema/tsconfig.json
-      - ./packages/graphql-schema/tslint.json:/app/packages/graphql-schema/tslint.json
-      - ./packages/graphql-schema/.babelrc:/app/packages/graphql-schema/.babelrc
-      - ./packages/graphql-schema/introspect.js:/app/packages/graphql-schema/introspect.js
-
-      # Mount the node modules of this package with the .cache directory mounted into a volume.
-      # - ./packages/graphql-schema/node_modules:/app/packages/graphql-schema/node_modules:delegated
-      # - node_modules_cache:/app/packages/graphql-schema/node_modules/.cache
-
-  graphql-server:
-    depends_on:
-      - parity
-    build:
-      context: .
-      dockerfile: ./packages/graphql-server/Dockerfile
       target: development
     volumes:
-      - *workspace-env
-      - *workspace-env-defaults
-      - *workspace-package
-      - *workspace-yarn-lock
-      - *workspace-prettier
-      - *workspace-tsconfig
-      - *workspace-tslint
-      - *workspace-jest-config
-      - *workspace-jest-setup
-      # - *workspace-node-modules
-      # - *workspace-node-modules-cache
-      - *package-melon-js
-      - *package-graphql-schema
-      - *package-exchange-aggregator
-      - ./packages/graphql-server/src:/app/packages/graphql-server/src
-      - ./packages/graphql-server/tests:/app/packages/graphql-server/tests
-      - ./packages/graphql-server/package.json:/app/packages/graphql-server/package.json
-      - ./packages/graphql-server/tsconfig.json:/app/packages/graphql-server/tsconfig.json
-      - ./packages/graphql-server/tslint.json:/app/packages/graphql-server/tslint.json
-      - ./packages/graphql-server/jest.config.js:/app/packages/graphql-server/jest.config.js
-      - ./packages/graphql-server/backpack.config.js:/app/packages/graphql-server/backpack.config.js
-      - ./packages/graphql-server/babel.config.js:/app/packages/graphql-server/babel.config.js
-      - ./packages/graphql-server/.babelrc:/app/packages/graphql-server/.babelrc
-
-      # Mount the node modules of this package with the .cache directory mounted into a volume.
-      # - ./packages/graphql-server/node_modules:/app/packages/graphql-server/node_modules:delegated
-      # - node_modules_cache:/app/packages/graphql-server/node_modules/.cache
-    ports:
-      - "3030:3030"
-    networks:
-      - melonproject
-    environment:
-      JSON_RPC_ENDPOINT: http://parity:8545
-
-  manager-interface:
-    depends_on:
-      - graphql-server
-    build:
-      context: .
-      dockerfile: ./packages/manager-interface/Dockerfile
-      target: development
-    volumes:
-      - *workspace-env
-      - *workspace-env-defaults
-      - *workspace-package
-      - *workspace-yarn-lock
-      - *workspace-prettier
-      - *workspace-tsconfig
-      - *workspace-tslint
-      - *workspace-jest-config
-      - *workspace-jest-setup
-      # - *workspace-node-modules
-      # - *workspace-node-modules-cache
-      - *package-melon-js
-      - *package-graphql-schema
-      - *package-exchange-aggregator
-      - *package-manager-components
-      - ./packages/manager-interface/server.js:/app/packages/manager-interface/server.js
-      - ./packages/manager-interface/src:/app/packages/manager-interface/src
-      - ./packages/manager-interface/config:/app/packages/manager-interface/config
-      - ./packages/manager-interface/tests:/app/packages/manager-interface/tests
-      - ./packages/manager-interface/package.json:/app/packages/manager-interface/package.json
-      - ./packages/manager-interface/tsconfig.json:/app/packages/manager-interface/tsconfig.json
-      - ./packages/manager-interface/tslint.json:/app/packages/manager-interface/tslint.json
-      - ./packages/manager-interface/jest.config.js:/app/packages/manager-interface/jest.config.js
-      - ./packages/manager-interface/next.config.js:/app/packages/manager-interface/next.config.js
-      - ./packages/manager-interface/next.config.dist.js:/app/packages/manager-interface/next.config.dist.js
-      - ./packages/manager-interface/next.routes.js:/app/packages/manager-interface/next.routes.js
-      - ./packages/manager-interface/babel.config.js:/app/packages/manager-interface/babel.config.js
-      - ./packages/manager-interface/postcss.config.js:/app/packages/manager-interface/postcss.config.js
-      - ./packages/manager-interface/.babelrc:/app/packages/manager-interface/.babelrc
-
-      # Mount the node modules of this package with the .cache directory mounted into a volume.
-      # - ./packages/manager-interface/node_modules:/app/packages/manager-interface/node_modules:delegated
-      # - node_modules_cache:/app/packages/manager-interface/node_modules/.cache
+      - ./src:/app/src
+      - ./config:/app/config
+      - ./tests:/app/tests
+      - ./introspect:/app/introspect
+      - ./package.json:/app/package.json
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./tslint.json:/app/tslint.json
+      - ./jest.config.js:/app/jest.config.js
+      - ./jest.setup.js:/app/jest.setup.js
+      - ./next.config.js:/app/next.config.js
+      - ./next.config.dist.js:/app/next.config.dist.js
+      - ./next.routes.js:/app/next.routes.js
+      - ./babel.config.js:/app/babel.config.js
+      - ./postcss.config.js:/app/postcss.config.js
+      - ./backpack.config.js:/app/backpack.config.js
+      - ./.babelrc:/app/.babelrc
+      - ./.prettierrc:/app/.prettierrc
+      - ./.prettierignore:/app/.prettierignore
     ports:
       - "3000:3000"
-    networks:
-      - melonproject
-    environment:
-      GRAPHQL_LOCAL_WS: ws://graphql-server:3030
-      GRAPHQL_LOCAL_HTTP: http://graphql-server:3030
 
-  manager-components:
+  # this service is not really meant to be spinned up. it's here, to take
+  # advantage of cached intermediate layers, as they are not shared between
+  # docker-compose and docker.
+  manager-production:
     build:
       context: .
-      dockerfile: ./packages/manager-components/Dockerfile
-      target: development
-    volumes:
-      - *workspace-package
-      - *workspace-yarn-lock
-      - *workspace-prettier
-      - *workspace-tsconfig
-      - *workspace-tslint
-      - *workspace-jest-config
-      - *workspace-jest-setup
-      # - *workspace-node-modules
-      # - *workspace-node-modules-cache
-      - ./packages/manager-components/src:/app/packages/manager-components/src
-      - ./packages/manager-components/config:/app/packages/manager-components/config
-      - ./packages/manager-components/public:/app/packages/manager-components/public
-      - ./packages/manager-components/postcss.config.js:/app/packages/manager-components/postcss.config.js
-      - ./packages/manager-components/jest.config.js:/app/packages/manager-components/jest.config.js
-      - ./packages/manager-components/package.json:/app/packages/manager-components/package.json
-      - ./packages/manager-components/tsconfig.json:/app/packages/manager-components/tsconfig.json
-      - ./packages/manager-components/tslint.json:/app/packages/manager-components/tslint.json
-      - ./packages/manager-components/.babelrc:/app/packages/manager-components/.babelrc
-
-      # Mount the node modules of this package with the .cache directory mounted into a volume.
-      # - ./packages/manager-components/node_modules:/app/packages/manager-components/node_modules:delegated
-      # - node_modules_cache:/app/packages/manager-components/node_modules/.cache
-    ports:
-      - "3060:3060"
-    networks:
-      - melonproject
-
-networks:
-  melonproject:
-    external: true
+    image: melonproject/manager:local

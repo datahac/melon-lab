@@ -3,20 +3,16 @@ node_modules/
 
 # Generated files
 package-lock.json
-dist/
 coverage/
+build/
 
-# Environment variables
-.env*
+# Ignore all dot files.
+.*
+
+# Allowed dot files
 !.env.example
 !.env.defaults
-
-# Log files
-*.log*
-.vscode
-
-# Parity data
-.parity
-
-# Editor files.
-.DS_Store
+!.babelrc
+!.gitignore
+!.prettierignore
+!.prettierrc

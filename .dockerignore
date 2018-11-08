@@ -1,53 +1,15 @@
 # Ignore as many files as possible. This keeps the build context small.
 *
 
-# White-list packages.
-!packages/exchange-aggregator/package.json
-!packages/graphql-schema/package.json
-!packages/graphql-server/package.json
-!packages/manager-components/package.json
-!packages/manager-interface/package.json
-!packages/melon.js/package.json
+!src/
+!config/
+!.babelrc
+!babel.config.js
+!postcss.config.js
+!next.config.js
+!next.config.dist.js
+!introspect.js
 
-# Package files required for building production images.
-!packages/graphql-server/src/
-!packages/graphql-server/.babelrc
-!packages/graphql-server/babel.config.js
-!packages/graphql-server/backpack.config.js
-!packages/graphql-server/tsconfig.json
-
-!packages/graphql-schema/src/
-!packages/graphql-schema/introspect.js
-!packages/graphql-schema/.babelrc
-
-!packages/exchange-aggregator/src/
-!packages/exchange-aggregator/.babelrc
-
-!packages/melon.js/lib/
-!packages/melon.js/.babelrc
-
-!packages/manager-interface/src/
-!packages/manager-interface/config/
-!packages/manager-interface/.babelrc
-!packages/manager-interface/server.js
-!packages/manager-interface/babel.config.js
-!packages/manager-interface/postcss.config.js
-!packages/manager-interface/electron-builder.yml
-!packages/manager-interface/next.config.js
-!packages/manager-interface/next.config.dist.js
-!packages/manager-interface/tsconfig.json
-
-!packages/manager-components/src/
-!packages/manager-components/public/
-!packages/manager-components/config/
-!packages/manager-components/.babelrc
-!packages/manager-components/.env.defaults
-!packages/manager-components/postcss.config.js
-!packages/manager-components/tsconfig.json
-!packages/manager-components/tslint.json
-
-# White-list workspace root.
 !yarn.lock
 !package.json
-!tsconfig.json
 !.env.defaults

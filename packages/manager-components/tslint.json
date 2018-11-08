@@ -1,7 +1,0 @@
-{
-  "extends": ["../../tslint.json"],
-  "rules": {
-    "jsx-boolean-value": ["never"],
-    "no-submodule-imports": [false]
-  }
-}

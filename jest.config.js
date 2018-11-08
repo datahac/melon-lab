@@ -2,15 +2,14 @@ module.exports = {
   "verbose": true,
   "testURL": "http://localhost/",
   "roots": ["<rootDir>/src", "<rootDir>/tests"],
-  "testEnvironment": "node",
+  "testEnvironment": "jsdom",
   "moduleNameMapper": {
     "^.+\\.s?css$": "identity-obj-proxy",
-    "^~/design/(.*)$": "@melonproject/manager-components/src/design/$1",
-    "^~/blocks/(.*)$": "@melonproject/manager-components/src/blocks/$1",
-    "^~/components/(.*)$": "@melonproject/manager-components/src/components/$1",
-    "^~/containers/(.*)$": "@melonproject/manager-components/src/containers/$1",
-    "^~/utils/(.*)$": "@melonproject/manager-components/src/utils/$1",
-    "^@melonproject/melon\\.js$": "@melonproject/melon.js/lib"
+    "^~/design/(.*)$": "./src/storybook/design/$1",
+    "^~/blocks/(.*)$": "./src/storybook/blocks/$1",
+    "^~/components/(.*)$": "./src/storybook/components/$1",
+    "^~/containers/(.*)$": "./src/storybook/containers/$1",
+    "^~/utils/(.*)$": "./src/storybook/utils/$1"
   },
   "snapshotSerializers": ["enzyme-to-json/serializer"],
   "setupFiles": [
@@ -19,9 +18,6 @@ module.exports = {
   "transform": {
     "^.+\\.(jsx?|tsx?)$": "ts-jest"
   },
-  "transformIgnorePatterns": [
-    "node_modules/(?!@melonproject/)"
-  ],
   "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   "moduleFileExtensions": [
     "ts",

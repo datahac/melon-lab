@@ -1,9 +1,0 @@
-/coverage/
-/build/
-
-# Ignore copied static files
-/src/static/fonts
-/src/static/images
-
-*.crt
-*.key

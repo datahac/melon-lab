@@ -1,13 +1,16 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "es2015",
-    "module": "commonjs",
+    "baseUrl": ".",
     "lib": ["esnext"],
-    "declaration": true,
+    "outDir": "dist",
+    "target": "esnext",
+    "module": "esnext",
+    "jsx": "preserve",
     "sourceMap": true,
     "strict": true,
-    "allowJs": false,
+    "allowJs": true,
+    "declaration": false,
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
@@ -16,5 +19,8 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
-  }
+    "paths": {
+    }
+  },
+  "include": ["src/**/*"],
 }
