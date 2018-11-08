@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import * as Rx from 'rxjs';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import GraphQLJSON from 'graphql-type-json';
 import { map, distinctUntilChanged, skip } from 'rxjs/operators';
@@ -252,6 +253,11 @@ export default {
   Subscription: {
     // TODO: Inline these.
     balance: require('./subscriptions/balance').default,
+    orderbook: {
+      subscribe: () => {
+        return toAsyncIterator(Rx.of([]));
+      },
+    },
     currentBlock: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {

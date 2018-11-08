@@ -42,8 +42,8 @@ export async function createContext(track, endpoint) {
 
   Object.values(streams).forEach(stream$ => stream$);
 
-  return async () => {
-    const loaders = await createLoaders(streams);
+  return () => {
+    const loaders = createLoaders(streams);
 
     return {
       loaders,

@@ -22,7 +22,7 @@ import getPrice from './loaders/tokenPrice';
 
 const contractCache = contract => contract.instance.address;
 
-export default async streams => {
+export default streams => {
   // TODO: Does this need a custom cache key function?
   const symbolPrice = new DataLoader(async symbols => {
     const environment = await takeLast(streams.environment$);

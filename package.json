@@ -35,6 +35,7 @@
     "apollo-link-context": "^1.0.8",
     "apollo-link-error": "^1.1.1",
     "apollo-link-http": "^1.5.3",
+    "apollo-link-schema": "^1.1.1",
     "apollo-link-state": "^0.4.1",
     "apollo-link-ws": "^1.0.7",
     "apollo-server-express": "^2.1.0",

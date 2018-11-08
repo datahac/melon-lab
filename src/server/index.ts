@@ -54,6 +54,9 @@ import { ApolloServer } from 'apollo-server-express';
 
   // Register the next.js routes.
   app.get('*', (req, res) => {
+    res.context = context;
+    res.schema = schema;
+
     return handle(req, res);
   });
 

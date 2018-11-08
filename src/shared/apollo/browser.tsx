@@ -12,21 +12,17 @@ import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
 import { setContext } from 'apollo-link-context';
 import { WebSocketLink } from 'apollo-link-ws';
-import { Query as QueryBase } from 'react-apollo';
 import { createErrorLink, createCache } from './common';
 import withApollo from 'next-with-apollo';
 import getConfig from 'next/config';
 
-const { publicRuntimeConfig: config, serverRuntimeConfig: serverConfig } = getConfig();
+const { publicRuntimeConfig: config } = getConfig();
 
-// We must disable SSR in the electron app. Hence, we re-export
-// the query components here so we can override the ssr flag.
+// Re-export the various query components so we can add some defaults.
 export { Subscription, Mutation } from 'react-apollo';
-export const Query = ({ errorPolicy, ...props }) => (
-  <QueryBase {...props} errorPolicy={errorPolicy || 'all'} />
-);
+export { Query } from './common';
 
-const createStateLink = (cache) => {
+export const createStateLink = (cache) => {
   const defaults = {
     hasStoredWallet: false,
     defaultAccount: null,
@@ -117,20 +113,30 @@ const createStateLink = (cache) => {
   return ApolloLink.from([stateContext, stateLink]);
 };
 
-export const createClient = options => {
-  const cache = createCache();
-  const stateLink = createStateLink(cache);
-  const errorLink = createErrorLink();
+export const createDataLink = () => {
+  const port = window.location.port ? `:${window.location.port}` : '';
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  const uri = `${protocol}//${hostname}${port}/api`;
+
   const dataLink = new WebSocketLink({
-    uri: process.browser ? config.graphqlRemoteWs : serverConfig.graphqlLocalWs,
+    uri: uri.replace('http', 'ws'),
     options: {
       reconnect: true,
     },
   });
 
+  return dataLink;
+}
+
+export const createClient = options => {
+  const cache = createCache();
+  const stateLink = createStateLink(cache);
+  const errorLink = createErrorLink();
+  const dataLink = createDataLink();
+
   const link = ApolloLink.from([errorLink, stateLink, dataLink]);
   const client = new ApolloClient({
-    ssrMode: !process.browser,
     link,
     cache,
   });

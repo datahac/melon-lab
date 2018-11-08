@@ -16,6 +16,18 @@ const srcDir = path.resolve(__dirname, 'src');
 const isElectron = !!JSON.parse(process.env.ELECTRON || 'false');
 const distConfig = require('./next.config.dist.js');
 
+const apolloLink = (electron, server) => {
+  if (electron) {
+    return 'app';
+  }
+
+  if (server) {
+    return 'server';
+  }
+
+  return 'browser';
+};
+
 module.exports = withComposedConfig(Object.assign({}, distConfig, {
   exportPathMap: () => require('./next.routes.js'),
   webpack: (config, options) => {
@@ -37,9 +49,7 @@ module.exports = withComposedConfig(Object.assign({}, distConfig, {
       '+/components': path.join(srcDir, 'components'),
 
       // Special alias for importing the apollo web transport.
-      '~/apollo': isElectron ?
-        path.join(srcDir, 'shared', 'apollo', 'index.app') :
-        path.join(srcDir, 'shared', 'apollo', 'index.web'),
+      '~/apollo': path.join(srcDir, 'shared', 'apollo', apolloLink(isElectron, options.isServer)),
     });
 
     config.plugins.push(new webpack.DefinePlugin({
