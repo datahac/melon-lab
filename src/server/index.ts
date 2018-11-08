@@ -41,12 +41,7 @@ import { ApolloServer } from 'apollo-server-express';
   const app = express();
   const server = createServer(app);
 
-  // Register the next.js routes.
   app.use(compression());
-
-  app.get('*', (req, res) => {
-    return handle(req, res);
-  });
 
   // Register the graphql routes.
   apollo.applyMiddleware({
@@ -55,6 +50,11 @@ import { ApolloServer } from 'apollo-server-express';
     cors: true,
     bodyParserConfig: true,
     disableHealthCheck: true,
+  });
+
+  // Register the next.js routes.
+  app.get('*', (req, res) => {
+    return handle(req, res);
   });
 
   apollo.installSubscriptionHandlers(server);
