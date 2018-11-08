@@ -5,6 +5,7 @@
 !config/
 !.babelrc
 !babel.config.js
+!backpack.config.js
 !postcss.config.js
 !next.config.js
 !next.config.dist.js
