@@ -6,7 +6,6 @@ require('dotenv').config({
 
 const DotEnv = require('dotenv-webpack');
 const path = require('path');
-const externals = require('webpack-node-externals');
 
 module.exports = {
   webpack: (config, options, webpack) => {
@@ -138,8 +137,6 @@ module.exports = {
         );
       }
     }
-
-    config.externals = externals();
 
     return config;
   },

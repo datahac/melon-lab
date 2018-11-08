@@ -7,7 +7,6 @@ import { ApolloLink } from 'apollo-link';
 import withApollo from 'next-with-apollo';
 import { SubscriptionClient } from '~/electron/graphql/client';
 import { createErrorLink } from './common';
-import getConfig from 'next/config';
 
 // Re-export the various query components so we can add some customization.
 export { Subscription, Mutation } from 'react-apollo';

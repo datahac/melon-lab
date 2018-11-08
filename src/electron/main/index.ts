@@ -75,7 +75,7 @@ const restoreMainWindow = async () => {
 
       server.listen(3000, () => {
         // Make sure to stop the server when the app closes.
-        electron.app.on('before-quit', () => server.close())
+        electron.app.on('before-quit', () => server.close());
 
         resolve();
       });

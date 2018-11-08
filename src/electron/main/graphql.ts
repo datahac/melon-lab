@@ -1,4 +1,4 @@
-import schema, { createContext } from '@melonproject/graphql-schema';
+import schema, { createContext } from '~/schema';
 import { ipcMain } from 'electron';
 import { SubscriptionServer } from '~/electron/graphql/server';
 
