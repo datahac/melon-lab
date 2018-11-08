@@ -28,7 +28,7 @@
     "Jenna Zenk <jenna@melonport.com>"
   ],
   "dependencies": {
-    "@melonproject/melon.js": "^0.8.31",
+    "@melonproject/melon.js": "^0.8.32",
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-client": "^2.3.1",
     "apollo-link": "^1.2.1",
