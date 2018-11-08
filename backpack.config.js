@@ -79,7 +79,7 @@ module.exports = {
       });
     } else {
       config.mode = 'none';
-      config.output.path = path.resolve(__dirname, 'build', 'express');
+      config.output.path = path.resolve(__dirname, 'build');
       config.entry = { index: './src/server/index.ts' };
 
       config.resolve.extensions.push('.ts', '.node');
