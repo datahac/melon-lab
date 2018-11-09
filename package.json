@@ -104,6 +104,7 @@
     "postcss-preset-env": "^6.4.0",
     "prettier": "^1.14.3",
     "rimraf": "^2.6.2",
+    "styled-jsx": "^3.1.1",
     "styled-jsx-plugin-postcss": "^2.0.0",
     "ts-jest": "^22.4.6",
     "tslint": "^5.9.1",
@@ -111,5 +112,8 @@
     "tslint-react": "^3.5.1",
     "typescript": "^3.1.6",
     "webpack-bundle-analyzer": "^2.13.1"
+  },
+  "resolutions": {
+    "styled-jsx": "3.1.1"
   }
 }
