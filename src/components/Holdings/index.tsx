@@ -28,13 +28,20 @@ const mapHoldings = R.curryN(2, (nav, asset) => ({
   balance: asset.balance,
 }));
 
+const sortHoldings = R.sortWith([
+  R.comparator((a, b) =>
+    R.gt(parseInt(R.prop('fraction', a)), parseInt(R.prop('fraction', b))),
+  ),
+  R.ascend(R.prop('symbol')),
+]);
+
 const withMappedProps = withPropsOnChange(
   ['holdings', 'nav', 'loading'],
   props => ({
     holdings:
       (!props.loading &&
         props.holdings &&
-        props.holdings.map(mapHoldings(props.nav))) ||
+        sortHoldings(props.holdings.map(mapHoldings(props.nav)))) ||
       [],
   }),
 );
