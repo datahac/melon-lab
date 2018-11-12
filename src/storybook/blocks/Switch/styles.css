@@ -6,7 +6,6 @@
 
 .switch__wrapper {
   width: 100%;
-  padding: 0 var(--space-m);
   display: flex;
   align-items: center;
   justify-content: space-between;

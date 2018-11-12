@@ -14,7 +14,7 @@
 .order-form__toggles {
   width: 100%;
   display: flex;
-  padding: var(--space-m) 0;
+  margin-bottom: var(--space-m) 0;
 }
 
 .order-form__toggle:first-child:nth-last-child(1) {
