@@ -10,6 +10,10 @@
   }
 }
 
+.fund-template__info {
+  border-top: 1px solid var(--color-border);
+}
+
 .fund-template__order-book {
   flex: 1 0 50%;
   overflow: hidden;
