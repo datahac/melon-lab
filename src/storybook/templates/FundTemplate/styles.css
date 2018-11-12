@@ -63,7 +63,15 @@
 .fund-template__holdings-wrap {
   max-height: 450px;
   overflow-y: scroll;
-  /* border: 1px solid var(--color-border); */
+}
+
+.fund-template__holdings-wrap::-webkit-scrollbar {
+  width: 5px;
+}
+
+.fund-template__holdings-wrap::-webkit-scrollbar-thumb {
+  background-color: var(--color-grey);
+  border-radius: 3px;
 }
 
 .fund-template__open-orders {
