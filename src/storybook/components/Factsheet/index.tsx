@@ -40,32 +40,39 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
       <Spinner icon size="small" />
     ) : (
       <Fragment>
-        Creation date: {format(inception, 'DD. MMM YYYY HH:mm')}
-        <br />
-        Total number of shares: {totalSupply}
-        <br />
-        Shares owned by me: {displayNumber(personalStake ? personalStake : '0')}
-        <hr />
-        Management Reward: {managementReward}%<br />
-        Performance Reward: {performanceReward}%<hr />
-        <a
-          href="https://ipfs.io/ipfs/Qmc9JRw4zarrs6gJwu6tC58UAgeEujNg9VMWcH8MUEd5TW/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Contact Investors/Managers
-        </a>
-        <hr />
-        <Link href={reportUrl}>
-          <a target="_blank" rel="noopener noreferrer">
-            Generate fund report
+        <div className="factsheet__item">
+          Creation date: {format(inception, 'DD. MMM YYYY HH:mm')}
+          <br />
+          Total number of shares: {totalSupply}
+          <br />
+          Shares owned by me:{' '}
+          {displayNumber(personalStake ? personalStake : '0')}
+        </div>
+        <div className="factsheet__item">
+          Management Reward: {managementReward}%<br />
+          Performance Reward: {performanceReward}%
+        </div>
+        <div className="factsheet__item">
+          <a
+            href="https://ipfs.io/ipfs/Qmc9JRw4zarrs6gJwu6tC58UAgeEujNg9VMWcH8MUEd5TW/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Contact Investors/Managers
           </a>
-        </Link>
-        <hr />
+          <br />
+          <Link href={reportUrl}>
+            <a target="_blank" rel="noopener noreferrer">
+              Generate fund report
+            </a>
+          </Link>
+        </div>
         {!isCompetition && isManager && (
-          <Button onClick={shutdown} style="clear">
-            Irreversibly shut down fund
-          </Button>
+          <div className="factsheet__item">
+            <Button onClick={shutdown} style="danger" size="small">
+              Irreversibly shut down fund
+            </Button>
+          </div>
         )}
       </Fragment>
     )}

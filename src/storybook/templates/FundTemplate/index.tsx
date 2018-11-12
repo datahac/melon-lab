@@ -46,21 +46,23 @@ const Fund = ({
             </div>
             <div className="fund-template__order">
               <div className="fund-template__holdings">
-                <h3>Holdings</h3>
+                <h3 className="fund-template__subtitle">Holdings</h3>
                 <div className="fund-template__holdings-wrap">
                   <Holdings {...HoldingsProps} />
                 </div>
               </div>
               <div className="fund-template__order-book" id="orderbook">
-                <h3>
+                <h3 className="fund-template__subtitle">
                   Orderbook for {OrderBookProps.baseAsset}/
                   {OrderBookProps.quoteAsset}
                 </h3>
                 <OrderBook {...OrderBookProps} />
               </div>
               <div className="fund-template__order-form" id="trade">
-                <h3>Trade</h3>
-                <OrderForm {...OrderFormProps} />
+                <h3 className="fund-template__subtitle">Trade</h3>
+                <div className="fund-template__order-form-wrap">
+                  <OrderForm {...OrderFormProps} />
+                </div>
               </div>
             </div>
             <div className="fund-template__open-orders">

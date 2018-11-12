@@ -16,7 +16,7 @@
 .orderbook__exchanges {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: var(--space-xs);
+  margin: 0 var(--space-m) var(--space-xs) var(--space-m);
 }
 
 .orderbook__exchange-label {

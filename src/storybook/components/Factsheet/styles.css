@@ -1,8 +1,26 @@
-.factsheet__title {
+.factsheet {
   display: flex;
   justify-content: space-between;
+  background-color: var(--color-primary);
 }
 
-.factsheet__title-link {
-  text-decoration: none;
+.factsheet__item {
+  padding: var(--space-m);
+  position: relative;
+  text-align: center;
+  border-right: 1px solid var(--color-border);
+}
+
+.factsheet__item:last-child {
+  border-right: 0px solid var(--color-border);
+}
+
+.factsheet__item:first-child:nth-last-child(3),
+.factsheet__item:first-child:nth-last-child(3) ~ .factsheet__item {
+  flex: 0 1 33.33%;
+}
+
+.factsheet__item:first-child:nth-last-child(4),
+.factsheet__item:first-child:nth-last-child(4) ~ .factsheet__item {
+  flex: 0 1 25%;
 }
