@@ -62,7 +62,6 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
   return (
     <div className="order-form">
       <style jsx>{styles}</style>
-      <h3>Trade</h3>
       <Form onSubmit={handleSubmit}>
         {!priceFeedUp && (
           <Notification isWarning>

@@ -39,22 +39,31 @@
   flex-wrap: wrap;
   flex-direction: row;
   margin: var(--space-m) calc(var(--space-m) * -1);
-
-  @media (--viewport-l) {
-    flex-wrap: nowrap;
-  }
 }
 
 .fund-template__order-book {
-  flex: 1 0 66.66%;
+  flex: 1 0 50%;
   overflow: hidden;
   padding: var(--space-m);
+  min-width: 300px;
 }
 
 .fund-template__order-form {
-  flex: 1 0 33.33%;
-  min-width: 300px;
+  flex: 1 0 25%;
+  min-width: 250px;
   padding: var(--space-m);
+}
+
+.fund-template__holdings {
+  flex: 1 0 25%;
+  min-width: 250px;
+  padding: var(--space-m);
+}
+
+.fund-template__holdings-wrap {
+  max-height: 450px;
+  overflow-y: scroll;
+  /* border: 1px solid var(--color-border); */
 }
 
 .fund-template__open-orders {

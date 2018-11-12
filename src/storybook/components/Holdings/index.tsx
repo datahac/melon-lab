@@ -10,6 +10,7 @@ import {
   TableHead,
 } from '~/blocks/Table';
 import displayNumber from '~/utils/displayNumber';
+import Holding from '~/blocks/Holding';
 
 import styles from './styles.css';
 
@@ -40,67 +41,26 @@ export const Holdings: StatelessComponent<HoldingsProps> = ({
   return (
     <div className="holdings" id="holdings">
       <style jsx>{styles}</style>
-      <h3>Fund Holdings</h3>
       {loading ? (
         <div className="holdings__loading">
           <Spinner icon />
         </div>
       ) : (
         <div className="holdings__table-wrap">
-          <Table>
-            <TableHead>
-              <Row isHead={true}>
-                <CellHead>Asset</CellHead>
-                <CellHead>Quantity</CellHead>
-                <CellHead textAlign="right">% of portfolio</CellHead>
-                <CellHead textAlign="right">Price (in {quoteAsset})</CellHead>
-                <CellHead textAlign="right" />
-              </Row>
-            </TableHead>
-            <TableBody>
-              {holdings &&
-                holdings.map(asset => (
-                  <Row
-                    key={asset.symbol}
-                    size="small"
-                    active={baseAsset === asset.symbol}
-                  >
-                    <CellBody>{asset.symbol}</CellBody>
-                    <CellBody>{displayNumber(asset.balance)}</CellBody>
-                    <CellBody textAlign="right">
-                      {displayNumber(asset.fraction)}%
-                    </CellBody>
-                    <CellBody textAlign="right">
-                      {displayNumber(asset.price)}
-                    </CellBody>
-                    <CellBody
-                      textAlign="right"
-                      cellClass="holdings__action-cell"
-                    >
-                      {asset.symbol === quoteAsset ? (
-                        <span className="holdings__quote-asset" />
-                      ) : asset.symbol !== quoteAsset && isReadyToTrade ? (
-                        <Button
-                          size="small"
-                          onClick={() => onClick(asset)}
-                          style="secondary"
-                        >
-                          Buy/Sell
-                        </Button>
-                      ) : (
-                        <Button
-                          size="small"
-                          onClick={() => onClick(asset)}
-                          style="secondary"
-                        >
-                          See Orderbook
-                        </Button>
-                      )}
-                    </CellBody>
-                  </Row>
-                ))}
-            </TableBody>
-          </Table>
+          {holdings &&
+            holdings.map(asset => (
+              <Holding
+                key={asset.symbol}
+                fraction={asset.fraction}
+                symbol={asset.symbol}
+                price={asset.price}
+                balance={asset.balance}
+                active={baseAsset === asset.symbol}
+                onClickHolding={
+                  !(asset.symbol === quoteAsset) ? () => onClick(asset) : null
+                }
+              />
+            ))}
         </div>
       )}
     </div>
