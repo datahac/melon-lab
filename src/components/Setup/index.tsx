@@ -15,14 +15,11 @@ import SetupForm from '~/components/SetupForm';
 import FeeFormModal from '+/components/FeeFormModal';
 import Link from '~/blocks/Link';
 import { withApollo } from 'react-apollo';
-import { withFormik } from 'formik';
-import gql from 'graphql-tag';
-import * as Yup from 'yup';
-import * as R from 'ramda';
 import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
 import { BalanceConsumer } from '+/components/BalanceContext';
 import { ConfigurationConsumer } from '+/components/ConfigurationContext';
+import withForm from './withForm';
 
 const withFormProps = withProps(props => {
   return {
@@ -56,113 +53,7 @@ const withFormProps = withProps(props => {
 const withConfirmationModal = withState('showModal', 'setShowModal', false);
 const withPageState = withState('page', 'setPage', 0);
 
-const initialValues = {
-  name: '',
-  exchanges: [],
-  terms: false,
-  gasPrice: '5',
-  policies: [],
-  performanceFee: '',
-  managementFee: '',
-};
-
-const withFormHandlers = withHandlers({
-  onActivatePolicy: props => value => {
-    const { policies } = props.values;
-
-    if (!R.find(R.propEq('key', value.key), policies)) {
-      props.setFieldValue('policies', [...policies, value]);
-    } else {
-      props.setFieldValue('policies', [
-        ...policies.filter(item => item.key !== value.key),
-      ]);
-    }
-  },
-  onChangeExchanges: props => event => {
-    const value = event.target.value;
-    const { exchanges } = props.values;
-
-    if (!exchanges.includes(value)) {
-      props.setFieldValue('exchanges', [...exchanges, value]);
-    } else {
-      props.setFieldValue('exchanges', [
-        ...exchanges.filter(item => item !== value),
-      ]);
-    }
-  },
-  onClickNext: props => e => {
-    const fields = props.steps[props.page].validateFields;
-    if (typeof fields !== 'undefined' && fields) {
-      fields.map(item => props.setFieldTouched(item));
-
-      props.validateForm().then(errors => {
-        if (fields.some(item => errors[item])) {
-          return props.setPage(props.page);
-        }
-
-        return props.setPage(props.page + 1);
-      });
-    }
-
-    return props.setPage(props.page + 1);
-  },
-  onClickPrev: props => event => {
-    return props.setPage(props.page - 1);
-  },
-});
-
-const uniqueFundQuery = gql`
-  query UniqueFundQuery($name: String!) {
-    fundByName(name: $name) {
-      address
-    }
-  }
-`;
-
-const withFormikForm = withFormik({
-  mapPropsToValues: () => initialValues,
-  validationSchema: props =>
-    Yup.object().shape({
-      name: Yup.string()
-        .required('Name is required.')
-        .test(
-          'is-unique',
-          'There is already a fund with this name.',
-          async value => {
-            const { data } =
-              value &&
-              (await props.client.query({
-                query: uniqueFundQuery,
-                variables: {
-                  name: value,
-                },
-              }));
-
-            return !data.fundByName;
-          },
-        ),
-      exchanges: Yup.array().required('Exchanges are required.'),
-      terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
-      gasPrice: Yup.number()
-        .required('Gas price is required.')
-        .moreThan(0, 'Please enter a valid gas price'),
-    }),
-  handleSubmit: (values, form) => {
-    form.props.executeSetup({
-      variables: {
-        name: values.name,
-        exchanges: values.exchanges,
-        gasPrice: values.gasPrice,
-        gasLimit: form.props.gasLimit,
-      },
-    });
-  },
-});
-
-const FormikSetupFormWizard = compose(
-  withFormikForm,
-  withFormHandlers,
-)(props => (
+const FormikSetupFormWizard = compose(withForm)(props => (
   <SetupForm handleSubmit={props.handleSubmit}>
     <Wizard page={props.page} steps={props.steps} loading={props.loading}>
       <WizardPage

@@ -29,7 +29,7 @@ export const StepTerms: StatelessComponent<StepTermsProps> = ({
                 const exchange = availableExchangeContracts.find(
                   exchange => exchange.value === item,
                 );
-                return <div>{exchange.text}</div>;
+                return <div key={exchange.value}>{exchange.text}</div>;
               })}
             </CellBody>
           </Row>
