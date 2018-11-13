@@ -74,6 +74,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
               name="strategy"
               value="Market"
               text="Market"
+              disabled={!isManager}
               isChecked={values.strategy === 'Market'}
               onChange={onChange}
             />
@@ -83,6 +84,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
               name="strategy"
               value="Limit"
               text="Limit"
+              disabled={!isManager}
               isChecked={values.strategy === 'Limit'}
               onChange={onChange}
             />
