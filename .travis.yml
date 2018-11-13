@@ -14,8 +14,6 @@ script:
   - make build
   - make lint
   - make test
-
-after_success:
   - docker save melonproject/manager-dependencies | gzip -9 > "$HOME/.cache/docker.tgz"
 
 deploy:
