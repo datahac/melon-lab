@@ -31,12 +31,6 @@ COPY --from=npm-dependencies /app/node_modules node_modules
 COPY package.json yarn.lock ./
 
 # -----------------------------------------------------------------------------
-# development
-# -----------------------------------------------------------------------------
-FROM node-development as development
-ENTRYPOINT ["yarn"]
-
-# -----------------------------------------------------------------------------
 # base production image
 # -----------------------------------------------------------------------------
 FROM node:11.1.0-alpine as node-production
@@ -44,6 +38,12 @@ WORKDIR /app
 
 COPY --from=npm-dependencies /app/node_modules_production node_modules
 COPY package.json yarn.lock ./
+
+# -----------------------------------------------------------------------------
+# development
+# -----------------------------------------------------------------------------
+FROM node-development as development
+ENTRYPOINT ["yarn"]
 
 # -----------------------------------------------------------------------------
 # build

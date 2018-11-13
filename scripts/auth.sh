@@ -14,6 +14,3 @@ sudo service docker restart
 # Log in to the openshift cluster and the docker registry.
 oc login $OPENSHIFT_URL --token $OPENSHIFT_TOKEN
 docker login -u travis -p $(oc whoami -t) $DOCKER_REGISTRY
-
-make tag
-make push

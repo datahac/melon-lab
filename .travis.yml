@@ -3,11 +3,27 @@ language: c
 services:
   - docker
 
+cache:
+  directories:
+    - "$HOME/.cache"
+
+before_script:
+  - if [ -f "$HOME/.cache/docker.tgz" ]; then gunzip -c "$HOME/.cache/docker.tgz" | docker load ; docker image ls ; fi
+
 script:
-  - make
+  - make build
+  - make lint
+  - make test
+
+after_success:
+  - docker save melonproject/manager:local | gzip -9 > "$HOME/.cache/docker.tgz"
 
 deploy:
   provider: script
-  script: bash scripts/deploy.sh
+  script: bash scripts/auth.sh && make tag && make push
   on:
     branch: master
+
+notifications:
+  email:
+    on_success: never

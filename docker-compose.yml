@@ -26,11 +26,3 @@ services:
       - ./.prettierignore:/app/.prettierignore
     ports:
       - "3000:3000"
-
-  # this service is not really meant to be spinned up. it's here, to take
-  # advantage of cached intermediate layers, as they are not shared between
-  # docker-compose and docker.
-  manager-production:
-    build:
-      context: .
-    image: melonproject/manager:local
