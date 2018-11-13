@@ -1,5 +1,5 @@
 .orderbook__loading {
-  margin: 0 auto;
+  margin: var(--space-m) auto;
   width: 100px;
 }
 

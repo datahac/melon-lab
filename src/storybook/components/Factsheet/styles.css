@@ -24,3 +24,8 @@
 .factsheet__item:first-child:nth-last-child(4) ~ .factsheet__item {
   flex: 0 1 25%;
 }
+
+.factsheet__spinner {
+  margin: var(--space-m) auto;
+  width: 50px;
+}

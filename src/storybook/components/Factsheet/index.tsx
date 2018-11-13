@@ -37,7 +37,9 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
   <div className="factsheet">
     <style jsx>{styles}</style>
     {loading ? (
-      <Spinner icon size="small" />
+      <div className="factsheet__spinner">
+        <Spinner icon size="small" />
+      </div>
     ) : (
       <Fragment>
         <div className="factsheet__item">
