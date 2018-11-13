@@ -1,0 +1,34 @@
+.home-template__header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 2;
+}
+
+.home-template__footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.home-template__content-wrap {
+  margin-top: 50px;
+}
+
+.home-template__title {
+  background-color: var(--color-secondary);
+  padding: 16px 16px;
+
+  @media (--viewport-s) {
+    padding: 16px 7%;
+  }
+}
+
+.home-template__content {
+  margin: 16px;
+
+  @media (--viewport-s) {
+    margin: 16px 7%;
+  }
+}

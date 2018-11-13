@@ -29,7 +29,6 @@ export const Ranking: StatelessComponent<RankingProps> = ({
 }) => (
   <div className="ranking">
     <style jsx>{styles}</style>
-    <h2>Funds Ranking</h2>
     {loading ? (
       <div className="ranking__loading">
         <Spinner icon />

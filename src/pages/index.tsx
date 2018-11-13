@@ -1,15 +1,8 @@
 import React from 'react';
-import DefaultTemplate from '+/components/DefaultTemplate';
-import Ranking from '+/components/Ranking';
-import GetStarted from '+/components/GetStarted';
+import HomeTemplate from '+/components/HomeTemplate';
 
 export default class RankingPage extends React.Component {
   render() {
-    return (
-      <DefaultTemplate>
-        <GetStarted isHome />
-        <Ranking />
-      </DefaultTemplate>
-    );
+    return <HomeTemplate />;
   }
 }

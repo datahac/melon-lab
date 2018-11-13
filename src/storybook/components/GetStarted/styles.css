@@ -1,7 +1,6 @@
 .get-started--is-home {
   display: flex;
   flex-flow: column;
-  padding-top: var(--space-m);
 
   @media (--viewport-m) {
     flex-flow: row;
