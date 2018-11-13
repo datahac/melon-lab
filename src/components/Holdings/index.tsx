@@ -45,7 +45,7 @@ export default class HoldingsContainer extends React.PureComponent {
   }
 
   render() {
-    const { address } = this.props;
+    const { address, baseAsset } = this.props;
     const holdings =
       (!this.props.loading &&
         (this.props.holdings || []) &&
@@ -54,6 +54,7 @@ export default class HoldingsContainer extends React.PureComponent {
 
     return (
       <Holdings
+        baseAsset={baseAsset}
         holdings={holdings}
         loading={this.props.loading}
         onClick={asset => this.onClick(asset, address)}

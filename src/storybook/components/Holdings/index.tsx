@@ -27,7 +27,6 @@ export interface HoldingsProps {
   baseAsset?: string;
   loading?: boolean;
   onClick: (asset) => void;
-  isReadyToTrade?: boolean;
 }
 
 export const Holdings: StatelessComponent<HoldingsProps> = ({
@@ -36,36 +35,33 @@ export const Holdings: StatelessComponent<HoldingsProps> = ({
   baseAsset,
   loading,
   onClick,
-  isReadyToTrade,
-}) => {
-  return (
-    <div className="holdings" id="holdings">
-      <style jsx>{styles}</style>
-      {loading ? (
-        <div className="holdings__loading">
-          <Spinner icon />
-        </div>
-      ) : (
-        <div className="holdings__table-wrap">
-          {holdings &&
-            holdings.map(asset => (
-              <Holding
-                key={asset.symbol}
-                fraction={asset.fraction}
-                tokenSymbol={asset.tokenSymbol}
-                tokenName={asset.tokenName}
-                price={asset.price}
-                balance={asset.balance}
-                active={baseAsset === asset.symbol}
-                onClickHolding={
-                  !(asset.symbol === quoteAsset) ? () => onClick(asset) : null
-                }
-              />
-            ))}
-        </div>
-      )}
-    </div>
-  );
-};
+}) => (
+  <div className="holdings" id="holdings">
+    <style jsx>{styles}</style>
+    {loading ? (
+      <div className="holdings__loading">
+        <Spinner icon />
+      </div>
+    ) : (
+      <div className="holdings__table-wrap">
+        {holdings &&
+          holdings.map(asset => (
+            <Holding
+              key={asset.symbol}
+              fraction={asset.fraction}
+              tokenSymbol={asset.tokenSymbol}
+              tokenName={asset.tokenName}
+              price={asset.price}
+              balance={asset.balance}
+              active={baseAsset === asset.symbol}
+              onClickHolding={
+                !(asset.symbol === quoteAsset) ? () => onClick(asset) : null
+              }
+            />
+          ))}
+      </div>
+    )}
+  </div>
+);
 
 export default Holdings;
