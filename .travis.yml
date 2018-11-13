@@ -3,18 +3,10 @@ language: c
 services:
   - docker
 
-cache:
-  directories:
-    - "$HOME/.cache"
-
-before_script:
-  - if [ -f "$HOME/.cache/docker.tgz" ]; then gunzip -c "$HOME/.cache/docker.tgz" | docker load ; docker image ls ; fi
-
 script:
   - make build
   - make lint
   - make test
-  - docker save melonproject/manager-dependencies | gzip -9 > "$HOME/.cache/docker.tgz"
 
 deploy:
   provider: script
