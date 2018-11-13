@@ -8,9 +8,9 @@ all: build lint test
 
 .PHONY: build
 build:
-	@docker build . --target dependencies --tag melonproject/manager-dependecies --cache-from melonproject/manager-dependencies
-	@docker build . --target development 	--tag melonproject/manager-development --cache-from melonproject/manager-dependencies,melonproject/manager-development
-	@docker build . --target production  	--tag melonproject/manager-production	 --cache-from melonproject/manager-dependencies,melonproject/manager-development,melonproject/manager-production
+	@docker build . --target dependencies --tag melonproject/manager-dependencies --cache-from melonproject/manager-dependencies
+	@docker build . --target development 	--tag melonproject/manager-development  --cache-from melonproject/manager-dependencies,melonproject/manager-development
+	@docker build . --target production  	--tag melonproject/manager-production	  --cache-from melonproject/manager-dependencies,melonproject/manager-development,melonproject/manager-production
 
 .PHONY: lint
 lint:

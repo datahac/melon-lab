@@ -24,7 +24,7 @@ LABEL melonproject "manager"
 WORKDIR /app
 
 COPY --from=dependencies /app/node_modules node_modules
-COPY package.json yarn.lock ./
+COPY . /app
 
 ENTRYPOINT ["yarn"]
 
@@ -34,7 +34,6 @@ ENTRYPOINT ["yarn"]
 FROM development as builder
 LABEL melonproject "manager"
 
-COPY . /app
 RUN yarn build
 
 # -----------------------------------------------------------------------------

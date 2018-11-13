@@ -2,14 +2,20 @@
 *
 
 !src/
-!.babelrc
 !babel.config.js
 !backpack.config.js
 !postcss.config.js
+!next.routes.js
 !next.config.js
 !next.config.dist.js
+!jest.config.js
+!jest.setup.js
 !introspect.js
-
+!tsconfig.json
+!tslint.json
 !yarn.lock
 !package.json
 !.env.defaults
+!.prettierignore
+!.prettierrc
+!.babelrc
