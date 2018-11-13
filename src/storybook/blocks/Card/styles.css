@@ -4,12 +4,9 @@
   display: table-row;
 }
 
+.card:hover,
 .card--active {
-  background-color: var(--color-secondary);
-}
-
-.card:hover {
-  background-color: color-mod(var(--color-secondary) a(50%));
+  background-color: var(--color-primary);
 }
 
 .card__info {
