@@ -38,9 +38,7 @@ export const RecentTrades: StatelessComponent<RecentTradesProps> = ({
   return (
     <div className="recent-trades">
       <style jsx>{styles}</style>
-      <h3>
-        Recent trades for {baseAsset}/{quoteAsset}
-      </h3>
+      <h3>Recent trades</h3>
       <div className="recent-trades__table-wrap">
         {trades.length > 0 ? (
           <Table>
