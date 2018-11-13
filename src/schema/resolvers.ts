@@ -2,56 +2,34 @@ import * as R from 'ramda';
 import * as Rx from 'rxjs';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import GraphQLJSON from 'graphql-type-json';
-import { map, distinctUntilChanged, skip } from 'rxjs/operators';
+import { map, pluck, distinctUntilChanged, skip } from 'rxjs/operators';
+import * as protocol from '@melonproject/protocol';
 import Order from './types/Order';
 import toAsyncIterator from './utils/toAsyncIterator';
 import takeLast from './utils/takeLast';
+import resolveNetwork from './utils/resolveNetwork';
 import sameBlock from './utils/sameBlock';
 
 export default {
   DateTime,
-  JSON: GraphQLJSON,
-  ExchangeContractEnum: {
-    MATCHING_MARKET: 'MatchingMarket',
-    ZERO_EX_EXCHANGE: 'ZeroExExchange',
-    KYBER_NETWORK_PROXY: 'KyberNetworkProxy',
-  },
-  ConfigKeyEnum: {
-    CANONICAL_PRICE_FEED_ADDRESS: 'canonicalPriceFeedAddress',
-    COMPETITION_COMPLIANCE_ADDRESS: 'competitionComplianceAddress',
-    ONLY_MANAGER_COMPETITION_ADDRESS: 'onlyManagerCompetitionAddress',
-    NO_COMPLIANCE_ADDRESS: 'noComplianceAddress',
-    MATCHING_MARKET_ADDRESS: 'matchingMarketAddress',
-    MATCHING_MARKET_ADAPTER: 'matchingMarketAdapter',
-    ZERO_EX_V1_ADDRESS: 'zeroExV1Address',
-    ZERO_EX_V1_ADAPTER_ADDRESS: 'zeroExV1AdapterAddress',
-    RANKING_ADDRESS: 'rankingAddress',
-    RISK_MANAGEMENT_ADDRESS: 'riskManagementAddress',
-    VERSION_ADDRESS: 'versionAddress',
-    GOVERNANCE_ADDRESS: 'governanceAddress',
-    OLYMPIAD_ADDRESS: 'olympiadAddress',
-    KYBER_NETWORK_ADDRESS: 'kyberNetworkAddress',
-    KYBER_ADAPTER: 'kyberAdapter',
-  },
+  Json: GraphQLJSON,
   Order,
   Query: {
     openOrders: async (_, { address }, { loaders }) => {
       const contract = await loaders.fundContract.load(address);
       return loaders.fundOpenOrders.load(contract);
     },
-    recentTrades: (_, { baseTokenSymbol, quoteTokenSymbol }, { loaders }) => {
-      return loaders.recentTrades.load({ baseTokenSymbol, quoteTokenSymbol });
+    recentTrades: (_, { base, quote }, { loaders }) => {
+      return loaders.recentTrades.load({ base, quote });
     },
     currentBlock: (_, __, { streams }) => {
-      return takeLast(streams.block$);
+      return takeLast(streams.block$.pipe(pluck('number')));
     },
     nodeSynced: (_, __, { streams }) => {
-      return takeLast(streams.synced$);
+      return takeLast(streams.syncing$.pipe(map(value => !value)));
     },
     totalFunds: (_, __, { streams }) => {
-      return takeLast(streams.ranking$).then(rankings => {
-        return rankings && rankings.length;
-      });
+      return takeLast(streams.ranking$);
     },
     priceFeedUp: (_, __, { streams }) => {
       return takeLast(streams.priceFeed$);
@@ -59,16 +37,11 @@ export default {
     peerCount: (_, __, { streams }) => {
       return takeLast(streams.peers$);
     },
-    versionConfig: (_, { key }, { streams }) => {
-      return takeLast(streams.config$).then(config => {
-        return (config && config[key]) || null;
-      });
-    },
-    provider: (_, __, { streams }) => {
-      return takeLast(streams.provider$);
+    contractDeployment: (_, __, { streams }) => {
+      return takeLast(streams.deployment$);
     },
     network: (_, __, { streams }) => {
-      return takeLast(streams.network$);
+      return takeLast(streams.network$.pipe(map(resolveNetwork)));
     },
     rankings: (_, __, { streams }) => {
       return takeLast(streams.ranking$);
@@ -95,17 +68,8 @@ export default {
     price: (_, { symbol }, { loaders }) => {
       return loaders.symbolPrice.load(symbol);
     },
-    balance: (_, { address, token }, { loaders }) => {
-      switch (token) {
-        case 'WETH':
-          return loaders.nativeBalance.load(address);
-        case 'ETH':
-          return loaders.etherBalance.load(address);
-        case 'MLN':
-          return loaders.melonBalance.load(address);
-      }
-
-      return null;
+    balance: (_, { address, symbol }, { loaders }) => {
+      return loaders.symbolBalance.load({ address, symbol });
     },
   },
   Ranking: {
@@ -121,7 +85,7 @@ export default {
       return takeLast(streams.ranking$).then(ranking => {
         const address = parent.instance.address;
         const entry = (ranking || []).find(rank => rank.address === address);
-        return (entry && entry.rank) || null;
+        return entry && entry.rank || null;
       });
     },
     name: (parent, _, { loaders }) => {
@@ -210,10 +174,31 @@ export default {
       throw new Error('This is not implemented yet');
     },
     estimateSetupFund: async (_, { name, exchanges }) => {
-      // TODO: Prepare setup fund.
-      throw new Error('This is not implemented yet');
+      const createComponentsEstimation = await protocol.factory.createComponents.prepare(
+        addressBook.fundFactory,
+        {
+          defaultTokens: addressBook.tokens,
+          exchangeConfigs: addressBook.exchangeConfigs,
+          fundName: name,
+          priceSource: addressBook.priceSource,
+          quoteToken: addressBook.tokens[0],
+        },
+      );
+      const continueCreationEstimation = await protocol.factory.continueCreation.prepare(
+        addressBook.fundFactory,
+      );
+      const setupFundEstimation = await protocol.factory.setupFund.prepare(
+        addressBook.fundFactory,
+      );
+
+      return [
+        createComponentsEstimation,
+        continueCreationEstimation,
+        setupFundEstimation,
+      ];
+      // throw new Error('This is not implemented yet');
     },
-    executeSetupFund: async (_, { name, exchanges, gasLimit, gasPrice }) => {
+    executeSetupFund: async (_, { name, exchanges, gasLimits, gasPrice }) => {
       // TODO: Execute setup fund.
       throw new Error('This is not implemented yet');
     },
@@ -255,17 +240,28 @@ export default {
     },
   },
   Subscription: {
-    // TODO: Inline these.
-    balance: require('./subscriptions/balance').default,
     orderbook: {
+      resolve: value => value,
       subscribe: () => {
-        return toAsyncIterator(Rx.of([]));
+        const stream$ = Rx.empty();
+        return toAsyncIterator(stream$);
+      },
+    },
+    balance: {
+      resolve: value => value,
+      subscribe: async (_, { symbol, address }, { loaders }) => {
+        const stream$ = (await loaders.symbolBalanceObservable(symbol, address)).pipe(
+          distinctUntilChanged(R.equals)
+        );
+
+        return toAsyncIterator(stream$);
       },
     },
     currentBlock: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
         const stream$ = streams.block$.pipe(
+          pluck('number'),
           distinctUntilChanged(sameBlock),
           skip(1),
         );
@@ -276,19 +272,8 @@ export default {
     nodeSynced: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.synced$.pipe(
-          distinctUntilChanged(R.equals),
-          skip(1),
-        );
-
-        return toAsyncIterator(stream$);
-      },
-    },
-    totalFunds: {
-      resolve: value => value,
-      subscribe: (_, __, { streams }) => {
-        const stream$ = streams.ranking$.pipe(
-          map(rankings => rankings.length),
+        const stream$ = streams.syncing$.pipe(
+          map((state) => !state),
           distinctUntilChanged(R.equals),
           skip(1),
         );
@@ -310,30 +295,7 @@ export default {
     peerCount: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.provider$.pipe(
-          distinctUntilChanged(R.equals),
-          skip(1),
-        );
-
-        return toAsyncIterator(stream$);
-      },
-    },
-    versionConfig: {
-      resolve: value => value,
-      subscribe: (_, { key }, { streams }) => {
-        const stream$ = streams.config$.pipe(
-          map(config => config && config[key]),
-          distinctUntilChanged(R.equals),
-          skip(1),
-        );
-
-        return toAsyncIterator(stream$);
-      },
-    },
-    provider: {
-      resolve: value => value,
-      subscribe: (_, __, { streams }) => {
-        const stream$ = streams.provider$.pipe(
+        const stream$ = streams.peers$.pipe(
           distinctUntilChanged(R.equals),
           skip(1),
         );
@@ -345,17 +307,6 @@ export default {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
         const stream$ = streams.network$.pipe(
-          distinctUntilChanged(R.equals),
-          skip(1),
-        );
-
-        return toAsyncIterator(stream$);
-      },
-    },
-    rankings: {
-      resolve: value => value,
-      subscribe: (_, __, { streams }) => {
-        const stream$ = streams.ranking$.pipe(
           distinctUntilChanged(R.equals),
           skip(1),
         );

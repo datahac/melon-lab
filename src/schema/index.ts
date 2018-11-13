@@ -2,50 +2,46 @@ import { GraphQLSchema } from 'graphql';
 import { makeExecutableSchema } from 'graphql-tools';
 import resolvers from './resolvers';
 import createLoaders from './loaders';
-import pollBlock from './utils/pollBlock';
+import subscribeBlock from './utils/subscribeBlock';
 import pollRanking from './utils/pollRanking';
-import pollSynced from './utils/pollSynced';
-import pollPeers from './utils/pollPeers';
+import subscribeSyncing from './utils/subscribeSyncing';
 import pollPriceFeed from './utils/pollPriceFeed';
-import getProviderType from './utils/getProviderType';
+import pollNetwork from './utils/pollNetwork';
 import getEnvironment from './utils/getEnvironment';
-import getConfig from './utils/getConfig';
-import getNetwork from './utils/getNetwork';
+import currentDeployment from './utils/currentDeployment';
+import currentPeers from './utils/currentPeers';
 import InsecureDirective from './directives/InsecureDirective';
 import * as typeDefs from './schema.gql';
-import { publishReplay, map, switchMap } from 'rxjs/operators';
+import { publishReplay } from 'rxjs/operators';
 
 export async function createContext(track, endpoint) {
-  const environment$ = getEnvironment(track, endpoint);
+  const environment = getEnvironment(track, endpoint);
 
-  const factory = {
-    environment$: environment$ => environment$,
-    network$: environment$ => environment$.pipe(map(getNetwork)),
-    provider$: environment$ => environment$.pipe(map(getProviderType)),
-    config$: environment$ => environment$.pipe(switchMap(getConfig)),
-    block$: environment$ => environment$.pipe(switchMap(pollBlock)),
-    ranking$: environment$ => environment$.pipe(switchMap(pollRanking)),
-    synced$: environment$ => environment$.pipe(switchMap(pollSynced)),
-    peers$: environment$ => environment$.pipe(switchMap(pollPeers)),
-    priceFeed$: environment$ => environment$.pipe(switchMap(pollPriceFeed)),
+  const network$ = pollNetwork(environment).pipe(publishReplay(1));
+  const block$ = subscribeBlock(environment).pipe(publishReplay(1));
+  const ranking$ = pollRanking(environment).pipe(publishReplay(1));
+  const syncing$ = subscribeSyncing(environment).pipe(publishReplay(1));
+  const priceFeed$ = pollPriceFeed(environment).pipe(publishReplay(1));
+  const deployment$ = currentDeployment(environment, network$).pipe(publishReplay(1));
+  const peers$ = currentPeers(environment, block$).pipe(publishReplay(1));
+
+  const streams = {
+    network$,
+    peers$,
+    block$,
+    ranking$,
+    syncing$,
+    priceFeed$,
+    deployment$,
   };
 
-  const streams = Object.keys(factory).reduce((acc, key) => {
-    const stream$ = factory[key](environment$).pipe(publishReplay(1));
-    stream$.connect();
-
-    return {
-      ...acc,
-      [key]: stream$,
-    };
-  }, {});
-
-  Object.values(streams).forEach(stream$ => stream$);
+  Object.values(streams).forEach(stream$ => stream$.connect());
 
   return () => {
-    const loaders = createLoaders(streams);
+    const loaders = createLoaders(environment, streams);
 
     return {
+      environment,
       loaders,
       streams,
     };

@@ -1,9 +1,5 @@
 const sameBlock = (a, b) => {
-  if (a !== b) {
-    return a && b && a.toString() === b.toString();
-  }
-
-  return false;
+  return a.toString() === b.toString();
 };
 
 export default sameBlock;

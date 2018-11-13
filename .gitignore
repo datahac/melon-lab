@@ -6,6 +6,9 @@ package-lock.json
 coverage/
 build/
 
+# Log files.
+*.log
+
 # Ignore all dot files.
 .*
 

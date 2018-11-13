@@ -2,14 +2,8 @@
 # from execution in the hosted / web environment.
 directive @insecure on FIELD_DEFINITION
 
-scalar JSON
+scalar Json
 scalar DateTime
-
-enum ExchangeContractEnum {
-  ZERO_EX_EXCHANGE
-  KYBER_NETWORK_PROXY
-  MATCHING_MARKET
-}
 
 enum ExchangeEnum {
   RADAR_RELAY
@@ -18,36 +12,10 @@ enum ExchangeEnum {
   KYBER_NETWORK
 }
 
-enum TokenEnum {
+enum SymbolEnum {
   WETH
   ETH
   MLN
-}
-
-enum ProviderEnum {
-  INJECTED
-  LOCAL
-  HOSTED
-  CUSTOM
-  NONE
-}
-
-enum ConfigKeyEnum {
-  CANONICAL_PRICE_FEED_ADDRESS
-  COMPETITION_COMPLIANCE_ADDRESS
-  ONLY_MANAGER_COMPETITION_ADDRESS
-  NO_COMPLIANCE_ADDRESS
-  MATCHING_MARKET_ADDRESS
-  MATCHING_MARKET_ADAPTER
-  ZERO_EX_V1_ADDRESS
-  ZERO_EX_V1_ADAPTER_ADDRESS
-  RANKING_ADDRESS
-  RISK_MANAGEMENT_ADDRESS
-  VERSION_ADDRESS
-  GOVERNANCE_ADDRESS
-  OLYMPIAD_ADDRESS
-  KYBER_NETWORK_ADDRESS
-  KYBER_ADAPTER
 }
 
 type Ranking {
@@ -163,6 +131,37 @@ type Signature {
   v: Int!
 }
 
+type ExchangeConfig {
+  adapterAddress: String!
+  exchangeAddress: String!
+  takesCustody: Boolean!
+}
+
+type Token {
+  address: String
+  decimals: Int!
+  symbol: String!
+}
+
+type Deployment {
+  exchangeConfigs: [ExchangeConfig]
+  priceSource: String
+  fundFactory: String
+  tokens: [Token]
+}
+
+type EstimatedTransaction {
+  name: String!
+  contract: String
+  gasEstimation: String!
+}
+
+input EstimatedTransactionInput {
+  name: String!
+  contract: String
+  gasEstimation: String!
+}
+
 type Query {
   defaultAccount: String @insecure
   allAccounts: [String] @insecure
@@ -181,14 +180,13 @@ type Query {
   ): Fund
 
   network: String
-  provider: String
   currentBlock: String
   nodeSynced: Boolean
   priceFeedUp: Boolean
   peerCount: String
-  versionConfig(key: ConfigKeyEnum!): String
+  contractDeployment: Deployment
   totalFunds: Int
-  balance(token: TokenEnum!, address: String!): String
+  balance(symbol: SymbolEnum!, address: String!): String
   price(symbol: String!): String
   fund(address: String!): Fund
   funds(addresses: [String]): [Fund]
@@ -196,7 +194,7 @@ type Query {
 
   # TODO: Move this to the Fund type.
   openOrders(address: String!): [Order]
-  recentTrades(baseTokenSymbol: String!, quoteTokenSymbol: String!): [Trade]
+  recentTrades(base: String!, quote: String!): [Trade]
 }
 
 type Mutation {
@@ -207,32 +205,33 @@ type Mutation {
     takerAssetSymbol: String!
   ): [Order]
 
+  # TODO: Give more fund configuration options: Policies, pricefeed, ...
   """
   Estimates the number of gas units required for the "setup fund" transaction.
   """
   estimateSetupFund(
     name: String!
-    exchanges: [ExchangeContractEnum]!
-  ): String
+    exchanges: [String]!
+  ): [EstimatedTransaction]
 
   """
   Executes the "setup fund" transaction with the given gas price per unit.
   """
   executeSetupFund(
     name: String!
-    exchanges: [ExchangeContractEnum]!
+    exchanges: [String]!
     gasPrice: String!
-    gasLimit: String!
+    gasLimits: [EstimatedTransactionInput]
   ): String
 
   estimateTakeOrder(
-    order: JSON!
+    order: Json!
     quantity: String!
     address: String!
   ): String
 
   executeTakeOrder(
-    order: JSON!
+    order: Json!
     quantity: String!
     address: String!
     gasPrice: String!
@@ -296,18 +295,15 @@ type Mutation {
 
 type Subscription {
   network: String
-  provider: String
   currentBlock: String
   nodeSynced: Boolean
   priceFeedUp: Boolean
   peerCount: String
-  versionConfig(key: ConfigKeyEnum!): String
   totalFunds: Int
-  rankings: [Ranking]
-  balance(token: TokenEnum!, address: String!): String
+  balance(symbol: SymbolEnum!, address: String!): String
   orderbook(
-    baseTokenSymbol: String!
-    quoteTokenSymbol: String!
+    base: String!
+    quote: String!
     exchanges: [ExchangeEnum] = [
       "RADAR_RELAY"
       "OASIS_DEX"

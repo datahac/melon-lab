@@ -1,5 +1,4 @@
 import DataLoader from 'dataloader';
-import takeLast from './utils/takeLast';
 import importWallet from './loaders/wallet/decryptWallet';
 import restoreWallet from './loaders/wallet/restoreWallet';
 import generateMnemonic from './loaders/wallet/generateMnemonic';
@@ -14,144 +13,143 @@ import getFundCalculations from './loaders/fund/fundCalculations';
 import getFundOpenOrders from './loaders/fund/fundOpenOrders';
 import getFundParticipation from './loaders/fund/fundParticipation';
 import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
-import getNativeBalance from './loaders/balance/nativeBalance';
-import getEtherBalance from './loaders/balance/etherBalance';
-import getMelonBalance from './loaders/balance/melonBalance';
 import getRecentTrades from './loaders/recentTrades';
+import { getSymbolBalance, observeSymbolBalance } from './loaders/symbolBalance';
 import getPrice from './loaders/tokenPrice';
+import takeLast from './utils/takeLast';
 
-const contractCache = contract => contract.instance.address;
-
-export default streams => {
+export default (environment, streams) => {
   // TODO: Does this need a custom cache key function?
-  const symbolPrice = new DataLoader(async symbols => {
-    const environment = await takeLast(streams.environment$);
-    const fn = getPrice(environment);
-    return Promise.all((environment && symbols.map(fn)) || []);
-  });
+  const symbolPrice = new DataLoader(
+    symbols => {
+      const fn = getPrice(environment);
+      return Promise.all(symbols.map(fn) || []);
+    },
+  );
 
-  const fundAddressFromManager = new DataLoader(async addresses => {
-    const environment = await takeLast(streams.environment$);
-    const fn = getFundAddressFromManager(environment);
-    return Promise.all((environment && addresses.map(fn)) || []);
-  });
+  const fundAddressFromManager = new DataLoader(
+    addresses => {
+      const fn = getFundAddressFromManager(environment);
+      return Promise.all(addresses.map(fn) || []);
+    },
+  );
 
-  const fundContract = new DataLoader(async addresses => {
-    const environment = await takeLast(streams.environment$);
-    const fn = getFundContract(environment);
-    return Promise.all((environment && addresses.map(fn)) || []);
-  });
+  const fundContract = new DataLoader(
+    addresses => {
+      const fn = getFundContract(environment);
+      return Promise.all(addresses.map(fn) || []);
+    },
+  );
 
   const fundName = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundName)),
+    contracts => {
+      return Promise.all(contracts.map(getFundName));
+    },
     {
-      cacheKeyFn: contractCache,
+      cacheKeyFn: contract => contract.instance.address,
     },
   );
 
   const fundInception = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundInception)),
+    contracts => {
+      return Promise.all(contracts.map(getFundInception));
+    },
     {
-      cacheKeyFn: contractCache,
+      cacheKeyFn: contract => contract.instance.address,
     },
   );
 
   const fundModules = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundModules)),
+    contracts => {
+      return Promise.all(contracts.map(getFundModules));
+    },
     {
-      cacheKeyFn: contractCache,
+      cacheKeyFn: contract => contract.instance.address,
     },
   );
 
   const fundOwner = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundOwner)),
+    contracts => {
+      return Promise.all(contracts.map(getFundOwner));
+    },
     {
-      cacheKeyFn: contractCache,
+      cacheKeyFn: contract => contract.instance.address,
     },
   );
 
   const fundTotalSupply = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundTotalSupply)),
+    contracts => {
+      return Promise.all(contracts.map(getFundTotalSupply));
+    },
     {
-      cacheKeyFn: contractCache,
+      cacheKeyFn: contract => contract.instance.address,
     },
   );
 
   const fundCalculations = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundCalculations)),
+    contracts => {
+      return Promise.all(contracts.map(getFundCalculations));
+    },
     {
-      cacheKeyFn: contractCache,
+      cacheKeyFn: contract => contract.instance.address,
     },
   );
 
   const fundHoldings = new DataLoader(
-    async contracts => {
-      const environment = await takeLast(streams.environment$);
+    contracts => {
       const fn = getFundHoldings(environment);
-      return Promise.all((environment && contracts.map(fn)) || []);
+      return Promise.all(contracts.map(fn) || []);
     },
     {
-      cacheKeyFn: contractCache,
+      cacheKeyFn: contract => contract.instance.address,
     },
   );
 
   const fundOpenOrders = new DataLoader(
-    async contracts => {
-      const environment = await takeLast(streams.environment$);
-      const config = await takeLast(streams.config$);
-      const fn = getFundOpenOrders(environment, config);
-      return Promise.all((environment && config && contracts.map(fn)) || []);
+    contracts => {
+      const fn = getFundOpenOrders(environment);
+      return Promise.all(contracts.map(fn) || []);
     },
     {
-      cacheKeyFn: contractCache,
+      cacheKeyFn: contract => contract.instance.address,
     },
   );
 
   const fundParticipation = new DataLoader(
-    async pairs => {
-      const environment = await takeLast(streams.environment$);
+    pairs => {
       const fn = getFundParticipation(environment);
       const result = pairs.map(pair => fn(pair.fund, pair.investor));
-      return Promise.all((environment && result) || []);
+      return Promise.all(result || []);
     },
     {
-      cacheKeyFn: pair => `${contractCache(pair.fund)}:${pair.investor}`,
+      cacheKeyFn: pair => `${pair.fund.instance.address}:${pair.investor}`,
     },
   );
 
-  const etherBalance = new DataLoader(async addresses => {
-    const environment = await takeLast(streams.environment$);
-    const config = await takeLast(streams.config$);
-    const fn = getEtherBalance(environment, config);
-    return Promise.all((environment && config && addresses.map(fn)) || []);
-  });
-
-  const melonBalance = new DataLoader(async addresses => {
-    const environment = await takeLast(streams.environment$);
-    const config = await takeLast(streams.config$);
-    const fn = getMelonBalance(environment, config);
-    return Promise.all((environment && config && addresses.map(fn)) || []);
-  });
-
-  const nativeBalance = new DataLoader(async addresses => {
-    const environment = await takeLast(streams.environment$);
-    const config = await takeLast(streams.config$);
-    const fn = getNativeBalance(environment, config);
-    return Promise.all((environment && config && addresses.map(fn)) || []);
-  });
-
-  const recentTrades = new DataLoader(
+  const symbolBalance = new DataLoader(
     async pairs => {
-      const environment = await takeLast(streams.environment$);
-      const fn = getRecentTrades(environment);
-      const result = pairs.map(pair =>
-        fn(pair.baseTokenSymbol, pair.quoteTokenSymbol),
-      );
-
-      return Promise.all((environment && result) || []);
+      const deployment = await takeLast(streams.deployment$);
+      const fn = getSymbolBalance(environment, deployment);
+      const result = pairs.map(pair => fn(pair.symbol, pair.address));
+      return Promise.all(result || []);
     },
     {
-      cacheKeyFn: pair => `${pair.baseTokenSymbol}:${pair.quoteTokenSymbol}`,
+      cacheKeyFn: pair => `${pair.symbol}:${pair.address}`,
+    },
+  );
+
+  const symbolBalanceObservable = async (symbol, address) => {
+    return observeSymbolBalance(environment, streams, symbol, address);
+  };
+
+  const recentTrades = new DataLoader(
+    pairs => {
+      const fn = getRecentTrades(environment);
+      const result = pairs.map(pair => fn(pair.base, pair.quote));
+      return Promise.all(result || []);
+    },
+    {
+      cacheKeyFn: pair => `${pair.base}:${pair.quote}`,
     },
   );
 
@@ -169,9 +167,8 @@ export default streams => {
     fundParticipation,
     recentTrades,
     symbolPrice,
-    nativeBalance,
-    melonBalance,
-    etherBalance,
+    symbolBalance,
+    symbolBalanceObservable,
     generateMnemonic,
     importWallet,
     restoreWallet,
