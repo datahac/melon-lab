@@ -7,10 +7,16 @@ import { ApolloLink } from 'apollo-link';
 import withApollo from 'next-with-apollo';
 import { SubscriptionClient } from '~/electron/graphql/client';
 import { createErrorLink } from './common';
+import { Query as QueryBase } from 'react-apollo';
 
-// Re-export the various query components so we can add some customization.
-export { Subscription, Mutation } from 'react-apollo';
-export { Query } from './common';
+export { Subscription } from 'react-apollo';
+export { Mutation } from 'react-apollo';
+
+// We must disable SSR in the electron app. Hence, we re-export
+// the query components here so we can override the ssr flag.
+export const Query = ({ errorPolicy, ...props }) => (
+  <QueryBase {...props} errorPolicy={errorPolicy || 'all'} ssr={false} />
+);
 
 const createLink = (options, cache) => {
   const client = new SubscriptionClient({

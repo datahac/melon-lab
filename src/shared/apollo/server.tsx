@@ -3,10 +3,16 @@ import { ApolloLink } from 'apollo-link';
 import { SchemaLink } from 'apollo-link-schema';
 import { createErrorLink, createCache } from './common';
 import withApollo from 'next-with-apollo';
+import { Query as QueryBase } from 'react-apollo';
 
-// Re-export the various query components so we can add some defaults.
-export { Subscription, Mutation } from 'react-apollo';
-export { Query } from './common';
+export { Subscription } from 'react-apollo';
+export { Mutation } from 'react-apollo';
+
+// We must disable SSR in the electron app. Hence, we re-export
+// the query components here so we can override the ssr flag.
+export const Query = ({ errorPolicy, ...props }) => (
+  <QueryBase {...props} errorPolicy={errorPolicy || 'all'} />
+);
 
 // TODO: This singleton is an ugly hack. Fix it.
 let dataLinkSingleton;

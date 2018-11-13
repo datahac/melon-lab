@@ -3,16 +3,6 @@
 import introspection from '~/schema/schema.gql';
 import { InMemoryCache, IntrospectionFragmentMatcher, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 import { onError } from 'apollo-link-error';
-import { Query as QueryBase } from 'react-apollo';
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig: config } = getConfig();
-
-// We must disable SSR in the electron app. Hence, we re-export
-// the query components here so we can override the ssr flag.
-export const Query = ({ ssr, errorPolicy, ...props }) => (
-  <QueryBase {...props} errorPolicy={errorPolicy || 'all'} ssr={config.isElectron ? false : ssr} />
-);
 
 export const createErrorLink = () => onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {

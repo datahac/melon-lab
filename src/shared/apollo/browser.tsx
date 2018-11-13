@@ -7,6 +7,7 @@ import createTransactionOptions from '~/schema/loaders/transaction/createTransac
 import createSetupFundParameters from '~/schema/loaders/transaction/setupFund/createParameters';
 import postProcessSetupFund from '~/schema/loaders/transaction/setupFund/postProcess';
 import { getParityProvider } from '@melonproject/melon.js';
+import { Query as QueryBase } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
@@ -18,9 +19,14 @@ import getConfig from 'next/config';
 
 const { publicRuntimeConfig: config } = getConfig();
 
-// Re-export the various query components so we can add some defaults.
-export { Subscription, Mutation } from 'react-apollo';
-export { Query } from './common';
+export { Subscription } from 'react-apollo';
+export { Mutation } from 'react-apollo';
+
+// We must disable SSR in the electron app. Hence, we re-export
+// the query components here so we can override the ssr flag.
+export const Query = ({ errorPolicy, ...props }) => (
+  <QueryBase {...props} errorPolicy={errorPolicy || 'all'} />
+);
 
 export const createStateLink = (cache) => {
   const defaults = {
