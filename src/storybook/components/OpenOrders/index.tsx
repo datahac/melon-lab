@@ -75,7 +75,10 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                   return (
                     <Row key={order.id} size={isManager && 'small'}>
                       <CellBody>
-                        {format(order.timestamp, 'DD. MMM YYYY HH:mm')}
+                        {format(
+                          parseInt(order.timestamp),
+                          'DD. MMM YYYY HH:mm',
+                        )}
                       </CellBody>
                       <CellBody>{order.id}</CellBody>
                       <CellBody>

@@ -1,15 +1,6 @@
-import { compose, withPropsOnChange } from 'recompose';
+import { compose } from 'recompose';
 import RecentTrades from '~/components/RecentTrades';
 import RecentTradesQuery from './data/recentTrades';
-
-const withMappedTrades = withPropsOnChange(['trades'], props => ({
-  trades: props.trades.map(trade => ({
-    ...trade,
-    price: trade.price,
-    quantity: trade.quantity,
-    timestamp: trade.timestamp,
-  })),
-}));
 
 const withRecentTrades = BaseComponent => baseProps => (
   <RecentTradesQuery
@@ -28,7 +19,4 @@ const withRecentTrades = BaseComponent => baseProps => (
   </RecentTradesQuery>
 );
 
-export default compose(
-  withRecentTrades,
-  withMappedTrades,
-)(RecentTrades);
+export default compose(withRecentTrades)(RecentTrades);

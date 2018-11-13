@@ -59,7 +59,7 @@ export const RecentTrades: StatelessComponent<RecentTradesProps> = ({
                 trades.map((trade, index) => (
                   <Row key={index}>
                     <CellBody>
-                      {format(trade.timestamp, 'DD. MMM YYYY HH:mm')}
+                      {format(parseInt(trade.timestamp), 'DD. MMM YYYY HH:mm')}
                     </CellBody>
                     <CellBody>
                       <span className={typeCellClassNames(trade.type)}>
