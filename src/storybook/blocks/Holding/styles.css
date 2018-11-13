@@ -1,6 +1,6 @@
 .holding {
   position: relative;
-  height: 36px;
+  height: 42px;
 }
 
 .holding__wrapper {
@@ -10,7 +10,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-xs) var(--space-s);
+  padding: var(--space-xxs) var(--space-s);
   line-height: 1;
 }
 
@@ -28,7 +28,14 @@
 }
 
 .holding__symbol {
-  flex: 0 0 33.33%;
+  flex: 1 0 33.33%;
+}
+
+.holding__name {
+  margin-top: var(--space-xxs);
+  display: block;
+  font-size: var(--font-size-s);
+  color: var(--color-grey);
 }
 
 .holding__bar {

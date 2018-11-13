@@ -52,7 +52,8 @@ export const Holdings: StatelessComponent<HoldingsProps> = ({
               <Holding
                 key={asset.symbol}
                 fraction={asset.fraction}
-                symbol={asset.symbol}
+                tokenSymbol={asset.tokenSymbol}
+                tokenName={asset.tokenName}
                 price={asset.price}
                 balance={asset.balance}
                 active={baseAsset === asset.symbol}

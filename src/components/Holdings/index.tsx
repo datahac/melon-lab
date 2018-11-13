@@ -2,19 +2,28 @@ import Holdings from '~/components/Holdings';
 import Router from 'next/router';
 import * as R from 'ramda';
 import { toBigNumber } from '~/utils/functionalBigNumber';
+import tokens from '~/utils/tokens';
 
-const mapHoldings = R.curryN(2, (nav, asset) => ({
-  ...asset,
-  price: asset.price,
-  fraction:
-    asset &&
-    nav &&
-    toBigNumber(asset.balance)
-      .times(asset.price)
-      .div(nav.toString() || 1)
-      .times(100),
-  balance: asset.balance,
-}));
+const mapHoldings = R.curryN(2, (nav, asset) => {
+  return {
+    ...asset,
+    price: asset.price,
+    fraction:
+      asset &&
+      nav &&
+      toBigNumber(asset.balance)
+        .times(asset.price)
+        .div(nav.toString() || 1)
+        .times(100),
+    balance: asset.balance,
+    tokenName: R.pathOr(
+      'N/A',
+      ['value'],
+      R.find(R.propEq('key', asset.symbol.split('-')[0]), tokens),
+    ),
+    tokenSymbol: asset.symbol,
+  };
+});
 
 const sortHoldings = R.sortWith([
   R.comparator((a, b) =>
