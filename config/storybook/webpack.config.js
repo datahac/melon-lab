@@ -1,18 +1,19 @@
 const path = require('path');
-const base = path.resolve(__dirname, '..', '..', 'src', 'storybook');
+const src = path.resolve(__dirname, '..', '..', 'src');
+const base = path.join(src, 'storybook');
 
 module.exports = config => {
   config.resolve.extensions.push('.ts', '.tsx');
 
   config.resolve.alias = Object.assign({}, config.resolve.alias, {
-    '~/static': path.join(base, '..', 'static'),
+    '~/static': path.join(src, 'static'),
+    '~/utils': path.join(src, 'shared', 'utils'),
     '~/design': path.join(base, 'design'),
     '~/components': path.join(base, 'components'),
     '~/blocks': path.join(base, 'blocks'),
     '~/templates': path.join(base, 'templates'),
     '~/containers': path.join(base, 'containers'),
-    '~/utils': path.join(base, 'utils'),
-    '~/link': path.join(base, 'utils', 'link'),
+    '~/link': path.join(base, 'link'),
   });
 
   config.module.rules.push(

@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 export const toBigNumber = value =>
-  new BigNumber(value && value.toString() || '0');
+  new BigNumber(value && value + '' || '0');
 
 export const multiply = (base, ...args) =>
   args.reduce(
