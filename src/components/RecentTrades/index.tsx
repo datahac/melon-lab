@@ -1,4 +1,3 @@
-import { compose } from 'recompose';
 import RecentTrades from '~/components/RecentTrades';
 import RecentTradesQuery from './data/recentTrades';
 
@@ -19,4 +18,4 @@ const withRecentTrades = BaseComponent => baseProps => (
   </RecentTradesQuery>
 );
 
-export default compose(withRecentTrades)(RecentTrades);
+export default withRecentTrades(RecentTrades);
