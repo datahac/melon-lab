@@ -1,19 +1,7 @@
 import Holdings from '~/components/Holdings';
-import { compose, withPropsOnChange, withHandlers } from 'recompose';
+import Router from 'next/router';
 import * as R from 'ramda';
-import { withRouter } from 'next/router';
 import { toBigNumber } from '~/utils/functionalBigNumber';
-
-// TODO: Add isReadyToTrade
-
-const withHoldingHandlers = withHandlers({
-  onClick: props => asset => {
-    props.router.push({
-      pathname: '/manage',
-      query: { address: props.address, base: asset.symbol, quote: 'WETH-T' },
-    });
-  },
-});
 
 const mapHoldings = R.curryN(2, (nav, asset) => ({
   ...asset,
@@ -35,19 +23,32 @@ const sortHoldings = R.sortWith([
   R.ascend(R.prop('symbol')),
 ]);
 
-const withMappedProps = withPropsOnChange(
-  ['holdings', 'nav', 'loading'],
-  props => ({
-    holdings:
-      (!props.loading &&
-        props.holdings &&
-        sortHoldings(props.holdings.map(mapHoldings(props.nav)))) ||
-      [],
-  }),
-);
+export default class HoldingsContainer extends React.PureComponent {
+  onClick(asset, address) {
+    Router.push({
+      pathname: '/manage',
+      query: {
+        address,
+        base: asset.symbol,
+        quote: 'WETH-T',
+      },
+    });
+  }
 
-export default compose(
-  withRouter,
-  withMappedProps,
-  withHoldingHandlers,
-)(Holdings);
+  render() {
+    const { address } = this.props;
+    const holdings =
+      (!this.props.loading &&
+        (this.props.holdings || []) &&
+        sortHoldings(this.props.holdings.map(mapHoldings(this.props.nav)))) ||
+      [];
+
+    return (
+      <Holdings
+        holdings={holdings}
+        loading={this.props.loading}
+        onClick={asset => this.onClick(asset, address)}
+      />
+    );
+  }
+}
