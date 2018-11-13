@@ -39,6 +39,7 @@
   margin: 0;
   min-height: calc(100% - 50px);
   padding-bottom: 33px;
+  background-color: var(--color-primary);
 }
 
 :global(*),

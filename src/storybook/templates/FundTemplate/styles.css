@@ -18,7 +18,6 @@
   flex: 1 0 100%;
   overflow: hidden;
   min-width: 300px;
-  background-color: var(--color-primary);
 
   @media (--viewport-m) {
     flex: 1 0 50%;
@@ -30,6 +29,7 @@
 }
 
 .fund-template__order-form {
+  background-color: var(--color-white);
   flex: 1 0 25%;
   min-width: 250px;
   border-top: 1px solid var(--color-border);
@@ -44,6 +44,7 @@
 }
 
 .fund-template__holdings {
+  background-color: var(--color-white);
   flex: 1 0 25%;
   min-width: 250px;
   border-bottom: 1px solid var(--color-border);
@@ -64,11 +65,13 @@
 }
 
 .fund-template__open-orders {
-  margin: var(--space-m) var(--space-xl);
+  background-color: var(--color-white);
+  padding: var(--space-xxs) var(--space-xl);
 }
 
 .fund-template__recent-trades {
-  margin: var(--space-m) var(--space-xl);
+  background-color: var(--color-white);
+  padding: var(--space-xxs) var(--space-xl) var(--space-l);
 }
 
 .fund-template__header {
