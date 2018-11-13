@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # apk dependencies
 # -----------------------------------------------------------------------------
-FROM node:11.0.0-alpine as apk-dependencies
+FROM node:11.1.0-alpine as apk-dependencies
 WORKDIR /app
 
 # Install system dependencies.
