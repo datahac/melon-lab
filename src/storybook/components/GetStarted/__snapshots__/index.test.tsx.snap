@@ -2,103 +2,99 @@
 
 exports[`GetStarted should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash get-started"
+  className="get-started"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
     Get started
   </h3>
   <div
-    className="jsx-__scopedHash get-started__description"
+    className="get-started__description"
   >
-    <p
-      className="jsx-__scopedHash"
-    >
-      <b
-        className="jsx-__scopedHash"
-      >
+    <p>
+      <b>
         Melon
       </b>
       , [méllō], μέλλω; Greek for 
-      <b
-        className="jsx-__scopedHash"
-      >
+      <b>
         "destined to be"
       </b>
       :
     </p>
-    <p
-      className="jsx-__scopedHash"
-    >
+    <p>
       Blockchain software that seeks to enable participants to set up, manage and invest in technology regulated digital investment funds.
     </p>
-    <p
-      className="jsx-__scopedHash"
-    >
+    <p>
       Set up your own technology regulated fund and discover the future of asset management.
     </p>
-    <Component />
   </div>
 </div>
 `;
 
 exports[`GetStarted should render correctly with isHome 1`] = `
 <div
-  className="jsx-__scopedHash get-started get-started--is-home"
+  className="get-started get-started--is-home"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <div
-    className="jsx-__scopedHash get-started__welcome"
+    className="get-started__welcome"
   >
     <h1
-      className="jsx-__scopedHash get-started__title"
+      className="get-started__title"
     >
       Welcome to 
       <span
-        className="jsx-__scopedHash get-started__name"
+        className="get-started__name"
       >
         Melon
       </span>
     </h1>
   </div>
   <div
-    className="jsx-__scopedHash get-started__description"
+    className="get-started__description"
   >
-    <p
-      className="jsx-__scopedHash"
-    >
-      <b
-        className="jsx-__scopedHash"
-      >
+    <p>
+      <b>
         Melon
       </b>
       , [méllō], μέλλω; Greek for 
-      <b
-        className="jsx-__scopedHash"
-      >
+      <b>
         "destined to be"
       </b>
       :
     </p>
-    <p
-      className="jsx-__scopedHash"
-    >
+    <p>
       Blockchain software that seeks to enable participants to set up, manage and invest in technology regulated digital investment funds.
     </p>
-    <p
-      className="jsx-__scopedHash"
-    >
+    <p>
       Set up your own technology regulated fund and discover the future of asset management.
     </p>
-    <Component />
   </div>
 </div>
 `;

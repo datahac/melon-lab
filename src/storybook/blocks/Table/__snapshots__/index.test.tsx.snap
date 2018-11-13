@@ -2,12 +2,22 @@
 
 exports[`CellBody should render correctly 1`] = `
 <Fragment>
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <td
-    className="jsx-__scopedHash table__cell"
+    className="table__cell"
   >
     Default button
   </td>
@@ -16,12 +26,22 @@ exports[`CellBody should render correctly 1`] = `
 
 exports[`CellHead should render correctly 1`] = `
 <Fragment>
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <th
-    className="jsx-__scopedHash table__cell"
+    className="table__cell"
   >
     Default button
   </th>
@@ -30,12 +50,22 @@ exports[`CellHead should render correctly 1`] = `
 
 exports[`Row should render correctly 1`] = `
 <Fragment>
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <tr
-    className="jsx-__scopedHash table__row table__row--body"
+    className="table__row table__row--body"
   >
     Default button
   </tr>
@@ -44,12 +74,22 @@ exports[`Row should render correctly 1`] = `
 
 exports[`Table should render correctly 1`] = `
 <Fragment>
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <table
-    className="jsx-__scopedHash table"
+    className="table"
   >
     Default button
   </table>
@@ -58,12 +98,22 @@ exports[`Table should render correctly 1`] = `
 
 exports[`TableBody should render correctly 1`] = `
 <Fragment>
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <tbody
-    className="jsx-__scopedHash table__body"
+    className="table__body"
   >
     Default button
   </tbody>
@@ -72,12 +122,22 @@ exports[`TableBody should render correctly 1`] = `
 
 exports[`TableHead should render correctly 1`] = `
 <Fragment>
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <thead
-    className="jsx-__scopedHash table__head"
+    className="table__head"
   >
     Default button
   </thead>

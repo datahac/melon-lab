@@ -2,24 +2,14 @@
 
 exports[`FundActivity should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash fund-activity"
+  className="fund-activity"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
-  >
+  <h3>
     Fund Activity
   </h3>
-  <p
-    className="jsx-__scopedHash"
-  >
+  <p>
     Recent Subscriptions
-    <br
-      className="jsx-__scopedHash"
-    />
+    <br />
     Recent Redemptions
   </p>
   <Button

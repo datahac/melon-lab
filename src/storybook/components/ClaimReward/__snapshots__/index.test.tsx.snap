@@ -2,32 +2,40 @@
 
 exports[`ClaimReward should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash claim-reward"
+  className="claim-reward"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
     Naxos
      reward
   </h3>
   <div
-    className="jsx-__scopedHash claim-reward__message"
+    className="claim-reward__message"
   >
     Naxos
      has ended. You can now claim your reward. By clicking the "Claim shares" button, the shares of your fund will be transfered back to your account. Then click on the "Redeem" button, and the underlying assets of your fund will then be transfered to your manager address.
   </div>
   <ul
-    className="jsx-__scopedHash claim-reward__steps"
+    className="claim-reward__steps"
   >
     <li
-      className="jsx-__scopedHash claim-reward__step"
+      className="claim-reward__step"
     >
       <span
-        className="jsx-__scopedHash claim-reward__step-text"
+        className="claim-reward__step-text"
       >
         Claim my shares from the 
         Naxos
@@ -40,10 +48,10 @@ exports[`ClaimReward should render correctly 1`] = `
       </Button>
     </li>
     <li
-      className="jsx-__scopedHash claim-reward__step"
+      className="claim-reward__step"
     >
       <span
-        className="jsx-__scopedHash claim-reward__step-text"
+        className="claim-reward__step-text"
       >
         Redeem my shares
       </span>
@@ -59,20 +67,28 @@ exports[`ClaimReward should render correctly 1`] = `
 
 exports[`ClaimReward should render correctly with isCompetitionActive 1`] = `
 <div
-  className="jsx-__scopedHash claim-reward"
+  className="claim-reward"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
     Naxos
      reward
   </h3>
   <div
-    className="jsx-__scopedHash claim-reward__message"
+    className="claim-reward__message"
   >
     Naxos
      reward can only be claimed at the end of the

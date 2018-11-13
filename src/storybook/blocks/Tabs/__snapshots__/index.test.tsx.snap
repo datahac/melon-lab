@@ -2,15 +2,25 @@
 
 exports[`Tabs should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash tabs"
+  className="tabs"
   role="tablist"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <div
-    className="jsx-__scopedHash tabs__nav"
+    className="tabs__nav"
   >
     <div
       aria-label="Tab 0"

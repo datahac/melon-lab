@@ -2,42 +2,52 @@
 
 exports[`Card should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash card"
+  className="card"
   onClick={[MockFunction]}
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <div
-    className="jsx-__scopedHash card__rank"
+    className="card__rank"
   >
     <span
-      className="jsx-__scopedHash card__rank-symbol"
+      className="card__rank-symbol"
     >
       #
     </span>
     1
   </div>
   <div
-    className="jsx-__scopedHash card__info-cell"
+    className="card__info-cell"
   >
     <div
-      className="jsx-__scopedHash card__info-wrap"
+      className="card__info-wrap"
     >
       <div
-        className="jsx-__scopedHash card__name"
+        className="card__name"
       >
         Black Turtle
       </div>
       <div
-        className="jsx-__scopedHash card__info"
+        className="card__info"
       >
         <div
-          className="jsx-__scopedHash card__share-price"
+          className="card__share-price"
         >
           <span
-            className="jsx-__scopedHash card__label"
+            className="card__label"
           >
             Share price
           </span>
@@ -45,10 +55,10 @@ exports[`Card should render correctly 1`] = `
           1.0081
         </div>
         <div
-          className="jsx-__scopedHash card__inception-date"
+          className="card__inception-date"
         >
           <span
-            className="jsx-__scopedHash card__label"
+            className="card__label"
           >
             Inception Date
           </span>
@@ -57,14 +67,19 @@ exports[`Card should render correctly 1`] = `
         </div>
       </div>
       <div
-        className="jsx-__scopedHash card__report"
+        className="card__report"
+        onClick={[Function]}
       >
-        <a
-          className="jsx-__scopedHash card__report-link"
+        <Link
           target="_blank"
+          title="Show Report"
         >
-          Show Report
-        </a>
+          <Icon
+            height="20px"
+            name="icons_report"
+            width="16px"
+          />
+        </Link>
       </div>
     </div>
   </div>

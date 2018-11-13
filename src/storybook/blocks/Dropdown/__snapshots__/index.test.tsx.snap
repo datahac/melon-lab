@@ -2,24 +2,34 @@
 
 exports[`Dropdown should pass a selected value to the onChange handler 1`] = `
 <div
-  className="jsx-__scopedHash dropdown"
+  className="dropdown"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <span
-    className="jsx-__scopedHash dropdown__label"
+    className="dropdown__label"
   >
     label
   </span>
   <div
-    className="jsx-__scopedHash dropdown__wrapper"
+    className="dropdown__wrapper"
   >
     <select
-      className="jsx-__scopedHash dropdown__select"
+      className="dropdown__select"
       name="name"
-      onChange={[Function]}
+      onChange={[MockFunction]}
     >
       <option
         key="0"
@@ -40,22 +50,32 @@ exports[`Dropdown should pass a selected value to the onChange handler 1`] = `
 
 exports[`Dropdown should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash dropdown"
+  className="dropdown"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <span
-    className="jsx-__scopedHash dropdown__label"
+    className="dropdown__label"
   >
     label
   </span>
   <div
-    className="jsx-__scopedHash dropdown__wrapper"
+    className="dropdown__wrapper"
   >
     <select
-      className="jsx-__scopedHash dropdown__select"
+      className="dropdown__select"
       name="name"
       onChange={[Function]}
     >

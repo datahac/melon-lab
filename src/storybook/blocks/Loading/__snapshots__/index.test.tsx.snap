@@ -1,25 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Loading should render correctly 1`] = `
-<span
-  className="jsx-__scopedHash"
->
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+<span>
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <span
-    className="jsx-__scopedHash loading__item"
+    className="loading__item"
   >
     .
   </span>
   <span
-    className="jsx-__scopedHash loading__item"
+    className="loading__item"
   >
     .
   </span>
   <span
-    className="jsx-__scopedHash loading__item"
+    className="loading__item"
   >
     .
   </span>
@@ -27,26 +35,42 @@ exports[`Loading should render correctly 1`] = `
 `;
 
 exports[`Loading should render correctly without dataAvailable 1`] = `
-<span
-  className="jsx-__scopedHash"
->
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+<span>
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <span
-    className="jsx-__scopedHash loading__invalid"
+    className="loading__invalid"
   />
 </span>
 `;
 
 exports[`Loading should render correctly without loading 1`] = `
-<span
-  className="jsx-__scopedHash"
->
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+<span>
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
 </span>
 `;

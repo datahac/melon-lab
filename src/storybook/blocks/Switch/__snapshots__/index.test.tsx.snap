@@ -2,38 +2,48 @@
 
 exports[`Switch should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash switch"
+  className="switch"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <label
-    className="jsx-__scopedHash switch__wrapper"
+    className="switch__wrapper"
   >
     <input
-      className="jsx-__scopedHash switch__input"
+      className="switch__input"
       name="name"
       onChange={[Function]}
       type="checkbox"
       value="value"
     />
     <span
-      className="jsx-__scopedHash switch__label"
+      className="switch__label"
       data-label-left="Buy"
       data-label-right="Sell"
     >
       ETH-T-M
     </span>
     <span
-      className="jsx-__scopedHash switch__label"
+      className="switch__label"
       data-label-left="Buy"
       data-label-right="Sell"
     >
       MLN-T-M
     </span>
     <div
-      className="jsx-__scopedHash switch__icon"
+      className="switch__icon"
     />
   </label>
 </div>

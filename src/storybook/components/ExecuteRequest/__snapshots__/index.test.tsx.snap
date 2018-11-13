@@ -7,20 +7,27 @@ exports[`ExecuteRequest should render correctly 1`] = `
   <Notification
     isWarning={true}
   >
-    <JSXStyle
-      css="__scoped"
-      styleId="__scopedHash"
-    />
+    <style
+      jsx={true}
+    >
+      <type
+        0="p"
+        1="r"
+        2="o"
+        3="p"
+        4="s"
+        key="key"
+      >
+        rendered
+      </type>
+    </style>
     <h3
-      className="jsx-__scopedHash execute-request__title"
+      className="execute-request__title"
     >
       Waiting time required
     </h3>
-    <p
-      className="jsx-__scopedHash"
-    >
+    <p>
       <a
-        className="jsx-__scopedHash"
         href="https://medium.com/melonport-blog/protecting-participants-ee55a752287"
         rel="noopener noreferrer"
         target="_blank"

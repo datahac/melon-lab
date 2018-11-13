@@ -2,22 +2,24 @@
 
 exports[`ImportWallet should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash import-wallet"
+  className="import-wallet"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
-    Import wallet
-  </h3>
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <div
-    className="jsx-__scopedHash import-wallet__error"
-  />
-  <div
-    className="jsx-__scopedHash import-wallet__dropzone"
+    className="import-wallet__dropzone"
   >
     <t
       disableClick={false}
@@ -39,9 +41,7 @@ exports[`ImportWallet should render correctly 1`] = `
         }
       }
     >
-      <p
-        className="jsx-__scopedHash"
-      >
+      <p>
         Select a wallet JSON file from your computer
       </p>
     </t>

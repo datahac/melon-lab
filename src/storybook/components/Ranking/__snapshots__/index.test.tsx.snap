@@ -2,25 +2,33 @@
 
 exports[`Ranking should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash ranking"
+  className="ranking"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h2>
     Funds Ranking
-  </h3>
+  </h2>
   <div
-    className="jsx-__scopedHash ranking__table-wrap"
+    className="ranking__table-wrap"
   >
     <div
-      className="jsx-__scopedHash ranking__filters"
+      className="ranking__filters"
     >
       <div
-        className="jsx-__scopedHash ranking__search"
+        className="ranking__search"
       >
         <Input
           name="search"
@@ -30,96 +38,45 @@ exports[`Ranking should render correctly 1`] = `
         />
       </div>
       <div
-        className="jsx-__scopedHash ranking__sort"
+        className="ranking__sort"
       >
         <Dropdown
           label="Sort by"
           onChange={[Function]}
-          options={
-            Array [
-              Object {
-                "name": "Highest rank",
-                "value": "+rank",
-              },
-              Object {
-                "name": "Lowest rank",
-                "value": "-rank",
-              },
-              Object {
-                "name": "Highest price",
-                "value": "-price",
-              },
-              Object {
-                "name": "Lowest price",
-                "value": "+price",
-              },
-              Object {
-                "name": "Newest",
-                "value": "-inception",
-              },
-              Object {
-                "name": "Oldest",
-                "value": "+inception",
-              },
-            ]
-          }
           value="+rank"
         />
       </div>
     </div>
     <div
-      className="jsx-__scopedHash ranking__funds"
-    >
-      <Card
-        address="0x5bBA9263Ab1eA26FF9c0FeE3619e7AAf7C79E02b"
-        inception="26. Jul 2018 10:48"
-        isActive={true}
-        key="0x5bBA9263Ab1eA26FF9c0FeE3619e7AAf7C79E02b"
-        name="Black Turtle"
-        onClick={[Function]}
-        rank={1}
-        sharePrice="1.0081"
-      />
-      <Card
-        address="0xFfDd0ae2efcBDb95fbCd189Fbb194708B3a3B3F9"
-        inception="24. Jul 2018 22:04"
-        isActive={false}
-        key="0xFfDd0ae2efcBDb95fbCd189Fbb194708B3a3B3F9"
-        name="Quants"
-        onClick={[Function]}
-        rank={2}
-        sharePrice="1.0000"
-      />
-      <Card
-        address="0xF1e9868Dc7b02AD30358476380Bfcb77A6c2e74e"
-        inception="26. Jul 2018 17:38"
-        isActive={false}
-        key="0xF1e9868Dc7b02AD30358476380Bfcb77A6c2e74e"
-        name="Titanium"
-        onClick={[Function]}
-        rank={3}
-        sharePrice="1.0000"
-      />
-    </div>
+      className="ranking__funds"
+    />
   </div>
 </div>
 `;
 
 exports[`Ranking should render correctly when loading 1`] = `
 <div
-  className="jsx-__scopedHash ranking"
+  className="ranking"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h2>
     Funds Ranking
-  </h3>
+  </h2>
   <div
-    className="jsx-__scopedHash ranking__loading"
+    className="ranking__loading"
   >
     <Spinner
       icon={true}

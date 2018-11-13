@@ -2,15 +2,23 @@
 
 exports[`Statistics should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash statistics"
+  className="statistics"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
     Statistics
   </h3>
   <Notification
@@ -19,7 +27,7 @@ exports[`Statistics should render correctly 1`] = `
     In development
   </Notification>
   <div
-    className="jsx-__scopedHash statistics__table"
+    className="statistics__table"
   >
     <Table>
       <TableBody>

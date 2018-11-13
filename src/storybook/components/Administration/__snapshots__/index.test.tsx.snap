@@ -2,15 +2,23 @@
 
 exports[`Administration should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash administration"
+  className="administration"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
     Fund Administration
   </h3>
   <Button
@@ -37,15 +45,23 @@ exports[`Administration should render correctly 1`] = `
 
 exports[`Administration should render correctly with loading 1`] = `
 <div
-  className="jsx-__scopedHash administration"
+  className="administration"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
     Fund Administration
   </h3>
   <Button
@@ -67,9 +83,7 @@ exports[`Administration should render correctly with loading 1`] = `
   >
     Irreversibly shut down fund
   </Button>
-  <p
-    className="jsx-__scopedHash"
-  >
+  <p>
     Please wait for upcoming Metamask popup
   </p>
 </div>
@@ -77,15 +91,23 @@ exports[`Administration should render correctly with loading 1`] = `
 
 exports[`Administration should render correctly with subscriptionAllowed 1`] = `
 <div
-  className="jsx-__scopedHash administration"
+  className="administration"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
     Fund Administration
   </h3>
   <Button

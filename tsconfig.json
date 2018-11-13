@@ -6,7 +6,7 @@
     "outDir": "dist",
     "target": "esnext",
     "module": "esnext",
-    "jsx": "preserve",
+    "jsx": "react",
     "sourceMap": true,
     "strict": true,
     "allowJs": true,
@@ -18,9 +18,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    "isolatedModules": true,
-    "paths": {
-    }
+    "isolatedModules": true
   },
   "include": ["src/**/*"],
 }

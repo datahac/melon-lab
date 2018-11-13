@@ -5,11 +5,12 @@ module.exports = {
   "testEnvironment": "jsdom",
   "moduleNameMapper": {
     "^.+\\.s?css$": "identity-obj-proxy",
-    "^~/design/(.*)$": "./src/storybook/design/$1",
-    "^~/blocks/(.*)$": "./src/storybook/blocks/$1",
-    "^~/components/(.*)$": "./src/storybook/components/$1",
-    "^~/containers/(.*)$": "./src/storybook/containers/$1",
-    "^~/utils/(.*)$": "./src/storybook/utils/$1"
+    "^~/design/(.*)$": "<rootDir>/src/storybook/design/$1",
+    "^~/blocks/(.*)$": "<rootDir>/src/storybook/blocks/$1",
+    "^~/components/(.*)$": "<rootDir>/src/storybook/components/$1",
+    "^~/containers/(.*)$": "<rootDir>/src/storybook/containers/$1",
+    "^~/utils/(.*)$": "<rootDir>/src/shared/utils/$1",
+    "^~/link$": "<rootDir>/src/storybook/link"
   },
   "snapshotSerializers": ["enzyme-to-json/serializer"],
   "setupFiles": [
@@ -29,8 +30,8 @@ module.exports = {
   ],
   "globals": {
     "ts-jest": {
-      "tsConfigFile": "tsconfig.json",
-      "useBabelrc": true
+      "tsConfig": "tsconfig.test.json",
+      "diagnostics": false,
     }
   }
 };

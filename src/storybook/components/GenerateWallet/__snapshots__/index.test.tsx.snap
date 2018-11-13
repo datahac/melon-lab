@@ -2,41 +2,63 @@
 
 exports[`GenerateWallet should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash generate-wallet"
+  className="generate-wallet"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
-    Generate Account
-  </h3>
-  <p
-    className="jsx-__scopedHash"
-  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <p>
     The standard bip39 is used to generate a mnemonic phrase, from which your wallet will be cryptographically derived.
   </p>
-  <p
-    className="jsx-__scopedHash"
-  >
-    Please write down the following mnemonic and store it in a safe place! If you loose your mnemonic you will not be able to access your fund again. If someone else gets a copy of this, they can take over your wallet & fund and steal your price!
+  <p>
+    <b>
+      Please write down the following mnemonic and store it in a safe place! If you loose your mnemonic you will not be able to access your fund again. If someone else gets a copy of this, they can take over your wallet & fund and steal your price!
+    </b>
   </p>
   <p
-    className="jsx-__scopedHash generate-wallet__mnemonic"
+    className="generate-wallet__mnemonic"
   >
     lorem ipsum
   </p>
-  <p
-    className="jsx-__scopedHash"
+  <div
+    className="generate-wallet__actions"
   >
-    <Button
-      onClick={[Function]}
-      style="secondary"
+    <div
+      className="generate-wallet__action"
     >
-      I have written down the mnemonic
-    </Button>
-  </p>
+      <Link
+        href={
+          Object {
+            "pathname": "/wallet",
+          }
+        }
+        size="medium"
+        style="secondary"
+      >
+        Cancel
+      </Link>
+    </div>
+    <div
+      className="generate-wallet__action"
+    >
+      <Button
+        onClick={[Function]}
+        style="primary"
+      >
+        Confirm
+      </Button>
+    </div>
+  </div>
 </div>
 `;

@@ -2,14 +2,24 @@
 
 exports[`Toggle should render correctly 1`] = `
 <label
-  className="jsx-__scopedHash toggle"
+  className="toggle"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <input
-    className="jsx-__scopedHash toggle__input"
+    className="toggle__input"
     hidden={true}
     name="name"
     onChange={[MockFunction]}
@@ -17,7 +27,7 @@ exports[`Toggle should render correctly 1`] = `
     value="value"
   />
   <span
-    className="jsx-__scopedHash toggle__text"
+    className="toggle__text"
   >
     text
   </span>

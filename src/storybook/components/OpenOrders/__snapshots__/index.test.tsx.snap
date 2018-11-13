@@ -2,19 +2,27 @@
 
 exports[`OpenOrders should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash open-orders"
+  className="open-orders"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
     Open orders
   </h3>
   <div
-    className="jsx-__scopedHash open-orders__table-wrap"
+    className="open-orders__table-wrap"
   >
     <Table>
       <TableHead>
@@ -55,14 +63,14 @@ exports[`OpenOrders should render correctly 1`] = `
           size="small"
         >
           <CellBody>
-            25. Jul 2018 11:11
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             12322
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash open-orders__cell open-orders__cell--red"
+              className="open-orders__cell open-orders__cell--red"
             >
               sell
             </span>
@@ -98,14 +106,14 @@ exports[`OpenOrders should render correctly 1`] = `
           size="small"
         >
           <CellBody>
-            25. Jul 2018 11:11
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             29468
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash open-orders__cell open-orders__cell--red"
+              className="open-orders__cell open-orders__cell--red"
             >
               sell
             </span>
@@ -144,23 +152,29 @@ exports[`OpenOrders should render correctly 1`] = `
 
 exports[`OpenOrders should render correctly without orders 1`] = `
 <div
-  className="jsx-__scopedHash open-orders"
+  className="open-orders"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
     Open orders
   </h3>
   <div
-    className="jsx-__scopedHash open-orders__table-wrap"
+    className="open-orders__table-wrap"
   >
-    <p
-      className="jsx-__scopedHash"
-    >
+    <p>
       No open orders
     </p>
   </div>

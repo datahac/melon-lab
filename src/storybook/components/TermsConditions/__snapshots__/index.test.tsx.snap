@@ -87,7 +87,7 @@ exports[`TermsAndConditions should render correctly 1`] = `
     : Any disputes arising out of this Disclaimer and the use of the Melon Protocol shall be submitted to the exclusive jurisdiction of the courts of Zug, Switzerland and this Disclaimer, as well as the use of the Melon Protocol shall be exclusively governed by Swiss law, except for the United Nations Convention for the International Sales of Goods which is excluded.
   </p>
   <p>
-    BY SIGNING THE HASH OF
+    BY ACCEPTING
      
     <strong>
       <a
@@ -102,12 +102,6 @@ exports[`TermsAndConditions should render correctly 1`] = `
      
     THE USER UNDERSTANDS AND ACCEPTS ALL THE TERMS AND CONDITIONS AS SET HEREIN.
   </p>
-  <Button
-    onClick={[Function]}
-    style="secondary"
-  >
-    I understand and agree to sign the above terms and conditions.
-  </Button>
 </div>
 `;
 
@@ -115,9 +109,6 @@ exports[`TermsAndConditions should render correctly without networkId 1`] = `
 <div
   className="conditions"
 >
-  <h4>
-    TERMS AND CONDITIONS
-  </h4>
   <p>
     The following terms and conditions have been deployed to IPFS and resolve to the following hash:
      
@@ -159,11 +150,5 @@ exports[`TermsAndConditions should render correctly without networkId 1`] = `
       BY SIGNING THE HASH OF THIS DOCUMENT THE USER UNDERSTANDS AND ACCEPTS ALL THE TERMS AND CONDITIONS AS SET HEREIN.
     </strong>
   </p>
-  <Button
-    onClick={[Function]}
-    style="secondary"
-  >
-    I understand and agree to sign the above terms and conditions.
-  </Button>
 </div>
 `;

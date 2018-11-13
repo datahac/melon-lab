@@ -2,17 +2,27 @@
 
 exports[`Footer should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash footer"
+  className="footer"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <span
-    className="jsx-__scopedHash footer__item"
+    className="footer__item"
   >
     <a
-      className="jsx-__scopedHash footer__item-link"
+      className="footer__item-link"
       href="https://github.com/melonproject/melon-lab/issues"
       rel="noopener noreferrer"
       target="_blank"
@@ -21,10 +31,10 @@ exports[`Footer should render correctly 1`] = `
     </a>
   </span>
   <span
-    className="jsx-__scopedHash footer__item"
+    className="footer__item"
   >
     <a
-      className="jsx-__scopedHash footer__item-link"
+      className="footer__item-link"
       href="https://www.melonport.com"
       rel="noopener noreferrer"
       target="_blank"

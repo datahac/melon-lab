@@ -2,43 +2,49 @@
 
 exports[`Modal should render correctly 1`] = `
 <Modal
-  ariaHideApp={true}
+  ariaHideApp={false}
   bodyOpenClassName="ReactModal__Body--open"
   className="modal__wrap"
   closeTimeoutMS={0}
+  interactionHandler={[MockFunction]}
   isOpen={true}
+  loading={false}
   overlayClassName="modal__overlay"
   parentSelector={[Function]}
   portalClassName="ReactModalPortal"
+  primaryInteraction="primaryInteraction"
+  role="dialog"
   shouldCloseOnEsc={true}
   shouldCloseOnOverlayClick={true}
   shouldFocusAfterRender={true}
   shouldReturnFocusAfterClose={true}
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <div
-    className="jsx-__scopedHash modal__title"
+    className="modal__title"
   >
     Modal
   </div>
   <div
-    className="jsx-__scopedHash modal__content"
+    className="modal__content"
   >
-    <p
-      className="jsx-__scopedHash"
-    />
     Hello World
-    <Form>
-      <Button
-        onClick={[Function]}
-        type="submit"
-      >
-        primaryInteraction
-      </Button>
-    </Form>
+    <div
+      className="modal__actions"
+    />
   </div>
 </Modal>
 `;

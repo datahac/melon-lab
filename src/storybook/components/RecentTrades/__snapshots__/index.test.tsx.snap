@@ -2,20 +2,27 @@
 
 exports[`RecentTrades should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash recent-trades"
+  className="recent-trades"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
-    Recent trades for 
-    /
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
+    Recent trades
   </h3>
   <div
-    className="jsx-__scopedHash recent-trades__table-wrap"
+    className="recent-trades__table-wrap"
   >
     <Table>
       <TableHead>
@@ -48,11 +55,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="0"
         >
           <CellBody>
-            23. Jul 2018 14:59
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -72,11 +79,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="1"
         >
           <CellBody>
-            23. Jul 2018 14:59
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -96,11 +103,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="2"
         >
           <CellBody>
-            23. Jul 2018 16:22
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -120,11 +127,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="3"
         >
           <CellBody>
-            23. Jul 2018 19:47
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -144,11 +151,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="4"
         >
           <CellBody>
-            23. Jul 2018 19:47
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -168,11 +175,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="5"
         >
           <CellBody>
-            23. Jul 2018 19:47
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -192,11 +199,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="6"
         >
           <CellBody>
-            23. Jul 2018 19:48
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -216,11 +223,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="7"
         >
           <CellBody>
-            23. Jul 2018 19:48
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -240,11 +247,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="8"
         >
           <CellBody>
-            23. Jul 2018 21:51
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -264,11 +271,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="9"
         >
           <CellBody>
-            23. Jul 2018 21:51
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -288,11 +295,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="10"
         >
           <CellBody>
-            23. Jul 2018 21:51
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -312,11 +319,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="11"
         >
           <CellBody>
-            23. Jul 2018 21:51
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -336,11 +343,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="12"
         >
           <CellBody>
-            23. Jul 2018 21:52
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -360,11 +367,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="13"
         >
           <CellBody>
-            23. Jul 2018 21:52
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -384,11 +391,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="14"
         >
           <CellBody>
-            23. Jul 2018 21:52
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -408,11 +415,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="15"
         >
           <CellBody>
-            23. Jul 2018 21:52
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -432,11 +439,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="16"
         >
           <CellBody>
-            23. Jul 2018 22:46
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -456,11 +463,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="17"
         >
           <CellBody>
-            23. Jul 2018 22:47
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -480,11 +487,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="18"
         >
           <CellBody>
-            23. Jul 2018 22:47
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -504,11 +511,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="19"
         >
           <CellBody>
-            23. Jul 2018 22:47
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -528,11 +535,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="20"
         >
           <CellBody>
-            23. Jul 2018 22:47
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -552,11 +559,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="21"
         >
           <CellBody>
-            23. Jul 2018 22:48
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -576,11 +583,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="22"
         >
           <CellBody>
-            23. Jul 2018 22:48
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -600,11 +607,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="23"
         >
           <CellBody>
-            23. Jul 2018 22:48
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -624,11 +631,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="24"
         >
           <CellBody>
-            24. Jul 2018 00:18
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -648,11 +655,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="25"
         >
           <CellBody>
-            24. Jul 2018 00:18
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -672,11 +679,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="26"
         >
           <CellBody>
-            24. Jul 2018 00:19
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -696,11 +703,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="27"
         >
           <CellBody>
-            24. Jul 2018 00:19
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -720,11 +727,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="28"
         >
           <CellBody>
-            24. Jul 2018 00:19
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -744,11 +751,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="29"
         >
           <CellBody>
-            24. Jul 2018 00:19
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -768,11 +775,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="30"
         >
           <CellBody>
-            24. Jul 2018 00:20
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -792,11 +799,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="31"
         >
           <CellBody>
-            24. Jul 2018 00:20
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -816,11 +823,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="32"
         >
           <CellBody>
-            24. Jul 2018 03:25
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -840,11 +847,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="33"
         >
           <CellBody>
-            24. Jul 2018 03:25
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -864,11 +871,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="34"
         >
           <CellBody>
-            24. Jul 2018 03:25
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -888,11 +895,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="35"
         >
           <CellBody>
-            24. Jul 2018 03:25
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -912,11 +919,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="36"
         >
           <CellBody>
-            24. Jul 2018 03:26
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -936,11 +943,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="37"
         >
           <CellBody>
-            24. Jul 2018 03:26
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -960,11 +967,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="38"
         >
           <CellBody>
-            24. Jul 2018 03:26
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -984,11 +991,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="39"
         >
           <CellBody>
-            24. Jul 2018 03:26
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1008,11 +1015,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="40"
         >
           <CellBody>
-            24. Jul 2018 04:54
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1032,11 +1039,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="41"
         >
           <CellBody>
-            24. Jul 2018 04:55
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1056,11 +1063,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="42"
         >
           <CellBody>
-            24. Jul 2018 04:55
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1080,11 +1087,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="43"
         >
           <CellBody>
-            24. Jul 2018 04:55
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1104,11 +1111,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="44"
         >
           <CellBody>
-            24. Jul 2018 04:55
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1128,11 +1135,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="45"
         >
           <CellBody>
-            24. Jul 2018 04:56
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1152,11 +1159,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="46"
         >
           <CellBody>
-            24. Jul 2018 04:56
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1176,11 +1183,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="47"
         >
           <CellBody>
-            24. Jul 2018 04:56
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1200,11 +1207,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="48"
         >
           <CellBody>
-            24. Jul 2018 06:00
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1224,11 +1231,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="49"
         >
           <CellBody>
-            24. Jul 2018 06:01
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1248,11 +1255,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="50"
         >
           <CellBody>
-            24. Jul 2018 06:01
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1272,11 +1279,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="51"
         >
           <CellBody>
-            24. Jul 2018 06:01
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1296,11 +1303,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="52"
         >
           <CellBody>
-            24. Jul 2018 06:01
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1320,11 +1327,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="53"
         >
           <CellBody>
-            24. Jul 2018 06:02
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1344,11 +1351,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="54"
         >
           <CellBody>
-            24. Jul 2018 06:02
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1368,11 +1375,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="55"
         >
           <CellBody>
-            24. Jul 2018 06:02
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1392,11 +1399,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="56"
         >
           <CellBody>
-            24. Jul 2018 08:06
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1416,11 +1423,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="57"
         >
           <CellBody>
-            24. Jul 2018 08:06
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1440,11 +1447,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="58"
         >
           <CellBody>
-            24. Jul 2018 08:07
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1464,11 +1471,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="59"
         >
           <CellBody>
-            24. Jul 2018 08:07
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1488,11 +1495,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="60"
         >
           <CellBody>
-            24. Jul 2018 08:07
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1512,11 +1519,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="61"
         >
           <CellBody>
-            24. Jul 2018 08:08
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1536,11 +1543,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="62"
         >
           <CellBody>
-            24. Jul 2018 08:08
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1560,11 +1567,11 @@ exports[`RecentTrades should render correctly 1`] = `
           key="63"
         >
           <CellBody>
-            24. Jul 2018 08:08
+            01. Jan 1970 01:00
           </CellBody>
           <CellBody>
             <span
-              className="jsx-__scopedHash recent-trades__cell recent-trades__cell--red"
+              className="recent-trades__cell recent-trades__cell--red"
             >
               sell
             </span>
@@ -1588,24 +1595,29 @@ exports[`RecentTrades should render correctly 1`] = `
 
 exports[`RecentTrades should render correctly without trades 1`] = `
 <div
-  className="jsx-__scopedHash recent-trades"
+  className="recent-trades"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <h3
-    className="jsx-__scopedHash"
+  <style
+    jsx={true}
   >
-    Recent trades for 
-    /
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
+    Recent trades
   </h3>
   <div
-    className="jsx-__scopedHash recent-trades__table-wrap"
+    className="recent-trades__table-wrap"
   >
-    <p
-      className="jsx-__scopedHash"
-    >
+    <p>
       No recent trades
     </p>
   </div>

@@ -2,12 +2,22 @@
 
 exports[`StepNavigation should render correctly 1`] = `
 <ul
-  className="jsx-__scopedHash step-navigation"
+  className="step-navigation"
   data-c-name="StepNavigation"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
 </ul>
 `;

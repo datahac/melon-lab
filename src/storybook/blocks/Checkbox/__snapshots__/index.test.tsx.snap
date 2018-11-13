@@ -1,26 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Checkbox should render correctly 1`] = `
-<label
-  className="jsx-__scopedHash checkbox"
+<div
+  className="checkbox"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <input
-    className="jsx-__scopedHash checkbox__input"
-    name="name"
-    type="checkbox"
-    value="value"
-  />
-  <span
-    className="jsx-__scopedHash checkbox__checkmark"
-  />
-  <span
-    className="jsx-__scopedHash checkbox__text"
+  <style
+    jsx={true}
   >
-    Text
-  </span>
-</label>
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <label
+    className="checkbox__label"
+  >
+    <input
+      className="checkbox__input"
+      name="name"
+      type="checkbox"
+      value="value"
+    />
+    <span
+      className="checkbox__checkmark"
+    />
+    <span
+      className="checkbox__text"
+    >
+      Text
+    </span>
+  </label>
+</div>
 `;

@@ -2,23 +2,33 @@
 
 exports[`RadioButton should render correctly 1`] = `
 <label
-  className="jsx-__scopedHash radio-button"
+  className="radio-button"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <input
-    className="jsx-__scopedHash radio-button__input"
+    className="radio-button__input"
     name="name"
     type="radio"
     value="value"
   />
   <span
-    className="jsx-__scopedHash radio-button__checkmark"
+    className="radio-button__checkmark"
   />
   <span
-    className="jsx-__scopedHash radio-button__text"
+    className="radio-button__text"
   >
     Text
   </span>

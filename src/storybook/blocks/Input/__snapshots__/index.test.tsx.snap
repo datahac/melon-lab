@@ -2,38 +2,58 @@
 
 exports[`Input should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash input"
+  className="input"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <span
-    className="jsx-__scopedHash input__label"
+    className="input__label"
   >
     label
   </span>
   <input
-    className="jsx-__scopedHash input__field"
+    className="input__field"
     name="name"
     type="text"
   />
   <div
-    className="jsx-__scopedHash input__error"
+    className="input__error"
   />
 </div>
 `;
 
 exports[`Input should render correctly with number 1`] = `
 <div
-  className="jsx-__scopedHash input"
+  className="input"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
   <span
-    className="jsx-__scopedHash input__label"
+    className="input__label"
   >
     label
   </span>
@@ -60,7 +80,7 @@ exports[`Input should render correctly with number 1`] = `
     type="text"
   />
   <div
-    className="jsx-__scopedHash input__error"
+    className="input__error"
   />
 </div>
 `;

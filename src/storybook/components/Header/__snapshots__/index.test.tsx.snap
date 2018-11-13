@@ -2,77 +2,83 @@
 
 exports[`Header should render correctly 1`] = `
 <div
-  className="jsx-__scopedHash header"
+  className="header"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <div
-    className="jsx-__scopedHash header__logo"
+  <style
+    jsx={true}
   >
-    <a
-      className="jsx-__scopedHash"
-      href="#"
-      onClick={[Function]}
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
     >
-      <span
-        className="jsx-__scopedHash header__logo-default"
-      >
-        <Icon
-          height="30px"
-          name="logos_with-text"
-          width="115px"
-        />
-      </span>
-      <span
-        className="jsx-__scopedHash header__logo-small"
-      >
-        <Icon
-          height="30px"
-          name="logos_default"
-          width="30px"
-        />
-      </span>
-    </a>
-  </div>
+      rendered
+    </type>
+  </style>
   <div
-    className="jsx-__scopedHash header__account"
+    className="header__logo"
   >
-    <div
-      className="jsx-__scopedHash header__account-name"
-    />
-    <div
-      className="jsx-__scopedHash header__account-info"
+    <Link
+      href="/"
     >
-      <span
-        className="jsx-__scopedHash header__account-address"
-      >
-        <a
-          className="jsx-__scopedHash"
-          href="#"
-          onClick={[Function]}
-        />
-      </span>
-      <span
-        className="jsx-__scopedHash header__account-balances"
+      <a
+        href="/"
       >
         <span
-          className="jsx-__scopedHash header__account-balance"
+          className="header__logo-default"
         >
-          ETH 
-          1.23422234
+          <Icon
+            height="30px"
+            name="logos_with-text"
+            width="115px"
+          />
         </span>
+        <span
+          className="header__logo-small"
+        >
+          <Icon
+            height="30px"
+            name="logos_default"
+            width="30px"
+          />
+        </span>
+      </a>
+    </Link>
+  </div>
+  <div
+    className="header__account"
+  >
+    <div
+      className="header__account-name"
+    />
+    <div
+      className="header__account-info"
+    >
+      <span
+        className="header__account-address"
+      >
+        <Link
+          href="/wallet"
+        >
+          <a
+            href="/wallet"
+          >
+            Your Wallet
+          </a>
+        </Link>
       </span>
       <span
-        className="jsx-__scopedHash header__account-network"
+        className="header__account-network"
       >
         kovan
       </span>
       <span
-        className="jsx-__scopedHash header__account-status"
+        className="header__account-status header__account-status--warning"
       >
-        message
+        Not ready
       </span>
     </div>
   </div>
@@ -81,81 +87,83 @@ exports[`Header should render correctly 1`] = `
 
 exports[`Header should render correctly with status 1`] = `
 <div
-  className="jsx-__scopedHash header"
+  className="header"
 >
-  <JSXStyle
-    css="__scoped"
-    styleId="__scopedHash"
-  />
-  <div
-    className="jsx-__scopedHash header__logo"
+  <style
+    jsx={true}
   >
-    <a
-      className="jsx-__scopedHash"
-      href="#"
-      onClick={[Function]}
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
     >
-      <span
-        className="jsx-__scopedHash header__logo-default"
-      >
-        <Icon
-          height="30px"
-          name="logos_with-text"
-          width="115px"
-        />
-      </span>
-      <span
-        className="jsx-__scopedHash header__logo-small"
-      >
-        <Icon
-          height="30px"
-          name="logos_default"
-          width="30px"
-        />
-      </span>
-    </a>
-  </div>
+      rendered
+    </type>
+  </style>
   <div
-    className="jsx-__scopedHash header__account"
+    className="header__logo"
   >
-    <div
-      className="jsx-__scopedHash header__account-name"
-    />
-    <div
-      className="jsx-__scopedHash header__account-info"
+    <Link
+      href="/"
     >
-      <span
-        className="jsx-__scopedHash header__account-address"
-      >
-        <a
-          className="jsx-__scopedHash"
-          href="#"
-          onClick={[Function]}
-        />
-      </span>
-      <span
-        className="jsx-__scopedHash header__account-balances"
+      <a
+        href="/"
       >
         <span
-          className="jsx-__scopedHash header__account-balance"
+          className="header__logo-default"
         >
-          ETH 
-          1.23422234
+          <Icon
+            height="30px"
+            name="logos_with-text"
+            width="115px"
+          />
         </span>
+        <span
+          className="header__logo-small"
+        >
+          <Icon
+            height="30px"
+            name="logos_default"
+            width="30px"
+          />
+        </span>
+      </a>
+    </Link>
+  </div>
+  <div
+    className="header__account"
+  >
+    <div
+      className="header__account-name"
+    />
+    <div
+      className="header__account-info"
+    >
+      <span
+        className="header__account-address"
+      >
+        <Link
+          href="/wallet"
+        >
+          <a
+            href="/wallet"
+          >
+            Your Wallet
+          </a>
+        </Link>
       </span>
       <span
-        className="jsx-__scopedHash header__account-network"
+        className="header__account-network"
       >
         kovan
       </span>
       <span
-        className="jsx-__scopedHash header__account-status"
+        className="header__account-status header__account-status--warning"
       >
-        <a
-          className="jsx-__scopedHash"
-          href="link"
-          target="_blank"
-        />
+        Not ready
       </span>
     </div>
   </div>
