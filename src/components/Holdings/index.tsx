@@ -46,11 +46,9 @@ export default class HoldingsContainer extends React.PureComponent {
 
   render() {
     const { address, baseAsset, quoteAsset } = this.props;
-    const holdings =
-      (!this.props.loading &&
-        (this.props.holdings || []) &&
-        sortHoldings(this.props.holdings.map(mapHoldings(this.props.nav)))) ||
-      [];
+    const holdings = sortHoldings(
+      this.props.holdings.map(mapHoldings(this.props.nav)),
+    );
 
     return (
       <Holdings
