@@ -8,7 +8,9 @@ all: build lint test
 
 .PHONY: build
 build:
-	@docker build .
+	@docker build . --target dependencies --tag melonproject/manager-dependecies --cache-from melonproject/manager-dependencies
+	@docker build . --target development 	--tag melonproject/manager-development --cache-from melonproject/manager-dependencies,melonproject/manager-development
+	@docker build . --target production  	--tag melonproject/manager-production	 --cache-from melonproject/manager-dependencies,melonproject/manager-development,melonproject/manager-production
 
 .PHONY: lint
 lint:
@@ -23,8 +25,8 @@ test:
 # -----------------------------------------------------------------------------
 .PHONY: tag
 tag:
-	@docker tag melonproject/manager:local ${REGISTRY}/melonproject/manager:${VERSION}
-	@docker tag melonproject/manager:local ${REGISTRY}/melonproject/manager:${TAG}
+	@docker tag melonproject/manager-production ${REGISTRY}/melonproject/manager:${VERSION}
+	@docker tag melonproject/manager-production ${REGISTRY}/melonproject/manager:${TAG}
 
 .PHONY: push
 push:

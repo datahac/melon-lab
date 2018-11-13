@@ -16,7 +16,7 @@ script:
   - make test
 
 after_success:
-  - docker save melonproject/manager:local | gzip -9 > "$HOME/.cache/docker.tgz"
+  - docker save melonproject/manager-dependencies | gzip -9 > "$HOME/.cache/docker.tgz"
 
 deploy:
   provider: script

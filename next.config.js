@@ -6,11 +6,6 @@ const path = require('path');
 const R = require('ramda');
 const webpack = require('webpack');
 const withTypeScript = require('@zeit/next-typescript');
-const withQueryFiles = require('./config/withQueryFiles');
-const withComposedConfig = R.compose(
-  withQueryFiles,
-  withTypeScript,
-);
 
 const srcDir = path.resolve(__dirname, 'src');
 const isElectron = !!JSON.parse(process.env.ELECTRON || 'false');
@@ -28,7 +23,7 @@ const apolloLink = (electron, server) => {
   return 'browser';
 };
 
-module.exports = withComposedConfig(Object.assign({}, distConfig, {
+module.exports = withTypeScript(Object.assign({}, distConfig, {
   exportPathMap: () => require('./next.routes.js'),
   webpack: (config, options) => {
     config.resolve.alias = Object.assign({}, config.resolve.alias || {}, {
@@ -65,6 +60,20 @@ module.exports = withComposedConfig(Object.assign({}, distConfig, {
         }));
       }
     }
+
+    config.module.rules.push({
+      test: /\.(graphql|gql)$/,
+      exclude: [/node_modules/, /\/schema\.(graphql|gql)$/],
+      loader: 'graphql-tag/loader',
+    });
+
+    // Treat schema.gql files differently by directly loading their introspection
+    // results instead of importing their AST.
+    config.module.rules.unshift({
+      test: /\/schema\.gql$/,
+      exclude: /node_modules/,
+      loader: require.resolve('./introspect.js'),
+    });
 
     config.module.rules.push({
       test: /\.css$/,

@@ -1,20 +1,15 @@
 # -----------------------------------------------------------------------------
-# apk dependencies
+# dependencies image
 # -----------------------------------------------------------------------------
-FROM node:11.1.0-alpine as apk-dependencies
+FROM node:11.1.0-alpine as dependencies
+LABEL melonproject "manager"
 WORKDIR /app
 
 # Install system dependencies.
 RUN apk add --update --no-cache --virtual .apk git python make g++ libsecret-dev
 
-# -----------------------------------------------------------------------------
-# npm dependencies
-# -----------------------------------------------------------------------------
-FROM apk-dependencies as npm-dependencies
-
-COPY package.json yarn.lock ./
-
 # Install node dependencies and clean up afterwards.
+COPY package.json yarn.lock ./
 RUN yarn install --ignore-engines --frozen-lockfile --pure-lockfile --production && \
   cp -R node_modules node_modules_production && \
   yarn install --ignore-engines --frozen-lockfile --pure-lockfile && \
@@ -22,46 +17,36 @@ RUN yarn install --ignore-engines --frozen-lockfile --pure-lockfile --production
   apk del .apk
 
 # -----------------------------------------------------------------------------
-# base development image
+# development image
 # -----------------------------------------------------------------------------
-FROM node:11.1.0-alpine as node-development
+FROM node:11.1.0-alpine as development
+LABEL melonproject "manager"
 WORKDIR /app
 
-COPY --from=npm-dependencies /app/node_modules node_modules
+COPY --from=dependencies /app/node_modules node_modules
 COPY package.json yarn.lock ./
 
-# -----------------------------------------------------------------------------
-# base production image
-# -----------------------------------------------------------------------------
-FROM node:11.1.0-alpine as node-production
-WORKDIR /app
-
-COPY --from=npm-dependencies /app/node_modules_production node_modules
-COPY package.json yarn.lock ./
-
-# -----------------------------------------------------------------------------
-# development
-# -----------------------------------------------------------------------------
-FROM node-development as development
 ENTRYPOINT ["yarn"]
 
 # -----------------------------------------------------------------------------
-# build
+# builder image
 # -----------------------------------------------------------------------------
-FROM node-development as build
+FROM development as builder
+LABEL melonproject "manager"
 
 COPY . /app
 RUN yarn build
 
 # -----------------------------------------------------------------------------
-# production
+# production image
 # -----------------------------------------------------------------------------
-FROM node-production as production
+FROM node:11.1.0-alpine as production
+LABEL melonproject "manager"
 
-COPY --from=build /app/build build
-COPY --from=build /app/src/static src/static
-
-COPY .env.defaults ./
+COPY --from=builder /app/build build
+COPY --from=builder /app/src/static src/static
+COPY --from=dependencies /app/node_modules_production node_modules
+COPY package.json yarn.lock .env.defaults ./
 COPY next.config.dist.js next.config.js
 
 ENTRYPOINT ["yarn"]
