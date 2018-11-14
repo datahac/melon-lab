@@ -31,7 +31,7 @@ const getLink = (account, weth, fund) => {
 
   return {
     href: '/wallet',
-    text: 'Create a wallet',
+    text: 'Setup your fund',
   };
 };
 
