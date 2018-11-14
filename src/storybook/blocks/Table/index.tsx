@@ -69,10 +69,12 @@ const CellBody: StatelessComponent<CellProps> = ({
   children,
   colSpan,
   textAlign,
+  noPadding = true,
 }) => {
   const cellBodyClassNames = classNames('table__cell', {
     [`${cellClass}`]: cellClass,
     [`table__cell--${textAlign}`]: textAlign,
+    'table__cell--no-padding': noPadding,
   });
 
   return (
@@ -92,11 +94,13 @@ const CellHead: StatelessComponent<CellProps> = ({
   onClick,
   sorted,
   textAlign,
+  noPadding = true,
 }) => {
   const cellHeadClassNames = classNames('table__cell', {
     [`${cellClass}`]: cellClass,
     [`table__cell--${textAlign}`]: textAlign,
     [`table__cell--clickable`]: onClick,
+    'table__cell--no-padding': noPadding,
   });
 
   const onCellClick = (e: any): void => {

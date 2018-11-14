@@ -1,3 +1,7 @@
+.recent-trades {
+  border-top: 1px solid var(--color-border);
+}
+
 .recent-trades__cell--red {
   color: var(--color-loss);
 }
@@ -8,4 +12,8 @@
 
 .recent-trades__table-wrap {
   overflow-x: auto;
+}
+
+.recent-trades__no-items {
+  margin: var(--space-xs) var(--space-s);
 }

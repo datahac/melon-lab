@@ -38,25 +38,26 @@ export const RecentTrades: StatelessComponent<RecentTradesProps> = ({
   return (
     <div className="recent-trades">
       <style jsx>{styles}</style>
-      <h3>Recent trades</h3>
       <div className="recent-trades__table-wrap">
         {trades.length > 0 ? (
           <Table>
             <TableHead>
               <Row isHead={true}>
-                <CellHead>Time</CellHead>
+                <CellHead noPadding={false}>Time</CellHead>
                 <CellHead>Type</CellHead>
                 <CellHead textAlign="right">
                   Price ({baseAsset}/{quoteAsset})
                 </CellHead>
-                <CellHead textAlign="right">Amount ({baseAsset})</CellHead>
+                <CellHead textAlign="right" noPadding={false}>
+                  Amount ({baseAsset})
+                </CellHead>
               </Row>
             </TableHead>
             <TableBody>
               {trades.length > 0 &&
                 trades.map((trade, index) => (
                   <Row key={index}>
-                    <CellBody>
+                    <CellBody noPadding={false}>
                       {format(parseInt(trade.timestamp), 'DD. MMM YYYY HH:mm')}
                     </CellBody>
                     <CellBody>
@@ -67,7 +68,7 @@ export const RecentTrades: StatelessComponent<RecentTradesProps> = ({
                     <CellBody textAlign="right">
                       {displayNumber(trade.price)}
                     </CellBody>
-                    <CellBody textAlign="right">
+                    <CellBody textAlign="right" noPadding={false}>
                       {displayNumber(trade.quantity)}
                     </CellBody>
                   </Row>
@@ -75,7 +76,7 @@ export const RecentTrades: StatelessComponent<RecentTradesProps> = ({
             </TableBody>
           </Table>
         ) : (
-          <p>No recent trades</p>
+          <p className="recent-trades__no-items">No recent trades</p>
         )}
       </div>
     </div>

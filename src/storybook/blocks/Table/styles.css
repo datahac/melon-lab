@@ -49,11 +49,11 @@
   white-space: nowrap;
 }
 
-.table__cell:first-child {
+.table__cell--no-padding:first-child {
   padding-left: 0;
 }
 
-.table__cell:last-child {
+.table__cell--no-padding:last-child {
   padding-right: 0;
 }
 

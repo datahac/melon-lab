@@ -52,21 +52,20 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
   return (
     <div className="open-orders">
       <style jsx>{styles}</style>
-      <h3>Open orders</h3>
       <div className="open-orders__table-wrap">
         {orders.length > 0 ? (
           <Table>
             <TableHead>
               <Row isHead={true} size={isManager && 'small'}>
-                <CellHead>Time</CellHead>
+                <CellHead noPadding={false}>Time</CellHead>
                 <CellHead>Id</CellHead>
                 <CellHead>Type</CellHead>
                 <CellHead>Buy</CellHead>
                 <CellHead>Sell</CellHead>
                 <CellHead>Price</CellHead>
                 <CellHead>Buy Quantity</CellHead>
-                <CellHead>Sell Quantity</CellHead>
-                {isManager && <CellHead />}
+                <CellHead noPadding={false}>Sell Quantity</CellHead>
+                {isManager && <CellHead noPadding={false} />}
               </Row>
             </TableHead>
             <TableBody>
@@ -74,7 +73,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                 orders.map(order => {
                   return (
                     <Row key={order.id} size={isManager && 'small'}>
-                      <CellBody>
+                      <CellBody noPadding={false}>
                         {format(
                           parseInt(order.timestamp),
                           'DD. MMM YYYY HH:mm',
@@ -90,9 +89,11 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                       <CellBody>{order.buySymbol}</CellBody>
                       <CellBody>{displayNumber(order.price)}</CellBody>
                       <CellBody>{displayNumber(order.sellHowMuch)}</CellBody>
-                      <CellBody>{displayNumber(order.buyHowMuch)}</CellBody>
+                      <CellBody noPadding={false}>
+                        {displayNumber(order.buyHowMuch)}
+                      </CellBody>
                       {isManager && (
-                        <CellBody>
+                        <CellBody noPadding={false}>
                           <Button
                             size="small"
                             style="secondary"
@@ -115,7 +116,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
             </TableBody>
           </Table>
         ) : (
-          <p>No open orders</p>
+          <p className="open-orders__no-items">No open orders</p>
         )}
       </div>
     </div>
