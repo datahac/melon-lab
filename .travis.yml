@@ -2,17 +2,33 @@ sudo: required
 language: c
 services:
   - docker
+ 
+# We do not test pushes to branches, since they are redundant with the pull_request build
+# for each branch. Take that, Big CI!
+branches:
+  only:
+    - master
 
-script:
-  - make build
-  - make lint
-  - make test
+stages:
+  - name: build
+  - name: test
+  - name: lint
+  - name: deploy
+    if: branch = master AND type != pull_request
 
-deploy:
-  provider: script
-  script: bash scripts/auth.sh && make tag && make push
-  on:
-    branch: master
+jobs:
+  include:
+    - stage: build
+      script: make build
+    - stage: test
+      script: make test
+    - stage: lint
+      script: make lint
+    - stage: deploy
+      script: skip
+      deploy:
+        provider: script
+        script: bash scripts/auth.sh && make tag && make push
 
 notifications:
   email:
