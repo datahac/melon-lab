@@ -31,7 +31,7 @@
   "dependencies": {
     "@melonproject/melon.js": "^0.8.32",
     "@melonproject/protocol": "^0.8.0-alpha.18",
-    "@melonproject/token-math": "^0.0.17",
+    "@melonproject/token-math": "^0.0.18",
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-client": "^2.3.1",
     "apollo-link": "^1.2.1",
