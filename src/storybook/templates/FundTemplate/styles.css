@@ -64,14 +64,34 @@
   border-radius: 3px;
 }
 
-.fund-template__open-orders {
+.fund-template__orders {
   background-color: var(--color-white);
-  padding: var(--space-xxs) var(--space-xl);
+  padding: var(--space-xxs) 0 var(--space-xxl);
+
+  @media (--viewport-l) {
+    display: flex;
+    width: 100%;
+  }
+}
+
+.fund-template__open-orders {
+  margin: 0 var(--space-m);
+
+  @media (--viewport-l) {
+    margin: 0 24px;
+    flex: 0 0 calc(50% - 48px);
+    order: 2;
+  }
 }
 
 .fund-template__recent-trades {
-  background-color: var(--color-white);
-  padding: var(--space-xxs) var(--space-xl) var(--space-l);
+  margin: 0 var(--space-m);
+
+  @media (--viewport-l) {
+    margin: 0 24px;
+    flex: 0 0 calc(50% - 48px);
+    order: 1;
+  }
 }
 
 .fund-template__header {

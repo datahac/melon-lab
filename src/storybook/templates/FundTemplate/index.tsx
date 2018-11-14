@@ -65,11 +65,13 @@ const Fund = ({
                 </div>
               </div>
             </div>
-            <div className="fund-template__open-orders">
-              <OpenOrders {...OpenOrdersProps} />
-            </div>
-            <div className="fund-template__recent-trades">
-              <RecentTrades {...RecentTradesProps} />
+            <div className="fund-template__orders">
+              <div className="fund-template__open-orders">
+                <OpenOrders {...OpenOrdersProps} />
+              </div>
+              <div className="fund-template__recent-trades">
+                <RecentTrades {...RecentTradesProps} />
+              </div>
             </div>
           </div>
         </div>
