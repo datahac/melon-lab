@@ -9,9 +9,9 @@
 
 .ranking__funds {
   display: table;
+  border-top: 1px solid var(--color-border);
 
   @media (--viewport-m) {
-    border-top: 1px solid var(--color-border);
     border-right: 1px solid var(--color-border);
     border-left: 1px solid var(--color-border);
   }
