@@ -26,9 +26,9 @@
 }
 
 .home-template__content {
-  margin: 16px;
+  margin: 16px 0;
 
-  @media (--viewport-s) {
+  @media (--viewport-m) {
     margin: 16px 7%;
   }
 }
