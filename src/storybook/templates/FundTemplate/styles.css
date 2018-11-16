@@ -30,7 +30,7 @@
 .fund-template__order-form {
   background-color: var(--color-white);
   flex: 1 0 25%;
-  min-width: 250px;
+  min-width: 256px;
   border-top: 1px solid var(--color-border);
 
   @media (--viewport-l) {
@@ -54,8 +54,24 @@
   }
 }
 
+.fund-template__holdings-wrap {
+  border-top: 1px solid var(--color-border);
+  max-height: 440px;
+  overflow-y: scroll;
+}
+
 .fund-template__holdings-wrap::-webkit-scrollbar {
   width: 5px;
+  background-color: var(--color-border);
+}
+
+.fund-template__holdings-wrap :global(.holding:first-child) {
+  border: none;
+}
+
+.fund-template__holdings-wrap::-webkit-scrollbar-track,
+.fund-template__holdings-wrap::-webkit-scrollbar-track-piece {
+  background-color: transparent;
 }
 
 .fund-template__holdings-wrap::-webkit-scrollbar-thumb {
