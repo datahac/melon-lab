@@ -9,6 +9,9 @@ build/
 # Ignore all dot files.
 .*
 
+# Ignore all log files.
+*.log
+
 # Allowed dot files
 !.env.example
 !.env.defaults
