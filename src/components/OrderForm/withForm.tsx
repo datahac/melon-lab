@@ -46,7 +46,6 @@ const withForm = withFormik({
 
 const withFormHandlers = withHandlers({
   onChange: props => event => {
-    console.log(props)
     const { setFieldValue, tokens, values } = props;
     const { name, value } = event.target;
 
