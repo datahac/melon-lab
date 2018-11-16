@@ -10948,7 +10948,7 @@ styled-jsx@3.1.0, styled-jsx@3.1.1:
     stylis "3.5.3"
     stylis-rule-sheet "0.0.10"
 
-styled-jsx@^3.1.2:
+styled-jsx@^3.1.1:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/styled-jsx/-/styled-jsx-3.1.2.tgz#d420add6f43d41aea942fb289db43a25afc3d898"
   integrity sha512-4yqYiU4VohqD6nm5WueT7aKuIQ+AnpTvD6owonWTfhZcl6FGaGEO4gzG0vaqKKNqLxs98e14wtp20A7lw1Z9aA==
