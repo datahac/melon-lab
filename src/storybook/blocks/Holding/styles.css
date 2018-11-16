@@ -24,11 +24,19 @@
 }
 
 .holding__price {
-  flex: 0 0 33.33%;
+  flex: 0 0 25%;
 }
 
 .holding__symbol {
-  flex: 1 0 33.33%;
+  flex: 0 0 50%;
+  overflow: hidden;
+  padding-right: var(--space-m);
+}
+
+.holding__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .holding__name {
