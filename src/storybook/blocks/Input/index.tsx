@@ -83,7 +83,7 @@ const Input: StatelessComponent<InputProps> = ({
           onBlur={onBlur}
         />
       )}
-      <div className="input__error">{error}</div>
+      {error && <div className="input__error">{error}</div>}
     </div>
   );
 };
