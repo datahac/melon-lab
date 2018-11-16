@@ -46,7 +46,8 @@ const withForm = withFormik({
 
 const withFormHandlers = withHandlers({
   onChange: props => event => {
-    const { setFieldValue, info, values } = props;
+    console.log(props)
+    const { setFieldValue, tokens, values } = props;
     const { name, value } = event.target;
 
     let maxTotal;
@@ -61,17 +62,17 @@ const withFormHandlers = withHandlers({
     if (values.strategy === 'Market') {
       maxTotal =
         typeValue === 'Buy'
-          ? min(info.tokens.quoteToken.balance, totalValue)
+          ? min(tokens.quoteToken.balance, totalValue)
           : totalValue;
       maxQuantity =
         typeValue === 'Sell'
-          ? max(info.tokens.baseToken.balance, quantityValue)
+          ? max(tokens.baseToken.balance, quantityValue)
           : quantityValue;
     } else if (values.strategy === 'Limit') {
       maxTotal =
-        typeValue === 'Buy' ? info.tokens.quoteToken.balance : Infinity;
+        typeValue === 'Buy' ? tokens.quoteToken.balance : Infinity;
       maxQuantity =
-        typeValue === 'Sell' ? info.tokens.baseToken.balance : Infinity;
+        typeValue === 'Sell' ? tokens.baseToken.balance : Infinity;
     }
 
     if (name === 'total') {
