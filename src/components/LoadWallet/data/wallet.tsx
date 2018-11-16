@@ -24,14 +24,16 @@ const WalletMutation = ({ onCompleted, children }) => (
     mutation={loadWalletMutation}
     update={(cache, { data: { loginWallet } }) => {
       const allAccounts = loginWallet || null;
-      const defaultAccount = loginWallet && loginWallet[0] || null;
+      const defaultAccount = (loginWallet && loginWallet[0]) || null;
 
       cache.writeQuery({
-        query: gql`{
-          allAccounts
-          defaultAccount
-          hasStoredWallet
-        }`,
+        query: gql`
+          {
+            allAccounts
+            defaultAccount
+            hasStoredWallet
+          }
+        `,
         data: {
           // We can safely set this to "true" even on the web client because
           // on the next refresh it will be automatically set to "false" through

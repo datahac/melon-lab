@@ -68,10 +68,8 @@ const withFormHandlers = withHandlers({
           ? max(tokens.baseToken.balance, quantityValue)
           : quantityValue;
     } else if (values.strategy === 'Limit') {
-      maxTotal =
-        typeValue === 'Buy' ? tokens.quoteToken.balance : Infinity;
-      maxQuantity =
-        typeValue === 'Sell' ? tokens.baseToken.balance : Infinity;
+      maxTotal = typeValue === 'Buy' ? tokens.quoteToken.balance : Infinity;
+      maxQuantity = typeValue === 'Sell' ? tokens.baseToken.balance : Infinity;
     }
 
     if (name === 'total') {

@@ -28,11 +28,13 @@ const WalletMutation = ({ children }) => (
       }
 
       cache.writeQuery({
-        query: gql`{
-          hasStoredWallet
-          defaultAccount
-          allAccounts
-        }`,
+        query: gql`
+          {
+            hasStoredWallet
+            defaultAccount
+            allAccounts
+          }
+        `,
         data: {
           hasStoredWallet: false,
           defaultAccount: null,

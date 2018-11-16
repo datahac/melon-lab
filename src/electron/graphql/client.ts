@@ -49,7 +49,8 @@ export class SubscriptionClient {
     this.operations = {};
     this.nextOperationId = 0;
 
-    this.messenger && this.messenger.on(`${this.channel}-res`, this.onMessage.bind(this));
+    this.messenger &&
+      this.messenger.on(`${this.channel}-res`, this.onMessage.bind(this));
   }
 
   public request(request: OperationOptions): Observable<ExecutionResult> {
@@ -144,7 +145,8 @@ export class SubscriptionClient {
   }
 
   private sendMessage(id: string, type: string, payload: any) {
-    this.messenger && this.messenger.send(`${this.channel}-req`, id, type, payload);
+    this.messenger &&
+      this.messenger.send(`${this.channel}-req`, id, type, payload);
   }
 
   private generateOperationId(): string {

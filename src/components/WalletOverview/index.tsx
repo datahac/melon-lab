@@ -10,16 +10,26 @@ import { NetworkConsumer } from '+/components/NetworkContext';
 export default class WalletOverviewContainer extends React.PureComponent {
   render() {
     return (
-      <Composer components={[
-        <NetworkConsumer />,
-        <AccountConsumer />,
-        <BalanceConsumer />,
-        <FundManagerConsumer />,
-        <WalletQuery />,
-        <WalletMutation />,
-      ]}>
-        {([network, account, balances, associatedFund, walletProps, deleteWallet]) => {
-          const hasWallet = walletProps.data && walletProps.data.hasStoredWallet;
+      <Composer
+        components={[
+          <NetworkConsumer />,
+          <AccountConsumer />,
+          <BalanceConsumer />,
+          <FundManagerConsumer />,
+          <WalletQuery />,
+          <WalletMutation />,
+        ]}
+      >
+        {([
+          network,
+          account,
+          balances,
+          associatedFund,
+          walletProps,
+          deleteWallet,
+        ]) => {
+          const hasWallet =
+            walletProps.data && walletProps.data.hasStoredWallet;
 
           return (
             <WalletOverview

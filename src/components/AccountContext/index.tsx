@@ -15,7 +15,9 @@ export class AccountProvider extends React.PureComponent {
     return (
       <Query query={accountQuery} ssr={false}>
         {props => (
-          <AccountContext.Provider value={props.data && props.data.defaultAccount}>
+          <AccountContext.Provider
+            value={props.data && props.data.defaultAccount}
+          >
             {this.props.children}
           </AccountContext.Provider>
         )}

@@ -38,7 +38,10 @@ const createParameters = async (
   const managementReward = 0;
   const performanceReward = 0;
 
-  if (environment.track === 'kovan-competition' || environment.track === 'live') {
+  if (
+    environment.track === 'kovan-competition' ||
+    environment.track === 'live'
+  ) {
     const competitionComplianceContract = await getCompetitionComplianceContract(
       environment,
     );
@@ -57,7 +60,10 @@ const createParameters = async (
   const isVersionShutDown = await contract.instance.isShutDown.call();
   ensure(!isVersionShutDown, 'Version is shut down.');
 
-  const signature = await signTermsAndConditions({ ...environment, account: wallet });
+  const signature = await signTermsAndConditions({
+    ...environment,
+    account: wallet,
+  });
   const termsAndConditionsAreSigned = await contract.instance.termsAndConditionsAreSigned.call(
     { from: wallet.address },
     [signature.v, signature.r, signature.s],
@@ -68,10 +74,9 @@ const createParameters = async (
     'Invalid signature of terms and conditions on contract level',
   );
 
-  const managerToFunds = await contract.instance.managerToFunds.call(
-    {},
-    [wallet.address],
-  );
+  const managerToFunds = await contract.instance.managerToFunds.call({}, [
+    wallet.address,
+  ]);
 
   ensure(
     managerToFunds === '0x0000000000000000000000000000000000000000',

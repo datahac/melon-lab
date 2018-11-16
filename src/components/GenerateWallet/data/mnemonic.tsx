@@ -8,9 +8,7 @@ const mutation = gql`
 `;
 
 const MnemonicQuery = ({ children }) => (
-  <Mutation mutation={mutation}>
-    {children}
-  </Mutation>
+  <Mutation mutation={mutation}>{children}</Mutation>
 );
 
 export default MnemonicQuery;

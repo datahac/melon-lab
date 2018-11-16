@@ -13,10 +13,14 @@ export const ConfigurationContext = React.createContext(defaults);
 
 export const configurationQuery = gql`
   query ConfigurationQuery {
-    canonicalPriceFeedAddress:versionConfig(key: CANONICAL_PRICE_FEED_ADDRESS)
-    competitionComplianceAddress:versionConfig(key: COMPETITION_COMPLIANCE_ADDRESS)
-    onlyManagerCompetitionAddress:versionConfig(key: ONLY_MANAGER_COMPETITION_ADDRESS)
-    noComplianceAddress:versionConfig(key: NO_COMPLIANCE_ADDRESS)
+    canonicalPriceFeedAddress: versionConfig(key: CANONICAL_PRICE_FEED_ADDRESS)
+    competitionComplianceAddress: versionConfig(
+      key: COMPETITION_COMPLIANCE_ADDRESS
+    )
+    onlyManagerCompetitionAddress: versionConfig(
+      key: ONLY_MANAGER_COMPETITION_ADDRESS
+    )
+    noComplianceAddress: versionConfig(key: NO_COMPLIANCE_ADDRESS)
   }
 `;
 
@@ -25,10 +29,12 @@ export class ConfigurationProvider extends React.PureComponent {
     return (
       <Query query={configurationQuery}>
         {props => (
-          <ConfigurationContext.Provider value={{
-            ...defaults,
-            ...props.data,
-          }}>
+          <ConfigurationContext.Provider
+            value={{
+              ...defaults,
+              ...props.data,
+            }}
+          >
             {this.props.children}
           </ConfigurationContext.Provider>
         )}

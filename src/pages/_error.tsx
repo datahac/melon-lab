@@ -15,7 +15,10 @@ export default class Error extends Component {
       case 403: {
         return (
           <DefaultTemplate {...props} title="Page not found">
-            <p>The page you are looking for does not exist or you do not have access to it.</p>
+            <p>
+              The page you are looking for does not exist or you do not have
+              access to it.
+            </p>
           </DefaultTemplate>
         );
       }

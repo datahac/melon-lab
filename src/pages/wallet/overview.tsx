@@ -20,10 +20,7 @@ export default class WalletOverviewPage extends React.Component {
 
   render() {
     return (
-      <Composer components={[
-        <NetworkConsumer />,
-        <AccountConsumer />,
-      ]}>
+      <Composer components={[<NetworkConsumer />, <AccountConsumer />]}>
         {([network, account]) => {
           const prefix = network.network === 'KOVAN' ? 'kovan.' : '';
           const pathname = `https://${prefix}etherscan.io/address/${account}`;
@@ -38,11 +35,7 @@ export default class WalletOverviewPage extends React.Component {
           );
 
           return (
-            <WalletTemplate
-              title="Your Wallet"
-              icon="icons_wallet"
-              text={text}
-            >
+            <WalletTemplate title="Your Wallet" icon="icons_wallet" text={text}>
               <WalletOverview />
             </WalletTemplate>
           );

@@ -18,7 +18,7 @@ export default class WalletDownloadPage extends React.Component {
   render() {
     const { statusCode, ...props } = this.props;
     if (statusCode && isError(statusCode)) {
-      return (<Error statusCode={statusCode} />);
+      return <Error statusCode={statusCode} />;
     }
 
     return (

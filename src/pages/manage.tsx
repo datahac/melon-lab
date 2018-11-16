@@ -19,7 +19,11 @@ export default class ManagePage extends React.Component {
     const { address, quoteAsset, baseAsset } = this.props;
 
     return (
-      <FundTemplate address={address} quoteAsset={quoteAsset} baseAsset={baseAsset} />
+      <FundTemplate
+        address={address}
+        quoteAsset={quoteAsset}
+        baseAsset={baseAsset}
+      />
     );
   }
 }

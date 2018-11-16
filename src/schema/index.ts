@@ -38,7 +38,7 @@ export async function createContext(track, endpoint) {
       ...acc,
       [key]: stream$,
     };
-  }, {})
+  }, {});
 
   Object.values(streams).forEach(stream$ => stream$);
 

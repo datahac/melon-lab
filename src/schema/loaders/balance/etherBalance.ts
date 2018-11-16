@@ -6,7 +6,7 @@ async function etherBalance(environment, config, address) {
   const balance =
     environment && (await environment.api.eth.getBalance(address));
 
-  return balance && symbol && toReadable(config, balance, symbol) || null;
+  return (balance && symbol && toReadable(config, balance, symbol)) || null;
 }
 
 export default R.curryN(3, etherBalance);

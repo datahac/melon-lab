@@ -6,7 +6,7 @@ const getConfigObservable = environment => {
   const config = getConfig(environment);
   return Rx.from(config).pipe(
     timeout(10000),
-    retryWhen((errors) => errors.pipe(delay(1000))),
+    retryWhen(errors => errors.pipe(delay(1000))),
   );
 };
 

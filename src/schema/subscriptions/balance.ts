@@ -31,7 +31,9 @@ export default {
       (environment, config) => [environment, config],
     ).pipe(
       debounceTime(5000),
-      switchMap(([environment, config]) => Rx.from(getBalance(environment, config))),
+      switchMap(([environment, config]) =>
+        Rx.from(getBalance(environment, config)),
+      ),
       distinctUntilChanged(R.equals),
     );
 

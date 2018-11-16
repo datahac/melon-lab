@@ -9,16 +9,23 @@ const estimateMutation = gql`
 `;
 
 const executeMutation = gql`
-  mutation ExecuteSetupFund($name: String!, $exchanges: [String]!, $gasPrice: String!, $gasLimit: String!) {
-    executeSetupFund(name: $name, exchanges: $exchanges, gasPrice: $gasPrice, gasLimit: $gasLimit) @client
+  mutation ExecuteSetupFund(
+    $name: String!
+    $exchanges: [String]!
+    $gasPrice: String!
+    $gasLimit: String!
+  ) {
+    executeSetupFund(
+      name: $name
+      exchanges: $exchanges
+      gasPrice: $gasPrice
+      gasLimit: $gasLimit
+    ) @client
   }
 `;
 
 export const EstimateSetupMutation = ({ onCompleted, children }) => (
-  <Mutation
-    mutation={estimateMutation}
-    onCompleted={onCompleted}
-  >
+  <Mutation mutation={estimateMutation} onCompleted={onCompleted}>
     {children}
   </Mutation>
 );

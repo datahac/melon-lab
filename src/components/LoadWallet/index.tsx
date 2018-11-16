@@ -7,24 +7,29 @@ import { WalletQuery, WalletMutation } from './data/wallet';
 class LoadWalletContainer extends React.Component {
   state = {
     error: null,
-  }
+  };
 
-  setError = (error) => {
+  setError = error => {
     this.setState({ error });
-  }
+  };
 
   render() {
     return (
-      <Composer components={[
-        <WalletQuery />,
-        <WalletMutation onCompleted={() => {
-          this.props.router.replace({
-            pathname: '/wallet',
-          });
-        }} />
-      ]}>
+      <Composer
+        components={[
+          <WalletQuery />,
+          <WalletMutation
+            onCompleted={() => {
+              this.props.router.replace({
+                pathname: '/wallet',
+              });
+            }}
+          />,
+        ]}
+      >
         {([walletProps, [loadWallet, mutationProps]]) => {
-          const hasStoredWallet = walletProps.data && walletProps.data.hasStoredWallet;
+          const hasStoredWallet =
+            walletProps.data && walletProps.data.hasStoredWallet;
           const isLoading = mutationProps.loading || walletProps.loading;
 
           return (

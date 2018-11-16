@@ -137,7 +137,12 @@ export class SubscriptionServer {
               this.sendMessage(messenger, id, MessageTypes.GQL_DATA, value);
             })
               .then(() => {
-                this.sendMessage(messenger, id, MessageTypes.GQL_COMPLETE, null);
+                this.sendMessage(
+                  messenger,
+                  id,
+                  MessageTypes.GQL_COMPLETE,
+                  null,
+                );
               })
               .catch((error: Error) => {
                 this.sendMessage(messenger, id, MessageTypes.GQL_ERROR, error);
@@ -189,7 +194,8 @@ export class SubscriptionServer {
       return Promise.resolve({ errors });
     }
 
-    const context = typeof this.context === 'function' ? this.context() : this.context;
+    const context =
+      typeof this.context === 'function' ? this.context() : this.context;
 
     if (isASubscriptionOperation(document, operation)) {
       return Promise.resolve(
@@ -205,14 +211,7 @@ export class SubscriptionServer {
     }
 
     return Promise.resolve(
-      execute(
-        this.schema,
-        document,
-        this.root,
-        context,
-        variables,
-        operation,
-      ),
+      execute(this.schema, document, this.root, context, variables, operation),
     );
   }
 }

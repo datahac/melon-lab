@@ -13,10 +13,6 @@ const query = gql`
   }
 `;
 
-const RankingQuery = ({ children }) => (
-  <Query query={query}>
-    {children}
-  </Query>
-);
+const RankingQuery = ({ children }) => <Query query={query}>{children}</Query>;
 
 export default RankingQuery;

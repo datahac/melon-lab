@@ -46,12 +46,20 @@ class SubscriptionHandler extends React.Component {
 export class BalanceProvider extends React.PureComponent {
   render() {
     return (
-      <Composer components={[
-        <AccountConsumer />,
-        ({ results: [account], render }) => (
-          <Query query={balanceQuery} variables={{ account }} skip={!account} ssr={false} children={render} />
-        ),
-      ]}>
+      <Composer
+        components={[
+          <AccountConsumer />,
+          ({ results: [account], render }) => (
+            <Query
+              query={balanceQuery}
+              variables={{ account }}
+              skip={!account}
+              ssr={false}
+              children={render}
+            />
+          ),
+        ]}
+      >
         {([account, props]) => {
           const subscribe = () => {
             const subscribeToToken = (token, field) => {
@@ -74,7 +82,7 @@ export class BalanceProvider extends React.PureComponent {
             ];
 
             return () => {
-              subscriptions.forEach((unsubscribe) => {
+              subscriptions.forEach(unsubscribe => {
                 unsubscribe();
               });
             };
@@ -82,10 +90,12 @@ export class BalanceProvider extends React.PureComponent {
 
           return (
             <SubscriptionHandler subscribe={subscribe} account={account}>
-              <BalanceContext.Provider value={{
-                ...defaults,
-                ...(account && props.data || {}),
-              }}>
+              <BalanceContext.Provider
+                value={{
+                  ...defaults,
+                  ...((account && props.data) || {}),
+                }}
+              >
                 {this.props.children}
               </BalanceContext.Provider>
             </SubscriptionHandler>

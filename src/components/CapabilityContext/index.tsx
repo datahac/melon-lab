@@ -18,7 +18,8 @@ export class CapabilityProvider extends React.PureComponent {
           <AccountConsumer />,
           <BalanceConsumer />,
           <NetworkConsumer />,
-        ]}>
+        ]}
+      >
         {([account, balance, network]) => {
           const wethBalance = balance && balance.weth;
           const ethBalance = balance && balance.eth;
@@ -32,14 +33,19 @@ export class CapabilityProvider extends React.PureComponent {
           const isSynced = !!nodeSynced;
           const isCompetition = false; // TODO: Make this configurable.
 
-          const canInteract = isSynced && hasAccount && hasCurrentBlock && hasEth;
-          const canInvest = isCompetition ? canInteract : (canInteract && hasWeth);
+          const canInteract =
+            isSynced && hasAccount && hasCurrentBlock && hasEth;
+          const canInvest = isCompetition
+            ? canInteract
+            : canInteract && hasWeth;
 
           return (
-            <CapabilityContext.Provider value={{
-              canInvest,
-              canInteract,
-            }}>
+            <CapabilityContext.Provider
+              value={{
+                canInvest,
+                canInteract,
+              }}
+            >
               {this.props.children}
             </CapabilityContext.Provider>
           );

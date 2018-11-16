@@ -1,7 +1,4 @@
-import {
-  getConfig,
-  getVersionContract,
-} from '@melonproject/melon.js';
+import { getConfig, getVersionContract } from '@melonproject/melon.js';
 
 const createTransactionOptions = async (environment, wallet) => {
   const config = await getConfig(environment);

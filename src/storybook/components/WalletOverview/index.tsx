@@ -76,7 +76,8 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
                 />
               ) : (
                 <Fragment>
-                  {(!balances.eth || isZero(balances.eth)) && !associatedFund ? (
+                  {(!balances.eth || isZero(balances.eth)) &&
+                  !associatedFund ? (
                     <InsufficientFunds
                       eth={balances.eth}
                       weth={balances.weth}

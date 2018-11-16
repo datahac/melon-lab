@@ -16,7 +16,7 @@ export const Query = ({ errorPolicy, ...props }) => (
 
 // TODO: This singleton is an ugly hack. Fix it.
 let dataLinkSingleton;
-export const createDataLink = (options) => {
+export const createDataLink = options => {
   if (typeof dataLinkSingleton === 'undefined') {
     dataLinkSingleton = new SchemaLink({
       schema: options.ctx.res.schema,
@@ -25,7 +25,7 @@ export const createDataLink = (options) => {
   }
 
   return dataLinkSingleton;
-}
+};
 
 export const createClient = options => {
   const cache = createCache();

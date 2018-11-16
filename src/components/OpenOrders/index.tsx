@@ -21,12 +21,14 @@ const OpenOrdersMapped = withMappedOrders(OpenOrders);
 export default class OpenOrdersContainer extends React.PureComponent {
   render() {
     return (
-      <Composer components={[
-        <OpenOrdersQuery address={this.props.address} />,
-        ({ render }) => (
-          <OpenOrdersMutation>{(a, b) => render([a, b])}</OpenOrdersMutation>
-        ),
-      ]}>
+      <Composer
+        components={[
+          <OpenOrdersQuery address={this.props.address} />,
+          ({ render }) => (
+            <OpenOrdersMutation>{(a, b) => render([a, b])}</OpenOrdersMutation>
+          ),
+        ]}
+      >
         {([openOrdersProps, [cancelOrder]]) => {
           const orders = R.pathOr([], ['data', 'openOrders'])(openOrdersProps);
 
@@ -49,6 +51,6 @@ export default class OpenOrdersContainer extends React.PureComponent {
           );
         }}
       </Composer>
-    )
+    );
   }
 }

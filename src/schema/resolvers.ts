@@ -49,7 +49,7 @@ export default {
       return takeLast(streams.synced$);
     },
     totalFunds: (_, __, { streams }) => {
-      return takeLast(streams.ranking$).then((rankings) => {
+      return takeLast(streams.ranking$).then(rankings => {
         return rankings && rankings.length;
       });
     },
@@ -60,8 +60,8 @@ export default {
       return takeLast(streams.peers$);
     },
     versionConfig: (_, { key }, { streams }) => {
-      return takeLast(streams.config$).then((config) => {
-        return config && config[key] || null;
+      return takeLast(streams.config$).then(config => {
+        return (config && config[key]) || null;
       });
     },
     provider: (_, __, { streams }) => {
@@ -77,8 +77,8 @@ export default {
       return loaders.fundContract.load(address);
     },
     fundByName: async (_, { name }, { loaders, streams }) => {
-      const rankings = await takeLast(streams.ranking$) || [];
-      const fund = rankings.find((fund) => fund.name === name);
+      const rankings = (await takeLast(streams.ranking$)) || [];
+      const fund = rankings.find(fund => fund.name === name);
       return fund && loaders.fundContract.load(fund.address);
     },
     associatedFund: async (_, { account }, { loaders }) => {
@@ -86,8 +86,8 @@ export default {
       return fundAddress || null;
     },
     funds: async (_, args, { loaders, streams }) => {
-      const addresses = await (args.addresses || (
-        await takeLast(streams.ranking$) || []).map(fund => fund.address) ||
+      const addresses = await (args.addresses ||
+        ((await takeLast(streams.ranking$)) || []).map(fund => fund.address) ||
         []);
 
       return loaders.fundContract.loadMany(addresses);
@@ -121,7 +121,7 @@ export default {
       return takeLast(streams.ranking$).then(ranking => {
         const address = parent.instance.address;
         const entry = (ranking || []).find(rank => rank.address === address);
-        return entry && entry.rank || null;
+        return (entry && entry.rank) || null;
       });
     },
     name: (parent, _, { loaders }) => {
@@ -240,11 +240,15 @@ export default {
       });
     },
     restoreWallet: (_, { mnemonic, password }, { loaders }) => {
-      return loaders.restoreWallet(mnemonic, password, (decrypted, encrypted) => {
-        // TODO: Store encrypted wallet in keytar storage and save current
-        // decrypted wallet and private key in memory.
-        throw new Error('This is not implemented yet');
-      });
+      return loaders.restoreWallet(
+        mnemonic,
+        password,
+        (decrypted, encrypted) => {
+          // TODO: Store encrypted wallet in keytar storage and save current
+          // decrypted wallet and private key in memory.
+          throw new Error('This is not implemented yet');
+        },
+      );
     },
     generateMnemonic: (_, __, { loaders }) => {
       return loaders.generateMnemonic();

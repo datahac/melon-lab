@@ -16,28 +16,30 @@ const restoreMainWindow = async () => {
   await setupGql();
 
   // Create the application's main menu.
-  electron.Menu.setApplicationMenu(electron.Menu.buildFromTemplate([
-    {
-      label: 'Application',
-      submenu: [
-        {
-          label: 'Quit',
-          accelerator: 'Command+Q',
-          click: () => {
-            electron.app.quit();
+  electron.Menu.setApplicationMenu(
+    electron.Menu.buildFromTemplate([
+      {
+        label: 'Application',
+        submenu: [
+          {
+            label: 'Quit',
+            accelerator: 'Command+Q',
+            click: () => {
+              electron.app.quit();
+            },
           },
-        },
-      ],
-    },
-    {
-      label: 'Edit',
-      submenu: [
-        { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
-        { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
-        { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
-      ],
-    },
-  ]));
+        ],
+      },
+      {
+        label: 'Edit',
+        submenu: [
+          { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
+          { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
+          { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
+        ],
+      },
+    ]),
+  );
 
   mainWindow = new electron.BrowserWindow({
     width: 1024,
@@ -70,7 +72,7 @@ const restoreMainWindow = async () => {
     await next.prepare();
 
     // Start the http server (with hot code reloading).
-    await new Promise((resolve) => {
+    await new Promise(resolve => {
       const server = http.createServer(requestHandler);
 
       server.listen(3000, () => {
@@ -82,11 +84,15 @@ const restoreMainWindow = async () => {
     });
   }
 
-  mainWindow.loadURL(isDev ? 'http://localhost:3000/' : url.format({
-    pathname: 'index.html',
-    protocol: 'file:',
-    slashes: true,
-  }));
+  mainWindow.loadURL(
+    isDev
+      ? 'http://localhost:3000/'
+      : url.format({
+          pathname: 'index.html',
+          protocol: 'file:',
+          slashes: true,
+        }),
+  );
 };
 
 electron.app.on('window-all-closed', () => {
@@ -109,9 +115,12 @@ electron.app.on('ready', () => {
 
       callback(path.normalize(path.join(__dirname, 'renderer', reqUrlFinal)));
     });
-  }
-  else {
-    const { default: install, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
+  } else {
+    const {
+      default: install,
+      REACT_DEVELOPER_TOOLS,
+      REDUX_DEVTOOLS,
+    } = require('electron-devtools-installer');
 
     install(REACT_DEVELOPER_TOOLS)
       .then(name => console.log(`Added Extension:  ${name}`))

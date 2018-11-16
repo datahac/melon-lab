@@ -15,9 +15,11 @@ const requestRanking = environment => {
 };
 
 const pollRanking = environment => {
-  return requestRanking(environment).pipe(expand(() =>
-    Rx.timer(60000).pipe(concatMap(() => requestRanking(environment))),
-  ));
+  return requestRanking(environment).pipe(
+    expand(() =>
+      Rx.timer(60000).pipe(concatMap(() => requestRanking(environment))),
+    ),
+  );
 };
 
 export default pollRanking;

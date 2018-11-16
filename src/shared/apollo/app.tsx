@@ -1,7 +1,10 @@
 // Import the introspection results (handled with a custom webpack loader)
 // for the schema.
 import introspection from '~/schema/schema.gql';
-import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import {
+  InMemoryCache,
+  IntrospectionFragmentMatcher,
+} from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import withApollo from 'next-with-apollo';

@@ -15,11 +15,11 @@ function toAsyncIterator(observable$: Rx.Observable<any>) {
 
   let promise = promiseCapability();
   const subscription = observable$.subscribe(
-    (value) => {
+    value => {
       promise.resolve({ value, done: false });
       promise = promiseCapability();
     },
-    (error) => {
+    error => {
       promise.reject(error);
     },
     () => {
@@ -37,7 +37,7 @@ function toAsyncIterator(observable$: Rx.Observable<any>) {
     },
     throw(error) {
       subscription.unsubscribe();
-      return Promise.reject(error);      
+      return Promise.reject(error);
     },
     [$$asyncIterator]() {
       return this;

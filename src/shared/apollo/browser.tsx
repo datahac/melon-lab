@@ -28,7 +28,7 @@ export const Query = ({ errorPolicy, ...props }) => (
   <QueryBase {...props} errorPolicy={errorPolicy || 'all'} />
 );
 
-export const createStateLink = (cache) => {
+export const createStateLink = cache => {
   const defaults = {
     hasStoredWallet: false,
     defaultAccount: null,
@@ -56,37 +56,66 @@ export const createStateLink = (cache) => {
         },
         exportWallet: (_, { password }, { getWallet }) => {
           const wallet = getWallet();
-          return wallet && wallet.encrypt(password) || null;
+          return (wallet && wallet.encrypt(password)) || null;
         },
         importWallet: (_, { wallet, password }, { setWallet }) => {
-          return importWallet(wallet, password, (wallet) => {
+          return importWallet(wallet, password, wallet => {
             setWallet(wallet);
           });
         },
         restoreWallet: (_, { mnemonic, password }, { setWallet }) => {
-          return restoreWallet(mnemonic, password, (wallet) => {
+          return restoreWallet(mnemonic, password, wallet => {
             setWallet(wallet);
           });
         },
         loginWallet: () => {
-          throw new Error('The in-browser app does not support storing of wallets for security reasons.');
+          throw new Error(
+            'The in-browser app does not support storing of wallets for security reasons.',
+          );
         },
-        estimateSetupFund: async (_, { name, exchanges }, { environment, getWallet }) => {
+        estimateSetupFund: async (
+          _,
+          { name, exchanges },
+          { environment, getWallet },
+        ) => {
           const wallet = getWallet();
-          const parameters = await createSetupFundParameters(environment, wallet, name);
+          const parameters = await createSetupFundParameters(
+            environment,
+            wallet,
+            name,
+          );
           const options = await createTransactionOptions(environment, wallet);
-          return await estimateTransaction(environment, 'setupFund', parameters, options);
+          return await estimateTransaction(
+            environment,
+            'setupFund',
+            parameters,
+            options,
+          );
         },
-        executeSetupFund: async (_, { name, exchanges, gasPrice, gasLimit }, { environment, getWallet }) => {
+        executeSetupFund: async (
+          _,
+          { name, exchanges, gasPrice, gasLimit },
+          { environment, getWallet },
+        ) => {
           const wallet = getWallet();
-          const parameters = await createSetupFundParameters(environment, wallet, name);
+          const parameters = await createSetupFundParameters(
+            environment,
+            wallet,
+            name,
+          );
           const options = await createTransactionOptions(environment, wallet);
-          const receipt = await sendTransaction(environment, wallet, 'setupFund', parameters, {
-            ...options,
-            // TODO: Remove the parseInt() calls in the new melon.js.
-            gasLimit: parseInt(gasLimit, 10),
-            gasPrice: parseInt(gasPrice, 10),
-          });
+          const receipt = await sendTransaction(
+            environment,
+            wallet,
+            'setupFund',
+            parameters,
+            {
+              ...options,
+              // TODO: Remove the parseInt() calls in the new melon.js.
+              gasLimit: parseInt(gasLimit, 10),
+              gasPrice: parseInt(gasPrice, 10),
+            },
+          );
 
           return postProcessSetupFund(receipt);
         },
@@ -108,7 +137,7 @@ export const createStateLink = (cache) => {
         track: config.track,
       },
       getWallet: () => activeWallet,
-      setWallet: (wallet) => {
+      setWallet: wallet => {
         activeWallet = wallet;
       },
     };
@@ -133,7 +162,7 @@ export const createDataLink = () => {
   });
 
   return dataLink;
-}
+};
 
 export const createClient = options => {
   const cache = createCache();

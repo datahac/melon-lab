@@ -85,11 +85,13 @@ class NetworkContextHandler extends React.Component {
     const { subscribe, ...props } = this.props;
 
     return (
-      <NetworkContext.Provider value={{
-        ...defaults,
-        ...state,
-        ...props,
-      }}>
+      <NetworkContext.Provider
+        value={{
+          ...defaults,
+          ...state,
+          ...props,
+        }}
+      >
         {this.props.children}
       </NetworkContext.Provider>
     );
@@ -122,7 +124,7 @@ export class NetworkProvider extends React.PureComponent {
             ];
 
             return () => {
-              subscriptions.forEach((unsubscribe) => {
+              subscriptions.forEach(unsubscribe => {
                 unsubscribe();
               });
             };
