@@ -5,4 +5,29 @@
 ![Dependencies](https://img.shields.io/david/melonproject/melon-lab.svg?style=flat-square)
 ![Development Dependencies](https://img.shields.io/david/dev/melonproject/melon-lab.svg?style=flat-square)
 
-<img src = "https://github.com/melonproject/branding/blob/master/melon/03_M_logo.jpg" width = "25%" lign="right">
+## Getting Started
+
+### Prerequisites
+
+- Node
+
+Get the code:
+
+```bash
+git clone git@github.com:melonproject/melon-lab.git
+```
+
+### Setup
+
+```bash
+yarn
+yarn dev
+```
+
+## Test
+
+Run tests
+
+```bash
+yarn test
+```
