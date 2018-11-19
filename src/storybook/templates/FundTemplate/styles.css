@@ -58,6 +58,7 @@
   border-top: 1px solid var(--color-border);
   max-height: 440px;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .fund-template__holdings-wrap::-webkit-scrollbar {
