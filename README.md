@@ -9,12 +9,13 @@
 
 ### Prerequisites
 
-- Node
+- Node.js
 
 Get the code:
 
 ```bash
 git clone git@github.com:melonproject/melon-lab.git
+cp .env.defaults .env
 ```
 
 ### Setup
