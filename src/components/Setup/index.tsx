@@ -192,6 +192,7 @@ class Setup extends React.Component {
         ]) => {
           return (
             <SetupFormContainer
+              {...this.props}
               account={account}
               configuration={configuration}
               page={this.state.page}
@@ -199,7 +200,6 @@ class Setup extends React.Component {
               steps={this.state.steps}
               setShowModal={this.setShowModal}
               showModal={this.state.showModal}
-              {...this.props}
               validateOnBlur={true}
               validateOnChange={false}
               prepareSetup={estimateSetupFund}
