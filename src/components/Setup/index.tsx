@@ -1,7 +1,7 @@
 import React from 'react';
 import { EstimateSetupMutation, ExecuteSetupMutation } from './data/fund';
 import { withRouter } from 'next/router';
-import { compose, withState, withHandlers, withProps } from 'recompose';
+import { compose } from 'recompose';
 import availableExchangeContracts from '~/utils/availableExchangeContracts';
 import availablePolicies from '~/utils/availablePolicies';
 import Wizard from '~/components/Wizard';
@@ -17,43 +17,10 @@ import Link from '~/blocks/Link';
 import { withApollo } from 'react-apollo';
 import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
-import { BalanceConsumer } from '+/components/BalanceContext';
 import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 import withForm from './withForm';
 
-const withFormProps = withProps(props => {
-  return {
-    steps: [
-      {
-        key: 'fund',
-        name: 'Fund',
-        validateFields: ['name', 'exchanges'],
-      },
-      // {
-      //   key: 'fee-structure',
-      //   name: 'Fee structure',
-      // },
-      {
-        key: 'risk-profile',
-        name: 'Risk Profile',
-      },
-      {
-        key: 'terms-conditions',
-        name: 'Terms & Conditions',
-        validateFields: ['terms'],
-      },
-      {
-        key: 'overview',
-        name: 'Overview',
-      },
-    ],
-  };
-});
-
-const withConfirmationModal = withState('showModal', 'setShowModal', false);
-const withPageState = withState('page', 'setPage', 0);
-
-const FormikSetupFormWizard = compose(withForm)(props => (
+const SetupFormContainer = withForm(props => (
   <SetupForm handleSubmit={props.handleSubmit}>
     <Wizard page={props.page} steps={props.steps} loading={props.loading}>
       <WizardPage
@@ -145,62 +112,114 @@ const FormikSetupFormWizard = compose(withForm)(props => (
   </SetupForm>
 ));
 
-const SetupFormWizard = props => (
-  <EstimateSetupMutation
-    onCompleted={() => {
-      props.setShowModal(true);
-    }}
-  >
-    {(prepareSetup, prepareProps) => (
-      <ExecuteSetupMutation
-        account={props.account}
-        onCompleted={result => {
-          props.router.replace({
-            pathname: '/manage',
-            query: { address: result.executeSetupFund },
-          });
-        }}
+class Setup extends React.Component {
+  state = {
+    page: 0,
+    showModal: false,
+    steps: [
+      {
+        key: 'fund',
+        name: 'Fund',
+        validateFields: ['name', 'exchanges'],
+      },
+      // {
+      //   key: 'fee-structure',
+      //   name: 'Fee structure',
+      // },
+      {
+        key: 'risk-profile',
+        name: 'Risk Profile',
+      },
+      {
+        key: 'terms-conditions',
+        name: 'Terms & Conditions',
+        validateFields: ['terms'],
+      },
+      {
+        key: 'overview',
+        name: 'Overview',
+      },
+    ],
+  };
+
+  setShowModal = showModal => {
+    this.setState({
+      showModal,
+    });
+  };
+
+  setPage = page => {
+    this.setState({
+      page,
+    });
+  };
+
+  render() {
+    return (
+      <Composer
+        components={[
+          <AccountConsumer />,
+          <ConfigurationConsumer />,
+          ({ render }) => (
+            <EstimateSetupMutation
+              onCompleted={() => {
+                this.setShowModal(true);
+              }}
+            >
+              {(a, b) => render([a, b])}
+            </EstimateSetupMutation>
+          ),
+          ({ render }) => (
+            <ExecuteSetupMutation
+              account={this.props.account}
+              onCompleted={result => {
+                this.props.router.replace({
+                  pathname: '/manage',
+                  query: { address: result.executeSetupFund },
+                });
+              }}
+            >
+              {(a, b) => render([a, b])}
+            </ExecuteSetupMutation>
+          ),
+        ]}
       >
-        {(executeSetup, executeProps) => (
-          <FormikSetupFormWizard
-            {...props}
-            validateOnBlur={true}
-            validateOnChange={false}
-            prepareSetup={prepareSetup}
-            executeSetup={executeSetup}
-            gasLimit={prepareProps.data && prepareProps.data.estimateSetupFund}
-            loading={prepareProps.loading || executeProps.loading}
-          />
-        )}
-      </ExecuteSetupMutation>
-    )}
-  </EstimateSetupMutation>
-);
+        {([
+          account,
+          configuration,
+          [estimateSetupFund, estimateSetupFundProps],
+          [executeSetupFund, executeSetupFundProps],
+        ]) => {
+          return (
+            <SetupFormContainer
+              account={account}
+              configuration={configuration}
+              page={this.state.page}
+              setPage={this.setPage}
+              steps={this.state.steps}
+              setShowModal={this.setShowModal}
+              showModal={this.state.showModal}
+              {...this.props}
+              validateOnBlur={true}
+              validateOnChange={false}
+              prepareSetup={estimateSetupFund}
+              executeSetup={executeSetupFund}
+              gasLimit={
+                estimateSetupFundProps.data &&
+                estimateSetupFundProps.data.estimateSetupFund
+              }
+              loading={
+                executeSetupFundProps.loading || executeSetupFundProps.loading
+              }
+            />
+          );
+        }}
+      </Composer>
+    );
+  }
+}
 
-const SetupFormContainer = compose(
-  withApollo,
+export default compose(
   withRouter,
-  withConfirmationModal,
-  withPageState,
-  withFormProps,
-)(SetupFormWizard);
-
-export default props => (
-  <Composer
-    components={[
-      <AccountConsumer />,
-      <BalanceConsumer />,
-      <ConfigurationConsumer />,
-    ]}
-  >
-    {([account, balances, configuration]) => {
-      return (
-        <SetupFormContainer
-          {...props}
-          account={account}
-          configuration={configuration}
-        />
-      );
-    }}
-  </Composer>
-);
+  withApollo,
+)(Setup);
