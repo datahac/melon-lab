@@ -1,5 +1,4 @@
 import { withFormik } from 'formik';
-import { compose } from 'recompose';
 import * as Yup from 'yup';
 import LoadWallet from './index';
 
@@ -18,4 +17,4 @@ const withFormValidation = withFormik({
     form.props.onSubmit && form.props.onSubmit(values),
 });
 
-export default compose(withFormValidation)(LoadWallet);
+export default withFormValidation(LoadWallet);
