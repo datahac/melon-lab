@@ -25,7 +25,8 @@
   "contributors": [
     "Simon Emanuel Schmid <simon@schmid.io>",
     "Sebastian Siemssen <fubhy@fubhy.com>",
-    "Jenna Zenk <jenna@melonport.com>"
+    "Jenna Zenk <jenna@melonport.com>",
+    "Matthias Gemperli <matt@melonport.com>"
   ],
   "dependencies": {
     "@melonproject/melon.js": "^0.8.32",
