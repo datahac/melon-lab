@@ -1,9 +1,14 @@
 import * as R from 'ramda';
-import { getFundForManager } from '@melonproject/melon.js';
+import * as protocol from '@melonproject/protocol';
 
-function fundAddressFromManager(environment, address) {
+function fundAddressFromManager(environment, managerAddress, contractAddress) {
   return (
-    environment && getFundForManager(environment, { managerAddress: address })
+    environment &&
+    protocol.factory.managersToHubs(
+      contractAddress,
+      managerAddress,
+      environment,
+    )
   );
 }
 

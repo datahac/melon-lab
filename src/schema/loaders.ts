@@ -14,32 +14,32 @@ import getFundOpenOrders from './loaders/fund/fundOpenOrders';
 import getFundParticipation from './loaders/fund/fundParticipation';
 import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
 import getRecentTrades from './loaders/recentTrades';
-import { getSymbolBalance, observeSymbolBalance } from './loaders/symbolBalance';
+import {
+  getSymbolBalance,
+  observeSymbolBalance,
+} from './loaders/symbolBalance';
 import getPrice from './loaders/tokenPrice';
 import takeLast from './utils/takeLast';
 
 export default (environment, streams) => {
   // TODO: Does this need a custom cache key function?
-  const symbolPrice = new DataLoader(
-    symbols => {
-      const fn = getPrice(environment);
-      return Promise.all(symbols.map(fn) || []);
-    },
-  );
+  const symbolPrice = new DataLoader(symbols => {
+    const fn = getPrice(environment);
+    return Promise.all(symbols.map(fn) || []);
+  });
 
-  const fundAddressFromManager = new DataLoader(
-    addresses => {
-      const fn = getFundAddressFromManager(environment);
-      return Promise.all(addresses.map(fn) || []);
-    },
-  );
+  const fundAddressFromManager = new DataLoader(pairs => {
+    const fn = getFundAddressFromManager(environment);
+    const result = pairs.map(pair =>
+      fn(pair.contractAddress, pair.contractAddress),
+    );
+    return Promise.all(result || []);
+  });
 
-  const fundContract = new DataLoader(
-    addresses => {
-      const fn = getFundContract(environment);
-      return Promise.all(addresses.map(fn) || []);
-    },
-  );
+  const fundContract = new DataLoader(addresses => {
+    const fn = getFundContract(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
 
   const fundName = new DataLoader(
     contracts => {

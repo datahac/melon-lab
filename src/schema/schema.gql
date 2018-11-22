@@ -175,7 +175,8 @@ type Query {
   "Fetch the associated fund of an account."
   associatedFund(
     "The address of the account to load the fund for."
-    account: String!
+    managerAddress: String!
+    contractAddress: String!
   ): String
 
   "Loads a fund by its name."
