@@ -36,7 +36,7 @@ export const balanceQuery = gql`
 `;
 
 const balanceSubscription = gql`
-  subscription BalanceSubscription($account: String!, $symbol: TokenEnum!) {
+  subscription BalanceSubscription($account: String!, $symbol: SymbolEnum!) {
     balance(address: $account, symbol: $symbol)
   }
 `;
