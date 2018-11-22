@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { StatelessComponent, Fragment } from 'react';
 import Icon from '~/blocks/Icon';
 import Link from '~/link';
-import displayNumber from '~/utils/displayNumber';
+import { toFixed } from '@melonproject/token-math/quantity';
 
 import styles from './styles.css';
 
@@ -149,7 +149,7 @@ export const Header: StatelessComponent<HeaderProps> = ({
           {ethBalance && (
             <span className="header__account-balances">
               <span className="header__account-balance">
-                ETH {displayNumber(ethBalance)}
+                ETH {toFixed(ethBalance)}
               </span>
             </span>
           )}
