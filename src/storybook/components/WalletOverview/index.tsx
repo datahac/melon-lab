@@ -25,75 +25,66 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
   networkId,
   loading,
   balances,
-}) => {
-  return (
-    <div className="wallet-overview">
-      <style jsx>{styles}</style>
-      {loading ? (
-        <Spinner icon size="small" />
-      ) : (
-        <Fragment>
-          {currentAddress && (
-            <Fragment>
-              <h2>Balances</h2>
-              <div className="wallet-overview__balances">
-                <div className="wallet-overview__balance">
-                  ETH:
-                  <br />
-                  <code>
-                    <span className="wallet-overview__balance-value">
-                      {balances && balances.eth ? balances.eth : 0}
-                    </span>
-                  </code>
-                </div>
-                <div className="wallet-overview__balance">
-                  MLN:
-                  <br />
-                  <code>
-                    <span className="wallet-overview__balance-value">
-                      {balances && balances.mln ? balances.mln : 0}
-                    </span>
-                  </code>
-                </div>
-                <div className="wallet-overview__balance">
-                  WETH:
-                  <br />
-                  <code>
-                    <span className="wallet-overview__balance-value">
-                      {balances && balances.weth ? balances.weth : 0}
-                    </span>
-                  </code>
-                </div>
+}) => (
+  <div className="wallet-overview">
+    <style jsx>{styles}</style>
+    {loading ? (
+      <Spinner icon size="small" />
+    ) : (
+      <Fragment>
+        {currentAddress && (
+          <Fragment>
+            <h2>Balances</h2>
+            <div className="wallet-overview__balances">
+              <div className="wallet-overview__balance">
+                ETH:
+                <br />
+                <span className="wallet-overview__balance-value">
+                  {balances && balances.eth && toFixed(balances.eth)}
+                </span>
               </div>
-              <h2>Fund</h2>
-              {associatedFund ? (
-                <AssociatedFund
-                  associatedFund={associatedFund}
-                  networkId={networkId}
-                />
-              ) : (
-                <Fragment>
-                  {(!balances.eth || isZero(balances.eth)) &&
-                  !associatedFund ? (
-                    <InsufficientFunds
-                      eth={balances.eth}
-                      weth={balances.weth}
-                      address={currentAddress}
-                    />
-                  ) : (
-                    <Link style="primary" size="medium" href="/setup">
-                      Setup your fund
-                    </Link>
-                  )}
-                </Fragment>
-              )}
-            </Fragment>
-          )}
-        </Fragment>
-      )}
-    </div>
-  );
-};
+              <div className="wallet-overview__balance">
+                MLN:
+                <br />
+                <span className="wallet-overview__balance-value">
+                  {balances && balances.mln && toFixed(balances.mln)}
+                </span>
+              </div>
+              <div className="wallet-overview__balance">
+                WETH:
+                <br />
+                <span className="wallet-overview__balance-value">
+                  {balances && balances.weth && toFixed(balances.weth)}
+                </span>
+              </div>
+            </div>
+            <h2>Fund</h2>
+            {associatedFund ? (
+              <AssociatedFund
+                associatedFund={associatedFund}
+                networkId={networkId}
+              />
+            ) : (
+              <Fragment>
+                {!balances.eth || isZero(balances.eth) ? (
+                  <InsufficientFunds
+                    eth={balances.eth}
+                    weth={balances.weth}
+                    address={currentAddress}
+                  />
+                ) : (
+                  <Link style="primary" size="medium" href="/setup">
+                    Setup your fund
+                  </Link>
+                )}
+              </Fragment>
+            )}
+          </Fragment>
+        )}
+      </Fragment>
+    )}
+  </div>
+);
 
 const AssociatedFund = ({ associatedFund, networkId }) => (
   <Fragment>

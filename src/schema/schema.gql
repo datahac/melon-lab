@@ -137,6 +137,11 @@ type ExchangeConfig {
   takesCustody: Boolean!
 }
 
+type Balance {
+  quantity: String!
+  token: Token!
+}
+
 type Token {
   address: String
   decimals: Int!
@@ -174,10 +179,7 @@ type Query {
   ): String
 
   "Loads a fund by its name."
-  fundByName(
-    "The name of the fund to load."
-    name: String!
-  ): Fund
+  fundByName("The name of the fund to load." name: String!): Fund
 
   network: String
   currentBlock: String
@@ -186,7 +188,7 @@ type Query {
   peerCount: String
   contractDeployment: Deployment
   totalFunds: Int
-  balance(symbol: SymbolEnum!, address: String!): String
+  balance(symbol: SymbolEnum!, address: String!): Balance
   price(symbol: String!): String
   fund(address: String!): Fund
   funds(addresses: [String]): [Fund]
@@ -209,10 +211,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "setup fund" transaction.
   """
-  estimateSetupFund(
-    name: String!
-    exchanges: [String]!
-  ): [EstimatedTransaction]
+  estimateSetupFund(name: String!, exchanges: [String]!): [EstimatedTransaction]
 
   """
   Executes the "setup fund" transaction with the given gas price per unit.
@@ -224,11 +223,7 @@ type Mutation {
     gasLimits: [EstimatedTransactionInput]
   ): String
 
-  estimateTakeOrder(
-    order: Json!
-    quantity: String!
-    address: String!
-  ): String
+  estimateTakeOrder(order: Json!, quantity: String!, address: String!): String
 
   executeTakeOrder(
     order: Json!

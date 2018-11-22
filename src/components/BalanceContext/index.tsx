@@ -14,9 +14,24 @@ export const BalanceContext = React.createContext(defaults);
 
 export const balanceQuery = gql`
   query BalanceQuery($account: String!) {
-    eth: balance(address: $account, symbol: ETH)
-    weth: balance(address: $account, symbol: WETH)
-    mln: balance(address: $account, symbol: MLN)
+    eth: balance(address: $account, symbol: ETH){
+      quantity
+      token {
+        decimals
+      }
+    }
+    weth: balance(address: $account, symbol: WETH){
+      quantity
+      token {
+        decimals
+      }
+    }
+    mln: balance(address: $account, symbol: MLN){
+      quantity
+      token {
+        decimals
+      }
+    }
   }
 `;
 

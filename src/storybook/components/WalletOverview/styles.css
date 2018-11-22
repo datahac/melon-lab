@@ -1,5 +1,5 @@
 .wallet-overview {
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto var(--space-xl) auto;
 }
 
@@ -17,6 +17,10 @@
 
 .wallet-overview__balance {
   flex: 0 0 33%;
+  padding: 0 var(--space-s);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .wallet-overview__balance:not(:last-child) {
