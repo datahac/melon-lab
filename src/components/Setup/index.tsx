@@ -37,9 +37,7 @@ const SetupFormContainer = withForm(props => (
       >
         <StepFund
           {...props}
-          canonicalPriceFeedAddress={
-            props.configuration.canonicalPriceFeedAddress
-          }
+          canonicalPriceFeedAddress={props.configuration.priceSource}
           noComplianceAddress={props.configuration.noComplianceAddress}
           availableExchangeContracts={availableExchangeContracts}
         />

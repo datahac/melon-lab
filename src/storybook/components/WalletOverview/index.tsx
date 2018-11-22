@@ -2,8 +2,8 @@ import React, { Fragment, StatelessComponent } from 'react';
 import Link from '~/blocks/Link';
 import Spinner from '~/blocks/Spinner';
 import InsufficientFunds from '~/components/InsufficientFunds';
-import displayNumber from '~/utils/displayNumber';
 import { isZero } from '~/utils/functionalBigNumber';
+import { toFixed } from '@melonproject/token-math/quantity';
 
 import styles from './styles.css';
 
@@ -42,8 +42,7 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
                   <br />
                   <code>
                     <span className="wallet-overview__balance-value">
-                      {balances &&
-                        displayNumber(balances.eth ? balances.eth : 0)}
+                      {balances && balances.eth ? balances.eth : 0}
                     </span>
                   </code>
                 </div>
@@ -52,8 +51,7 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
                   <br />
                   <code>
                     <span className="wallet-overview__balance-value">
-                      {balances &&
-                        displayNumber(balances.mln ? balances.mln : 0)}
+                      {balances && balances.mln ? balances.mln : 0}
                     </span>
                   </code>
                 </div>
@@ -62,8 +60,7 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
                   <br />
                   <code>
                     <span className="wallet-overview__balance-value">
-                      {balances &&
-                        displayNumber(balances.weth ? balances.weth : 0)}
+                      {balances && balances.weth ? balances.weth : 0}
                     </span>
                   </code>
                 </div>

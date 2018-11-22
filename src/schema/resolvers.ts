@@ -15,6 +15,10 @@ export default {
   Json: GraphQLJSON,
   Order,
   Query: {
+    defaultAccount: async (_, __, { environment }) => {
+      const accounts = await environment.eth.getAccounts();
+      return accounts[0];
+    },
     openOrders: async (_, { address }, { loaders }) => {
       const contract = await loaders.fundContract.load(address);
       return loaders.fundOpenOrders.load(contract);
@@ -85,7 +89,7 @@ export default {
       return takeLast(streams.ranking$).then(ranking => {
         const address = parent.instance.address;
         const entry = (ranking || []).find(rank => rank.address === address);
-        return entry && entry.rank || null;
+        return (entry && entry.rank) || null;
       });
     },
     name: (parent, _, { loaders }) => {
@@ -250,9 +254,10 @@ export default {
     balance: {
       resolve: value => value,
       subscribe: async (_, { symbol, address }, { loaders }) => {
-        const stream$ = (await loaders.symbolBalanceObservable(symbol, address)).pipe(
-          distinctUntilChanged(R.equals)
-        );
+        const stream$ = (await loaders.symbolBalanceObservable(
+          symbol,
+          address,
+        )).pipe(distinctUntilChanged(R.equals));
 
         return toAsyncIterator(stream$);
       },
@@ -273,7 +278,7 @@ export default {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
         const stream$ = streams.syncing$.pipe(
-          map((state) => !state),
+          map(state => !state),
           distinctUntilChanged(R.equals),
           skip(1),
         );

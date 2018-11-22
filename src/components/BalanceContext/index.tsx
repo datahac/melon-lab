@@ -14,15 +14,15 @@ export const BalanceContext = React.createContext(defaults);
 
 export const balanceQuery = gql`
   query BalanceQuery($account: String!) {
-    eth: balance(address: $account, token: ETH)
-    weth: balance(address: $account, token: WETH)
-    mln: balance(address: $account, token: MLN)
+    eth: balance(address: $account, symbol: ETH)
+    weth: balance(address: $account, symbol: WETH)
+    mln: balance(address: $account, symbol: MLN)
   }
 `;
 
 const balanceSubscription = gql`
-  subscription BalanceSubscription($account: String!, $token: TokenEnum!) {
-    balance(address: $account, token: $token)
+  subscription BalanceSubscription($account: String!, $symbol: TokenEnum!) {
+    balance(address: $account, symbol: $symbol)
   }
 `;
 
@@ -62,10 +62,10 @@ export class BalanceProvider extends React.PureComponent {
       >
         {([account, props]) => {
           const subscribe = () => {
-            const subscribeToToken = (token, field) => {
+            const subscribeToToken = (symbol, field) => {
               return props.subscribeToMore({
                 document: balanceSubscription,
-                variables: { account, token },
+                variables: { account, symbol },
                 updateQuery: (previous, { subscriptionData: result }) => {
                   return {
                     ...(previous || {}),

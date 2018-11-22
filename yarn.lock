@@ -1089,15 +1089,26 @@
     ethers-wallet "^2.1.8"
     ramda "^0.25.0"
 
-"@melonproject/protocol@^0.8.0-alpha.18":
-  version "0.8.0-alpha.18"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.8.0-alpha.18.tgz#fdeb46a461c4d30a5ce675e3a1f39572b7c18139"
+"@melonproject/protocol@0.9.0-alpha.19":
+  version "0.9.0-alpha.19"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.0-alpha.19.tgz#3764d8ee649f2a7252c9f72b044832334e6499b3"
+  integrity sha512-5lOh5ooj16SHP70TZZ1ILAlx4LYaJ/BSNZwfvkidcSawtESMwTlZB95jqIZUoEPZs3vFN+6SloMMs4Uyo/B16Q==
   dependencies:
-    "0x.js" "^0.35.0"
-    "@parity/api" "^2.1.20"
-    bignumber.js "^4.1.0"
-    ethereumjs-testrpc "^4.1.3"
+    "@melonproject/token-math" "0.0.10"
+    babel-runtime "^6.26.0"
+    camel-case "^3.0.0"
+    commander "^2.19.0"
+    debug "^4.0.1"
+    dotenv "^6.0.0"
+    find-up "^3.0.0"
+    ramda "^0.25.0"
     request-promise "^4.2.2"
+    solc "^0.4.25"
+    tsconfig-paths "^3.6.0"
+    web3-eth "1.0.0-beta.36"
+    web3-eth-abi "1.0.0-beta.36"
+    web3-utils "1.0.0-beta.36"
+    yup "^0.26.6"
 
 "@melonproject/smart-contracts@0.8.10":
   version "0.8.10"
@@ -1113,9 +1124,18 @@
     truffle-workflow-compile "^1.0.6"
     web3 "^1.0.0-beta.34"
 
-"@melonproject/token-math@^0.0.18":
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.0.18.tgz#dc1276908531956999f30472905a8f50451b6dbd"
+"@melonproject/token-math@0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.0.10.tgz#87874fd1d052a0145d5383c85a5f067a9b083fbe"
+  integrity sha512-OqiMmS1NT8bQ4ZUDY9xO8HfWV+D3Xq3fq8fRoNGbcSJmw+XatVnCQcJoY5kDE6FrPCGHnmg9VCGCueiy5pLy4w==
+  dependencies:
+    bn.js "^4.11.8"
+    web3-utils "^1.0.0-beta.36"
+
+"@melonproject/token-math@0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.0.20.tgz#47be3df0b9cca70b26dc45fb0a2f4bef2a22000e"
+  integrity sha512-k0Sz8JgEmPxIY0Zlfa1xsiIn79OdSjscN6imTEWtqkYfPoRtS/E2Y4L/K1oA7x6Tgk151A4o5ZzEoqtwhpIqPg==
   dependencies:
     bn.js "^4.11.8"
     web3-utils "^1.0.0-beta.36"
@@ -1139,7 +1159,7 @@
     js-sha3 "0.5.5"
     utf8 "^2.1.2"
 
-"@parity/api@^2.1.20", "@parity/api@^2.1.5":
+"@parity/api@^2.1.5":
   version "2.1.24"
   resolved "https://registry.yarnpkg.com/@parity/api/-/api-2.1.24.tgz#e04ca177598354b435b83c8cfe7c7c3672bf3e44"
   dependencies:
@@ -1481,6 +1501,11 @@
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
+
+"@types/json5@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
+  integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
 "@types/long@^4.0.0":
   version "4.0.0"
@@ -3324,9 +3349,10 @@ callsites@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-2.0.0.tgz#06eb84f00eea413da86affefacbffb36093b3c50"
 
-camel-case@3.0.x:
+camel-case@3.0.x, camel-case@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/camel-case/-/camel-case-3.0.0.tgz#ca3c3688a4e9cf3a4cda777dc4dcbc713249cf73"
+  integrity sha1-yjw2iKTpzzpM2nd9xNy8cTJJz3M=
   dependencies:
     no-case "^2.2.0"
     upper-case "^1.1.1"
@@ -4035,9 +4061,10 @@ debug@^3.1.0:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.1.0:
+debug@^4.0.1, debug@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.0.tgz#373687bffa678b38b1cd91f861b63850035ddc87"
+  integrity sha512-heNPJUJIqC+xB6ayLAMHaIrmN9HKa7aQO8MGqKpvCA+uJYVcvR6l5kgdrhRuwPFHU7P5/A1w0BjByPHwpfTDKg==
   dependencies:
     ms "^2.1.1"
 
@@ -4125,9 +4152,10 @@ deepmerge@1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-1.3.2.tgz#1663691629d4dbfe364fa12a2a4f0aa86aa3a050"
 
-deepmerge@^2.1.1:
+deepmerge@^2.0.1, deepmerge@^2.1.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.2.1.tgz#5d3ff22a01c00f645405a2fbc17d0778a1801170"
+  integrity sha512-R9hc1Xa/NOBi9WRVUWg19rl1UB7Tt4kuPd+thNJgFZoxXsTz7ncaPaeIm+40oSGuP33DfMb4sZt1QIGiJzC4EA==
 
 default-require-extensions@^1.0.0:
   version "1.0.0"
@@ -7243,6 +7271,13 @@ json5@2.x, json5@^2.1.0:
 json5@^0.5.0, json5@^0.5.1:
   version "0.5.1"
   resolved "http://registry.npmjs.org/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
+
+json5@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"
+  integrity sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==
+  dependencies:
+    minimist "^1.2.0"
 
 jsonfile@^2.1.0:
   version "2.4.0"
@@ -10602,6 +10637,17 @@ solc@0.4.24:
     semver "^5.3.0"
     yargs "^4.7.1"
 
+solc@^0.4.25:
+  version "0.4.25"
+  resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.25.tgz#06b8321f7112d95b4b903639b1138a4d292f5faa"
+  integrity sha512-jU1YygRVy6zatgXrLY2rRm7HW1d7a8CkkEgNJwvH2VLpWhMFsMdWcJn6kUqZwcSz/Vm+w89dy7Z/aB5p6AFTrg==
+  dependencies:
+    fs-extra "^0.30.0"
+    memorystream "^0.3.1"
+    require-from-string "^1.1.0"
+    semver "^5.3.0"
+    yargs "^4.7.1"
+
 source-list-map@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.1.tgz#3993bd873bfc48479cca9ea3a547835c7c154b34"
@@ -11474,6 +11520,17 @@ ts-jest@^23.10.4:
     mkdirp "0.x"
     semver "^5.5"
     yargs-parser "10.x"
+
+tsconfig-paths@^3.6.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-3.7.0.tgz#02ae978db447b22e09dafcd4198be95c4885ceb2"
+  integrity sha512-7iE+Q/2E1lgvxD+c0Ot+GFFmgmfIjt/zCayyruXkXQ84BLT85gHXy0WSoQSiuFX9+d+keE/jiON7notV74ZY+A==
+  dependencies:
+    "@types/json5" "^0.0.29"
+    deepmerge "^2.0.1"
+    json5 "^1.0.1"
+    minimist "^1.2.0"
+    strip-bom "^3.0.0"
 
 tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.9.3"
@@ -12753,9 +12810,10 @@ yauzl@^2.4.2:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.1.0"
 
-yup@^0.26.2:
+yup@^0.26.2, yup@^0.26.6:
   version "0.26.6"
   resolved "https://registry.yarnpkg.com/yup/-/yup-0.26.6.tgz#07e216a1424861f17958fef1d4775c64ef985724"
+  integrity sha512-Lfj8pAtQ/cDu/wsCuXt2ArQ0uUO/9nfr+EwlD9oQrWIErtjURjdSXYTS1ycN7T/Ok+IUTy23Tdo6Wo0f/wMMBw==
   dependencies:
     "@babel/runtime" "7.0.0"
     fn-name "~2.0.1"

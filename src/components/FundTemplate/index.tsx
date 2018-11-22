@@ -109,7 +109,7 @@ export default class FundTemplateContainer extends React.Component {
                 canInvest: capabibility && capabibility.canInvest,
                 canInteract: capabibility && capabibility.canInteract,
                 canonicalPriceFeedAddress:
-                  configuration && configuration.canonicalPriceFeedAddress,
+                  configuration && configuration.priceSource,
                 network: network && network.network,
                 currentBlock: network && network.currentBlock,
                 blockOverdue: network && network.blockOverdue,
