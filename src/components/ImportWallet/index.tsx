@@ -24,7 +24,9 @@ class ImportWalletContainer extends React.Component {
   onImportFile = file => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      this.setFile(reader.result);
+      if (reader.result !== 'null') {
+        this.setFile(reader.result);
+      }
     };
 
     reader.readAsBinaryString(file[0]);
