@@ -58,7 +58,16 @@ export const observeSymbolBalance = R.curryN(
         }),
       );
 
-      return stream$.pipe(map(extractQuantity));
+      return stream$.pipe(
+        map(quantity => ({
+          quantity: extractQuantity(quantity),
+          token: {
+            decimals: quantity.token.decimals,
+            symbol: quantity.token.symbol,
+            address: quantity.token.address,
+          },
+        })),
+      );
     }
 
     const stream$ = streams.deployment$.pipe(
@@ -73,6 +82,15 @@ export const observeSymbolBalance = R.curryN(
       }),
     );
 
-    return stream$.pipe(map(extractQuantity));
+    return stream$.pipe(
+      map(quantity => ({
+        quantity: extractQuantity(quantity),
+        token: {
+          decimals: quantity.token.decimals,
+          symbol: quantity.token.symbol,
+          address: quantity.token.address,
+        },
+      })),
+    );
   },
 );

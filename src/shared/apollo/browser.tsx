@@ -6,7 +6,7 @@ import sendTransaction from '~/schema/loaders/transaction/sendTransaction';
 import createTransactionOptions from '~/schema/loaders/transaction/createTransactionOptions';
 import createSetupFundParameters from '~/schema/loaders/transaction/setupFund/createParameters';
 import postProcessSetupFund from '~/schema/loaders/transaction/setupFund/postProcess';
-import { getParityProvider } from '@melonproject/melon.js';
+import getEnvironment from '~/schema/utils/getEnvironment';
 import { Query as QueryBase } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
@@ -34,14 +34,6 @@ export const createStateLink = cache => {
     defaultAccount: null,
     allAccounts: null,
   };
-
-  // We only need the local overrides for the schema within the browser.
-  // The server won't ever run these since the affected fields are generally
-  // mutations or don't pose any security relevant thread. Even if they did,
-  // they would be protected through our directives in the schema.
-  if (!process.browser) {
-    return withClientState({ cache, defaults, resolvers: {} });
-  }
 
   const stateLink = withClientState({
     cache,
@@ -132,10 +124,7 @@ export const createStateLink = cache => {
     let activeWallet;
 
     contextSingleton = {
-      environment: {
-        ...(await getParityProvider(config.jsonRpcRemote)),
-        track: config.track,
-      },
+      environment: getEnvironment(config.track, config.jsonRpcRemote),
       getWallet: () => activeWallet,
       setWallet: wallet => {
         activeWallet = wallet;

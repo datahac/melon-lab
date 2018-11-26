@@ -296,7 +296,7 @@ type Subscription {
   priceFeedUp: Boolean
   peerCount: String
   totalFunds: Int
-  balance(symbol: SymbolEnum!, address: String!): String
+  balance(symbol: SymbolEnum!, address: String!): Balance
   orderbook(
     base: String!
     quote: String!

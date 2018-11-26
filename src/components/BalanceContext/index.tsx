@@ -37,13 +37,18 @@ export const balanceQuery = gql`
 
 const balanceSubscription = gql`
   subscription BalanceSubscription($account: String!, $symbol: SymbolEnum!) {
-    balance(address: $account, symbol: $symbol)
+    balance(address: $account, symbol: $symbol) {
+      quantity
+      token {
+        decimals
+      }
+    }
   }
 `;
 
 class SubscriptionHandler extends React.Component {
   componentDidUpdate(prevProps) {
-    if (this.props.account && this.props.account !== prevProps.account) {
+    if (this.props.account && !this.props.loading && prevProps.loading) {
       this.unsubscribe && this.unsubscribe();
       this.unsubscribe = this.props.subscribe();
     }
@@ -83,8 +88,8 @@ export class BalanceProvider extends React.PureComponent {
                 variables: { account, symbol },
                 updateQuery: (previous, { subscriptionData: result }) => {
                   return {
-                    ...(previous || {}),
-                    [field]: result && result.data && result.data.balance,
+                    ...previous,
+                    [field]: result.data.balance,
                   };
                 },
               });
@@ -104,7 +109,11 @@ export class BalanceProvider extends React.PureComponent {
           };
 
           return (
-            <SubscriptionHandler subscribe={subscribe} account={account}>
+            <SubscriptionHandler
+              loading={props.loading}
+              subscribe={subscribe}
+              account={account}
+            >
               <BalanceContext.Provider
                 value={{
                   ...defaults,

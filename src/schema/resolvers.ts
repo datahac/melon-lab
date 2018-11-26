@@ -16,8 +16,8 @@ export default {
   Order,
   Query: {
     defaultAccount: async (_, __, { environment }) => {
-      const accounts = await environment.eth.getAccounts();
-      return accounts[0] || null;
+      // TODO: Load wallet from keytar
+      return null;
     },
     openOrders: async (_, { address }, { loaders }) => {
       const contract = await loaders.fundContract.load(address);
