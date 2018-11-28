@@ -1,10 +1,10 @@
 import * as R from 'ramda';
-import * as protocol from '@melonproject/protocol';
+import { managersToHubs } from '@melonproject/protocol';
 
 function fundAddressFromManager(environment, managerAddress, contractAddress) {
   return (
     environment &&
-    protocol.factory.managersToHubs(
+    managersToHubs(
       contractAddress,
       managerAddress,
       environment,

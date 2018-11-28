@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import * as Rx from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import * as protocol from '@melonproject/protocol';
+import { balanceOf } from '@melonproject/protocol';
 import * as tokenMath from '@melonproject/token-math';
 
 export const extractQuantity = quantity => {
@@ -21,7 +21,7 @@ export const getTokenBalance = async (
   address,
 ) => {
   const token = deployment.tokens.find(item => item.symbol === symbol);
-  const quantity = await protocol.token.balanceOf(
+  const quantity = await balanceOf(
     token.address,
     { address },
     environment,
@@ -73,7 +73,7 @@ export const observeSymbolBalance = R.curryN(
     const stream$ = streams.deployment$.pipe(
       switchMap(deployment => {
         const token = deployment.tokens.find(item => item.symbol === symbol);
-        const zen = protocol.token.balanceOf.observable(
+        const zen = balanceOf.observable(
           token.address,
           { address },
           environment,

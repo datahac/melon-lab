@@ -3,7 +3,6 @@ import * as Rx from 'rxjs';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import GraphQLJSON from 'graphql-type-json';
 import { map, pluck, distinctUntilChanged, skip } from 'rxjs/operators';
-import * as protocol from '@melonproject/protocol';
 import Order from './types/Order';
 import toAsyncIterator from './utils/toAsyncIterator';
 import takeLast from './utils/takeLast';
@@ -181,29 +180,8 @@ export default {
       throw new Error('This is not implemented yet');
     },
     estimateSetupFund: async (_, { name, exchanges }) => {
-      const createComponentsEstimation = await protocol.factory.createComponents.prepare(
-        addressBook.fundFactory,
-        {
-          defaultTokens: addressBook.tokens,
-          exchangeConfigs: addressBook.exchangeConfigs,
-          fundName: name,
-          priceSource: addressBook.priceSource,
-          quoteToken: addressBook.tokens[0],
-        },
-      );
-      const continueCreationEstimation = await protocol.factory.continueCreation.prepare(
-        addressBook.fundFactory,
-      );
-      const setupFundEstimation = await protocol.factory.setupFund.prepare(
-        addressBook.fundFactory,
-      );
-
-      return [
-        createComponentsEstimation,
-        continueCreationEstimation,
-        setupFundEstimation,
-      ];
-      // throw new Error('This is not implemented yet');
+      // TODO: Implement this.
+      throw new Error('This is not implemented yet');
     },
     executeSetupFund: async (_, { name, exchanges, gasLimits, gasPrice }) => {
       // TODO: Execute setup fund.
