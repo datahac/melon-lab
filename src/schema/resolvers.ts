@@ -57,10 +57,14 @@ export default {
       const fund = rankings.find(fund => fund.name === name);
       return fund && loaders.fundContract.load(fund.address);
     },
-    associatedFund: async (_, { managerAddress, contractAddress }, { loaders }) => {
+    associatedFund: async (
+      _,
+      { managerAddress, contractAddress },
+      { loaders },
+    ) => {
       const fundAddress = await loaders.fundAddressFromManager.load({
         managerAddress,
-        contractAddress
+        contractAddress,
       });
       return fundAddress || null;
     },

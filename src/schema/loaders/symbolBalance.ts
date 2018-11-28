@@ -21,11 +21,7 @@ export const getTokenBalance = async (
   address,
 ) => {
   const token = deployment.tokens.find(item => item.symbol === symbol);
-  const quantity = await balanceOf(
-    token.address,
-    { address },
-    environment,
-  );
+  const quantity = await balanceOf(token.address, { address }, environment);
   return quantity;
 };
 

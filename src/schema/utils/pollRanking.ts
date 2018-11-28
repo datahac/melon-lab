@@ -6,13 +6,13 @@ const requestRanking = environment => {
   const ranking = getRanking(environment);
   return Rx.from(ranking).pipe(
     timeout(10000),
-    retryWhen((errors) => errors.pipe(delay(1000))),
+    retryWhen(errors => errors.pipe(delay(1000))),
   );
 };
 
 const pollRanking = environment => {
-  const doPoll = () => Rx.timer(60000)
-    .pipe(concatMap(() => requestRanking(environment)));
+  const doPoll = () =>
+    Rx.timer(60000).pipe(concatMap(() => requestRanking(environment)));
 
   return requestRanking(environment).pipe(expand(doPoll));
 };

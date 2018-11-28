@@ -22,7 +22,9 @@ export async function createContext(track, endpoint) {
   const ranking$ = pollRanking(environment).pipe(publishReplay(1));
   const syncing$ = subscribeSyncing(environment).pipe(publishReplay(1));
   const priceFeed$ = pollPriceFeed(environment).pipe(publishReplay(1));
-  const deployment$ = currentDeployment(environment, network$).pipe(publishReplay(1));
+  const deployment$ = currentDeployment(environment, network$).pipe(
+    publishReplay(1),
+  );
   const peers$ = currentPeers(environment, block$).pipe(publishReplay(1));
 
   const streams = {

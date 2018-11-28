@@ -3,12 +3,7 @@ import { managersToHubs } from '@melonproject/protocol';
 
 function fundAddressFromManager(environment, managerAddress, contractAddress) {
   return (
-    environment &&
-    managersToHubs(
-      contractAddress,
-      managerAddress,
-      environment,
-    )
+    environment && managersToHubs(contractAddress, managerAddress, environment)
   );
 }
 
