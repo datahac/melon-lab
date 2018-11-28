@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@melonproject/protocol": {
+      "signature": "86fca26859ce494576c68c87c2319210",
+      "file": true,
+      "replaced": "0.9.0-alpha.19"
+    }
+  }
+}

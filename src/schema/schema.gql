@@ -1,6 +1,7 @@
 # Fields that are only safe within the native app environment and are blocked
 # from execution in the hosted / web environment.
 directive @insecure on FIELD_DEFINITION
+directive @client on FIELD
 
 scalar Json
 scalar DateTime

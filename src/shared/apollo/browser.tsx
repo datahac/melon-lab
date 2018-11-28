@@ -1,12 +1,6 @@
 import generateMnemonic from '~/schema/loaders/wallet/generateMnemonic';
 import restoreWallet from '~/schema/loaders/wallet/restoreWallet';
 import importWallet from '~/schema/loaders/wallet/decryptWallet';
-import estimateTransaction from '~/schema/loaders/transaction/estimateTransaction';
-import sendTransaction from '~/schema/loaders/transaction/sendTransaction';
-import createTransactionOptions from '~/schema/loaders/transaction/createTransactionOptions';
-import createSetupFundParameters from '~/schema/loaders/transaction/setupFund/createParameters';
-import postProcessSetupFund from '~/schema/loaders/transaction/setupFund/postProcess';
-import getEnvironment from '~/schema/utils/getEnvironment';
 import { Query as QueryBase } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
@@ -15,9 +9,6 @@ import { setContext } from 'apollo-link-context';
 import { WebSocketLink } from 'apollo-link-ws';
 import { createErrorLink, createCache } from './common';
 import withApollo from 'next-with-apollo';
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig: config } = getConfig();
 
 export { Subscription } from 'react-apollo';
 export { Mutation } from 'react-apollo';
@@ -65,52 +56,6 @@ export const createStateLink = cache => {
             'The in-browser app does not support storing of wallets for security reasons.',
           );
         },
-        estimateSetupFund: async (
-          _,
-          { name, exchanges },
-          { environment, getWallet },
-        ) => {
-          const wallet = getWallet();
-          const parameters = await createSetupFundParameters(
-            environment,
-            wallet,
-            name,
-          );
-          const options = await createTransactionOptions(environment, wallet);
-          return await estimateTransaction(
-            environment,
-            'setupFund',
-            parameters,
-            options,
-          );
-        },
-        executeSetupFund: async (
-          _,
-          { name, exchanges, gasPrice, gasLimit },
-          { environment, getWallet },
-        ) => {
-          const wallet = getWallet();
-          const parameters = await createSetupFundParameters(
-            environment,
-            wallet,
-            name,
-          );
-          const options = await createTransactionOptions(environment, wallet);
-          const receipt = await sendTransaction(
-            environment,
-            wallet,
-            'setupFund',
-            parameters,
-            {
-              ...options,
-              // TODO: Remove the parseInt() calls in the new melon.js.
-              gasLimit: parseInt(gasLimit, 10),
-              gasPrice: parseInt(gasPrice, 10),
-            },
-          );
-
-          return postProcessSetupFund(receipt);
-        },
       },
     },
   });
@@ -122,9 +67,7 @@ export const createStateLink = cache => {
     }
 
     let activeWallet;
-
     contextSingleton = {
-      environment: getEnvironment(config.track, config.jsonRpcRemote),
       getWallet: () => activeWallet,
       setWallet: wallet => {
         activeWallet = wallet;
