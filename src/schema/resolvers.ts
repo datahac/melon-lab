@@ -4,6 +4,8 @@ import * as keytar from 'keytar';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import GraphQLJSON from 'graphql-type-json';
 import { map, pluck, distinctUntilChanged, skip } from 'rxjs/operators';
+import { createComponents } from '@melonproject/protocol/lib/contracts/factory/transactions/createComponents';
+import { Address } from '@melonproject/token-math/address';
 import Order from './types/Order';
 import toAsyncIterator from './utils/toAsyncIterator';
 import takeLast from './utils/takeLast';
@@ -19,9 +21,9 @@ export default {
       const credentials = await keytar.findCredentials('melon.fund');
       return !!(credentials && credentials.length);
     },
-    defaultAccount: async (_, __, { environment }) => {
-      // TODO: Load wallet from keytar
-      return null;
+    defaultAccount: async (_, __, { getWallet }) => {
+      const wallet = getWallet();
+      return (wallet && wallet.address) || null;
     },
     openOrders: async (_, { address }, { loaders }) => {
       const contract = await loaders.fundContract.load(address);
@@ -188,13 +190,56 @@ export default {
       // TODO: Cancel open orders.
       throw new Error('This is not implemented yet');
     },
-    estimateSetupFund: async (_, { name, exchanges }) => {
-      // TODO: Implement this.
-      throw new Error('This is not implemented yet');
+    estimateSetupFund: async (_, { from, args }, { environment, streams }) => {
+      const deployment: any = await takeLast(streams.deployment$);
+      const { exchangeConfigs, fundFactory, priceSource, tokens } = deployment;
+
+      const [weth, mln] = tokens;
+      const params = {
+        defaultTokens: [weth, mln],
+        exchangeConfigs,
+        fundName: args.name,
+        priceSource,
+        quoteToken: weth,
+      };
+
+      const result = await createComponents.prepare(
+        fundFactory,
+        params,
+        undefined,
+        {
+          ...environment,
+          wallet: {
+            address: new Address(from),
+          },
+        },
+      );
+
+      return result && result.rawTransaction;
     },
-    executeSetupFund: async (_, { name, exchanges, gasLimits, gasPrice }) => {
-      // TODO: Execute setup fund.
-      throw new Error('This is not implemented yet');
+    executeSetupFund: async (
+      _,
+      { from, name, exchanges, data },
+      { environment, streams },
+    ) => {
+      const deployment: any = await takeLast(streams.deployment$);
+      const { exchangeConfigs, fundFactory, priceSource, tokens } = deployment;
+
+      const [weth, mln] = tokens;
+      const params = {
+        defaultTokens: [weth, mln],
+        exchangeConfigs,
+        fundName: name,
+        priceSource,
+        quoteToken: weth,
+      };
+
+      return createComponents.send(fundFactory, data, params, undefined, {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      });
     },
     deleteWallet: async () => {
       const credentials = (await keytar.findCredentials('melon.fund')) || [];

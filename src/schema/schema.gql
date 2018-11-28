@@ -3,6 +3,15 @@
 directive @insecure on FIELD_DEFINITION
 directive @client on FIELD
 
+directive @sign(
+  source: String = "unsigned"
+  target: String = "signed"
+) on FIELD
+
+directive @from(
+  arg: String = "from"
+) on FIELD
+
 scalar Json
 scalar DateTime
 
@@ -157,15 +166,32 @@ type Deployment {
 }
 
 type EstimatedTransaction {
-  name: String!
-  contract: String
-  gasEstimation: String!
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
 }
 
 input EstimatedTransactionInput {
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
+}
+
+input SetupFundInput {
   name: String!
-  contract: String
-  gasEstimation: String!
+  exchanges: [String]!
+}
+
+input TakeOrderInput {
+  order: Json!
+  quantity: String!
+  address: String!
 }
 
 type Query {
@@ -213,26 +239,35 @@ type Mutation {
   """
   Estimates the number of gas units required for the "setup fund" transaction.
   """
-  estimateSetupFund(name: String!, exchanges: [String]!): [EstimatedTransaction]
+  estimateSetupFund(
+    args: SetupFundInput!
+    from: String
+  ): EstimatedTransaction
 
   """
   Executes the "setup fund" transaction with the given gas price per unit.
   """
   executeSetupFund(
-    name: String!
-    exchanges: [String]!
-    gasPrice: String!
-    gasLimits: [EstimatedTransactionInput]
+    args: SetupFundInput!
+    from: String
+    "Unsigned transaction data."
+    unsigned: EstimatedTransactionInput
+    "Signed transaction data."
+    signed: String
   ): String
 
-  estimateTakeOrder(order: Json!, quantity: String!, address: String!): String
-
-  executeTakeOrder(
+  estimateTakeOrder(
     order: Json!
     quantity: String!
     address: String!
-    gasPrice: String!
-    gasLimit: String!
+  ): String
+
+  executeTakeOrder(
+    args: TakeOrderInput
+    "Unsigned transaction data."
+    unsigned: EstimatedTransactionInput
+    "Signed transaction data."
+    signed: String
   ): String
 
   """

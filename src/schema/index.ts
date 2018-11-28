@@ -1,4 +1,3 @@
-import { GraphQLSchema } from 'graphql';
 import { makeExecutableSchema } from 'graphql-tools';
 import resolvers from './resolvers';
 import createLoaders from './loaders';
@@ -11,6 +10,7 @@ import getEnvironment from './utils/getEnvironment';
 import currentDeployment from './utils/currentDeployment';
 import currentPeers from './utils/currentPeers';
 import InsecureDirective from './directives/InsecureDirective';
+import addQueryDirectives from './directives/addQueryDirectives';
 import * as typeDefs from './schema.gql';
 import { publishReplay } from 'rxjs/operators';
 
@@ -19,16 +19,15 @@ export async function createContext(track, endpoint) {
   let currentWallet;
 
   const environment = getEnvironment(track, endpoint);
-
   const network$ = pollNetwork(environment).pipe(publishReplay(1));
   const block$ = subscribeBlock(environment).pipe(publishReplay(1));
   const ranking$ = pollRanking(environment).pipe(publishReplay(1));
   const syncing$ = subscribeSyncing(environment).pipe(publishReplay(1));
   const priceFeed$ = pollPriceFeed(environment).pipe(publishReplay(1));
+  const peers$ = currentPeers(environment, block$).pipe(publishReplay(1));
   const deployment$ = currentDeployment(environment, network$).pipe(
     publishReplay(1),
   );
-  const peers$ = currentPeers(environment, block$).pipe(publishReplay(1));
 
   const streams = {
     network$,
@@ -57,10 +56,32 @@ export async function createContext(track, endpoint) {
   });
 }
 
-export default makeExecutableSchema({
+const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
   schemaDirectives: {
     insecure: InsecureDirective,
   },
-}) as GraphQLSchema;
+});
+
+const defaultFrom = ({ loaders }) => {
+  const wallet = loaders.getWallet();
+  return (wallet && wallet.address) || undefined;
+};
+
+addQueryDirectives(schema, {
+  sign: (resolve, source, args, context, info, directiveArgs) => {
+    return resolve(source, args, context, info);
+  },
+  from: (resolve, source, args, context, info, directiveArgs) => {
+    const from = args[directiveArgs.arg] || defaultFrom(context);
+    const newArgs = {
+      ...args,
+      [directiveArgs.arg]: from,
+    };
+
+    return resolve(source, newArgs, context, info);
+  },
+});
+
+export default schema;

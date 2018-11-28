@@ -1,0 +1,84 @@
+import {
+  ApolloLink,
+  Observable,
+  Operation,
+  NextLink,
+  FetchResult,
+} from 'apollo-link';
+import { withClientState } from 'apollo-link-state';
+import { setContext } from 'apollo-link-context';
+import { hasDirectives } from 'apollo-utilities';
+import generateMnemonic from '~/schema/loaders/wallet/generateMnemonic';
+import restoreWallet from '~/schema/loaders/wallet/restoreWallet';
+import importWallet from '~/schema/loaders/wallet/decryptWallet';
+
+const resolvers = {
+  Mutation: {
+    generateMnemonic: () => {
+      return generateMnemonic();
+    },
+    deleteWallet: () => {
+      return true;
+    },
+    exportWallet: (_, { password }, { getWallet }) => {
+      const wallet = getWallet();
+      return (wallet && wallet.encrypt(password)) || null;
+    },
+    importWallet: (_, { wallet, password }, { setWallet }) => {
+      return importWallet(wallet, password, wallet => {
+        setWallet(wallet);
+      });
+    },
+    restoreWallet: (_, { mnemonic, password }, { setWallet }) => {
+      return restoreWallet(mnemonic, password, wallet => {
+        setWallet(wallet);
+      });
+    },
+  },
+};
+
+const addIdentity = operation => {
+  // TODO: Process the query.
+  return operation;
+};
+
+export const createIdentityLink = cache => {
+  const defaults = {
+    hasStoredWallet: false,
+    defaultAccount: null,
+    allAccounts: null,
+  };
+
+  const resolverOverride = withClientState({
+    cache,
+    defaults,
+    resolvers,
+  });
+
+  const identityDecorator = new class IdentityLink extends ApolloLink {
+    public request(
+      operation: Operation,
+      forward: NextLink,
+    ): Observable<FetchResult> {
+      if (!hasDirectives(['sign', 'from'], operation.query)) {
+        return forward(operation);
+      }
+
+      return forward(addIdentity(operation));
+    }
+  }();
+
+  let activeWallet;
+  const identityContext = {
+    getWallet: () => activeWallet,
+    setWallet: wallet => {
+      activeWallet = wallet;
+    },
+  };
+
+  return ApolloLink.from([
+    setContext(() => identityContext),
+    identityDecorator,
+    resolverOverride,
+  ]);
+};

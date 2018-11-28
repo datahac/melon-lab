@@ -1109,7 +1109,7 @@
     ramda "^0.25.0"
 
 "@melonproject/protocol@file:.yalc/@melonproject/protocol":
-  version "0.9.0-alpha.19-86fca268"
+  version "0.9.0-alpha.19-1afed890"
   dependencies:
     "@melonproject/ganache-cli" "^6.1.9"
     "@melonproject/token-math" "0.0.20"

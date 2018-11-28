@@ -4,7 +4,7 @@ import { fundManagerQuery } from '+/components/FundManagerContext';
 
 const estimateMutation = gql`
   mutation EstimateSetupFund($name: String!, $exchanges: [String]!) {
-    estimateSetupFund(name: $name, exchanges: $exchanges) @client
+    estimateSetupFund(args: { name: $name, exchanges: $exchanges }) @sign @from
   }
 `;
 
@@ -12,15 +12,12 @@ const executeMutation = gql`
   mutation ExecuteSetupFund(
     $name: String!
     $exchanges: [String]!
-    $gasPrice: String!
-    $gasLimit: String!
+    $transaction: String!
   ) {
     executeSetupFund(
-      name: $name
-      exchanges: $exchanges
-      gasPrice: $gasPrice
-      gasLimit: $gasLimit
-    ) @client
+      unsigned: $transaction
+      args: { name: $name, exchanges: $exchanges }
+    ) @sign @from
   }
 `;
 
