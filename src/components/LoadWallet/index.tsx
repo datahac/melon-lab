@@ -18,13 +18,17 @@ class LoadWalletContainer extends React.Component {
       <Composer
         components={[
           <WalletQuery />,
-          <WalletMutation
-            onCompleted={() => {
-              this.props.router.replace({
-                pathname: '/wallet',
-              });
-            }}
-          />,
+          ({ render }) => (
+            <WalletMutation
+              onCompleted={() => {
+                this.props.router.replace({
+                  pathname: '/wallet',
+                });
+              }}
+            >
+              {(a, b) => render([a, b])}
+            </WalletMutation>
+          ),
         ]}
       >
         {([walletProps, [loadWallet, mutationProps]]) => {

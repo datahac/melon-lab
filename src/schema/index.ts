@@ -15,6 +15,9 @@ import * as typeDefs from './schema.gql';
 import { publishReplay } from 'rxjs/operators';
 
 export async function createContext(track, endpoint) {
+  // The current wallet (in an electron context);
+  let currentWallet;
+
   const environment = getEnvironment(track, endpoint);
 
   const network$ = pollNetwork(environment).pipe(publishReplay(1));
@@ -39,15 +42,19 @@ export async function createContext(track, endpoint) {
 
   Object.values(streams).forEach(stream$ => stream$.connect());
 
-  return () => {
-    const loaders = createLoaders(environment, streams);
-
-    return {
-      environment,
-      loaders,
-      streams,
-    };
-  };
+  return () => ({
+    environment,
+    streams,
+    loaders: {
+      setWallet: wallet => {
+        currentWallet = wallet;
+      },
+      getWallet: () => {
+        return currentWallet;
+      },
+      ...createLoaders(environment, streams),
+    },
+  });
 }
 
 export default makeExecutableSchema({

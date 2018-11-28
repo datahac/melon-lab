@@ -1,5 +1,6 @@
 import * as R from 'ramda';
 import * as Rx from 'rxjs';
+import * as keytar from 'keytar';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import GraphQLJSON from 'graphql-type-json';
 import { map, pluck, distinctUntilChanged, skip } from 'rxjs/operators';
@@ -14,6 +15,10 @@ export default {
   Json: GraphQLJSON,
   Order,
   Query: {
+    hasStoredWallet: async () => {
+      const credentials = await keytar.findCredentials('melon.fund');
+      return !!(credentials && credentials.length);
+    },
     defaultAccount: async (_, __, { environment }) => {
       // TODO: Load wallet from keytar
       return null;
@@ -191,36 +196,53 @@ export default {
       // TODO: Execute setup fund.
       throw new Error('This is not implemented yet');
     },
-    loginWallet: (_, { password }, { loaders }) => {
-      // TODO: Load wallet from keytar storage.
-      throw new Error('This is not implemented yet');
-
-      const wallet = null;
-      return loaders.importWallet(wallet, password, (decrypted, encrypted) => {
-        // TODO: Store encrypted wallet in keytar storage and save current
-        // decrypted wallet and private key in memory.
-        throw new Error('This is not implemented yet');
+    deleteWallet: async () => {
+      const credentials = (await keytar.findCredentials('melon.fund')) || [];
+      credentials.forEach(item => {
+        keytar.deletePassword('melon.fund', item.account);
       });
+
+      return true;
+    },
+    loginWallet: async (_, { password }, { loaders }) => {
+      const credentials = await keytar.findCredentials('melon.fund');
+      if (credentials && credentials.length) {
+        const item = R.head(credentials);
+        return loaders.importWallet(item.password, password, decrypted => {
+          loaders.setWallet(decrypted);
+        });
+      }
+
+      return null;
     },
     exportWallet: (_, { password }, { loaders }) => {
-      // TODO: Load decrypted wallet from memory.
-      throw new Error('This is not implemented yet');
+      const wallet = loaders.getWallet();
+      return (wallet && wallet.encrypt(password)) || null;
     },
     importWallet: (_, { wallet, password }, { loaders }) => {
-      return loaders.importWallet(wallet, password, (decrypted, encrypted) => {
-        // TODO: Store encrypted wallet in keytar storage and save current
-        // decrypted wallet and private key in memory.
-        throw new Error('This is not implemented yet');
-      });
+      return loaders.importWallet(
+        wallet,
+        password,
+        async (decrypted, encrypted) => {
+          // Currently, we only support a single stored wallet.
+          const credentials =
+            (await keytar.findCredentials('melon.fund')) || [];
+          credentials.forEach(item => {
+            keytar.deletePassword('melon.fund', item.account);
+          });
+
+          await keytar.setPassword('melon.fund', decrypted.address, encrypted);
+          loaders.setWallet(decrypted);
+        },
+      );
     },
     restoreWallet: (_, { mnemonic, password }, { loaders }) => {
       return loaders.restoreWallet(
         mnemonic,
         password,
-        (decrypted, encrypted) => {
-          // TODO: Store encrypted wallet in keytar storage and save current
-          // decrypted wallet and private key in memory.
-          throw new Error('This is not implemented yet');
+        async (decrypted, encrypted) => {
+          await keytar.setPassword('melon.fund', decrypted.address, encrypted);
+          loaders.setWallet(decrypted);
         },
       );
     },

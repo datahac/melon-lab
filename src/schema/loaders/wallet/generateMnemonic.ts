@@ -1,8 +1,10 @@
-import { createWallet } from '@melonproject/melon.js';
+import Wallet from 'ethers-wallet';
+import bip39 from 'bip39';
 
 async function generateMnemonic() {
-  const wallet = await createWallet();
-  return wallet && wallet.mnemonic;
+  const mnemonic = bip39.generateMnemonic();
+  const wallet = new Wallet.Wallet.fromMnemonic(mnemonic);
+  return wallet.mnemonic;
 }
 
 export default generateMnemonic;
