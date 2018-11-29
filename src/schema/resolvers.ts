@@ -220,22 +220,9 @@ export default {
 
       return result && result.rawTransaction;
     },
-    executeSetupFund: async (
-      _,
-      { from, signed, args },
-      { environment, streams },
-    ) => {
+    executeSetupFund: async (_, { from, signed }, { environment, streams }) => {
       const deployment: any = await takeLast(streams.deployment$);
-      const { exchangeConfigs, fundFactory, priceSource, tokens } = deployment;
-
-      const [weth, mln] = tokens;
-      const params = {
-        defaultTokens: [weth, mln],
-        exchangeConfigs,
-        fundName: args.name,
-        priceSource,
-        quoteToken: weth,
-      };
+      const { fundFactory } = deployment;
 
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
@@ -248,7 +235,7 @@ export default {
       return createComponents.send(
         fundFactory,
         signed.rawTransaction,
-        params,
+        undefined, // TODO: Remove params from send.
         undefined,
         enhancedEnvironment,
       );

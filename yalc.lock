@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@melonproject/protocol": {
-      "signature": "0d228f1d2be39283d1673f3840ad7298",
+      "signature": "47b3b2d5712a5b0854e0d7b984121eed",
       "file": true,
       "replaced": "0.9.0-alpha.19"
     }

@@ -13,10 +13,21 @@ import InsecureDirective from './directives/InsecureDirective';
 import addQueryDirectives from './directives/addQueryDirectives';
 import * as typeDefs from './schema.gql';
 import { publishReplay } from 'rxjs/operators';
+import * as Accounts from 'web3-eth-accounts';
+
+import restoreWallet from './loaders/wallet/restoreWallet';
 
 export async function createContext(track, endpoint) {
   // The current wallet (in an electron context);
-  let currentWallet;
+  let currentWallet = await new Promise((resolve, reject) => {
+    restoreWallet(
+      'street ritual glide warfare cherry patrol crush valid eager slender capable motor',
+      '123123123',
+      decrypted => {
+        resolve(decrypted);
+      },
+    );
+  });
 
   const environment = getEnvironment(track, endpoint);
   const network$ = pollNetwork(environment).pipe(publishReplay(1));

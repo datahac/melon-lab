@@ -165,7 +165,7 @@ type Deployment {
   tokens: [Token]
 }
 
-type EstimatedTransaction {
+type UnsignedTransaction {
   data: String
   from: String
   gas: String
@@ -174,24 +174,13 @@ type EstimatedTransaction {
   value: String
 }
 
-input EstimatedTransactionInput {
+input UnsignedTransactionInput {
   data: String
   from: String
   gas: String
   gasPrice: String
   to: String
   value: String
-}
-
-input SetupFundInput {
-  name: String!
-  exchanges: [String]!
-}
-
-input TakeOrderInput {
-  order: Json!
-  quantity: String!
-  address: String!
 }
 
 type Query {
@@ -240,16 +229,16 @@ type Mutation {
   Estimates the number of gas units required for the "setup fund" transaction.
   """
   estimateSetupFund(
-    args: SetupFundInput!
-  ): EstimatedTransaction
+    name: String!
+    exchanges: [String]!
+  ): UnsignedTransaction
 
   """
   Executes the "setup fund" transaction with the given gas price per unit.
   """
   executeSetupFund(
-    args: SetupFundInput!
     "Unsigned transaction data."
-    unsigned: EstimatedTransactionInput!
+    unsigned: UnsignedTransactionInput!
   ): String
 
   estimateTakeOrder(
@@ -259,9 +248,8 @@ type Mutation {
   ): String
 
   executeTakeOrder(
-    args: TakeOrderInput
     "Unsigned transaction data."
-    unsigned: EstimatedTransactionInput!
+    unsigned: UnsignedTransactionInput!
   ): String
 
   """
