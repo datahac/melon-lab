@@ -3,7 +3,7 @@ import { SchemaDirectiveVisitor } from 'graphql-tools';
 const isElectron = JSON.parse(process.env.ELECTRON || 'false');
 
 class InsecureDirective extends SchemaDirectiveVisitor {
-  public visitFieldDefinition(field: GraphQLField<any, any>) {
+  public visitFieldDefinition(field) {
     if (process.env.NODE_ENV === 'production' && !isElectron) {
       field.resolve = (_, __, ___, info) => {
         throw new Error(

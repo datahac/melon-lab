@@ -241,7 +241,6 @@ type Mutation {
   """
   estimateSetupFund(
     args: SetupFundInput!
-    from: String
   ): EstimatedTransaction
 
   """
@@ -249,11 +248,8 @@ type Mutation {
   """
   executeSetupFund(
     args: SetupFundInput!
-    from: String
     "Unsigned transaction data."
-    unsigned: EstimatedTransactionInput
-    "Signed transaction data."
-    signed: String
+    unsigned: EstimatedTransactionInput!
   ): String
 
   estimateTakeOrder(
@@ -265,9 +261,7 @@ type Mutation {
   executeTakeOrder(
     args: TakeOrderInput
     "Unsigned transaction data."
-    unsigned: EstimatedTransactionInput
-    "Signed transaction data."
-    signed: String
+    unsigned: EstimatedTransactionInput!
   ): String
 
   """

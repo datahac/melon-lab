@@ -203,23 +203,26 @@ export default {
         quoteToken: weth,
       };
 
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
       const result = await createComponents.prepare(
         fundFactory,
         params,
         undefined,
-        {
-          ...environment,
-          wallet: {
-            address: new Address(from),
-          },
-        },
+        enhancedEnvironment,
       );
 
       return result && result.rawTransaction;
     },
     executeSetupFund: async (
       _,
-      { from, name, exchanges, data },
+      { from, signed, args },
       { environment, streams },
     ) => {
       const deployment: any = await takeLast(streams.deployment$);
@@ -229,17 +232,26 @@ export default {
       const params = {
         defaultTokens: [weth, mln],
         exchangeConfigs,
-        fundName: name,
+        fundName: args.name,
         priceSource,
         quoteToken: weth,
       };
 
-      return createComponents.send(fundFactory, data, params, undefined, {
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
         ...environment,
         wallet: {
           address: new Address(from),
         },
-      });
+      };
+
+      return createComponents.send(
+        fundFactory,
+        signed.rawTransaction,
+        params,
+        undefined,
+        enhancedEnvironment,
+      );
     },
     deleteWallet: async () => {
       const credentials = (await keytar.findCredentials('melon.fund')) || [];

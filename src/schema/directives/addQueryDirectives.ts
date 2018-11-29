@@ -2,10 +2,8 @@ import { forEachField } from 'graphql-tools';
 import { defaultFieldResolver } from 'graphql';
 import { getDirectiveValues } from 'graphql/execution';
 import * as graphqlLanguage from 'graphql/language';
-import * as graphqlType from 'graphql/type';
 
-const DirectiveLocation =
-  graphqlLanguage.DirectiveLocation || graphqlType.DirectiveLocation;
+const DirectiveLocation = graphqlLanguage.DirectiveLocation;
 
 function getFieldResolver(field) {
   const resolver = field.resolve || defaultFieldResolver;
@@ -38,101 +36,42 @@ function getDirectiveInfo(directive, resolverMap, schema, location, variables) {
   return { args, resolver };
 }
 
-function createFieldExecutionResolver(field, resolverMap, schema) {
-  const originalResolver = getFieldResolver(field);
-  const { directives } = field.astNode;
-  if (!directives.length) {
-    return originalResolver;
-  }
-
-  return directives.reduce((recursiveResolver, directive) => {
-    const directiveInfo = getDirectiveInfo(
-      directive,
-      resolverMap,
-      schema,
-      DirectiveLocation.FIELD_DEFINITION,
-      undefined,
-    );
-
-    return (source, args, context, info) => {
-      if (typeof directiveInfo.resolver === 'undefined') {
-        return recursiveResolver(source, args, context, info);
-      }
-
-      const resolver = (
-        sourceOverride = source,
-        argsOverride = args,
-        contextOverride = context,
-        infoOverride = info,
-      ) => {
-        return recursiveResolver(
-          sourceOverride,
-          argsOverride,
-          contextOverride,
-          infoOverride,
-        );
-      };
-
-      return directiveInfo.resolver(
-        resolver,
-        source,
-        args,
-        context,
-        info,
-        directiveInfo.args,
-      );
-    };
-  }, originalResolver);
-}
-
 function createFieldResolver(field, resolverMap, schema) {
   const originalResolver = getFieldResolver(field);
   return (source, args, context, info) => {
-    const { directives } = info.fieldNodes[0];
-    if (!directives.length) {
+    const { directives } = info.fieldNodes[0] || [];
+    const resolvers = directives
+      .map(directive => {
+        const directiveInfo = getDirectiveInfo(
+          directive,
+          resolverMap,
+          schema,
+          DirectiveLocation.FIELD,
+          info.variableValues,
+        );
+
+        return directiveInfo;
+      })
+      .filter(directive => typeof directive.resolver !== 'undefined');
+
+    if (!resolvers.length) {
       return originalResolver(source, args, context, info);
     }
 
-    const fieldResolver = directives.reduce((recursiveResolver, directive) => {
-      const directiveInfo = getDirectiveInfo(
-        directive,
-        resolverMap,
-        schema,
-        DirectiveLocation.FIELD,
-        info.variableValues,
-      );
-
-      return () => {
-        if (typeof directiveInfo.resolver === 'undefined') {
-          return recursiveResolver(source, args, context, info);
-        }
-
-        const resolver = (
-          sourceOverride = source,
-          argsOverride = args,
-          contextOverride = context,
-          infoOverride = info,
-        ) => {
-          return recursiveResolver(
-            sourceOverride,
-            argsOverride,
-            contextOverride,
-            infoOverride,
-          );
-        };
-
-        return directiveInfo.resolver(
-          resolver,
-          source,
+    const chain = resolvers.reduce((carry, current) => {
+      return (parent, args, context, info) => {
+        return current.resolver(
+          carry,
+          parent,
           args,
           context,
           info,
-          directiveInfo.args,
+          current.args,
         );
       };
     }, originalResolver);
 
-    return fieldResolver(source, args, context, info);
+    return chain(source, args, context, info);
   };
 }
 
@@ -148,7 +87,6 @@ function addQueryDirectives(schema, resolverMap) {
   }
 
   forEachField(schema, field => {
-    field.resolve = createFieldExecutionResolver(field, resolverMap, schema);
     field.resolve = createFieldResolver(field, resolverMap, schema);
   });
 }

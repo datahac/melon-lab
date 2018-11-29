@@ -70,8 +70,27 @@ const defaultFrom = ({ loaders }) => {
 };
 
 addQueryDirectives(schema, {
-  sign: (resolve, source, args, context, info, directiveArgs) => {
-    return resolve(source, args, context, info);
+  sign: async (resolve, source, args, context, info, directiveArgs) => {
+    if (typeof args[directiveArgs.target] !== 'undefined') {
+      // The transaction is already signed.
+      return resolve(source, args, context, info);
+    }
+
+    const { environment, loaders } = context;
+    const wallet = loaders.getWallet();
+    const accounts = new Accounts(environment.eth.currentProvider);
+    const unsigned = args[directiveArgs.source];
+    const signed = await accounts.signTransaction(
+      unsigned,
+      wallet && wallet.privateKey,
+    );
+
+    const newArgs = {
+      ...args,
+      [directiveArgs.target]: signed,
+    };
+
+    return resolve(source, newArgs, context, info);
   },
   from: (resolve, source, args, context, info, directiveArgs) => {
     const from = args[directiveArgs.arg] || defaultFrom(context);
