@@ -76,9 +76,9 @@ export const createIdentityLink = cache => {
     },
   };
 
-  return ApolloLink.from([
-    setContext(() => identityContext),
-    identityDecorator,
-    resolverOverride,
-  ]);
+  return ApolloLink.from(
+    [setContext(() => identityContext), identityDecorator].concat(
+      process.env.NODE_ENV === 'development' ? [] : [resolverOverride],
+    ),
+  );
 };

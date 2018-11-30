@@ -21,8 +21,8 @@ export default {
       const credentials = await keytar.findCredentials('melon.fund');
       return !!(credentials && credentials.length);
     },
-    defaultAccount: async (_, __, { getWallet }) => {
-      const wallet = getWallet();
+    defaultAccount: async (_, __, { loaders }) => {
+      const wallet = loaders.getWallet();
       return (wallet && wallet.address) || null;
     },
     openOrders: async (_, { address }, { loaders }) => {
