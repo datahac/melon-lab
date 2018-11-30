@@ -4,11 +4,11 @@ import GetStarted from '~/components/GetStarted';
 import { AccountConsumer } from '+/components/AccountContext';
 import { BalanceConsumer } from '+/components/BalanceContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
-import { isZero } from '~/utils/functionalBigNumber';
+import * as tokenMath from '@melonproject/token-math';
 
 const getLink = (account, weth, fund) => {
   if (account) {
-    if (weth && !isZero(weth)) {
+    if (weth && tokenMath.bigInteger.isZero(weth.quantity)) {
       return {
         href: '/wallet',
         text: 'Fund your wallet',
