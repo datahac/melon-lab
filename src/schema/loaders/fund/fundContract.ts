@@ -1,8 +1,8 @@
 import * as R from 'ramda';
-import { getFundContract } from '@melonproject/melon.js';
+import { getHub } from '@melonproject/protocol';
 
 function fundContract(environment, address) {
-  return environment && getFundContract(environment, address);
+  return environment && getHub(address, environment);
 }
 
 export default R.curryN(2, fundContract);

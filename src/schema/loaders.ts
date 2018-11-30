@@ -30,9 +30,7 @@ export default (environment, streams) => {
 
   const fundAddressFromManager = new DataLoader(pairs => {
     const fn = getFundAddressFromManager(environment);
-    const result = pairs.map(pair =>
-      fn(pair.contractAddress, pair.contractAddress),
-    );
+    const result = pairs.map(pair => fn(pair.managerAddress, pair.fundFactory));
     return Promise.all(result || []);
   });
 

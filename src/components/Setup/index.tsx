@@ -101,7 +101,9 @@ const SetupFormContainer = withForm(props => (
           fees={[
             {
               // TODO: Does this still have to be a list?
-              gasLimit: props.gasLimit,
+              gasLimit:
+                props.estimateSetupFundProps &&
+                props.estimateSetupFundProps.gas,
             },
           ]}
         />
@@ -167,9 +169,9 @@ class Setup extends React.Component {
               {(a, b) => render([a, b])}
             </EstimateSetupMutation>
           ),
-          ({ render }) => (
+          ({ results: [account], render }) => (
             <ExecuteSetupMutation
-              account={this.props.account}
+              account={account}
               onCompleted={result => {
                 this.props.router.replace({
                   pathname: '/manage',
@@ -202,9 +204,9 @@ class Setup extends React.Component {
               validateOnChange={false}
               prepareSetup={estimateSetupFund}
               executeSetup={executeSetupFund}
-              gasLimit={
+              estimateSetupFundProps={
                 estimateSetupFundProps.data &&
-                estimateSetupFundProps.data.estimateSetupFund.gasPrice
+                estimateSetupFundProps.data.estimateSetupFund
               }
               loading={
                 executeSetupFundProps.loading || executeSetupFundProps.loading

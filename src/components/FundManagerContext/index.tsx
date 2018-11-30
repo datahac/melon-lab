@@ -8,8 +8,8 @@ import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 export const FundManagerContext = React.createContext(null);
 
 export const fundManagerQuery = gql`
-  query FundManagerQuery($account: String!, $contract: String!) {
-    associatedFund(managerAddress: $account, contractAddress: $contract)
+  query FundManagerQuery($account: String!) {
+    associatedFund(managerAddress: $account)
   }
 `;
 
@@ -19,20 +19,19 @@ export class FundManagerProvider extends React.PureComponent {
       <Composer
         components={[
           <AccountConsumer />,
-          <ConfigurationConsumer />,
-          ({ results: [account, { fundFactory }], render }) => (
+          ({ results: [account], render }) => (
             <Query
               query={fundManagerQuery}
-              variables={{ account, contract: fundFactory }}
+              variables={{ account }}
               skip={!account}
               children={render}
             />
           ),
         ]}
       >
-        {([account, props]) => {
+        {([account, fund]) => {
           const associatedFund =
-            account && props.data && props.data.associatedFund;
+            account && fund.data && fund.data.associatedFund;
 
           return (
             <FundManagerContext.Provider value={associatedFund}>

@@ -5,15 +5,35 @@ import { fundManagerQuery } from '+/components/FundManagerContext';
 const estimateMutation = gql`
   mutation EstimateSetupFund($name: String!, $exchanges: [String]!) {
     estimateSetupFund(name: $name, exchanges: $exchanges) @from {
+      data
+      from
       gas
       gasPrice
+      to
+      value
     }
   }
 `;
 
 const executeMutation = gql`
-  mutation ExecuteSetupFund($transaction: String!) {
-    executeSetupFund(unsigned: $transaction) @sign @from
+  mutation ExecuteSetupFund(
+    $data: String!
+    $from: String!
+    $gas: String!
+    $gasPrice: String!
+    $to: String!
+    $value: String!
+  ) {
+    executeSetupFund(
+      unsigned: {
+        data: $data
+        from: $from
+        gas: $gas
+        gasPrice: $gasPrice
+        to: $to
+        value: $value
+      }
+    ) @sign @from
   }
 `;
 
@@ -30,7 +50,6 @@ export const ExecuteSetupMutation = ({ onCompleted, account, children }) => (
     update={(cache, { data: { executeSetupFund } }) => {
       const variables = {
         account,
-        authenticated: true,
       };
 
       const data = cache.readQuery({
