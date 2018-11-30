@@ -1,7 +1,7 @@
 import Holdings from '~/components/Holdings';
 import Router from 'next/router';
 import * as R from 'ramda';
-import * as tokenMath from '@melonproject/token-math';
+import { toBigNumber } from '~/utils/functionalBigNumber';
 import tokens from '~/utils/tokens';
 
 const mapHoldings = R.curryN(2, (nav, asset) => {
@@ -11,7 +11,7 @@ const mapHoldings = R.curryN(2, (nav, asset) => {
     fraction:
       asset &&
       nav &&
-      tokenMath.bigInteger.toBI(asset.balance)
+      toBigNumber(asset.balance)
         .times(asset.price)
         .div(nav.toString() || 1)
         .times(100),
