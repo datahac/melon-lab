@@ -3,7 +3,7 @@ import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
 import { BalanceConsumer } from '+/components/BalanceContext';
 import { NetworkConsumer } from '+/components/NetworkContext';
-import { isZero } from '~/utils/functionalBigNumber';
+import * as tokenMath from '@melonproject/token-math';
 
 export const CapabilityContext = React.createContext({
   canInvest: false,
@@ -27,9 +27,9 @@ export class CapabilityProvider extends React.PureComponent {
           const nodeSynced = network && network.nodeSynced;
 
           const hasAccount = !!account;
-          const hasEth = hasAccount && ethBalance && !isZero(ethBalance);
-          const hasWeth = hasAccount && wethBalance && !isZero(wethBalance);
-          const hasCurrentBlock = currentBlock && !isZero(currentBlock);
+          const hasEth = hasAccount && ethBalance && !tokenMath.bigInteger.isZero(ethBalance.quantity);
+          const hasWeth = hasAccount && wethBalance && !tokenMath.bigInteger.isZero(wethBalance.quantity);
+          const hasCurrentBlock = currentBlock && !tokenMath.bigInteger.isZero(currentBlock);
           const isSynced = !!nodeSynced;
           const isCompetition = false; // TODO: Make this configurable.
 

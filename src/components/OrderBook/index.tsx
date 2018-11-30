@@ -1,13 +1,14 @@
 import { averagePrice } from '@melonproject/melon.js';
 import { withHandlers } from 'recompose';
 import OrderBook from '~/components/OrderBook';
-import { min, toBigNumber } from '~/utils/functionalBigNumber';
+import { min } from '~/utils/functionalBigNumber';
+import * as tokenMath from '@melonproject/token-math';
 
 const withSetOrderHandler = withHandlers({
   setBuyOrder: props => (volume, exchange, subset, symbol) => {
     const balance = props.holdings.find(h => h.symbol === symbol).balance;
     const price = averagePrice('sell', subset);
-    const total = min(toBigNumber(balance), price.times(volume));
+    const total = min(tokenMath.bigInteger.toBI(balance), price.times(volume));
     const amount = total.div(price);
 
     props.setOrder({
@@ -22,7 +23,7 @@ const withSetOrderHandler = withHandlers({
   setSellOrder: props => (volume, exchange, subset, symbol) => {
     const balance = props.holdings.find(h => h.symbol === symbol).balance;
     const price = averagePrice('buy', subset);
-    const amount = min(toBigNumber(balance), volume);
+    const amount = min(tokenMath.bigInteger.toBI(balance), volume);
     const total = price.times(amount);
 
     props.setOrder({
