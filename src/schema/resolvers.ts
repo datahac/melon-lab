@@ -190,7 +190,11 @@ export default {
       // TODO: Cancel open orders.
       throw new Error('This is not implemented yet');
     },
-    estimateSetupFund: async (_, { from, args }, { environment, streams }) => {
+    estimateSetupFund: async (
+      _,
+      { from, name, exchanges },
+      { environment, streams },
+    ) => {
       const deployment: any = await takeLast(streams.deployment$);
       const { exchangeConfigs, fundFactory, priceSource, tokens } = deployment;
 
@@ -198,7 +202,7 @@ export default {
       const params = {
         defaultTokens: [weth, mln],
         exchangeConfigs,
-        fundName: args.name,
+        fundName: name,
         priceSource,
         quoteToken: weth,
       };

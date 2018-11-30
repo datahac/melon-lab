@@ -204,7 +204,7 @@ class Setup extends React.Component {
               executeSetup={executeSetupFund}
               gasLimit={
                 estimateSetupFundProps.data &&
-                estimateSetupFundProps.data.estimateSetupFund
+                estimateSetupFundProps.data.estimateSetupFund.gasPrice
               }
               loading={
                 executeSetupFundProps.loading || executeSetupFundProps.loading

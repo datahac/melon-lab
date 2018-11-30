@@ -3,24 +3,17 @@ import gql from 'graphql-tag';
 import { fundManagerQuery } from '+/components/FundManagerContext';
 
 const estimateMutation = gql`
-  mutation EstimateSetupFund(
-    $name: String!
-    $exchanges: [String]!
-  ) {
-    estimateSetupFund(
-      name: $name
-      exchanges: $exchanges
-    ) @from
+  mutation EstimateSetupFund($name: String!, $exchanges: [String]!) {
+    estimateSetupFund(name: $name, exchanges: $exchanges) @from {
+      gas
+      gasPrice
+    }
   }
 `;
 
 const executeMutation = gql`
-  mutation ExecuteSetupFund(
-    $transaction: String!
-  ) {
-    executeSetupFund(
-      unsigned: $transaction
-    ) @sign @from
+  mutation ExecuteSetupFund($transaction: String!) {
+    executeSetupFund(unsigned: $transaction) @sign @from
   }
 `;
 

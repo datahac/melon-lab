@@ -28,23 +28,23 @@ const withForm = withFormik({
   validationSchema: props =>
     Yup.object().shape({
       name: Yup.string()
-        .required('Name is required.')
-        .test(
-          'is-unique',
-          'There is already a fund with this name.',
-          async value => {
-            const { data } =
-              value &&
-              (await props.client.query({
-                query: uniqueFundQuery,
-                variables: {
-                  name: value,
-                },
-              }));
+        .required('Name is required.'),
+        // .test(
+        //   'is-unique',
+        //   'There is already a fund with this name.',
+        //   async value => {
+        //     const { data } =
+        //       value &&
+        //       (await props.client.query({
+        //         query: uniqueFundQuery,
+        //         variables: {
+        //           name: value,
+        //         },
+        //       }));
 
-            return !data.fundByName;
-          },
-        ),
+        //     return !data.fundByName;
+        //   },
+        // ),
       exchanges: Yup.array().required('Exchanges are required.'),
       terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
       gasPrice: Yup.number()
