@@ -1,7 +1,27 @@
-import { averagePrice } from '@melonproject/melon.js';
 import { withHandlers } from 'recompose';
 import OrderBook from '~/components/OrderBook';
 import { min, toBigNumber } from '~/utils/functionalBigNumber';
+
+const averagePrice = (type: 'buy' | 'sell', orders) => {
+  const cumulatedVolumes = orders.reduce(
+    (accumulator, current) => ({
+      buy: accumulator.buy.add(current.buy.howMuch),
+      sell: accumulator.sell.add(current.sell.howMuch),
+    }),
+    {
+      buy: toBigNumber(0),
+      sell: toBigNumber(0),
+    },
+  );
+
+  if (type === 'buy') {
+    return cumulatedVolumes.sell.div(cumulatedVolumes.buy);
+  } else if (type === 'sell') {
+    return cumulatedVolumes.buy.div(cumulatedVolumes.sell);
+  }
+
+  return null;
+};
 
 const withSetOrderHandler = withHandlers({
   setBuyOrder: props => (volume, exchange, subset, symbol) => {

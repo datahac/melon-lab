@@ -29,7 +29,6 @@
     "Matthias Gemperli <matt@melonport.com>"
   ],
   "dependencies": {
-    "@melonproject/melon.js": "^0.8.32",
     "@melonproject/protocol": "file:.yalc/@melonproject/protocol",
     "@melonproject/token-math": "^0.0.20",
     "apollo-cache-inmemory": "^1.1.12",
