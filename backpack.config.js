@@ -5,7 +5,6 @@ require('dotenv').config({
 const DotEnv = require('dotenv-webpack');
 const path = require('path');
 const isElectron = !!JSON.parse(process.env.ELECTRON || 'false');
-const watchModules = ['@melonproject'];
 
 module.exports = {
   webpack: (config, options, webpack) => {
@@ -29,9 +28,21 @@ module.exports = {
     });
 
     config.watchOptions = {
-      ignored: new RegExp(`node_modules(?!\/(${watchModules.join('|')})(?!.*node_modules))`),
+      ignored: new RegExp(`node_modules((?!\/@melonproject\/)(?!.*node_modules))`),
       aggregateTimeout: 500,
     };
+
+    if (process.env.NODE_ENV === 'development') {
+      const externals = config.externals;
+
+      config.externals = (context, request, callback) => {
+        if (request.indexOf('@melonproject') !== -1 && request.indexOf('node_modules') === -1) {
+          return callback();
+        }
+
+        return externals(context, request, callback);
+      };
+    }
 
     if (isElectron || (process.platform === 'win32' || process.env.NODE_ENV === 'production')) {
       // Disable source maps and remove the source map loader (in the banner).
