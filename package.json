@@ -10,7 +10,7 @@
     "prebuild:app": "yarn clean",
     "build": "cross-env NODE_ENV=production backpack build && cross-env NODE_ENV=production next build src",
     "build:app": "cross-env NODE_ENV=production cross-env ELECTRON=true backpack build && cross-env NODE_ENV=production cross-env ELECTRON=true next build src && cross-env NODE_ENV=production cross-env ELECTRON=true next export src -o app/renderer && electron-builder",
-    "start": "cross-env NODE_ENV=production node build",
+    "start": "cross-env NODE_ENV=production node build/server",
     "predev": "yarn clean",
     "predev:app": "yarn clean",
     "dev": "cross-env NODE_ENV=development backpack dev",

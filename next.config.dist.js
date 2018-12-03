@@ -5,7 +5,7 @@ require('dotenv').config({
 const path = require('path');
 
 module.exports = {
-  distDir: path.join('..', 'build'),
+  distDir: path.join('..', 'build', 'next'),
   publicRuntimeConfig: ({
     jsonRpcRemote: process.env.JSON_RPC_REMOTE,
     baseTokenDefault: `MLN${process.env.TRACK !== 'live' ? '-T' : ''}`,
