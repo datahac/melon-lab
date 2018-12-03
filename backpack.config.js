@@ -3,6 +3,7 @@ require('dotenv').config({
 });
 
 const DotEnv = require('dotenv-webpack');
+const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 const isElectron = !!JSON.parse(process.env.ELECTRON || 'false');
 
@@ -18,7 +19,7 @@ module.exports = {
     config.module.rules.push({
       test: /\.ts$/,
       exclude: /node_modules/,
-      loader: require.resolve('babel-loader'),
+      loader: 'babel-loader',
     });
 
     config.module.rules.push({
@@ -33,15 +34,16 @@ module.exports = {
     };
 
     if (process.env.NODE_ENV === 'development') {
-      const externals = config.externals;
-
-      config.externals = (context, request, callback) => {
-        if (request.indexOf('@melonproject') !== -1 && request.indexOf('node_modules') === -1) {
-          return callback();
-        }
-
-        return externals(context, request, callback);
-      };
+      config.externals = nodeExternals({
+        modulesFromFile: true,
+        whitelist: [
+          /@melonport\//,
+          /\.(eot|woff|woff2|ttf|otf)$/,
+          /\.(svg|png|jpg|jpeg|gif|ico|webm)$/,
+          /\.(mp4|mp3|ogg|swf|webp)$/,
+          /\.(css|scss|sass|less|styl)$/,
+        ],
+      });
     }
 
     if (isElectron || (process.platform === 'win32' || process.env.NODE_ENV === 'production')) {
