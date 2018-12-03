@@ -205,7 +205,6 @@ type Query {
   contractDeployment: Deployment
   totalFunds: Int
   balance(symbol: SymbolEnum!, address: String!): Balance
-  price(symbol: String!): String
   fund(address: String!): Fund
   funds(addresses: [String]): [Fund]
   rankings: [Ranking]

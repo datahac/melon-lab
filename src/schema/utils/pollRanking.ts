@@ -1,9 +1,9 @@
 import * as Rx from 'rxjs';
 import { timeout, retryWhen, delay, concatMap, expand } from 'rxjs/operators';
-import { getRanking } from '@melonproject/melon.js';
 
 const requestRanking = environment => {
-  const ranking = getRanking(environment);
+  // TODO: Implement this properly.
+  const ranking = [];
   return Rx.from(ranking).pipe(
     timeout(10000),
     retryWhen(errors => errors.pipe(delay(1000))),

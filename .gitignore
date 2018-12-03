@@ -3,6 +3,7 @@ node_modules/
 
 # Generated files
 package-lock.json
+yalc.lock
 coverage/
 build/
 

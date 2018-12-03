@@ -81,9 +81,6 @@ export default {
 
       return loaders.fundContract.loadMany(addresses);
     },
-    price: (_, { symbol }, { loaders }) => {
-      return loaders.symbolPrice.load(symbol);
-    },
     balance: (_, { address, symbol }, { loaders }) => {
       return loaders.symbolBalance.load({ address, symbol });
     },

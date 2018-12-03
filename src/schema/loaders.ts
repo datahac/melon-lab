@@ -18,16 +18,9 @@ import {
   getSymbolBalance,
   observeSymbolBalance,
 } from './loaders/symbolBalance';
-import getPrice from './loaders/tokenPrice';
 import takeLast from './utils/takeLast';
 
 export default (environment, streams) => {
-  // TODO: Does this need a custom cache key function?
-  const symbolPrice = new DataLoader(symbols => {
-    const fn = getPrice(environment);
-    return Promise.all(symbols.map(fn) || []);
-  });
-
   const fundAddressFromManager = new DataLoader(pairs => {
     const fn = getFundAddressFromManager(environment);
     const result = pairs.map(pair => fn(pair.managerAddress, pair.fundFactory));
@@ -164,7 +157,6 @@ export default (environment, streams) => {
     fundOpenOrders,
     fundParticipation,
     recentTrades,
-    symbolPrice,
     symbolBalance,
     symbolBalanceObservable,
     generateMnemonic,
