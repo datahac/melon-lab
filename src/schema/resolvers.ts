@@ -194,14 +194,14 @@ export default {
       const deployment: any = await takeLast(streams.deployment$);
       const { exchangeConfigs, fundFactory, priceSource, tokens } = deployment;
 
-      const [weth, mln] = tokens;
+      const [weth, eth, mln] = tokens;
       const params = {
         defaultTokens: [weth, mln],
         exchangeConfigs,
         fundName: name,
         priceSource,
         quoteToken: weth,
-        nativeToken: mln,
+        nativeToken: eth,
       };
 
       // TODO: The environment should not hold account data. Maybe?

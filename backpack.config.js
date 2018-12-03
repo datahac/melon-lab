@@ -5,6 +5,7 @@ require('dotenv').config({
 const DotEnv = require('dotenv-webpack');
 const path = require('path');
 const isElectron = !!JSON.parse(process.env.ELECTRON || 'false');
+const watchModules = ['@melonproject'];
 
 module.exports = {
   webpack: (config, options, webpack) => {
@@ -26,6 +27,11 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'graphql-tag/loader',
     });
+
+    config.watchOptions = {
+      ignored: new RegExp(`node_modules(?!\/(${watchModules.join('|')})(?!.*node_modules))`),
+      aggregateTimeout: 500,
+    };
 
     if (isElectron || (process.platform === 'win32' || process.env.NODE_ENV === 'production')) {
       // Disable source maps and remove the source map loader (in the banner).

@@ -29,7 +29,7 @@
     "Matthias Gemperli <matt@melonport.com>"
   ],
   "dependencies": {
-    "@melonproject/protocol": "file:.yalc/@melonproject/protocol",
+    "@melonproject/protocol": "^0.9.0-alpha.20",
     "@melonproject/token-math": "^0.0.20",
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-client": "^2.3.1",
@@ -121,7 +121,6 @@
     "webpack-bundle-analyzer": "^3.0.3"
   },
   "resolutions": {
-    "@melonproject/token-math": "0.0.20",
     "styled-jsx": "3.1.2"
   },
   "husky": {
