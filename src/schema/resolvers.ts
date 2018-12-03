@@ -201,6 +201,7 @@ export default {
         fundName: name,
         priceSource,
         quoteToken: weth,
+        nativeToken: mln,
       };
 
       // TODO: The environment should not hold account data. Maybe?
