@@ -14,12 +14,11 @@ interface FormValues {
 }
 
 export interface ParticipationFormProps {
-  priceFeedUp: boolean;
   decimals?: number;
-  errors?: any;
   quoteAsset: string;
   setup: boolean;
   touched?: any;
+  errors?: any;
   values: FormValues;
   handleBlur?: () => void;
   handleSubmit?: () => void;

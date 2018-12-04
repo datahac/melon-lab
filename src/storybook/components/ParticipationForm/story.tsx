@@ -14,11 +14,8 @@ const data = {
   decimals: 4,
   setup: true,
   quoteAsset: 'WETH-T',
-  fund: {
-    sharePrice: 5,
-  },
 };
 
-storiesOf('Components|Participation', module).add('Default', () => {
+storiesOf('Components|Participation Form', module).add('Default', () => {
   return <ParticipationForm {...data} />;
 });
