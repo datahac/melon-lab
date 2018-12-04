@@ -56,13 +56,13 @@ export default {
     rankings: (_, __, { streams }) => {
       return takeLast(streams.ranking$);
     },
-    fund: async (_, { address }, { loaders }) => {
-      return loaders.fundContract.load(address);
+    fund: async (_, { address }) => {
+      return address;
     },
     fundByName: async (_, { name }, { loaders, streams }) => {
       const rankings = (await takeLast(streams.ranking$)) || [];
       const fund = rankings.find(fund => fund.name === name);
-      return fund && loaders.fundContract.load(fund.address);
+      return fund && fund.address;
     },
     associatedFund: async (_, { managerAddress }, { loaders, streams }) => {
       const deployment: any = await takeLast(streams.deployment$);
@@ -92,67 +92,81 @@ export default {
   },
   Fund: {
     address: parent => {
-      return parent.instance.address;
-    },
-    rank: async (parent, _, { streams }) => {
-      return takeLast(streams.ranking$).then(ranking => {
-        const address = parent.instance.address;
-        const entry = (ranking || []).find(rank => rank.address === address);
-        return (entry && entry.rank) || null;
-      });
+      return parent;
     },
     name: (parent, _, { loaders }) => {
       return loaders.fundName.load(parent);
     },
-    modules: (parent, _, { loaders }) => {
-      return loaders.fundModules.load(parent);
-    },
-    inception: async (parent, _, { loaders }) => {
-      const inception = await loaders.fundInception.load(parent);
-      return new Date(inception.toString() * 1000);
-    },
     owner: (parent, _, { loaders }) => {
       return loaders.fundOwner.load(parent);
     },
+    settings: (parent, _, { loaders }) => {
+      return loaders.fundSettings.load(parent);
+    },
+    totalSupply: async (parent, _, { loaders }) => {
+      const { sharesAddress } = await loaders.fundSettings.load(parent);
+      return loaders.fundTotalSupply.load(sharesAddress);
+    },
+    rank: async (parent, _, { streams }) => {
+      // return takeLast(streams.ranking$).then(ranking => {
+      //   const address = parent.instance.address;
+      //   const entry = (ranking || []).find(rank => rank.address === address);
+      //   return (entry && entry.rank) || null;
+      // });
+      throw new Error('This is not implemented yet');
+    },
+    modules: (parent, _, { loaders }) => {
+      // return loaders.fundModules.load(parent);
+      throw new Error('This is not implemented yet');
+    },
+    inception: async (parent, _, { loaders }) => {
+      // const inception = await loaders.fundInception.load(parent);
+      // return new Date(inception.toString() * 1000);
+      throw new Error('This is not implemented yet');
+    },
     personalStake: async (parent, { investor }, { loaders }) => {
-      const participation = await loaders.fundParticipation.load({
-        fund: parent,
-        investor: investor,
-      });
+      // const participation = await loaders.fundParticipation.load({
+      //   fund: parent,
+      //   investor: investor,
+      // });
 
-      return participation && participation.personalStake;
+      // return participation && participation.personalStake;
+      throw new Error('This is not implemented yet');
     },
     gav: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations[0].div(10 ** precision);
+      // const calculations = await loaders.fundCalculations.load(parent);
+      // return calculations[0].div(10 ** precision);
+      throw new Error('This is not implemented yet');
     },
     managementReward: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations[1].div(10 ** precision);
+      // const calculations = await loaders.fundCalculations.load(parent);
+      // return calculations[1].div(10 ** precision);
+      throw new Error('This is not implemented yet');
     },
     performanceReward: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations[2].div(10 ** precision);
+      // const calculations = await loaders.fundCalculations.load(parent);
+      // return calculations[2].div(10 ** precision);
+      throw new Error('This is not implemented yet');
     },
     unclaimedRewards: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations[3].div(10 ** precision);
+      // const calculations = await loaders.fundCalculations.load(parent);
+      // return calculations[3].div(10 ** precision);
+      throw new Error('This is not implemented yet');
     },
     rewardsShareQuantity: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations[4].div(10 ** precision);
+      // const calculations = await loaders.fundCalculations.load(parent);
+      // return calculations[4].div(10 ** precision);
+      throw new Error('This is not implemented yet');
     },
     nav: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations[5].div(10 ** precision);
+      // const calculations = await loaders.fundCalculations.load(parent);
+      // return calculations[5].div(10 ** precision);
+      throw new Error('This is not implemented yet');
     },
     sharePrice: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations[6].div(10 ** precision);
-    },
-    totalSupply: async (parent, _, { loaders, precision = 18 }) => {
-      const totalSupply = await loaders.fundTotalSupply.load(parent);
-      return totalSupply.div(10 ** precision);
+      // const calculations = await loaders.fundCalculations.load(parent);
+      // return calculations[6].div(10 ** precision);
+      throw new Error('This is not implemented yet');
     },
     subscriptionAllowed: () => {
       // TODO: Where does this come from?
@@ -163,7 +177,8 @@ export default {
       throw new Error('This is not implemented yet');
     },
     holdings: (parent, _, { loaders }) => {
-      return loaders.fundHoldings.load(parent);
+      // return loaders.fundHoldings.load(parent);
+      throw new Error('This is not implemented yet');
     },
   },
   Holding: {

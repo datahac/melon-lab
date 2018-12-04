@@ -1,5 +1,8 @@
-function fundTotalSupply(contract) {
-  return contract.instance.totalSupply.call();
+import * as R from 'ramda';
+import { getInfo } from '@melonproject/protocol';
+
+function getTotalSupply(environment, address) {
+  return environment && getInfo(address, environment);
 }
 
-export default fundTotalSupply;
+export default R.curryN(2, getTotalSupply);

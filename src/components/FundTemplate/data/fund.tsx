@@ -7,21 +7,20 @@ const query = gql`
     $account: String!
     $authenticated: Boolean!
   ) {
-    totalFunds
+    # totalFunds
 
     fund(address: $address) {
-      rank
+      # rank # not implemented yet
       name
-      gav
-      nav
-      managementReward
-      performanceReward
-      sharePrice
-      totalSupply
+      # gav # accounting - calculations
+      # nav # accounting - calculations
+      # managementReward # accounting - calculations
+      # performanceReward  # accounting - calculations
+      # sharePrice # accounting - calculations
+      # totalSupply # shares
       owner
-      inception
-      address
-      personalStake(investor: $account) @include(if: $authenticated)
+      # inception #
+      # personalStake(investor: $account) @include(if: $authenticated) # shares
     }
   }
 `;

@@ -7,6 +7,7 @@ import getFundInception from './loaders/fund/fundInception';
 import getFundModules from './loaders/fund/fundModules';
 import getFundOwner from './loaders/fund/fundOwner';
 import getFundName from './loaders/fund/fundName';
+import getFundSettings from './loaders/fund/fundSettings';
 import getFundHoldings from './loaders/fund/fundHoldings';
 import getFundTotalSupply from './loaders/fund/fundTotalSupply';
 import getFundCalculations from './loaders/fund/fundCalculations';
@@ -32,14 +33,25 @@ export default (environment, streams) => {
     return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundName = new DataLoader(
-    contracts => {
-      return Promise.all(contracts.map(getFundName));
-    },
-    {
-      cacheKeyFn: contract => contract.instance.address,
-    },
-  );
+  const fundName = new DataLoader(addresses => {
+    const fn = getFundName(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
+
+  const fundOwner = new DataLoader(addresses => {
+    const fn = getFundOwner(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
+
+  const fundSettings = new DataLoader(addresses => {
+    const fn = getFundSettings(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
+
+  const fundTotalSupply = new DataLoader(addresses => {
+    const fn = getFundTotalSupply(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
 
   const fundInception = new DataLoader(
     contracts => {
@@ -53,24 +65,6 @@ export default (environment, streams) => {
   const fundModules = new DataLoader(
     contracts => {
       return Promise.all(contracts.map(getFundModules));
-    },
-    {
-      cacheKeyFn: contract => contract.instance.address,
-    },
-  );
-
-  const fundOwner = new DataLoader(
-    contracts => {
-      return Promise.all(contracts.map(getFundOwner));
-    },
-    {
-      cacheKeyFn: contract => contract.instance.address,
-    },
-  );
-
-  const fundTotalSupply = new DataLoader(
-    contracts => {
-      return Promise.all(contracts.map(getFundTotalSupply));
     },
     {
       cacheKeyFn: contract => contract.instance.address,
@@ -162,5 +156,6 @@ export default (environment, streams) => {
     generateMnemonic,
     importWallet,
     restoreWallet,
+    fundSettings,
   };
 };
