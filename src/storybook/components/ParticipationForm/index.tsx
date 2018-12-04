@@ -20,7 +20,7 @@ export interface ParticipationFormProps {
   errors?: any;
   handleBlur?: () => void;
   handleSubmit?: () => void;
-  onChange?: () => void;
+  handleChange?: () => void;
   quoteAsset: string;
   setup: boolean;
   touched?: any;
@@ -33,7 +33,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   errors,
   handleBlur,
   handleSubmit,
-  onChange,
+  handleChange,
   quoteAsset,
   setup,
   touched,
@@ -44,14 +44,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   return (
     <div className="participation-form">
       <style jsx>{styles}</style>
-      <h3>Participation</h3>
       <Form onSubmit={handleSubmit}>
-        {!priceFeedUp && (
-          <Notification isWarning>
-            Invest/Redeem not possible when price feed down
-          </Notification>
-        )}
-
         {!setup && (
           <div className="participation-form__toggles">
             <div className="participation-form__toggle">
@@ -60,7 +53,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 value="Invest"
                 text="Invest"
                 isChecked={values.type === 'Invest'}
-                onChange={onChange}
+                onChange={handleChange}
               />
             </div>
             <div className="participation-form__toggle">
@@ -69,7 +62,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 value="Slices"
                 text="Slices"
                 isChecked={values.type === 'Slices'}
-                onChange={onChange}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -83,12 +76,11 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
             name="quantity"
             insideLabel="true"
             placeholder={numberPlaceholder}
-            onChange={onChange}
+            onChange={handleChange}
             onBlur={handleBlur}
             required={true}
             formatNumber={true}
             error={touched.quantity && errors.quantity}
-            disabled={!priceFeedUp}
           />
         </div>
 
@@ -102,7 +94,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 name="price"
                 insideLabel="true"
                 placeholder={numberPlaceholder}
-                onChange={onChange}
+                onChange={handleChange}
                 onBlur={handleBlur}
                 required={true}
                 formatNumber={true}
@@ -118,21 +110,18 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 name="total"
                 insideLabel="true"
                 placeholder={numberPlaceholder}
-                onChange={onChange}
+                onChange={handleChange}
                 onBlur={handleBlur}
                 required={true}
                 formatNumber={true}
                 error={touched.total && errors.total}
-                disabled={!priceFeedUp}
               />
             </div>
           </Fragment>
         )}
 
         <div className="participation-form__input">
-          <Button type="submit" disabled={!priceFeedUp}>
-            Submit request
-          </Button>
+          <Button type="submit">Submit request</Button>
         </div>
       </Form>
     </div>
