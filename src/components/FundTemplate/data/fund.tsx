@@ -4,12 +4,13 @@ import gql from 'graphql-tag';
 const query = gql`
   query FundQuery(
     $address: String!
-    $account: String!
-    $authenticated: Boolean!
+    # $account: String!
+    # $authenticated: Boolean!
   ) {
     # totalFunds
 
     fund(address: $address) {
+      address
       # rank # not implemented yet
       name
       # gav # accounting - calculations

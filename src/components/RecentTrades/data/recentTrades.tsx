@@ -3,12 +3,12 @@ import gql from 'graphql-tag';
 
 const query = gql`
   query RecentTradesQuery(
-    $baseTokenSymbol: String!
-    $quoteTokenSymbol: String!
+    $base: String!
+    $quote: String!
   ) {
     recentTrades(
-      baseTokenSymbol: $baseTokenSymbol
-      quoteTokenSymbol: $quoteTokenSymbol
+      base: $base
+      quote: $quote
     ) {
       price
       quantity
@@ -22,8 +22,8 @@ const RecentTradesQuery = ({ baseAsset, quoteAsset, children }) => (
   <Query
     query={query}
     variables={{
-      baseTokenSymbol: baseAsset,
-      quoteTokenSymbol: quoteAsset,
+      base: baseAsset,
+      quote: quoteAsset,
     }}
     ssr={false}
   >

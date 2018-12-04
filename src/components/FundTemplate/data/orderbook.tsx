@@ -3,13 +3,13 @@ import gql from 'graphql-tag';
 
 const subscription = gql`
   subscription OrderBookQuery(
-    $baseToken: String!
-    $quoteToken: String!
+    $base: String!
+    $quote: String!
     $exchanges: [ExchangeEnum]
   ) {
     orderbook(
-      baseTokenSymbol: $baseToken
-      quoteTokenSymbol: $quoteToken
+      base: $base
+      quote: $quote
       exchanges: $exchanges
     ) {
       totalBuyVolume
@@ -100,8 +100,8 @@ const OrderBookQuery = ({ exchanges, baseAsset, quoteAsset, children }) => (
     key={exchanges.join(':')}
     subscription={subscription}
     variables={{
-      baseToken: baseAsset,
-      quoteToken: quoteAsset,
+      base: baseAsset,
+      quote: quoteAsset,
       exchanges: exchanges.length > 0 && exchanges,
     }}
     ssr={false}
