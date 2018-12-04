@@ -2,14 +2,8 @@ import { Query } from '~/apollo';
 import gql from 'graphql-tag';
 
 const query = gql`
-  query RecentTradesQuery(
-    $base: String!
-    $quote: String!
-  ) {
-    recentTrades(
-      base: $base
-      quote: $quote
-    ) {
+  query RecentTradesQuery($base: String!, $quote: String!) {
+    recentTrades(base: $base, quote: $quote) {
       price
       quantity
       timestamp

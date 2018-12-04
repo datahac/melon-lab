@@ -15,9 +15,9 @@ import * as typeDefs from './schema.gql';
 import { publishReplay } from 'rxjs/operators';
 import * as Accounts from 'web3-eth-accounts';
 
-export async function createContext(track, endpoint) {
+export async function createContext(track, endpoint, wallet = null) {
   // The current wallet (in an electron context);
-  let currentWallet;
+  let currentWallet = wallet;
 
   const environment = getEnvironment(track, endpoint);
   const network$ = pollNetwork(environment).pipe(publishReplay(1));
@@ -46,8 +46,8 @@ export async function createContext(track, endpoint) {
     environment,
     streams,
     loaders: {
-      setWallet: wallet => {
-        currentWallet = wallet;
+      setWallet: value => {
+        currentWallet = value;
       },
       getWallet: () => {
         return currentWallet;

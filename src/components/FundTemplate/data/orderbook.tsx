@@ -7,11 +7,7 @@ const subscription = gql`
     $quote: String!
     $exchanges: [ExchangeEnum]
   ) {
-    orderbook(
-      base: $base
-      quote: $quote
-      exchanges: $exchanges
-    ) {
+    orderbook(base: $base, quote: $quote, exchanges: $exchanges) {
       totalBuyVolume
       totalSellVolume
       buyEntries {
