@@ -2,7 +2,6 @@ import React, { Fragment, StatelessComponent } from 'react';
 import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
-import Notification from '~/blocks/Notification';
 import Toggle from '~/blocks/Toggle';
 
 import styles from './styles.css';
@@ -18,17 +17,16 @@ export interface ParticipationFormProps {
   priceFeedUp: boolean;
   decimals?: number;
   errors?: any;
-  handleBlur?: () => void;
-  handleSubmit?: () => void;
-  handleChange?: () => void;
   quoteAsset: string;
   setup: boolean;
   touched?: any;
   values: FormValues;
+  handleBlur?: () => void;
+  handleSubmit?: () => void;
+  handleChange?: () => void;
 }
 
 const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
-  priceFeedUp,
   decimals,
   errors,
   handleBlur,
