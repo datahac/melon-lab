@@ -43,18 +43,6 @@ const addIdentity = operation => {
 };
 
 export const createIdentityLink = cache => {
-  const defaults = {
-    hasStoredWallet: false,
-    defaultAccount: null,
-    allAccounts: null,
-  };
-
-  const resolverOverride = withClientState({
-    cache,
-    defaults,
-    resolvers,
-  });
-
   const identityDecorator = new class IdentityLink extends ApolloLink {
     public request(
       operation: Operation,
@@ -76,9 +64,22 @@ export const createIdentityLink = cache => {
     },
   };
 
-  return ApolloLink.from(
-    [setContext(() => identityContext), identityDecorator].concat(
-      process.env.NODE_ENV === 'development' ? [] : [resolverOverride],
-    ),
-  );
+  const links = [setContext(() => identityContext), identityDecorator];
+  if (process.env.NODE_ENV !== 'development') {
+    const defaults = {
+      hasStoredWallet: false,
+      defaultAccount: null,
+      allAccounts: null,
+    };
+
+    const resolverOverride = withClientState({
+      cache,
+      defaults,
+      resolvers,
+    });
+
+    links.push(resolverOverride);
+  }
+
+  return ApolloLink.from(links);
 };

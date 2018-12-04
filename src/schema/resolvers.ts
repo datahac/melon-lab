@@ -25,6 +25,11 @@ export default {
       const wallet = loaders.getWallet();
       return (wallet && wallet.address) || null;
     },
+    allAccounts: async (_, __, { loaders }) => {
+      // TODO: Make this return all accounts.
+      const wallet = loaders.getWallet();
+      return (wallet && wallet.address && [wallet.address]) || null;
+    },
     openOrders: async (_, { address }, { loaders }) => {
       const contract = await loaders.fundContract.load(address);
       return loaders.fundOpenOrders.load(contract);
