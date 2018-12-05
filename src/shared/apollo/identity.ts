@@ -65,7 +65,17 @@ export const createIdentityLink = cache => {
   };
 
   const links = [setContext(() => identityContext), identityDecorator];
-  if (process.env.NODE_ENV !== 'development') {
+
+  // If in local development and the server-side wallet is enabled,
+  // don't add the client state apollo link. This will cause the control
+  // of thee wallet / login state to be handed off to the server where
+  // it will also be persisted within the graphql server.
+  if (
+    !(
+      process.env.NODE_ENV === 'development' &&
+      !!JSON.parse(process.env.SERVER_SIDE_WALLET || 'false')
+    )
+  ) {
     const defaults = {
       hasStoredWallet: false,
       defaultAccount: null,
