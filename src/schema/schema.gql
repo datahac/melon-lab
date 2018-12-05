@@ -279,6 +279,22 @@ type Mutation {
     unsigned: UnsignedTransactionInput!
   ): String
 
+  """
+  Estimates the number of gas units required for the "request investment" transaction.
+  """
+  estimateRequestInvestment(
+    fundAddress: String!
+    investmentAmount: String!
+  ): UnsignedTransaction
+
+  """
+  Executes the "setup fund" transaction with the given gas price per unit.
+  """
+  executeRequestInvestment(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+  ): String
+
   estimateTakeOrder(
     order: Json!
     quantity: String!

@@ -7,7 +7,9 @@ import { map, pluck, distinctUntilChanged, skip } from 'rxjs/operators';
 import { createComponents } from '@melonproject/protocol/lib/contracts/factory/transactions/createComponents';
 import { continueCreation } from '@melonproject/protocol/lib/contracts/factory/transactions/continueCreation';
 import { setupFund } from '@melonproject/protocol/lib/contracts/factory/transactions/setupFund';
+import { requestInvestment } from '@melonproject/protocol/lib/contracts/fund/participation/transactions/requestInvestment';
 import { Address } from '@melonproject/token-math/address';
+import { createQuantity } from '@melonproject/token-math/quantity';
 import Order from './types/Order';
 import toAsyncIterator from './utils/toAsyncIterator';
 import takeLast from './utils/takeLast';
@@ -214,7 +216,7 @@ export default {
       { environment, streams },
     ) => {
       const deployment: any = await takeLast(streams.deployment$);
-      const { exchangeConfigs, fundFactory, priceSource, tokens } = deployment;
+      const { exchangeConfigs, priceSource, tokens, version } = deployment;
 
       const [weth, eth, mln] = tokens;
       const params = {
@@ -235,7 +237,7 @@ export default {
       };
 
       const result = await createComponents.prepare(
-        fundFactory,
+        version,
         params,
         undefined,
         enhancedEnvironment,
@@ -249,7 +251,7 @@ export default {
       { environment, streams },
     ) => {
       const deployment: any = await takeLast(streams.deployment$);
-      const { fundFactory } = deployment;
+      const { version } = deployment;
 
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
@@ -260,7 +262,7 @@ export default {
       };
 
       return createComponents.send(
-        fundFactory,
+        version,
         signed.rawTransaction,
         undefined, // TODO: Remove params from send.
         undefined,
@@ -269,7 +271,7 @@ export default {
     },
     estimateContinueCreation: async (_, { from }, { environment, streams }) => {
       const deployment: any = await takeLast(streams.deployment$);
-      const { fundFactory } = deployment;
+      const { version } = deployment;
 
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
@@ -280,7 +282,7 @@ export default {
       };
 
       const result = await continueCreation.prepare(
-        fundFactory,
+        version,
         undefined,
         undefined,
         enhancedEnvironment,
@@ -294,7 +296,7 @@ export default {
       { environment, streams },
     ) => {
       const deployment: any = await takeLast(streams.deployment$);
-      const { fundFactory } = deployment;
+      const { version } = deployment;
 
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
@@ -305,7 +307,7 @@ export default {
       };
 
       return continueCreation.send(
-        fundFactory,
+        version,
         signed.rawTransaction,
         undefined, // TODO: Remove params from send.
         undefined,
@@ -314,7 +316,7 @@ export default {
     },
     estimateSetupFund: async (_, { from }, { environment, streams }) => {
       const deployment: any = await takeLast(streams.deployment$);
-      const { fundFactory } = deployment;
+      const { version } = deployment;
 
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
@@ -325,7 +327,7 @@ export default {
       };
 
       const result = await setupFund.prepare(
-        fundFactory,
+        version,
         undefined,
         undefined,
         enhancedEnvironment,
@@ -335,7 +337,7 @@ export default {
     },
     executeSetupFund: async (_, { from, signed }, { environment, streams }) => {
       const deployment: any = await takeLast(streams.deployment$);
-      const { fundFactory } = deployment;
+      const { version } = deployment;
 
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
@@ -346,7 +348,7 @@ export default {
       };
 
       return setupFund.send(
-        fundFactory,
+        version,
         signed.rawTransaction,
         undefined, // TODO: Remove params from send.
         undefined,
