@@ -11,6 +11,9 @@ import { hasDirectives } from 'apollo-utilities';
 import generateMnemonic from '~/schema/loaders/wallet/generateMnemonic';
 import restoreWallet from '~/schema/loaders/wallet/restoreWallet';
 import importWallet from '~/schema/loaders/wallet/decryptWallet';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 const resolvers = {
   Mutation: {
@@ -70,12 +73,7 @@ export const createIdentityLink = cache => {
   // don't add the client state apollo link. This will cause the control
   // of thee wallet / login state to be handed off to the server where
   // it will also be persisted within the graphql server.
-  if (
-    !(
-      process.env.NODE_ENV === 'development' &&
-      !!JSON.parse(process.env.SERVER_SIDE_WALLET || 'false')
-    )
-  ) {
+  if (!publicRuntimeConfig.serverSideWallet) {
     const defaults = {
       hasStoredWallet: false,
       defaultAccount: null,
