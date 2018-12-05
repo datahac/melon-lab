@@ -52,7 +52,7 @@ const withForm = withFormik({
     }),
   enableReinitialize: true,
   handleSubmit: (values, form) => {
-    const { data, from, gas, to, value } = form.props.estimateSetupFundProps;
+    const { data, from, gas, to, value } = form.props.estimateCreateComponentsProps;
     form.props.executeSetup({
       variables: {
         data,

@@ -5,6 +5,8 @@ import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import GraphQLJSON from 'graphql-type-json';
 import { map, pluck, distinctUntilChanged, skip } from 'rxjs/operators';
 import { createComponents } from '@melonproject/protocol/lib/contracts/factory/transactions/createComponents';
+import { continueCreation } from '@melonproject/protocol/lib/contracts/factory/transactions/continueCreation';
+import { setupFund } from '@melonproject/protocol/lib/contracts/factory/transactions/setupFund';
 import { Address } from '@melonproject/token-math/address';
 import Order from './types/Order';
 import toAsyncIterator from './utils/toAsyncIterator';
@@ -206,7 +208,7 @@ export default {
       // TODO: Cancel open orders.
       throw new Error('This is not implemented yet');
     },
-    estimateSetupFund: async (
+    estimateCreateComponents: async (
       _,
       { from, name, exchanges },
       { environment, streams },
@@ -241,7 +243,11 @@ export default {
 
       return result && result.rawTransaction;
     },
-    executeSetupFund: async (_, { from, signed }, { environment, streams }) => {
+    executeCreateComponents: async (
+      _,
+      { from, signed },
+      { environment, streams },
+    ) => {
       const deployment: any = await takeLast(streams.deployment$);
       const { fundFactory } = deployment;
 
@@ -254,6 +260,92 @@ export default {
       };
 
       return createComponents.send(
+        fundFactory,
+        signed.rawTransaction,
+        undefined, // TODO: Remove params from send.
+        undefined,
+        enhancedEnvironment,
+      );
+    },
+    estimateContinueCreation: async (_, { from }, { environment, streams }) => {
+      const deployment: any = await takeLast(streams.deployment$);
+      const { fundFactory } = deployment;
+
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      const result = await continueCreation.prepare(
+        fundFactory,
+        undefined,
+        undefined,
+        enhancedEnvironment,
+      );
+
+      return result && result.rawTransaction;
+    },
+    executeContinueCreation: async (
+      _,
+      { from, signed },
+      { environment, streams },
+    ) => {
+      const deployment: any = await takeLast(streams.deployment$);
+      const { fundFactory } = deployment;
+
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      return continueCreation.send(
+        fundFactory,
+        signed.rawTransaction,
+        undefined, // TODO: Remove params from send.
+        undefined,
+        enhancedEnvironment,
+      );
+    },
+    estimateSetupFund: async (_, { from }, { environment, streams }) => {
+      const deployment: any = await takeLast(streams.deployment$);
+      const { fundFactory } = deployment;
+
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      const result = await setupFund.prepare(
+        fundFactory,
+        undefined,
+        undefined,
+        enhancedEnvironment,
+      );
+
+      return result && result.rawTransaction;
+    },
+    executeSetupFund: async (_, { from, signed }, { environment, streams }) => {
+      const deployment: any = await takeLast(streams.deployment$);
+      const { fundFactory } = deployment;
+
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      return setupFund.send(
         fundFactory,
         signed.rawTransaction,
         undefined, // TODO: Remove params from send.

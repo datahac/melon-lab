@@ -2,9 +2,9 @@ import { Mutation } from '~/apollo';
 import gql from 'graphql-tag';
 import { fundManagerQuery } from '+/components/FundManagerContext';
 
-const estimateMutation = gql`
-  mutation EstimateSetupFund($name: String!, $exchanges: [String]!) {
-    estimateSetupFund(name: $name, exchanges: $exchanges) @from {
+const estimateCreateComponentsMutation = gql`
+  mutation EstimateCreateComponents($name: String!, $exchanges: [String]!) {
+    estimateCreateComponents(name: $name, exchanges: $exchanges) @from {
       data
       from
       gas
@@ -15,8 +15,8 @@ const estimateMutation = gql`
   }
 `;
 
-const executeMutation = gql`
-  mutation ExecuteSetupFund(
+const executeCreateComponentsMutation = gql`
+  mutation ExecuteCreateComponents(
     $data: String!
     $from: String!
     $gas: String!
@@ -24,7 +24,7 @@ const executeMutation = gql`
     $to: String!
     $value: String!
   ) {
-    executeSetupFund(
+    executeCreateComponents(
       unsigned: {
         data: $data
         from: $from
@@ -37,17 +37,34 @@ const executeMutation = gql`
   }
 `;
 
-export const EstimateSetupMutation = ({ onCompleted, children }) => (
-  <Mutation mutation={estimateMutation} onCompleted={onCompleted}>
+const estimateContinueCreationMutation = gql`
+  mutation EstimateContinueCreation {
+    estimateContinueCreation @from {
+      data
+      from
+      gas
+      gasPrice
+      to
+      value
+    }
+  }
+`;
+
+export const EstimateCreateComponentsMutation = ({ onCompleted, children }) => (
+  <Mutation mutation={estimateCreateComponentsMutation} onCompleted={onCompleted}>
     {children}
   </Mutation>
 );
 
-export const ExecuteSetupMutation = ({ onCompleted, account, children }) => (
+export const ExecuteCreateComponentsMutation = ({
+  onCompleted,
+  account,
+  children,
+}) => (
   <Mutation
-    mutation={executeMutation}
+    mutation={executeCreateComponentsMutation}
     onCompleted={onCompleted}
-    update={(cache, { data: { executeSetupFund } }) => {
+    update={(cache, { data: { executeCreateComponents } }) => {
       const variables = {
         account,
       };
@@ -62,10 +79,19 @@ export const ExecuteSetupMutation = ({ onCompleted, account, children }) => (
         variables,
         data: {
           ...data,
-          associatedFund: executeSetupFund,
+          associatedFund: executeCreateComponents,
         },
       });
     }}
+  >
+    {children}
+  </Mutation>
+);
+
+export const EstimateContinueCreationMutation = ({ onCompleted, children }) => (
+  <Mutation
+    mutation={estimateContinueCreationMutation}
+    onCompleted={onCompleted}
   >
     {children}
   </Mutation>

@@ -1,5 +1,8 @@
 import React from 'react';
-import { EstimateSetupMutation, ExecuteSetupMutation } from './data/fund';
+import {
+  EstimateCreateComponentsMutation,
+  ExecuteCreateComponentsMutation,
+} from './data/fund';
 import { withRouter } from 'next/router';
 import { compose } from 'recompose';
 import availableExchangeContracts from '~/utils/availableExchangeContracts';
@@ -102,8 +105,8 @@ const SetupFormContainer = withForm(props => (
             {
               // TODO: Does this still have to be a list?
               gasLimit:
-                props.estimateSetupFundProps &&
-                props.estimateSetupFundProps.gas,
+                props.estimateCreateComponentsProps &&
+                props.estimateCreateComponentsProps.gas,
             },
           ]}
         />
@@ -161,34 +164,34 @@ class Setup extends React.Component {
           <AccountConsumer />,
           <ConfigurationConsumer />,
           ({ render }) => (
-            <EstimateSetupMutation
+            <EstimateCreateComponentsMutation
               onCompleted={() => {
                 this.setShowModal(true);
               }}
             >
               {(a, b) => render([a, b])}
-            </EstimateSetupMutation>
+            </EstimateCreateComponentsMutation>
           ),
           ({ results: [account], render }) => (
-            <ExecuteSetupMutation
+            <ExecuteCreateComponentsMutation
               account={account}
               onCompleted={result => {
                 this.props.router.replace({
                   pathname: '/manage',
-                  query: { address: result.executeSetupFund },
+                  query: { address: result.executeCreateComponents },
                 });
               }}
             >
               {(a, b) => render([a, b])}
-            </ExecuteSetupMutation>
+            </ExecuteCreateComponentsMutation>
           ),
         ]}
       >
         {([
           account,
           configuration,
-          [estimateSetupFund, estimateSetupFundProps],
-          [executeSetupFund, executeSetupFundProps],
+          [estimateCreateComponents, estimateCreateComponentsProps],
+          [executeCreateComponents, executeCreateComponentsProps],
         ]) => {
           return (
             <SetupFormContainer
@@ -202,14 +205,15 @@ class Setup extends React.Component {
               showModal={this.state.showModal}
               validateOnBlur={true}
               validateOnChange={false}
-              prepareSetup={estimateSetupFund}
-              executeSetup={executeSetupFund}
-              estimateSetupFundProps={
-                estimateSetupFundProps.data &&
-                estimateSetupFundProps.data.estimateSetupFund
+              prepareSetup={estimateCreateComponents}
+              executeSetup={executeCreateComponents}
+              estimateCreateComponentsProps={
+                estimateCreateComponentsProps.data &&
+                estimateCreateComponentsProps.data.estimateCreateComponents
               }
               loading={
-                executeSetupFundProps.loading || executeSetupFundProps.loading
+                executeCreateComponentsProps.loading ||
+                executeCreateComponentsProps.loading
               }
             />
           );

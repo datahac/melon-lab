@@ -238,12 +238,38 @@ type Mutation {
 
   # TODO: Give more fund configuration options: Policies, pricefeed, ...
   """
-  Estimates the number of gas units required for the "setup fund" transaction.
+  Estimates the number of gas units required for the "create components" transaction.
   """
-  estimateSetupFund(
+  estimateCreateComponents(
     name: String!
     exchanges: [String]!
   ): UnsignedTransaction
+
+  """
+  Executes the "create components" transaction with the given gas price per unit.
+  """
+  executeCreateComponents(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+  ): String
+
+  """
+  Estimates the number of gas units required for the "continue creation" transaction.
+  """
+  estimateContinueCreation: UnsignedTransaction
+
+  """
+  Executes the "continue creation" transaction with the given gas price per unit.
+  """
+  executeContinueCreation(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+  ): String
+
+  """
+  Estimates the number of gas units required for the "setup fund" transaction.
+  """
+  estimateSetupFund: UnsignedTransaction
 
   """
   Executes the "setup fund" transaction with the given gas price per unit.
