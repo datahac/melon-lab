@@ -51,7 +51,10 @@ const estimateContinueCreationMutation = gql`
 `;
 
 export const EstimateCreateComponentsMutation = ({ onCompleted, children }) => (
-  <Mutation mutation={estimateCreateComponentsMutation} onCompleted={onCompleted}>
+  <Mutation
+    mutation={estimateCreateComponentsMutation}
+    onCompleted={onCompleted}
+  >
     {children}
   </Mutation>
 );
