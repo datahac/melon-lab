@@ -355,6 +355,61 @@ export default {
         enhancedEnvironment,
       );
     },
+    estimateRequestInvestment: async (
+      _,
+      { from, fundAddress, investmentAmount },
+      { environment, streams, loaders },
+    ) => {
+      const deployment: any = await takeLast(streams.deployment$);
+      const { tokens } = deployment;
+
+      const [weth] = tokens;
+      const params = {
+        investmentAmount: createQuantity(weth, investmentAmount),
+      };
+
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      const settings = await loaders.fundSettings.load(fundAddress);
+
+      const result = await requestInvestment.prepare(
+        settings.participationAddress,
+        params,
+        undefined,
+        enhancedEnvironment,
+      );
+
+      return result && result.rawTransaction;
+    },
+    executeRequestInvestment: async (
+      _,
+      { from, signed, fundAddress },
+      { environment, loaders },
+    ) => {
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      const settings = await loaders.fundSettings.load(fundAddress);
+
+      return requestInvestment.send(
+        settings.participationAddress,
+        signed.rawTransaction,
+        undefined, // TODO: Remove params from send.
+        undefined,
+        enhancedEnvironment,
+      );
+    },
     deleteWallet: async () => {
       const credentials = (await keytar.findCredentials('melon.fund')) || [];
       credentials.forEach(item => {

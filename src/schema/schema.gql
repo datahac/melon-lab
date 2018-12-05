@@ -293,6 +293,7 @@ type Mutation {
   executeRequestInvestment(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
+    fundAddress: String!
   ): String
 
   estimateTakeOrder(
