@@ -24,7 +24,7 @@ import takeLast from './utils/takeLast';
 export default (environment, streams) => {
   const fundAddressFromManager = new DataLoader(pairs => {
     const fn = getFundAddressFromManager(environment);
-    const result = pairs.map(pair => fn(pair.managerAddress, pair.fundFactory));
+    const result = pairs.map(pair => fn(pair.managerAddress, pair.version));
     return Promise.all(result || []);
   });
 

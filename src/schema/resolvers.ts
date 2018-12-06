@@ -75,11 +75,11 @@ export default {
     },
     associatedFund: async (_, { managerAddress }, { loaders, streams }) => {
       const deployment: any = await takeLast(streams.deployment$);
-      const { fundFactory } = deployment;
+      const { version } = deployment;
 
       const fundAddress = await loaders.fundAddressFromManager.load({
         managerAddress,
-        fundFactory,
+        version,
       });
       return fundAddress || null;
     },

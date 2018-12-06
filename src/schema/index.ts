@@ -2,7 +2,7 @@ import { makeExecutableSchema } from 'graphql-tools';
 import resolvers from './resolvers';
 import createLoaders from './loaders';
 import subscribeBlock from './utils/subscribeBlock';
-import pollRanking from './utils/pollRanking';
+import currentRanking from './utils/currentRanking';
 import subscribeSyncing from './utils/subscribeSyncing';
 import pollPriceFeed from './utils/pollPriceFeed';
 import pollNetwork from './utils/pollNetwork';
@@ -22,11 +22,13 @@ export async function createContext(track, endpoint, wallet = null) {
   const environment = getEnvironment(track, endpoint);
   const network$ = pollNetwork(environment).pipe(publishReplay(1));
   const block$ = subscribeBlock(environment).pipe(publishReplay(1));
-  const ranking$ = pollRanking(environment).pipe(publishReplay(1));
   const syncing$ = subscribeSyncing(environment).pipe(publishReplay(1));
   const priceFeed$ = pollPriceFeed(environment).pipe(publishReplay(1));
   const peers$ = currentPeers(environment, block$).pipe(publishReplay(1));
   const deployment$ = currentDeployment(environment, network$).pipe(
+    publishReplay(1),
+  );
+  const ranking$ = currentRanking(environment, deployment$, block$).pipe(
     publishReplay(1),
   );
 

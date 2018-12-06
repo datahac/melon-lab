@@ -12,7 +12,6 @@ export const configurationQuery = gql`
   query ConfigurationQuery {
     contractDeployment {
       priceSource
-      fundFactory
     }
   }
 `;

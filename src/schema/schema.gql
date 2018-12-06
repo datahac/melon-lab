@@ -175,7 +175,8 @@ type Token {
 type Deployment {
   exchangeConfigs: [ExchangeConfig]
   priceSource: String
-  fundFactory: String
+  version: String
+  ranking: String
   tokens: [Token]
 }
 
