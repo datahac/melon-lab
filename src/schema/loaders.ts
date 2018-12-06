@@ -2,7 +2,6 @@ import DataLoader from 'dataloader';
 import importWallet from './loaders/wallet/decryptWallet';
 import restoreWallet from './loaders/wallet/restoreWallet';
 import generateMnemonic from './loaders/wallet/generateMnemonic';
-import getFundContract from './loaders/fund/fundContract';
 import getFundInception from './loaders/fund/fundInception';
 import getFundModules from './loaders/fund/fundModules';
 import getFundOwner from './loaders/fund/fundOwner';
@@ -15,6 +14,7 @@ import getFundOpenOrders from './loaders/fund/fundOpenOrders';
 import getFundParticipation from './loaders/fund/fundParticipation';
 import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
 import getRecentTrades from './loaders/recentTrades';
+import getQuoteToken from './loaders/quoteToken';
 import {
   getSymbolBalance,
   observeSymbolBalance,
@@ -26,11 +26,6 @@ export default (environment, streams) => {
     const fn = getFundAddressFromManager(environment);
     const result = pairs.map(pair => fn(pair.managerAddress, pair.version));
     return Promise.all(result || []);
-  });
-
-  const fundContract = new DataLoader(addresses => {
-    const fn = getFundContract(environment);
-    return Promise.all(addresses.map(fn) || []);
   });
 
   const fundName = new DataLoader(addresses => {
@@ -53,52 +48,30 @@ export default (environment, streams) => {
     return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundInception = new DataLoader(
-    contracts => {
-      return Promise.all(contracts.map(getFundInception));
-    },
-    {
-      cacheKeyFn: contract => contract.instance.address,
-    },
-  );
+  const fundInception = new DataLoader(addresses => {
+    const fn = getFundInception(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
 
-  const fundModules = new DataLoader(
-    contracts => {
-      return Promise.all(contracts.map(getFundModules));
-    },
-    {
-      cacheKeyFn: contract => contract.instance.address,
-    },
-  );
+  const fundModules = new DataLoader(addresses => {
+    const fn = getFundModules(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
 
-  const fundCalculations = new DataLoader(
-    contracts => {
-      return Promise.all(contracts.map(getFundCalculations));
-    },
-    {
-      cacheKeyFn: contract => contract.instance.address,
-    },
-  );
+  const fundCalculations = new DataLoader(addresses => {
+    const fn = getFundCalculations(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
 
-  const fundHoldings = new DataLoader(
-    contracts => {
-      const fn = getFundHoldings(environment);
-      return Promise.all(contracts.map(fn) || []);
-    },
-    {
-      cacheKeyFn: contract => contract.instance.address,
-    },
-  );
+  const fundHoldings = new DataLoader(addresses => {
+    const fn = getFundHoldings(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
 
-  const fundOpenOrders = new DataLoader(
-    contracts => {
-      const fn = getFundOpenOrders(environment);
-      return Promise.all(contracts.map(fn) || []);
-    },
-    {
-      cacheKeyFn: contract => contract.instance.address,
-    },
-  );
+  const fundOpenOrders = new DataLoader(addresses => {
+    const fn = getFundOpenOrders(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
 
   const fundParticipation = new DataLoader(
     pairs => {
@@ -138,9 +111,13 @@ export default (environment, streams) => {
     },
   );
 
+  const quoteToken = new DataLoader(async () => {
+    const { priceSource } = await takeLast(streams.deployment$);
+    return getQuoteToken(priceSource);
+  });
+
   return {
     fundAddressFromManager,
-    fundContract,
     fundName,
     fundInception,
     fundModules,
@@ -157,5 +134,6 @@ export default (environment, streams) => {
     importWallet,
     restoreWallet,
     fundSettings,
+    quoteToken,
   };
 };

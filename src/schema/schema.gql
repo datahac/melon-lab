@@ -30,11 +30,11 @@ enum SymbolEnum {
 
 type Ranking {
   rank: Int
-  address: String!
-  name: String!
-  inception: DateTime!
+  address: String
+  name: String
+  inception: DateTime
   fund: Fund
-  sharePrice: String!
+  sharePrice: String
 }
 
 type Settings {
@@ -52,12 +52,12 @@ type Settings {
 
 type Fund {
   rank: Int
-  address: String!
-  name: String!
+  address: String
+  name: String
   inception: DateTime
   gav: String
   nav: String
-  owner: String!
+  owner: String
   modules: [String]
   settings: Settings
   holdings: [Holding]
@@ -289,9 +289,26 @@ type Mutation {
   ): UnsignedTransaction
 
   """
-  Executes the "setup fund" transaction with the given gas price per unit.
+  Executes the "request investment" transaction with the given gas price per unit.
   """
   executeRequestInvestment(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): String
+
+  """
+  Estimates the number of gas units required for the "approve transfer" transaction.
+  """
+  estimateApproveTransfer(
+    fundAddress: String!
+    investmentAmount: String!
+  ): UnsignedTransaction
+
+  """
+  Executes the "approve transfer" transaction with the given gas price per unit.
+  """
+  executeApproveTransfer(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     fundAddress: String!

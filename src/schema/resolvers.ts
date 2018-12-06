@@ -8,6 +8,7 @@ import { createComponents } from '@melonproject/protocol/lib/contracts/factory/t
 import { continueCreation } from '@melonproject/protocol/lib/contracts/factory/transactions/continueCreation';
 import { setupFund } from '@melonproject/protocol/lib/contracts/factory/transactions/setupFund';
 import { requestInvestment } from '@melonproject/protocol/lib/contracts/fund/participation/transactions/requestInvestment';
+import { approve as approveTransfer } from '@melonproject/protocol/lib/contracts/dependencies/token/transactions/approve';
 import { Address } from '@melonproject/token-math/address';
 import { createQuantity } from '@melonproject/token-math/quantity';
 import Order from './types/Order';
@@ -27,16 +28,15 @@ export default {
     },
     defaultAccount: async (_, __, { loaders }) => {
       const wallet = loaders.getWallet();
-      return (wallet && wallet.address) || null;
+      return wallet && wallet.address;
     },
     allAccounts: async (_, __, { loaders }) => {
       // TODO: Make this return all accounts.
       const wallet = loaders.getWallet();
-      return (wallet && wallet.address && [wallet.address]) || null;
+      return wallet && wallet.address && [wallet.address];
     },
     openOrders: async (_, { address }, { loaders }) => {
-      const contract = await loaders.fundContract.load(address);
-      return loaders.fundOpenOrders.load(contract);
+      return loaders.fundOpenOrders.load(address);
     },
     recentTrades: (_, { base, quote }, { loaders }) => {
       return loaders.recentTrades.load({ base, quote });
@@ -81,7 +81,8 @@ export default {
         managerAddress,
         version,
       });
-      return fundAddress || null;
+
+      return fundAddress;
     },
     funds: async (_, args, { loaders, streams }) => {
       const addresses = await (args.addresses ||
@@ -96,7 +97,7 @@ export default {
   },
   Ranking: {
     fund: (parent, _, { loaders }) => {
-      return loaders.fundContract.load(parent.address);
+      return parent.address;
     },
   },
   Fund: {
@@ -117,77 +118,64 @@ export default {
       return loaders.fundTotalSupply.load(sharesAddress);
     },
     rank: async (parent, _, { streams }) => {
-      // return takeLast(streams.ranking$).then(ranking => {
-      //   const address = parent.instance.address;
-      //   const entry = (ranking || []).find(rank => rank.address === address);
-      //   return (entry && entry.rank) || null;
-      // });
-      throw new Error('This is not implemented yet');
+      return takeLast(streams.ranking$).then(ranking => {
+        const entry = (ranking || []).find(rank => rank.address === parent);
+        return entry && entry.rank;
+      });
     },
     modules: (parent, _, { loaders }) => {
-      // return loaders.fundModules.load(parent);
-      throw new Error('This is not implemented yet');
+      return loaders.fundModules.load(parent);
     },
     inception: async (parent, _, { loaders }) => {
-      // const inception = await loaders.fundInception.load(parent);
-      // return new Date(inception.toString() * 1000);
-      throw new Error('This is not implemented yet');
+      const inception = await loaders.fundInception.load(parent);
+      return inception && new Date(inception.toString() * 1000);
     },
     personalStake: async (parent, { investor }, { loaders }) => {
-      // const participation = await loaders.fundParticipation.load({
-      //   fund: parent,
-      //   investor: investor,
-      // });
+      const participation = await loaders.fundParticipation.load({
+        fund: parent,
+        investor: investor,
+      });
 
-      // return participation && participation.personalStake;
-      throw new Error('This is not implemented yet');
+      return participation && participation.personalStake;
     },
     gav: async (parent, _, { loaders, precision = 18 }) => {
-      // const calculations = await loaders.fundCalculations.load(parent);
-      // return calculations[0].div(10 ** precision);
-      throw new Error('This is not implemented yet');
+      const calculations = await loaders.fundCalculations.load(parent);
+      return calculations && calculations[0].div(10 ** precision);
     },
     managementReward: async (parent, _, { loaders, precision = 18 }) => {
-      // const calculations = await loaders.fundCalculations.load(parent);
-      // return calculations[1].div(10 ** precision);
-      throw new Error('This is not implemented yet');
+      const calculations = await loaders.fundCalculations.load(parent);
+      return calculations && calculations[1].div(10 ** precision);
     },
     performanceReward: async (parent, _, { loaders, precision = 18 }) => {
-      // const calculations = await loaders.fundCalculations.load(parent);
-      // return calculations[2].div(10 ** precision);
-      throw new Error('This is not implemented yet');
+      const calculations = await loaders.fundCalculations.load(parent);
+      return calculations && calculations[2].div(10 ** precision);
     },
     unclaimedRewards: async (parent, _, { loaders, precision = 18 }) => {
-      // const calculations = await loaders.fundCalculations.load(parent);
-      // return calculations[3].div(10 ** precision);
-      throw new Error('This is not implemented yet');
+      const calculations = await loaders.fundCalculations.load(parent);
+      return calculations && calculations[3].div(10 ** precision);
     },
     rewardsShareQuantity: async (parent, _, { loaders, precision = 18 }) => {
-      // const calculations = await loaders.fundCalculations.load(parent);
-      // return calculations[4].div(10 ** precision);
-      throw new Error('This is not implemented yet');
+      const calculations = await loaders.fundCalculations.load(parent);
+      return calculations && calculations[4].div(10 ** precision);
     },
     nav: async (parent, _, { loaders, precision = 18 }) => {
-      // const calculations = await loaders.fundCalculations.load(parent);
-      // return calculations[5].div(10 ** precision);
-      throw new Error('This is not implemented yet');
+      const calculations = await loaders.fundCalculations.load(parent);
+      return calculations && calculations[5].div(10 ** precision);
     },
     sharePrice: async (parent, _, { loaders, precision = 18 }) => {
-      // const calculations = await loaders.fundCalculations.load(parent);
-      // return calculations[6].div(10 ** precision);
-      throw new Error('This is not implemented yet');
+      const calculations = await loaders.fundCalculations.load(parent);
+      return calculations && calculations[6].div(10 ** precision);
     },
     subscriptionAllowed: () => {
       // TODO: Where does this come from?
-      throw new Error('This is not implemented yet');
+      return null;
     },
     redemptionAllowed: () => {
       // TODO: Where does this come from?
-      throw new Error('This is not implemented yet');
+      return null;
     },
     holdings: (parent, _, { loaders }) => {
-      // return loaders.fundHoldings.load(parent);
-      throw new Error('This is not implemented yet');
+      return loaders.fundHoldings.load(parent);
     },
   },
   Holding: {
@@ -199,8 +187,7 @@ export default {
         return 0;
       }
 
-      const contract = await loaders.fundContract.load(parent.fund);
-      const calculations = await loaders.fundCalculations.load(contract);
+      const calculations = await loaders.fundCalculations.load(parent.fund);
       const nav = calculations[5].div(10 ** precision);
       return nav.div(parent.balance.times(parent.price));
     },
@@ -213,19 +200,28 @@ export default {
     estimateCreateComponents: async (
       _,
       { from, name, exchanges },
-      { environment, streams },
+      { environment, loaders, streams },
     ) => {
-      const deployment: any = await takeLast(streams.deployment$);
-      const { exchangeConfigs, priceSource, tokens, version } = deployment;
+      const { exchangeConfigs, priceSource, tokens, version } = await takeLast(
+        streams.deployment$,
+      );
+      const quoteToken = await loaders.quoteToken.load();
 
-      const [weth, eth, mln] = tokens;
+      const nativeToken = tokens.find(token => {
+        return token.symbol === 'WETH';
+      });
+
+      const mlnToken = tokens.find(token => {
+        return token.symbol === 'MLN';
+      });
+
       const params = {
-        defaultTokens: [weth, mln],
+        defaultTokens: [quoteToken, mlnToken],
         exchangeConfigs,
         fundName: name,
         priceSource,
-        quoteToken: weth,
-        nativeToken: eth,
+        quoteToken,
+        nativeToken,
       };
 
       // TODO: The environment should not hold account data. Maybe?
@@ -250,8 +246,7 @@ export default {
       { from, signed },
       { environment, streams },
     ) => {
-      const deployment: any = await takeLast(streams.deployment$);
-      const { version } = deployment;
+      const { version } = await takeLast(streams.deployment$);
 
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
@@ -270,8 +265,7 @@ export default {
       );
     },
     estimateContinueCreation: async (_, { from }, { environment, streams }) => {
-      const deployment: any = await takeLast(streams.deployment$);
-      const { version } = deployment;
+      const { version } = await takeLast(streams.deployment$);
 
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
@@ -295,8 +289,7 @@ export default {
       { from, signed },
       { environment, streams },
     ) => {
-      const deployment: any = await takeLast(streams.deployment$);
-      const { version } = deployment;
+      const { version } = await takeLast(streams.deployment$);
 
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
@@ -315,8 +308,7 @@ export default {
       );
     },
     estimateSetupFund: async (_, { from }, { environment, streams }) => {
-      const deployment: any = await takeLast(streams.deployment$);
-      const { version } = deployment;
+      const { version } = await takeLast(streams.deployment$);
 
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
@@ -360,10 +352,12 @@ export default {
       { from, fundAddress, investmentAmount },
       { environment, streams, loaders },
     ) => {
-      const deployment: any = await takeLast(streams.deployment$);
-      const { tokens } = deployment;
+      const { tokens } = await takeLast(streams.deployment$);
+      const settings = await loaders.fundSettings.load(fundAddress);
+      const nativeToken = tokens.find(token => {
+        return token.symbol === 'WETH';
+      });
 
-      const [weth] = tokens;
       const params = {
         investmentAmount: createQuantity(weth, investmentAmount),
       };
@@ -375,8 +369,6 @@ export default {
           address: new Address(from),
         },
       };
-
-      const settings = await loaders.fundSettings.load(fundAddress);
 
       const result = await requestInvestment.prepare(
         settings.participationAddress,
@@ -392,6 +384,7 @@ export default {
       { from, signed, fundAddress },
       { environment, loaders },
     ) => {
+      const settings = await loaders.fundSettings.load(fundAddress);
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
         ...environment,
@@ -400,7 +393,56 @@ export default {
         },
       };
 
+      return requestInvestment.send(
+        settings.participationAddress,
+        signed.rawTransaction,
+        undefined, // TODO: Remove params from send.
+        undefined,
+        enhancedEnvironment,
+      );
+    },
+    estimateApproveTransfer: async (
+      _,
+      { from, fundAddress, investmentAmount },
+      { environment, streams, loaders },
+    ) => {
       const settings = await loaders.fundSettings.load(fundAddress);
+      const quoteToken = await loaders.quoteToken.load();
+      const params = {
+        howMuch: createQuantity(quoteToken, investmentAmount),
+        spender: settings.participationAddress,
+      };
+
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      const result = await approveTransfer.prepare(
+        params,
+        undefined,
+        enhancedEnvironment,
+      );
+
+      return result && result.rawTransaction;
+    },
+    executeApproveTransfer: async (
+      _,
+      { from, signed, fundAddress },
+      { environment, loaders },
+    ) => {
+      const settings = await loaders.fundSettings.load(fundAddress);
+
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
 
       return requestInvestment.send(
         settings.participationAddress,
@@ -431,7 +473,7 @@ export default {
     },
     exportWallet: (_, { password }, { loaders }) => {
       const wallet = loaders.getWallet();
-      return (wallet && wallet.encrypt(password)) || null;
+      return wallet && wallet.encrypt(password);
     },
     importWallet: (_, { wallet, password }, { loaders }) => {
       return loaders.importWallet(
