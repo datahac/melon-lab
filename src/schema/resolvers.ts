@@ -51,7 +51,7 @@ export default {
       return takeLast(streams.ranking$);
     },
     priceFeedUp: (_, __, { streams }) => {
-      return takeLast(streams.priceFeed$);
+      return takeLast(streams.recentPrice$);
     },
     peerCount: (_, __, { streams }) => {
       return takeLast(streams.peers$);
@@ -510,7 +510,7 @@ export default {
     priceFeedUp: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.priceFeed$.pipe(
+        const stream$ = streams.recentPrice$.pipe(
           distinctUntilChanged(R.equals),
           skip(1),
         );

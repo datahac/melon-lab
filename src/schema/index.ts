@@ -4,7 +4,7 @@ import createLoaders from './loaders';
 import subscribeBlock from './utils/subscribeBlock';
 import currentRanking from './utils/currentRanking';
 import subscribeSyncing from './utils/subscribeSyncing';
-import pollPriceFeed from './utils/pollPriceFeed';
+import hasRecentPrice from './utils/hasRecentPrice';
 import pollNetwork from './utils/pollNetwork';
 import getEnvironment from './utils/getEnvironment';
 import currentDeployment from './utils/currentDeployment';
@@ -23,9 +23,11 @@ export async function createContext(track, endpoint, wallet = null) {
   const network$ = pollNetwork(environment).pipe(publishReplay(1));
   const block$ = subscribeBlock(environment).pipe(publishReplay(1));
   const syncing$ = subscribeSyncing(environment).pipe(publishReplay(1));
-  const priceFeed$ = pollPriceFeed(environment).pipe(publishReplay(1));
   const peers$ = currentPeers(environment, block$).pipe(publishReplay(1));
   const deployment$ = currentDeployment(environment, network$).pipe(
+    publishReplay(1),
+  );
+  const recentPrice$ = hasRecentPrice(environment, deployment$, block$).pipe(
     publishReplay(1),
   );
   const ranking$ = currentRanking(environment, deployment$, block$).pipe(
@@ -38,7 +40,7 @@ export async function createContext(track, endpoint, wallet = null) {
     block$,
     ranking$,
     syncing$,
-    priceFeed$,
+    recentPrice$,
     deployment$,
   };
 

@@ -2,7 +2,6 @@ import * as R from 'ramda';
 import * as Rx from 'rxjs';
 import {
   distinctUntilKeyChanged,
-  tap,
   throttleTime,
   startWith,
   timeout,
