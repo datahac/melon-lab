@@ -202,10 +202,10 @@ export default {
       { from, name, exchanges },
       { environment, loaders, streams },
     ) => {
+      const quoteToken = await loaders.quoteToken();
       const { exchangeConfigs, priceSource, tokens, version } = await takeLast(
         streams.deployment$,
       );
-      const quoteToken = await loaders.quoteToken.load();
 
       const nativeToken = tokens.find(token => {
         return token.symbol === 'WETH';
@@ -406,8 +406,8 @@ export default {
       { from, fundAddress, investmentAmount },
       { environment, streams, loaders },
     ) => {
+      const quoteToken = await loaders.quoteToken();
       const settings = await loaders.fundSettings.load(fundAddress);
-      const quoteToken = await loaders.quoteToken.load();
       const params = {
         howMuch: createQuantity(quoteToken, investmentAmount),
         spender: settings.participationAddress,

@@ -15,7 +15,7 @@ const requestRanking = (environment, rankingAddress, versionAddress) => {
   return Rx.from(
     getFundDetails(rankingAddress, versionAddress, environment),
   ).pipe(
-    timeout(60000),
+    timeout(3000),
     retryWhen(errors => errors.pipe(delay(1000))),
   );
 };
@@ -24,7 +24,7 @@ const currentRanking = (environment, deployment$, block$) => {
   const throttled$ = block$.pipe(
     distinctUntilKeyChanged('number'),
     startWith(null),
-    throttleTime(60000),
+    throttleTime(5000),
   );
 
   // Emit the deployment version for each new block (throttled) or when

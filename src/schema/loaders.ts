@@ -111,10 +111,16 @@ export default (environment, streams) => {
     },
   );
 
-  const quoteToken = new DataLoader(async () => {
+  let memoizedQuoteToken;
+  const quoteToken = async () => {
+    if (typeof memoizedQuoteToken !== 'undefined') {
+      return memoizedQuoteToken;
+    }
+
     const { priceSource } = await takeLast(streams.deployment$);
-    return getQuoteToken(priceSource);
-  });
+    memoizedQuoteToken = await getQuoteToken(priceSource, environment);
+    return memoizedQuoteToken;
+  };
 
   return {
     fundAddressFromManager,
