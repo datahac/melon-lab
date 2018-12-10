@@ -21,10 +21,9 @@ import {
 } from './loaders/symbolBalance';
 
 export default (environment, streams) => {
-  const fundAddressFromManager = new DataLoader(pairs => {
+  const fundAddressFromManager = new DataLoader(addresses => {
     const fn = getFundAddressFromManager(environment);
-    const result = pairs.map(pair => fn(pair.managerAddress, pair.version));
-    return Promise.all(result || []);
+    return Promise.all(addresses.map(fn) || []);
   });
 
   const fundName = new DataLoader(addresses => {

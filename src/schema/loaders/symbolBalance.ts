@@ -66,7 +66,7 @@ export const observeSymbolBalance = R.curryN(
     const token = environment.deployment.tokens.find(
       item => item.symbol === symbol,
     );
-    const zen = balanceOf.observable(token.address, { address }, environment);
+    const zen = balanceOf.observable(environment, token.address, { address });
 
     return Rx.from(zen).pipe(
       map(quantity => ({
