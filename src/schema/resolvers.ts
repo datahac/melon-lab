@@ -216,6 +216,7 @@ export default {
       });
 
       const params = {
+        fees: [], // TODO: Implement fees
         defaultTokens: [quoteToken, mlnToken],
         exchangeConfigs,
         fundName: name,
