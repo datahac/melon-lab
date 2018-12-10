@@ -1,47 +1,35 @@
 import { makeExecutableSchema } from 'graphql-tools';
+import { publishReplay } from 'rxjs/operators';
+import Accounts from 'web3-eth-accounts';
 import resolvers from './resolvers';
 import createLoaders from './loaders';
 import subscribeBlock from './utils/subscribeBlock';
 import currentRanking from './utils/currentRanking';
 import subscribeSyncing from './utils/subscribeSyncing';
 import hasRecentPrice from './utils/hasRecentPrice';
-import pollNetwork from './utils/pollNetwork';
-import getEnvironment from './utils/getEnvironment';
-import currentDeployment from './utils/currentDeployment';
 import currentPeers from './utils/currentPeers';
 import InsecureDirective from './directives/InsecureDirective';
 import addQueryDirectives from './directives/addQueryDirectives';
 import * as typeDefs from './schema.gql';
-import { publishReplay } from 'rxjs/operators';
-import * as Accounts from 'web3-eth-accounts';
 
-export async function createContext(track, endpoint, wallet = null) {
+export async function createContext(environment, wallet = null) {
   // The current wallet (in an electron context);
   let currentWallet = wallet;
 
-  const environment = getEnvironment(track, endpoint);
-  const network$ = pollNetwork(environment).pipe(publishReplay(1));
   const block$ = subscribeBlock(environment).pipe(publishReplay(1));
   const syncing$ = subscribeSyncing(environment).pipe(publishReplay(1));
   const peers$ = currentPeers(environment, block$).pipe(publishReplay(1));
-  const deployment$ = currentDeployment(environment, network$).pipe(
+  const recentPrice$ = hasRecentPrice(environment, block$).pipe(
     publishReplay(1),
   );
-  const recentPrice$ = hasRecentPrice(environment, deployment$, block$).pipe(
-    publishReplay(1),
-  );
-  const ranking$ = currentRanking(environment, deployment$, block$).pipe(
-    publishReplay(1),
-  );
+  const ranking$ = currentRanking(environment, block$).pipe(publishReplay(1));
 
   const streams = {
-    network$,
     peers$,
     block$,
     ranking$,
     syncing$,
     recentPrice$,
-    deployment$,
   };
 
   Object.values(streams).forEach(stream$ => stream$.connect());

@@ -381,12 +381,10 @@ type Mutation {
 }
 
 type Subscription {
-  network: String
   currentBlock: String
   nodeSynced: Boolean
   priceFeedUp: Boolean
   peerCount: String
-  totalFunds: Int
   balance(symbol: SymbolEnum!, address: String!): Balance
   orderbook(
     base: String!

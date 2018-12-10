@@ -56,11 +56,11 @@ export default {
     peerCount: (_, __, { streams }) => {
       return takeLast(streams.peers$);
     },
-    contractDeployment: (_, __, { streams }) => {
-      return takeLast(streams.deployment$);
+    contractDeployment: (_, __, { environment }) => {
+      return environment.deployment;
     },
-    network: (_, __, { streams }) => {
-      return takeLast(streams.network$.pipe(map(resolveNetwork)));
+    network: async (_, __, { environment }) => {
+      return resolveNetwork(await environment.eth.net.getId());
     },
     rankings: (_, __, { streams }) => {
       return takeLast(streams.ranking$);
@@ -73,14 +73,10 @@ export default {
       const fund = rankings.find(fund => fund.name === name);
       return fund && fund.address;
     },
-    associatedFund: async (_, { managerAddress }, { loaders, streams }) => {
-      const deployment: any = await takeLast(streams.deployment$);
-      const { version } = deployment;
-
-      const fundAddress = await loaders.fundAddressFromManager.load({
+    associatedFund: async (_, { managerAddress }, { loaders }) => {
+      const fundAddress = await loaders.fundAddressFromManager.load(
         managerAddress,
-        version,
-      });
+      );
 
       return fundAddress;
     },
@@ -200,12 +196,15 @@ export default {
     estimateCreateComponents: async (
       _,
       { from, name, exchanges },
-      { environment, loaders, streams },
+      { environment, loaders },
     ) => {
       const quoteToken = await loaders.quoteToken();
-      const { exchangeConfigs, priceSource, tokens, version } = await takeLast(
-        streams.deployment$,
-      );
+      const {
+        exchangeConfigs,
+        priceSource,
+        tokens,
+        version,
+      } = environment.deployment;
 
       const nativeToken = tokens.find(token => {
         return token.symbol === 'WETH';
@@ -234,21 +233,15 @@ export default {
       };
 
       const result = await createComponents.prepare(
+        enhancedEnvironment,
         version,
         params,
         undefined,
-        enhancedEnvironment,
       );
 
       return result && result.rawTransaction;
     },
-    executeCreateComponents: async (
-      _,
-      { from, signed },
-      { environment, streams },
-    ) => {
-      const { version } = await takeLast(streams.deployment$);
-
+    executeCreateComponents: async (_, { from, signed }, { environment }) => {
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
         ...environment,
@@ -258,16 +251,14 @@ export default {
       };
 
       return createComponents.send(
-        version,
+        enhancedEnvironment,
+        environment.deployment.version,
         signed.rawTransaction,
         undefined, // TODO: Remove params from send.
         undefined,
-        enhancedEnvironment,
       );
     },
     estimateContinueCreation: async (_, { from }, { environment, streams }) => {
-      const { version } = await takeLast(streams.deployment$);
-
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
         ...environment,
@@ -277,21 +268,13 @@ export default {
       };
 
       const result = await continueCreation.prepare(
-        version,
-        undefined,
-        undefined,
         enhancedEnvironment,
+        environment.deployment.version,
       );
 
       return result && result.rawTransaction;
     },
-    executeContinueCreation: async (
-      _,
-      { from, signed },
-      { environment, streams },
-    ) => {
-      const { version } = await takeLast(streams.deployment$);
-
+    executeContinueCreation: async (_, { from, signed }, { environment }) => {
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
         ...environment,
@@ -301,16 +284,12 @@ export default {
       };
 
       return continueCreation.send(
-        version,
-        signed.rawTransaction,
-        undefined, // TODO: Remove params from send.
-        undefined,
         enhancedEnvironment,
+        environment.deployment.version,
+        signed.rawTransaction,
       );
     },
-    estimateSetupFund: async (_, { from }, { environment, streams }) => {
-      const { version } = await takeLast(streams.deployment$);
-
+    estimateSetupFund: async (_, { from }, { environment }) => {
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
         ...environment,
@@ -320,18 +299,13 @@ export default {
       };
 
       const result = await setupFund.prepare(
-        version,
-        undefined,
-        undefined,
         enhancedEnvironment,
+        environment.deployment.version,
       );
 
       return result && result.rawTransaction;
     },
     executeSetupFund: async (_, { from, signed }, { environment, streams }) => {
-      const deployment: any = await takeLast(streams.deployment$);
-      const { version } = deployment;
-
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
         ...environment,
@@ -341,26 +315,24 @@ export default {
       };
 
       return setupFund.send(
-        version,
-        signed.rawTransaction,
-        undefined, // TODO: Remove params from send.
-        undefined,
         enhancedEnvironment,
+        environment.deployment.version,
+        signed.rawTransaction,
       );
     },
     estimateRequestInvestment: async (
       _,
       { from, fundAddress, investmentAmount },
-      { environment, streams, loaders },
+      { environment, loaders },
     ) => {
-      const { tokens } = await takeLast(streams.deployment$);
+      const { tokens } = environment.deployment;
       const settings = await loaders.fundSettings.load(fundAddress);
       const nativeToken = tokens.find(token => {
         return token.symbol === 'WETH';
       });
 
       const params = {
-        investmentAmount: createQuantity(weth, investmentAmount),
+        investmentAmount: createQuantity(nativeToken, investmentAmount),
       };
 
       // TODO: The environment should not hold account data. Maybe?
@@ -372,10 +344,9 @@ export default {
       };
 
       const result = await requestInvestment.prepare(
+        enhancedEnvironment,
         settings.participationAddress,
         params,
-        undefined,
-        enhancedEnvironment,
       );
 
       return result && result.rawTransaction;
@@ -395,11 +366,9 @@ export default {
       };
 
       return requestInvestment.send(
+        enhancedEnvironment,
         settings.participationAddress,
         signed.rawTransaction,
-        undefined, // TODO: Remove params from send.
-        undefined,
-        enhancedEnvironment,
       );
     },
     estimateApproveTransfer: async (
@@ -422,11 +391,7 @@ export default {
         },
       };
 
-      const result = await approveTransfer.prepare(
-        params,
-        undefined,
-        enhancedEnvironment,
-      );
+      const result = await approveTransfer.prepare(enhancedEnvironment, params);
 
       return result && result.rawTransaction;
     },
@@ -446,11 +411,9 @@ export default {
       };
 
       return requestInvestment.send(
+        enhancedEnvironment,
         settings.participationAddress,
         signed.rawTransaction,
-        undefined, // TODO: Remove params from send.
-        undefined,
-        enhancedEnvironment,
       );
     },
     deleteWallet: async () => {
@@ -565,17 +528,6 @@ export default {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
         const stream$ = streams.peers$.pipe(
-          distinctUntilChanged(R.equals),
-          skip(1),
-        );
-
-        return toAsyncIterator(stream$);
-      },
-    },
-    network: {
-      resolve: value => value,
-      subscribe: (_, __, { streams }) => {
-        const stream$ = streams.network$.pipe(
           distinctUntilChanged(R.equals),
           skip(1),
         );

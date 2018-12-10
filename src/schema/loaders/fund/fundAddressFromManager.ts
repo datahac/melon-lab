@@ -1,9 +1,11 @@
 import * as R from 'ramda';
 import { managersToHubs } from '@melonproject/protocol';
 
-function fundAddressFromManager(environment, managerAddress, contractAddress) {
-  return (
-    environment && managersToHubs(contractAddress, managerAddress, environment)
+function fundAddressFromManager(environment, managerAddress) {
+  return managersToHubs(
+    environment,
+    environment.deployment.version,
+    managerAddress,
   );
 }
 

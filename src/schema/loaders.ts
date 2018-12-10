@@ -19,7 +19,6 @@ import {
   getSymbolBalance,
   observeSymbolBalance,
 } from './loaders/symbolBalance';
-import takeLast from './utils/takeLast';
 
 export default (environment, streams) => {
   const fundAddressFromManager = new DataLoader(pairs => {
@@ -86,8 +85,7 @@ export default (environment, streams) => {
 
   const symbolBalance = new DataLoader(
     async pairs => {
-      const deployment = await takeLast(streams.deployment$);
-      const fn = getSymbolBalance(environment, deployment);
+      const fn = getSymbolBalance(environment);
       const result = pairs.map(pair => fn(pair.symbol, pair.address));
       return Promise.all(result || []);
     },
@@ -117,8 +115,10 @@ export default (environment, streams) => {
       return memoizedQuoteToken;
     }
 
-    const { priceSource } = await takeLast(streams.deployment$);
-    memoizedQuoteToken = await getQuoteToken(priceSource, environment);
+    memoizedQuoteToken = await getQuoteToken(
+      environment,
+      environment.deployment.priceSource,
+    );
     return memoizedQuoteToken;
   };
 

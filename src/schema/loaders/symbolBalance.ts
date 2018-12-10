@@ -14,24 +14,21 @@ export const getEthBalance = async (environment, address) => {
   return quantity;
 };
 
-export const getTokenBalance = async (
-  environment,
-  deployment,
-  symbol,
-  address,
-) => {
-  const token = deployment.tokens.find(item => item.symbol === symbol);
-  const quantity = await balanceOf(token.address, { address }, environment);
+export const getTokenBalance = async (environment, symbol, address) => {
+  const token = environment.deployment.tokens.find(
+    item => item.symbol === symbol,
+  );
+  const quantity = await balanceOf(environment, token.address, { address });
   return quantity;
 };
 
 export const getSymbolBalance = R.curryN(
   3,
-  async (environment, deployment, symbol, address) => {
+  async (environment, symbol, address) => {
     const quantity =
       symbol === 'ETH'
         ? await getEthBalance(environment, address)
-        : await getTokenBalance(environment, deployment, symbol, address);
+        : await getTokenBalance(environment, symbol, address);
 
     return {
       quantity: extractQuantity(quantity),
@@ -66,19 +63,12 @@ export const observeSymbolBalance = R.curryN(
       );
     }
 
-    const stream$ = streams.deployment$.pipe(
-      switchMap(deployment => {
-        const token = deployment.tokens.find(item => item.symbol === symbol);
-        const zen = balanceOf.observable(
-          token.address,
-          { address },
-          environment,
-        );
-        return Rx.from(zen);
-      }),
+    const token = environment.deployment.tokens.find(
+      item => item.symbol === symbol,
     );
+    const zen = balanceOf.observable(token.address, { address }, environment);
 
-    return stream$.pipe(
+    return Rx.from(zen).pipe(
       map(quantity => ({
         quantity: extractQuantity(quantity),
         token: {
