@@ -212,6 +212,12 @@ type Query {
   "Loads a fund by its name."
   fundByName("The name of the fund to load." name: String!): Fund
 
+  "Loads the current step for fund creation for a fund manager address."
+  stepFor(
+    "The address of the fund manager."
+    address: String!
+  ): Int
+
   network: String
   currentBlock: String
   nodeSynced: Boolean

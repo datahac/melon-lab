@@ -15,6 +15,7 @@ import getFundParticipation from './loaders/fund/fundParticipation';
 import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
 import getRecentTrades from './loaders/recentTrades';
 import getQuoteToken from './loaders/quoteToken';
+import getStepFor from './loaders/stepFor';
 import {
   getSymbolBalance,
   observeSymbolBalance,
@@ -82,6 +83,11 @@ export default (environment, streams) => {
     },
   );
 
+  const stepFor = new DataLoader(addresses => {
+    const fn = getStepFor(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
+
   const symbolBalance = new DataLoader(
     async pairs => {
       const fn = getSymbolBalance(environment);
@@ -132,6 +138,7 @@ export default (environment, streams) => {
     fundHoldings,
     fundOpenOrders,
     fundParticipation,
+    stepFor,
     recentTrades,
     symbolBalance,
     symbolBalanceObservable,

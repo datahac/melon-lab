@@ -26,16 +26,19 @@ export default {
       const credentials = await keytar.findCredentials('melon.fund');
       return !!(credentials && credentials.length);
     },
-    defaultAccount: async (_, __, { loaders }) => {
+    defaultAccount: (_, __, { loaders }) => {
       const wallet = loaders.getWallet();
       return wallet && wallet.address;
     },
-    allAccounts: async (_, __, { loaders }) => {
+    allAccounts: (_, __, { loaders }) => {
       // TODO: Make this return all accounts.
       const wallet = loaders.getWallet();
       return wallet && wallet.address && [wallet.address];
     },
-    openOrders: async (_, { address }, { loaders }) => {
+    stepFor: (_, { address }, { loaders }) => {
+      return loaders.stepFor.load(address);
+    },
+    openOrders: (_, { address }, { loaders }) => {
       return loaders.fundOpenOrders.load(address);
     },
     recentTrades: (_, { base, quote }, { loaders }) => {
@@ -65,10 +68,10 @@ export default {
     rankings: (_, __, { streams }) => {
       return takeLast(streams.ranking$);
     },
-    fund: async (_, { address }) => {
+    fund: (_, { address }) => {
       return address;
     },
-    fundByName: async (_, { name }, { loaders, streams }) => {
+    fundByName: async (_, { name }, { streams }) => {
       const rankings = (await takeLast(streams.ranking$)) || [];
       const fund = rankings.find(fund => fund.name === name);
       return fund && fund.address;
@@ -114,10 +117,9 @@ export default {
       return loaders.fundTotalSupply.load(sharesAddress);
     },
     rank: async (parent, _, { streams }) => {
-      return takeLast(streams.ranking$).then(ranking => {
-        const entry = (ranking || []).find(rank => rank.address === parent);
-        return entry && entry.rank;
-      });
+      const ranking = await takeLast(streams.ranking$);
+      const entry = (ranking || []).find(rank => rank.address === parent);
+      return entry && entry.rank;
     },
     modules: (parent, _, { loaders }) => {
       return loaders.fundModules.load(parent);
