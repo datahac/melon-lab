@@ -37,7 +37,6 @@ const Modal: StatelessComponent<ModalProps> = ({
     <div className="modal__content">
       {ContentWrapper ? (
         <ContentWrapper {...ContentWrapperProps}>
-          {text && <p>{text}</p>}
           {children}
 
           <div className="modal__actions">
@@ -56,7 +55,6 @@ const Modal: StatelessComponent<ModalProps> = ({
         </ContentWrapper>
       ) : (
         <Fragment>
-          {text && <p>{text}</p>}
           {children}
 
           <div className="modal__actions">

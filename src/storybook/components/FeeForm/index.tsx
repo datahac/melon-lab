@@ -25,6 +25,7 @@ export interface FeeFormProps {
   touched?: any;
   values: FormValues;
   loading?: boolean;
+  text?: string;
 }
 
 export const FeeForm: StatelessComponent<FeeFormProps> = ({
@@ -35,6 +36,7 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   touched,
   values,
   loading,
+  text,
 }) => {
   const calcEntryTotal = (gasLimit: number) => {
     return (
@@ -51,13 +53,13 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   return (
     <div className="fee-form">
       <style jsx>{styles}</style>
-
       {loading ? (
         <div className="fee-form__spinner">
           <Spinner icon size="small" />
         </div>
       ) : (
         <Fragment>
+          {text && <p>{text}</p>}
           <div className="fee-form__input">
             <Input
               value={values.gasPrice}

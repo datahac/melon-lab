@@ -7,48 +7,60 @@ import FeeForm from '~/components/FeeForm';
 import Composer from 'react-composer';
 import { Mutation } from '~/apollo';
 import withForm from './withForm';
+import { compose } from 'recompose';
+import { withRouter } from 'next/router';
 
-const WithFormModal = withForm(class extends React.Component {
-  componentDidMount() {
-    if (process.browser && this.props.open) {
-      this.props.estimate();
+const WithFormModal = compose(
+  withForm,
+  withRouter,
+)(
+  class extends React.Component {
+    componentDidMount() {
+      if (process.browser && this.props.open) {
+        this.props.estimate();
+      }
     }
-  }
 
-  componentDidUpdate(prevProps) {
-    if (process.browser && this.props.open && !prevProps.open) {
-      this.props.estimate();
+    componentDidUpdate(prevProps) {
+      if (process.browser && this.props.open && !prevProps.open) {
+        this.props.estimate();
+      }
     }
-  }
 
-  render() {
-    return !!process.browser && (
-      <Modal
-        title="Fees"
-        text={this.props.text}
-        loading={this.props.loading}
-        isOpen={this.props.open}
-        PrimaryAction={Button}
-        PrimaryActionProps={{
-          children: 'Cancel',
-          style: 'secondary',
-          onClick: {}, // TODO
-        }}
-        SecondaryAction={Button}
-        SecondaryActionProps={{
-          children: 'Confirm',
-          onClick: this.props.handleSubmit,
-        }}
-        ContentWrapper={Form}
-        ContentWrapperProps={{
-          onSubmit: this.props.handleSubmit,
-        }}
-      >
-        <FeeForm {...this.props} />
-      </Modal>
-    );
-  }
-});
+    render() {
+      return (
+        !!process.browser && (
+          <Modal
+            title="Fees"
+            loading={this.props.loading}
+            isOpen={this.props.open}
+            PrimaryAction={Button}
+            PrimaryActionProps={{
+              children: 'Cancel',
+              style: 'secondary',
+              onClick: () => {
+                this.props.router.replace({
+                  pathname: '/wallet',
+                });
+              },
+            }}
+            SecondaryAction={Button}
+            SecondaryActionProps={{
+              children: 'Confirm',
+              onClick: this.props.handleSubmit,
+            }}
+            ContentWrapper={Form}
+            ContentWrapperProps={{
+              onSubmit: this.props.handleSubmit,
+            }}
+          >
+            <FeeForm {...this.props} />
+          </Modal>
+        )
+      );
+    }
+  },
+);
 
 export default class ModalTransaction extends React.Component {
   render() {
@@ -71,15 +83,23 @@ export default class ModalTransaction extends React.Component {
           const transaction = R.path(['data', 'estimate'], estimateProps);
 
           const doEstimate = () => {
-            const variables = R.pathOr(() => undefined, ['estimate', 'variables'], this.props)(this.props);
+            const variables = R.pathOr(
+              () => undefined,
+              ['estimate', 'variables'],
+              this.props,
+            )(this.props);
 
             estimate({
               variables,
             });
           };
 
-          const doExecute = (gasPrice) => {
-            const variables = R.pathOr((props, transaction) => transaction, ['execute', 'variables'], this.props)(this.props, {
+          const doExecute = gasPrice => {
+            const variables = R.pathOr(
+              (props, transaction) => transaction,
+              ['execute', 'variables'],
+              this.props,
+            )(this.props, {
               ...transaction,
               gasPrice,
             });
@@ -96,14 +116,16 @@ export default class ModalTransaction extends React.Component {
             },
           ];
 
-          return <WithFormModal
-            loading={estimateProps.loading || executeProps.loading}
-            text={this.props.text}
-            open={this.props.open}
-            fees={fees}
-            estimate={doEstimate}
-            execute={doExecute}
-          />;
+          return (
+            <WithFormModal
+              loading={estimateProps.loading || executeProps.loading}
+              text={this.props.text}
+              open={this.props.open}
+              fees={fees}
+              estimate={doEstimate}
+              execute={doExecute}
+            />
+          );
         }}
       </Composer>
     );
