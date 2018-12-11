@@ -86,7 +86,7 @@ export default class FundTemplateContainer extends React.Component {
           network,
           capabibility,
           configuration,
-          associatedFund,
+          managerProps,
           holdingsProps,
           orderBookProps,
           fundProps,
@@ -100,7 +100,7 @@ export default class FundTemplateContainer extends React.Component {
           );
           const totalFunds = R.pathOr(0, ['data', 'totalFunds'])(fundProps);
           const isManager =
-            !!associatedFund && isSameAddress(associatedFund, address);
+            !!managerProps.fund && isSameAddress(managerProps.fund, address);
 
           return (
             <Template

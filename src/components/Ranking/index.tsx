@@ -102,7 +102,7 @@ export default class RankingContainer extends React.PureComponent {
           <RankingQuery />,
         ]}
       >
-        {([network, associatedFund, rankingProps]) => {
+        {([network, managerProps, rankingProps]) => {
           const funds =
             (!rankingProps.loading &&
               ((rankingProps.data && rankingProps.data.rankings) || [])
@@ -115,7 +115,7 @@ export default class RankingContainer extends React.PureComponent {
           return (
             <Ranking
               availableOrdering={availableOrdering}
-              associatedFund={associatedFund}
+              associatedFund={managerProps.fund}
               funds={funds}
               loading={rankingProps.loading}
               search={this.state.search}

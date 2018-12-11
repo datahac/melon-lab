@@ -46,30 +46,9 @@ const withForm = withFormik({
       // ),
       exchanges: Yup.array().required('Exchanges are required.'),
       terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
-      gasPrice: Yup.number()
-        .required('Gas price is required.')
-        .moreThan(0, 'Please enter a valid gas price'),
     }),
   enableReinitialize: true,
-  handleSubmit: (values, form) => {
-    const {
-      data,
-      from,
-      gas,
-      to,
-      value,
-    } = form.props.estimateCreateComponentsProps;
-    form.props.executeSetup({
-      variables: {
-        data,
-        from,
-        gas,
-        gasPrice: values.gasPrice,
-        to,
-        value,
-      },
-    });
-  },
+  handleSubmit: (values, form) => form.props.setFundValues(values),
 });
 
 const withFormHandlers = withHandlers({

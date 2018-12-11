@@ -1,8 +1,4 @@
-import React from 'react';
-import {
-  EstimateCreateComponentsMutation,
-  ExecuteCreateComponentsMutation,
-} from './data/fund';
+import React, { Fragment } from 'react';
 import { withRouter } from 'next/router';
 import { compose } from 'recompose';
 import availableExchangeContracts from '~/utils/availableExchangeContracts';
@@ -15,13 +11,16 @@ import StepTerms from '~/components/SetupForm/StepTerms';
 import StepOverview from '~/components/SetupForm/StepOverview';
 import SetupForm from '~/components/SetupForm';
 // import StepFeeStructure from '~/components/SetupForm/StepFeeStructure';
-import FeeFormModal from '+/components/FeeFormModal';
 import Link from '~/blocks/Link';
 import { withApollo } from 'react-apollo';
 import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
 import { ConfigurationConsumer } from '+/components/ConfigurationContext';
+import { FundManagerConsumer } from '+/components/FundManagerContext';
 import withForm from './withForm';
+import CreateComponents from '+/components/CreateComponents';
+import ContinueCreation from '+/components/ContinueCreation';
+import SetupFund from '+/components/SetupFund';
 
 const SetupFormContainer = withForm(props => (
   <SetupForm handleSubmit={props.handleSubmit}>
@@ -77,38 +76,12 @@ const SetupFormContainer = withForm(props => (
         onClickPrev={props.onClickPrev}
         LastActionProps={{
           children: 'Create Fund',
-          onClick: () => {
-            props.prepareSetup({
-              variables: {
-                name: props.values.name,
-                exchanges: props.values.exchanges,
-              },
-            });
-          },
+          onClick: () => props.submitForm(),
         }}
       >
         <StepOverview
           {...props}
           availableExchangeContracts={availableExchangeContracts}
-        />
-        <FeeFormModal
-          {...props}
-          showModal={props.showModal}
-          onClickConfirm={() => {
-            props.submitForm();
-            props.setShowModal(false);
-          }}
-          onClickDecline={() => {
-            props.setShowModal(false);
-          }}
-          fees={[
-            {
-              // TODO: Does this still have to be a list?
-              gasLimit:
-                props.estimateCreateComponentsProps &&
-                props.estimateCreateComponentsProps.gas,
-            },
-          ]}
         />
       </WizardPage>
     </Wizard>
@@ -117,6 +90,7 @@ const SetupFormContainer = withForm(props => (
 
 class Setup extends React.Component {
   state = {
+    values: undefined,
     page: 0,
     showModal: false,
     steps: [
@@ -145,6 +119,12 @@ class Setup extends React.Component {
     ],
   };
 
+  setFundValues = values => {
+    this.setState({
+      values,
+    });
+  };
+
   setShowModal = showModal => {
     this.setState({
       showModal,
@@ -163,61 +143,45 @@ class Setup extends React.Component {
         components={[
           <AccountConsumer />,
           <ConfigurationConsumer />,
-          ({ render }) => (
-            <EstimateCreateComponentsMutation
-              onCompleted={() => {
-                this.setShowModal(true);
-              }}
-            >
-              {(a, b) => render([a, b])}
-            </EstimateCreateComponentsMutation>
-          ),
-          ({ results: [account], render }) => (
-            <ExecuteCreateComponentsMutation
-              account={account}
-              onCompleted={result => {
-                this.props.router.replace({
-                  pathname: '/manage',
-                  query: { address: result.executeCreateComponents },
-                });
-              }}
-            >
-              {(a, b) => render([a, b])}
-            </ExecuteCreateComponentsMutation>
-          ),
+          <FundManagerConsumer />,
         ]}
       >
-        {([
-          account,
-          configuration,
-          [estimateCreateComponents, estimateCreateComponentsProps],
-          [executeCreateComponents, executeCreateComponentsProps],
-        ]) => {
-          return (
-            <SetupFormContainer
-              {...this.props}
-              account={account}
-              configuration={configuration}
-              page={this.state.page}
-              setPage={this.setPage}
-              steps={this.state.steps}
-              setShowModal={this.setShowModal}
-              showModal={this.state.showModal}
-              validateOnBlur={true}
-              validateOnChange={false}
-              prepareSetup={estimateCreateComponents}
-              executeSetup={executeCreateComponents}
-              estimateCreateComponentsProps={
-                estimateCreateComponentsProps.data &&
-                estimateCreateComponentsProps.data.estimateCreateComponents
-              }
-              loading={
-                executeCreateComponentsProps.loading ||
-                executeCreateComponentsProps.loading
-              }
+        {([account, configuration, managerProps]) => (
+          <Fragment>
+            <CreateComponents
+              step={managerProps.step}
+              values={this.state.values}
+              update={managerProps.update}
             />
-          );
-        }}
+
+            <ContinueCreation
+              step={managerProps.step}
+              update={managerProps.update}
+            />
+
+            <SetupFund
+              step={managerProps.step}
+              fund={managerProps.fund}
+              update={managerProps.update}
+            />
+
+            {managerProps.step === 0 && (
+              <SetupFormContainer
+                {...this.props}
+                account={account}
+                configuration={configuration}
+                page={this.state.page}
+                setPage={this.setPage}
+                steps={this.state.steps}
+                setShowModal={this.setShowModal}
+                setFundValues={this.setFundValues}
+                showModal={this.state.showModal}
+                validateOnBlur={true}
+                validateOnChange={false}
+              />
+            )}
+          </Fragment>
+        )}
       </Composer>
     );
   }

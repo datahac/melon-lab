@@ -23,7 +23,7 @@ export default class OrderFormContainer extends React.PureComponent {
   render() {
     return (
       <Composer components={[<NetworkConsumer />, <FundManagerConsumer />]}>
-        {([network, associatedFund]) => {
+        {([network, managerProps]) => {
           const {
             address,
             quoteAsset,
@@ -33,7 +33,7 @@ export default class OrderFormContainer extends React.PureComponent {
           } = this.props;
 
           const isManager =
-            !!associatedFund && isSameAddress(associatedFund, address);
+            !!managerProps.fund && isSameAddress(managerProps.fund, address);
 
           const tokens = {
             baseToken: this.getTokenBalance(this.props.baseAsset),

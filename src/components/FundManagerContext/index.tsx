@@ -3,13 +3,21 @@ import Composer from 'react-composer';
 import gql from 'graphql-tag';
 import { Query } from '~/apollo';
 import { AccountConsumer } from '+/components/AccountContext';
-import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 
-export const FundManagerContext = React.createContext(null);
+const defaults = {
+  fund: null,
+  step: null,
+  update: () => {
+    throw new Error('Cannot set the current step without an account.');
+  },
+};
+
+export const FundManagerContext = React.createContext(defaults);
 
 export const fundManagerQuery = gql`
   query FundManagerQuery($account: String!) {
-    associatedFund(managerAddress: $account)
+    fund:associatedFund(managerAddress: $account)
+    step:stepFor(address: $account)
   }
 `;
 
@@ -29,12 +37,31 @@ export class FundManagerProvider extends React.PureComponent {
           ),
         ]}
       >
-        {([account, fund]) => {
-          const associatedFund =
-            account && fund.data && fund.data.associatedFund;
+        {([account, result]) => {
+          const data = account && result.data;
+          const value = data && {
+            ...data,
+            update: (cache, values) => {
+              cache.writeQuery({
+                query: fundManagerQuery,
+                variables: {
+                  account,
+                },
+                data: {
+                  ...data,
+                  ...values,
+                },
+              });
+            },
+          };
 
           return (
-            <FundManagerContext.Provider value={associatedFund}>
+            <FundManagerContext.Provider
+              value={{
+                ...defaults,
+                ...value,
+              }}
+            >
               {this.props.children}
             </FundManagerContext.Provider>
           );

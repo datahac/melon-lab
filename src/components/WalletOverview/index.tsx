@@ -19,10 +19,10 @@ export default class WalletOverviewContainer extends React.PureComponent {
           <WalletQuery />,
         ]}
       >
-        {([network, account, balances, associatedFund, walletProps]) => {
+        {([network, account, balances, managerProps, walletProps]) => {
           return (
             <WalletOverview
-              associatedFund={associatedFund}
+              associatedFund={managerProps.fund}
               balances={balances}
               loading={walletProps.loading}
               currentAddress={account}
