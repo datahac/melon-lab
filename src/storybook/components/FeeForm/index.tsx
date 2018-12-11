@@ -1,4 +1,4 @@
-import React, { StatelessComponent } from 'react';
+import React, { StatelessComponent, Fragment } from 'react';
 import Input from '~/blocks/Input';
 import {
   CellBody,
@@ -9,6 +9,7 @@ import {
   TableHead,
 } from '~/blocks/Table';
 import { add, toBigNumber } from '~/utils/functionalBigNumber';
+import Spinner from '~/blocks/Spinner';
 
 import styles from './styles.css';
 
@@ -23,6 +24,7 @@ export interface FeeFormProps {
   handleChange: () => void;
   touched?: any;
   values: FormValues;
+  loading?: boolean;
 }
 
 export const FeeForm: StatelessComponent<FeeFormProps> = ({
@@ -32,6 +34,7 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   handleChange,
   touched,
   values,
+  loading,
 }) => {
   const calcEntryTotal = (gasLimit: number) => {
     return (
@@ -48,55 +51,64 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   return (
     <div className="fee-form">
       <style jsx>{styles}</style>
-      <div className="fee-form__input">
-        <Input
-          value={values.gasPrice}
-          label="Gas price"
-          name="gasPrice"
-          insideLabel="true"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          required={true}
-          formatNumber={true}
-          error={touched.gasPrice && errors.gasPrice}
-        />
-      </div>
 
-      {fees && (
-        <div>
-          <Table>
-            <TableHead>
-              <Row isHead>
-                <CellHead>Description</CellHead>
-                <CellHead>Gas Limit</CellHead>
-                <CellHead>Total</CellHead>
-              </Row>
-            </TableHead>
-            <TableBody>
-              {fees.map((entry, i: number) => (
-                <Row key={`fee-${i}`}>
-                  <CellBody>{entry.description}</CellBody>
-                  <CellBody>{entry.gasLimit}</CellBody>
-                  <CellBody>Ξ {calcEntryTotal(entry.gasLimit)}</CellBody>
-                </Row>
-              ))}
-
-              <Row>
-                <CellHead />
-                <CellHead />
-                <CellHead>Ξ {total}</CellHead>
-              </Row>
-            </TableBody>
-          </Table>
-          <p>
-            If you do not change the gas price field, the default gas price will
-            be used. If you wish to set the gas price according to network
-            conditions, please refer to{' '}
-            <a href="https://ethgasstation.info/" target="_blank">
-              Eth Gas Station.
-            </a>
-          </p>
+      {loading ? (
+        <div className="fee-form__spinner">
+          <Spinner icon size="small" />
         </div>
+      ) : (
+        <Fragment>
+          <div className="fee-form__input">
+            <Input
+              value={values.gasPrice}
+              label="Gas price"
+              name="gasPrice"
+              insideLabel="true"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              required={true}
+              formatNumber={true}
+              error={touched.gasPrice && errors.gasPrice}
+            />
+          </div>
+
+          {fees && (
+            <div>
+              <Table>
+                <TableHead>
+                  <Row isHead>
+                    <CellHead>Description</CellHead>
+                    <CellHead>Gas Limit</CellHead>
+                    <CellHead>Total</CellHead>
+                  </Row>
+                </TableHead>
+                <TableBody>
+                  {fees.map((entry, i: number) => (
+                    <Row key={`fee-${i}`}>
+                      <CellBody>{entry.description}</CellBody>
+                      <CellBody>{entry.gasLimit}</CellBody>
+                      <CellBody>Ξ {calcEntryTotal(entry.gasLimit)}</CellBody>
+                    </Row>
+                  ))}
+
+                  <Row>
+                    <CellHead />
+                    <CellHead />
+                    <CellHead>Ξ {total}</CellHead>
+                  </Row>
+                </TableBody>
+              </Table>
+              <p>
+                If you do not change the gas price field, the default gas price
+                will be used. If you wish to set the gas price according to
+                network conditions, please refer to{' '}
+                <a href="https://ethgasstation.info/" target="_blank">
+                  Eth Gas Station.
+                </a>
+              </p>
+            </div>
+          )}
+        </Fragment>
       )}
     </div>
   );
