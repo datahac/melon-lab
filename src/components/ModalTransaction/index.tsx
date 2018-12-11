@@ -25,6 +25,7 @@ const WithFormModal = withForm(class extends React.Component {
     return !!process.browser && (
       <Modal
         title="Fees"
+        text={this.props.text}
         isOpen={this.props.open}
         PrimaryAction={Button}
         PrimaryActionProps={{
@@ -95,6 +96,7 @@ export default class ModalTransaction extends React.Component {
           ];
 
           return <WithFormModal
+            text={this.props.text}
             open={this.props.open}
             fees={fees}
             estimate={doEstimate}

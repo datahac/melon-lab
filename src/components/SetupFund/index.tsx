@@ -40,6 +40,7 @@ const executeSetupFundMutation = gql`
 
 export default withRouter(props => (
   <ModalTransaction
+    text="The following method on the Melon Smart Contracts will be executed: setupFund"
     open={props.step === 2}
     estimate={{
       mutation: estimateSetupFundMutation,

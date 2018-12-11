@@ -5,6 +5,7 @@ import styles from './styles.css';
 
 export interface ModalProps {
   title?: string;
+  text?: string;
   PrimaryAction;
   PrimaryActionProps;
   SecondaryAction;
@@ -22,6 +23,7 @@ const Modal: StatelessComponent<ModalProps> = ({
   ContentWrapperProps = {},
   children,
   title,
+  text,
   ...props
 }) => (
   <ReactModal
@@ -35,6 +37,7 @@ const Modal: StatelessComponent<ModalProps> = ({
     <div className="modal__content">
       {ContentWrapper ? (
         <ContentWrapper {...ContentWrapperProps}>
+          {text && <p>{text}</p>}
           {children}
 
           <div className="modal__actions">
@@ -53,6 +56,7 @@ const Modal: StatelessComponent<ModalProps> = ({
         </ContentWrapper>
       ) : (
         <Fragment>
+          {text && <p>{text}</p>}
           {children}
 
           <div className="modal__actions">

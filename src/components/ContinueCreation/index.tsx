@@ -39,13 +39,14 @@ const executeContinueCreationMutation = gql`
 
 export default props => (
   <ModalTransaction
+    text="The following method on the Melon Smart Contracts will be executed: continueCreation"
     open={props.step === 1}
     estimate={{
       mutation: estimateContinueCreationMutation,
     }}
     execute={{
       mutation: executeContinueCreationMutation,
-      update: (cache) => {
+      update: cache => {
         props.update(cache, {
           step: 2,
         });
