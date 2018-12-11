@@ -38,11 +38,7 @@ const WithFormModal = compose(
             PrimaryActionProps={{
               children: 'Cancel',
               style: 'secondary',
-              onClick: () => {
-                this.props.router.replace({
-                  pathname: '/wallet',
-                });
-              },
+              onClick: this.props.handleCancel,
             }}
             SecondaryAction={Button}
             SecondaryActionProps={{
@@ -118,6 +114,7 @@ export default class ModalTransaction extends React.Component {
 
           return (
             <WithFormModal
+              handleCancel={this.props.handleCancel}
               loading={estimateProps.loading || executeProps.loading}
               text={this.props.text}
               open={this.props.open}

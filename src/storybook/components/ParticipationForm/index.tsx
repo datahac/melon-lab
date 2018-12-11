@@ -78,6 +78,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
             required={true}
             formatNumber={true}
             error={touched.quantity && errors.quantity}
+            decimals={0}
           />
         </div>
 
@@ -97,6 +98,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 formatNumber={true}
                 error={touched.price && errors.price}
                 disabled={true}
+                decimals={0}
               />
             </div>
             <div className="participation-form__input">
@@ -112,6 +114,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 required={true}
                 formatNumber={true}
                 error={touched.total && errors.total}
+                decimals={0}
               />
             </div>
           </Fragment>

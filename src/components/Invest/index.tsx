@@ -1,28 +1,47 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Composer from 'react-composer';
 import Participation from '~/components/ParticipationForm';
 import { AccountConsumer } from '+/components/AccountContext';
-import { BalanceConsumer } from '+/components/BalanceContext';
-import { NetworkConsumer } from '+/components/NetworkContext';
-import { FundManagerConsumer } from '+/components/FundManagerContext';
-import { withRouter } from 'next/router';
+import ApproveTransfer from '+/components/ApproveTransfer';
 import withForm from './withForm';
+import { withRouter } from 'next/router';
 
-const ParticipationForm = withForm(Participation);
+const ParticipationFormContainer = withForm(props => (
+  <Participation
+    {...props}
+    setup={true}
+    setInvestValues={props.setInvestValues}
+  />
+));
 
 class InvestContainer extends React.PureComponent {
+  state = {
+    values: undefined,
+  };
+
+  setInvestValues = values => {
+    this.setState({
+      values,
+    });
+  };
+
   render() {
     return (
-      <Composer
-        components={[
-          <AccountConsumer />,
-          <FundManagerConsumer />,
-          <BalanceConsumer />,
-          <NetworkConsumer />,
-        ]}
-      >
-        {([account, associatedFund, balances, network]) => {
-          return <ParticipationForm setup={true} />;
+      <Composer components={[<AccountConsumer />]}>
+        {([account]) => {
+          return (
+            <Fragment>
+              <ParticipationFormContainer
+                {...this.props}
+                setInvestValues={this.setInvestValues}
+              />
+              <ApproveTransfer
+                fundAddress={this.props.address}
+                values={this.state.values}
+                setInvestValues={this.setInvestValues}
+              />
+            </Fragment>
+          );
         }}
       </Composer>
     );

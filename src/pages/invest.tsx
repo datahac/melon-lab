@@ -6,18 +6,20 @@ import redirect from '~/utils/redirect';
 
 export default class SetupPage extends React.Component {
   static async getInitialProps(context) {
+    const parameters = (context.req && context.req.query) || context.query;
     const hasWallet = await checkHasWallet(context.apolloClient);
     if (!hasWallet) {
       redirect(context, '/wallet');
     }
-
-    return {};
+    return {
+      address: parameters.address,
+    };
   }
 
   render() {
     return (
       <DefaultTemplate title="Invest">
-        <Invest />
+        <Invest address={this.props.address} />
       </DefaultTemplate>
     );
   }

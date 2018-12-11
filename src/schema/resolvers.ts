@@ -399,11 +399,9 @@ export default {
     },
     executeApproveTransfer: async (
       _,
-      { from, signed, fundAddress },
+      { from, signed, fundAddress, investmentAmount },
       { environment, loaders },
     ) => {
-      const settings = await loaders.fundSettings.load(fundAddress);
-
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
         ...environment,
@@ -412,10 +410,17 @@ export default {
         },
       };
 
-      return requestInvestment.send(
+      const quoteToken = await loaders.quoteToken();
+      const settings = await loaders.fundSettings.load(fundAddress);
+      const params = {
+        howMuch: createQuantity(quoteToken, investmentAmount),
+        spender: settings.participationAddress,
+      };
+
+      return approveTransfer.send(
         enhancedEnvironment,
-        settings.participationAddress,
         signed.rawTransaction,
+        params,
       );
     },
     deleteWallet: async () => {

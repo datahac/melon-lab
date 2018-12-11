@@ -5,7 +5,8 @@ import gql from 'graphql-tag';
 
 const estimateCreateComponentsMutation = gql`
   mutation EstimateCreateComponents($name: String!, $exchanges: [String]!) {
-    estimate:estimateCreateComponents(name: $name, exchanges: $exchanges) @from {
+    estimate: estimateCreateComponents(name: $name, exchanges: $exchanges)
+      @from {
       data
       from
       gas
@@ -25,7 +26,7 @@ const executeCreateComponentsMutation = gql`
     $to: String!
     $value: String!
   ) {
-    execute:executeCreateComponents(
+    execute: executeCreateComponents(
       unsigned: {
         data: $data
         from: $from

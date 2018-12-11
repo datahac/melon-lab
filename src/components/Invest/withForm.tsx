@@ -27,8 +27,7 @@ const withForm = withFormik({
     });
   },
   enableReinitialize: true,
-  handleSubmit: (values, form) =>
-    form.props.onSubmit && form.props.onSubmit(values),
+  handleSubmit: (values, form) => form.props.setInvestValues(values),
 });
 
 const withFormHandlers = compose(

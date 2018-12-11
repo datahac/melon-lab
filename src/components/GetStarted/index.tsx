@@ -46,7 +46,11 @@ export default class GetStartedContainer extends React.PureComponent {
         ]}
       >
         {([account, balance, managerProps]) => {
-          const link = getLink(account, balance && balance.weth, managerProps.fund);
+          const link = getLink(
+            account,
+            balance && balance.weth,
+            managerProps.fund,
+          );
 
           return <GetStarted link={link} {...this.props} />;
         }}
