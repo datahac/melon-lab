@@ -76,6 +76,7 @@ const withFormHandlers = withHandlers({
     }
   },
   onClickNext: props => e => {
+    e.preventDefault();
     const fields = props.steps[props.page].validateFields;
     if (typeof fields !== 'undefined' && fields) {
       fields.map(item => props.setFieldTouched(item));
@@ -91,7 +92,8 @@ const withFormHandlers = withHandlers({
 
     return props.setPage(props.page + 1);
   },
-  onClickPrev: props => event => {
+  onClickPrev: props => e => {
+    e.preventDefault();
     return props.setPage(props.page - 1);
   },
 });
