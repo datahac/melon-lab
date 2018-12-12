@@ -38,28 +38,25 @@ const executeContinueCreationMutation = gql`
   }
 `;
 
-export default withRouter(
-  props =>
-    console.log(props) || (
-      <ModalTransaction
-        text="The following method on the Melon Smart Contracts will be executed: continueCreation"
-        open={props.step === 1}
-        estimate={{
-          mutation: estimateContinueCreationMutation,
-        }}
-        execute={{
-          mutation: executeContinueCreationMutation,
-          update: cache => {
-            props.update(cache, {
-              step: 2,
-            });
-          },
-        }}
-        handleCancel={() =>
-          props.router.replace({
-            pathname: '/wallet',
-          })
-        }
-      />
-    ),
-);
+export default withRouter(props => (
+  <ModalTransaction
+    text="The following method on the Melon Smart Contracts will be executed: continueCreation"
+    open={props.step === 1}
+    estimate={{
+      mutation: estimateContinueCreationMutation,
+    }}
+    execute={{
+      mutation: executeContinueCreationMutation,
+      update: cache => {
+        props.update(cache, {
+          step: 2,
+        });
+      },
+    }}
+    handleCancel={() =>
+      props.router.replace({
+        pathname: '/wallet',
+      })
+    }
+  />
+));
