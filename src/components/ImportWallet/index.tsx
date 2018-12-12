@@ -39,7 +39,7 @@ class ImportWalletContainer extends React.Component {
           ({ render }) => (
             <WalletMutation
               onCompleted={() => {
-                this.props.router.replace({
+                this.props.router.push({
                   pathname: '/wallet',
                 });
               }}

@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
-import Composer from 'react-composer';
 import Participation from '~/components/ParticipationForm';
-import { AccountConsumer } from '+/components/AccountContext';
 import ApproveTransfer from '+/components/ApproveTransfer';
 import RequestInvestment from '+/components/RequestInvestment';
 import ExecuteRequest from '+/components/ExecuteRequest';
@@ -37,39 +35,33 @@ class InvestContainer extends React.PureComponent {
 
   render() {
     return (
-      <Composer components={[<AccountConsumer />]}>
-        {([account]) => {
-          return (
-            <Fragment>
-              <ParticipationFormContainer
-                {...this.props}
-                setInvestValues={this.setInvestValues}
-              />
+      <Fragment>
+        <ParticipationFormContainer
+          {...this.props}
+          setInvestValues={this.setInvestValues}
+        />
 
-              <ApproveTransfer
-                fundAddress={this.props.address}
-                values={this.state.values}
-                setStep={this.setStep}
-                step={this.state.step}
-              />
+        <ApproveTransfer
+          fundAddress={this.props.address}
+          values={this.state.values}
+          setStep={this.setStep}
+          step={this.state.step}
+        />
 
-              <RequestInvestment
-                fundAddress={this.props.address}
-                values={this.state.values}
-                setStep={this.setStep}
-                step={this.state.step}
-              />
+        <RequestInvestment
+          fundAddress={this.props.address}
+          values={this.state.values}
+          setStep={this.setStep}
+          step={this.state.step}
+        />
 
-              <ExecuteRequest
-                fundAddress={this.props.address}
-                values={this.state.values}
-                setStep={this.setStep}
-                step={this.state.step}
-              />
-            </Fragment>
-          );
-        }}
-      </Composer>
+        <ExecuteRequest
+          fundAddress={this.props.address}
+          values={this.state.values}
+          setStep={this.setStep}
+          step={this.state.step}
+        />
+      </Fragment>
     );
   }
 }

@@ -53,7 +53,7 @@ export default withRouter(props => (
         });
       },
       onCompleted: () => {
-        props.router.replace({
+        props.router.push({
           pathname: '/invest',
           query: {
             address: props.fund,
@@ -62,7 +62,7 @@ export default withRouter(props => (
       },
     }}
     handleCancel={() =>
-      props.router.replace({
+      props.router.push({
         pathname: '/wallet',
       })
     }

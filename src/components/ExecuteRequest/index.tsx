@@ -1,5 +1,6 @@
 import React from 'react';
 import ModalTransaction from '+/components/ModalTransaction';
+import { withRouter } from 'next/router';
 import gql from 'graphql-tag';
 
 const estimateExecuteRequestMutation = gql`
@@ -39,7 +40,7 @@ const executeExecuteRequestMutation = gql`
   }
 `;
 
-export default props => (
+export default withRouter(props => (
   <ModalTransaction
     text="The following method on the Melon Smart Contracts will be executed: executeRequest"
     open={props.step === 2}
@@ -55,12 +56,20 @@ export default props => (
         ...transaction,
         fundAddress: props.fundAddress,
       }),
-      onCompleted: () => {
+      update: () => {
         props.setStep(3);
+      },
+      onCompleted: () => {
+        props.router.push({
+          pathname: '/manage',
+          query: {
+            address: props.fundAddress,
+          },
+        });
       },
     }}
     handleCancel={() => {
       props.setStep(null);
     }}
   />
-);
+));

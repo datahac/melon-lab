@@ -17,6 +17,7 @@ interface FormValues {
 }
 
 export interface FeeFormProps {
+  error?: Error;
   errors?: any;
   fees?: any;
   handleBlur: () => void;
@@ -27,6 +28,7 @@ export interface FeeFormProps {
 }
 
 export const FeeForm: StatelessComponent<FeeFormProps> = ({
+  error,
   errors,
   fees,
   handleBlur,
@@ -50,8 +52,9 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   return (
     <div className="fee-form">
       <style jsx>{styles}</style>
-      {text && <p>{text}</p>}
-      <div className="fee-form__input">
+      {error && <p>{error.message}</p>}
+      {!error && text && <p>{text}</p>}
+      {!error && <div className="fee-form__input">
         <Input
           value={values.gasPrice}
           label="Gas price"
@@ -63,9 +66,9 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
           formatNumber={true}
           error={touched.gasPrice && errors.gasPrice}
         />
-      </div>
+      </div>}
 
-      {fees && (
+      {!error && fees && (
         <div>
           <Table>
             <TableHead>

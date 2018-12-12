@@ -20,7 +20,7 @@ class DownloadWalletContainer extends React.PureComponent {
                 const wallet = data && data.exportWallet;
 
                 downloadWallet(wallet, account).then(() => {
-                  this.props.router.replace({
+                  this.props.router.push({
                     pathname: '/wallet',
                   });
                 });

@@ -54,7 +54,7 @@ export default withRouter(props => (
       },
     }}
     handleCancel={() =>
-      props.router.replace({
+      props.router.push({
         pathname: '/wallet',
       })
     }

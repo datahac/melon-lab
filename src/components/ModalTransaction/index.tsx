@@ -43,7 +43,8 @@ const WithFormModal = compose(
             SecondaryAction={Button}
             SecondaryActionProps={{
               children: 'Confirm',
-              onClick: this.props.handleSubmit,
+              type: 'submit',
+              disabled: this.props.loading || this.props.error,
             }}
             ContentWrapper={Form}
             ContentWrapperProps={{
@@ -69,7 +70,9 @@ export default class ModalTransaction extends React.Component {
             </Mutation>
           ),
           ({ render }) => (
-            <Mutation {...R.omit(['variables'], this.props.execute)}>
+            <Mutation {...R.omit(['variables'], this.props.execute)} onError={(error) => {
+              this.setError(error);
+            }}>
               {(a, b) => render([a, b])}
             </Mutation>
           ),
@@ -115,6 +118,7 @@ export default class ModalTransaction extends React.Component {
           return (
             <WithFormModal
               handleCancel={this.props.handleCancel}
+              error={estimateProps.error || executeProps.error}
               loading={estimateProps.loading || executeProps.loading}
               text={this.props.text}
               open={this.props.open}
