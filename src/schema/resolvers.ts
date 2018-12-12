@@ -172,8 +172,9 @@ export default {
       // TODO: Where does this come from?
       return null;
     },
-    holdings: (parent, _, { loaders }) => {
-      return loaders.fundHoldings.load(parent);
+    holdings: async (parent, _, { loaders }) => {
+      const { accountingAddress } = await loaders.fundSettings.load(parent);
+      return loaders.fundHoldings.load(accountingAddress);
     },
   },
   Holding: {
