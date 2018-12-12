@@ -9,7 +9,6 @@ import {
   TableHead,
 } from '~/blocks/Table';
 import { add, toBigNumber } from '~/utils/functionalBigNumber';
-import Spinner from '~/blocks/Spinner';
 
 import styles from './styles.css';
 
@@ -24,7 +23,6 @@ export interface FeeFormProps {
   handleChange: () => void;
   touched?: any;
   values: FormValues;
-  loading?: boolean;
   text?: string;
 }
 
@@ -35,7 +33,6 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   handleChange,
   touched,
   values,
-  loading,
   text,
 }) => {
   const calcEntryTotal = (gasLimit: number) => {
@@ -53,64 +50,56 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   return (
     <div className="fee-form">
       <style jsx>{styles}</style>
-      {loading ? (
-        <div className="fee-form__spinner">
-          <Spinner icon size="small" />
+      {text && <p>{text}</p>}
+      <div className="fee-form__input">
+        <Input
+          value={values.gasPrice}
+          label="Gas price"
+          name="gasPrice"
+          insideLabel="true"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          required={true}
+          formatNumber={true}
+          error={touched.gasPrice && errors.gasPrice}
+        />
+      </div>
+
+      {fees && (
+        <div>
+          <Table>
+            <TableHead>
+              <Row isHead>
+                <CellHead>Description</CellHead>
+                <CellHead>Gas Limit</CellHead>
+                <CellHead>Total</CellHead>
+              </Row>
+            </TableHead>
+            <TableBody>
+              {fees.map((entry, i: number) => (
+                <Row key={`fee-${i}`}>
+                  <CellBody>{entry.description}</CellBody>
+                  <CellBody>{entry.gasLimit}</CellBody>
+                  <CellBody>Ξ {calcEntryTotal(entry.gasLimit)}</CellBody>
+                </Row>
+              ))}
+
+              <Row>
+                <CellHead />
+                <CellHead />
+                <CellHead>Ξ {total}</CellHead>
+              </Row>
+            </TableBody>
+          </Table>
+          <p>
+            If you do not change the gas price field, the default gas price will
+            be used. If you wish to set the gas price according to network
+            conditions, please refer to{' '}
+            <a href="https://ethgasstation.info/" target="_blank">
+              Eth Gas Station.
+            </a>
+          </p>
         </div>
-      ) : (
-        <Fragment>
-          {text && <p>{text}</p>}
-          <div className="fee-form__input">
-            <Input
-              value={values.gasPrice}
-              label="Gas price"
-              name="gasPrice"
-              insideLabel="true"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              required={true}
-              formatNumber={true}
-              error={touched.gasPrice && errors.gasPrice}
-            />
-          </div>
-
-          {fees && (
-            <div>
-              <Table>
-                <TableHead>
-                  <Row isHead>
-                    <CellHead>Description</CellHead>
-                    <CellHead>Gas Limit</CellHead>
-                    <CellHead>Total</CellHead>
-                  </Row>
-                </TableHead>
-                <TableBody>
-                  {fees.map((entry, i: number) => (
-                    <Row key={`fee-${i}`}>
-                      <CellBody>{entry.description}</CellBody>
-                      <CellBody>{entry.gasLimit}</CellBody>
-                      <CellBody>Ξ {calcEntryTotal(entry.gasLimit)}</CellBody>
-                    </Row>
-                  ))}
-
-                  <Row>
-                    <CellHead />
-                    <CellHead />
-                    <CellHead>Ξ {total}</CellHead>
-                  </Row>
-                </TableBody>
-              </Table>
-              <p>
-                If you do not change the gas price field, the default gas price
-                will be used. If you wish to set the gas price according to
-                network conditions, please refer to{' '}
-                <a href="https://ethgasstation.info/" target="_blank">
-                  Eth Gas Station.
-                </a>
-              </p>
-            </div>
-          )}
-        </Fragment>
       )}
     </div>
   );

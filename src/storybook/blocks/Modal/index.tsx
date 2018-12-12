@@ -1,11 +1,13 @@
 import React, { StatelessComponent, Fragment } from 'react';
 import ReactModal from 'react-modal';
+import Spinner from '~/blocks/Spinner';
 
 import styles from './styles.css';
 
 export interface ModalProps {
   title?: string;
   text?: string;
+  loading?: boolean;
   PrimaryAction;
   PrimaryActionProps;
   SecondaryAction;
@@ -24,6 +26,7 @@ const Modal: StatelessComponent<ModalProps> = ({
   children,
   title,
   text,
+  loading,
   ...props
 }) => (
   <ReactModal
@@ -34,45 +37,51 @@ const Modal: StatelessComponent<ModalProps> = ({
   >
     <style jsx>{styles}</style>
     <div className="modal__title">{title}</div>
-    <div className="modal__content">
-      {ContentWrapper ? (
-        <ContentWrapper {...ContentWrapperProps}>
-          {children}
+    {loading ? (
+      <div className="modal__spinner">
+        <Spinner icon size="small" />
+      </div>
+    ) : (
+      <div className="modal__content">
+        {ContentWrapper ? (
+          <ContentWrapper {...ContentWrapperProps}>
+            {children}
 
-          <div className="modal__actions">
-            {PrimaryAction && (
-              <div className="modal__action">
-                <PrimaryAction {...PrimaryActionProps} />
-              </div>
-            )}
+            <div className="modal__actions">
+              {PrimaryAction && (
+                <div className="modal__action">
+                  <PrimaryAction {...PrimaryActionProps} />
+                </div>
+              )}
 
-            {SecondaryAction && (
-              <div className="modal__action">
-                <SecondaryAction {...SecondaryActionProps} />
-              </div>
-            )}
-          </div>
-        </ContentWrapper>
-      ) : (
-        <Fragment>
-          {children}
+              {SecondaryAction && (
+                <div className="modal__action">
+                  <SecondaryAction {...SecondaryActionProps} />
+                </div>
+              )}
+            </div>
+          </ContentWrapper>
+        ) : (
+          <Fragment>
+            {children}
 
-          <div className="modal__actions">
-            {PrimaryAction && (
-              <div className="modal__action">
-                <PrimaryAction {...PrimaryActionProps} />
-              </div>
-            )}
+            <div className="modal__actions">
+              {PrimaryAction && (
+                <div className="modal__action">
+                  <PrimaryAction {...PrimaryActionProps} />
+                </div>
+              )}
 
-            {SecondaryAction && (
-              <div className="modal__action">
-                <SecondaryAction {...SecondaryActionProps} />
-              </div>
-            )}
-          </div>
-        </Fragment>
-      )}
-    </div>
+              {SecondaryAction && (
+                <div className="modal__action">
+                  <SecondaryAction {...SecondaryActionProps} />
+                </div>
+              )}
+            </div>
+          </Fragment>
+        )}
+      </div>
+    )}
   </ReactModal>
 );
 

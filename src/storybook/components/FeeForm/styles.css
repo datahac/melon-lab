@@ -12,8 +12,3 @@
 .fee-form__input {
   margin: 0 0 var(--space-m) 0;
 }
-
-.fee-form__spinner {
-  margin: var(--space-m) auto;
-  width: 50px;
-}
