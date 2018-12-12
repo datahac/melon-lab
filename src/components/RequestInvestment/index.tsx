@@ -2,12 +2,12 @@ import React from 'react';
 import ModalTransaction from '+/components/ModalTransaction';
 import gql from 'graphql-tag';
 
-const estimateApproveTransferMutation = gql`
-  mutation EstimateApproveTransfer(
+const estimateRequestInvestmentMutation = gql`
+  mutation EstimateRequestInvestment(
     $investmentAmount: String!
     $fundAddress: String!
   ) {
-    estimate: estimateApproveTransfer(
+    estimate: estimateRequestInvestment(
       investmentAmount: $investmentAmount
       fundAddress: $fundAddress
     ) @from {
@@ -21,19 +21,17 @@ const estimateApproveTransferMutation = gql`
   }
 `;
 
-const executeApproveTransferMutation = gql`
-  mutation ExecuteApproveTransfer(
+const executeRequestInvestmentMutation = gql`
+  mutation ExecuteRequestInvestment(
     $data: String!
     $from: String!
     $gas: String!
     $gasPrice: String!
     $to: String!
     $value: String!
-    $investmentAmount: String!
     $fundAddress: String!
   ) {
-    execute: executeApproveTransfer(
-      investmentAmount: $investmentAmount
+    execute: executeRequestInvestment(
       fundAddress: $fundAddress
       unsigned: {
         data: $data
@@ -49,23 +47,21 @@ const executeApproveTransferMutation = gql`
 
 export default props => (
   <ModalTransaction
-    text="The following method on the Melon Smart Contracts will be executed: approve"
-    open={!!props.values && !props.approved}
+    text="The following method on the Melon Smart Contracts will be executed: requestInvestment"
+    open={!!props.values && props.approved}
     estimate={{
-      mutation: estimateApproveTransferMutation,
+      mutation: estimateRequestInvestmentMutation,
       variables: () => ({
         fundAddress: props.fundAddress,
         investmentAmount: props.values.quantity,
       }),
     }}
     execute={{
-      mutation: executeApproveTransferMutation,
+      mutation: executeRequestInvestmentMutation,
       variables: (_, transaction) => ({
         ...transaction,
         fundAddress: props.fundAddress,
-        investmentAmount: props.values.quantity,
       }),
-      onCompleted: () => props.setApproved(true),
     }}
     handleCancel={() => props.setInvestValues(null)}
   />
