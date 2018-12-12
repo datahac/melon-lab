@@ -2,15 +2,9 @@ import React from 'react';
 import ModalTransaction from '+/components/ModalTransaction';
 import gql from 'graphql-tag';
 
-const estimateRequestInvestmentMutation = gql`
-  mutation EstimateRequestInvestment(
-    $investmentAmount: String!
-    $fundAddress: String!
-  ) {
-    estimate: estimateRequestInvestment(
-      investmentAmount: $investmentAmount
-      fundAddress: $fundAddress
-    ) @from {
+const estimateExecuteRequestMutation = gql`
+  mutation EstimateExecuteRequest($fundAddress: String!) {
+    estimate: estimateExecuteRequest(fundAddress: $fundAddress) @from {
       data
       from
       gas
@@ -21,8 +15,8 @@ const estimateRequestInvestmentMutation = gql`
   }
 `;
 
-const executeRequestInvestmentMutation = gql`
-  mutation ExecuteRequestInvestment(
+const executeExecuteRequestMutation = gql`
+  mutation ExecuteExecuteRequest(
     $data: String!
     $from: String!
     $gas: String!
@@ -31,7 +25,7 @@ const executeRequestInvestmentMutation = gql`
     $value: String!
     $fundAddress: String!
   ) {
-    execute: executeRequestInvestment(
+    execute: executeExecuteRequest(
       fundAddress: $fundAddress
       unsigned: {
         data: $data
@@ -47,23 +41,22 @@ const executeRequestInvestmentMutation = gql`
 
 export default props => (
   <ModalTransaction
-    text="The following method on the Melon Smart Contracts will be executed: requestInvestment"
-    open={!!props.values && props.step === 1}
+    text="The following method on the Melon Smart Contracts will be executed: executeRequest"
+    open={props.step === 2}
     estimate={{
-      mutation: estimateRequestInvestmentMutation,
+      mutation: estimateExecuteRequestMutation,
       variables: () => ({
         fundAddress: props.fundAddress,
-        investmentAmount: props.values.quantity,
       }),
     }}
     execute={{
-      mutation: executeRequestInvestmentMutation,
+      mutation: executeExecuteRequestMutation,
       variables: (_, transaction) => ({
         ...transaction,
         fundAddress: props.fundAddress,
       }),
       onCompleted: () => {
-        props.setStep(2);
+        props.setStep(3);
       },
     }}
     handleCancel={() => {

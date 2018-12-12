@@ -8,6 +8,7 @@ import { createComponents } from '@melonproject/protocol/lib/contracts/factory/t
 import { continueCreation } from '@melonproject/protocol/lib/contracts/factory/transactions/continueCreation';
 import { setupFund } from '@melonproject/protocol/lib/contracts/factory/transactions/setupFund';
 import { requestInvestment } from '@melonproject/protocol/lib/contracts/fund/participation/transactions/requestInvestment';
+import { executeRequest } from '@melonproject/protocol/lib/contracts/fund/participation/transactions/executeRequest';
 import { approve as approveTransfer } from '@melonproject/protocol/lib/contracts/dependencies/token/transactions/approve';
 import { Address } from '@melonproject/token-math/address';
 import { createQuantity } from '@melonproject/token-math/quantity';
@@ -239,12 +240,11 @@ export default {
         enhancedEnvironment,
         version,
         params,
-        undefined,
       );
 
       return result && result.rawTransaction;
     },
-    executeCreateComponents: async (_, { from, signed }, { environment }) => {
+    executeCreateComponents: (_, { from, signed }, { environment }) => {
       // TODO: The environment should not hold account data. Maybe?
       const enhancedEnvironment = {
         ...environment,
@@ -257,8 +257,6 @@ export default {
         enhancedEnvironment,
         environment.deployment.version,
         signed.rawTransaction,
-        undefined, // TODO: Remove params from send.
-        undefined,
       );
     },
     estimateContinueCreation: async (_, { from }, { environment, streams }) => {
@@ -286,11 +284,13 @@ export default {
         },
       };
 
-      return continueCreation.send(
+      const result = await continueCreation.send(
         enhancedEnvironment,
         environment.deployment.version,
         signed.rawTransaction,
       );
+
+      return !!result;
     },
     estimateSetupFund: async (_, { from }, { environment }) => {
       // TODO: The environment should not hold account data. Maybe?
@@ -317,11 +317,13 @@ export default {
         },
       };
 
-      return setupFund.send(
+      const result = await setupFund.send(
         enhancedEnvironment,
         environment.deployment.version,
         signed.rawTransaction,
       );
+
+      return !!result;
     },
     estimateRequestInvestment: async (
       _,
@@ -368,11 +370,13 @@ export default {
         },
       };
 
-      return requestInvestment.send(
+      const result = await requestInvestment.send(
         enhancedEnvironment,
         settings.participationAddress,
         signed.rawTransaction,
       );
+
+      return !!result;
     },
     estimateApproveTransfer: async (
       _,
@@ -395,7 +399,6 @@ export default {
       };
 
       const result = await approveTransfer.prepare(enhancedEnvironment, params);
-
       return result && result.rawTransaction;
     },
     executeApproveTransfer: async (
@@ -418,11 +421,57 @@ export default {
         spender: settings.participationAddress,
       };
 
-      return approveTransfer.send(
+      const result = await approveTransfer.send(
         enhancedEnvironment,
         signed.rawTransaction,
         params,
       );
+
+      return !!result;
+    },
+    estimateExecuteRequest: async (
+      _,
+      { from, fundAddress },
+      { environment, loaders },
+    ) => {
+      const settings = await loaders.fundSettings.load(fundAddress);
+
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      const result = await executeRequest.prepare(
+        enhancedEnvironment,
+        settings.participationAddress,
+      );
+
+      return result && result.rawTransaction;
+    },
+    executeExecuteRequest: async (
+      _,
+      { from, signed, fundAddress },
+      { environment, loaders },
+    ) => {
+      const settings = await loaders.fundSettings.load(fundAddress);
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      const result = await executeRequest.send(
+        enhancedEnvironment,
+        settings.participationAddress,
+        signed.rawTransaction,
+      );
+
+      return !!result;
     },
     deleteWallet: async () => {
       const credentials = (await keytar.findCredentials('melon.fund')) || [];

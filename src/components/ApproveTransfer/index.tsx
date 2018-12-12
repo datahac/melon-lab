@@ -50,7 +50,7 @@ const executeApproveTransferMutation = gql`
 export default props => (
   <ModalTransaction
     text="The following method on the Melon Smart Contracts will be executed: approve"
-    open={!!props.values && !props.approved}
+    open={!!props.values && props.step === 0}
     estimate={{
       mutation: estimateApproveTransferMutation,
       variables: () => ({
@@ -65,8 +65,12 @@ export default props => (
         fundAddress: props.fundAddress,
         investmentAmount: props.values.quantity,
       }),
-      onCompleted: () => props.setApproved(true),
+      onCompleted: () => {
+        props.setStep(1);
+      },
     }}
-    handleCancel={() => props.setInvestValues(null)}
+    handleCancel={() => {
+      props.setStep(null);
+    }}
   />
 );

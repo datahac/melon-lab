@@ -54,7 +54,7 @@ export default withRouter(props => (
       },
       onCompleted: () => {
         props.router.replace({
-          pathname: '/manage',
+          pathname: '/invest',
           query: {
             address: props.fund,
           },

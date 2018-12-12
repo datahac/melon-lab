@@ -4,6 +4,7 @@ import Participation from '~/components/ParticipationForm';
 import { AccountConsumer } from '+/components/AccountContext';
 import ApproveTransfer from '+/components/ApproveTransfer';
 import RequestInvestment from '+/components/RequestInvestment';
+import ExecuteRequest from '+/components/ExecuteRequest';
 import withForm from './withForm';
 import { withRouter } from 'next/router';
 
@@ -17,19 +18,20 @@ const ParticipationFormContainer = withForm(props => (
 
 class InvestContainer extends React.PureComponent {
   state = {
-    values: undefined,
-    approved: false,
+    values: null,
+    step: null,
   };
 
   setInvestValues = values => {
     this.setState({
       values,
+      step: 0,
     });
   };
 
-  setApproved = approved => {
+  setStep = step => {
     this.setState({
-      approved,
+      step,
     });
   };
 
@@ -43,19 +45,26 @@ class InvestContainer extends React.PureComponent {
                 {...this.props}
                 setInvestValues={this.setInvestValues}
               />
+
               <ApproveTransfer
                 fundAddress={this.props.address}
                 values={this.state.values}
-                setInvestValues={this.setInvestValues}
-                setApproved={this.setApproved}
-                approved={this.state.approved}
+                setStep={this.setStep}
+                step={this.state.step}
               />
 
               <RequestInvestment
                 fundAddress={this.props.address}
                 values={this.state.values}
-                approved={this.state.approved}
-                setInvestValues={this.setInvestValues}
+                setStep={this.setStep}
+                step={this.state.step}
+              />
+
+              <ExecuteRequest
+                fundAddress={this.props.address}
+                values={this.state.values}
+                setStep={this.setStep}
+                step={this.state.step}
               />
             </Fragment>
           );

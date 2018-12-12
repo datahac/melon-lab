@@ -271,7 +271,7 @@ type Mutation {
   executeContinueCreation(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
-  ): String
+  ): Boolean
 
   """
   Estimates the number of gas units required for the "setup fund" transaction.
@@ -284,7 +284,7 @@ type Mutation {
   executeSetupFund(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
-  ): String
+  ): Boolean
 
   """
   Estimates the number of gas units required for the "request investment" transaction.
@@ -301,7 +301,23 @@ type Mutation {
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
-  ): String
+  ): Boolean
+
+  """
+  Estimates the number of gas units required for the "execute request" transaction.
+  """
+  estimateExecuteRequest(
+    fundAddress: String!
+  ): UnsignedTransaction
+
+  """
+  Executes the "execute request" transaction with the given gas price per unit.
+  """
+  executeExecuteRequest(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean
 
   """
   Estimates the number of gas units required for the "approve transfer" transaction.
@@ -319,7 +335,7 @@ type Mutation {
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
     investmentAmount: String!
-  ): String
+  ): Boolean
 
   estimateTakeOrder(
     order: Json!
@@ -330,7 +346,7 @@ type Mutation {
   executeTakeOrder(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
-  ): String
+  ): Boolean
 
   """
   Export the currently active wallet in its encrypted form.
