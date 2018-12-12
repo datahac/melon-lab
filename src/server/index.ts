@@ -3,6 +3,8 @@ require('dotenv').config({
 });
 
 import schema, { createContext } from '~/schema';
+import path from 'path';
+import fs from 'fs';
 import next from 'next';
 import compression from 'compression';
 import * as express from 'express';
@@ -23,6 +25,14 @@ const mnemonic =
   'exhibit now news planet fame thank swear reform tilt accident bitter axis';
 
 const getTestEnvironment = async (track: string) => {
+  const chainPath = path.resolve(process.cwd(), '.chain');
+  const databasePath = path.join(chainPath, 'db');
+
+  if (!fs.existsSync(chainPath)) {
+    fs.mkdirSync(chainPath);
+    fs.mkdirSync(databasePath);
+  }
+
   const provider = Ganache.provider({
     gasLimit: '0x7a1200',
     default_balance_ether: 10000000000000,
@@ -30,12 +40,21 @@ const getTestEnvironment = async (track: string) => {
     total_accounts: 10,
     mnemonic,
     logger: console,
+    db_path: databasePath,
   });
 
+  const deploymentPath = path.join(chainPath, 'deployment.json');
   const environment = constructEnvironment({
     provider,
     track,
+    deployment:
+      fs.existsSync(deploymentPath) &&
+      JSON.parse(fs.readFileSync(deploymentPath).toString()),
   });
+
+  if (environment && environment.deployment) {
+    return environment;
+  }
 
   const wallet = Wallet.Wallet.fromMnemonic(mnemonic);
   const accounts = new Web3Accounts(environment.eth.currentProvider);
@@ -52,10 +71,13 @@ const getTestEnvironment = async (track: string) => {
     },
   });
 
+  fs.writeFileSync(deploymentPath, JSON.stringify(deployment.deployment));
+
   const quoteToken = await getQuoteToken(
     deployment,
     deployment.deployment.priceSource,
   );
+
   const baseToken = getTokenBySymbol(deployment, 'WETH');
   const newPrice = getPrice(
     createQuantity(baseToken, 1),
