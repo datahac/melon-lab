@@ -33,16 +33,22 @@ const subscription = gql`
             taker
           }
 
-          price
-          sell {
-            howMuch
-            symbol
+          price {
+            base {
+              quantity
+              token {
+                symbol
+              }
+            }
+
+            quote {
+              quantity
+              token {
+                symbol
+              }
+            }
           }
 
-          buy {
-            howMuch
-            symbol
-          }
           type
           exchange
           exchangeContractAddress
@@ -72,15 +78,22 @@ const subscription = gql`
             taker
           }
 
-          price
-          buy {
-            howMuch
-            symbol
+          price {
+            base {
+              quantity
+              token {
+                symbol
+              }
+            }
+
+            quote {
+              quantity
+              token {
+                symbol
+              }
+            }
           }
-          sell {
-            howMuch
-            symbol
-          }
+
           type
           exchange
           exchangeContractAddress

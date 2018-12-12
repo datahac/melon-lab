@@ -15,6 +15,7 @@ import getFundParticipation from './loaders/fund/fundParticipation';
 import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
 import getRecentTrades from './loaders/recentTrades';
 import getQuoteToken from './loaders/quoteToken';
+import getAssetPrice from './loaders/assetPrice';
 import getStepFor from './loaders/stepFor';
 import {
   getSymbolBalance,
@@ -114,6 +115,16 @@ export default (environment, streams) => {
     },
   );
 
+  const assetPrice = new DataLoader(
+    tokens => {
+      const fn = getAssetPrice(environment);
+      return Promise.all(tokens.map(fn) || []);
+    },
+    {
+      cacheKeyFn: token => `${token.symbol}`,
+    },
+  );
+
   let memoizedQuoteToken;
   const quoteToken = async () => {
     if (typeof memoizedQuoteToken !== 'undefined') {
@@ -139,6 +150,7 @@ export default (environment, streams) => {
     fundOpenOrders,
     fundParticipation,
     stepFor,
+    assetPrice,
     recentTrades,
     symbolBalance,
     symbolBalanceObservable,

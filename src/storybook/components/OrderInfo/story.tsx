@@ -8,11 +8,11 @@ const data = {
   ask: 0,
   tokens: {
     baseToken: {
-      name: 'ETH-T',
+      name: 'ETH',
       balance: 30.0,
     },
     quoteToken: {
-      name: 'MLN-T',
+      name: 'MLN',
       balance: 20.0,
     },
   },

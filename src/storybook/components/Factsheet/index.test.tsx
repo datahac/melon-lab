@@ -14,7 +14,7 @@ const data = {
   numberOfFunds: '12',
   performanceReward: 0.0,
   personalStake: 1.0,
-  quoteAsset: 'WETH-T',
+  quoteAsset: 'WETH',
   rank: '1',
   sharePrice: 0.9824,
   shutdown: mockCallbackShutdown,

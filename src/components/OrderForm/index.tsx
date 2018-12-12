@@ -1,4 +1,5 @@
 import React from 'react';
+import * as R from 'ramda';
 import Composer from 'react-composer';
 import OrderForm from '~/components/OrderForm';
 import { NetworkConsumer } from '+/components/NetworkContext';
@@ -11,12 +12,14 @@ const WrappedOrderForm = withForm(OrderForm);
 export default class OrderFormContainer extends React.PureComponent {
   getTokenBalance = asset => {
     const { holdings } = this.props;
+    const balance = R.compose(
+      R.propOr(0, 'balance'),
+      R.find(holding => holding.symbol === asset),
+    )(holdings);
+
     return {
       name: asset,
-      balance:
-        holdings &&
-        holdings.length &&
-        holdings.find(holding => holding.symbol === asset).balance.toString(10),
+      balance,
     };
   };
 

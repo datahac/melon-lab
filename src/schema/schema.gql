@@ -28,6 +28,22 @@ enum SymbolEnum {
   MLN
 }
 
+type Price {
+  base: Quantity,
+  quote: Quantity,
+}
+
+type Quantity {
+  token: Token
+  quantity: String
+}
+
+type Token {
+  symbol: String
+  decimals: Int
+  address: String
+}
+
 type Ranking {
   rank: Int
   address: String
@@ -73,20 +89,14 @@ type Fund {
 }
 
 type Holding {
-  symbol: String!
-  balance: String!
-  price: String!
+  balance: Quantity!
+  price: Price!
   fraction: String!
 }
 
-type HowMuchOfAsset {
-  symbol: String!
-  howMuch: String!
-}
-
 type Trade {
-  price: String
-  quantity: String
+  price: Price
+  quantity: Quantity
   timestamp: String
   type: String
 }
@@ -96,9 +106,9 @@ interface Order {
   taker: String
   isActive: Boolean!
   type: String!
-  buy: HowMuchOfAsset!
-  sell: HowMuchOfAsset!
-  price: String!
+  buy: Quantity!
+  sell: Quantity!
+  price: Price!
   exchangeContractAddress: String
   exchange: String
 }
@@ -108,9 +118,9 @@ type ZeroExOrder implements Order {
   taker: String
   isActive: Boolean!
   type: String!
-  buy: HowMuchOfAsset!
-  sell: HowMuchOfAsset!
-  price: String!
+  buy: Quantity!
+  sell: Quantity!
+  price: Price!
   expiration: String
   salt: String!
   makerFee: String!
@@ -127,9 +137,9 @@ type OasisDexOrder implements Order {
   taker: String
   isActive: Boolean!
   type: String!
-  buy: HowMuchOfAsset!
-  sell: HowMuchOfAsset!
-  price: String!
+  buy: Quantity!
+  sell: Quantity!
+  price: Price!
   id: String!
   timestamp: DateTime
   exchange: String
@@ -159,17 +169,6 @@ type ExchangeConfig {
   adapterAddress: String!
   exchangeAddress: String!
   takesCustody: Boolean!
-}
-
-type Balance {
-  quantity: String!
-  token: Token!
-}
-
-type Token {
-  address: String
-  decimals: Int!
-  symbol: String!
 }
 
 type Deployment {
@@ -225,7 +224,7 @@ type Query {
   peerCount: String
   contractDeployment: Deployment
   totalFunds: Int
-  balance(symbol: SymbolEnum!, address: String!): Balance
+  balance(symbol: SymbolEnum!, address: String!): Quantity
   fund(address: String!): Fund
   funds(addresses: [String]): [Fund]
   rankings: [Ranking]
@@ -408,7 +407,7 @@ type Subscription {
   nodeSynced: Boolean
   priceFeedUp: Boolean
   peerCount: String
-  balance(symbol: SymbolEnum!, address: String!): Balance
+  balance(symbol: SymbolEnum!, address: String!): Quantity
   orderbook(
     base: String!
     quote: String!

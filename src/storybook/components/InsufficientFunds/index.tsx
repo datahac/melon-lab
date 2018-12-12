@@ -17,12 +17,11 @@ export const InsufficientFunds: StatelessComponent<InsufficientFundsProps> = ({
     <b>Insufficient ETH Balance</b>
     <p>
       You don't have enough Kovan Ether or Kovan W-ETH. Current balances: {weth}{' '}
-      WETH-T, {eth} ETH
+      WETH, {eth} ETH
       <br />
       To get started, head to our faucet to receive Kovan Ether and Kovan Melon
       <br />
-      Once you have received ETH-T and MLN-T, go ahead and create your Melon
-      fund.
+      Once you have received ETH and MLN, go ahead and create your Melon fund.
     </p>
 
     <Link

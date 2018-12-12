@@ -58,7 +58,7 @@ export const Ranking: StatelessComponent<RankingProps> = ({
             funds.map(fund => (
               <Link
                 key={fund.address}
-                href={`/manage?address=${fund.address}&base=MLN-T&quote=WETH-T`}
+                href={`/manage?address=${fund.address}&base=MLN&quote=WETH`}
               >
                 <Card isActive={fund.address === associatedFund} {...fund} />
               </Link>

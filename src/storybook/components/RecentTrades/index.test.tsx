@@ -2,8 +2,8 @@ import React from 'react';
 import RecentTrades from './index';
 
 const data = {
-  baseTokenSymbol: 'MLN-T',
-  quoteTokenSymbol: 'WETH-T',
+  baseTokenSymbol: 'MLN',
+  quoteTokenSymbol: 'WETH',
   trades: [
     {
       price: '0.0522',

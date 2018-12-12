@@ -6,9 +6,28 @@ const query = gql`
     fund(address: $address) {
       address
       holdings {
-        symbol
-        balance
-        price
+        balance {
+          quantity
+          token {
+            symbol
+          }
+        }
+
+        price {
+          base {
+            quantity
+            token {
+              symbol
+            }
+          }
+
+          quote {
+            quantity
+            token {
+              symbol
+            }
+          }
+        }
         fraction
       }
     }

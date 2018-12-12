@@ -10,6 +10,9 @@ import { setupFund } from '@melonproject/protocol/lib/contracts/factory/transact
 import { requestInvestment } from '@melonproject/protocol/lib/contracts/fund/participation/transactions/requestInvestment';
 import { executeRequest } from '@melonproject/protocol/lib/contracts/fund/participation/transactions/executeRequest';
 import { approve as approveTransfer } from '@melonproject/protocol/lib/contracts/dependencies/token/transactions/approve';
+import { getTokenByAddress } from '@melonproject/protocol/lib/utils/environment/getTokenByAddress';
+import { isEmptyAddress } from '@melonproject/protocol/lib/utils/checks/isEmptyAddress';
+import { isAddress } from '@melonproject/protocol/lib/utils/checks/isAddress';
 import { Address } from '@melonproject/token-math/address';
 import { createQuantity } from '@melonproject/token-math/quantity';
 import Order from './types/Order';
@@ -173,23 +176,34 @@ export default {
       // TODO: Where does this come from?
       return null;
     },
-    holdings: async (parent, _, { loaders }) => {
+    holdings: async (parent, _, { loaders, environment }) => {
       const { accountingAddress } = await loaders.fundSettings.load(parent);
-      return loaders.fundHoldings.load(accountingAddress);
+      const { 0: quantities, 1: tokens } = await loaders.fundHoldings.load(
+        accountingAddress,
+      );
+
+      const result = tokens
+        .filter(value => {
+          return isAddress(value) && !isEmptyAddress(value);
+        })
+        .map((value, key) => {
+          const token = getTokenByAddress(environment, value);
+          return createQuantity(token, quantities[key]);
+        });
+
+      return result;
     },
   },
   Holding: {
-    symbol: parent => {
-      return parent.name;
-    },
     fraction: async (parent, _, { loaders, precision = 18 }) => {
-      if (parent.balance.eq(0)) {
-        return 0;
-      }
-
-      const calculations = await loaders.fundCalculations.load(parent.fund);
-      const nav = calculations[5].div(10 ** precision);
-      return nav.div(parent.balance.times(parent.price));
+      // TODO: Re-implement this.
+      return 0;
+    },
+    balance: parent => {
+      return parent;
+    },
+    price: async (parent, _, { loaders }) => {
+      return loaders.assetPrice.load(parent.token);
     },
   },
   Mutation: {

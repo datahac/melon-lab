@@ -67,7 +67,7 @@ exports[`Order Info should render correctly 1`] = `
       <span
         className="order-info__balance-desc"
       >
-        ETH-T
+        ETH
         :
       </span>
        
@@ -100,7 +100,7 @@ exports[`Order Info should render correctly 1`] = `
       <span
         className="order-info__balance-desc"
       >
-        MLN-T
+        MLN
         :
       </span>
        
@@ -217,7 +217,7 @@ exports[`Order Info should render correctly with ask 1`] = `
       <span
         className="order-info__balance-desc"
       >
-        ETH-T
+        ETH
         :
       </span>
        
@@ -250,7 +250,7 @@ exports[`Order Info should render correctly with ask 1`] = `
       <span
         className="order-info__balance-desc"
       >
-        MLN-T
+        MLN
         :
       </span>
        
@@ -367,7 +367,7 @@ exports[`Order Info should render correctly with bid 1`] = `
       <span
         className="order-info__balance-desc"
       >
-        ETH-T
+        ETH
         :
       </span>
        
@@ -400,7 +400,7 @@ exports[`Order Info should render correctly with bid 1`] = `
       <span
         className="order-info__balance-desc"
       >
-        MLN-T
+        MLN
         :
       </span>
        
@@ -517,7 +517,7 @@ exports[`Order Info should render correctly with lastPrice 1`] = `
       <span
         className="order-info__balance-desc"
       >
-        ETH-T
+        ETH
         :
       </span>
        
@@ -550,7 +550,7 @@ exports[`Order Info should render correctly with lastPrice 1`] = `
       <span
         className="order-info__balance-desc"
       >
-        MLN-T
+        MLN
         :
       </span>
        

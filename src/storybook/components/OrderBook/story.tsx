@@ -6,8 +6,8 @@ import OrderBook from './index';
 const data = {
   loading: false,
   isReadyToTrade: true,
-  baseToken: 'MLN-T',
-  quoteToken: 'WETH-T',
+  baseToken: 'MLN',
+  quoteToken: 'WETH',
   totalBuyVolume: '6014.96303423220724',
   totalSellVolume: '2756.383767891347375',
 
@@ -19,9 +19,9 @@ const data = {
         price: '1.5',
         sell: {
           howMuch: '1.5',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
-        buy: { howMuch: '1', symbol: 'MLN-T', __typename: 'HowMuchOfAsset' },
+        buy: { howMuch: '1', symbol: 'MLN', __typename: 'HowMuchOfAsset' },
         type: 'buy',
         exchange: 'OASIS_DEX',
         exchangeContractAddress: '0xbED692938E714Da2a1d5407E5D99658F7D4c8079',
@@ -35,9 +35,9 @@ const data = {
         price: '0.5',
         sell: {
           howMuch: '0.5',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
-        buy: { howMuch: '1', symbol: 'MLN-T', __typename: 'HowMuchOfAsset' },
+        buy: { howMuch: '1', symbol: 'MLN', __typename: 'HowMuchOfAsset' },
         type: 'buy',
         exchange: 'OASIS_DEX',
         exchangeContractAddress: '0xbED692938E714Da2a1d5407E5D99658F7D4c8079',
@@ -67,11 +67,11 @@ const data = {
         price: '0.03467175813539999996',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '288.419178541452765',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'ERC_DEX',
@@ -86,11 +86,11 @@ const data = {
         price: '0.03467175813539999996',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '288.419178541452765',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'OASIS_DEX',
@@ -105,11 +105,11 @@ const data = {
         price: '0.03446496832544731614',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '290.149693612701481',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'OASIS_DEX',
@@ -141,11 +141,11 @@ const data = {
         price: '0.03446496832544731614',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '290.149693612701481',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'ERC_DEX',
@@ -161,11 +161,11 @@ const data = {
         price: '0.03409219089026548669',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '293.322304576657462',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'OASIS_DEX',
@@ -196,11 +196,11 @@ const data = {
         price: '0.03409219089026548669',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '293.322304576657462',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'ERC_DEX',
@@ -231,11 +231,11 @@ const data = {
         price: '0.03366190110233009704',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '297.071753897696348',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'ERC_DEX',
@@ -250,11 +250,11 @@ const data = {
         price: '0.03366190110233009704',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '297.071753897696348',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'OASIS_DEX',
@@ -269,11 +269,11 @@ const data = {
         price: '0.03359666485988372095',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '297.648592254779253',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'OASIS_DEX',
@@ -305,11 +305,11 @@ const data = {
         price: '0.03359666485988372095',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '297.648592254779253',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'ERC_DEX',
@@ -340,11 +340,11 @@ const data = {
         price: '0.03317871591904306221',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '301.398041575818139',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'ERC_DEX',
@@ -360,11 +360,11 @@ const data = {
         price: '0.03317871591904306221',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '301.398041575818139',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'OASIS_DEX',
@@ -379,11 +379,11 @@ const data = {
         price: '0.03274009266798866853',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '305.435910075398478',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'OASIS_DEX',
@@ -415,11 +415,11 @@ const data = {
         price: '0.03274009266798866853',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '305.435910075398478',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'ERC_DEX',
@@ -435,11 +435,11 @@ const data = {
         price: '0.03246419301067415727',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '308.031682682271553',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'OASIS_DEX',
@@ -471,11 +471,11 @@ const data = {
         price: '0.03246419301067415727',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '308.031682682271553',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'ERC_DEX',
@@ -491,11 +491,11 @@ const data = {
         price: '0.03210347975499999999',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '311.492712824768986',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'OASIS_DEX',
@@ -527,11 +527,11 @@ const data = {
         price: '0.03210347975499999999',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '311.492712824768986',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'ERC_DEX',
@@ -563,11 +563,11 @@ const data = {
         price: '0.03189674161490340389',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '313.511647074559155',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'ERC_DEX',
@@ -583,11 +583,11 @@ const data = {
         price: '0.03189674161490340389',
         sell: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         buy: {
           howMuch: '313.511647074559155',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'buy',
         exchange: 'OASIS_DEX',
@@ -621,11 +621,11 @@ const data = {
         price: '0.03474117106460000001',
         buy: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         sell: {
           howMuch: '287.842916446464847',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'sell',
         exchange: 'ERC_DEX',
@@ -657,11 +657,11 @@ const data = {
         price: '0.03495087632253521127',
         buy: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         sell: {
           howMuch: '286.115858947786058',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'sell',
         exchange: 'ERC_DEX',
@@ -693,11 +693,11 @@ const data = {
         price: '0.03534198480630722275',
         buy: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         sell: {
           howMuch: '282.949586866874945',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'sell',
         exchange: 'ERC_DEX',
@@ -729,11 +729,11 @@ const data = {
         price: '0.03581564027278350511',
         buy: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         sell: {
           howMuch: '279.207628953070902',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'sell',
         exchange: 'ERC_DEX',
@@ -765,11 +765,11 @@ const data = {
         price: '0.03588963952954545454',
         buy: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         sell: {
           howMuch: '278.631943120177972',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'sell',
         exchange: 'ERC_DEX',
@@ -801,11 +801,11 @@ const data = {
         price: '0.03637818959643979057',
         buy: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         sell: {
           howMuch: '274.889985206373929',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'sell',
         exchange: 'ERC_DEX',
@@ -837,11 +837,11 @@ const data = {
         price: '0.03691941664675876728',
         buy: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         sell: {
           howMuch: '270.860184376123421',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'sell',
         exchange: 'ERC_DEX',
@@ -873,11 +873,11 @@ const data = {
         price: '0.03727593461866952796',
         buy: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         sell: {
           howMuch: '268.269598128105237',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'sell',
         exchange: 'ERC_DEX',
@@ -909,11 +909,11 @@ const data = {
         price: '0.03776214246152173917',
         buy: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         sell: {
           howMuch: '264.815483130747659',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'sell',
         exchange: 'ERC_DEX',
@@ -945,11 +945,11 @@ const data = {
         price: '0.03805166600722891572',
         buy: {
           howMuch: '10',
-          symbol: 'WETH-T',
+          symbol: 'WETH',
         },
         sell: {
           howMuch: '262.800582715622405',
-          symbol: 'MLN-T',
+          symbol: 'MLN',
         },
         type: 'sell',
         exchange: 'ERC_DEX',
@@ -965,8 +965,8 @@ const data = {
 const noData = {
   loading: false,
   isReadyToTrade: true,
-  baseToken: 'MLN-T',
-  quoteToken: 'WETH-T',
+  baseToken: 'MLN',
+  quoteToken: 'WETH',
   orderbook: {
     totalBuyVolume: '6014.96303423220724',
     totalSellVolume: '2756.383767891347375',

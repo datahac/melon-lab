@@ -12,7 +12,7 @@ const data = {
   touched: {},
   decimals: 4,
   setup: true,
-  quoteAsset: 'WETH-T',
+  quoteAsset: 'WETH',
 };
 
 describe('ParticipationForm', () => {

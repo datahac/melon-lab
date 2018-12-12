@@ -2,8 +2,8 @@ import React from 'react';
 import OrderForm from './container';
 
 const data = {
-  baseTokenSymbol: 'ETH-T-M',
-  quoteTokenSymbol: 'MLN-T-M',
+  baseTokenSymbol: 'ETH-M',
+  quoteTokenSymbol: 'MLN-M',
   strategy: 'Limit',
   info: {
     lastPrice: 0.5,
@@ -11,11 +11,11 @@ const data = {
     ask: 0,
     tokens: {
       baseToken: {
-        name: 'ETH-T',
+        name: 'ETH',
         balance: 30,
       },
       quoteToken: {
-        name: 'MLN-T',
+        name: 'MLN',
         balance: 20,
       },
     },

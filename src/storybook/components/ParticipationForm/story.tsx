@@ -13,7 +13,7 @@ const data = {
   touched: {},
   decimals: 4,
   setup: true,
-  quoteAsset: 'WETH-T',
+  quoteAsset: 'WETH',
 };
 
 storiesOf('Components|Participation Form', module).add('Default', () => {

@@ -8,7 +8,9 @@ export interface HoldingProps {
   fraction?: string;
   balance?: string;
   price?: string;
+  name?: string;
   symbol?: string;
+  active?: boolean;
   onClickHolding?: () => void;
 }
 
@@ -16,10 +18,10 @@ const Holding: StatelessComponent<HoldingProps> = ({
   fraction,
   balance,
   price,
-  tokenSymbol,
+  symbol,
+  name,
   onClickHolding,
   active,
-  tokenName,
 }) => {
   const holdingClassNames = classNames('holding', {
     'holding--active': active,
@@ -40,8 +42,8 @@ const Holding: StatelessComponent<HoldingProps> = ({
       {fraction > 0 && <div className="holding__bar" />}
       <div className="holding__wrapper">
         <div className="holding__symbol">
-          {tokenSymbol}
-          <span className="holding__name">{tokenName}</span>
+          {symbol}
+          <span className="holding__name">{name}</span>
         </div>
         <div className="holding__price">{displayNumber(price)}</div>
         <div className="holding__balance">{displayNumber(balance)}</div>

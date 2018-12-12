@@ -5,8 +5,8 @@ import { min, toBigNumber } from '~/utils/functionalBigNumber';
 const averagePrice = (type: 'buy' | 'sell', orders) => {
   const cumulatedVolumes = orders.reduce(
     (accumulator, current) => ({
-      buy: accumulator.buy.add(current.buy.howMuch),
-      sell: accumulator.sell.add(current.sell.howMuch),
+      buy: accumulator.buy.add(current.buy.quantity),
+      sell: accumulator.sell.add(current.sell.quantity),
     }),
     {
       buy: toBigNumber(0),

@@ -53,7 +53,7 @@ const tokens = [
   },
   {
     key: 'KNC',
-    value: 'KingN Coin',
+    value: 'Kyber Network',
   },
   {
     key: 'JNT',
