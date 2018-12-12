@@ -23,7 +23,13 @@ import ContinueCreation from '+/components/ContinueCreation';
 import SetupFund from '+/components/SetupFund';
 
 const SetupFormContainer = withForm(props => (
-  <SetupForm handleSubmit={props.handleSubmit}>
+  <SetupForm
+    handleSubmit={
+      props.steps.length - 1 === props.page
+        ? props.handleSubmit
+        : props.onClickNext
+    }
+  >
     <Wizard page={props.page} steps={props.steps} loading={props.loading}>
       <WizardPage
         onClickNext={props.onClickNext}
