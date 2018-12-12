@@ -27,6 +27,7 @@ export default class WalletOverviewContainer extends React.PureComponent {
               loading={walletProps.loading}
               currentAddress={account}
               networkId={network.network}
+              step={managerProps.step}
             />
           );
         }}

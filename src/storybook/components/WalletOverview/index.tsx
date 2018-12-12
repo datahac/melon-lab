@@ -12,6 +12,7 @@ export interface WalletOverviewProps {
   currentAddress?: string;
   networkId: string;
   loading?: boolean;
+  step?: number;
   balances?: {
     eth?: string;
     mln?: string;
@@ -25,6 +26,7 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
   networkId,
   loading,
   balances,
+  step,
 }) => (
   <div className="wallet-overview">
     <style jsx>{styles}</style>
@@ -59,14 +61,48 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
               </div>
             </div>
             <h2>Fund</h2>
-            {associatedFund ? (
+
+            {associatedFund && (step && step >= 3) && (
               <AssociatedFund
                 associatedFund={associatedFund}
                 networkId={networkId}
               />
-            ) : (
+            )}
+
+            {associatedFund && (step && step < 3) && (
               <Fragment>
-                {!balances.eth || isZero(balances.eth) ? (
+                {balances && (!balances.eth || isZero(balances.eth)) ? (
+                  <InsufficientFunds
+                    eth={balances.eth}
+                    weth={balances.weth}
+                    address={currentAddress}
+                  />
+                ) : (
+                  <Fragment>
+                    <Link style="primary" size="medium" href="/setup">
+                      Continue setup your fund
+                    </Link>
+                    <p>
+                      Fund address:{' '}
+                      <strong>
+                        <a
+                          href={`https://${
+                            networkId === 'KOVAN' ? 'kovan.' : ''
+                          }etherscan.io/address/${associatedFund}`}
+                          target="_blank"
+                        >
+                          {associatedFund}
+                        </a>
+                      </strong>
+                    </p>
+                  </Fragment>
+                )}
+              </Fragment>
+            )}
+
+            {!associatedFund && (
+              <Fragment>
+                {balances && (!balances.eth || isZero(balances.eth)) ? (
                   <InsufficientFunds
                     eth={balances.eth}
                     weth={balances.weth}
