@@ -1,6 +1,7 @@
 import React from 'react';
 import ModalTransaction from '+/components/ModalTransaction';
 import gql from 'graphql-tag';
+import { withRouter } from 'next/router';
 
 const estimateContinueCreationMutation = gql`
   mutation EstimateContinueCreation {
@@ -37,20 +38,28 @@ const executeContinueCreationMutation = gql`
   }
 `;
 
-export default props => (
-  <ModalTransaction
-    text="The following method on the Melon Smart Contracts will be executed: continueCreation"
-    open={props.step === 1}
-    estimate={{
-      mutation: estimateContinueCreationMutation,
-    }}
-    execute={{
-      mutation: executeContinueCreationMutation,
-      update: cache => {
-        props.update(cache, {
-          step: 2,
-        });
-      },
-    }}
-  />
+export default withRouter(
+  props =>
+    console.log(props) || (
+      <ModalTransaction
+        text="The following method on the Melon Smart Contracts will be executed: continueCreation"
+        open={props.step === 1}
+        estimate={{
+          mutation: estimateContinueCreationMutation,
+        }}
+        execute={{
+          mutation: executeContinueCreationMutation,
+          update: cache => {
+            props.update(cache, {
+              step: 2,
+            });
+          },
+        }}
+        handleCancel={() =>
+          props.router.replace({
+            pathname: '/wallet',
+          })
+        }
+      />
+    ),
 );

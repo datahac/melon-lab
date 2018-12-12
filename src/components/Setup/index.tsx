@@ -152,6 +152,7 @@ class Setup extends React.Component {
               step={managerProps.step}
               values={this.state.values}
               update={managerProps.update}
+              setFundValues={this.setFundValues}
             />
 
             <ContinueCreation

@@ -42,7 +42,7 @@ const executeCreateComponentsMutation = gql`
 export default props => (
   <ModalTransaction
     text="The following method on the Melon Smart Contracts will be executed: createComponents"
-    open={props.values && props.step === 0}
+    open={!!props.values && props.step === 0}
     estimate={{
       mutation: estimateCreateComponentsMutation,
       variables: () => ({
@@ -59,5 +59,6 @@ export default props => (
         });
       },
     }}
+    handleCancel={() => props.setFundValues(null)}
   />
 );

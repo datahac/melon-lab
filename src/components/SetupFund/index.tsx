@@ -61,5 +61,10 @@ export default withRouter(props => (
         });
       },
     }}
+    handleCancel={() =>
+      props.router.replace({
+        pathname: '/wallet',
+      })
+    }
   />
 ));
