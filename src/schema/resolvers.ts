@@ -4,15 +4,17 @@ import * as keytar from 'keytar';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import GraphQLJSON from 'graphql-type-json';
 import { map, pluck, distinctUntilChanged, skip } from 'rxjs/operators';
-import { createComponents } from '@melonproject/protocol/lib/contracts/factory/transactions/createComponents';
-import { continueCreation } from '@melonproject/protocol/lib/contracts/factory/transactions/continueCreation';
-import { setupFund } from '@melonproject/protocol/lib/contracts/factory/transactions/setupFund';
-import { requestInvestment } from '@melonproject/protocol/lib/contracts/fund/participation/transactions/requestInvestment';
-import { executeRequest } from '@melonproject/protocol/lib/contracts/fund/participation/transactions/executeRequest';
-import { approve as approveTransfer } from '@melonproject/protocol/lib/contracts/dependencies/token/transactions/approve';
+import {
+  createComponents,
+  continueCreation,
+  setupFund,
+  requestInvestment,
+  executeRequest,
+  approve as approveTransfer,
+  isEmptyAddress,
+  isAddress,
+} from '@melonproject/protocol';
 import { getTokenByAddress } from '@melonproject/protocol/lib/utils/environment/getTokenByAddress';
-import { isEmptyAddress } from '@melonproject/protocol/lib/utils/checks/isEmptyAddress';
-import { isAddress } from '@melonproject/protocol/lib/utils/checks/isAddress';
 import { Address } from '@melonproject/token-math/address';
 import { createQuantity } from '@melonproject/token-math/quantity';
 import Order from './types/Order';
