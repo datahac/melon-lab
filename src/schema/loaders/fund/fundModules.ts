@@ -1,7 +1,8 @@
-function getFundModules(contract) {
-  // return contract.instance.getModules.call();
+import * as R from 'ramda';
+
+function fundModules(environment, address) {
   // TODO: Implement this again.
   return null;
 }
 
-export default getFundModules;
+export default R.curryN(2, fundModules);

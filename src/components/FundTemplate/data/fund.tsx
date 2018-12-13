@@ -5,21 +5,53 @@ const query = gql`
   query FundQuery(
     $address: String! # $account: String! # $authenticated: Boolean!
   ) {
-    # totalFunds
+    totalFunds
 
     fund(address: $address) {
       address
-      # rank # not implemented yet
+      rank
       name
-      # gav # accounting - calculations
-      # nav # accounting - calculations
-      # managementReward # accounting - calculations
-      # performanceReward  # accounting - calculations
-      # sharePrice # accounting - calculations
-      # totalSupply # shares
+      gav {
+        quantity
+        token {
+          decimals
+          symbol
+        }
+      }
+
+      nav {
+        quantity
+        token {
+          decimals
+          symbol
+        }
+      }
+
+      sharePrice {
+        quantity
+        token {
+          decimals
+          symbol
+        }
+      }
+
+      totalSupply {
+        quantity
+        token {
+          decimals
+          symbol
+        }
+      }
+
       owner
-      # inception #
-      # personalStake(investor: $account) @include(if: $authenticated) # shares
+      inception
+      personalStake @from(arg: "investor") @authenticated {
+        quantity
+        token {
+          decimals
+          symbol
+        }
+      }
     }
   }
 `;

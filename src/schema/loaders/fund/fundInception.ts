@@ -1,7 +1,8 @@
-function fundInception(contract) {
-  // return contract.instance.getCreationTime.call();
-  // TODO: Implement this again.
-  return null;
+import * as R from 'ramda';
+import { getCreationTime } from '@melonproject/protocol/lib/contracts/fund/hub/calls/getCreationTime';
+
+function fundInception(environment, address) {
+  return getCreationTime(environment, address);
 }
 
-export default fundInception;
+export default R.curryN(2, fundInception);

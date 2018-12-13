@@ -1,7 +1,8 @@
 import React, { StatelessComponent, Fragment } from 'react';
 import Icon from '~/blocks/Icon';
 import Spinner from '~/blocks/Spinner';
-import displayNumber from '~/utils/displayNumber';
+import toFixedWithSymbol from '~/utils/toFixedWithSymbol';
+import { toFixed } from '@melonproject/token-math/quantity';
 
 import styles from './styles.css';
 
@@ -12,7 +13,6 @@ export interface FundHeadlineProps {
   rank?: string;
   totalFunds?: string;
   quoteAsset?: string;
-  decimals?: number;
   owner?: string;
   account?: string;
   address?: string;
@@ -26,8 +26,6 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   gav,
   rank,
   totalFunds,
-  quoteAsset,
-  decimals = 4,
   owner,
   account,
   address,
@@ -38,13 +36,13 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   const buildTwitterUrl = () => {
     const text = isOwner
       ? track !== 'live'
-        ? `My #MelonFund "${name}" has a share price currently of ${sharePrice}. Have a look:`
+        ? `My #MelonFund "${name}" has a share price currently of ${toFixed(sharePrice)}. Have a look:`
         : `Check out my on-chain decentralized hedge fund "${name}". ` +
-          `It currently has a share price of ${sharePrice}. Have a look:`
+          `It currently has a share price of ${toFixed(sharePrice)}. Have a look:`
       : track !== 'live'
-      ? `The #MelonFund "${name}" has a share price currently of ${sharePrice}. Have a look:`
+      ? `The #MelonFund "${name}" has a share price currently of ${toFixed(sharePrice)}. Have a look:`
       : `Check out this on-chain decentralized hedge fund "${name}". ` +
-        `It currently has a share price of ${sharePrice}. Have a look:`;
+        `It currently has a share price of ${toFixed(sharePrice)}. Have a look:`;
 
     const url =
       track === 'live'
@@ -86,12 +84,12 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">Share price</div>
-            {displayNumber(sharePrice, decimals)} {quoteAsset}
+            {sharePrice && toFixedWithSymbol(sharePrice)}
             /Share
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">AUM</div>
-            {displayNumber(gav, decimals)} {quoteAsset}
+            {sharePrice && toFixedWithSymbol(gav)}
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">Ranking</div>

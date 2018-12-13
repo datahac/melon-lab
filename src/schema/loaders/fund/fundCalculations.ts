@@ -1,7 +1,8 @@
-function fundCalculations(contract) {
-  // return contract.instance.performCalculations.call();
-  // TODO: Implement this again.
-  return null;
+import * as R from 'ramda';
+import { performCalculations } from '@melonproject/protocol/lib/contracts/fund/accounting/calls/performCalculations';
+
+function fundCalculations(environment, address) {
+  return performCalculations(environment, address);
 }
 
-export default fundCalculations;
+export default R.curryN(2, fundCalculations);

@@ -2,6 +2,7 @@
 # from execution in the hosted / web environment.
 directive @insecure on FIELD_DEFINITION
 directive @client on FIELD
+directive @authenticated on FIELD
 
 directive @sign(
   source: String = "unsigned"
@@ -71,21 +72,19 @@ type Fund {
   address: String
   name: String
   inception: DateTime
-  gav: String
-  nav: String
+  gav: Quantity
+  nav: Quantity
   owner: String
   modules: [String]
   settings: Settings
   holdings: [Holding]
-  sharePrice: String
-  totalSupply: String
-  personalStake(investor: String!): String
-  managementReward: String
-  performanceReward: String
-  unclaimedRewards: String
-  rewardsShareQuantity: String
-  subscriptionAllowed: Boolean
-  redemptionAllowed: Boolean
+  sharePrice: Quantity
+  totalSupply: Quantity
+  personalStake(investor: String): Quantity
+  managementReward: Quantity
+  performanceReward: Quantity
+  unclaimedFees: Quantity
+  feesShareQuantity: Quantity
 }
 
 type Holding {
@@ -226,7 +225,6 @@ type Query {
   totalFunds: Int
   balance(symbol: SymbolEnum!, address: String!): Quantity
   fund(address: String!): Fund
-  funds(addresses: [String]): [Fund]
   rankings: [Ranking]
 
   # TODO: Move this to the Fund type.

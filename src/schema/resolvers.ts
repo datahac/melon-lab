@@ -57,7 +57,7 @@ export default {
       return takeLast(streams.syncing$.pipe(map(value => !value)));
     },
     totalFunds: (_, __, { streams }) => {
-      return takeLast(streams.ranking$);
+      return takeLast(streams.ranking$.pipe(map(value => value.length)));
     },
     priceFeedUp: (_, __, { streams }) => {
       return takeLast(streams.recentPrice$);
@@ -89,13 +89,6 @@ export default {
 
       return fundAddress;
     },
-    funds: async (_, args, { loaders, streams }) => {
-      const addresses = await (args.addresses ||
-        ((await takeLast(streams.ranking$)) || []).map(fund => fund.address) ||
-        []);
-
-      return loaders.fundContract.loadMany(addresses);
-    },
     balance: (_, { address, symbol }, { loaders }) => {
       return loaders.symbolBalance.load({ address, symbol });
     },
@@ -103,6 +96,10 @@ export default {
   Ranking: {
     fund: (parent, _, { loaders }) => {
       return parent.address;
+    },
+    rank: parent => {
+      // TODO: Add the +1 on the protocol level.
+      return parent.rank + 1;
     },
   },
   Fund: {
@@ -118,64 +115,50 @@ export default {
     settings: (parent, _, { loaders }) => {
       return loaders.fundSettings.load(parent);
     },
-    totalSupply: async (parent, _, { loaders }) => {
-      const { sharesAddress } = await loaders.fundSettings.load(parent);
-      return loaders.fundTotalSupply.load(sharesAddress);
+    totalSupply: (parent, _, { loaders }) => {
+      return loaders.fundTotalSupply.load(parent);
     },
     rank: async (parent, _, { streams }) => {
       const ranking = await takeLast(streams.ranking$);
       const entry = (ranking || []).find(rank => rank.address === parent);
-      return entry && entry.rank;
+      // TODO: Add the +1 on the protocol level.
+      const result = (entry && entry.rank + 1) || 0;
+      return result;
     },
     modules: (parent, _, { loaders }) => {
       return loaders.fundModules.load(parent);
     },
     inception: async (parent, _, { loaders }) => {
-      const inception = await loaders.fundInception.load(parent);
-      return inception && new Date(inception.toString() * 1000);
+      return loaders.fundInception.load(parent);
     },
     personalStake: async (parent, { investor }, { loaders }) => {
-      const participation = await loaders.fundParticipation.load({
+      return loaders.fundParticipation.load({
         fund: parent,
-        investor: investor,
+        investor,
       });
-
-      return participation && participation.personalStake;
     },
-    gav: async (parent, _, { loaders, precision = 18 }) => {
+    gav: async (parent, _, { loaders }) => {
       const calculations = await loaders.fundCalculations.load(parent);
-      return calculations && calculations[0].div(10 ** precision);
+      return calculations && calculations.gav;
     },
-    managementReward: async (parent, _, { loaders, precision = 18 }) => {
+    nav: async (parent, _, { loaders }) => {
       const calculations = await loaders.fundCalculations.load(parent);
-      return calculations && calculations[1].div(10 ** precision);
+      return calculations && calculations.nav;
     },
-    performanceReward: async (parent, _, { loaders, precision = 18 }) => {
+    sharePrice: async (parent, _, { loaders }) => {
       const calculations = await loaders.fundCalculations.load(parent);
-      return calculations && calculations[2].div(10 ** precision);
+      return calculations && calculations.sharePrice;
     },
-    unclaimedRewards: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations && calculations[3].div(10 ** precision);
-    },
-    rewardsShareQuantity: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations && calculations[4].div(10 ** precision);
-    },
-    nav: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations && calculations[5].div(10 ** precision);
-    },
-    sharePrice: async (parent, _, { loaders, precision = 18 }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations && calculations[6].div(10 ** precision);
-    },
-    subscriptionAllowed: () => {
-      // TODO: Where does this come from?
+    managementReward: async (parent, _, { loaders }) => {
       return null;
     },
-    redemptionAllowed: () => {
-      // TODO: Where does this come from?
+    performanceReward: async (parent, _, { loaders }) => {
+      return null;
+    },
+    unclaimedFees: async (parent, _, { loaders }) => {
+      return null;
+    },
+    feesShareQuantity: async (parent, _, { loaders }) => {
       return null;
     },
     holdings: async (parent, _, { loaders, environment }) => {
@@ -197,7 +180,7 @@ export default {
     },
   },
   Holding: {
-    fraction: async (parent, _, { loaders, precision = 18 }) => {
+    fraction: async (parent, _, { loaders }) => {
       // TODO: Re-implement this.
       return 0;
     },

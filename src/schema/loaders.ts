@@ -43,9 +43,17 @@ export default (environment, streams) => {
     return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundTotalSupply = new DataLoader(addresses => {
-    const fn = getFundTotalSupply(environment);
-    return Promise.all(addresses.map(fn) || []);
+  const fundTotalSupply = new DataLoader(async addresses => {
+    const settings = await fundSettings.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { sharesAddress } = settings[key] || {
+          sharesAddress: null,
+        };
+
+        return sharesAddress && getFundTotalSupply(environment, sharesAddress);
+      }),
+    );
   });
 
   const fundInception = new DataLoader(addresses => {
@@ -58,9 +66,20 @@ export default (environment, streams) => {
     return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundCalculations = new DataLoader(addresses => {
-    const fn = getFundCalculations(environment);
-    return Promise.all(addresses.map(fn) || []);
+  const fundCalculations = new DataLoader(async addresses => {
+    const settings = await fundSettings.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { accountingAddress } = settings[key] || {
+          accountingAddress: null,
+        };
+
+        return (
+          accountingAddress &&
+          getFundCalculations(environment, accountingAddress)
+        );
+      }),
+    );
   });
 
   const fundHoldings = new DataLoader(addresses => {
@@ -74,13 +93,25 @@ export default (environment, streams) => {
   });
 
   const fundParticipation = new DataLoader(
-    pairs => {
-      const fn = getFundParticipation(environment);
-      const result = pairs.map(pair => fn(pair.fund, pair.investor));
-      return Promise.all(result || []);
+    async pairs => {
+      const funds = pairs.map(pair => pair.fund);
+      const investors = pairs.map(pair => pair.investor);
+      const settings = await fundSettings.loadMany(funds);
+      return Promise.all(
+        investors.map((investor, key) => {
+          const { sharesAddress } = settings[key] || {
+            sharesAddress: null,
+          };
+
+          return (
+            sharesAddress &&
+            getFundParticipation(environment, sharesAddress, investor)
+          );
+        }),
+      );
     },
     {
-      cacheKeyFn: pair => `${pair.fund.instance.address}:${pair.investor}`,
+      cacheKeyFn: pair => `${pair.fund}:${pair.investor}`,
     },
   );
 
