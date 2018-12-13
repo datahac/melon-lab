@@ -17,6 +17,7 @@ import getRecentTrades from './loaders/recentTrades';
 import getQuoteToken from './loaders/quoteToken';
 import getAssetPrice from './loaders/assetPrice';
 import getStepFor from './loaders/stepFor';
+import getIsShutdown from './loaders/shutdown';
 import {
   getSymbolBalance,
   observeSymbolBalance,
@@ -120,6 +121,11 @@ export default (environment, streams) => {
     return Promise.all(addresses.map(fn) || []);
   });
 
+  const shutdown = new DataLoader(addresses => {
+    const fn = getIsShutdown(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
+
   const symbolBalance = new DataLoader(
     async pairs => {
       const fn = getSymbolBalance(environment);
@@ -190,5 +196,6 @@ export default (environment, streams) => {
     restoreWallet,
     fundSettings,
     quoteToken,
+    shutdown,
   };
 };

@@ -13,6 +13,7 @@ import {
   approve as approveTransfer,
   isEmptyAddress,
   isAddress,
+  shutDownFund,
 } from '@melonproject/protocol';
 import { getTokenByAddress } from '@melonproject/protocol/lib/utils/environment/getTokenByAddress';
 import { Address } from '@melonproject/token-math/address';
@@ -87,7 +88,9 @@ export default {
         managerAddress,
       );
 
-      return fundAddress;
+      const isShutdown = await loaders.shutDown.load(fundAddress);
+
+      return (!isShutdown && fundAddress) || null;
     },
     balance: (_, { address, symbol }, { loaders }) => {
       return loaders.symbolBalance.load({ address, symbol });
@@ -107,6 +110,9 @@ export default {
     },
     name: (parent, _, { loaders }) => {
       return loaders.fundName.load(parent);
+    },
+    isShutdown: (parent, _, { loaders }) => {
+      return loaders.shutdown.load(parent);
     },
     owner: (parent, _, { loaders }) => {
       return loaders.fundOwner.load(parent);
@@ -465,6 +471,50 @@ export default {
         enhancedEnvironment,
         settings.participationAddress,
         signed.rawTransaction,
+      );
+
+      return !!result;
+    },
+    estimateShutDownFund: async (_, { from, fundAddress }, { environment }) => {
+      const params = {
+        hub: fundAddress,
+      };
+
+      // TODO: The environment should not hold account data. Maybe?
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      const result = await shutDownFund.prepare(
+        enhancedEnvironment,
+        environment.deployment.version,
+        params,
+      );
+      return result && result.rawTransaction;
+    },
+    executeShutDownFund: async (
+      _,
+      { from, signed, fundAddress },
+      { environment, loaders },
+    ) => {
+      const params = {
+        hub: fundAddress,
+      };
+      const enhancedEnvironment = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      const result = await shutDownFund.send(
+        enhancedEnvironment,
+        environment.deployment.version,
+        signed.rawTransaction,
+        params,
       );
 
       return !!result;

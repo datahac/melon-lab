@@ -15,7 +15,7 @@ export interface FactsheetProps {
   performanceReward?: string;
   personalStake?: string;
   reportUrl?: string;
-  shutdown: () => void;
+  handleShutDown: () => void;
   totalSupply?: string;
   tweetHref?: string;
   isManager?: boolean;
@@ -29,7 +29,7 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
   performanceReward,
   personalStake,
   reportUrl,
-  shutdown,
+  handleShutDown,
   totalSupply,
   isManager,
 }) => (
@@ -69,7 +69,7 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
         </div>
         {!isCompetition && isManager && (
           <div className="factsheet__item">
-            <Button onClick={shutdown} style="danger" size="small">
+            <Button onClick={handleShutDown} style="danger" size="small">
               Irreversibly shut down fund
             </Button>
           </div>

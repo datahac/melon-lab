@@ -85,6 +85,7 @@ type Fund {
   performanceReward: Quantity
   unclaimedFees: Quantity
   feesShareQuantity: Quantity
+  isShutdown: Boolean
 }
 
 type Holding {
@@ -322,6 +323,22 @@ type Mutation {
   estimateApproveTransfer(
     fundAddress: String!
     investmentAmount: String!
+  ): UnsignedTransaction
+
+  """
+  Executes the "execute request" transaction with the given gas price per unit.
+  """
+  executeShutDownFund(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean
+
+  """
+  Estimates the number of gas units required for the "approve transfer" transaction.
+  """
+  estimateShutDownFund(
+    fundAddress: String!
   ): UnsignedTransaction
 
   """

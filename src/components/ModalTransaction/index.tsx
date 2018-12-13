@@ -72,9 +72,6 @@ export default class ModalTransaction extends React.Component {
           ({ render }) => (
             <Mutation
               {...R.omit(['variables'], this.props.execute)}
-              onError={error => {
-                this.setError(error);
-              }}
             >
               {(a, b) => render([a, b])}
             </Mutation>
