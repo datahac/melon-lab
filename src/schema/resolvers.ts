@@ -97,9 +97,8 @@ export default {
     fund: (parent, _, { loaders }) => {
       return parent.address;
     },
-    rank: parent => {
-      // TODO: Add the +1 on the protocol level.
-      return parent.rank + 1;
+    inception: parent => {
+      return parent.creationTime;
     },
   },
   Fund: {
@@ -121,9 +120,7 @@ export default {
     rank: async (parent, _, { streams }) => {
       const ranking = await takeLast(streams.ranking$);
       const entry = (ranking || []).find(rank => rank.address === parent);
-      // TODO: Add the +1 on the protocol level.
-      const result = (entry && entry.rank + 1) || 0;
-      return result;
+      return entry && entry.rank;
     },
     modules: (parent, _, { loaders }) => {
       return loaders.fundModules.load(parent);
