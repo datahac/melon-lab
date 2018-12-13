@@ -15,10 +15,12 @@ import Ganache from '@melonproject/ganache-cli';
 import { constructEnvironment } from '@melonproject/protocol';
 import { getPrice } from '@melonproject/token-math/price';
 import { createQuantity } from '@melonproject/token-math/quantity';
-import { deploySystem } from '@melonproject/protocol/lib/utils/deploySystem';
-import { getTokenBySymbol } from '@melonproject/protocol/lib/utils/environment/getTokenBySymbol';
-import { update } from '@melonproject/protocol/lib/contracts/prices/transactions/update';
-import { getQuoteToken } from '@melonproject/protocol/lib/contracts/prices/calls/getQuoteToken';
+import {
+  deploySystem,
+  getTokenBySymbol,
+  update,
+  getQuoteToken,
+} from '@melonproject/protocol';
 import Web3Accounts from 'web3-eth-accounts';
 
 const mnemonic =

@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { getStepFor } from '@melonproject/protocol/lib/contracts/factory/calls/getStepFor';
+import { getStepFor } from '@melonproject/protocol';
 
 function stepFor(environment, managerAddress) {
   return getStepFor(environment, managerAddress);

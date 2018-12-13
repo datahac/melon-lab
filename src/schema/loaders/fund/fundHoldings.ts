@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { getFundHoldings } from '@melonproject/protocol/lib/contracts/fund/accounting/calls/getFundHoldings';
+import { getFundHoldings } from '@melonproject/protocol';
 
 function fundHoldings(environment, address) {
   return getFundHoldings(environment, address);
