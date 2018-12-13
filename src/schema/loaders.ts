@@ -17,6 +17,7 @@ import getFundCalculations from './loaders/fund/fundCalculations';
 import getFundOpenOrders from './loaders/fund/fundOpenOrders';
 import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
 import getFundIsShutdown from './loaders/fund/fundIsShutdown';
+import getFundParticipation from './loaders/fund/fundParticipation';
 import getRecentTrades from './loaders/recentTrades';
 import getQuoteToken from './loaders/quoteToken';
 import getAssetPrice from './loaders/assetPrice';

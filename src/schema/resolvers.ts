@@ -116,7 +116,7 @@ export default {
       return loaders.fundName.load(parent);
     },
     isShutdown: (parent, _, { loaders }) => {
-      return loaders.shutdown.load(parent);
+      return loaders.fundIsShutdown.load(parent);
     },
     owner: (parent, _, { loaders }) => {
       return loaders.fundOwner.load(parent);
