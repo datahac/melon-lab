@@ -70,9 +70,7 @@ export default class ModalTransaction extends React.Component {
             </Mutation>
           ),
           ({ render }) => (
-            <Mutation
-              {...R.omit(['variables'], this.props.execute)}
-            >
+            <Mutation {...R.omit(['variables'], this.props.execute)}>
               {(a, b) => render([a, b])}
             </Mutation>
           ),
