@@ -1,4 +1,8 @@
 import DataLoader from 'dataloader';
+import memoizeOne from 'memoize-one';
+import * as R from 'ramda';
+import { pluck, map } from 'rxjs/operators';
+import takeLast from './utils/takeLast';
 import importWallet from './loaders/wallet/decryptWallet';
 import restoreWallet from './loaders/wallet/restoreWallet';
 import generateMnemonic from './loaders/wallet/generateMnemonic';
@@ -11,17 +15,15 @@ import getFundHoldings from './loaders/fund/fundHoldings';
 import getFundTotalSupply from './loaders/fund/fundTotalSupply';
 import getFundCalculations from './loaders/fund/fundCalculations';
 import getFundOpenOrders from './loaders/fund/fundOpenOrders';
-import getFundParticipation from './loaders/fund/fundParticipation';
 import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
+import getFundIsShutdown from './loaders/fund/fundIsShutdown';
 import getRecentTrades from './loaders/recentTrades';
 import getQuoteToken from './loaders/quoteToken';
 import getAssetPrice from './loaders/assetPrice';
 import getStepFor from './loaders/stepFor';
-import getIsShutdown from './loaders/shutdown';
-import {
-  getSymbolBalance,
-  observeSymbolBalance,
-} from './loaders/symbolBalance';
+import getSymbolBalance from './loaders/symbolBalance';
+import getSymbolBalanceObservable from './loaders/symbolBalanceObservable';
+import resolveNetwork from './utils/resolveNetwork';
 
 export default (environment, streams) => {
   const fundAddressFromManager = new DataLoader(addresses => {
@@ -32,6 +34,15 @@ export default (environment, streams) => {
   const fundName = new DataLoader(addresses => {
     const fn = getFundName(environment);
     return Promise.all(addresses.map(fn) || []);
+  });
+
+  const fundReady = new DataLoader(async addresses => {
+    const settings = await fundSettings.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        return !!(settings && settings[key]);
+      }),
+    );
   });
 
   const fundOwner = new DataLoader(addresses => {
@@ -53,6 +64,16 @@ export default (environment, streams) => {
         };
 
         return sharesAddress && getFundTotalSupply(environment, sharesAddress);
+      }),
+    );
+  });
+
+  const fundRank = new DataLoader(async addresses => {
+    const ranking = (await takeLast(streams.ranking$)) || [];
+    return Promise.all(
+      addresses.map(address => {
+        const entry = R.find(R.propEq('address', address), ranking);
+        return R.propOr(0, 'rank', entry);
       }),
     );
   });
@@ -83,13 +104,28 @@ export default (environment, streams) => {
     );
   });
 
-  const fundHoldings = new DataLoader(addresses => {
-    const fn = getFundHoldings(environment);
-    return Promise.all(addresses.map(fn) || []);
+  const fundHoldings = new DataLoader(async addresses => {
+    const settings = await fundSettings.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { accountingAddress } = settings[key] || {
+          accountingAddress: null,
+        };
+
+        return (
+          accountingAddress && getFundHoldings(environment, accountingAddress)
+        );
+      }),
+    );
   });
 
   const fundOpenOrders = new DataLoader(addresses => {
     const fn = getFundOpenOrders(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
+
+  const fundIsShutdown = new DataLoader(addresses => {
+    const fn = getFundIsShutdown(environment);
     return Promise.all(addresses.map(fn) || []);
   });
 
@@ -116,13 +152,18 @@ export default (environment, streams) => {
     },
   );
 
-  const stepFor = new DataLoader(addresses => {
-    const fn = getStepFor(environment);
-    return Promise.all(addresses.map(fn) || []);
+  const fundByName = new DataLoader(async names => {
+    const ranking = await fundRanking();
+    return Promise.all(
+      names.map(name => {
+        const entry = R.find(R.propEq('name', name), ranking);
+        return R.prop('address', entry);
+      }),
+    );
   });
 
-  const shutdown = new DataLoader(addresses => {
-    const fn = getIsShutdown(environment);
+  const stepFor = new DataLoader(addresses => {
+    const fn = getStepFor(environment);
     return Promise.all(addresses.map(fn) || []);
   });
 
@@ -137,9 +178,16 @@ export default (environment, streams) => {
     },
   );
 
-  const symbolBalanceObservable = async (symbol, address) => {
-    return observeSymbolBalance(environment, streams, symbol, address);
-  };
+  const symbolBalanceObservable = new DataLoader(
+    async pairs => {
+      const fn = getSymbolBalanceObservable(environment, streams);
+      const result = pairs.map(pair => fn(pair.symbol, pair.address));
+      return Promise.all(result || []);
+    },
+    {
+      cacheKeyFn: pair => `${pair.symbol}:${pair.address}`,
+    },
+  );
 
   const recentTrades = new DataLoader(
     pairs => {
@@ -162,30 +210,58 @@ export default (environment, streams) => {
     },
   );
 
-  let memoizedQuoteToken;
-  const quoteToken = async () => {
-    if (typeof memoizedQuoteToken !== 'undefined') {
-      return memoizedQuoteToken;
-    }
-
-    memoizedQuoteToken = await getQuoteToken(
+  const quoteToken = memoizeOne(() => {
+    return getQuoteToken(
       environment,
-      environment.deployment.priceSource,
+      environment.deployment.melonContracts.priceSource,
     );
-    return memoizedQuoteToken;
-  };
+  });
+
+  const fundRanking = memoizeOne(() => {
+    return takeLast(streams.ranking$);
+  });
+
+  const currentBlock = memoizeOne(() => {
+    return takeLast(streams.block$.pipe(pluck('number')));
+  });
+
+  const nodeSynced = memoizeOne(() => {
+    return takeLast(streams.syncing$.pipe(map(value => !value)));
+  });
+
+  const priceFeedUp = memoizeOne(() => {
+    return takeLast(streams.recentPrice$);
+  });
+
+  const peerCount = memoizeOne(() => {
+    return takeLast(streams.peers$);
+  });
+
+  const versionDeployment = memoizeOne(() => {
+    return environment.deployment;
+  });
+
+  const networkName = memoizeOne(async () => {
+    return resolveNetwork(await environment.eth.net.getId());
+  });
 
   return {
+    fundReady,
+    fundRanking,
+    fundByName,
     fundAddressFromManager,
     fundName,
     fundInception,
     fundModules,
     fundOwner,
+    fundRank,
     fundTotalSupply,
     fundCalculations,
     fundHoldings,
     fundOpenOrders,
     fundParticipation,
+    fundSettings,
+    fundIsShutdown,
     stepFor,
     assetPrice,
     recentTrades,
@@ -194,8 +270,12 @@ export default (environment, streams) => {
     generateMnemonic,
     importWallet,
     restoreWallet,
-    fundSettings,
     quoteToken,
-    shutdown,
+    currentBlock,
+    nodeSynced,
+    priceFeedUp,
+    peerCount,
+    versionDeployment,
+    networkName,
   };
 };

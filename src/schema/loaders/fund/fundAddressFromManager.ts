@@ -4,7 +4,7 @@ import { managersToHubs } from '@melonproject/protocol';
 function fundAddressFromManager(environment, managerAddress) {
   return managersToHubs(
     environment,
-    environment.deployment.version,
+    environment.deployment.melonContracts.version,
     managerAddress,
   );
 }

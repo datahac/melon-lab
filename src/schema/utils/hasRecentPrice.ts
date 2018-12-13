@@ -15,7 +15,7 @@ import {
 
 const requestHasRecentPrice = environment => {
   return Rx.defer(async () => {
-    const address = environment.deployment.priceSource;
+    const address = environment.deployment.melonContracts.priceSource;
     const token = await getQuoteToken(environment, address);
     return hasRecentPriceCall(environment, address, token);
   }).pipe(

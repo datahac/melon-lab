@@ -36,21 +36,17 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   const buildTwitterUrl = () => {
     const text = isOwner
       ? track !== 'live'
-        ? `My #MelonFund "${name}" has a share price currently of ${toFixed(
-            sharePrice,
-          )}. Have a look:`
+        ? `My #MelonFund "${name}" has a share price currently of ${sharePrice &&
+            oFixed(sharePrice)}. Have a look:`
         : `Check out my on-chain decentralized hedge fund "${name}". ` +
-          `It currently has a share price of ${toFixed(
-            sharePrice,
-          )}. Have a look:`
+          `It currently has a share price of ${sharePrice &&
+            toFixed(sharePrice)}. Have a look:`
       : track !== 'live'
-      ? `The #MelonFund "${name}" has a share price currently of ${toFixed(
-          sharePrice,
-        )}. Have a look:`
+      ? `The #MelonFund "${name}" has a share price currently of ${sharePrice &&
+          toFixed(sharePrice)}. Have a look:`
       : `Check out this on-chain decentralized hedge fund "${name}". ` +
-        `It currently has a share price of ${toFixed(
-          sharePrice,
-        )}. Have a look:`;
+        `It currently has a share price of ${sharePrice &&
+          toFixed(sharePrice)}. Have a look:`;
 
     const url =
       track === 'live'

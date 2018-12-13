@@ -2,11 +2,11 @@ import React from 'react';
 import * as R from 'ramda';
 import ModalTransaction from '+/components/ModalTransaction';
 import gql from 'graphql-tag';
+import { withRouter } from 'next/router';
 
-const estimateCreateComponentsMutation = gql`
-  mutation EstimateCreateComponents($name: String!, $exchanges: [String]!) {
-    estimate: estimateCreateComponents(name: $name, exchanges: $exchanges)
-      @from {
+const estimateFundSetupBeginMutation = gql`
+  mutation EstimateFundSetupBegin($name: String!, $exchanges: [String]!) {
+    estimate: estimateFundSetupBegin(name: $name, exchanges: $exchanges) @from {
       data
       from
       gas
@@ -17,8 +17,8 @@ const estimateCreateComponentsMutation = gql`
   }
 `;
 
-const executeCreateComponentsMutation = gql`
-  mutation ExecuteCreateComponents(
+const executeFundSetupBeginMutation = gql`
+  mutation ExecuteFundSetupBegin(
     $data: String!
     $from: String!
     $gas: String!
@@ -26,7 +26,7 @@ const executeCreateComponentsMutation = gql`
     $to: String!
     $value: String!
   ) {
-    execute: executeCreateComponents(
+    execute: executeFundSetupBegin(
       unsigned: {
         data: $data
         from: $from
@@ -39,19 +39,19 @@ const executeCreateComponentsMutation = gql`
   }
 `;
 
-export default props => (
+export default withRouter(props => (
   <ModalTransaction
-    text="The following method on the Melon Smart Contracts will be executed: createComponents"
-    open={!!props.values && props.step === 0}
+    text="The following method on the Melon Smart Contracts will be executed: beginSetup"
+    open={!!props.values && props.progress === 0}
     estimate={{
-      mutation: estimateCreateComponentsMutation,
+      mutation: estimateFundSetupBeginMutation,
       variables: () => ({
         name: props.values.name,
         exchanges: props.values.exchanges,
       }),
     }}
     execute={{
-      mutation: executeCreateComponentsMutation,
+      mutation: executeFundSetupBeginMutation,
       update: (cache, result) => {
         props.update(cache, {
           step: 1,
@@ -59,6 +59,10 @@ export default props => (
         });
       },
     }}
-    handleCancel={() => props.setFundValues(null)}
+    handleCancel={() => {
+      props.router.push({
+        pathname: '/wallet',
+      });
+    }}
   />
-);
+));

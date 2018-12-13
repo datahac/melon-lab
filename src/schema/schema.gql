@@ -29,6 +29,16 @@ enum SymbolEnum {
   MLN
 }
 
+enum FundSetupStepEnum {
+  CREATE_ACCOUNTING
+  CREATE_FEE_MANAGER
+  CREATE_PARTICIPATION
+  CREATE_POLICY_MANAGER
+  CREATE_SHARES
+  CREATE_TRADING
+  CREATE_VAULT
+}
+
 type Price {
   base: Quantity,
   quote: Quantity,
@@ -171,9 +181,45 @@ type ExchangeConfig {
   takesCustody: Boolean!
 }
 
+type AdapterAddresses {
+  kyberAdapter: String!
+  matchingMarketAdapter: String!
+  zeroExAdapter: String!
+}
+
+type PolicyAddresses {
+  priceTolerance: String!
+  userWhitelist: String!
+}
+
+type FactoryAddresses {
+  accountingFactory: String!
+  feeManagerFactory: String!
+  participationFactory: String!
+  policyManagerFactory: String!
+  sharesFactory: String!
+  tradingFactory: String!
+  vaultFactory: String!
+}
+
+type ThirdPartyContracts {
+  exchanges: [ExchangeConfig]!
+  tokens: [Token]!
+}
+
+type MelonContracts {
+  priceSource: String!
+  adapters: AdapterAddresses!
+  policies: PolicyAddresses!
+  engine: String!
+  registry: String!
+  version: String!
+  ranking: String!
+}
+
 type Deployment {
-  exchangeConfigs: [ExchangeConfig]
-  priceSource: String
+  melonContracts: MelonContracts!
+  thirdPartyContracts: ThirdPartyContracts!
   version: String
   ranking: String
   tokens: [Token]
@@ -243,46 +289,51 @@ type Mutation {
 
   # TODO: Give more fund configuration options: Policies, pricefeed, ...
   """
-  Estimates the number of gas units required for the "create components" transaction.
+  Estimates the number of gas units required for the "beginSetup" transaction.
   """
-  estimateCreateComponents(
+  estimateFundSetupBegin(
     name: String!
     exchanges: [String]!
   ): UnsignedTransaction
 
   """
-  Executes the "create components" transaction with the given gas price per unit.
+  Executes the "beginSetup" transaction with the given gas price per unit.
   """
-  executeCreateComponents(
+  executeFundSetupBegin(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
   ): String
 
   """
-  Estimates the number of gas units required for the "continue creation" transaction.
+  Estimates the number of gas units required for a fund setup step transaction.
   """
-  estimateContinueCreation: UnsignedTransaction
+  estimateFundSetupStep(
+    "The step in the fund factory process."
+    step: FundSetupStepEnum!
+  ): UnsignedTransaction
 
   """
-  Executes the "continue creation" transaction with the given gas price per unit.
+  Executes a fund setup step transaction with the given gas price per unit.
   """
-  executeContinueCreation(
+  executeFundSetupStep(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
+    "The step in the fund factory process."
+    step: FundSetupStepEnum!
   ): Boolean
 
   """
-  Estimates the number of gas units required for the "setup fund" transaction.
+  Estimates the number of gas units required for the "completeSetup" transaction.
   """
-  estimateSetupFund: UnsignedTransaction
+  estimateFundSetupComplete: UnsignedTransaction
 
   """
-  Executes the "setup fund" transaction with the given gas price per unit.
+  Executes the "completeSetup" transaction with the given gas price per unit.
   """
-  executeSetupFund(
+  executeFundSetupComplete(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
-  ): Boolean
+  ): String
 
   """
   Estimates the number of gas units required for the "request investment" transaction.

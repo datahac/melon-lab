@@ -18,9 +18,9 @@ import { AccountConsumer } from '+/components/AccountContext';
 import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import withForm from './withForm';
-import CreateComponents from '+/components/CreateComponents';
-import ContinueCreation from '+/components/ContinueCreation';
-import SetupFund from '+/components/SetupFund';
+import FundSetupBegin from '+/components/FundSetupBegin';
+import FundSetupStep from '+/components/FundSetupStep';
+import FundSetupComplete from '+/components/FundSetupComplete';
 
 const SetupFormContainer = withForm(props => (
   <SetupForm
@@ -45,7 +45,9 @@ const SetupFormContainer = withForm(props => (
       >
         <StepFund
           {...props}
-          canonicalPriceFeedAddress={props.configuration.priceSource}
+          canonicalPriceFeedAddress={
+            props.configuration.melonContracts.priceSource
+          }
           noComplianceAddress={props.configuration.noComplianceAddress}
           availableExchangeContracts={availableExchangeContracts}
         />
@@ -154,21 +156,58 @@ class Setup extends React.Component {
       >
         {([account, configuration, managerProps]) => (
           <Fragment>
-            <CreateComponents
-              step={managerProps.step}
+            <FundSetupBegin
+              progress={managerProps.step}
               values={this.state.values}
               update={managerProps.update}
               setFundValues={this.setFundValues}
             />
 
-            <ContinueCreation
-              step={managerProps.step}
+            <FundSetupStep
+              step={2}
+              progress={managerProps.step}
               update={managerProps.update}
             />
 
-            <SetupFund
-              step={managerProps.step}
+            <FundSetupStep
+              step={3}
+              progress={managerProps.step}
+              update={managerProps.update}
+            />
+
+            <FundSetupStep
+              step={4}
+              progress={managerProps.step}
+              update={managerProps.update}
+            />
+
+            <FundSetupStep
+              step={5}
+              progress={managerProps.step}
+              update={managerProps.update}
+            />
+
+            <FundSetupStep
+              step={6}
+              progress={managerProps.step}
+              update={managerProps.update}
+            />
+
+            <FundSetupStep
+              step={7}
+              progress={managerProps.step}
+              update={managerProps.update}
+            />
+
+            <FundSetupStep
+              step={8}
+              progress={managerProps.step}
+              update={managerProps.update}
+            />
+
+            <FundSetupComplete
               fund={managerProps.fund}
+              progress={managerProps.step}
               update={managerProps.update}
             />
 

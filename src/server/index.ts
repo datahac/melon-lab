@@ -12,16 +12,18 @@ import { createServer } from 'http';
 import { ApolloServer } from 'apollo-server-express';
 import Wallet from 'ethers-wallet';
 import Ganache from '@melonproject/ganache-cli';
-import { constructEnvironment } from '@melonproject/protocol';
 import { getPrice } from '@melonproject/token-math/price';
 import { createQuantity } from '@melonproject/token-math/quantity';
 import {
+  constructEnvironment,
+  deployThirdParty,
   deploySystem,
   getTokenBySymbol,
   update,
   getQuoteToken,
 } from '@melonproject/protocol';
 import Web3Accounts from 'web3-eth-accounts';
+import { compose } from 'async';
 
 const mnemonic =
   'exhibit now news planet fame thank swear reform tilt accident bitter axis';
@@ -65,32 +67,39 @@ const getTestEnvironment = async (track: string) => {
       .signTransaction(transaction, wallet.privateKey)
       .then(t => t.rawTransaction);
 
-  const deployment = await deploySystem({
+  const withWallet = {
     ...environment,
     wallet: {
       ...wallet,
       sign: signer,
     },
-  });
+  };
 
-  fs.writeFileSync(deploymentPath, JSON.stringify(deployment.deployment));
+  const thirdParty = await deployThirdParty(withWallet);
+  const withDeployment = await deploySystem(withWallet, thirdParty);
+
+  fs.writeFileSync(deploymentPath, JSON.stringify(withDeployment.deployment));
 
   const quoteToken = await getQuoteToken(
-    deployment,
-    deployment.deployment.priceSource,
+    withDeployment,
+    withDeployment.deployment.melonContracts.priceSource,
   );
 
-  const baseToken = getTokenBySymbol(deployment, 'WETH');
+  const baseToken = getTokenBySymbol(withDeployment, 'WETH');
   const newPrice = getPrice(
     createQuantity(baseToken, 1),
     createQuantity(quoteToken, 2),
   );
 
-  await update(deployment, deployment.deployment.priceSource, [newPrice]);
+  await update(
+    withDeployment,
+    withDeployment.deployment.melonContracts.priceSource,
+    [newPrice],
+  );
 
   return {
     ...environment,
-    deployment: deployment.deployment,
+    deployment: withDeployment.deployment,
   };
 };
 

@@ -1,11 +1,12 @@
 import React from 'react';
-import { withRouter } from 'next/router';
+import * as R from 'ramda';
 import ModalTransaction from '+/components/ModalTransaction';
 import gql from 'graphql-tag';
+import { withRouter } from 'next/router';
 
-const estimateSetupFundMutation = gql`
-  mutation EstimateSetupFund {
-    estimate: estimateSetupFund @from {
+const estimateFundSetupCompleteMutation = gql`
+  mutation EstimateFundSetupComplete {
+    estimate: estimateFundSetupComplete @from {
       data
       from
       gas
@@ -16,8 +17,8 @@ const estimateSetupFundMutation = gql`
   }
 `;
 
-const executeSetupFundMutation = gql`
-  mutation ExecuteSetupFund(
+const executeFundSetupCompleteMutation = gql`
+  mutation ExecuteFundSetupComplete(
     $data: String!
     $from: String!
     $gas: String!
@@ -25,7 +26,7 @@ const executeSetupFundMutation = gql`
     $to: String!
     $value: String!
   ) {
-    execute: executeSetupFund(
+    execute: executeFundSetupComplete(
       unsigned: {
         data: $data
         from: $from
@@ -40,16 +41,17 @@ const executeSetupFundMutation = gql`
 
 export default withRouter(props => (
   <ModalTransaction
-    text="The following method on the Melon Smart Contracts will be executed: setupFund"
-    open={props.step === 2}
+    text="The following method on the Melon Smart Contracts will be executed: completeSetup"
+    open={props.progress === 8}
     estimate={{
-      mutation: estimateSetupFundMutation,
+      mutation: estimateFundSetupCompleteMutation,
     }}
     execute={{
-      mutation: executeSetupFundMutation,
-      update: cache => {
+      mutation: executeFundSetupCompleteMutation,
+      update: (cache, result) => {
         props.update(cache, {
-          step: 3,
+          step: 9,
+          fund: R.path(['data', 'execute'], result),
         });
       },
       onCompleted: () => {
@@ -61,10 +63,10 @@ export default withRouter(props => (
         });
       },
     }}
-    handleCancel={() =>
+    handleCancel={() => {
       props.router.push({
         pathname: '/wallet',
-      })
-    }
+      });
+    }}
   />
 ));

@@ -3,7 +3,9 @@ import gql from 'graphql-tag';
 import { Query } from '~/apollo';
 
 const defaults = {
-  priceSource: null,
+  melonContracts: {
+    priceSource: null,
+  },
 };
 
 export const ConfigurationContext = React.createContext(defaults);
@@ -11,7 +13,9 @@ export const ConfigurationContext = React.createContext(defaults);
 export const configurationQuery = gql`
   query ConfigurationQuery {
     contractDeployment {
-      priceSource
+      melonContracts {
+        priceSource
+      }
     }
   }
 `;

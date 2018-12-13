@@ -5,23 +5,24 @@ import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import GraphQLJSON from 'graphql-type-json';
 import { map, pluck, distinctUntilChanged, skip } from 'rxjs/operators';
 import {
-  createComponents,
-  continueCreation,
-  setupFund,
   requestInvestment,
   executeRequest,
   approve as approveTransfer,
-  isEmptyAddress,
-  isAddress,
   shutDownFund,
+  beginSetup,
+  createParticipation,
+  createPolicyManager,
+  createShares,
+  createTrading,
+  createVault,
+  createFeeManager,
+  createAccounting,
+  completeSetup,
 } from '@melonproject/protocol';
-import { getTokenByAddress } from '@melonproject/protocol/lib/utils/environment/getTokenByAddress';
-import { Address } from '@melonproject/token-math/address';
+import { isAddress, Address } from '@melonproject/token-math/address';
 import { createQuantity } from '@melonproject/token-math/quantity';
 import Order from './types/Order';
 import toAsyncIterator from './utils/toAsyncIterator';
-import takeLast from './utils/takeLast';
-import resolveNetwork from './utils/resolveNetwork';
 import sameBlock from './utils/sameBlock';
 
 export default {
@@ -29,10 +30,6 @@ export default {
   Json: GraphQLJSON,
   Order,
   Query: {
-    hasStoredWallet: async () => {
-      const credentials = await keytar.findCredentials('melon.fund');
-      return !!(credentials && credentials.length);
-    },
     defaultAccount: (_, __, { loaders }) => {
       const wallet = loaders.getWallet();
       return wallet && wallet.address;
@@ -41,6 +38,10 @@ export default {
       // TODO: Make this return all accounts.
       const wallet = loaders.getWallet();
       return wallet && wallet.address && [wallet.address];
+    },
+    hasStoredWallet: async () => {
+      const credentials = await keytar.findCredentials('melon.fund');
+      return !!(credentials && credentials.length);
     },
     stepFor: (_, { address }, { loaders }) => {
       return loaders.stepFor.load(address);
@@ -51,53 +52,56 @@ export default {
     recentTrades: (_, { base, quote }, { loaders }) => {
       return loaders.recentTrades.load({ base, quote });
     },
-    currentBlock: (_, __, { streams }) => {
-      return takeLast(streams.block$.pipe(pluck('number')));
+    currentBlock: (_, __, { loaders }) => {
+      return loaders.currentBlock();
     },
-    nodeSynced: (_, __, { streams }) => {
-      return takeLast(streams.syncing$.pipe(map(value => !value)));
+    nodeSynced: (_, __, { loaders }) => {
+      return loaders.nodeSynced();
     },
-    totalFunds: (_, __, { streams }) => {
-      return takeLast(streams.ranking$.pipe(map(value => value.length)));
+    totalFunds: (_, __, { loaders }) => {
+      return loaders.fundRanking().then(R.prop('length'));
     },
-    priceFeedUp: (_, __, { streams }) => {
-      return takeLast(streams.recentPrice$);
+    priceFeedUp: (_, __, { loaders }) => {
+      return loaders.priceFeedUp();
     },
-    peerCount: (_, __, { streams }) => {
-      return takeLast(streams.peers$);
+    peerCount: (_, __, { loaders }) => {
+      return loaders.peerCount();
     },
-    contractDeployment: (_, __, { environment }) => {
-      return environment.deployment;
+    contractDeployment: (_, __, { loaders }) => {
+      return loaders.versionDeployment();
     },
-    network: async (_, __, { environment }) => {
-      return resolveNetwork(await environment.eth.net.getId());
+    network: (_, __, { loaders }) => {
+      return loaders.networkName();
     },
-    rankings: (_, __, { streams }) => {
-      return takeLast(streams.ranking$);
+    rankings: (_, __, { loaders }) => {
+      return loaders.fundRanking();
     },
-    fund: (_, { address }) => {
-      return address;
-    },
-    fundByName: async (_, { name }, { streams }) => {
-      const rankings = (await takeLast(streams.ranking$)) || [];
-      const fund = rankings.find(fund => fund.name === name);
-      return fund && fund.address;
-    },
-    associatedFund: async (_, { managerAddress }, { loaders }) => {
-      const fundAddress = await loaders.fundAddressFromManager.load(
-        managerAddress,
+    fund: (_, { address }, { loaders }) => {
+      return (
+        (isAddress(address) &&
+          loaders.fundReady
+            .load(address)
+            .then(
+              R.cond([
+                [R.equals(true), R.always(address)],
+                [R.equals(false), R.always(null)],
+              ]),
+            )) ||
+        null
       );
-
-      const isShutdown = await loaders.shutDown.load(fundAddress);
-
-      return (!isShutdown && fundAddress) || null;
+    },
+    fundByName: (_, { name }, { loaders }) => {
+      return loaders.fundByName.load(name);
+    },
+    associatedFund: (_, { managerAddress }, { loaders }) => {
+      return loaders.fundAddressFromManager.load(managerAddress);
     },
     balance: (_, { address, symbol }, { loaders }) => {
       return loaders.symbolBalance.load({ address, symbol });
     },
   },
   Ranking: {
-    fund: (parent, _, { loaders }) => {
+    fund: parent => {
       return parent.address;
     },
     inception: parent => {
@@ -123,34 +127,29 @@ export default {
     totalSupply: (parent, _, { loaders }) => {
       return loaders.fundTotalSupply.load(parent);
     },
-    rank: async (parent, _, { streams }) => {
-      const ranking = await takeLast(streams.ranking$);
-      const entry = (ranking || []).find(rank => rank.address === parent);
-      return entry && entry.rank;
+    rank: (parent, _, { loaders }) => {
+      return loaders.fundRank.load(parent);
     },
     modules: (parent, _, { loaders }) => {
       return loaders.fundModules.load(parent);
     },
-    inception: async (parent, _, { loaders }) => {
+    inception: (parent, _, { loaders }) => {
       return loaders.fundInception.load(parent);
     },
-    personalStake: async (parent, { investor }, { loaders }) => {
+    personalStake: (parent, { investor }, { loaders }) => {
       return loaders.fundParticipation.load({
         fund: parent,
         investor,
       });
     },
-    gav: async (parent, _, { loaders }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations && calculations.gav;
+    gav: (parent, _, { loaders }) => {
+      return loaders.fundCalculations.load(parent).then(R.prop('gav'));
     },
-    nav: async (parent, _, { loaders }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations && calculations.nav;
+    nav: (parent, _, { loaders }) => {
+      return loaders.fundCalculations.load(parent).then(R.prop('nav'));
     },
-    sharePrice: async (parent, _, { loaders }) => {
-      const calculations = await loaders.fundCalculations.load(parent);
-      return calculations && calculations.sharePrice;
+    sharePrice: (parent, _, { loaders }) => {
+      return loaders.fundCalculations.load(parent).then(R.prop('sharePrice'));
     },
     managementReward: async (parent, _, { loaders }) => {
       return null;
@@ -164,22 +163,8 @@ export default {
     feesShareQuantity: async (parent, _, { loaders }) => {
       return null;
     },
-    holdings: async (parent, _, { loaders, environment }) => {
-      const { accountingAddress } = await loaders.fundSettings.load(parent);
-      const { 0: quantities, 1: tokens } = await loaders.fundHoldings.load(
-        accountingAddress,
-      );
-
-      const result = tokens
-        .filter(value => {
-          return isAddress(value) && !isEmptyAddress(value);
-        })
-        .map((value, key) => {
-          const token = getTokenByAddress(environment, value);
-          return createQuantity(token, quantities[key]);
-        });
-
-      return result;
+    holdings: async (parent, _, { loaders }) => {
+      return loaders.fundHoldings.load(parent);
     },
   },
   Holding: {
@@ -199,7 +184,7 @@ export default {
       // TODO: Cancel open orders.
       throw new Error('This is not implemented yet');
     },
-    estimateCreateComponents: async (
+    estimateFundSetupBegin: async (
       _,
       { from, name, exchanges },
       { environment, loaders },
@@ -207,9 +192,8 @@ export default {
       const quoteToken = await loaders.quoteToken();
       const {
         exchangeConfigs,
-        priceSource,
-        tokens,
-        version,
+        melonContracts: { priceSource, version },
+        thirdPartyContracts: { tokens },
       } = environment.deployment;
 
       const nativeToken = tokens.find(token => {
@@ -220,8 +204,9 @@ export default {
         return token.symbol === 'MLN';
       });
 
+      // TODO: Properly handle provided fees, exchanges, tokens, etc.
       const params = {
-        fees: [], // TODO: Implement fees
+        fees: [],
         defaultTokens: [quoteToken, mlnToken],
         exchangeConfigs,
         fundName: name,
@@ -238,7 +223,7 @@ export default {
         },
       };
 
-      const result = await createComponents.prepare(
+      const result = await beginSetup.prepare(
         enhancedEnvironment,
         version,
         params,
@@ -246,94 +231,104 @@ export default {
 
       return result && result.rawTransaction;
     },
-    executeCreateComponents: (_, { from, signed }, { environment }) => {
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+    executeFundSetupBegin: (_, { from, signed }, { environment }) => {
+      const transaction = signed.rawTransaction;
+      const version = environment.deployment.melonContracts.version;
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
         },
       };
 
-      return createComponents.send(
-        enhancedEnvironment,
-        environment.deployment.version,
-        signed.rawTransaction,
-      );
+      return beginSetup.send(env, version, transaction);
     },
-    estimateContinueCreation: async (_, { from }, { environment, streams }) => {
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+    estimateFundSetupStep: async (_, { step, from }, { environment }) => {
+      const version = environment.deployment.melonContracts.version;
+      const fn = {
+        CREATE_ACCOUNTING: createAccounting,
+        CREATE_FEE_MANAGER: createFeeManager,
+        CREATE_PARTICIPATION: createParticipation,
+        CREATE_POLICY_MANAGER: createPolicyManager,
+        CREATE_SHARES: createShares,
+        CREATE_TRADING: createTrading,
+        CREATE_VAULT: createVault,
+      }[step];
+
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
         },
       };
 
-      const result = await continueCreation.prepare(
-        enhancedEnvironment,
-        environment.deployment.version,
-      );
+      const result = await fn.prepare(env, version);
 
       return result && result.rawTransaction;
     },
-    executeContinueCreation: async (_, { from, signed }, { environment }) => {
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+    executeFundSetupStep: async (
+      _,
+      { step, from, signed },
+      { environment },
+    ) => {
+      const version = environment.deployment.melonContracts.version;
+      const transaction = signed.rawTransaction;
+      const fn = {
+        CREATE_ACCOUNTING: createAccounting,
+        CREATE_FEE_MANAGER: createFeeManager,
+        CREATE_PARTICIPATION: createParticipation,
+        CREATE_POLICY_MANAGER: createPolicyManager,
+        CREATE_SHARES: createShares,
+        CREATE_TRADING: createTrading,
+        CREATE_VAULT: createVault,
+      }[step];
+
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
         },
       };
 
-      const result = await continueCreation.send(
-        enhancedEnvironment,
-        environment.deployment.version,
-        signed.rawTransaction,
-      );
+      const result = await fn.send(env, version, transaction);
 
       return !!result;
     },
-    estimateSetupFund: async (_, { from }, { environment }) => {
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+
+    estimateFundSetupComplete: async (_, { from }, { environment }) => {
+      const version = environment.deployment.melonContracts.version;
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
         },
       };
 
-      const result = await setupFund.prepare(
-        enhancedEnvironment,
-        environment.deployment.version,
-      );
+      const result = await completeSetup.prepare(env, version);
 
       return result && result.rawTransaction;
     },
-    executeSetupFund: async (_, { from, signed }, { environment, streams }) => {
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+    executeFundSetupComplete: async (_, { from, signed }, { environment }) => {
+      const version = environment.deployment.melonContracts.version;
+      const transaction = signed.rawTransaction;
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
         },
       };
 
-      const result = await setupFund.send(
-        enhancedEnvironment,
-        environment.deployment.version,
-        signed.rawTransaction,
-      );
-
-      return !!result;
+      return completeSetup.send(env, version, transaction);
     },
     estimateRequestInvestment: async (
       _,
       { from, fundAddress, investmentAmount },
       { environment, loaders },
     ) => {
-      const { tokens } = environment.deployment;
-      const settings = await loaders.fundSettings.load(fundAddress);
+      const { tokens } = environment.deployment.thirdPartyContracts;
+      const { participationAddress } = await loaders.fundSettings.load(
+        fundAddress,
+      );
       const nativeToken = tokens.find(token => {
         return token.symbol === 'WETH';
       });
@@ -342,8 +337,7 @@ export default {
         investmentAmount: createQuantity(nativeToken, investmentAmount),
       };
 
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
@@ -351,8 +345,8 @@ export default {
       };
 
       const result = await requestInvestment.prepare(
-        enhancedEnvironment,
-        settings.participationAddress,
+        env,
+        participationAddress,
         params,
       );
 
@@ -363,9 +357,11 @@ export default {
       { from, signed, fundAddress },
       { environment, loaders },
     ) => {
-      const settings = await loaders.fundSettings.load(fundAddress);
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+      const { participationAddress } = await loaders.fundSettings.load(
+        fundAddress,
+      );
+      const transaction = signed.rawTransaction;
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
@@ -373,9 +369,9 @@ export default {
       };
 
       const result = await requestInvestment.send(
-        enhancedEnvironment,
-        settings.participationAddress,
-        signed.rawTransaction,
+        env,
+        participationAddress,
+        transaction,
       );
 
       return !!result;
@@ -383,24 +379,25 @@ export default {
     estimateApproveTransfer: async (
       _,
       { from, fundAddress, investmentAmount },
-      { environment, streams, loaders },
+      { environment, loaders },
     ) => {
+      const { participationAddress } = await loaders.fundSettings.load(
+        fundAddress,
+      );
       const quoteToken = await loaders.quoteToken();
-      const settings = await loaders.fundSettings.load(fundAddress);
       const params = {
         howMuch: createQuantity(quoteToken, investmentAmount),
-        spender: settings.participationAddress,
+        spender: participationAddress,
       };
 
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
         },
       };
 
-      const result = await approveTransfer.prepare(enhancedEnvironment, params);
+      const result = await approveTransfer.prepare(env, params);
       return result && result.rawTransaction;
     },
     executeApproveTransfer: async (
@@ -408,26 +405,24 @@ export default {
       { from, signed, fundAddress, investmentAmount },
       { environment, loaders },
     ) => {
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+      const { participationAddress } = await loaders.fundSettings.load(
+        fundAddress,
+      );
+      const quoteToken = await loaders.quoteToken();
+      const transaction = signed.rawTransaction;
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
         },
       };
 
-      const quoteToken = await loaders.quoteToken();
-      const settings = await loaders.fundSettings.load(fundAddress);
       const params = {
         howMuch: createQuantity(quoteToken, investmentAmount),
-        spender: settings.participationAddress,
+        spender: participationAddress,
       };
 
-      const result = await approveTransfer.send(
-        enhancedEnvironment,
-        signed.rawTransaction,
-        params,
-      );
+      const result = await approveTransfer.send(env, transaction, params);
 
       return !!result;
     },
@@ -436,20 +431,17 @@ export default {
       { from, fundAddress },
       { environment, loaders },
     ) => {
-      const settings = await loaders.fundSettings.load(fundAddress);
-
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+      const { participationAddress } = await loaders.fundSettings.load(
+        fundAddress,
+      );
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
         },
       };
 
-      const result = await executeRequest.prepare(
-        enhancedEnvironment,
-        settings.participationAddress,
-      );
+      const result = await executeRequest.prepare(env, participationAddress);
 
       return result && result.rawTransaction;
     },
@@ -458,9 +450,11 @@ export default {
       { from, signed, fundAddress },
       { environment, loaders },
     ) => {
-      const settings = await loaders.fundSettings.load(fundAddress);
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+      const { participationAddress } = await loaders.fundSettings.load(
+        fundAddress,
+      );
+      const transaction = signed.rawTransaction;
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
@@ -468,9 +462,9 @@ export default {
       };
 
       const result = await executeRequest.send(
-        enhancedEnvironment,
-        settings.participationAddress,
-        signed.rawTransaction,
+        env,
+        participationAddress,
+        transaction,
       );
 
       return !!result;
@@ -480,8 +474,7 @@ export default {
         hub: fundAddress,
       };
 
-      // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
+      const env = {
         ...environment,
         wallet: {
           address: new Address(from),
@@ -489,20 +482,24 @@ export default {
       };
 
       const result = await shutDownFund.prepare(
-        enhancedEnvironment,
-        environment.deployment.version,
+        env,
+        environment.deployment.melonContracts.version,
         params,
       );
+
       return result && result.rawTransaction;
     },
     executeShutDownFund: async (
       _,
       { from, signed, fundAddress },
-      { environment, loaders },
+      { environment },
     ) => {
+      const version = environment.deployment.melonContracts.version;
+      const transaction = signed.rawTransaction;
       const params = {
         hub: fundAddress,
       };
+
       const enhancedEnvironment = {
         ...environment,
         wallet: {
@@ -512,8 +509,8 @@ export default {
 
       const result = await shutDownFund.send(
         enhancedEnvironment,
-        environment.deployment.version,
-        signed.rawTransaction,
+        version,
+        transaction,
         params,
       );
 
@@ -584,10 +581,11 @@ export default {
     balance: {
       resolve: value => value,
       subscribe: async (_, { symbol, address }, { loaders }) => {
-        const stream$ = (await loaders.symbolBalanceObservable(
+        const observable$ = await loaders.symbolBalanceObservable.load({
           symbol,
           address,
-        )).pipe(distinctUntilChanged(R.equals));
+        });
+        const stream$ = observable$.pipe(distinctUntilChanged(R.equals));
 
         return toAsyncIterator(stream$);
       },

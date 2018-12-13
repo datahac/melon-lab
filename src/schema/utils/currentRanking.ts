@@ -30,8 +30,8 @@ const currentRanking = (environment, block$) => {
     concatMap(() => {
       return requestRanking(
         environment,
-        environment.deployment.ranking,
-        environment.deployment.version,
+        environment.deployment.melonContracts.ranking,
+        environment.deployment.melonContracts.version,
       );
     }),
   );

@@ -46,7 +46,7 @@ class WalletTemplateContainer extends React.PureComponent {
                 canInvest: capabibility && capabibility.canInvest,
                 canInteract: capabibility && capabibility.canInteract,
                 canonicalPriceFeedAddress:
-                  configuration && configuration.priceSource,
+                  configuration && configuration.melonContracts.priceSource,
                 network: network && network.network,
                 currentBlock: network && network.currentBlock,
                 blockOverdue: network && network.blockOverdue,
