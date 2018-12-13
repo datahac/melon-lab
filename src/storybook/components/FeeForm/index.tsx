@@ -54,19 +54,21 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
       <style jsx>{styles}</style>
       {error && <p>{error.message}</p>}
       {!error && text && <p>{text}</p>}
-      {!error && <div className="fee-form__input">
-        <Input
-          value={values.gasPrice}
-          label="Gas price"
-          name="gasPrice"
-          insideLabel="true"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          required={true}
-          formatNumber={true}
-          error={touched.gasPrice && errors.gasPrice}
-        />
-      </div>}
+      {!error && (
+        <div className="fee-form__input">
+          <Input
+            value={values.gasPrice}
+            label="Gas price"
+            name="gasPrice"
+            insideLabel="true"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            required={true}
+            formatNumber={true}
+            error={touched.gasPrice && errors.gasPrice}
+          />
+        </div>
+      )}
 
       {!error && fees && (
         <div>
