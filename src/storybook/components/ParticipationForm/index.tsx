@@ -15,7 +15,10 @@ interface FormValues {
 
 export interface ParticipationFormProps {
   decimals?: number;
-  quoteAsset: string;
+  quoteToken?: {
+    symbol: string;
+    decimals: number;
+  };
   setup: boolean;
   touched?: any;
   errors?: any;
@@ -26,12 +29,12 @@ export interface ParticipationFormProps {
 }
 
 const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
-  decimals,
+  decimals = 0,
   errors,
   handleBlur,
   handleSubmit,
   handleChange,
-  quoteAsset,
+  quoteToken,
   setup,
   touched,
   values,
@@ -78,7 +81,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
             required={true}
             formatNumber={true}
             error={touched.quantity && errors.quantity}
-            decimals={0}
+            decimals={decimals}
           />
         </div>
 
@@ -88,7 +91,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
               <Input
                 value={values.price}
                 type="number"
-                label={`Price (${quoteAsset})`}
+                label={`Price (${quoteToken && quoteToken.symbol})`}
                 name="price"
                 insideLabel="true"
                 placeholder={numberPlaceholder}
@@ -98,14 +101,14 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 formatNumber={true}
                 error={touched.price && errors.price}
                 disabled={true}
-                decimals={0}
+                decimals={decimals}
               />
             </div>
             <div className="participation-form__input">
               <Input
                 value={values.total}
                 type="number"
-                label={`Total (${quoteAsset})`}
+                label={`Total (${quoteToken && quoteToken.symbol})`}
                 name="total"
                 insideLabel="true"
                 placeholder={numberPlaceholder}
@@ -114,7 +117,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 required={true}
                 formatNumber={true}
                 error={touched.total && errors.total}
-                decimals={0}
+                decimals={decimals}
               />
             </div>
           </Fragment>

@@ -275,6 +275,7 @@ type Query {
     name: String!
   ): Fund
 
+  quoteToken: Token
   network: String
   currentBlock: String
   nodeSynced: Boolean

@@ -90,6 +90,9 @@ export default {
     balance: (_, { address, symbol }, { loaders }) => {
       return loaders.symbolBalance.load({ address, symbol });
     },
+    quoteToken: (_, __, { loaders }) => {
+      return loaders.quoteToken();
+    },
   },
   Ranking: {
     fund: parent => {
