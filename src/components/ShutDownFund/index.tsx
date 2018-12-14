@@ -1,5 +1,4 @@
 import React from 'react';
-import * as R from 'ramda';
 import ModalTransaction from '+/components/ModalTransaction';
 import gql from 'graphql-tag';
 

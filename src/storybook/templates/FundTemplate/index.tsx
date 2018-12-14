@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Footer from '~/components/Footer';
 import Header from '~/components/Header';
+import Notification from '~/blocks/Notification';
 import FundHeadline from '~/components/FundHeadline';
 import Layout from '~/design/Layout';
 
@@ -22,6 +23,12 @@ const Fund = ({
   HeaderProps = {},
   FundHeadlineProps,
 }) => {
+  let message;
+
+  if (FundHeadlineProps.isShutdown) {
+    message = 'This fund is shutdown';
+  }
+
   return (
     <Layout>
       <div className="fund-template">
@@ -34,9 +41,16 @@ const Fund = ({
 
         <div className="fund-template__content-wrap">
           {FundHeadlineProps && (
-            <div className="fund-template__title">
-              <FundHeadline {...FundHeadlineProps} />
-            </div>
+            <Fragment>
+              {message && (
+                <div className="fund-headline__message">
+                  <Notification isError>{message}</Notification>
+                </div>
+              )}
+              <div className="fund-template__title">
+                <FundHeadline {...FundHeadlineProps} />
+              </div>
+            </Fragment>
           )}
           <div className="fund-template__content">
             <div className="fund-template__info">
