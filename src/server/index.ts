@@ -23,7 +23,6 @@ import {
   getQuoteToken,
 } from '@melonproject/protocol';
 import Web3Accounts from 'web3-eth-accounts';
-import { compose } from 'async';
 
 const mnemonic =
   'exhibit now news planet fame thank swear reform tilt accident bitter axis';
@@ -164,7 +163,6 @@ const getEnvironment = async (track: string, endpoint?: string) => {
   apollo.applyMiddleware({
     app,
     path: '/api',
-    cors: true,
     bodyParserConfig: true,
     disableHealthCheck: true,
   });

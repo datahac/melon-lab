@@ -6,7 +6,8 @@ import { withRouter } from 'next/router';
 
 const estimateFundSetupBeginMutation = gql`
   mutation EstimateFundSetupBegin($name: String!, $exchanges: [String]!) {
-    estimate: estimateFundSetupBegin(name: $name, exchanges: $exchanges) @from {
+    estimate: estimateFundSetupBegin(name: $name, exchanges: $exchanges)
+      @account {
       data
       from
       gas
@@ -35,7 +36,7 @@ const executeFundSetupBeginMutation = gql`
         to: $to
         value: $value
       }
-    ) @sign @from
+    ) @sign @account
   }
 `;
 

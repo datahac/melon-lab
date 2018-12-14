@@ -9,12 +9,8 @@ import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import Template from '~/templates/FundTemplate';
 import FactSheet from '+/components/FactSheet';
-import OrderBook from '+/components/OrderBook';
-import OpenOrders from '+/components/OpenOrders';
 import OrderForm from '+/components/OrderForm';
 import Holdings from '+/components/Holdings';
-import RecentTrades from '+/components/RecentTrades';
-import OrderBookQuery from './data/orderbook';
 import FundQuery from './data/fund';
 import HoldingsQuery from './data/holdings';
 import isSameAddress from '~/utils/isSameAddress';
@@ -30,11 +26,6 @@ const Context = ({ exchanges, address, quoteAsset, baseAsset, children }) => (
       <ConfigurationConsumer />,
       <FundManagerConsumer />,
       <HoldingsQuery address={address} />,
-      <OrderBookQuery
-        exchanges={exchanges}
-        baseAsset={baseAsset}
-        quoteAsset={quoteAsset}
-      />,
       ({ results: [account], render }) => (
         <FundQuery address={address} account={account} children={render} />
       ),
@@ -57,18 +48,6 @@ export default class FundTemplateContainer extends React.Component {
     },
   };
 
-  setExchanges = exchanges => {
-    this.setState({
-      exchanges,
-    });
-  };
-
-  setOrder = order => {
-    this.setState({
-      order,
-    });
-  };
-
   render() {
     const { exchanges } = this.state;
     const { address, quoteAsset, baseAsset } = this.props;
@@ -88,16 +67,12 @@ export default class FundTemplateContainer extends React.Component {
           configuration,
           managerProps,
           holdingsProps,
-          orderBookProps,
           fundProps,
         ]) => {
           const holdingsData = R.pathOr([], ['data', 'fund', 'holdings'])(
             holdingsProps,
           );
           const fundData = R.pathOr({}, ['data', 'fund'])(fundProps);
-          const orderBookData = R.pathOr({}, ['data', 'orderbook'])(
-            orderBookProps,
-          );
           const totalFunds = R.pathOr(0, ['data', 'totalFunds'])(fundProps);
           const isManager =
             !!managerProps.fund && isSameAddress(managerProps.fund, address);
@@ -148,30 +123,17 @@ export default class FundTemplateContainer extends React.Component {
                 holdings: holdingsData,
                 formValues: this.state.order,
               }}
-              OrderBook={OrderBook}
+              OrderBook={() => null}
               OrderBookProps={{
-                ...orderBookData,
-                quoteAsset,
-                baseAsset,
-                loading: orderBookProps.loading,
-                exchanges,
-                availableExchanges,
-                setExchanges: this.setExchanges,
-                setOrder: this.setOrder,
-                holdings: holdingsData,
-                isManager: isManager,
+                // TODO: Re-add this.
               }}
-              OpenOrders={OpenOrders}
+              OpenOrders={() => null}
               OpenOrdersProps={{
-                address,
-                isManager,
-                // TODO: Compute this properly.
-                isReadyToTrade: true,
+                // TODO: Re-add this.
               }}
-              RecentTrades={RecentTrades}
+              RecentTrades={() => null}
               RecentTradesProps={{
-                quoteAsset,
-                baseAsset,
+                // TODO: Re-add this.
               }}
             />
           );

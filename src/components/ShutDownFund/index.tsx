@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 
 const estimateShutDownFundMutation = gql`
   mutation EstimateShutDownFund($fundAddress: String!) {
-    estimate: estimateShutDownFund(fundAddress: $fundAddress) @from {
+    estimate: estimateShutDownFund(fundAddress: $fundAddress) @account {
       data
       from
       gas
@@ -35,7 +35,7 @@ const executeShutDownFundMutation = gql`
         to: $to
         value: $value
       }
-    ) @sign @from
+    ) @sign @account
   }
 `;
 

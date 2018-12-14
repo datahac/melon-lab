@@ -10,7 +10,7 @@ const estimateApproveTransferMutation = gql`
     estimate: estimateApproveTransfer(
       investmentAmount: $investmentAmount
       fundAddress: $fundAddress
-    ) @from {
+    ) @account {
       data
       from
       gas
@@ -43,7 +43,7 @@ const executeApproveTransferMutation = gql`
         to: $to
         value: $value
       }
-    ) @sign @from
+    ) @sign @account
   }
 `;
 

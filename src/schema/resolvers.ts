@@ -1,8 +1,6 @@
 import * as R from 'ramda';
-import * as Rx from 'rxjs';
 import * as keytar from 'keytar';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
-import GraphQLJSON from 'graphql-type-json';
 import { map, pluck, distinctUntilChanged, skip } from 'rxjs/operators';
 import {
   requestInvestment,
@@ -27,7 +25,6 @@ import sameBlock from './utils/sameBlock';
 
 export default {
   DateTime,
-  Json: GraphQLJSON,
   Order,
   Query: {
     defaultAccount: (_, __, { loaders }) => {
@@ -43,14 +40,8 @@ export default {
       const credentials = await keytar.findCredentials('melon.fund');
       return !!(credentials && credentials.length);
     },
-    stepFor: (_, { address }, { loaders }) => {
-      return loaders.stepFor.load(address);
-    },
-    openOrders: (_, { address }, { loaders }) => {
-      return loaders.fundOpenOrders.load(address);
-    },
-    recentTrades: (_, { base, quote }, { loaders }) => {
-      return loaders.recentTrades.load({ base, quote });
+    stepFor: (_, { manager }, { loaders }) => {
+      return loaders.stepFor.load(manager);
     },
     currentBlock: (_, __, { loaders }) => {
       return loaders.currentBlock();
@@ -93,8 +84,8 @@ export default {
     fundByName: (_, { name }, { loaders }) => {
       return loaders.fundByName.load(name);
     },
-    associatedFund: (_, { managerAddress }, { loaders }) => {
-      return loaders.fundAddressFromManager.load(managerAddress);
+    associatedFund: (_, { manager }, { loaders }) => {
+      return loaders.fundAddressFromManager.load(manager);
     },
     balance: (_, { address, symbol }, { loaders }) => {
       return loaders.symbolBalance.load({ address, symbol });
@@ -165,6 +156,18 @@ export default {
     },
     holdings: async (parent, _, { loaders }) => {
       return loaders.fundHoldings.load(parent);
+    },
+    openOrders: (parent, { offset, limit }, { loaders }) => {
+      return loaders.fundOpenOrders.load({
+        address: parent,
+      });
+    },
+    recentTrades: (parent, { base, quote, offset, limit }, { loaders }) => {
+      return loaders.recentTrades.load({
+        address: parent,
+        base,
+        quote,
+      });
     },
   },
   Holding: {
@@ -571,13 +574,6 @@ export default {
     },
   },
   Subscription: {
-    orderbook: {
-      resolve: value => value,
-      subscribe: () => {
-        const stream$ = Rx.empty();
-        return toAsyncIterator(stream$);
-      },
-    },
     balance: {
       resolve: value => value,
       subscribe: async (_, { symbol, address }, { loaders }) => {

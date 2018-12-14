@@ -10,7 +10,7 @@ const estimateRequestInvestmentMutation = gql`
     estimate: estimateRequestInvestment(
       investmentAmount: $investmentAmount
       fundAddress: $fundAddress
-    ) @from {
+    ) @account {
       data
       from
       gas
@@ -41,7 +41,7 @@ const executeRequestInvestmentMutation = gql`
         to: $to
         value: $value
       }
-    ) @sign @from
+    ) @sign @account
   }
 `;
 

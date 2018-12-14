@@ -1,4 +1,4 @@
-import React, { StatelessComponent, Fragment } from 'react';
+import React, { StatelessComponent } from 'react';
 import Input from '~/blocks/Input';
 import {
   CellBody,
@@ -8,7 +8,6 @@ import {
   TableBody,
   TableHead,
 } from '~/blocks/Table';
-import { add, toBigNumber } from '~/utils/functionalBigNumber';
 
 import styles from './styles.css';
 
@@ -41,13 +40,14 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
     return (
       gasLimit &&
       values.gasPrice &&
-      toBigNumber((values.gasPrice * gasLimit) / 10 ** 9).toFixed(4)
+      ((values.gasPrice * gasLimit) / 10 ** 9).toFixed(4)
     );
   };
 
   const mapped = fees.map(fee => (fee.gasLimit * values.gasPrice) / 10 ** 9);
-  const total =
-    mapped && mapped.length ? toBigNumber(add(...mapped)).toFixed(4) : 0;
+  const total = mapped.reduce((carry, current) => {
+    return carry + current;
+  }, 0).toFixed(4);
 
   return (
     <div className="fee-form">

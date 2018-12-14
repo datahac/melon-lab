@@ -6,6 +6,7 @@ export default class RecentTradesContainer extends React.PureComponent {
   render() {
     return (
       <RecentTradesQuery
+        fundAddress={this.props.fundAddress}
         baseAsset={this.props.baseAsset}
         quoteAsset={this.props.quoteAsset}
       >

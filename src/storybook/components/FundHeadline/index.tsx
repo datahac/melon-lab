@@ -1,8 +1,7 @@
 import React, { StatelessComponent, Fragment } from 'react';
 import Icon from '~/blocks/Icon';
 import Spinner from '~/blocks/Spinner';
-import toFixedWithSymbol from '~/utils/toFixedWithSymbol';
-import { toFixed } from '@melonproject/token-math/quantity';
+import displayQuantity from '~/utils/displayQuantity';
 
 import styles from './styles.css';
 
@@ -37,16 +36,16 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
     const text = isOwner
       ? track !== 'live'
         ? `My #MelonFund "${name}" has a share price currently of ${sharePrice &&
-            oFixed(sharePrice)}. Have a look:`
+            displayQuantity(sharePrice)}. Have a look:`
         : `Check out my on-chain decentralized hedge fund "${name}". ` +
           `It currently has a share price of ${sharePrice &&
-            toFixed(sharePrice)}. Have a look:`
+            displayQuantity(sharePrice)}. Have a look:`
       : track !== 'live'
       ? `The #MelonFund "${name}" has a share price currently of ${sharePrice &&
-          toFixed(sharePrice)}. Have a look:`
+          displayQuantity(sharePrice)}. Have a look:`
       : `Check out this on-chain decentralized hedge fund "${name}". ` +
         `It currently has a share price of ${sharePrice &&
-          toFixed(sharePrice)}. Have a look:`;
+          displayQuantity(sharePrice)}. Have a look:`;
 
     const url =
       track === 'live'
@@ -88,12 +87,12 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">Share price</div>
-            {sharePrice && toFixedWithSymbol(sharePrice)}
+            {sharePrice && displayQuantity(sharePrice)}
             /Share
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">AUM</div>
-            {sharePrice && toFixedWithSymbol(gav)}
+            {sharePrice && displayQuantity(gav)}
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">Ranking</div>

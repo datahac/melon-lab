@@ -1,4 +1,3 @@
-import BigNumber from 'bignumber.js';
 import React, { Fragment, StatelessComponent } from 'react';
 import Checkbox from '~/blocks/Checkbox';
 import Notification from '~/blocks/Notification';
@@ -42,37 +41,11 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
   availableExchanges = [],
 }) => {
   const setSellOrder = index => {
-    const subset =
-      index + 1 < buyEntries.length
-        ? buyEntries.slice(0, index + 1)
-        : buyEntries;
-    const entry = buyEntries[index];
-    const exchange = entry.order.exchange;
-    const volume = entry.volume;
-
-    setSellOrderFinal(
-      new BigNumber(volume),
-      exchange,
-      subset.map(({ order }) => order),
-      entry.order.buy.symbol,
-    );
+    // TODO:
   };
 
   const setBuyOrder = index => {
-    const subset =
-      index + 1 < sellEntries.length
-        ? sellEntries.slice(0, index + 1)
-        : sellEntries;
-    const entry = sellEntries[index];
-    const exchange = entry.order.exchange;
-    const volume = entry.volume;
-
-    setBuyOrderFinal(
-      new BigNumber(volume),
-      exchange,
-      subset.map(({ order }) => order),
-      entry.order.buy.symbol,
-    );
+    // TODO:
   };
 
   return (

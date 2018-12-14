@@ -1,7 +1,7 @@
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { withHandlers, compose } from 'recompose';
-import { divide, multiply } from '~/utils/functionalBigNumber';
+import { divide, multiply } from '@melonproject/token-math/bigInteger';
 
 const withForm = withFormik({
   mapPropsToValues: () => ({

@@ -2,33 +2,43 @@ import { Query } from '~/apollo';
 import gql from 'graphql-tag';
 
 const query = gql`
-  query RecentTradesQuery($base: String!, $quote: String!) {
-    recentTrades(base: $base, quote: $quote) {
-      price {
-        base {
-          quantity
-          token {
-            symbol
+  query RecentTradesQuery(
+    $address: String!
+    $base: String!
+    $quote: String!
+  ) {
+    fund(address: $address) {
+      recentTrades(
+        base: $base
+        quote: $quote
+      ) {
+        price {
+          base {
+            quantity
+            token {
+              symbol
+            }
           }
-        }
 
-        quote {
-          quantity
-          token {
-            symbol
+          quote {
+            quantity
+            token {
+              symbol
+            }
           }
         }
+        timestamp
+        type
       }
-      timestamp
-      type
     }
   }
 `;
 
-const RecentTradesQuery = ({ baseAsset, quoteAsset, children }) => (
+const RecentTradesQuery = ({ fundAddress, baseAsset, quoteAsset, children }) => (
   <Query
     query={query}
     variables={{
+      address: fundAddress,
       base: baseAsset,
       quote: quoteAsset,
     }}

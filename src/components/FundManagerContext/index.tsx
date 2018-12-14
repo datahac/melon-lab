@@ -15,9 +15,9 @@ const defaults = {
 export const FundManagerContext = React.createContext(defaults);
 
 export const fundManagerQuery = gql`
-  query FundManagerQuery($account: String!) {
-    fund: associatedFund(managerAddress: $account)
-    step: stepFor(address: $account)
+  query FundManagerQuery {
+    fund: associatedFund @account(arg: "manager") @authenticated
+    step: stepFor @account(arg: "manager") @authenticated
   }
 `;
 

@@ -57,7 +57,7 @@ const schema = makeExecutableSchema({
   },
 });
 
-const defaultFrom = ({ loaders }) => {
+const defaultAccount = ({ loaders }) => {
   const wallet = loaders.getWallet();
   return (wallet && wallet.address) || undefined;
 };
@@ -85,11 +85,11 @@ addQueryDirectives(schema, {
 
     return resolve(source, newArgs, context, info);
   },
-  from: (resolve, source, args, context, info, directiveArgs) => {
-    const from = args[directiveArgs.arg] || defaultFrom(context);
+  account: (resolve, source, args, context, info, directiveArgs) => {
+    const account = args[directiveArgs.arg] || defaultAccount(context);
     const newArgs = {
       ...args,
-      [directiveArgs.arg]: from,
+      [directiveArgs.arg]: account,
     };
 
     return resolve(source, newArgs, context, info);

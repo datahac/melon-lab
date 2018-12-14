@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 const estimateExecuteRequestMutation = gql`
   mutation EstimateExecuteRequest($fundAddress: String!) {
-    estimate: estimateExecuteRequest(fundAddress: $fundAddress) @from {
+    estimate: estimateExecuteRequest(fundAddress: $fundAddress) @account {
       data
       from
       gas
@@ -36,7 +36,7 @@ const executeExecuteRequestMutation = gql`
         to: $to
         value: $value
       }
-    ) @sign @from
+    ) @sign @account
   }
 `;
 

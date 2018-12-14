@@ -6,7 +6,7 @@ import { withRouter } from 'next/router';
 
 const estimateFundSetupCompleteMutation = gql`
   mutation EstimateFundSetupComplete {
-    estimate: estimateFundSetupComplete @from {
+    estimate: estimateFundSetupComplete @account {
       data
       from
       gas
@@ -35,7 +35,7 @@ const executeFundSetupCompleteMutation = gql`
         to: $to
         value: $value
       }
-    ) @sign @from
+    ) @sign @account
   }
 `;
 

@@ -1,7 +1,7 @@
 import { withFormik } from 'formik';
 import { compose, withHandlers } from 'recompose';
 import * as Yup from 'yup';
-import { divide, multiply } from '~/utils/functionalBigNumber';
+import { divide, multiply } from '@melonproject/token-math/bigInteger';
 
 import ContributionForm from './index';
 

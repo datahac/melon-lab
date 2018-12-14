@@ -2,8 +2,8 @@ import React, { Fragment, StatelessComponent } from 'react';
 import Link from '~/blocks/Link';
 import Spinner from '~/blocks/Spinner';
 import InsufficientFunds from '~/components/InsufficientFunds';
-import { isZero } from '~/utils/functionalBigNumber';
 import { toFixed } from '@melonproject/token-math/quantity';
+import { isZero } from '@melonproject/token-math/bigInteger';
 
 import styles from './styles.css';
 

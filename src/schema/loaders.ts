@@ -7,18 +7,15 @@ import importWallet from './loaders/wallet/decryptWallet';
 import restoreWallet from './loaders/wallet/restoreWallet';
 import generateMnemonic from './loaders/wallet/generateMnemonic';
 import getFundInception from './loaders/fund/fundInception';
-import getFundModules from './loaders/fund/fundModules';
 import getFundOwner from './loaders/fund/fundOwner';
 import getFundName from './loaders/fund/fundName';
 import getFundSettings from './loaders/fund/fundSettings';
 import getFundHoldings from './loaders/fund/fundHoldings';
 import getFundTotalSupply from './loaders/fund/fundTotalSupply';
 import getFundCalculations from './loaders/fund/fundCalculations';
-import getFundOpenOrders from './loaders/fund/fundOpenOrders';
 import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
 import getFundIsShutdown from './loaders/fund/fundIsShutdown';
 import getFundParticipation from './loaders/fund/fundParticipation';
-import getRecentTrades from './loaders/recentTrades';
 import getQuoteToken from './loaders/quoteToken';
 import getAssetPrice from './loaders/assetPrice';
 import getStepFor from './loaders/stepFor';
@@ -84,11 +81,6 @@ export default (environment, streams) => {
     return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundModules = new DataLoader(addresses => {
-    const fn = getFundModules(environment);
-    return Promise.all(addresses.map(fn) || []);
-  });
-
   const fundCalculations = new DataLoader(async addresses => {
     const settings = await fundSettings.loadMany(addresses);
     return Promise.all(
@@ -120,9 +112,22 @@ export default (environment, streams) => {
     );
   });
 
-  const fundOpenOrders = new DataLoader(addresses => {
-    const fn = getFundOpenOrders(environment);
-    return Promise.all(addresses.map(fn) || []);
+  const fundModules = new DataLoader(addresses => {
+    // TODO: Implement this.
+    const fn = () => null;
+    return Promise.all(addresses.map(fn));
+  });
+
+  const fundOpenOrders = new DataLoader(pairs => {
+    // TODO: Implement this.
+    const fn = () => null;
+    return Promise.all(pairs.map(fn));
+  });
+
+  const fundRecentTrades = new DataLoader(pairs => {
+    // TODO: Implement this.
+    const fn = () => null;
+    return Promise.all(pairs.map(fn));
   });
 
   const fundIsShutdown = new DataLoader(addresses => {
@@ -163,6 +168,10 @@ export default (environment, streams) => {
     );
   });
 
+  const fundRanking = memoizeOne(() => {
+    return takeLast(streams.ranking$);
+  });
+
   const stepFor = new DataLoader(addresses => {
     const fn = getStepFor(environment);
     return Promise.all(addresses.map(fn) || []);
@@ -190,17 +199,6 @@ export default (environment, streams) => {
     },
   );
 
-  const recentTrades = new DataLoader(
-    pairs => {
-      const fn = getRecentTrades(environment);
-      const result = pairs.map(pair => fn(pair.base, pair.quote));
-      return Promise.all(result || []);
-    },
-    {
-      cacheKeyFn: pair => `${pair.base}:${pair.quote}`,
-    },
-  );
-
   const assetPrice = new DataLoader(
     tokens => {
       const fn = getAssetPrice(environment);
@@ -216,10 +214,6 @@ export default (environment, streams) => {
       environment,
       environment.deployment.melonContracts.priceSource,
     );
-  });
-
-  const fundRanking = memoizeOne(() => {
-    return takeLast(streams.ranking$);
   });
 
   const currentBlock = memoizeOne(() => {
@@ -260,12 +254,12 @@ export default (environment, streams) => {
     fundCalculations,
     fundHoldings,
     fundOpenOrders,
+    fundRecentTrades,
     fundParticipation,
     fundSettings,
     fundIsShutdown,
     stepFor,
     assetPrice,
-    recentTrades,
     symbolBalance,
     symbolBalanceObservable,
     generateMnemonic,

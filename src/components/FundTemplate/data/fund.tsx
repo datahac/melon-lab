@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 
 const query = gql`
   query FundQuery(
-    $address: String! # $account: String! # $authenticated: Boolean!
+    $address: String!
   ) {
     totalFunds
 
@@ -46,7 +46,7 @@ const query = gql`
 
       owner
       inception
-      personalStake @from(arg: "investor") @authenticated {
+      personalStake @account(arg: "investor") @authenticated {
         quantity
         token {
           decimals
@@ -57,13 +57,11 @@ const query = gql`
   }
 `;
 
-const FundQuery = ({ address, account, children }) => (
+const FundQuery = ({ address, children }) => (
   <Query
     query={query}
     variables={{
       address,
-      account: account || '',
-      authenticated: !!account,
     }}
     skip={!address}
   >

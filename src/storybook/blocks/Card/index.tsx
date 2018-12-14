@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
 import format from 'date-fns/format';
-import displayNumber from '~/utils/displayNumber';
+import displayQuantity from '~/utils/displayQuantity';
 import Link from '~/blocks/Link';
 import Icon from '~/blocks/Icon';
 
@@ -45,7 +45,7 @@ const Card: StatelessComponent<CardProps> = ({
           <div className="card__info">
             <div className="card__share-price">
               <span className="card__label">Share price</span>{' '}
-              {displayNumber(sharePrice)}
+              {sharePrice && displayQuantity(sharePrice)}
             </div>
             <div className="card__inception-date">
               <span className="card__label">Inception Date</span>{' '}

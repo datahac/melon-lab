@@ -5,7 +5,7 @@ import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import Ranking from '~/components/Ranking';
 import RankingQuery from './data/ranking';
-import { greaterThan } from '~/utils/functionalBigNumber';
+import { greaterThan } from '@melonproject/token-math/bigInteger';
 
 const filterRankings = R.curryN(2, (search, fund) => {
   return fund.name.toLocaleLowerCase().includes(search);

@@ -1,7 +1,5 @@
 import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
-import displayNumber from '~/utils/displayNumber';
-
 import styles from './styles.css';
 
 export interface HoldingProps {
@@ -45,8 +43,8 @@ const Holding: StatelessComponent<HoldingProps> = ({
           {symbol}
           <span className="holding__name">{name}</span>
         </div>
-        <div className="holding__price">{displayNumber(price)}</div>
-        <div className="holding__balance">{displayNumber(balance)}</div>
+        <div className="holding__price">{price && price.quantity}</div>
+        <div className="holding__balance">{balance && balance.quantity}</div>
       </div>
     </div>
   );

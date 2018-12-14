@@ -9,7 +9,7 @@ import {
   TableHead,
 } from '~/blocks/Table';
 import format from 'date-fns/format';
-import displayNumber from '~/utils/displayNumber';
+import displayQuantity from '~/utils/displayQuantity';
 
 import styles from './styles.css';
 
@@ -66,10 +66,10 @@ export const RecentTrades: StatelessComponent<RecentTradesProps> = ({
                       </span>
                     </CellBody>
                     <CellBody textAlign="right">
-                      {displayNumber(trade.price)}
+                      {trade.price && displayQuantity(trade.price)}
                     </CellBody>
                     <CellBody textAlign="right" noPadding={false}>
-                      {displayNumber(trade.quantity)}
+                      {trade.quantity && displayQuantity(trade.quantity)}
                     </CellBody>
                   </Row>
                 ))}

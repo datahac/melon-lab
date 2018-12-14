@@ -15,7 +15,7 @@ const steps = {
 
 const estimateFundSetupStepMutation = gql`
   mutation EstimateFundSetupStep($step: FundSetupStepEnum!) {
-    estimate: estimateFundSetupStep(step: $step) @from {
+    estimate: estimateFundSetupStep(step: $step) @account {
       data
       from
       gas
@@ -46,7 +46,7 @@ const executeFundSetupStepMutation = gql`
         to: $to
         value: $value
       }
-    ) @sign @from
+    ) @sign @account
   }
 `;
 

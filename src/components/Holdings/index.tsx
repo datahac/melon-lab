@@ -7,10 +7,10 @@ const mapHoldings = R.curryN(2, (nav, asset) => {
   const token = R.find(R.propEq('key', asset.balance.token.symbol), tokens);
 
   return {
-    price: asset.price.base.quantity,
+    price: asset.price.base,
     // TODO: Re-implement fraction.
     fraction: 0,
-    balance: asset.balance.quantity,
+    balance: asset.balance,
     name: token && token.value,
     symbol: asset.balance.token.symbol,
   };
