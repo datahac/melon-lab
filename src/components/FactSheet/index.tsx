@@ -41,6 +41,7 @@ export default class FactsheetContainer extends React.PureComponent {
                 reportUrl={reportUrl}
                 loading={loading}
                 handleShutDown={this.setShutDown}
+                isShutdown={fund.isShutdown}
               />
             </Fragment>
           );

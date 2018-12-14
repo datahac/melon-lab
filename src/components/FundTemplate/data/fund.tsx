@@ -8,6 +8,7 @@ const query = gql`
     totalFunds
 
     fund(address: $address) {
+      isShutdown
       address
       rank
       name

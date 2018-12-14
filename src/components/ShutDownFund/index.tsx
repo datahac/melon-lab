@@ -61,6 +61,9 @@ export default props => (
           fund: null,
         });
       },
+      onCompleted: () => {
+        props.setShutDown();
+      },
     }}
     handleCancel={() => props.setShutDown()}
   />
