@@ -13,7 +13,9 @@ const data = {
   touched: {},
   decimals: 4,
   setup: true,
-  quoteAsset: 'WETH',
+  quoteToken: {
+    symbol: 'WETH'
+  },
 };
 
 storiesOf('Components|Participation Form', module).add('Default', () => {

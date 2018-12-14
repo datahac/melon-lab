@@ -17,7 +17,6 @@ export interface ParticipationFormProps {
   decimals?: number;
   quoteToken?: {
     symbol: string;
-    decimals: number;
   };
   setup: boolean;
   touched?: any;

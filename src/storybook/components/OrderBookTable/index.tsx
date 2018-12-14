@@ -8,7 +8,7 @@ const OrderBookTable = ({
   style,
   entries,
   totalVolume,
-  decimals,
+  decimals = 0,
   onClickOrder,
   canTrade,
 }) => {

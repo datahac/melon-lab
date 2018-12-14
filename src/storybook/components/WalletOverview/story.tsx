@@ -8,9 +8,24 @@ const data = {
   currentAddress: '0x0890b03f83629B397F6E5E5075400fe6Ddb4255F',
   networkId: 'KOVAN',
   balances: {
-    eth: '1',
-    mln: '1',
-    weth: '1',
+    eth: {
+      quantity: 10000,
+      token: {
+        decimals: 4,
+      },
+    },
+    mln: {
+      quantity: 1,
+      token: {
+        decimals: 4,
+      },
+    },
+    weth: {
+      quantity: 1,
+      token: {
+        decimals: 4,
+      },
+    },
   },
   loading: false,
 };
