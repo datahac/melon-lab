@@ -1,6 +1,9 @@
 import React, { Fragment, StatelessComponent } from 'react';
-import { toFixed } from '@melonproject/token-math/quantity';
-import { toFixed as toFixedPrice } from '@melonproject/token-math/price';
+import { toFixed, QuantityInterface } from '@melonproject/token-math/quantity';
+import {
+  toFixed as toFixedPrice,
+  PriceInterface,
+} from '@melonproject/token-math/price';
 import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
@@ -10,19 +13,14 @@ import * as R from 'ramda';
 import styles from './styles.css';
 
 interface FormValues {
-  price: string;
-  quantity: string;
-  total: string;
+  price: PriceInterface;
+  quantity: QuantityInterface;
+  total: QuantityInterface;
   type: string;
 }
 
 export interface ParticipationFormProps {
   decimals?: number;
-  sharePrice?: {
-    token: {
-      symbol: string;
-    };
-  };
   setup: boolean;
   touched?: any;
   errors?: any;

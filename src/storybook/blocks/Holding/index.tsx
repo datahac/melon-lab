@@ -1,13 +1,16 @@
 import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
 import styles from './styles.css';
-import { toFixed } from '@melonproject/token-math/quantity';
-import { toFixed as toFixedPrice } from '@melonproject/token-math/price';
+import { toFixed, QuantityInterface } from '@melonproject/token-math/quantity';
+import {
+  toFixed as toFixedPrice,
+  PriceInterface,
+} from '@melonproject/token-math/price';
 
 export interface HoldingProps {
   fraction?: number;
-  balance?: string;
-  price?: string;
+  balance?: QuantityInterface;
+  price?: PriceInterface;
   name?: string;
   symbol?: string;
   active?: boolean;

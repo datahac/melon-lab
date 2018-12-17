@@ -3,13 +3,15 @@ import Icon from '~/blocks/Icon';
 import Spinner from '~/blocks/Spinner';
 import displayQuantity from '~/utils/displayQuantity';
 import displayPrice from '~/utils/displayPrice';
+import { QuantityInterface } from '@melonproject/token-math/quantity';
+import { PriceInterface } from '@melonproject/token-math/price';
 
 import styles from './styles.css';
 
 export interface FundHeadlineProps {
   name?: string;
-  sharePrice?: any;
-  gav?: string;
+  sharePrice?: PriceInterface;
+  gav?: QuantityInterface;
   rank?: string;
   totalFunds?: string;
   quoteAsset?: string;
