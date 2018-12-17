@@ -118,6 +118,8 @@ export default class ModalTransaction extends React.Component {
               handleCancel={this.props.handleCancel}
               error={estimateProps.error || executeProps.error}
               loading={estimateProps.loading || executeProps.loading}
+              estimateProps={estimateProps}
+              gasPrice={R.path(['data', 'estimate', 'gasPrice'], estimateProps)}
               text={this.props.text}
               open={this.props.open}
               fees={fees}

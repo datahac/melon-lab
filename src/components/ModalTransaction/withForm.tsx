@@ -1,13 +1,9 @@
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
-const initialValues = {
-  gasPrice: '5',
-};
-
 const withForm = withFormik({
   mapPropsToValues: props => ({
-    ...(props.formValues ? props.formValues : initialValues),
+    gasPrice: props.gasPrice,
   }),
   validationSchema: props =>
     Yup.object().shape({
