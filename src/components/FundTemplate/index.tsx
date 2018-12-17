@@ -124,17 +124,23 @@ export default class FundTemplateContainer extends React.Component {
                 formValues: this.state.order,
               }}
               OrderBook={() => null}
-              OrderBookProps={{
-                // TODO: Re-add this.
-              }}
+              OrderBookProps={
+                {
+                  // TODO: Re-add this.
+                }
+              }
               OpenOrders={() => null}
-              OpenOrdersProps={{
-                // TODO: Re-add this.
-              }}
+              OpenOrdersProps={
+                {
+                  // TODO: Re-add this.
+                }
+              }
               RecentTrades={() => null}
-              RecentTradesProps={{
-                // TODO: Re-add this.
-              }}
+              RecentTradesProps={
+                {
+                  // TODO: Re-add this.
+                }
+              }
             />
           );
         }}

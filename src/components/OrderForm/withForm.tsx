@@ -1,6 +1,12 @@
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
-import { min, max, divide, multiply, greaterThan } from '@melonproject/token-math/bigInteger';
+import {
+  min,
+  max,
+  divide,
+  multiply,
+  greaterThan,
+} from '@melonproject/token-math/bigInteger';
 import { withHandlers, compose } from 'recompose';
 
 const validation = props => {

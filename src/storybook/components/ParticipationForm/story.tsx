@@ -14,7 +14,7 @@ const data = {
   decimals: 4,
   setup: true,
   quoteToken: {
-    symbol: 'WETH'
+    symbol: 'WETH',
   },
 };
 

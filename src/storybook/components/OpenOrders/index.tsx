@@ -87,8 +87,13 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                       </CellBody>
                       <CellBody>{order.sellSymbol}</CellBody>
                       <CellBody>{order.buySymbol}</CellBody>
-                      <CellBody>{order.price && displayQuantity(order.price)}</CellBody>
-                      <CellBody>{order.sellHowMuch && displayQuantity(order.sellHowMuch)}</CellBody>
+                      <CellBody>
+                        {order.price && displayQuantity(order.price)}
+                      </CellBody>
+                      <CellBody>
+                        {order.sellHowMuch &&
+                          displayQuantity(order.sellHowMuch)}
+                      </CellBody>
                       <CellBody noPadding={false}>
                         {order.buyHowMuch && displayQuantity(order.buyHowMuch)}
                       </CellBody>
