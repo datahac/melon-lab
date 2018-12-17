@@ -16,7 +16,6 @@ const initialValues = {
   name: '',
   exchanges: [],
   terms: false,
-  gasPrice: '5',
   policies: [],
   performanceFee: '',
   managementFee: '',
