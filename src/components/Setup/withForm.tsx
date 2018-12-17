@@ -32,20 +32,26 @@ const withForm = withFormik({
           'is-unique',
           'There is already a fund with this name.',
           async value => {
-            const { data } =
-              value &&
-              (await props.client.query({
+            if (value) {
+              const { data } = await props.client.query({
                 query: uniqueFundQuery,
                 variables: {
                   name: value,
                 },
-              }));
+              });
 
-            return !data.fundByName;
+              return !data.fundByName;
+            }
+
+            return false;
           },
         ),
       exchanges: Yup.array().required('Exchanges are required.'),
-      terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
+      terms: Yup.boolean().test(
+        'is-checked',
+        'Must Accept Terms and Conditions',
+        value => (value !== true ? false : true),
+      ),
     }),
   enableReinitialize: true,
   handleSubmit: (values, form) => form.props.setFundValues(values),
@@ -75,11 +81,12 @@ const withFormHandlers = withHandlers({
       ]);
     }
   },
-  onClickNext: props => e => {
+  onClickNext: props => async e => {
     e.preventDefault();
     const fields = props.steps[props.page].validateFields;
+
     if (typeof fields !== 'undefined' && fields) {
-      fields.map(item => props.setFieldTouched(item));
+      await fields.map(item => props.setFieldTouched(item, true, true));
 
       props.validateForm().then(errors => {
         if (fields.some(item => errors[item])) {
