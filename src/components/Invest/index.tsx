@@ -43,6 +43,7 @@ class InvestContainer extends React.PureComponent {
             <ParticipationFormContainer
               {...this.props}
               setInvestValues={this.setInvestValues}
+              loading={R.path(['loading'], queryProps)}
               sharePrice={R.path(['data', 'fund', 'sharePrice'], queryProps)}
             />
 
