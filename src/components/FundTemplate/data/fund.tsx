@@ -2,9 +2,7 @@ import { Query } from '~/apollo';
 import gql from 'graphql-tag';
 
 const query = gql`
-  query FundQuery(
-    $address: String!
-  ) {
+  query FundQuery($address: String!) {
     totalFunds
 
     fund(address: $address) {
@@ -29,10 +27,19 @@ const query = gql`
       }
 
       sharePrice {
-        quantity
-        token {
-          decimals
-          symbol
+        base {
+          token {
+            symbol
+            decimals
+          }
+          quantity
+        }
+        quote {
+          token {
+            symbol
+            decimals
+          }
+          quantity
         }
       }
 

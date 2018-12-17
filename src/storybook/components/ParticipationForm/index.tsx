@@ -1,8 +1,11 @@
 import React, { Fragment, StatelessComponent } from 'react';
+import { toFixed } from '@melonproject/token-math/quantity';
+import { toFixed as toFixedPrice } from '@melonproject/token-math/price';
 import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Toggle from '~/blocks/Toggle';
+import * as R from 'ramda';
 
 import styles from './styles.css';
 
@@ -15,8 +18,10 @@ interface FormValues {
 
 export interface ParticipationFormProps {
   decimals?: number;
-  quoteToken?: {
-    symbol: string;
+  sharePrice?: {
+    token: {
+      symbol: string;
+    };
   };
   setup: boolean;
   touched?: any;
@@ -28,12 +33,11 @@ export interface ParticipationFormProps {
 }
 
 const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
-  decimals = 0,
+  decimals = 4,
   errors,
   handleBlur,
   handleSubmit,
   handleChange,
-  quoteToken,
   setup,
   touched,
   values,
@@ -69,7 +73,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
 
         <div className="participation-form__input">
           <Input
-            value={values.quantity}
+            value={values.quantity && toFixed(values.quantity, decimals)}
             type="number"
             label="Quantity (Shares)"
             name="quantity"
@@ -88,9 +92,12 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
           <Fragment>
             <div className="participation-form__input">
               <Input
-                value={values.price}
+                value={values.price && toFixedPrice(values.price, decimals)}
                 type="number"
-                label={`Price (${quoteToken && quoteToken.symbol})`}
+                label={`Price (${R.path(
+                  ['quote', 'token', 'symbol'],
+                  values.price,
+                )})`}
                 name="price"
                 insideLabel="true"
                 placeholder={numberPlaceholder}
@@ -105,9 +112,9 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
             </div>
             <div className="participation-form__input">
               <Input
-                value={values.total}
+                value={values.total && toFixed(values.total, decimals)}
                 type="number"
-                label={`Total (${quoteToken && quoteToken.symbol})`}
+                label={`Total (${R.path(['token', 'symbol'], values.total)})`}
                 name="total"
                 insideLabel="true"
                 placeholder={numberPlaceholder}

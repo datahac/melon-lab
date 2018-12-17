@@ -5,7 +5,8 @@ import RequestInvestment from '+/components/RequestInvestment';
 import ExecuteRequest from '+/components/ExecuteRequest';
 import withForm from './withForm';
 import { withRouter } from 'next/router';
-import { QuoteTokenQuery } from './data/quoteToken';
+import { FundInvestQuery } from './data/fund';
+import * as R from 'ramda';
 
 const ParticipationFormContainer = withForm(props => (
   <Participation
@@ -36,13 +37,13 @@ class InvestContainer extends React.PureComponent {
 
   render() {
     return (
-      <QuoteTokenQuery>
-        {quoteToken => (
+      <FundInvestQuery address={this.props.address}>
+        {queryProps => (
           <Fragment>
             <ParticipationFormContainer
               {...this.props}
               setInvestValues={this.setInvestValues}
-              quoteToken={quoteToken.data && quoteToken.data.quoteToken}
+              sharePrice={R.path(['data', 'fund', 'sharePrice'], queryProps)}
             />
 
             <ApproveTransfer
@@ -61,13 +62,12 @@ class InvestContainer extends React.PureComponent {
 
             <ExecuteRequest
               fundAddress={this.props.address}
-              values={this.state.values}
               setStep={this.setStep}
               step={this.state.step}
             />
           </Fragment>
         )}
-      </QuoteTokenQuery>
+      </FundInvestQuery>
     );
   }
 }

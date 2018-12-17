@@ -63,8 +63,8 @@ type Ranking {
   sharePrice: String
 }
 
-type Settings {
-  accountingAddress: String
+type Components {
+  accounting: String
   feeManagerAddress: String
   participationAddress: String
   policyManagerAddress: String
@@ -84,10 +84,12 @@ type Fund {
   gav: Quantity
   nav: Quantity
   owner: String
-  modules: [String]
-  settings: Settings
+  # TODO: Rename to components.
+  settings: Components
+  quoteAsset: Token
+  nativeAsset: Token
   holdings: [Holding]
-  sharePrice: Quantity
+  sharePrice: Price
   totalSupply: Quantity
   personalStake(investor: String): Quantity
   managementReward: Quantity
@@ -275,7 +277,6 @@ type Query {
     name: String!
   ): Fund
 
-  quoteToken: Token
   network: String
   currentBlock: String
   nodeSynced: Boolean

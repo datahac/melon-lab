@@ -2,12 +2,13 @@ import React, { StatelessComponent, Fragment } from 'react';
 import Icon from '~/blocks/Icon';
 import Spinner from '~/blocks/Spinner';
 import displayQuantity from '~/utils/displayQuantity';
+import displayPrice from '~/utils/displayPrice';
 
 import styles from './styles.css';
 
 export interface FundHeadlineProps {
   name?: string;
-  sharePrice?: string;
+  sharePrice?: any;
   gav?: string;
   rank?: string;
   totalFunds?: string;
@@ -17,6 +18,7 @@ export interface FundHeadlineProps {
   address?: string;
   track?: string;
   loading?: boolean;
+  decimals?: number;
 }
 
 const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
@@ -30,22 +32,23 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   address,
   track,
   loading,
+  decimals = 4,
 }) => {
   const isOwner = owner === account;
   const buildTwitterUrl = () => {
     const text = isOwner
       ? track !== 'live'
         ? `My #MelonFund "${name}" has a share price currently of ${sharePrice &&
-            displayQuantity(sharePrice)}. Have a look:`
+            displayPrice(sharePrice)}. Have a look:`
         : `Check out my on-chain decentralized hedge fund "${name}". ` +
           `It currently has a share price of ${sharePrice &&
-            displayQuantity(sharePrice)}. Have a look:`
+            displayPrice(sharePrice)}. Have a look:`
       : track !== 'live'
       ? `The #MelonFund "${name}" has a share price currently of ${sharePrice &&
-          displayQuantity(sharePrice)}. Have a look:`
+          displayPrice(sharePrice)}. Have a look:`
       : `Check out this on-chain decentralized hedge fund "${name}". ` +
         `It currently has a share price of ${sharePrice &&
-          displayQuantity(sharePrice)}. Have a look:`;
+          displayPrice(sharePrice)}. Have a look:`;
 
     const url =
       track === 'live'
@@ -87,12 +90,12 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">Share price</div>
-            {sharePrice && displayQuantity(sharePrice)}
+            {sharePrice && displayPrice(sharePrice, decimals)}
             /Share
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">AUM</div>
-            {sharePrice && displayQuantity(gav)}
+            {gav && displayQuantity(gav, decimals)}
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">Ranking</div>

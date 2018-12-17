@@ -55,7 +55,7 @@ export default props => (
       mutation: estimateApproveTransferMutation,
       variables: () => ({
         fundAddress: props.fundAddress,
-        investmentAmount: props.values.quantity,
+        investmentAmount: props.values.total.quantity,
       }),
     }}
     execute={{
@@ -63,7 +63,7 @@ export default props => (
       variables: (_, transaction) => ({
         ...transaction,
         fundAddress: props.fundAddress,
-        investmentAmount: props.values.quantity,
+        investmentAmount: props.values.total.quantity,
       }),
       onCompleted: () => {
         props.setStep(1);

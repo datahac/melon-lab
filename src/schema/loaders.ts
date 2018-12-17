@@ -11,6 +11,8 @@ import getFundOwner from './loaders/fund/fundOwner';
 import getFundName from './loaders/fund/fundName';
 import getFundSettings from './loaders/fund/fundSettings';
 import getFundHoldings from './loaders/fund/fundHoldings';
+import getFundQuoteAsset from './loaders/fund/fundQuoteAsset';
+import getFundNativeAsset from './loaders/fund/fundNativeAsset';
 import getFundTotalSupply from './loaders/fund/fundTotalSupply';
 import getFundCalculations from './loaders/fund/fundCalculations';
 import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
@@ -32,6 +34,37 @@ export default (environment, streams) => {
   const fundName = new DataLoader(addresses => {
     const fn = getFundName(environment);
     return Promise.all(addresses.map(fn) || []);
+  });
+
+  const fundQuoteAsset = new DataLoader(async addresses => {
+    const settings = await fundSettings.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { accountingAddress } = settings[key] || {
+          accountingAddress: null,
+        };
+
+        return (
+          accountingAddress && getFundQuoteAsset(environment, accountingAddress)
+        );
+      }),
+    );
+  });
+
+  const fundNativeAsset = new DataLoader(async addresses => {
+    const settings = await fundSettings.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { accountingAddress } = settings[key] || {
+          accountingAddress: null,
+        };
+
+        return (
+          accountingAddress &&
+          getFundNativeAsset(environment, accountingAddress)
+        );
+      }),
+    );
   });
 
   const fundReady = new DataLoader(async addresses => {
@@ -241,36 +274,38 @@ export default (environment, streams) => {
   });
 
   return {
-    fundReady,
-    fundRanking,
-    fundByName,
+    assetPrice,
+    currentBlock,
     fundAddressFromManager,
-    fundName,
-    fundInception,
-    fundModules,
-    fundOwner,
-    fundRank,
-    fundTotalSupply,
+    fundByName,
     fundCalculations,
     fundHoldings,
-    fundOpenOrders,
-    fundRecentTrades,
-    fundParticipation,
-    fundSettings,
+    fundInception,
     fundIsShutdown,
-    stepFor,
-    assetPrice,
-    symbolBalance,
-    symbolBalanceObservable,
+    fundModules,
+    fundName,
+    fundNativeAsset,
+    fundOpenOrders,
+    fundOwner,
+    fundParticipation,
+    fundQuoteAsset,
+    fundRank,
+    fundRanking,
+    fundReady,
+    fundRecentTrades,
+    fundSettings,
+    fundTotalSupply,
     generateMnemonic,
     importWallet,
-    restoreWallet,
-    quoteToken,
-    currentBlock,
-    nodeSynced,
-    priceFeedUp,
-    peerCount,
-    versionDeployment,
     networkName,
+    nodeSynced,
+    peerCount,
+    priceFeedUp,
+    quoteToken,
+    restoreWallet,
+    stepFor,
+    symbolBalance,
+    symbolBalanceObservable,
+    versionDeployment,
   };
 };

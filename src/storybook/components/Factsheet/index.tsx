@@ -33,7 +33,7 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
   handleShutDown,
   totalSupply,
   isManager,
-  isShutdown
+  isShutdown,
 }) => (
   <div className="factsheet">
     <style jsx>{styles}</style>

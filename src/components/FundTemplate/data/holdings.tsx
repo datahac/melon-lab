@@ -10,6 +10,7 @@ const query = gql`
           quantity
           token {
             symbol
+            decimals
           }
         }
 
@@ -18,6 +19,7 @@ const query = gql`
             quantity
             token {
               symbol
+              decimals
             }
           }
 
@@ -25,6 +27,7 @@ const query = gql`
             quantity
             token {
               symbol
+              decimals
             }
           }
         }

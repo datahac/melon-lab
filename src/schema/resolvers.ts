@@ -90,9 +90,6 @@ export default {
     balance: (_, { address, symbol }, { loaders }) => {
       return loaders.symbolBalance.load({ address, symbol });
     },
-    quoteToken: (_, __, { loaders }) => {
-      return loaders.quoteToken();
-    },
   },
   Ranking: {
     fund: parent => {
@@ -118,14 +115,17 @@ export default {
     settings: (parent, _, { loaders }) => {
       return loaders.fundSettings.load(parent);
     },
+    quoteAsset: (parent, _, { loaders }) => {
+      return loaders.fundQuoteAsset.load(parent);
+    },
+    nativeAsset: (parent, _, { loaders }) => {
+      return loaders.fundNativeAsset.load(parent);
+    },
     totalSupply: (parent, _, { loaders }) => {
       return loaders.fundTotalSupply.load(parent);
     },
     rank: (parent, _, { loaders }) => {
       return loaders.fundRank.load(parent);
-    },
-    modules: (parent, _, { loaders }) => {
-      return loaders.fundModules.load(parent);
     },
     inception: (parent, _, { loaders }) => {
       return loaders.fundInception.load(parent);
