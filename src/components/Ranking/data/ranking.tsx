@@ -8,22 +8,7 @@ const query = gql`
       address
       name
       inception
-      sharePrice {
-        base {
-          token {
-            symbol
-            decimals
-          }
-          quantity
-        }
-        quote {
-          token {
-            symbol
-            decimals
-          }
-          quantity
-        }
-      }
+      sharePrice
     }
   }
 `;

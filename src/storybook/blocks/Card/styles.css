@@ -89,3 +89,16 @@
   z-index: 999;
   display: flex;
 }
+
+.card__report :global(.link):hover::before {
+  content: '';
+  position: absolute;
+  background-color: var(--color-border);
+  z-index: -1;
+  left: -10px;
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  width: 36px;
+  border-radius: 50%;
+}
