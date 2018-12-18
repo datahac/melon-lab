@@ -14,7 +14,7 @@ export default class OrderFormContainer extends React.PureComponent {
     const { holdings } = this.props;
     const balance = R.compose(
       R.propOr(0, 'balance'),
-      R.find(holding => holding.symbol === asset),
+      R.find(holding => holding.balance.token.symbol === asset),
     )(holdings);
 
     return {
