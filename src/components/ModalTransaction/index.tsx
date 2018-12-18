@@ -15,7 +15,13 @@ const WithFormModal = compose(
   withRouter,
 )(
   class extends React.Component {
+    state = {
+      rendered: false,
+    };
+
     componentDidMount() {
+      this.setState({ rendered: true });
+
       if (process.browser && this.props.open) {
         this.props.estimate();
       }
@@ -28,32 +34,30 @@ const WithFormModal = compose(
     }
 
     render() {
-      return (
-        !!process.browser && (
-          <Modal
-            title="Fees"
-            loading={this.props.loading}
-            isOpen={this.props.open}
-            PrimaryAction={Button}
-            PrimaryActionProps={{
-              children: 'Cancel',
-              style: 'secondary',
-              onClick: this.props.handleCancel,
-            }}
-            SecondaryAction={Button}
-            SecondaryActionProps={{
-              children: 'Confirm',
-              type: 'submit',
-              disabled: this.props.loading || this.props.error,
-            }}
-            ContentWrapper={Form}
-            ContentWrapperProps={{
-              onSubmit: this.props.handleSubmit,
-            }}
-          >
-            <FeeForm {...this.props} />
-          </Modal>
-        )
+      return this.state.rendered && (
+        <Modal
+          title="Fees"
+          loading={this.props.loading}
+          isOpen={this.props.open}
+          PrimaryAction={Button}
+          PrimaryActionProps={{
+            children: 'Cancel',
+            style: 'secondary',
+            onClick: this.props.handleCancel,
+          }}
+          SecondaryAction={Button}
+          SecondaryActionProps={{
+            children: 'Confirm',
+            type: 'submit',
+            disabled: this.props.loading || this.props.error,
+          }}
+          ContentWrapper={Form}
+          ContentWrapperProps={{
+            onSubmit: this.props.handleSubmit,
+          }}
+        >
+          <FeeForm {...this.props} />
+        </Modal>
       );
     }
   },
