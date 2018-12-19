@@ -16,6 +16,7 @@ import {
   createFeeManager,
   createAccounting,
   completeSetup,
+  triggerRewardAllFees,
 } from '@melonproject/protocol';
 import { isAddress, Address } from '@melonproject/token-math/address';
 import { createQuantity } from '@melonproject/token-math/quantity';
@@ -507,6 +508,50 @@ export default {
         version,
         transaction,
         params,
+      );
+
+      return !!result;
+    },
+    estimateTriggerRewardAllFees: async (
+      _,
+      { from, fundAddress },
+      { environment, loaders },
+    ) => {
+      const { feeManagerAddress } = await loaders.fundSettings.load(
+        fundAddress,
+      );
+
+      const env = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      const result = await triggerRewardAllFees.prepare(env, feeManagerAddress);
+
+      return result && result.rawTransaction;
+    },
+    executeTriggerRewardAllFees: async (
+      _,
+      { from, signed, fundAddress },
+      { environment, loaders },
+    ) => {
+      const { feeManagerAddress } = await loaders.fundSettings.load(
+        fundAddress,
+      );
+      const transaction = signed.rawTransaction;
+      const env = {
+        ...environment,
+        wallet: {
+          address: new Address(from),
+        },
+      };
+
+      const result = await triggerRewardAllFees.send(
+        env,
+        feeManagerAddress,
+        transaction,
       );
 
       return !!result;

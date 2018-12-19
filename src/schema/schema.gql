@@ -340,6 +340,22 @@ type Mutation {
   ): Boolean
 
   """
+  Estimates the number of gas units required for the "trigger reward all fees" transaction.
+  """
+  estimateTriggerRewardAllFees(
+    fundAddress: String!
+  ): UnsignedTransaction
+
+  """
+  Executes the "trigger reward all fees" transaction with the given gas price per unit.
+  """
+  executeTriggerRewardAllFees(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Quantity
+
+  """
   Export the currently active wallet in its encrypted form.
   """
   exportWallet(
