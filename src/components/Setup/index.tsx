@@ -211,7 +211,7 @@ class Setup extends React.Component {
               update={managerProps.update}
             />
 
-            {managerProps.step === 0 && (
+            {!managerProps.fund && (
               <SetupFormContainer
                 {...this.props}
                 account={account}
