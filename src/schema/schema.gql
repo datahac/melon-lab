@@ -60,7 +60,7 @@ type Ranking {
   name: String
   inception: DateTime
   fund: Fund
-  sharePrice: String
+  sharePrice: Price
 }
 
 type Components {
