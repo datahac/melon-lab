@@ -160,18 +160,6 @@ export default {
     holdings: async (parent, _, { loaders }) => {
       return loaders.fundHoldings.load(parent);
     },
-    openOrders: (parent, { offset, limit }, { loaders }) => {
-      return loaders.fundOpenOrders.load({
-        address: parent,
-      });
-    },
-    recentTrades: (parent, { base, quote, offset, limit }, { loaders }) => {
-      return loaders.recentTrades.load({
-        address: parent,
-        base,
-        quote,
-      });
-    },
   },
   Holding: {
     fraction: async (parent, _, { loaders }) => {
@@ -186,10 +174,6 @@ export default {
     },
   },
   Mutation: {
-    cancelOpenOrder: () => {
-      // TODO: Cancel open orders.
-      throw new Error('This is not implemented yet');
-    },
     estimateFundSetupBegin: async (
       _,
       { from, name, exchanges },

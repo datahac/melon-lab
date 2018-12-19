@@ -87,7 +87,7 @@ const getTestEnvironment = async (track: string) => {
   const baseToken = getTokenBySymbol(withDeployment, 'WETH');
   const newPrice = getPrice(
     createQuantity(baseToken, 1),
-    createQuantity(quoteToken, 2),
+    createQuantity(quoteToken, 1),
   );
 
   await update(

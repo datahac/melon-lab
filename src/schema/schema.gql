@@ -97,16 +97,6 @@ type Fund {
   unclaimedFees: Quantity
   feesShareQuantity: Quantity
   isShutdown: Boolean
-  openOrders(
-    offset: Int = 0
-    limit: Int = 10
-  ): [Order]
-  recentTrades(
-    base: String!
-    quote: String!
-    offset: Int = 0
-    limit: Int = 10
-  ): [Trade]
 }
 
 type Holding {
@@ -120,64 +110,6 @@ type Trade {
   quantity: Quantity
   timestamp: String
   type: String
-}
-
-interface Order {
-  maker: String
-  taker: String
-  isActive: Boolean!
-  type: String!
-  buy: Quantity!
-  sell: Quantity!
-  price: Price!
-  exchangeContractAddress: String
-  exchange: String
-}
-
-type ZeroExOrder implements Order {
-  maker: String
-  taker: String
-  isActive: Boolean!
-  type: String!
-  buy: Quantity!
-  sell: Quantity!
-  price: Price!
-  expiration: String
-  salt: String!
-  makerFee: String!
-  takerFee: String!
-  signature: Signature
-  feeRecipient: String
-  timestamp: DateTime
-  exchange: String
-  exchangeContractAddress: String
-}
-
-type OasisDexOrder implements Order {
-  maker: String
-  taker: String
-  isActive: Boolean!
-  type: String!
-  buy: Quantity!
-  sell: Quantity!
-  price: Price!
-  id: String!
-  timestamp: DateTime
-  exchange: String
-  exchangeContractAddress: String
-}
-
-type Orderbook {
-  allOrders: [Order]
-  sellEntries: [OrderbookEntry]
-  buyEntries: [OrderbookEntry]
-  totalBuyVolume: String
-  totalSellVolume: String
-}
-
-type OrderbookEntry {
-  volume: String
-  order: Order
 }
 
 type Signature {
@@ -290,13 +222,6 @@ type Query {
 }
 
 type Mutation {
-  cancelOpenOrder(
-    orderId: String!
-    fundAddress: String!
-    makerAssetSymbol: String!
-    takerAssetSymbol: String!
-  ): [Order]
-
   # TODO: Give more fund configuration options: Policies, pricefeed, ...
   """
   Estimates the number of gas units required for the "beginSetup" transaction.

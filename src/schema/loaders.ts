@@ -145,24 +145,6 @@ export default (environment, streams) => {
     );
   });
 
-  const fundModules = new DataLoader(addresses => {
-    // TODO: Implement this.
-    const fn = () => null;
-    return Promise.all(addresses.map(fn));
-  });
-
-  const fundOpenOrders = new DataLoader(pairs => {
-    // TODO: Implement this.
-    const fn = () => null;
-    return Promise.all(pairs.map(fn));
-  });
-
-  const fundRecentTrades = new DataLoader(pairs => {
-    // TODO: Implement this.
-    const fn = () => null;
-    return Promise.all(pairs.map(fn));
-  });
-
   const fundIsShutdown = new DataLoader(addresses => {
     const fn = getFundIsShutdown(environment);
     return Promise.all(addresses.map(fn) || []);
@@ -282,17 +264,14 @@ export default (environment, streams) => {
     fundHoldings,
     fundInception,
     fundIsShutdown,
-    fundModules,
     fundName,
     fundNativeAsset,
-    fundOpenOrders,
     fundOwner,
     fundParticipation,
     fundQuoteAsset,
     fundRank,
     fundRanking,
     fundReady,
-    fundRecentTrades,
     fundSettings,
     fundTotalSupply,
     generateMnemonic,
