@@ -37,12 +37,10 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   text,
 }) => {
   const calcEntryTotal = (gasLimit: number) => {
-    return (
-      gasLimit && values.gasPrice && (values.gasPrice * gasLimit)
-    );
+    return gasLimit && values.gasPrice && values.gasPrice * gasLimit;
   };
 
-  const mapped = fees.map(fee => (fee.gasLimit * values.gasPrice));
+  const mapped = fees.map(fee => fee.gasLimit * values.gasPrice);
   const total = mapped.reduce((carry, current) => {
     return carry + current;
   }, 0);
