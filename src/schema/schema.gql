@@ -63,7 +63,7 @@ type Ranking {
   sharePrice: Price
 }
 
-type Components {
+type Routes {
   accounting: String
   feeManagerAddress: String
   participationAddress: String
@@ -84,8 +84,7 @@ type Fund {
   gav: Quantity
   nav: Quantity
   owner: String
-  # TODO: Rename to components.
-  routes: Components
+  routes: Routes
   quoteAsset: Token
   nativeAsset: Token
   holdings: [Holding]
