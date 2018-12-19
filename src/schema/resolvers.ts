@@ -25,7 +25,6 @@ import sameBlock from './utils/sameBlock';
 
 export default {
   DateTime,
-  Order,
   Query: {
     defaultAccount: (_, __, { loaders }) => {
       const wallet = loaders.getWallet();
