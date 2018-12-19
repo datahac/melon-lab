@@ -115,7 +115,7 @@ export default {
     routes: (parent, _, { loaders }) => {
       return loaders.fundRoutes.load(parent);
     },
-    quoteAsset: (parent, _, { loaders }) => {
+    denominationAsset: (parent, _, { loaders }) => {
       return loaders.fundDenominationAsset.load(parent);
     },
     nativeAsset: (parent, _, { loaders }) => {

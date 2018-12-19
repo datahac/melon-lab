@@ -85,7 +85,7 @@ type Fund {
   nav: Quantity
   owner: String
   routes: Routes
-  quoteAsset: Token
+  denominationAsset: Token
   nativeAsset: Token
   holdings: [Holding]
   sharePrice: Price
