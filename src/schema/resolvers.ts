@@ -148,7 +148,13 @@ export default {
     managementReward: async (parent, _, { loaders }) => {
       return null;
     },
+    managementFeeRate: async (parent, _, { loaders }) => {
+      return null;
+    },
     performanceReward: async (parent, _, { loaders }) => {
+      return null;
+    },
+    performanceFeeRate: async (parent, _, { loaders }) => {
       return null;
     },
     unclaimedFees: async (parent, _, { loaders }) => {

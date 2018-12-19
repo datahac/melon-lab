@@ -93,7 +93,9 @@ type Fund {
   totalSupply: Quantity
   personalStake(investor: String): Quantity
   managementReward: Quantity
+  managementFeeRate: String
   performanceReward: Quantity
+  performanceFeeRate: String
   unclaimedFees: Quantity
   feesShareQuantity: Quantity
   isShutdown: Boolean
