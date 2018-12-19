@@ -116,7 +116,7 @@ export default {
       return loaders.fundSettings.load(parent);
     },
     quoteAsset: (parent, _, { loaders }) => {
-      return loaders.fundQuoteAsset.load(parent);
+      return loaders.fundDenominationAsset.load(parent);
     },
     nativeAsset: (parent, _, { loaders }) => {
       return loaders.fundNativeAsset.load(parent);

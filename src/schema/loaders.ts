@@ -11,7 +11,7 @@ import getFundOwner from './loaders/fund/fundOwner';
 import getFundName from './loaders/fund/fundName';
 import getFundSettings from './loaders/fund/fundSettings';
 import getFundHoldings from './loaders/fund/fundHoldings';
-import getFundQuoteAsset from './loaders/fund/fundQuoteAsset';
+import getFundDenominationAsset from './loaders/fund/fundDenominationAsset';
 import getFundNativeAsset from './loaders/fund/fundNativeAsset';
 import getFundTotalSupply from './loaders/fund/fundTotalSupply';
 import getFundCalculations from './loaders/fund/fundCalculations';
@@ -36,7 +36,7 @@ export default (environment, streams) => {
     return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundQuoteAsset = new DataLoader(async addresses => {
+  const fundDenominationAsset = new DataLoader(async addresses => {
     const settings = await fundSettings.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
@@ -45,7 +45,8 @@ export default (environment, streams) => {
         };
 
         return (
-          accountingAddress && getFundQuoteAsset(environment, accountingAddress)
+          accountingAddress &&
+          getFundDenominationAsset(environment, accountingAddress)
         );
       }),
     );
@@ -268,7 +269,7 @@ export default (environment, streams) => {
     fundNativeAsset,
     fundOwner,
     fundParticipation,
-    fundQuoteAsset,
+    fundDenominationAsset,
     fundRank,
     fundRanking,
     fundReady,
