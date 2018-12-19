@@ -4,6 +4,7 @@ import format from 'date-fns/format';
 import displayPrice from '~/utils/displayPrice';
 import Link from '~/blocks/Link';
 import Icon from '~/blocks/Icon';
+import { PriceInterface } from '@melonproject/token-math/price';
 
 import styles from './styles.css';
 
@@ -12,7 +13,7 @@ export interface CardProps {
   isActive?: boolean;
   name?: string;
   rank?: number;
-  sharePrice?: string;
+  sharePrice?: PriceInterface;
   reportUrl?: string;
   onClick?: React.MouseEventHandler;
   decimals?: number;
