@@ -85,7 +85,7 @@ type Fund {
   nav: Quantity
   owner: String
   # TODO: Rename to components.
-  settings: Components
+  routes: Components
   quoteAsset: Token
   nativeAsset: Token
   holdings: [Holding]

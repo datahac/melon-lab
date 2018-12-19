@@ -112,8 +112,8 @@ export default {
     owner: (parent, _, { loaders }) => {
       return loaders.fundOwner.load(parent);
     },
-    settings: (parent, _, { loaders }) => {
-      return loaders.fundSettings.load(parent);
+    routes: (parent, _, { loaders }) => {
+      return loaders.fundRoutes.load(parent);
     },
     quoteAsset: (parent, _, { loaders }) => {
       return loaders.fundDenominationAsset.load(parent);
@@ -322,7 +322,7 @@ export default {
       { environment, loaders },
     ) => {
       const { tokens } = environment.deployment.thirdPartyContracts;
-      const { participationAddress } = await loaders.fundSettings.load(
+      const { participationAddress } = await loaders.fundRoutes.load(
         fundAddress,
       );
       const nativeToken = tokens.find(token => {
@@ -353,7 +353,7 @@ export default {
       { from, signed, fundAddress },
       { environment, loaders },
     ) => {
-      const { participationAddress } = await loaders.fundSettings.load(
+      const { participationAddress } = await loaders.fundRoutes.load(
         fundAddress,
       );
       const transaction = signed.rawTransaction;
@@ -377,7 +377,7 @@ export default {
       { from, fundAddress, investmentAmount },
       { environment, loaders },
     ) => {
-      const { participationAddress } = await loaders.fundSettings.load(
+      const { participationAddress } = await loaders.fundRoutes.load(
         fundAddress,
       );
       const quoteToken = await loaders.quoteToken();
@@ -401,7 +401,7 @@ export default {
       { from, signed, fundAddress, investmentAmount },
       { environment, loaders },
     ) => {
-      const { participationAddress } = await loaders.fundSettings.load(
+      const { participationAddress } = await loaders.fundRoutes.load(
         fundAddress,
       );
       const quoteToken = await loaders.quoteToken();
@@ -427,7 +427,7 @@ export default {
       { from, fundAddress },
       { environment, loaders },
     ) => {
-      const { participationAddress } = await loaders.fundSettings.load(
+      const { participationAddress } = await loaders.fundRoutes.load(
         fundAddress,
       );
       const env = {
@@ -446,7 +446,7 @@ export default {
       { from, signed, fundAddress },
       { environment, loaders },
     ) => {
-      const { participationAddress } = await loaders.fundSettings.load(
+      const { participationAddress } = await loaders.fundRoutes.load(
         fundAddress,
       );
       const transaction = signed.rawTransaction;
@@ -517,9 +517,7 @@ export default {
       { from, fundAddress },
       { environment, loaders },
     ) => {
-      const { feeManagerAddress } = await loaders.fundSettings.load(
-        fundAddress,
-      );
+      const { feeManagerAddress } = await loaders.fundRoutes.load(fundAddress);
 
       const env = {
         ...environment,
@@ -537,9 +535,7 @@ export default {
       { from, signed, fundAddress },
       { environment, loaders },
     ) => {
-      const { feeManagerAddress } = await loaders.fundSettings.load(
-        fundAddress,
-      );
+      const { feeManagerAddress } = await loaders.fundRoutes.load(fundAddress);
       const transaction = signed.rawTransaction;
       const env = {
         ...environment,

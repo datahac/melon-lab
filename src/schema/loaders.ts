@@ -9,7 +9,7 @@ import generateMnemonic from './loaders/wallet/generateMnemonic';
 import getFundInception from './loaders/fund/fundInception';
 import getFundOwner from './loaders/fund/fundOwner';
 import getFundName from './loaders/fund/fundName';
-import getFundSettings from './loaders/fund/fundSettings';
+import getFundRoutes from './loaders/fund/fundRoutes';
 import getFundHoldings from './loaders/fund/fundHoldings';
 import getFundDenominationAsset from './loaders/fund/fundDenominationAsset';
 import getFundNativeAsset from './loaders/fund/fundNativeAsset';
@@ -37,10 +37,10 @@ export default (environment, streams) => {
   });
 
   const fundDenominationAsset = new DataLoader(async addresses => {
-    const settings = await fundSettings.loadMany(addresses);
+    const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
-        const { accountingAddress } = settings[key] || {
+        const { accountingAddress } = routes[key] || {
           accountingAddress: null,
         };
 
@@ -53,10 +53,10 @@ export default (environment, streams) => {
   });
 
   const fundNativeAsset = new DataLoader(async addresses => {
-    const settings = await fundSettings.loadMany(addresses);
+    const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
-        const { accountingAddress } = settings[key] || {
+        const { accountingAddress } = routes[key] || {
           accountingAddress: null,
         };
 
@@ -69,10 +69,10 @@ export default (environment, streams) => {
   });
 
   const fundReady = new DataLoader(async addresses => {
-    const settings = await fundSettings.loadMany(addresses);
+    const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
-        return !!(settings && settings[key]);
+        return !!(routes && routes[key]);
       }),
     );
   });
@@ -82,16 +82,16 @@ export default (environment, streams) => {
     return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundSettings = new DataLoader(addresses => {
-    const fn = getFundSettings(environment);
+  const fundRoutes = new DataLoader(addresses => {
+    const fn = getFundRoutes(environment);
     return Promise.all(addresses.map(fn) || []);
   });
 
   const fundTotalSupply = new DataLoader(async addresses => {
-    const settings = await fundSettings.loadMany(addresses);
+    const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
-        const { sharesAddress } = settings[key] || {
+        const { sharesAddress } = routes[key] || {
           sharesAddress: null,
         };
 
@@ -116,10 +116,10 @@ export default (environment, streams) => {
   });
 
   const fundCalculations = new DataLoader(async addresses => {
-    const settings = await fundSettings.loadMany(addresses);
+    const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
-        const { accountingAddress } = settings[key] || {
+        const { accountingAddress } = routes[key] || {
           accountingAddress: null,
         };
 
@@ -132,10 +132,10 @@ export default (environment, streams) => {
   });
 
   const fundHoldings = new DataLoader(async addresses => {
-    const settings = await fundSettings.loadMany(addresses);
+    const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
-        const { accountingAddress } = settings[key] || {
+        const { accountingAddress } = routes[key] || {
           accountingAddress: null,
         };
 
@@ -155,10 +155,10 @@ export default (environment, streams) => {
     async pairs => {
       const funds = pairs.map(pair => pair.fund);
       const investors = pairs.map(pair => pair.investor);
-      const settings = await fundSettings.loadMany(funds);
+      const routes = await fundRoutes.loadMany(funds);
       return Promise.all(
         investors.map((investor, key) => {
-          const { sharesAddress } = settings[key] || {
+          const { sharesAddress } = routes[key] || {
             sharesAddress: null,
           };
 
@@ -273,7 +273,7 @@ export default (environment, streams) => {
     fundRank,
     fundRanking,
     fundReady,
-    fundSettings,
+    fundRoutes,
     fundTotalSupply,
     generateMnemonic,
     importWallet,
