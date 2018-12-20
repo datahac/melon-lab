@@ -21,11 +21,17 @@ import getFundParticipation from './loaders/fund/fundParticipation';
 import getQuoteToken from './loaders/quoteToken';
 import getAssetPrice from './loaders/assetPrice';
 import getStepFor from './loaders/stepFor';
+import getFundIsComplete from './loaders/fund/fundIsComplete';
 import getSymbolBalance from './loaders/symbolBalance';
 import getSymbolBalanceObservable from './loaders/symbolBalanceObservable';
 import resolveNetwork from './utils/resolveNetwork';
 
 export default (environment, streams) => {
+  const fundIsComplete = new DataLoader(addresses => {
+    const fn = getFundIsComplete(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
+
   const fundAddressFromManager = new DataLoader(addresses => {
     const fn = getFundAddressFromManager(environment);
     return Promise.all(addresses.map(fn) || []);
@@ -287,5 +293,6 @@ export default (environment, streams) => {
     symbolBalance,
     symbolBalanceObservable,
     versionDeployment,
+    fundIsComplete,
   };
 };

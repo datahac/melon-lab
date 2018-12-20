@@ -64,12 +64,12 @@ type Ranking {
 }
 
 type Routes {
-  accounting: String
+  accountingAddress: String
   feeManagerAddress: String
   participationAddress: String
   policyManagerAddress: String
   priceSourceAddress: String
-  registrarAddress: String
+  registryAddress: String
   sharesAddress: String
   tradingAddress: String
   vaultAddress: String
@@ -98,6 +98,7 @@ type Fund {
   unclaimedFees: Quantity
   feesShareQuantity: Quantity
   isShutdown: Boolean
+  isComplete: Boolean
 }
 
 type Holding {

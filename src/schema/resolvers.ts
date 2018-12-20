@@ -103,6 +103,9 @@ export default {
     address: parent => {
       return parent;
     },
+    isComplete: (parent, _, { loaders }) => {
+      return loaders.fundIsComplete.load(parent);
+    },
     name: (parent, _, { loaders }) => {
       return loaders.fundName.load(parent);
     },
@@ -270,6 +273,7 @@ export default {
       const version = environment.deployment.melonContracts.version;
       const transaction = signed.rawTransaction;
       const fn = {
+        // TODO: Change
         CREATE_ACCOUNTING: createAccounting,
         CREATE_FEE_MANAGER: createFeeManager,
         CREATE_PARTICIPATION: createParticipation,
