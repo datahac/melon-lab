@@ -221,6 +221,10 @@ type Query {
   balance(symbol: SymbolEnum!, address: String): Quantity
   fund(address: String!): Fund
   rankings: [Ranking]
+  fundSetup(
+    "The address of the fund manager."
+    manager: String
+  ): Routes
 }
 
 type Mutation {
