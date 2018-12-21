@@ -58,7 +58,7 @@ export class FundManagerProvider extends React.PureComponent {
         {([account, associatedFund, fund]) => {
           const data = account && {
             ...associatedFund.data,
-            isComplete: fund.data.fund.isComplete,
+            isComplete: R.path(['data', 'fund', 'isComplete'], fund),
           };
           const value = data && {
             ...data,
