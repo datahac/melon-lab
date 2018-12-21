@@ -12,7 +12,7 @@ export interface WalletOverviewProps {
   currentAddress?: string;
   networkId: string;
   loading?: boolean;
-  step?: number;
+  isComplete?: boolean;
   balances?: {
     eth?: string;
     mln?: string;
@@ -26,7 +26,7 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
   networkId,
   loading,
   balances,
-  step,
+  isComplete,
 }) => (
   <div className="wallet-overview">
     <style jsx>{styles}</style>
@@ -62,14 +62,14 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
             </div>
             <h2>Fund</h2>
 
-            {associatedFund && (step && step >= 3) && (
+            {associatedFund && isComplete && (
               <AssociatedFund
                 associatedFund={associatedFund}
                 networkId={networkId}
               />
             )}
 
-            {associatedFund && (step && step < 3) && (
+            {associatedFund && !isComplete && (
               <Fragment>
                 {balances && (!balances.eth || isZero(balances.eth)) ? (
                   <InsufficientFunds

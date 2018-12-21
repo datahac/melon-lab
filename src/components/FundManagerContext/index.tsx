@@ -6,7 +6,7 @@ import { AccountConsumer } from '+/components/AccountContext';
 
 const defaults = {
   fund: null,
-  step: null,
+  isComplete: null,
   update: () => {
     throw new Error('Cannot set the current step without an account.');
   },
@@ -17,7 +17,14 @@ export const FundManagerContext = React.createContext(defaults);
 export const fundManagerQuery = gql`
   query FundManagerQuery {
     fund: associatedFund @account(arg: "manager") @authenticated
-    step: stepFor @account(arg: "manager") @authenticated
+  }
+`;
+
+export const fundQuery = gql`
+  query FundManagerQuery($address: String!) {
+    fundData: fund(address: $address) {
+      isComplete
+    }
   }
 `;
 
@@ -35,10 +42,30 @@ export class FundManagerProvider extends React.PureComponent {
               children={render}
             />
           ),
+          ({ results: [_, associatedFund], render }) => (
+            <Query
+              query={fundQuery}
+              variables={{
+                address:
+                  associatedFund &&
+                  associatedFund.data &&
+                  associatedFund.data.fund,
+              }}
+              skip={
+                !associatedFund &&
+                !associatedFund.data &&
+                !associatedFund.data.fund
+              }
+              children={render}
+            />
+          ),
         ]}
       >
-        {([account, result]) => {
-          const data = account && result.data;
+        {([account, associatedFund, fund]) => {
+          const data = account && {
+            ...associatedFund.data,
+            isComplete: fund.data.fundData.isComplete,
+          };
           const value = data && {
             ...data,
             update: (cache, values) => {
