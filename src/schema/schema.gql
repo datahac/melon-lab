@@ -199,12 +199,6 @@ type Query {
     manager: String
   ): String
 
-  "Loads the current step for fund creation for a fund manager address."
-  stepFor(
-    "The address of the fund manager."
-    manager: String
-  ): Int
-
   "Loads a fund by its name."
   fundByName(
     "The name of the fund to load."
@@ -221,6 +215,8 @@ type Query {
   balance(symbol: SymbolEnum!, address: String): Quantity
   fund(address: String!): Fund
   rankings: [Ranking]
+
+  "Loads the current routes for fund creation for a fund manager address."
   fundSetup(
     "The address of the fund manager."
     manager: String

@@ -40,9 +40,6 @@ export default {
       const credentials = await keytar.findCredentials('melon.fund');
       return !!(credentials && credentials.length);
     },
-    stepFor: (_, { manager }, { loaders }) => {
-      return loaders.stepFor.load(manager);
-    },
     currentBlock: (_, __, { loaders }) => {
       return loaders.currentBlock();
     },

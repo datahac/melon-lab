@@ -200,11 +200,6 @@ export default (environment, streams) => {
     return takeLast(streams.ranking$);
   });
 
-  const stepFor = new DataLoader(addresses => {
-    const fn = getStepFor(environment);
-    return Promise.all(addresses.map(fn) || []);
-  });
-
   const symbolBalance = new DataLoader(
     async pairs => {
       const fn = getSymbolBalance(environment);
@@ -295,7 +290,6 @@ export default (environment, streams) => {
     priceFeedUp,
     quoteToken,
     restoreWallet,
-    stepFor,
     symbolBalance,
     symbolBalanceObservable,
     versionDeployment,
