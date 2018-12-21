@@ -3,6 +3,7 @@ import Composer from 'react-composer';
 import gql from 'graphql-tag';
 import { Query } from '~/apollo';
 import { AccountConsumer } from '+/components/AccountContext';
+import * as R from 'ramda';
 
 const defaults = {
   fund: null,
@@ -22,7 +23,7 @@ export const fundManagerQuery = gql`
 
 export const fundQuery = gql`
   query FundManagerQuery($address: String!) {
-    fundData: fund(address: $address) {
+    fund(address: $address) {
       isComplete
     }
   }
@@ -46,16 +47,9 @@ export class FundManagerProvider extends React.PureComponent {
             <Query
               query={fundQuery}
               variables={{
-                address:
-                  associatedFund &&
-                  associatedFund.data &&
-                  associatedFund.data.fund,
+                address: R.path(['data', 'fund'], associatedFund),
               }}
-              skip={
-                !associatedFund &&
-                !associatedFund.data &&
-                !associatedFund.data.fund
-              }
+              skip={!R.path(['data', 'fund'], associatedFund)}
               children={render}
             />
           ),
@@ -64,7 +58,7 @@ export class FundManagerProvider extends React.PureComponent {
         {([account, associatedFund, fund]) => {
           const data = account && {
             ...associatedFund.data,
-            isComplete: fund.data.fundData.isComplete,
+            isComplete: fund.data.fund.isComplete,
           };
           const value = data && {
             ...data,
