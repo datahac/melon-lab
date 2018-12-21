@@ -7,7 +7,7 @@ import { NetworkConsumer } from '+/components/NetworkContext';
 import { CapabilityConsumer } from '+/components/CapabilityContext';
 import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
-import Template from '~/templates/FundTemplate';
+import Template from '~/templates/ManageTemplate';
 import FactSheet from '+/components/FactSheet';
 import OrderForm from '+/components/OrderForm';
 import Holdings from '+/components/Holdings';
@@ -35,7 +35,7 @@ const Context = ({ exchanges, address, quoteAsset, baseAsset, children }) => (
   </Composer>
 );
 
-export default class FundTemplateContainer extends React.Component {
+export default class ManageTemplateContainer extends React.Component {
   state = {
     exchanges: availableExchanges.map(exchange => exchange.value),
     order: {

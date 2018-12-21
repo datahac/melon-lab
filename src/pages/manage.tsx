@@ -1,5 +1,5 @@
 import React from 'react';
-import FundTemplate from '+/components/FundTemplate';
+import ManageTemplate from '+/components/ManageTemplate';
 import getConfig from 'next/config';
 
 const { publicRuntimeConfig: config } = getConfig();
@@ -19,7 +19,7 @@ export default class ManagePage extends React.Component {
     const { address, quoteAsset, baseAsset } = this.props;
 
     return (
-      <FundTemplate
+      <ManageTemplate
         address={address}
         quoteAsset={quoteAsset}
         baseAsset={baseAsset}

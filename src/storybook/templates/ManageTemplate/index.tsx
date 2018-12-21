@@ -7,7 +7,7 @@ import Layout from '~/design/Layout';
 
 import styles from './styles.css';
 
-const Fund = ({
+const ManageTemplate = ({
   FactSheet,
   FactSheetProps,
   Holdings,
@@ -100,4 +100,4 @@ const Fund = ({
   );
 };
 
-export default Fund;
+export default ManageTemplate;
