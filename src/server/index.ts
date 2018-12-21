@@ -38,7 +38,7 @@ const getTestEnvironment = async (track: string) => {
 
   const provider = Ganache.provider({
     gasLimit: '0x7a1200',
-    default_balance_ether: 1000,
+    default_balance_ether: 10000000000000,
     // db_path: path.resolve(__dirname, '.chain'),
     total_accounts: 10,
     mnemonic,

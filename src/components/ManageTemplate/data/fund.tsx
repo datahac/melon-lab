@@ -1,7 +1,7 @@
 import { Query } from '~/apollo';
 import gql from 'graphql-tag';
 
-const query = gql`
+export const query = gql`
   query FundQuery($address: String!) {
     totalFunds
 

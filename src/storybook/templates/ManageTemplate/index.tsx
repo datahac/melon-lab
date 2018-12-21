@@ -23,11 +23,10 @@ const ManageTemplate = ({
   HeaderProps = {},
   FundHeadlineProps,
 }) => {
-  let message;
-
-  if (FundHeadlineProps.isShutdown) {
-    message = 'This fund is shutdown';
-  }
+  const message =
+    FundHeadlineProps &&
+    FundHeadlineProps.isShutdown &&
+    'This fund is shutdown';
 
   return (
     <Layout>

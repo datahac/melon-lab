@@ -7,12 +7,12 @@ import Composer from 'react-composer';
 
 export default class FactsheetContainer extends React.PureComponent {
   state = {
-    shutDown: false,
+    shutDownModal: false,
   };
 
-  setShutDown = () => {
+  setShutDownModal = () => {
     this.setState(prevState => ({
-      shutDown: !prevState.shutDown,
+      shutDownModal: !prevState.shutDownModal,
     }));
   };
 
@@ -30,8 +30,8 @@ export default class FactsheetContainer extends React.PureComponent {
           return (
             <Fragment>
               <ShutDownFund
-                shutDown={this.state.shutDown}
-                setShutDown={this.setShutDown}
+                shutDown={this.state.shutDownModal}
+                setShutDown={this.setShutDownModal}
                 fundAddress={address}
                 update={managerProps.update}
               />
@@ -40,7 +40,7 @@ export default class FactsheetContainer extends React.PureComponent {
                 isManager={isManager}
                 reportUrl={reportUrl}
                 loading={loading}
-                handleShutDown={this.setShutDown}
+                handleShutDown={this.setShutDownModal}
                 isShutdown={fund.isShutdown}
               />
             </Fragment>
