@@ -12,15 +12,14 @@ import { createServer } from 'http';
 import { ApolloServer } from 'apollo-server-express';
 import Wallet from 'ethers-wallet';
 import Ganache from '@melonproject/ganache-cli';
-import { getPrice } from '@melonproject/token-math/price';
 import { createQuantity } from '@melonproject/token-math/quantity';
+import { createPrice } from '@melonproject/token-math/price';
 import {
   constructEnvironment,
   deployThirdParty,
   deploySystem,
-  getTokenBySymbol,
+  deployAllContractsConfig,
   update,
-  getQuoteToken,
 } from '@melonproject/protocol';
 import Web3Accounts from 'web3-eth-accounts';
 
@@ -75,26 +74,31 @@ const getTestEnvironment = async (track: string) => {
   };
 
   const thirdParty = await deployThirdParty(withWallet);
-  const withDeployment = await deploySystem(withWallet, thirdParty);
+  const withDeployment = await deploySystem(
+    withWallet,
+    thirdParty,
+    deployAllContractsConfig,
+  );
 
   fs.writeFileSync(deploymentPath, JSON.stringify(withDeployment.deployment));
 
-  const quoteToken = await getQuoteToken(
-    withDeployment,
-    withDeployment.deployment.melonContracts.priceSource,
+  const { melonContracts, thirdPartyContracts } = withDeployment.deployment;
+
+  const { priceSource } = melonContracts;
+  const tokens = thirdPartyContracts.tokens;
+  const [ethToken, mlnToken] = tokens;
+
+  const mlnPrice = createPrice(
+    createQuantity(mlnToken, '1'),
+    createQuantity(ethToken, '2'),
   );
 
-  const baseToken = getTokenBySymbol(withDeployment, 'WETH');
-  const newPrice = getPrice(
-    createQuantity(baseToken, 1),
-    createQuantity(quoteToken, 1),
+  const ethPrice = createPrice(
+    createQuantity(ethToken, '1'),
+    createQuantity(ethToken, '1'),
   );
 
-  await update(
-    withDeployment,
-    withDeployment.deployment.melonContracts.priceSource,
-    [newPrice],
-  );
+  await update(withDeployment, priceSource, [ethPrice, mlnPrice]);
 
   return {
     ...environment,
