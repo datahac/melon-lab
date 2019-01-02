@@ -8,6 +8,7 @@ import * as R from 'ramda';
 const defaults = {
   fund: null,
   isComplete: null,
+  fundSetup: null,
   update: () => {
     throw new Error('Cannot set the current step without an account.');
   },
@@ -18,6 +19,15 @@ export const FundManagerContext = React.createContext(defaults);
 export const fundManagerQuery = gql`
   query FundManagerQuery {
     fund: associatedFund @account(arg: "manager") @authenticated
+    fundSetup @account(arg: "manager") @authenticated {
+      accountingAddress
+      feeManagerAddress
+      participationAddress
+      policyManagerAddress
+      sharesAddress
+      tradingAddress
+      vaultAddress
+    }
   }
 `;
 
