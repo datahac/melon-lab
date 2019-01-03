@@ -21,9 +21,8 @@ exports[`ImportWallet should render correctly 1`] = `
   <div
     className="import-wallet__dropzone"
   >
-    <t
+    <n
       disableClick={false}
-      disablePreview={false}
       disabled={false}
       getDataTransferItems={[Function]}
       inputProps={Object {}}
@@ -44,7 +43,7 @@ exports[`ImportWallet should render correctly 1`] = `
       <p>
         Select a wallet JSON file from your computer
       </p>
-    </t>
+    </n>
   </div>
 </div>
 `;

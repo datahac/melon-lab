@@ -18,9 +18,6 @@ exports[`RecentTrades should render correctly 1`] = `
       rendered
     </type>
   </style>
-  <h3>
-    Recent trades
-  </h3>
   <div
     className="recent-trades__table-wrap"
   >
@@ -29,7 +26,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           isHead={true}
         >
-          <CellHead>
+          <CellHead
+            noPadding={false}
+          >
             Time
           </CellHead>
           <CellHead>
@@ -43,6 +42,7 @@ exports[`RecentTrades should render correctly 1`] = `
             )
           </CellHead>
           <CellHead
+            noPadding={false}
             textAlign="right"
           >
             Amount (
@@ -54,7 +54,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="0"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -70,6 +72,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0522
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             191.4630
@@ -78,7 +81,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="1"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -94,6 +99,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0521
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             192.0272
@@ -102,7 +108,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="2"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -118,6 +126,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0517
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             193.4366
@@ -126,7 +135,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="3"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -142,6 +153,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0515
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             194.2841
@@ -150,7 +162,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="4"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -166,6 +180,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0512
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.1502
@@ -174,7 +189,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="5"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -190,6 +207,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0512
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.2951
@@ -198,7 +216,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="6"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -214,6 +234,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0512
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.3698
@@ -222,7 +243,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="7"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -238,6 +261,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0512
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.4102
@@ -246,7 +270,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="8"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -262,6 +288,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0512
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.4146
@@ -270,7 +297,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="9"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -286,6 +315,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0512
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.4281
@@ -294,7 +324,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="10"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -310,6 +342,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0512
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.4735
@@ -318,7 +351,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="11"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -334,6 +369,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.5459
@@ -342,7 +378,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="12"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -358,6 +396,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.5852
@@ -366,7 +405,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="13"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -382,6 +423,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.5956
@@ -390,7 +432,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="14"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -406,6 +450,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.6337
@@ -414,7 +459,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="15"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -430,6 +477,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.6615
@@ -438,7 +486,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="16"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -454,6 +504,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.6889
@@ -462,7 +513,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="17"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -478,6 +531,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.7426
@@ -486,7 +540,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="18"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -502,6 +558,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.7552
@@ -510,7 +567,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="19"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -526,6 +585,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.7622
@@ -534,7 +594,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="20"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -550,6 +612,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.8318
@@ -558,7 +621,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="21"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -574,6 +639,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.8684
@@ -582,7 +648,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="22"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -598,6 +666,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0511
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.8775
@@ -606,7 +675,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="23"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -622,6 +693,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.8963
@@ -630,7 +702,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="24"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -646,6 +720,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.9459
@@ -654,7 +729,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="25"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -670,6 +747,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.9568
@@ -678,7 +756,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="26"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -694,6 +774,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.9628
@@ -702,7 +783,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="27"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -718,6 +801,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.9792
@@ -726,7 +810,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="28"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -742,6 +828,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             195.9960
@@ -750,7 +837,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="29"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -766,6 +855,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.0429
@@ -774,7 +864,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="30"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -790,6 +882,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.0529
@@ -798,7 +891,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="31"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -814,6 +909,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.1009
@@ -822,7 +918,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="32"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -838,6 +936,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.1103
@@ -846,7 +945,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="33"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -862,6 +963,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.1177
@@ -870,7 +972,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="34"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -886,6 +990,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.1329
@@ -894,7 +999,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="35"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -910,6 +1017,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.1439
@@ -918,7 +1026,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="36"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -934,6 +1044,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.1477
@@ -942,7 +1053,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="37"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -958,6 +1071,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.1824
@@ -966,7 +1080,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="38"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -982,6 +1098,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0510
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.1826
@@ -990,7 +1107,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="39"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1006,6 +1125,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0509
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.3219
@@ -1014,7 +1134,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="40"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1030,6 +1152,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0509
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.3461
@@ -1038,7 +1161,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="41"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1054,6 +1179,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0509
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.3796
@@ -1062,7 +1188,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="42"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1078,6 +1206,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0509
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.3968
@@ -1086,7 +1215,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="43"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1102,6 +1233,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0509
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.4054
@@ -1110,7 +1242,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="44"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1126,6 +1260,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0509
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.4496
@@ -1134,7 +1269,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="45"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1150,6 +1287,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0509
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.4975
@@ -1158,7 +1296,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="46"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1174,6 +1314,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0509
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.5006
@@ -1182,7 +1323,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="47"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1198,6 +1341,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0509
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.5245
@@ -1206,7 +1350,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="48"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1222,6 +1368,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0509
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.5297
@@ -1230,7 +1377,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="49"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1246,6 +1395,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0509
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.6486
@@ -1254,7 +1404,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="50"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1270,6 +1422,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.6733
@@ -1278,7 +1431,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="51"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1294,6 +1449,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.7271
@@ -1302,7 +1458,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="52"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1318,6 +1476,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.7375
@@ -1326,7 +1485,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="53"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1342,6 +1503,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.8085
@@ -1350,7 +1512,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="54"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1366,6 +1530,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.8284
@@ -1374,7 +1539,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="55"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1390,6 +1557,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.8811
@@ -1398,7 +1566,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="56"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1414,6 +1584,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.8961
@@ -1422,7 +1593,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="57"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1438,6 +1611,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.9129
@@ -1446,7 +1620,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="58"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1462,6 +1638,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.9297
@@ -1470,7 +1647,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="59"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1486,6 +1665,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.9672
@@ -1494,7 +1674,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="60"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1510,6 +1692,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.9705
@@ -1518,7 +1701,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="61"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1534,6 +1719,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             196.9835
@@ -1542,7 +1728,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="62"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1558,6 +1746,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0508
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             197.0196
@@ -1566,7 +1755,9 @@ exports[`RecentTrades should render correctly 1`] = `
         <Row
           key="63"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -1582,6 +1773,7 @@ exports[`RecentTrades should render correctly 1`] = `
             0.0507
           </CellBody>
           <CellBody
+            noPadding={false}
             textAlign="right"
           >
             197.0460
@@ -1611,13 +1803,12 @@ exports[`RecentTrades should render correctly without trades 1`] = `
       rendered
     </type>
   </style>
-  <h3>
-    Recent trades
-  </h3>
   <div
     className="recent-trades__table-wrap"
   >
-    <p>
+    <p
+      className="recent-trades__no-items"
+    >
       No recent trades
     </p>
   </div>
