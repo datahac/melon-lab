@@ -20,7 +20,6 @@ import getFundIsShutdown from './loaders/fund/fundIsShutdown';
 import getFundParticipation from './loaders/fund/fundParticipation';
 import getQuoteToken from './loaders/quoteToken';
 import getAssetPrice from './loaders/assetPrice';
-import getStepFor from './loaders/stepFor';
 import getFundIsComplete from './loaders/fund/fundIsComplete';
 import getSymbolBalance from './loaders/symbolBalance';
 import getSymbolBalanceObservable from './loaders/symbolBalanceObservable';

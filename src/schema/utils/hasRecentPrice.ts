@@ -8,16 +8,13 @@ import {
   delay,
   concatMap,
 } from 'rxjs/operators';
-import {
-  getQuoteToken,
-  hasRecentPrice as hasRecentPriceCall,
-} from '@melonproject/protocol';
+import { getQuoteToken, hasValidPrice } from '@melonproject/protocol';
 
 const requestHasRecentPrice = environment => {
   return Rx.defer(async () => {
     const address = environment.deployment.melonContracts.priceSource;
     const token = await getQuoteToken(environment, address);
-    return hasRecentPriceCall(environment, address, token);
+    return hasValidPrice(environment, address, token);
   }).pipe(
     timeout(2000),
     retryWhen(errors => errors.pipe(delay(1000))),
