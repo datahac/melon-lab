@@ -1,13 +1,22 @@
 import React from 'react';
 import Modal from './index';
+import Button from '~/blocks/Button';
 
 const mockCallback = jest.fn();
 const data = {
   isOpen: true,
-  loading: false,
   title: 'Modal',
-  primaryInteraction: 'primaryInteraction',
-  interactionHandler: mockCallback,
+  PrimaryAction: Button,
+  PrimaryActionProps: {
+    children: 'First Button',
+    onClick: mockCallback,
+    style: 'secondary',
+  },
+  SecondaryAction: Button,
+  SecondaryActionProps: {
+    children: 'Second Button',
+    onClick: mockCallback,
+  },
 };
 
 describe('Modal', () => {
@@ -28,16 +37,14 @@ describe('Modal', () => {
       .first()
       .simulate('click');
     expect(mockCallback.mock.calls.length).toBe(1);
-    expect(mockCallback.mock.calls[0][1]).toBe(data.primaryInteraction);
   });
 
   it('onClick primary action', () => {
-    wrapper.setProps({ secondaryInteraction: 'secondaryInteraction' });
     wrapper
       .find('Button')
       .first()
       .simulate('click');
     expect(mockCallback.mock.calls.length).toBe(2);
-    expect(mockCallback.mock.calls[1][1]).toBe('secondaryInteraction');
+
   });
 });

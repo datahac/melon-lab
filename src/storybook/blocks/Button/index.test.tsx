@@ -19,7 +19,9 @@ describe('Button', () => {
   });
 
   it('onClick event', () => {
-    wrapper.find('button').simulate('click');
+    wrapper.find('button').simulate('click', {
+      preventDefault: () => {},
+    });
     expect(mockCallback.mock.calls.length).toBe(1);
   });
 });

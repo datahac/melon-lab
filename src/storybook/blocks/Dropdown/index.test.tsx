@@ -26,9 +26,6 @@ describe('Dropdown', () => {
 
     expect(wrapper).toMatchSnapshot();
     wrapper.find('select').simulate('change', { target: { value: 'value' } });
-    expect(onChange).toBeCalledWith(
-      { value: 'value' },
-      { target: { value: 'value' } },
-    );
+    expect(onChange).toBeCalledWith({ target: { value: 'value' } });
   });
 });
