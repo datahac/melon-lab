@@ -43,7 +43,7 @@ const executeFundSetupBeginMutation = gql`
 export default withRouter(props => (
   <ModalTransaction
     text="The following method on the Melon Smart Contracts will be executed: beginSetup"
-    open={!!props.values && props.progress === 0}
+    open={!!props.values && props.progress}
     estimate={{
       mutation: estimateFundSetupBeginMutation,
       variables: () => ({
@@ -55,7 +55,6 @@ export default withRouter(props => (
       mutation: executeFundSetupBeginMutation,
       update: (cache, result) => {
         props.update(cache, {
-          step: 1,
           fund: R.path(['data', 'execute'], result),
         });
       },

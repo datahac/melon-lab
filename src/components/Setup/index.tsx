@@ -146,6 +146,13 @@ class Setup extends React.Component {
   };
 
   render() {
+    const setupStepsComplete = target => {
+      for (const address in target) {
+        if (target[address] === null) return false;
+      }
+      return true;
+    };
+
     return (
       <Composer
         components={[
@@ -157,59 +164,34 @@ class Setup extends React.Component {
         {([account, configuration, managerProps]) => (
           <Fragment>
             <FundSetupBegin
-              progress={managerProps.step}
+              progress={!managerProps.fund}
               values={this.state.values}
               update={managerProps.update}
               setFundValues={this.setFundValues}
             />
 
-            <FundSetupStep
-              step={2}
-              progress={managerProps.step}
-              update={managerProps.update}
-            />
+            {!!managerProps.fundSetup && (
+              <Fragment>
+                <FundSetupStep
+                  progress={
+                    !!managerProps.fund &&
+                    !managerProps.isComplete &&
+                    !setupStepsComplete(managerProps.fundSetup)
+                  }
+                  update={managerProps.update}
+                  fundSetup={managerProps.fundSetup}
+                />
 
-            <FundSetupStep
-              step={3}
-              progress={managerProps.step}
-              update={managerProps.update}
-            />
-
-            <FundSetupStep
-              step={4}
-              progress={managerProps.step}
-              update={managerProps.update}
-            />
-
-            <FundSetupStep
-              step={5}
-              progress={managerProps.step}
-              update={managerProps.update}
-            />
-
-            <FundSetupStep
-              step={6}
-              progress={managerProps.step}
-              update={managerProps.update}
-            />
-
-            <FundSetupStep
-              step={7}
-              progress={managerProps.step}
-              update={managerProps.update}
-            />
-
-            <FundSetupStep
-              step={8}
-              progress={managerProps.step}
-              update={managerProps.update}
-            />
-
-            <FundSetupComplete
-              fund={managerProps.fund}
-              progress={managerProps.step}
-              update={managerProps.update}
-            />
+                <FundSetupComplete
+                  progress={
+                    !managerProps.isComplete &&
+                    setupStepsComplete(managerProps.fundSetup)
+                  }
+                  fund={managerProps.fund}
+                  update={managerProps.update}
+                />
+              </Fragment>
+            )}
 
             {!managerProps.fund && (
               <SetupFormContainer

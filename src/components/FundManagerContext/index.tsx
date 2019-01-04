@@ -81,6 +81,10 @@ export class FundManagerProvider extends React.PureComponent {
                 data: {
                   ...data,
                   ...values,
+                  fundSetup: {
+                    ...data.fundSetup,
+                    ...values.fundSetup,
+                  },
                 },
               });
             },
