@@ -139,6 +139,7 @@ export default class ModalTransactions extends React.Component {
             this.setGas(R.path(['data', 'estimate', 'gasPrice'], data));
             this.setFees([
               {
+                description: mergedMutations[0].name,
                 gasLimit: R.path(['data', 'estimate', 'gas'], data),
               },
             ]);
