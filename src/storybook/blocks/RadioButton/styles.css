@@ -15,7 +15,7 @@
   background-color: var(--color-primary-dark);
 }
 
-.radio-button input:checked ~ .radio-button__checkmark:after {
+.radio-button input:checked ~ .radio-button__checkmark::after {
   display: block;
 }
 
@@ -51,7 +51,7 @@
   transition-duration: var(--transition-duration-default);
 }
 
-.radio-button__checkmark ::after {
+.radio-button__checkmark::after {
   content: '';
   position: absolute;
   display: none;
