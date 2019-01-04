@@ -37,7 +37,11 @@
   transform: rotate(45deg);
 }
 
-.transaction-progress__status--is-complete
+.transaction-progress__item--is-complete
   .transaction-progress__checkmark::after {
   display: block;
+}
+
+.transaction-progress__item--is-active {
+  font-weight: var(--font-weight-bold);
 }

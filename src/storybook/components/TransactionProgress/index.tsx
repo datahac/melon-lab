@@ -14,24 +14,25 @@ export interface TransactionProgressProps {
 export const TransactionProgress: StatelessComponent<
   TransactionProgressProps
 > = ({ transactions, activeTransaction }) => {
-  const statusClassNames = (isComplete, isActive) =>
-    classNames('transaction-progress__status', {
-      'transaction-progress__status--is-complete': isComplete,
-      'transaction-progress__status--is-active': isActive,
+  const itemClassNames = (isComplete, isActive) =>
+    classNames('transaction-progress__item', {
+      'transaction-progress__item--is-complete': isComplete,
+      'transaction-progress__item--is-active': isActive,
     });
 
   return (
     <div className="transaction-progress">
       <style jsx>{styles}</style>
       {transactions.map((transaction, index) => (
-        <div className="transaction-progress__item" key={index}>
+        <div
+          className={itemClassNames(
+            transaction.isComplete,
+            transaction.name === activeTransaction,
+          )}
+          key={index}
+        >
           <div className="transaction-progress__name">{transaction.name}</div>
-          <div
-            className={statusClassNames(
-              transaction.isComplete,
-              transaction.name === activeTransaction,
-            )}
-          >
+          <div className="transaction-progress__status">
             {(transaction.isComplete ||
               transaction.name === activeTransaction) && (
               <div className="transaction-progress__checkmark" />
