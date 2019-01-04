@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import * as R from 'ramda';
 
 export default apolloClient =>
   apolloClient
@@ -9,8 +10,28 @@ export default apolloClient =>
         }
       `,
     })
-    .then(({ data }) => {
-      return data && !!data.associatedFund;
+    .then(async ({ data }) => {
+      if (data && !!data.associatedFund) {
+        const fundData = await apolloClient.query({
+          variables: {
+            address: data && data.associatedFund,
+          },
+          query: gql`
+            query FundQuery($address: String!) {
+              fund(address: $address) {
+                isComplete
+              }
+            }
+          `,
+        });
+
+        return (
+          data.associatedFund &&
+          R.path(['data', 'fund', 'isComplete'], fundData)
+        );
+      }
+
+      return false;
     })
     .catch(() => {
       // Fail gracefully
