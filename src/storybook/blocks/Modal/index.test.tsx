@@ -45,6 +45,5 @@ describe('Modal', () => {
       .first()
       .simulate('click');
     expect(mockCallback.mock.calls.length).toBe(2);
-
   });
 });
