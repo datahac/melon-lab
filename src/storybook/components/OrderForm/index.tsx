@@ -46,6 +46,9 @@ export interface OrderFormProps {
   touched: any;
   type?: string;
   values: FormValues;
+  lastPrice: PriceInterface;
+  ask: PriceInterface;
+  bid: PriceInterface;
 }
 
 export const OrderForm: StatelessComponent<OrderFormProps> = ({
@@ -63,6 +66,9 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
   quoteAsset,
   touched,
   values,
+  lastPrice,
+  ask,
+  bid,
 }) => {
   const isMarket = values.strategy === 'Market' ? true : false;
   const numberPlaceholder = (0).toFixed(decimals);
@@ -121,7 +127,12 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
           />
         </div> */}
         <div className="order-form__order-info">
-          <OrderInfo tokens={tokens} />
+          <OrderInfo
+            tokens={tokens}
+            lastPrice={lastPrice}
+            ask={ask}
+            bid={bid}
+          />
         </div>
         <div className="order-form__input">
           <Input
