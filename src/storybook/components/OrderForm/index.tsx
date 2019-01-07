@@ -7,6 +7,7 @@ import Notification from '~/blocks/Notification';
 import Switch from '~/blocks/Switch';
 import Toggle from '~/blocks/Toggle';
 import OrderInfo from '~/components/OrderInfo';
+import { QuantityInterface } from '@melonproject/token-math/quantity';
 
 import styles from './styles.css';
 
@@ -30,7 +31,10 @@ export interface OrderFormProps {
   }>;
   handleBlur?: () => void;
   handleSubmit?: () => void;
-  tokens?: any;
+  tokens?: {
+    baseToken: QuantityInterface;
+    quoteToken: QuantityInterface;
+  };
   isCompetition?: boolean;
   isManager?: boolean;
   onChange?: React.ChangeEvent<any>;

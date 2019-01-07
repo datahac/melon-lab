@@ -18,8 +18,11 @@ export default class OrderFormContainer extends React.PureComponent {
     )(holdings);
 
     return {
-      name: asset,
-      balance,
+      quantity: R.pathOr(0, ['quantity'], balance),
+      token: {
+        ...balance.token,
+        symbol: R.pathOr(asset, ['token', 'symbol'], balance),
+      },
     };
   };
 
@@ -42,6 +45,8 @@ export default class OrderFormContainer extends React.PureComponent {
             baseToken: this.getTokenBalance(this.props.baseAsset),
             quoteToken: this.getTokenBalance(this.props.quoteAsset),
           };
+
+          console.log(tokens);
 
           return (
             <WrappedOrderForm

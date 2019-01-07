@@ -8,12 +8,18 @@ const data = {
   ask: 0,
   tokens: {
     baseToken: {
-      name: 'ETH',
-      balance: 30.0,
+      quantity: 3000000000000000000,
+      token: {
+        symbol: 'ETH',
+        decimals: 18,
+      },
     },
     quoteToken: {
-      name: 'MLN',
-      balance: 20.0,
+      quantity: 1000000000000000000,
+      token: {
+        symbol: 'MLN',
+        decimals: 18,
+      },
     },
   },
 };

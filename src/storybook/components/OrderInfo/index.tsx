@@ -9,10 +9,8 @@ export interface OrderInfoProps {
   bid?: number;
   lastPrice?: number;
   tokens: {
-    [key: string]: {
-      name: string;
-      balance: QuantityInterface;
-    };
+    baseToken: QuantityInterface;
+    quoteToken: QuantityInterface;
   };
 }
 
@@ -38,22 +36,22 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
         <span className="order-info__price-desc">Ask</span>
       </div>
     </div>
-    <div className="order-info__balances">
-      <div className="order-info__balance">
-        <span className="order-info__balance-desc">
-          {tokens.baseToken.name}:
-        </span>{' '}
-        {R.path(['baseToken', 'balance'], tokens) &&
-          toFixed(tokens.baseToken.balance)}
+    {tokens && (
+      <div className="order-info__balances">
+        <div className="order-info__balance">
+          <span className="order-info__balance-desc">
+            {tokens.baseToken.token.symbol}:
+          </span>{' '}
+          {toFixed(tokens.baseToken)}
+        </div>
+        <div className="order-info__balance">
+          <span className="order-info__balance-desc">
+            {tokens.quoteToken.token.symbol}:
+          </span>{' '}
+          {toFixed(tokens.quoteToken)}
+        </div>
       </div>
-      <div className="order-info__balance">
-        <span className="order-info__balance-desc">
-          {tokens.quoteToken.name}:
-        </span>{' '}
-        {R.path(['quoteToken', 'balance'], tokens) &&
-          toFixed(tokens.quoteToken.balance)}
-      </div>
-    </div>
+    )}
   </div>
 );
 

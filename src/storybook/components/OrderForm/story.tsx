@@ -14,12 +14,18 @@ const data = {
   },
   tokens: {
     baseToken: {
-      name: 'ETH',
-      balance: 30.0,
+      quantity: 30.0,
+      token: {
+        symbol: 'ETH',
+        decimals: 4,
+      },
     },
     quoteToken: {
-      name: 'MLN',
-      balance: 20.0,
+      quantity: 20.0,
+      token: {
+        symbol: 'MLN',
+        decimals: 4,
+      },
     },
   },
   exchanges: [
