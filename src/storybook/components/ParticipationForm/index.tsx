@@ -13,18 +13,24 @@ import * as R from 'ramda';
 
 import styles from './styles.css';
 
-interface FormValues {
+export interface FormValues {
   price: PriceInterface;
   quantity: QuantityInterface;
   total: QuantityInterface;
   type: string;
 }
 
+export interface FormErrors {
+  quantity?: string;
+  total?: string;
+  price?: string;
+}
+
 export interface ParticipationFormProps {
   decimals?: number;
   setup: boolean;
   touched?: any;
-  errors?: any;
+  errors: FormErrors;
   values: FormValues;
   handleBlur?: () => void;
   handleSubmit?: () => void;

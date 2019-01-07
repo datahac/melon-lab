@@ -1,13 +1,9 @@
 import { withFormik } from 'formik';
-import * as Yup from 'yup';
 import { withHandlers, compose } from 'recompose';
-import {
-  divide,
-  multiply,
-  toString,
-} from '@melonproject/token-math/bigInteger';
 import { createQuantity, isEqual } from '@melonproject/token-math/quantity';
 import { valueIn } from '@melonproject/token-math/price';
+import { isZero } from '@melonproject/token-math/bigInteger';
+import { FormErros } from '~/components/ParticipationForm';
 
 const withForm = withFormik({
   mapPropsToValues: props => ({
@@ -17,23 +13,23 @@ const withForm = withFormik({
       props.sharePrice && createQuantity(props.sharePrice.base.token, 0),
     type: 'Invest',
   }),
-  // TODO: Implement validation
-  // validationSchema: props => {
-  //   const numberFormat = (0).toFixed(4);
-  //   const minNumber = numberFormat.slice(0, -1) + '1';
+  validate: values => {
+    let errors: FormErros = {};
 
-  //   return Yup.object().shape({
-  //     total: Yup.number()
-  //       .min(minNumber, `Minimum total is ${minNumber}`)
-  //       .required('Total is required.'),
-  //     quantity: Yup.number()
-  //       .min(minNumber, `Minimum quantity is ${minNumber}`)
-  //       .required('Quantity is required.'),
-  //     price: Yup.number()
-  //       .min(minNumber, `Minimum price is ${minNumber}`)
-  //       .required('Price is required.'),
-  //   });
-  // },
+    if (!values.quantity) {
+      errors.quantity = 'Required';
+    } else if (isZero(values.quantity.quantity)) {
+      errors.quantity = 'Invalid quantity';
+    }
+
+    if (!values.total) {
+      errors.total = 'Required';
+    } else if (isZero(values.total.quantity)) {
+      errors.total = 'Invalid quantity';
+    }
+
+    return errors;
+  },
   enableReinitialize: true,
   handleSubmit: (values, form) => form.props.setInvestValues(values),
 });
