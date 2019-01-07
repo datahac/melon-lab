@@ -14,17 +14,17 @@ const data = {
   },
   tokens: {
     baseToken: {
-      quantity: 30.0,
+      quantity: 3000000000000000000,
       token: {
         symbol: 'ETH',
-        decimals: 4,
+        decimals: 18,
       },
     },
     quoteToken: {
-      quantity: 20.0,
+      quantity: 1000000000000000000,
       token: {
         symbol: 'MLN',
-        decimals: 4,
+        decimals: 18,
       },
     },
   },
