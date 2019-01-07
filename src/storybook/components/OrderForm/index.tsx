@@ -7,17 +7,21 @@ import Notification from '~/blocks/Notification';
 import Switch from '~/blocks/Switch';
 import Toggle from '~/blocks/Toggle';
 import OrderInfo from '~/components/OrderInfo';
-import { QuantityInterface } from '@melonproject/token-math/quantity';
+import { toFixed, QuantityInterface } from '@melonproject/token-math/quantity';
+import {
+  toFixed as toFixedPrice,
+  PriceInterface,
+} from '@melonproject/token-math/price';
 
 import styles from './styles.css';
 
 interface FormValues {
   exchange: string;
   type: string;
-  price: string;
-  quantity: string;
   strategy: string;
-  total: string;
+  price: PriceInterface;
+  quantity: QuantityInterface;
+  total: QuantityInterface;
 }
 
 export interface OrderFormProps {
@@ -121,7 +125,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div>
         <div className="order-form__input">
           <Input
-            value={values.price}
+            value={values.price && toFixedPrice(values.price, decimals)}
             disabled={isMarket || !priceFeedUp || !isManager}
             label="Price"
             name="price"
@@ -137,7 +141,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div>
         <div className="order-form__input">
           <Input
-            value={values.quantity}
+            value={values.quantity && toFixed(values.quantity, decimals)}
             label="Quantity"
             name="quantity"
             insideLabel="true"
@@ -153,7 +157,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div>
         <div className="order-form__input">
           <Input
-            value={values.total}
+            value={values.total && toFixed(values.total, decimals)}
             label="Total"
             name="total"
             insideLabel="true"

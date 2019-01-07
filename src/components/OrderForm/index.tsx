@@ -46,8 +46,6 @@ export default class OrderFormContainer extends React.PureComponent {
             quoteToken: this.getTokenBalance(this.props.quoteAsset),
           };
 
-          console.log(tokens);
-
           return (
             <WrappedOrderForm
               tokens={tokens}

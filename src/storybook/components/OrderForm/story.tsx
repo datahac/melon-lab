@@ -33,11 +33,38 @@ const data = {
     { value: 'OASIS_DEX', name: 'OasisDEX' },
   ],
   values: {
-    price: '1.0000',
+    price: {
+      base: {
+        quantity: 1000000000000000000,
+        token: {
+          symbol: 'ETH',
+          decimals: 18,
+        },
+      },
+      quote: {
+        quantity: 1000000000000000000,
+        token: {
+          symbol: 'ETH',
+          decimals: 18,
+        },
+      },
+    },
     orderType: 'Sell',
     strategy: 'Limit',
-    quantity: '1.0000',
-    total: '1.0000',
+    quantity: {
+      quantity: 3000000000000000000,
+      token: {
+        symbol: 'ETH',
+        decimals: 18,
+      },
+    },
+    total: {
+      quantity: 3000000000000000000,
+      token: {
+        symbol: 'ETH',
+        decimals: 18,
+      },
+    },
     exchange: 'OASIS_DEX',
   },
   touched: {
