@@ -60,7 +60,7 @@ const getTestEnvironment = async (track: string) => {
 
   const wallet = Wallet.Wallet.fromMnemonic(mnemonic);
   const accounts = new Web3Accounts(environment.eth.currentProvider);
-  const signer = transaction =>
+  const signTransaction = transaction =>
     accounts
       .signTransaction(transaction, wallet.privateKey)
       .then(t => t.rawTransaction);
@@ -69,7 +69,7 @@ const getTestEnvironment = async (track: string) => {
     ...environment,
     wallet: {
       ...wallet,
-      sign: signer,
+      signTransaction,
     },
   };
 
