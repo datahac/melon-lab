@@ -178,6 +178,28 @@ export default {
       return loaders.fundHoldings.load(parent);
     },
   },
+  Order: {
+    __resolveType: object => {
+      switch (object.exchange) {
+        case 'RADAR_RELAY':
+          return 'ZeroExOrder';
+        case 'OASIS_DEX':
+          return 'OasisDexOrder';
+        case 'KYBER_NETWORK':
+          return 'KyberNetworkOrder';
+        case 'ETHFINEX':
+          return 'EthfinexOrder';
+        default:
+          throw new Error('Invalid order type.');
+      }
+    },
+  },
+  ZeroExOrder: {
+    metadata: parent => parent.original.signedOrder,
+  },
+  OasisDexOrder: {
+    metadata: parent => parent.original,
+  },
   Holding: {
     fraction: async (parent, _, { loaders }) => {
       // TODO: Re-implement this.

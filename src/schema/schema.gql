@@ -18,8 +18,8 @@ scalar DateTime
 enum ExchangeEnum {
   RADAR_RELAY
   OASIS_DEX
-  ERC_DEX
   KYBER_NETWORK
+  ETHFINEX
 }
 
 enum SymbolEnum {
@@ -43,12 +43,66 @@ enum FundSetupStepEnum {
   CREATE_VAULT
 }
 
-type Order {
+interface Order {
   id: String
   trade: Price!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
-  signature: Signature
+}
+
+type EthfinexOrder implements Order {
+  id: String
+  trade: Price!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+}
+
+type ZeroExOrder implements Order {
+  id: String
+  trade: Price!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+  metadata: ZeroExOrderMetadata
+}
+
+type OasisDexOrder implements Order {
+  id: String
+  trade: Price!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+  metadata: OasisDexOrderMetadata
+}
+
+type KyberNetworkOrder implements Order {
+  id: String
+  trade: Price!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+}
+
+type ZeroExOrderMetadata {
+  exchangeAddress: String
+  senderAddress: String
+  makerAddress: String
+  takerAddress: String
+  makerAssetData: String
+  takerAssetData: String
+  feeRecipientAddress: String
+  makerAssetAmount: String
+  takerAssetAmount: String
+  makerFee: String
+  takerFee: String
+  expirationTimeSeconds: Int
+  signature: String
+  salt: String
+}
+
+type OasisDexOrderMetadata {
+  id: String!
+  maker: String
+  taker: String
+  isActive: Boolean!
+  exchangeContractAddress: String
 }
 
 type Price {
