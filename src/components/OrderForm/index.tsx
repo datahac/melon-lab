@@ -22,6 +22,8 @@ export default class OrderFormContainer extends React.PureComponent {
       token: {
         ...balance.token,
         symbol: R.pathOr(asset, ['token', 'symbol'], balance),
+        decimals: R.pathOr(18, ['token', 'decimals'], balance),
+        address: R.pathOr('', ['token', 'address'], balance),
       },
     };
   };

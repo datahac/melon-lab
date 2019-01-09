@@ -12,6 +12,7 @@ const query = gql`
           token {
             symbol
             decimals
+            address
           }
         }
 

@@ -54,7 +54,7 @@ export interface OrderFormProps {
 export const OrderForm: StatelessComponent<OrderFormProps> = ({
   baseAsset,
   priceFeedUp,
-  decimals = 0,
+  decimals = 4,
   errors,
   exchanges,
   handleBlur,
