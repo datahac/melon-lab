@@ -168,10 +168,7 @@ class Setup extends React.Component {
             {setup.routes && (
               <FundSetupStep
                 progress={
-                  !!manager.fund &&
-                  !setup.isComplete &&
-                  !!setup.routes &&
-                  setup.isInProgress
+                  !!manager.fund && !setup.isComplete && setup.isInProgress
                 }
                 update={setup.update}
                 routes={setup.routes}
@@ -180,7 +177,7 @@ class Setup extends React.Component {
 
             <FundSetupComplete
               progress={
-                !setup.isInProgress && !setup.isComplete && !!manager.fund
+                !!manager.fund && !setup.isComplete && !setup.isInProgress
               }
               fund={manager.fund}
               update={setup.update}
