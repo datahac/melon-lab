@@ -72,51 +72,19 @@ const WithFormModal = compose(
 );
 
 export default class ModalTransactions extends React.Component {
-  state = {
-    step: '',
-    gas: 0,
-    fees: [],
-    text: '',
-  };
-
-  setStep = step => {
-    this.setState({
-      step,
-    });
-  };
-
-  setGas = gas => {
-    this.setState({
-      gas,
-    });
-  };
-
-  setFees = fees => {
-    this.setState({
-      fees,
-    });
-  };
-
-  setText = text => {
-    this.setState({
-      text,
-    });
-  };
-
   render() {
-    const mergedMutations =
-      this.props.estimations &&
-      R.flatten(
-        this.props.estimations.map((estimateMutation, i) => {
-          if (estimateMutation.isComplete) return [];
-          const executeMutation = this.props.executions[i];
-          return [estimateMutation, executeMutation];
-        }),
-      );
+    const estimations = this.props.estimations.filter(
+      estimateMutation => !estimateMutation.isComplete,
+    );
+
+    const executions = this.props.executions.filter(
+      (executeMutation, index) =>
+        !this.props.estimations[index].isComplete && executeMutation,
+    );
 
     return (
       <Composer
-        components={mergedMutations.map(mutation => {
+        components={R.flatten(R.zip(estimations, executions)).map(mutation => {
           return ({ render }) => (
             <Mutation {...R.omit(['variables'], mutation)}>
               {(a, b) => render([a, b])}
@@ -125,36 +93,26 @@ export default class ModalTransactions extends React.Component {
         })}
       >
         {results => {
-          const doEstimate = async () => {
+          const transaction = R.path(['data', 'estimate'], results[0][1]);
+
+          const doEstimate = () => {
             const variables = R.pathOr(
               () => undefined,
               ['variables'],
-              mergedMutations[0],
-            )(mergedMutations[0]);
+              estimations[0],
+            )(estimations[0]);
 
-            const data = await results[0][0]({
+            results[0][0]({
               variables,
             });
-
-            this.setGas(R.path(['data', 'estimate', 'gasPrice'], data));
-            this.setFees([
-              {
-                description: mergedMutations[0].name,
-                gasLimit: R.path(['data', 'estimate', 'gas'], data),
-              },
-            ]);
-            this.setText(mergedMutations[0].text);
-            this.setStep(mergedMutations[0].name);
           };
 
           const doExecute = async gasPrice => {
-            const transaction = R.path(['data', 'estimate'], results[0][1]);
-
             const variables = R.pathOr(
               () => undefined,
               ['variables'],
-              mergedMutations[1],
-            )(mergedMutations[1], {
+              executions[0],
+            )(executions[0], {
               ...transaction,
               gasPrice,
             });
@@ -164,25 +122,25 @@ export default class ModalTransactions extends React.Component {
             });
           };
 
-          const loading = results
-            .map(item => {
-              return item[1].loading;
-            })
-            .some(loading => loading === true);
+          const fees = [
+            {
+              gasLimit: R.prop('gas', transaction),
+            },
+          ];
 
           return (
             <WithFormModal
               handleCancel={this.props.handleCancel}
               error={false}
-              loading={loading}
-              gasPrice={this.state.gas}
+              loading={results[0][1].loading || results[1][1].loading}
+              gasPrice={R.path(['data', 'estimate', 'gasPrice'], results[0][1])}
               text={this.props.text}
               open={this.props.open}
-              fees={this.state.fees}
+              fees={fees}
               estimate={doEstimate}
               execute={doExecute}
               estimations={this.props.estimations}
-              step={this.state.step}
+              step={estimations[0].name}
             />
           );
         }}

@@ -165,11 +165,9 @@ class Setup extends React.Component {
               setFundValues={this.setFundValues}
             />
 
-            {setup.routes && (
+            {setup.routes && setup.isInProgress && (
               <FundSetupStep
-                progress={
-                  !!manager.fund && !setup.isComplete && setup.isInProgress
-                }
+                progress={!!manager.fund && !setup.isComplete}
                 update={setup.update}
                 routes={setup.routes}
               />
