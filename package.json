@@ -31,7 +31,7 @@
   "dependencies": {
     "@melonproject/exchange-aggregator": "^0.0.2",
     "@melonproject/protocol": "^0.9.0-alpha.21",
-    "@melonproject/token-math": "^0.0.21",
+    "@melonproject/token-math": "^0.0.25",
     "@radarrelay/types": "^1.2.1",
     "apollo-cache-inmemory": "^1.3.12",
     "apollo-client": "^2.4.8",
