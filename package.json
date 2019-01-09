@@ -29,7 +29,7 @@
     "Matthias Gemperli <matt@melonport.com>"
   ],
   "dependencies": {
-    "@melonproject/exchange-aggregator": "^0.0.1",
+    "@melonproject/exchange-aggregator": "^0.0.2",
     "@melonproject/protocol": "^0.9.0-alpha.21",
     "@melonproject/token-math": "^0.0.21",
     "@radarrelay/types": "^1.2.1",
