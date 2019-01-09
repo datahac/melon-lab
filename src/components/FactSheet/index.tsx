@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import FactSheet from '~/components/Factsheet';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
+import { SetupConsumer } from '+/components/SetupContext';
 import ShutDownFund from '+/components/ShutDownFund';
 import Composer from 'react-composer';
 
@@ -18,8 +19,14 @@ export default class FactsheetContainer extends React.PureComponent {
 
   render() {
     return (
-      <Composer components={[<FundManagerConsumer />, <NetworkConsumer />]}>
-        {([managerProps, network]) => {
+      <Composer
+        components={[
+          <FundManagerConsumer />,
+          <NetworkConsumer />,
+          <SetupConsumer />,
+        ]}
+      >
+        {([_, network, setup]) => {
           const { address, fund, loading, isManager } = this.props;
           const reportUrl =
             address &&
@@ -33,7 +40,7 @@ export default class FactsheetContainer extends React.PureComponent {
                 shutDown={this.state.shutDownModal}
                 setShutDown={this.setShutDownModal}
                 fundAddress={address}
-                update={managerProps.update}
+                update={setup.updateExistingFund}
               />
               <FactSheet
                 {...fund}
@@ -41,7 +48,7 @@ export default class FactsheetContainer extends React.PureComponent {
                 reportUrl={reportUrl}
                 loading={loading}
                 handleShutDown={this.setShutDownModal}
-                isShutdown={fund.isShutdown}
+                isShutdown={setup.isShutdown}
               />
             </Fragment>
           );

@@ -53,7 +53,7 @@ const executeFundSetupStepMutation = gql`
 
 export default withRouter(props => (
   <ModalTransactions
-    text={`The following methods on the Melon Smart Contracts will be executed:`}
+    text={`The following method on the Melon Smart Contracts will be executed:`}
     open={props.progress}
     estimations={[
       {
@@ -61,7 +61,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_ACCOUNTING',
         }),
-        isComplete: !!props.fundSetup.accountingAddress,
+        isComplete: !!props.routes.accountingAddress,
         name: 'createAccounting',
       },
       {
@@ -69,7 +69,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_FEE_MANAGER',
         }),
-        isComplete: !!props.fundSetup.feeManagerAddress,
+        isComplete: !!props.routes.feeManagerAddress,
         name: 'createFeeManager',
       },
       {
@@ -77,7 +77,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_PARTICIPATION',
         }),
-        isComplete: !!props.fundSetup.participationAddress,
+        isComplete: !!props.routes.participationAddress,
         name: 'createParticipation',
       },
       {
@@ -85,7 +85,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_POLICY_MANAGER',
         }),
-        isComplete: !!props.fundSetup.policyManagerAddress,
+        isComplete: !!props.routes.policyManagerAddress,
         name: 'createPolicyManager',
       },
       {
@@ -93,7 +93,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_SHARES',
         }),
-        isComplete: !!props.fundSetup.sharesAddress,
+        isComplete: !!props.routes.sharesAddress,
         name: 'createShares',
       },
       {
@@ -101,7 +101,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_TRADING',
         }),
-        isComplete: !!props.fundSetup.tradingAddress,
+        isComplete: !!props.routes.tradingAddress,
         name: 'createTrading',
       },
       {
@@ -109,7 +109,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_VAULT',
         }),
-        isComplete: !!props.fundSetup.vaultAddress,
+        isComplete: !!props.routes.vaultAddress,
         name: 'createVault',
       },
     ]}
@@ -122,7 +122,7 @@ export default withRouter(props => (
         }),
         update: (cache, result) => {
           props.update(cache, {
-            fundSetup: {
+            routes: {
               accountingAddress: R.path(['data', 'execute'], result),
             },
           });
@@ -136,7 +136,7 @@ export default withRouter(props => (
         }),
         update: (cache, result) => {
           props.update(cache, {
-            fundSetup: {
+            routes: {
               feeManagerAddress: R.path(['data', 'execute'], result),
             },
           });
@@ -150,7 +150,7 @@ export default withRouter(props => (
         }),
         update: (cache, result) => {
           props.update(cache, {
-            fundSetup: {
+            routes: {
               participationAddress: R.path(['data', 'execute'], result),
             },
           });
@@ -164,7 +164,7 @@ export default withRouter(props => (
         }),
         update: (cache, result) => {
           props.update(cache, {
-            fundSetup: {
+            routes: {
               policyManagerAddress: R.path(['data', 'execute'], result),
             },
           });
@@ -178,7 +178,7 @@ export default withRouter(props => (
         }),
         update: (cache, result) => {
           props.update(cache, {
-            fundSetup: {
+            routes: {
               sharesAddress: R.path(['data', 'execute'], result),
             },
           });
@@ -192,7 +192,7 @@ export default withRouter(props => (
         }),
         update: (cache, result) => {
           props.update(cache, {
-            fundSetup: {
+            routes: {
               tradingAddress: R.path(['data', 'execute'], result),
             },
           });
@@ -206,7 +206,7 @@ export default withRouter(props => (
         }),
         update: (cache, result) => {
           props.update(cache, {
-            fundSetup: {
+            routes: {
               vaultAddress: R.path(['data', 'execute'], result),
             },
           });

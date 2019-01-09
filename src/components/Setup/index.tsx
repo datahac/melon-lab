@@ -17,6 +17,7 @@ import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
 import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
+import { SetupConsumer } from '+/components/SetupContext';
 import withForm from './withForm';
 import FundSetupBegin from '+/components/FundSetupBegin';
 import FundSetupStep from '+/components/FundSetupStep';
@@ -146,54 +147,41 @@ class Setup extends React.Component {
   };
 
   render() {
-    const setupStepsComplete = target => {
-      for (const address in target) {
-        if (target[address] === null) return false;
-      }
-      return true;
-    };
-
     return (
       <Composer
         components={[
           <AccountConsumer />,
           <ConfigurationConsumer />,
           <FundManagerConsumer />,
+          <SetupConsumer />,
         ]}
       >
-        {([account, configuration, managerProps]) => (
+        {([account, configuration, manager, setup]) => (
           <Fragment>
             <FundSetupBegin
-              progress={!managerProps.fund}
+              progress={!manager.fund}
               values={this.state.values}
-              update={managerProps.update}
+              update={manager.update}
               setFundValues={this.setFundValues}
             />
 
-            {!!managerProps.fundSetup && (
-              <Fragment>
-                <FundSetupStep
-                  progress={
-                    !!managerProps.fund &&
-                    !managerProps.isComplete &&
-                    !setupStepsComplete(managerProps.fundSetup)
-                  }
-                  update={managerProps.update}
-                  fundSetup={managerProps.fundSetup}
-                />
-
-                <FundSetupComplete
-                  progress={
-                    !managerProps.isComplete &&
-                    setupStepsComplete(managerProps.fundSetup)
-                  }
-                  fund={managerProps.fund}
-                  update={managerProps.update}
-                />
-              </Fragment>
+            {!!setup.routes && setup.isInProgress && (
+              <FundSetupStep
+                progress={!!manager.fund && !setup.isComplete}
+                update={setup.update}
+                routes={setup.routes}
+              />
             )}
 
-            {!managerProps.fund && (
+            <FundSetupComplete
+              progress={
+                !setup.isInProgress && !setup.isComplete && !!manager.fund
+              }
+              fund={manager.fund}
+              update={setup.update}
+            />
+
+            {!manager.fund && (
               <SetupFormContainer
                 {...this.props}
                 account={account}
@@ -219,3 +207,13 @@ export default compose(
   withRouter,
   withApollo,
 )(Setup);
+
+// Begin
+// - fund === false
+
+// Step
+// - fund === true
+// - IsInProgress === true
+
+// End
+// - fund === true

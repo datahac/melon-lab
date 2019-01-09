@@ -6,6 +6,7 @@ import { BalanceProvider } from '+/components/BalanceContext';
 import { FundManagerProvider } from '+/components/FundManagerContext';
 import { NetworkProvider } from '+/components/NetworkContext';
 import { CapabilityProvider } from '+/components/CapabilityContext';
+import { SetupProvider } from '+/components/SetupContext';
 import React from 'react';
 import withApollo from '~/apollo';
 
@@ -46,7 +47,9 @@ class MelonApp extends App {
                 <FundManagerProvider>
                   <BalanceProvider>
                     <CapabilityProvider>
-                      <Component {...pageProps} />
+                      <SetupProvider>
+                        <Component {...pageProps} />
+                      </SetupProvider>
                     </CapabilityProvider>
                   </BalanceProvider>
                 </FundManagerProvider>

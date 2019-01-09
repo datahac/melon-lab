@@ -6,6 +6,7 @@ import { FundManagerConsumer } from '+/components/FundManagerContext';
 import { AccountConsumer } from '+/components/AccountContext';
 import { BalanceConsumer } from '+/components/BalanceContext';
 import { NetworkConsumer } from '+/components/NetworkContext';
+import { SetupConsumer } from '+/components/SetupContext';
 
 export default class WalletOverviewContainer extends React.PureComponent {
   render() {
@@ -16,18 +17,19 @@ export default class WalletOverviewContainer extends React.PureComponent {
           <AccountConsumer />,
           <BalanceConsumer />,
           <FundManagerConsumer />,
+          <SetupConsumer />,
           <WalletQuery />,
         ]}
       >
-        {([network, account, balances, managerProps, walletProps]) => {
+        {([network, account, balances, manager, setup, walletProps]) => {
           return (
             <WalletOverview
-              associatedFund={managerProps.fund}
+              associatedFund={manager.fund}
               balances={balances}
               loading={walletProps.loading}
               currentAddress={account}
               networkId={network.network}
-              isComplete={managerProps.isComplete}
+              isComplete={setup.isComplete}
             />
           );
         }}

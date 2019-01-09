@@ -1,7 +1,6 @@
 import React from 'react';
 import ModalTransaction from '+/components/ModalTransaction';
 import gql from 'graphql-tag';
-import { query as fundQuery } from '+/components/ManageTemplate/data/fund';
 
 const estimateShutDownFundMutation = gql`
   mutation EstimateShutDownFund($fundAddress: String!) {
@@ -57,17 +56,8 @@ export default props => (
         fundAddress: props.fundAddress,
       }),
       update: cache => {
-        cache.writeFragment({
-          id: `fund:${props.fundAddress}`,
-          fragment: gql`
-            fragment myFund on Fund {
-              isShutdown
-            }
-          `,
-          data: {
-            __typename: 'Fund',
-            isShutdown: true,
-          },
+        props.update(cache, {
+          isShutdown: true,
         });
       },
       onCompleted: () => {

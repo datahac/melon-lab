@@ -1,5 +1,6 @@
 .transaction-progress {
   margin-bottom: var(--space-m);
+  padding: var(--space-xs) 0;
 }
 
 .transaction-progress__item {
@@ -12,6 +13,7 @@
 }
 
 .transaction-progress__checkmark {
+  display: none;
   position: relative;
   height: 20px;
   width: 20px;
@@ -25,7 +27,6 @@
 .transaction-progress__checkmark::after {
   content: '';
   position: absolute;
-  display: none;
   left: 7px;
   top: 4px;
   width: 4px;
@@ -37,11 +38,11 @@
   transform: rotate(45deg);
 }
 
-.transaction-progress__item--is-complete
-  .transaction-progress__checkmark::after {
+.transaction-progress__item--is-complete .transaction-progress__checkmark {
   display: block;
 }
 
 .transaction-progress__item--is-active {
   font-weight: var(--font-weight-bold);
+  background-color: var(--color-secondary);
 }

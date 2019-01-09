@@ -87,8 +87,8 @@ export default {
     balance: (_, { address, symbol }, { loaders }) => {
       return loaders.symbolBalance.load({ address, symbol });
     },
-    fundSetup: (_, { manager }, { loaders }) => {
-      return loaders.fundSetup.load(manager);
+    routes: (_, { manager }, { loaders }) => {
+      return loaders.routes.load(manager);
     },
   },
   Ranking: {

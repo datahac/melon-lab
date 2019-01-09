@@ -63,7 +63,7 @@ const WithFormModal = compose(
               transactions={this.props.estimations}
               activeTransaction={this.props.step}
             />
-            <FeeForm {...this.props} />
+            <FeeForm {...this.props} text={''} />
           </Modal>
         )
       );
@@ -175,7 +175,6 @@ export default class ModalTransactions extends React.Component {
               handleCancel={this.props.handleCancel}
               error={false}
               loading={loading}
-              estimateProps={{}}
               gasPrice={this.state.gas}
               text={this.props.text}
               open={this.props.open}

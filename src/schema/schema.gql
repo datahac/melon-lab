@@ -217,7 +217,7 @@ type Query {
   rankings: [Ranking]
 
   "Loads the current routes for fund creation for a fund manager address."
-  fundSetup(
+  routes(
     "The address of the fund manager."
     manager: String
   ): Routes

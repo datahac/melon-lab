@@ -24,7 +24,7 @@ import getFundIsComplete from './loaders/fund/fundIsComplete';
 import getSymbolBalance from './loaders/symbolBalance';
 import getSymbolBalanceObservable from './loaders/symbolBalanceObservable';
 import resolveNetwork from './utils/resolveNetwork';
-import getFundSetup from './loaders/fundSetup';
+import getRoutes from './loaders/routes';
 
 export default (environment, streams) => {
   const fundIsComplete = new DataLoader(addresses => {
@@ -37,8 +37,8 @@ export default (environment, streams) => {
     return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundSetup = new DataLoader(addresses => {
-    const fn = getFundSetup(environment);
+  const routes = new DataLoader(addresses => {
+    const fn = getRoutes(environment);
     return Promise.all(addresses.map(fn) || []);
   });
 
@@ -293,6 +293,6 @@ export default (environment, streams) => {
     symbolBalanceObservable,
     versionDeployment,
     fundIsComplete,
-    fundSetup,
+    routes,
   };
 };

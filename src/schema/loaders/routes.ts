@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { managersToRoutes } from '@melonproject/protocol';
 import { isEmptyAddress } from '@melonproject/protocol';
 
-async function fundSetup(environment, managerAddress) {
+async function routes(environment, managerAddress) {
   const routes = await managersToRoutes(
     environment,
     environment.deployment.melonContracts.version,
@@ -29,4 +29,4 @@ async function fundSetup(environment, managerAddress) {
   };
 }
 
-export default R.curryN(2, fundSetup);
+export default R.curryN(2, routes);

@@ -48,10 +48,11 @@ export default withRouter(props => (
     }}
     execute={{
       mutation: executeFundSetupCompleteMutation,
-      update: (cache, result) => {
+      update: cache => {
         props.update(cache, {
-          fund: R.path(['data', 'execute'], result),
-          isComplete: true,
+          fund: {
+            isComplete: true,
+          },
         });
       },
       onCompleted: () => {
