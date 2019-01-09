@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 export const query = gql`
   query InvestQuery($address: String!) {
     fund(address: $address) {
+      id
       sharePrice {
         base {
           token {

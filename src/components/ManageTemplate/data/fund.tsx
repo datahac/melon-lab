@@ -6,6 +6,7 @@ export const query = gql`
     totalFunds
 
     fund(address: $address) {
+      id
       isShutdown
       address
       rank

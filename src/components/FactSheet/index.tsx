@@ -40,7 +40,7 @@ export default class FactsheetContainer extends React.PureComponent {
                 shutDown={this.state.shutDownModal}
                 setShutDown={this.setShutDownModal}
                 fundAddress={address}
-                update={setup.updateExistingFund}
+                update={setup.update}
               />
               <FactSheet
                 {...fund}

@@ -1,11 +1,8 @@
 import * as R from 'ramda';
 import { filter } from 'rxjs/operators';
 import { Exchange, Network } from '@melonproject/exchange-aggregator/lib/types';
-import {
-  getObservableRadarRelayOrders,
-  standardizeStream as standarizeRadarRelayStream,
-} from '@melonproject/exchange-aggregator/lib/exchanges/radar-relay';
-import { isSnapshotEvent } from '@melonproject/exchange-aggregator/lib/exchanges';
+import { observeRadarRelay } from '@melonproject/exchange-aggregator/lib/exchanges/radar-relay';
+import { isSnapshotEvent } from '@melonproject/exchange-aggregator/lib/exchanges/debug';
 import { createToken } from '@melonproject/token-math/token';
 import takeLast from '../utils/takeLast';
 
@@ -22,12 +19,11 @@ export default R.curryN(
           },
         };
 
-        const stream$ = getObservableRadarRelayOrders(options);
-        const standardized$ = standarizeRadarRelayStream(options, stream$).pipe(
+        const stream$ = observeRadarRelay(options).pipe(
           filter(isSnapshotEvent),
         );
 
-        return takeLast(standardized$).then(data => data.orders);
+        return takeLast(stream$).then(data => data.orders);
       }
 
       default:

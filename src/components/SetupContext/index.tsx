@@ -20,6 +20,7 @@ export const SetupContext = React.createContext(defaults);
 export const fundQuery = gql`
   query FundQuery($address: String!) {
     fund(address: $address) {
+      id
       isComplete
       isShutdown
     }
@@ -58,6 +59,7 @@ export class SetupProvider extends React.PureComponent {
             ['Routes'],
             R.values(R.pathOr(false, ['data', 'routes'], setup)),
           );
+
           const isInProgress =
             (routesValues.every(item => item === null) ||
               routesValues.some(item => item === null)) &&
@@ -86,21 +88,6 @@ export class SetupProvider extends React.PureComponent {
 
           const value = {
             ...data,
-            updateExistingFund: (cache, values) => {
-              cache.writeFragment({
-                id: `fund:${manager.fund}`,
-                fragment: gql`
-                  fragment myFund on Fund {
-                    isShutdown
-                    isComplete
-                  }
-                `,
-                data: {
-                  ...R.pathOr({}, ['data', 'fund'], setup),
-                  ...values,
-                },
-              });
-            },
             update: (cache, values) => {
               cache.writeQuery({
                 query: fundQuery,

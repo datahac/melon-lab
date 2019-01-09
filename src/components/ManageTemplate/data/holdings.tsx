@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 const query = gql`
   query HoldingsQuery($address: String!) {
     fund(address: $address) {
+      id
       address
       holdings {
         balance {

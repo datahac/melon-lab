@@ -94,6 +94,9 @@ export default {
     },
   },
   Ranking: {
+    id: parent => {
+      return Buffer.from(parent.address).toString('base64');
+    },
     fund: parent => {
       return parent.address;
     },
@@ -102,6 +105,9 @@ export default {
     },
   },
   Fund: {
+    id: parent => {
+      return Buffer.from(parent).toString('base64');
+    },
     address: parent => {
       return parent;
     },

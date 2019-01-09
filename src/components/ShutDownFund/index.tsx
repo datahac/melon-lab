@@ -57,7 +57,9 @@ export default props => (
       }),
       update: cache => {
         props.update(cache, {
-          isShutdown: true,
+          fund: {
+            isShutdown: true,
+          },
         });
       },
       onCompleted: () => {

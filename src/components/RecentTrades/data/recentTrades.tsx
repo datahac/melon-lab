@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 const query = gql`
   query RecentTradesQuery($address: String!, $base: String!, $quote: String!) {
     fund(address: $address) {
+      id
       recentTrades(base: $base, quote: $quote) {
         price {
           base {

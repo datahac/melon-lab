@@ -68,6 +68,7 @@ type Token {
 }
 
 type Ranking {
+  id: String
   rank: Int
   address: String
   name: String
@@ -90,6 +91,7 @@ type Routes {
 }
 
 type Fund {
+  id: String
   rank: Int
   address: String
   name: String

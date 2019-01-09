@@ -4,6 +4,7 @@ import { Query } from '~/apollo';
 const query = gql`
   query RankingQuery {
     rankings {
+      id
       rank
       address
       name
