@@ -20,7 +20,6 @@ import {
 } from '@melonproject/protocol';
 import { isAddress, Address } from '@melonproject/token-math/address';
 import { createQuantity } from '@melonproject/token-math/quantity';
-import Order from './types/Order';
 import toAsyncIterator from './utils/toAsyncIterator';
 import sameBlock from './utils/sameBlock';
 
@@ -63,6 +62,9 @@ export default {
     },
     rankings: (_, __, { loaders }) => {
       return loaders.fundRanking();
+    },
+    orders: (_, { exchange, base, quote }, { loaders }) => {
+      return loaders.exchangeOrders.load({ exchange, base, quote });
     },
     fund: (_, { address }, { loaders }) => {
       return (

@@ -20,6 +20,7 @@ import getFundIsShutdown from './loaders/fund/fundIsShutdown';
 import getFundParticipation from './loaders/fund/fundParticipation';
 import getQuoteToken from './loaders/quoteToken';
 import getAssetPrice from './loaders/assetPrice';
+import getExchangeOrders from './loaders/exchangeOrders';
 import getFundIsComplete from './loaders/fund/fundIsComplete';
 import getSymbolBalance from './loaders/symbolBalance';
 import getSymbolBalanceObservable from './loaders/symbolBalanceObservable';
@@ -231,6 +232,20 @@ export default (environment, streams) => {
     },
   );
 
+  const exchangeOrders = new DataLoader(
+    pairs => {
+      const fn = getExchangeOrders(environment);
+      const result = pairs.map(pair =>
+        fn(pair.exchange, pair.base, pair.quote),
+      );
+      return Promise.all(result || []);
+    },
+    {
+      cacheKeyFn: options =>
+        `${options.exchange}:${options.base}:${options.quote}`,
+    },
+  );
+
   const quoteToken = memoizeOne(() => {
     return getQuoteToken(
       environment,
@@ -294,5 +309,6 @@ export default (environment, streams) => {
     versionDeployment,
     fundIsComplete,
     routes,
+    exchangeOrders,
   };
 };

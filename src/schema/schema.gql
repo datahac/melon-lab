@@ -28,6 +28,11 @@ enum SymbolEnum {
   MLN
 }
 
+enum OrderTypeEnum {
+  ASK
+  BID
+}
+
 enum FundSetupStepEnum {
   CREATE_ACCOUNTING
   CREATE_FEE_MANAGER
@@ -36,6 +41,14 @@ enum FundSetupStepEnum {
   CREATE_SHARES
   CREATE_TRADING
   CREATE_VAULT
+}
+
+type Order {
+  id: String
+  trade: Price!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+  signature: Signature
 }
 
 type Price {
@@ -215,6 +228,11 @@ type Query {
   balance(symbol: SymbolEnum!, address: String): Quantity
   fund(address: String!): Fund
   rankings: [Ranking]
+  orders(
+    exchange: ExchangeEnum!
+    base: String!
+    quote: String!
+  ): [Order]
 
   "Loads the current routes for fund creation for a fund manager address."
   routes(
@@ -415,7 +433,10 @@ type Subscription {
   nodeSynced: Boolean
   priceFeedUp: Boolean
   peerCount: String
-  balance(symbol: SymbolEnum!, address: String): Quantity
+  balance(
+    symbol: SymbolEnum!
+    address: String
+  ): Quantity
 }
 
 schema {

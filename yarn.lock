@@ -179,6 +179,15 @@
     ethers "~4.0.4"
     lodash "^4.17.5"
 
+"@0xproject/types@^1.0.1-rc.3":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@0xproject/types/-/types-1.1.4.tgz#3ffd65e670d6a21dab19ee0ffd5fad0056291b8e"
+  integrity sha512-kPVXvVDDoHhi/q3PSe3F5NbBFiIT8FfPG73J2WrLrXptf54vTSffbK3D+NMpwb12tk/q0KgdEPwNz6nhY1+xmw==
+  dependencies:
+    "@types/node" "*"
+    bignumber.js "~4.1.0"
+    ethereum-types "^1.0.11"
+
 "@apollographql/apollo-tools@^0.2.6":
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/@apollographql/apollo-tools/-/apollo-tools-0.2.8.tgz#f755baa3576eabdd93afa2782be61f5ae8a856dc"
@@ -1717,6 +1726,17 @@
     pretty-ms "^0.2.1"
     text-table "^0.2.0"
 
+"@melonproject/exchange-aggregator@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.0.1.tgz#b88f69c5fafae7edb2265fd3e84218316b10ebcd"
+  integrity sha512-K+vXPdmUvFxbW/iY4XbVj0KFZ2JKWPMUi6A2II0SdK6YkSmmUFBh0+2DwI8JULBzktZ+rJWpEbROJV8jBe6iTw==
+  dependencies:
+    "@melonproject/token-math" "0.0.20"
+    axios "^0.18.0"
+    isomorphic-ws "^4.0.1"
+    ramda "^0.26.1"
+    rxjs "^6.3.3"
+
 "@melonproject/ganache-cli@^6.1.9":
   version "6.1.9"
   resolved "https://registry.yarnpkg.com/@melonproject/ganache-cli/-/ganache-cli-6.1.9.tgz#9ee571a954c2dfb9fb2258e636f576810ce2a18d"
@@ -1825,6 +1845,14 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
+
+"@radarrelay/types@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@radarrelay/types/-/types-1.2.1.tgz#d16edb43d0735a31c887b9e79ff6e53924ac8cc5"
+  integrity sha512-jy8MoBr3oFhYvnCBLbzGNZDCNLpS2gUoVE06BXTuwJxAE0mDv87wnJYVRrX1lX6PZVqeeXULfgJePad3kpM+Rg==
+  dependencies:
+    "@0xproject/types" "^1.0.1-rc.3"
+    bignumber.js "^5.0.0"
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
@@ -3513,6 +3541,14 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
   integrity sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
 
+axios@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
+  integrity sha1-MtU+SFHv3AoRmTts0AB4nXDAUQI=
+  dependencies:
+    follow-redirects "^1.3.0"
+    is-buffer "^1.1.5"
+
 babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
@@ -4255,6 +4291,11 @@ big.js@^3.1.3:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-3.2.0.tgz#a5fc298b81b9e0dca2e458824784b65c52ba588e"
   integrity sha512-+hN/Zh2D08Mx65pZ/4g5bsmNiZUuChDiQfTUQ7qJr4/kuopCr88xZsAXv6mBoZEsUI4OuGHlX59qE94K2mMW8Q==
+
+bignumber.js@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-5.0.0.tgz#fbce63f09776b3000a83185badcde525daf34833"
+  integrity sha512-KWTu6ZMVk9sxlDJQh2YH1UOnfDP8O8TpxUxgQG/vKASoSnEjK9aVuOueFaPcQEYQ5fyNXNTOYwYw3099RYebWg==
 
 bignumber.js@~4.1.0:
   version "4.1.0"
@@ -5744,6 +5785,13 @@ debug@2.6.9, debug@^2.1.2, debug@^2.1.3, debug@^2.2.0, debug@^2.3.3, debug@^2.5.
   dependencies:
     ms "2.0.0"
 
+debug@=3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
+  dependencies:
+    ms "2.0.0"
+
 debug@^3.0.1, debug@^3.1.0:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
@@ -6625,6 +6673,14 @@ eth-lib@0.2.7:
     elliptic "^6.4.0"
     xhr-request-promise "^0.1.2"
 
+ethereum-types@^1.0.11:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/ethereum-types/-/ethereum-types-1.1.4.tgz#d8a5978290b2c625ce05afee2d657e042f3729e3"
+  integrity sha512-nZ/JqdTQt8LapEhHCeQoYCbT4UAw7XscFZ5V2/haUxjSC7LyFrZzrcTKQoHdFpCKHdNEX634tUplO460pwHYuQ==
+  dependencies:
+    "@types/node" "*"
+    bignumber.js "~4.1.0"
+
 ethereum-types@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/ethereum-types/-/ethereum-types-1.1.2.tgz#4ebadc361913e884d99b07cd794d96934b61104b"
@@ -7241,6 +7297,13 @@ fn-name@^2.0.0, fn-name@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fn-name/-/fn-name-2.0.1.tgz#5214d7537a4d06a4a301c0cc262feb84188002e7"
   integrity sha1-UhTXU3pNBqSjAcDMJi/rhBiAAuc=
+
+follow-redirects@^1.3.0:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.6.1.tgz#514973c44b5757368bad8bddfe52f81f015c94cb"
+  integrity sha512-t2JCjbzxQpWvbhts3l6SH1DKzSrx8a+SsaVf4h6bG4kOXUuPYS/kg2Lr4gQSb7eemaHqJkOThF1BGyjlUkO1GQ==
+  dependencies:
+    debug "=3.1.0"
 
 for-each@^0.3.2:
   version "0.3.3"
@@ -8864,6 +8927,11 @@ isomorphic-unfetch@^3.0.0:
   dependencies:
     node-fetch "^2.2.0"
     unfetch "^4.0.0"
+
+isomorphic-ws@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/isomorphic-ws/-/isomorphic-ws-4.0.1.tgz#55fd4cd6c5e6491e76dc125938dd863f5cd4f2dc"
+  integrity sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==
 
 isstream@~0.1.2:
   version "0.1.2"
@@ -12326,7 +12394,7 @@ ramda@^0.25.0:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
   integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
 
-ramda@^0.26.0:
+ramda@^0.26.0, ramda@^0.26.1:
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
