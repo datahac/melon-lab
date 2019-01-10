@@ -13,7 +13,18 @@ async function fundHoldings(environment, address) {
     address,
   );
 
-  return tokens
+  const availableTokens = R.pathOr(
+    [],
+    ['deployment', 'thirdPartyContracts', 'tokens'],
+    environment,
+  ).map(value => {
+    return {
+      quantity: 0,
+      token: value,
+    };
+  });
+
+  const holdings = tokens
     .filter(value => {
       return isAddress(value) && !isEmptyAddress(value);
     })
@@ -21,6 +32,8 @@ async function fundHoldings(environment, address) {
       const token = getTokenByAddress(environment, value);
       return createQuantity(token, quantities[key]);
     });
+
+  return R.unionWith(R.eqBy(R.prop('token')), holdings, availableTokens);
 }
 
 export default R.curryN(2, fundHoldings);
