@@ -1,17 +1,57 @@
 import { withFormik } from 'formik';
 import { withHandlers, compose } from 'recompose';
-import { createQuantity } from '@melonproject/token-math/quantity';
-import { createPrice, toFixed } from '@melonproject/token-math/price';
+import {
+  createQuantity,
+  isEqual,
+  isZero,
+  greaterThan,
+} from '@melonproject/token-math/quantity';
+import { valueIn } from '@melonproject/token-math/price';
+import { createPrice } from '@melonproject/token-math/price';
+import { FormErros } from '~/components/OrderForm';
 
 const withForm = withFormik({
   mapPropsToValues: props => ({
-    type: 'sell',
+    type: 'Buy',
     strategy: 'Market',
     quantity: null,
     total: null,
     price: null,
     exchange: '',
   }),
+  validate: (values, props) => {
+    let errors: FormErros = {};
+
+    if (!values.price) {
+      errors.price = 'Required';
+    } else if (isZero(values.price.quote)) {
+      errors.price = 'Invalid price';
+    }
+
+    if (!values.quantity) {
+      errors.quantity = 'Required';
+    } else if (isZero(values.quantity)) {
+      errors.quantity = 'Invalid quantity';
+    } else if (
+      greaterThan(values.quantity, props.tokens.baseToken) &&
+      values.type === 'Sell'
+    ) {
+      errors.quantity = 'Insufficient balance';
+    }
+
+    if (!values.total) {
+      errors.total = 'Required';
+    } else if (isZero(values.total)) {
+      errors.total = 'Invalid total';
+    } else if (
+      greaterThan(values.total, props.tokens.quoteToken) &&
+      values.type === 'Buy'
+    ) {
+      errors.total = 'Insufficient balance';
+    }
+
+    return errors;
+  },
   enableReinitialize: true,
   handleSubmit: (values, form) =>
     form.props.onSubmit && form.props.onSubmit(values),
@@ -32,65 +72,32 @@ const withFormHandlers = withHandlers({
         createQuantity(tokens.quoteToken.token, value || 0),
       );
       setFieldValue('price', price);
+
+      if (values.quantity) {
+        const total = valueIn(price, values.quantity);
+        props.setFieldValue('total', total);
+      }
     }
 
     if (name === 'quantity') {
       const quantity = createQuantity(tokens.baseToken.token, value || 0);
       props.setFieldValue('quantity', quantity);
+
+      if (values.price) {
+        const total = valueIn(values.price, quantity);
+        props.setFieldValue('total', total);
+      }
     }
 
     if (name === 'total') {
       const total = createQuantity(tokens.quoteToken.token, value || 0);
       props.setFieldValue('total', total);
+
+      if (values.price) {
+        const quantity = valueIn(values.price, total);
+        props.setFieldValue('quantity', quantity);
+      }
     }
-
-    // let maxTotal;
-    // let maxQuantity;
-
-    // const typeValue = name === 'type' ? value : values.orderType;
-    // const totalValue = name === 'total' ? value : values.total;
-    // const quantityValue = name === 'quantity' ? value : values.quantity;
-
-    // if (values.strategy === 'Market') {
-    //   maxTotal =
-    //     typeValue === 'Buy'
-    //       ? min(tokens.quoteToken.balance, totalValue)
-    //       : totalValue;
-    //   maxQuantity =
-    //     typeValue === 'Sell'
-    //       ? max(tokens.baseToken.balance, quantityValue)
-    //       : quantityValue;
-    // } else if (values.strategy === 'Limit') {
-    //   maxTotal = typeValue === 'Buy' ? tokens.quoteToken.balance : Infinity;
-    //   maxQuantity = typeValue === 'Sell' ? tokens.baseToken.balance : Infinity;
-    // }
-
-    // if (name === 'total') {
-    //   if (greaterThan(value, maxTotal)) {
-    //     setFieldValue('total', maxTotal);
-    //   } else if (values.price) {
-    //     const quantity = divide(value, values.price).toString(10);
-    //     if (values.quantity !== value) {
-    //       setFieldValue('quantity', quantity);
-    //     }
-    //   }
-    // }
-
-    // if (name === 'quantity') {
-    //   if (greaterThan(value, maxQuantity)) {
-    //     setFieldValue('quantity', maxQuantity);
-    //   } else if (values.price) {
-    //     const total = multiply(value, values.price).toString(10);
-    //     if (values.total !== value) {
-    //       setFieldValue('total', total);
-    //     }
-    //   }
-    // }
-
-    // if (name === 'price' && values.quantity) {
-    //   const total = multiply(values.quantity, value).toString(10);
-    //   setFieldValue('total', total);
-    // }
   },
 });
 

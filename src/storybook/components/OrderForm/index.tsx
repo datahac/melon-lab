@@ -12,6 +12,7 @@ import {
   toFixed as toFixedPrice,
   PriceInterface,
 } from '@melonproject/token-math/price';
+import * as R from 'ramda';
 
 import styles from './styles.css';
 
@@ -22,6 +23,12 @@ interface FormValues {
   price: PriceInterface;
   quantity: QuantityInterface;
   total: QuantityInterface;
+}
+
+export interface FormErrors {
+  quantity?: string;
+  total?: string;
+  price?: string;
 }
 
 export interface OrderFormProps {
@@ -169,7 +176,10 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         <div className="order-form__input">
           <Input
             value={values.total && toFixed(values.total, decimals)}
-            label="Total"
+            label={`Total (${R.path(
+              ['quoteToken', 'token', 'symbol'],
+              tokens,
+            )})`}
             name="total"
             insideLabel="true"
             placeholder={numberPlaceholder}
