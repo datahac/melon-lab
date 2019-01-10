@@ -87,9 +87,9 @@
     "yup": "^0.26.2"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^4.1.4",
-    "@storybook/addon-options": "^4.1.4",
-    "@storybook/react": "^4.1.4",
+    "@storybook/addon-actions": "^4.1.6",
+    "@storybook/addon-options": "^4.1.6",
+    "@storybook/react": "^4.1.6",
     "@zeit/next-typescript": "^1.1.0",
     "babel-jest": "^23.0.1",
     "devtron": "^1.4.0",
