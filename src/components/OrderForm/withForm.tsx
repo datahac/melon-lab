@@ -2,7 +2,6 @@ import { withFormik } from 'formik';
 import { withHandlers, compose } from 'recompose';
 import {
   createQuantity,
-  isEqual,
   isZero,
   greaterThan,
 } from '@melonproject/token-math/quantity';
@@ -16,14 +15,12 @@ const initialValues = {
   quantity: null,
   total: null,
   price: null,
-  exchange: '',
+  exchange: null,
 };
 
 const withForm = withFormik({
   mapPropsToValues: props =>
-    console.log(props) || props.formValues
-      ? { ...props.formValues }
-      : initialValues,
+    props.formValues ? props.formValues : initialValues,
   validate: (values, props) => {
     let errors: FormErros = {};
 
