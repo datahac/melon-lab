@@ -3,7 +3,7 @@ import Button from '~/blocks/Button';
 import Spinner from '~/blocks/Spinner';
 import Link from '~/link';
 import format from 'date-fns/format';
-import { toFixed } from '@melonproject/token-math/quantity';
+import * as Tm from '@melonproject/token-math';
 
 import styles from './styles.css';
 
@@ -46,9 +46,11 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
         <div className="factsheet__item">
           Creation date: {inception && format(inception, 'DD. MMM YYYY HH:mm')}
           <br />
-          Total number of shares: {totalSupply && toFixed(totalSupply)}
+          Total number of shares:{' '}
+          {totalSupply && Tm.quantity.toFixed(totalSupply)}
           <br />
-          Shares owned by me: {personalStake && toFixed(personalStake)}
+          Shares owned by me:{' '}
+          {personalStake && Tm.quantity.toFixed(personalStake)}
         </div>
         <div className="factsheet__item">
           Management Reward: {managementReward}%<br />

@@ -1,16 +1,12 @@
 import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
 import styles from './styles.css';
-import { toFixed, QuantityInterface } from '@melonproject/token-math/quantity';
-import {
-  toFixed as toFixedPrice,
-  PriceInterface,
-} from '@melonproject/token-math/price';
+import * as Tm from '@melonproject/token-math';
 
 export interface HoldingProps {
   fraction?: number;
-  balance?: QuantityInterface;
-  price?: PriceInterface;
+  balance?: Tm.quantity.QuantityInterface;
+  price?: Tm.price.PriceInterface;
   name?: string;
   symbol?: string;
   active?: boolean;
@@ -44,17 +40,17 @@ const Holding: StatelessComponent<HoldingProps> = ({
           width: ${fraction}%;
         }
       `}</style>
-      {fraction > 0 && <div className="holding__bar" />}
+      {(fraction && fraction > 0 && <div className="holding__bar" />) || null}
       <div className="holding__wrapper">
         <div className="holding__symbol">
           {symbol}
           <span className="holding__name">{name}</span>
         </div>
         <div className="holding__price">
-          {price && toFixedPrice(price, decimals)}
+          {price && Tm.price.toFixed(price, decimals)}
         </div>
         <div className="holding__balance">
-          {balance && toFixed(balance, decimals)}
+          {balance && Tm.quantity.toFixed(balance, decimals)}
         </div>
       </div>
     </div>

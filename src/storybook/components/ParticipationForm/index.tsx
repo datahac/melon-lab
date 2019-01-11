@@ -1,9 +1,5 @@
 import React, { Fragment, StatelessComponent } from 'react';
-import { toFixed, QuantityInterface } from '@melonproject/token-math/quantity';
-import {
-  toFixed as toFixedPrice,
-  PriceInterface,
-} from '@melonproject/token-math/price';
+import * as Tm from '@melonproject/token-math';
 import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
@@ -14,9 +10,9 @@ import * as R from 'ramda';
 import styles from './styles.css';
 
 export interface FormValues {
-  price: PriceInterface;
-  quantity: QuantityInterface;
-  total: QuantityInterface;
+  price: Tm.price.PriceInterface;
+  quantity: Tm.quantity.QuantityInterface;
+  total: Tm.quantity.QuantityInterface;
   type: string;
 }
 
@@ -86,7 +82,10 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
 
             <div className="participation-form__input">
               <Input
-                value={values.quantity && toFixed(values.quantity, decimals)}
+                value={
+                  values.quantity &&
+                  Tm.quantity.toFixed(values.quantity, decimals)
+                }
                 type="number"
                 label="Quantity (Shares)"
                 name="quantity"
@@ -105,7 +104,9 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
               <Fragment>
                 <div className="participation-form__input">
                   <Input
-                    value={values.price && toFixedPrice(values.price, decimals)}
+                    value={
+                      values.price && Tm.price.toFixed(values.price, decimals)
+                    }
                     type="number"
                     label={`Price (${R.path(
                       ['quote', 'token', 'symbol'],
@@ -125,7 +126,10 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 </div>
                 <div className="participation-form__input">
                   <Input
-                    value={values.total && toFixed(values.total, decimals)}
+                    value={
+                      values.total &&
+                      Tm.quantity.toFixed(values.total, decimals)
+                    }
                     type="number"
                     label={`Total (${R.path(
                       ['token', 'symbol'],

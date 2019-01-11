@@ -1,9 +1,7 @@
 import * as R from 'ramda';
-import { filter, map } from 'rxjs/operators';
 import { Exchange, Network } from '@melonproject/exchange-aggregator/lib/types';
 import { fetchEthfinexOrders } from '@melonproject/exchange-aggregator/lib/exchanges/ethfinex';
 import { fetchOasisDexOrders } from '@melonproject/exchange-aggregator/lib/exchanges/oasis-dex';
-import { isSnapshotEvent } from '@melonproject/exchange-aggregator/lib/exchanges/debug';
 import { Environment } from '@melonproject/protocol/lib/utils/environment/Environment';
 import { getTokenBySymbol } from '@melonproject/protocol/lib/utils/environment/getTokenBySymbol';
 
@@ -41,6 +39,6 @@ export default R.curryN(
       }
     })();
 
-    return result;
+    return result.catch(() => []);
   },
 );

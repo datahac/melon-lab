@@ -1,11 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import VolumeBar from '~/components/VolumeBar';
-import {
-  subtract,
-  multiply,
-  divide,
-} from '@melonproject/token-math/bigInteger';
+import * as Tm from '@melonproject/token-math';
 import styles from './styles.css';
 
 const OrderBookTable = ({
@@ -22,12 +18,18 @@ const OrderBookTable = ({
 
   const calculateBar = (prevEntry, entry, totalVolume) => {
     const getPercentage = (cumulativeVolume, totalVolume) => {
-      return multiply(divide(cumulativeVolume, totalVolume), 100);
+      return Tm.bigInteger.multiply(
+        Tm.bigInteger.divide(cumulativeVolume, totalVolume),
+        100,
+      );
     };
 
     const percentageDiff =
       prevEntry &&
-      getPercentage(subtract(entry.volume, prevEntry.volume), totalVolume);
+      getPercentage(
+        Tm.bigInteger.subtract(entry.volume, prevEntry.volume),
+        totalVolume,
+      );
 
     const prevEntryPercentage =
       prevEntry && getPercentage(prevEntry.volume, totalVolume);

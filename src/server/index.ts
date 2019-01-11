@@ -12,8 +12,7 @@ import { createServer } from 'http';
 import { ApolloServer } from 'apollo-server-express';
 import Wallet from 'ethers-wallet';
 import Ganache from '@melonproject/ganache-cli';
-import { createQuantity } from '@melonproject/token-math/quantity';
-import { createPrice } from '@melonproject/token-math/price';
+import * as Tm from '@melonproject/token-math';
 import {
   constructEnvironment,
   deployThirdParty,
@@ -89,14 +88,14 @@ const getTestEnvironment = async (track: string) => {
   const tokens = thirdPartyContracts.tokens;
   const [ethToken, mlnToken] = tokens;
 
-  const mlnPrice = createPrice(
-    createQuantity(mlnToken, '1'),
-    createQuantity(ethToken, '2'),
+  const mlnPrice = Tm.price.createPrice(
+    Tm.quantity.createQuantity(mlnToken, '1'),
+    Tm.quantity.createQuantity(ethToken, '2'),
   );
 
-  const ethPrice = createPrice(
-    createQuantity(ethToken, '1'),
-    createQuantity(ethToken, '1'),
+  const ethPrice = Tm.price.createPrice(
+    Tm.quantity.createQuantity(ethToken, '1'),
+    Tm.quantity.createQuantity(ethToken, '1'),
   );
 
   await update(withDeployment, priceSource, [ethPrice, mlnPrice]);
@@ -105,18 +104,18 @@ const getTestEnvironment = async (track: string) => {
     withDeployment.deployment.exchangeConfigs.MatchingMarket.exchange;
 
   await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-    buy: createQuantity(mlnToken, 1),
-    sell: createQuantity(ethToken, 1),
+    buy: Tm.quantity.createQuantity(mlnToken, 1),
+    sell: Tm.quantity.createQuantity(ethToken, 1),
   });
 
   await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-    buy: createQuantity(mlnToken, 2),
-    sell: createQuantity(ethToken, 1),
+    buy: Tm.quantity.createQuantity(mlnToken, 2),
+    sell: Tm.quantity.createQuantity(ethToken, 1),
   });
 
   await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-    buy: createQuantity(mlnToken, 3),
-    sell: createQuantity(ethToken, 1),
+    buy: Tm.quantity.createQuantity(mlnToken, 3),
+    sell: Tm.quantity.createQuantity(ethToken, 1),
   });
 
   return {

@@ -1,16 +1,17 @@
+import * as Tm from '@melonproject/token-math';
 import { withFormik } from 'formik';
 import { withHandlers, compose } from 'recompose';
-import { createQuantity, isEqual } from '@melonproject/token-math/quantity';
-import { valueIn } from '@melonproject/token-math/price';
-import { isZero } from '@melonproject/token-math/bigInteger';
 import { FormErros } from '~/components/ParticipationForm';
 
 const withForm = withFormik({
   mapPropsToValues: props => ({
     price: props.sharePrice,
-    total: props.sharePrice && createQuantity(props.sharePrice.quote.token, 0),
+    total:
+      props.sharePrice &&
+      Tm.quantity.createQuantity(props.sharePrice.quote.token, 0),
     quantity:
-      props.sharePrice && createQuantity(props.sharePrice.base.token, 0),
+      props.sharePrice &&
+      Tm.quantity.createQuantity(props.sharePrice.base.token, 0),
     type: 'Invest',
   }),
   validate: values => {
@@ -18,13 +19,13 @@ const withForm = withFormik({
 
     if (!values.quantity) {
       errors.quantity = 'Required';
-    } else if (isZero(values.quantity.quantity)) {
+    } else if (Tm.bigInteger.izZero(values.quantity.quantity)) {
       errors.quantity = 'Invalid quantity';
     }
 
     if (!values.total) {
       errors.total = 'Required';
-    } else if (isZero(values.total.quantity)) {
+    } else if (Tm.bigInteger.izZero(values.total.quantity)) {
       errors.total = 'Invalid quantity';
     }
 
@@ -41,27 +42,28 @@ const withFormHandlers = compose(
       const { values } = props;
 
       if (name === 'quantity') {
-        const quantity = createQuantity(
+        const quantity = Tm.quantity.createQuantity(
           props.sharePrice.base.token,
           parseFloat(value) || 0,
         );
         props.setFieldValue('quantity', quantity);
 
-        const total = valueIn(values.price, quantity);
-        if (!isEqual(values.total, total)) {
+        const total = Tm.price.valueIn(values.price, quantity);
+        console.log(values.total, total);
+        if (!Tm.quantity.isEqual(values.total, total)) {
           props.setFieldValue('total', total);
         }
       }
 
       if (name === 'total') {
-        const total = createQuantity(
+        const total = Tm.quantity.createQuantity(
           props.sharePrice.quote.token,
           parseFloat(value) || 0,
         );
         props.setFieldValue('total', total);
 
-        const quantity = valueIn(values.price, total);
-        if (!isEqual(values.quantity, quantity)) {
+        const quantity = Tm.price.valueIn(values.price, total);
+        if (!Tm.bigInteger.isEqual(values.quantity, quantity)) {
           props.setFieldValue('quantity', quantity);
         }
       }

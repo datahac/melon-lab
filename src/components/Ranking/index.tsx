@@ -5,7 +5,7 @@ import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import Ranking from '~/components/Ranking';
 import RankingQuery from './data/ranking';
-import { greaterThan } from '@melonproject/token-math/bigInteger';
+import * as Tm from '@melonproject/token-math';
 
 const filterRankings = R.curryN(2, (search, fund) => {
   return fund.name.toLocaleLowerCase().includes(search);
@@ -49,19 +49,19 @@ const mapRankings = R.curryN(2, (network, fund) => ({
 
 const sortRankings = ordering => (a, b) => {
   if (ordering === '+rank') {
-    return greaterThan(a.rank, b.rank) ? 1 : -1;
+    return Tm.bigInteger.greaterThan(a.rank, b.rank) ? 1 : -1;
   }
 
   if (ordering === '-rank') {
-    return greaterThan(b.rank, a.rank) ? 1 : -1;
+    return Tm.bigInteger.greaterThan(b.rank, a.rank) ? 1 : -1;
   }
 
   if (ordering === '+price') {
-    return greaterThan(a.sharePrice, b.sharePrice) ? 1 : -1;
+    return Tm.bigInteger.greaterThan(a.sharePrice, b.sharePrice) ? 1 : -1;
   }
 
   if (ordering === '-price') {
-    return greaterThan(b.sharePrice, a.sharePrice) ? 1 : -1;
+    return Tm.bigInteger.greaterThan(b.sharePrice, a.sharePrice) ? 1 : -1;
   }
 
   if (ordering === '+inception') {

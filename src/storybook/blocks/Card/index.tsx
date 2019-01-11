@@ -4,7 +4,7 @@ import format from 'date-fns/format';
 import displayPrice from '~/utils/displayPrice';
 import Link from '~/blocks/Link';
 import Icon from '~/blocks/Icon';
-import { PriceInterface } from '@melonproject/token-math/price';
+import * as Tm from '@melonproject/token-math';
 
 import styles from './styles.css';
 
@@ -13,7 +13,7 @@ export interface CardProps {
   isActive?: boolean;
   name?: string;
   rank?: number;
-  sharePrice?: PriceInterface;
+  sharePrice?: Tm.price.PriceInterface;
   reportUrl?: string;
   onClick?: React.MouseEventHandler;
   decimals?: number;

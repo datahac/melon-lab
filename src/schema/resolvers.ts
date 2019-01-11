@@ -1,5 +1,6 @@
 import * as R from 'ramda';
 import * as keytar from 'keytar';
+import * as Tm from '@melonproject/token-math';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import { map, pluck, distinctUntilChanged, skip } from 'rxjs/operators';
 import {
@@ -18,9 +19,6 @@ import {
   completeSetup,
   triggerRewardAllFees,
 } from '@melonproject/protocol';
-import { isAddress, Address } from '@melonproject/token-math/address';
-import { toFixed as toFixedQuantity } from '@melonproject/token-math/quantity';
-import { toFixed as toFixedPrice } from '@melonproject/token-math/price';
 import toAsyncIterator from './utils/toAsyncIterator';
 import sameBlock from './utils/sameBlock';
 
@@ -69,7 +67,7 @@ export default {
     },
     fund: (_, { address }, { loaders }) => {
       return (
-        (isAddress(address) &&
+        (Tm.address.isAddress(address) &&
           loaders.fundReady
             .load(address)
             .then(
@@ -194,8 +192,8 @@ export default {
           throw new Error('Invalid order type.');
       }
     },
-    price: parent => toFixedPrice(parent.trade),
-    volume: parent => toFixedQuantity(parent.trade.base),
+    price: parent => Tm.price.toFixed(parent.trade),
+    volume: parent => Tm.quantity.toFixed(parent.trade.base),
   },
   ZeroExOrder: {
     metadata: parent => parent.original.signedOrder,
@@ -251,7 +249,7 @@ export default {
       const enhancedEnvironment = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -269,7 +267,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -290,7 +288,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -319,7 +317,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -333,7 +331,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -347,7 +345,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -367,13 +365,16 @@ export default {
       });
 
       const params = {
-        investmentAmount: createQuantity(nativeToken, investmentAmount),
+        investmentAmount: Tm.quantity.createQuantity(
+          nativeToken,
+          investmentAmount,
+        ),
       };
 
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -397,7 +398,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -419,14 +420,14 @@ export default {
       );
       const quoteToken = await loaders.quoteToken();
       const params = {
-        howMuch: createQuantity(quoteToken, investmentAmount),
+        howMuch: Tm.quantity.createQuantity(quoteToken, investmentAmount),
         spender: participationAddress,
       };
 
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -446,12 +447,12 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
       const params = {
-        howMuch: createQuantity(quoteToken, investmentAmount),
+        howMuch: Tm.quantity.createQuantity(quoteToken, investmentAmount),
         spender: participationAddress,
       };
 
@@ -470,7 +471,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -490,7 +491,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -510,7 +511,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -536,7 +537,7 @@ export default {
       const enhancedEnvironment = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -559,7 +560,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 
@@ -577,7 +578,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Address(from),
+          address: new Tm.address.Address(from),
         },
       };
 

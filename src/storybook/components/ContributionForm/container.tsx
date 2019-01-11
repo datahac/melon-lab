@@ -1,7 +1,7 @@
 import { withFormik } from 'formik';
 import { compose, withHandlers } from 'recompose';
 import * as Yup from 'yup';
-import { divide, multiply } from '@melonproject/token-math/bigInteger';
+import * as Tm from '@melonproject/token-math';
 
 import ContributionForm from './index';
 
@@ -12,13 +12,13 @@ const calculateInputs = (props, field, value) => {
   const amountValue = field === 'amount' ? value : values.amount;
 
   if (field === 'amount') {
-    const total = multiply(amountValue, 60);
+    const total = Tm.bigInteger.multiply(amountValue, 60);
 
     if (values.total !== total) {
       props.setFieldValue('total', total);
     }
   } else if (field === 'total') {
-    const amount = divide(totalValue, 60);
+    const amount = Tm.bigInteger.divide(totalValue, 60);
 
     if (amount !== values.amount) {
       if (values.amount !== amount) {

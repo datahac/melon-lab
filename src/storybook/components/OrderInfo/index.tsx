@@ -1,19 +1,15 @@
 import React, { StatelessComponent, Fragment } from 'react';
-import { toFixed, QuantityInterface } from '@melonproject/token-math/quantity';
-import {
-  PriceInterface,
-  toFixed as toFixedPrice,
-} from '@melonproject/token-math/price';
+import * as Tm from '@melonproject/token-math';
 import * as R from 'ramda';
 
 import styles from './styles.css';
 
 export interface OrderInfoProps {
-  ask?: PriceInterface;
-  bid?: PriceInterface;
-  lastPrice?: PriceInterface;
-  baseToken: QuantityInterface;
-  quoteToken: QuantityInterface;
+  ask?: Tm.price.PriceInterface;
+  bid?: Tm.price.PriceInterface;
+  lastPrice?: Tm.price.PriceInterface;
+  baseToken: Tm.quantity.QuantityInterface;
+  quoteToken: Tm.quantity.QuantityInterface;
 }
 
 const OrderInfo: StatelessComponent<OrderInfoProps> = ({
@@ -28,18 +24,18 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
     <div className="order-info__prices">
       <div className="order-info__last-price">
         {lastPrice ? (
-          <Fragment>{toFixedPrice(lastPrice)}</Fragment>
+          <Fragment>{Tm.price.toFixed(lastPrice)}</Fragment>
         ) : (
           <span>N/A</span>
         )}
         <span className="order-info__price-desc">Last Price</span>
       </div>
       <div className="order-info__bid">
-        {bid ? <Fragment>{toFixedPrice(bid)}</Fragment> : <span>N/A</span>}
+        {bid ? <Fragment>{Tm.price.toFixed(bid)}</Fragment> : <span>N/A</span>}
         <span className="order-info__price-desc">Bid</span>
       </div>
       <div className="order-info__ask">
-        {ask ? <Fragment>{toFixedPrice(ask)}</Fragment> : <span>N/A</span>}
+        {ask ? <Fragment>{Tm.price.toFixed(ask)}</Fragment> : <span>N/A</span>}
         <span className="order-info__price-desc">Ask</span>
       </div>
     </div>
@@ -48,13 +44,13 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
         <span className="order-info__balance-desc">
           {R.path(['token', 'symbol'], baseToken)}:
         </span>{' '}
-        {baseToken && toFixed(baseToken)}
+        {baseToken && Tm.quantity.toFixed(baseToken)}
       </div>
       <div className="order-info__balance">
         <span className="order-info__balance-desc">
           {R.path(['token', 'symbol'], quoteToken)}:
         </span>{' '}
-        {quoteToken && toFixed(quoteToken)}
+        {quoteToken && Tm.quantity.toFixed(quoteToken)}
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { createQuantity } from '@melonproject/token-math/quantity';
+import * as Tm from '@melonproject/token-math';
 import {
   getFundHoldings,
   isEmptyAddress,
@@ -30,7 +30,7 @@ async function fundHoldings(environment, address) {
     })
     .map((value, key) => {
       const token = getTokenByAddress(environment, value);
-      return createQuantity(token, quantities[key]);
+      return Tm.quantity.createQuantity(token, quantities[key]);
     });
 
   return R.unionWith(R.eqBy(R.prop('token')), holdings, availableTokens);

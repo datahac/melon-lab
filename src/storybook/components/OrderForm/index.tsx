@@ -7,11 +7,7 @@ import Notification from '~/blocks/Notification';
 import Switch from '~/blocks/Switch';
 import Toggle from '~/blocks/Toggle';
 import OrderInfo from '~/components/OrderInfo';
-import { toFixed, QuantityInterface } from '@melonproject/token-math/quantity';
-import {
-  toFixed as toFixedPrice,
-  PriceInterface,
-} from '@melonproject/token-math/price';
+import * as Tm from '@melonproject/token-math';
 import * as R from 'ramda';
 
 import styles from './styles.css';
@@ -20,9 +16,9 @@ interface FormValues {
   exchange: string;
   type: string;
   strategy: string;
-  price: PriceInterface;
-  quantity: QuantityInterface;
-  total: QuantityInterface;
+  price: Tm.price.PriceInterface;
+  quantity: Tm.quantity.QuantityInterface;
+  total: Tm.quantity.QuantityInterface;
 }
 
 export interface FormErrors {
@@ -42,8 +38,8 @@ export interface OrderFormProps {
   }>;
   handleBlur?: () => void;
   handleSubmit?: () => void;
-  baseToken: QuantityInterface;
-  quoteToken: QuantityInterface;
+  baseToken: Tm.quantity.QuantityInterface;
+  quoteToken: Tm.quantity.QuantityInterface;
   isCompetition?: boolean;
   isManager?: boolean;
   onChange?: React.ChangeEvent<any>;
@@ -51,9 +47,9 @@ export interface OrderFormProps {
   touched: any;
   type?: string;
   values: FormValues;
-  lastPrice: PriceInterface;
-  ask: PriceInterface;
-  bid: PriceInterface;
+  lastPrice: Tm.price.PriceInterface;
+  ask: Tm.price.PriceInterface;
+  bid: Tm.price.PriceInterface;
 }
 
 export const OrderForm: StatelessComponent<OrderFormProps> = ({
@@ -146,7 +142,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div>
         <div className="order-form__input">
           <Input
-            value={values.price && toFixedPrice(values.price, decimals)}
+            value={values.price && Tm.price.toFixed(values.price, decimals)}
             disabled={isMarket || !priceFeedUp || !isManager}
             label="Price"
             name="price"
@@ -162,7 +158,9 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div>
         <div className="order-form__input">
           <Input
-            value={values.quantity && toFixed(values.quantity, decimals)}
+            value={
+              values.quantity && Tm.quantity.toFixed(values.quantity, decimals)
+            }
             label="Quantity"
             name="quantity"
             insideLabel="true"
@@ -178,7 +176,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div>
         <div className="order-form__input">
           <Input
-            value={values.total && toFixed(values.total, decimals)}
+            value={values.total && Tm.quantity.toFixed(values.total, decimals)}
             label={`Total (${R.path(['token', 'symbol'], quoteToken)})`}
             name="total"
             insideLabel="true"

@@ -2,8 +2,7 @@ import React, { Fragment, StatelessComponent } from 'react';
 import Link from '~/blocks/Link';
 import Spinner from '~/blocks/Spinner';
 import InsufficientFunds from '~/components/InsufficientFunds';
-import { toFixed } from '@melonproject/token-math/quantity';
-import { isZero } from '@melonproject/token-math/bigInteger';
+import * as Tm from '@melonproject/token-math';
 
 import styles from './styles.css';
 
@@ -42,21 +41,27 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
                 ETH:
                 <br />
                 <span className="wallet-overview__balance-value">
-                  {balances && balances.eth && toFixed(balances.eth)}
+                  {balances &&
+                    balances.eth &&
+                    Tm.quantity.toFixed(balances.eth)}
                 </span>
               </div>
               <div className="wallet-overview__balance">
                 MLN:
                 <br />
                 <span className="wallet-overview__balance-value">
-                  {balances && balances.mln && toFixed(balances.mln)}
+                  {balances &&
+                    balances.mln &&
+                    Tm.quantity.toFixed(balances.mln)}
                 </span>
               </div>
               <div className="wallet-overview__balance">
                 WETH:
                 <br />
                 <span className="wallet-overview__balance-value">
-                  {balances && balances.weth && toFixed(balances.weth)}
+                  {balances &&
+                    balances.weth &&
+                    Tm.quantity.toFixed(balances.weth)}
                 </span>
               </div>
             </div>
@@ -71,7 +76,8 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
 
             {associatedFund && !isComplete && (
               <Fragment>
-                {balances && (!balances.eth || isZero(balances.eth)) ? (
+                {balances &&
+                (!balances.eth || Tm.bigInteger.isZero(balances.eth)) ? (
                   <InsufficientFunds
                     eth={balances.eth}
                     weth={balances.weth}
@@ -102,7 +108,8 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
 
             {!associatedFund && (
               <Fragment>
-                {balances && (!balances.eth || isZero(balances.eth)) ? (
+                {balances &&
+                (!balances.eth || Tm.bigInteger.isZero(balances.eth)) ? (
                   <InsufficientFunds
                     eth={balances.eth}
                     weth={balances.weth}
