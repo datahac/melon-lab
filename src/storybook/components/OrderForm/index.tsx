@@ -113,7 +113,10 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
 
         <div className="order-form__switch">
           <Switch
-            options={[baseToken.token.symbol, quoteToken.token.symbol]}
+            options={[
+              R.path(['token', 'symbol'], baseToken),
+              R.path(['token', 'symbol'], quoteToken),
+            ]}
             labels={['Buy', 'Sell']}
             onChange={onChange}
             name="type"
