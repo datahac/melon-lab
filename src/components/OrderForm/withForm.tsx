@@ -35,7 +35,7 @@ const withForm = withFormik({
     } else if (isZero(values.quantity)) {
       errors.quantity = 'Invalid quantity';
     } else if (
-      greaterThan(values.quantity, props.tokens.baseToken) &&
+      greaterThan(values.quantity, props.baseToken) &&
       values.type === 'Sell'
     ) {
       errors.quantity = 'Insufficient balance';
@@ -46,7 +46,7 @@ const withForm = withFormik({
     } else if (isZero(values.total)) {
       errors.total = 'Invalid total';
     } else if (
-      greaterThan(values.total, props.tokens.quoteToken) &&
+      greaterThan(values.total, props.quoteToken) &&
       values.type === 'Buy'
     ) {
       errors.total = 'Insufficient balance';
@@ -61,7 +61,7 @@ const withForm = withFormik({
 
 const withFormHandlers = withHandlers({
   onChange: props => event => {
-    const { setFieldValue, tokens, values } = props;
+    const { setFieldValue, baseToken, quoteToken, values } = props;
     const { name, value } = event.target;
 
     if (name === 'type' || name === 'strategy') {
@@ -70,8 +70,8 @@ const withFormHandlers = withHandlers({
 
     if (name === 'price') {
       const price = createPrice(
-        createQuantity(tokens.baseToken.token, 1),
-        createQuantity(tokens.quoteToken.token, value || 0),
+        createQuantity(baseToken.token, 1),
+        createQuantity(quoteToken.token, value || 0),
       );
       setFieldValue('price', price);
 
@@ -82,7 +82,7 @@ const withFormHandlers = withHandlers({
     }
 
     if (name === 'quantity') {
-      const quantity = createQuantity(tokens.baseToken.token, value || 0);
+      const quantity = createQuantity(baseToken.token, value || 0);
       setFieldValue('quantity', quantity);
 
       if (values.price) {
@@ -92,7 +92,7 @@ const withFormHandlers = withHandlers({
     }
 
     if (name === 'total') {
-      const total = createQuantity(tokens.quoteToken.token, value || 0);
+      const total = createQuantity(quoteToken.token, value || 0);
       setFieldValue('total', total);
 
       if (values.price) {

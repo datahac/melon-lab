@@ -42,10 +42,8 @@ export interface OrderFormProps {
   }>;
   handleBlur?: () => void;
   handleSubmit?: () => void;
-  tokens?: {
-    baseToken: QuantityInterface;
-    quoteToken: QuantityInterface;
-  };
+  baseToken: QuantityInterface;
+  quoteToken: QuantityInterface;
   isCompetition?: boolean;
   isManager?: boolean;
   onChange?: React.ChangeEvent<any>;
@@ -66,7 +64,6 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
   exchanges,
   handleBlur,
   handleSubmit,
-  tokens,
   isCompetition,
   isManager,
   onChange,
@@ -76,6 +73,8 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
   lastPrice,
   ask,
   bid,
+  baseToken,
+  quoteToken,
 }) => {
   const isMarket = values.strategy === 'Market' ? true : false;
   const numberPlaceholder = (0).toFixed(decimals);
@@ -114,7 +113,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
 
         <div className="order-form__switch">
           <Switch
-            options={[baseAsset, quoteAsset]}
+            options={[baseToken.token.symbol, quoteToken.token.symbol]}
             labels={['Buy', 'Sell']}
             onChange={onChange}
             name="type"
@@ -135,7 +134,8 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div> */}
         <div className="order-form__order-info">
           <OrderInfo
-            tokens={tokens}
+            baseToken={baseToken}
+            quoteToken={quoteToken}
             lastPrice={lastPrice}
             ask={ask}
             bid={bid}
@@ -176,10 +176,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         <div className="order-form__input">
           <Input
             value={values.total && toFixed(values.total, decimals)}
-            label={`Total (${R.path(
-              ['quoteToken', 'token', 'symbol'],
-              tokens,
-            )})`}
+            label={`Total (${R.path(['token', 'symbol'], quoteToken)})`}
             name="total"
             insideLabel="true"
             placeholder={numberPlaceholder}

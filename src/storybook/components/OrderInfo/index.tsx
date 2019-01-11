@@ -4,6 +4,7 @@ import {
   PriceInterface,
   toFixed as toFixedPrice,
 } from '@melonproject/token-math/price';
+import * as R from 'ramda';
 
 import styles from './styles.css';
 
@@ -11,17 +12,16 @@ export interface OrderInfoProps {
   ask?: PriceInterface;
   bid?: PriceInterface;
   lastPrice?: PriceInterface;
-  tokens: {
-    baseToken: QuantityInterface;
-    quoteToken: QuantityInterface;
-  };
+  baseToken: QuantityInterface;
+  quoteToken: QuantityInterface;
 }
 
 const OrderInfo: StatelessComponent<OrderInfoProps> = ({
   ask,
   bid,
   lastPrice,
-  tokens,
+  baseToken,
+  quoteToken,
 }) => (
   <div className="order-info">
     <style jsx>{styles}</style>
@@ -43,22 +43,20 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
         <span className="order-info__price-desc">Ask</span>
       </div>
     </div>
-    {tokens && (
-      <div className="order-info__balances">
-        <div className="order-info__balance">
-          <span className="order-info__balance-desc">
-            {tokens.baseToken.token.symbol}:
-          </span>{' '}
-          {toFixed(tokens.baseToken)}
-        </div>
-        <div className="order-info__balance">
-          <span className="order-info__balance-desc">
-            {tokens.quoteToken.token.symbol}:
-          </span>{' '}
-          {toFixed(tokens.quoteToken)}
-        </div>
+    <div className="order-info__balances">
+      <div className="order-info__balance">
+        <span className="order-info__balance-desc">
+          {R.path(['token', 'symbol'], baseToken)}:
+        </span>{' '}
+        {baseToken && toFixed(baseToken)}
       </div>
-    )}
+      <div className="order-info__balance">
+        <span className="order-info__balance-desc">
+          {R.path(['token', 'symbol'], quoteToken)}:
+        </span>{' '}
+        {quoteToken && toFixed(quoteToken)}
+      </div>
+    </div>
   </div>
 );
 

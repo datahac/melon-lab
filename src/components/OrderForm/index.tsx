@@ -43,19 +43,13 @@ export default class OrderFormContainer extends React.PureComponent {
           const isManager =
             !!managerProps.fund && isSameAddress(managerProps.fund, address);
 
-          const tokens = {
-            baseToken: this.getTokenBalance(this.props.baseAsset),
-            quoteToken: this.getTokenBalance(this.props.quoteAsset),
-          };
-
           return (
             <WrappedOrderForm
-              tokens={tokens}
+              baseToken={this.getTokenBalance(baseAsset)}
+              quoteToken={this.getTokenBalance(quoteAsset)}
               isCompetition={false}
               isManager={isManager}
               holdings={holdings}
-              quoteAsset={quoteAsset}
-              baseAsset={baseAsset}
               formValues={formValues}
               priceFeedUp={network && network.priceFeedUp}
             />
