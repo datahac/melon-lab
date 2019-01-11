@@ -21,9 +21,8 @@ import {
   deployAllContractsConfig,
   update,
 } from '@melonproject/protocol';
-import Web3Accounts from 'web3-eth-accounts';
-
 import { makeOrderFromAccountOasisDex } from '@melonproject/protocol/lib/contracts/exchanges/transactions/makeOrderFromAccountOasisDex';
+import Web3Accounts from 'web3-eth-accounts';
 
 const mnemonic =
   'exhibit now news planet fame thank swear reform tilt accident bitter axis';
@@ -104,6 +103,7 @@ const getTestEnvironment = async (track: string) => {
 
   const matchingMarketAddress =
     withDeployment.deployment.exchangeConfigs.MatchingMarket.exchange;
+
   await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
     buy: createQuantity(mlnToken, 1),
     sell: createQuantity(ethToken, 1),

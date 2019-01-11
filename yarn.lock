@@ -1929,12 +1929,13 @@
   dependencies:
     events "^3.0.0"
 
-"@melonproject/exchange-aggregator@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.0.8.tgz#25147040a6ef752c5430d19816400ae813883dca"
-  integrity sha512-AOL6ijMcZ6YrPDPlC9RTOgpt5ImkPIhEgOdAUPS0O0phJoCknGAxW+At4MjAJG1I6VB4Y/Mo5ZNSReF6wSR4yg==
+"@melonproject/exchange-aggregator@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.0.9.tgz#a2a58c5cebc0441886f1b6aad6762c5c98d32464"
+  integrity sha512-ipwb1SN1mC3B4l6X/pIZ1jl3wHsFR2u6HsSBj5wAyNSrKmXhzZ5Jk5NO9r5iW0PlcS65yZd2BCeHPDMblj1O/Q==
   dependencies:
-    "@melonproject/token-math" "^0.0.25"
+    "@melonproject/protocol" "^0.9.0-alpha.25"
+    "@melonproject/token-math" "^0.0.32"
     "@radarrelay/types" "^1.2.1"
     axios "^0.18.0"
     bn.js "^4.11.8"
@@ -1949,17 +1950,18 @@
   dependencies:
     source-map-support "^0.5.3"
 
-"@melonproject/protocol@^0.9.0-alpha.21":
-  version "0.9.0-alpha.22"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.0-alpha.22.tgz#3c067388dfb418585c360e56f7a463e331ab299a"
-  integrity sha512-3dML1rBdMs5A/5MdiDeIHruPdalYlS7w72FqW/gWaooHmjS4hiFuoR/W+m2GdPHXK85Vz9rYzYXm0MogaTAaiw==
+"@melonproject/protocol@^0.9.0-alpha.25":
+  version "0.9.0-alpha.25"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.0-alpha.25.tgz#b6227cc7f88b343dbbaeea571b58b55db018f31a"
+  integrity sha512-iMlj54Y9cssqA3g9T5cVug/KWwmkmmjVVqTLx+uI6q/4Mu59acLUtMRmujk84NsgI03xyqgi5dTT7HxqvlHd6A==
   dependencies:
     "@0x/contract-wrappers" "^4.1.1"
     "@0x/order-utils" "^3.0.2"
     "@melonproject/ganache-cli" "^6.1.9"
-    "@melonproject/token-math" "0.0.21"
+    "@melonproject/token-math" "^0.0.31"
     ava "0.25.0"
     commander "^2.19.0"
+    ethereum-types "^1.1.4"
     ramda "^0.25.0"
     request-promise "^4.2.2"
     solc "^0.4.25"
@@ -1970,26 +1972,18 @@
     yup "^0.26.6"
     zen-observable-ts "^0.8.10"
 
-"@melonproject/token-math@0.0.21":
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.0.21.tgz#8cea4a8e77bb890054802ee7a49be695821a4a88"
-  integrity sha512-QaSO7r6V11zUEigloXQ6JZNn1tXPG+5HjaPFunpfrk26SQmDQeZ7lp9hREIfaMPYJcc7Nn96EBbhODit46wyIA==
-  dependencies:
-    bn.js "^4.11.8"
-    web3-utils "^1.0.0-beta.36"
-
-"@melonproject/token-math@^0.0.25":
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.0.25.tgz#d5367cbb01ecd163e766a11faf4cc3b6a13ee959"
-  integrity sha512-E7ZqZ/MqOPUcEIKrEnTuIRBIpRR2yz7u1XsgoJ1/pMMS+SejE2vUAe9h/SWFRlcKRC9gT35vVCKJ8PxO1+4QbA==
-  dependencies:
-    bn.js "^4.11.8"
-    web3-utils "^1.0.0-beta.36"
-
 "@melonproject/token-math@^0.0.31":
   version "0.0.31"
   resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.0.31.tgz#f447eee440ca620b3f6ffb3ac17e40179f080745"
   integrity sha512-RtUbMIZQR77hRHhaTassic/a/uB6lMhP0Jb5DgSZ1TebMai/KzqT1LBVGAdr9V9DEm9utU/jQeIeVVDwClnxWA==
+  dependencies:
+    jsbi "^2.0.5"
+    web3-utils "^1.0.0-beta.36"
+
+"@melonproject/token-math@^0.0.32":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.0.32.tgz#7fa0bcff54fde88574d23c767118b4b0fe2a8a7e"
+  integrity sha512-FYvnb562JMh2Ok6mK4TShCNCZEeDurmN9Bn1eCHZf+AE3PbDbfuL/6rIvcnYYujQY7Ce2BAaTaMVhNyFqmK6Ow==
   dependencies:
     jsbi "^2.0.5"
     web3-utils "^1.0.0-beta.36"
@@ -3684,7 +3678,7 @@ async-eventemitter@^0.2.2:
   dependencies:
     async "^2.4.0"
 
-"async-eventemitter@github:ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c":
+async-eventemitter@ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c:
   version "0.2.3"
   resolved "https://codeload.github.com/ahultgren/async-eventemitter/tar.gz/fa06e39e56786ba541c180061dbf2c0a5bbf951c"
   dependencies:
