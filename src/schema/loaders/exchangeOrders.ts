@@ -1,44 +1,57 @@
 import * as R from 'ramda';
 import * as Rx from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { Exchange, Network } from '@melonproject/exchange-aggregator/lib/types';
 import { observeRadarRelay } from '@melonproject/exchange-aggregator/lib/exchanges/radar-relay';
 import { observeKyber } from '@melonproject/exchange-aggregator/lib/exchanges/kyber';
 import { observeEthfinex } from '@melonproject/exchange-aggregator/lib/exchanges/ethfinex';
+import { fetchOasisDexOrders } from '@melonproject/exchange-aggregator/lib/exchanges/oasis-dex';
 import { isSnapshotEvent } from '@melonproject/exchange-aggregator/lib/exchanges/debug';
-import { createToken } from '@melonproject/token-math/token';
 import takeLast from '../utils/takeLast';
+import { Environment } from '@melonproject/protocol/lib/utils/environment/Environment';
+import { getTokenBySymbol } from '@melonproject/protocol/lib/utils/environment/getTokenBySymbol';
 
 export default R.curryN(
   4,
-  async (environment, exchange: Exchange, base: string, quote: string) => {
+  async (
+    environment: Environment,
+    exchange: Exchange,
+    base: string,
+    quote: string,
+  ) => {
     const options = {
-      network: Network.MAINNET,
+      environment,
+      network: Network.KOVAN,
       pair: {
-        base: createToken(base),
-        quote: createToken(quote),
+        base: getTokenBySymbol(environment, base),
+        quote: getTokenBySymbol(environment, quote),
       },
     };
 
     const stream$ = (() => {
       switch (exchange) {
         case 'OASIS_DEX':
-          return Rx.throwError(new Error('Not implemented yet.'));
+          return Rx.from(fetchOasisDexOrders(options));
         case 'RADAR_RELAY':
-          return observeRadarRelay(options);
+          return observeRadarRelay(options).pipe(
+            filter(isSnapshotEvent),
+            map(data => data.orders),
+          );
         case 'KYBER_NETWORK':
-          return observeKyber(options);
+          return observeKyber(options).pipe(
+            filter(isSnapshotEvent),
+            map(data => data.orders),
+          );
         case 'ETHFINEX':
-          return observeEthfinex(options);
+          return observeEthfinex(options).pipe(
+            filter(isSnapshotEvent),
+            map(data => data.orders),
+          );
         default:
           throw new Error('Invalid exchange.');
       }
     })();
 
-    const orders$ = stream$.pipe(filter(isSnapshotEvent));
-
-    return takeLast(orders$, 10000)
-      .then(data => data.orders)
-      .catch(() => []);
+    return takeLast(stream$, 10000).catch(() => []);
   },
 );

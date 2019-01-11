@@ -19,7 +19,8 @@ import {
   triggerRewardAllFees,
 } from '@melonproject/protocol';
 import { isAddress, Address } from '@melonproject/token-math/address';
-import { createQuantity } from '@melonproject/token-math/quantity';
+import { toFixed as toFixedQuantity } from '@melonproject/token-math/quantity';
+import { toFixed as toFixedPrice } from '@melonproject/token-math/price';
 import toAsyncIterator from './utils/toAsyncIterator';
 import sameBlock from './utils/sameBlock';
 
@@ -193,6 +194,8 @@ export default {
           throw new Error('Invalid order type.');
       }
     },
+    price: parent => toFixedPrice(parent.trade),
+    volume: parent => toFixedQuantity(parent.trade.base),
   },
   ZeroExOrder: {
     metadata: parent => parent.original.signedOrder,

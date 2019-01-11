@@ -46,6 +46,8 @@ enum FundSetupStepEnum {
 interface Order {
   id: String
   trade: Price!
+  price: String
+  volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
 }
@@ -53,6 +55,8 @@ interface Order {
 type EthfinexOrder implements Order {
   id: String
   trade: Price!
+  price: String
+  volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
 }
@@ -60,6 +64,8 @@ type EthfinexOrder implements Order {
 type ZeroExOrder implements Order {
   id: String
   trade: Price!
+  price: String
+  volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
   metadata: ZeroExOrderMetadata
@@ -68,6 +74,8 @@ type ZeroExOrder implements Order {
 type OasisDexOrder implements Order {
   id: String
   trade: Price!
+  price: String
+  volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
   metadata: OasisDexOrderMetadata
@@ -76,6 +84,8 @@ type OasisDexOrder implements Order {
 type KyberNetworkOrder implements Order {
   id: String
   trade: Price!
+  price: String
+  volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
 }

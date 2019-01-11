@@ -52,6 +52,7 @@ export async function createContext(environment, wallet = null) {
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
+  inheritResolversFromInterfaces: true,
   schemaDirectives: {
     insecure: InsecureDirective,
   },
