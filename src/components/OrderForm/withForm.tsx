@@ -10,15 +10,20 @@ import { valueIn } from '@melonproject/token-math/price';
 import { createPrice } from '@melonproject/token-math/price';
 import { FormErros } from '~/components/OrderForm';
 
+const initialValues = {
+  type: 'Buy',
+  strategy: 'Market',
+  quantity: null,
+  total: null,
+  price: null,
+  exchange: '',
+};
+
 const withForm = withFormik({
-  mapPropsToValues: props => ({
-    type: 'Buy',
-    strategy: 'Market',
-    quantity: null,
-    total: null,
-    price: null,
-    exchange: '',
-  }),
+  mapPropsToValues: props =>
+    console.log(props) || props.formValues
+      ? { ...props.formValues }
+      : initialValues,
   validate: (values, props) => {
     let errors: FormErros = {};
 
@@ -75,27 +80,27 @@ const withFormHandlers = withHandlers({
 
       if (values.quantity) {
         const total = valueIn(price, values.quantity);
-        props.setFieldValue('total', total);
+        setFieldValue('total', total);
       }
     }
 
     if (name === 'quantity') {
       const quantity = createQuantity(tokens.baseToken.token, value || 0);
-      props.setFieldValue('quantity', quantity);
+      setFieldValue('quantity', quantity);
 
       if (values.price) {
         const total = valueIn(values.price, quantity);
-        props.setFieldValue('total', total);
+        setFieldValue('total', total);
       }
     }
 
     if (name === 'total') {
       const total = createQuantity(tokens.quoteToken.token, value || 0);
-      props.setFieldValue('total', total);
+      setFieldValue('total', total);
 
       if (values.price) {
         const quantity = valueIn(values.price, total);
-        props.setFieldValue('quantity', quantity);
+        setFieldValue('quantity', quantity);
       }
     }
   },

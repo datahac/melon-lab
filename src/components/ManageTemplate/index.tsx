@@ -39,11 +39,11 @@ export default class ManageTemplateContainer extends React.Component {
   state = {
     exchanges: availableExchanges.map(exchange => exchange.value),
     order: {
-      price: '',
-      orderType: 'Buy',
+      type: 'Buy',
       strategy: 'Market',
-      quantity: '',
-      total: '',
+      price: null,
+      quantity: null,
+      total: null,
       exchange: '',
     },
   };
