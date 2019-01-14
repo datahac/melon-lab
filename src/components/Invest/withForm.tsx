@@ -49,7 +49,6 @@ const withFormHandlers = compose(
         props.setFieldValue('quantity', quantity);
 
         const total = Tm.price.valueIn(values.price, quantity);
-        console.log(values.total, total);
         if (!Tm.quantity.isEqual(values.total, total)) {
           props.setFieldValue('total', total);
         }
