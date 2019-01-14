@@ -118,6 +118,21 @@ const getTestEnvironment = async (track: string) => {
     sell: Tm.createQuantity(ethToken, 1),
   });
 
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(mlnToken, 4),
+    sell: Tm.createQuantity(ethToken, 1),
+  });
+
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(mlnToken, 6.5),
+    sell: Tm.createQuantity(ethToken, 1),
+  });
+
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(mlnToken, 3.7),
+    sell: Tm.createQuantity(ethToken, 1),
+  });
+
   return {
     ...environment,
     deployment: withDeployment.deployment,

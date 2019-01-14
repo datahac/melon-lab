@@ -7,38 +7,25 @@ import OrderBookTable from '~/components/OrderBookTable';
 import styles from './styles.css';
 
 export interface OrderBookProps {
-  baseAsset?: string;
-  decimals?: number;
   isManager: boolean;
-  loading: boolean;
   setSellOrder: (volume, exchange, subset, balance) => void;
   setBuyOrder: (volume, exchange, subset, balance) => void;
-  orderbook?: any;
-  quoteAsset?: string;
   setExchange: (e) => void;
-  exchanges: any;
+  selectedExchanges: any;
   availableExchanges: any;
-  totalBuyVolume;
-  totalSellVolume;
-  sellEntries;
-  buyEntries;
+  loading: boolean;
+  bids: any;
+  asks: any;
 }
 
 export const OrderBook: StatelessComponent<OrderBookProps> = ({
-  baseAsset,
-  decimals = 4,
-  isManager = false,
   loading,
-  setSellOrder: setSellOrderFinal,
-  setBuyOrder: setBuyOrderFinal,
-  quoteAsset,
-  totalBuyVolume,
-  totalSellVolume,
-  sellEntries = [],
-  buyEntries = [],
+  asks = [],
+  bids = [],
   setExchange,
-  exchanges = [],
+  selectedExchanges = [],
   availableExchanges = [],
+  isManager = false,
 }) => {
   const setSellOrder = index => {
     // TODO:
@@ -61,7 +48,7 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
               value="ALL"
               text="All"
               defaultChecked={
-                exchanges.length ===
+                selectedExchanges.length ===
                 availableExchanges.map(exchange => exchange.value).length
               }
               disabled={loading}
@@ -74,7 +61,7 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
                 name="exchanges"
                 value={exchange.value}
                 text={exchange.text}
-                defaultChecked={exchanges.indexOf(exchange.value) !== -1}
+                defaultChecked={selectedExchanges.indexOf(exchange.value) !== -1}
                 disabled={loading}
               />
             </div>
@@ -88,7 +75,7 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
         </div>
       ) : (
         <Fragment>
-          {sellEntries.length === 0 && buyEntries.length === 0 ? (
+          {bids.length === 0 && asks.length === 0 ? (
             <Notification isWarning>
               No orders on the orderbook for this trading pair
             </Notification>
@@ -97,17 +84,13 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
               <div className="orderbook__tables">
                 <OrderBookTable
                   style="buy"
-                  entries={buyEntries}
-                  totalVolume={totalBuyVolume}
-                  decimals={decimals}
+                  entries={asks}
                   onClickOrder={isManager && setSellOrder}
                   canTrade={isManager}
                 />
                 <OrderBookTable
                   style="sell"
-                  entries={sellEntries}
-                  totalVolume={totalSellVolume}
-                  decimals={decimals}
+                  entries={bids}
                   onClickOrder={isManager && setBuyOrder}
                   canTrade={isManager}
                 />

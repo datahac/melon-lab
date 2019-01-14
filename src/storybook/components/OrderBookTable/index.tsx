@@ -1,41 +1,19 @@
-import classNames from 'classnames';
 import React from 'react';
-import VolumeBar from '~/components/VolumeBar';
 import * as Tm from '@melonproject/token-math';
+import classNames from 'classnames';
+import VolumeBar from '~/components/VolumeBar';
 import styles from './styles.css';
 
 const OrderBookTable = ({
   style,
   entries,
-  totalVolume,
-  decimals = 0,
   onClickOrder,
   canTrade,
 }) => {
+  const total = entries && entries.length ? parseInt(entries[entries.length - 1].cummulative.quantity, 10) : 0;
   const orderBookTableClassNames = classNames('orderbook-table', {
     [`orderbook-table--${style}`]: style,
   });
-
-  const calculateBar = (prevEntry, entry, totalVolume) => {
-    const getPercentage = (cumulativeVolume, totalVolume) => {
-      return Tm.multiply(Tm.divide(cumulativeVolume, totalVolume), 100);
-    };
-
-    const percentageDiff =
-      prevEntry &&
-      getPercentage(Tm.subtract(entry.volume, prevEntry.volume), totalVolume);
-
-    const prevEntryPercentage =
-      prevEntry && getPercentage(prevEntry.volume, totalVolume);
-
-    const entryPercentage = entry && getPercentage(entry.volume, totalVolume);
-
-    return {
-      percentageDiff,
-      prevEntryPercentage,
-      entryPercentage,
-    };
-  };
 
   return (
     <div className={orderBookTableClassNames}>
@@ -48,51 +26,34 @@ const OrderBookTable = ({
         </div>
       </div>
       <div className="orderbook-table__body">
-        {entries.map((entry, index) => {
-          const volume = Number.parseFloat(entry.volume).toFixed(decimals);
-          const howMuch = Number.parseFloat(entry.order.sell.howMuch).toFixed(
-            decimals,
-          );
-          const price = Number.parseFloat(entry.order.price).toFixed(decimals);
+        {entries.map((order, index) => {
+          const prev = entries[index - 1] ? parseInt(entries[index - 1].cummulative.quantity, 10) : 0;
+          const cur = parseInt(order.cummulative.quantity, 10);
+          const difference = Math.max(0, Math.min((prev - cur) / total * 100));
+          const previous = Math.max(0, Math.min(prev / total * 100));
+          const current = Math.max(0, Math.min(100, cur / total * 100));
 
-          const calculatedBar = calculateBar(
-            entries[index - 1],
-            entry,
-            totalVolume,
-          );
-
-          let leftSpaceBorder;
-          if (style === 'sell') {
-            leftSpaceBorder = `calc(${calculatedBar.entryPercentage}% - ${
-              calculatedBar.percentageDiff
-            }% ${calculatedBar.prevEntryPercentage > 0.5 && '- 1px'})`;
-          } else {
-            leftSpaceBorder = `calc(100% - ${
-              calculatedBar.entryPercentage
-            }% ${calculatedBar.prevEntryPercentage > 0.5 && '+ 1px'})`;
-          }
+          const leftSpaceBorder = style === 'sell'
+            ? `calc(${current}% - ${difference}% ${previous > 0.5 && '- 1px'})`
+            : `calc(100% - ${current}% ${previous > 0.5 && '+ 1px'})`;
 
           return (
             <div
               className="orderbook-table__body-row"
-              key={`${entry.order.id}-${index}`}
+              key={order.id}
               onClick={() => onClickOrder && onClickOrder(index)}
               style={{
                 cursor: canTrade ? 'pointer' : 'auto',
               }}
             >
-              <div className="orderbook-table__body-cell">{price}</div>
-              <div className="orderbook-table__body-cell">{howMuch}</div>
-              <div className="orderbook-table__body-cell">{volume}</div>
+              <div className="orderbook-table__body-cell">{Tm.toFixed(order.trade, 4)}</div>
+              <div className="orderbook-table__body-cell">{Tm.toFixed(order.trade.base, 4)}</div>
+              <div className="orderbook-table__body-cell">{Tm.toFixed(order.cummulative, 4)}</div>
 
               <VolumeBar
                 style={style}
-                widthBar={`${
-                  calculatedBar.entryPercentage > 100
-                    ? 100
-                    : calculatedBar.entryPercentage
-                }%`}
-                widthBorder={`${calculatedBar.percentageDiff}%`}
+                widthBar={`${current}%`}
+                widthBorder={`${difference}%`}
                 leftSpaceBorder={leftSpaceBorder}
               />
             </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Composer from 'react-composer';
 import * as R from 'ramda';
 import { AccountConsumer } from '+/components/AccountContext';
@@ -13,40 +13,11 @@ import OrderForm from '+/components/OrderForm';
 import Holdings from '+/components/Holdings';
 import OrderBook from '+/components/OrderBook';
 import FundQuery from './data/fund';
-import OrdersQuery from './data/orders';
 import HoldingsQuery from './data/holdings';
 import isSameAddress from '~/utils/isSameAddress';
 import availableExchanges from '~/utils/availableExchanges';
-import { aggregateOrders } from '@melonproject/exchange-aggregator/lib/exchanges/aggregate';
 
-const AggregatedOrders = ({ baseAsset, quoteAsset, exchanges, children }) => (
-  <Composer
-    components={exchanges.map(exchange => (
-      <OrdersQuery
-        exchange={exchange}
-        quoteAsset={quoteAsset}
-        baseAsset={baseAsset}
-      />
-    ))}
-  >
-    {orderResponses => {
-      const loading = !!orderResponses.find(R.propEq('loading', true));
-      const orders = [].concat(
-        ...orderResponses.map(R.pathOr([], ['data', 'orders'])),
-      );
-      const orderbook = aggregateOrders(orders);
-
-      return children({
-        ...orderbook,
-        loading,
-      });
-    }}
-  </Composer>
-);
-
-const Container = ({ address, quoteAsset, baseAsset, children }) => {
-  const [exchanges, setExchanges] = useState(Object.keys(availableExchanges));
-
+const Container = ({ address, children }) => {
   return (
     <Composer
       components={[
@@ -59,12 +30,7 @@ const Container = ({ address, quoteAsset, baseAsset, children }) => {
         <HoldingsQuery address={address} />,
         ({ results: [account], render }) => (
           <FundQuery address={address} account={account} children={render} />
-        ),
-        <AggregatedOrders
-          baseAsset={baseAsset}
-          quoteAsset={quoteAsset}
-          exchanges={exchanges}
-        />,
+        )
       ]}
     >
       {children}
@@ -74,7 +40,7 @@ const Container = ({ address, quoteAsset, baseAsset, children }) => {
 
 export default class ManageTemplateContainer extends React.Component {
   state = {
-    exchange: 'OASIS_DEX',
+    exchanges: Object.keys(availableExchanges),
     order: {
       type: 'Buy',
       strategy: 'Market',
@@ -86,16 +52,11 @@ export default class ManageTemplateContainer extends React.Component {
   };
 
   render() {
-    const { exchange } = this.state;
+    const { exchanges } = this.state;
     const { address, quoteAsset, baseAsset } = this.props;
 
     return (
-      <Container
-        exchange={exchange}
-        address={address}
-        quoteAsset={quoteAsset}
-        baseAsset={baseAsset}
-      >
+      <Container address={address}>
         {([
           account,
           balances,
@@ -105,7 +66,6 @@ export default class ManageTemplateContainer extends React.Component {
           managerProps,
           holdingsProps,
           fundProps,
-          ordersProps,
         ]) => {
           const holdingsData = R.pathOr([], ['data', 'fund', 'holdings'])(
             holdingsProps,
@@ -162,9 +122,9 @@ export default class ManageTemplateContainer extends React.Component {
               }}
               OrderBook={OrderBook}
               OrderBookProps={{
-                loading: ordersProps.loading,
-                asks: ordersProps.asks,
-                bids: ordersProps.bids,
+                exchanges,
+                quoteAsset,
+                baseAsset,
               }}
               OpenOrders={() => null}
               OpenOrdersProps={
