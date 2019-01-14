@@ -7,16 +7,24 @@ import Notification from '~/blocks/Notification';
 import Switch from '~/blocks/Switch';
 import Toggle from '~/blocks/Toggle';
 import OrderInfo from '~/components/OrderInfo';
+import * as Tm from '@melonproject/token-math';
+import * as R from 'ramda';
 
 import styles from './styles.css';
 
 interface FormValues {
   exchange: string;
   type: string;
-  price: string;
-  quantity: string;
   strategy: string;
-  total: string;
+  price: Tm.PriceInterface;
+  quantity: Tm.QuantityInterface;
+  total: Tm.QuantityInterface;
+}
+
+export interface FormErrors {
+  quantity?: string;
+  total?: string;
+  price?: string;
 }
 
 export interface OrderFormProps {
@@ -30,7 +38,8 @@ export interface OrderFormProps {
   }>;
   handleBlur?: () => void;
   handleSubmit?: () => void;
-  tokens?: any;
+  baseToken: Tm.QuantityInterface;
+  quoteToken: Tm.QuantityInterface;
   isCompetition?: boolean;
   isManager?: boolean;
   onChange?: React.ChangeEvent<any>;
@@ -38,23 +47,30 @@ export interface OrderFormProps {
   touched: any;
   type?: string;
   values: FormValues;
+  lastPrice: Tm.PriceInterface;
+  ask: Tm.PriceInterface;
+  bid: Tm.PriceInterface;
 }
 
 export const OrderForm: StatelessComponent<OrderFormProps> = ({
   baseAsset,
   priceFeedUp,
-  decimals = 4,
+  decimals = 6,
   errors,
   exchanges,
   handleBlur,
   handleSubmit,
-  tokens,
   isCompetition,
   isManager,
   onChange,
   quoteAsset,
   touched,
   values,
+  lastPrice,
+  ask,
+  bid,
+  baseToken,
+  quoteToken,
 }) => {
   const isMarket = values.strategy === 'Market' ? true : false;
   const numberPlaceholder = (0).toFixed(decimals);
@@ -93,12 +109,15 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
 
         <div className="order-form__switch">
           <Switch
-            options={[baseAsset, quoteAsset]}
+            options={[
+              R.path(['token', 'symbol'], baseToken),
+              R.path(['token', 'symbol'], quoteToken),
+            ]}
             labels={['Buy', 'Sell']}
             onChange={onChange}
             name="type"
             value={values.type}
-            isChecked={values.type === 'sell' ? true : false}
+            isChecked={values.type === 'Sell' ? true : false}
             disabled={isMarket || !priceFeedUp || !isManager}
           />
         </div>
@@ -113,11 +132,17 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
           />
         </div> */}
         <div className="order-form__order-info">
-          <OrderInfo tokens={tokens} />
+          <OrderInfo
+            baseToken={baseToken}
+            quoteToken={quoteToken}
+            lastPrice={lastPrice}
+            ask={ask}
+            bid={bid}
+          />
         </div>
         <div className="order-form__input">
           <Input
-            value={values.price}
+            value={values.price && Tm.toFixed(values.price, decimals)}
             disabled={isMarket || !priceFeedUp || !isManager}
             label="Price"
             name="price"
@@ -133,7 +158,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div>
         <div className="order-form__input">
           <Input
-            value={values.quantity}
+            value={values.quantity && Tm.toFixed(values.quantity, decimals)}
             label="Quantity"
             name="quantity"
             insideLabel="true"
@@ -149,8 +174,8 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div>
         <div className="order-form__input">
           <Input
-            value={values.total}
-            label="Total"
+            value={values.total && Tm.toFixed(values.total, decimals)}
+            label={`Total (${R.path(['token', 'symbol'], quoteToken)})`}
             name="total"
             insideLabel="true"
             placeholder={numberPlaceholder}

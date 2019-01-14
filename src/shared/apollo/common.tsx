@@ -4,7 +4,6 @@ import introspection from '~/schema/schema.gql';
 import {
   InMemoryCache,
   IntrospectionFragmentMatcher,
-  defaultDataIdFromObject,
 } from 'apollo-cache-inmemory';
 import { onError } from 'apollo-link-error';
 
@@ -40,26 +39,6 @@ export const createCache = () => {
     fragmentMatcher: new IntrospectionFragmentMatcher({
       introspectionQueryResultData: introspection,
     }),
-    dataIdFromObject: object => {
-      switch (object.__typename) {
-        case 'Fund': {
-          return object.address
-            ? `fund:${object.address}`
-            : defaultDataIdFromObject(object);
-        }
-
-        default: {
-          return defaultDataIdFromObject(object);
-        }
-      }
-    },
-    cacheRedirects: {
-      Query: {
-        fund: (_, args, { getCacheKey }) => {
-          return getCacheKey({ __typename: 'Fund', address: args.address });
-        },
-      },
-    },
   });
 
   return cache;

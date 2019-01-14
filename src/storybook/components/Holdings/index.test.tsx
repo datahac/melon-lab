@@ -5,7 +5,7 @@ const mockCallback = jest.fn();
 const data = {
   isReadyToTrade: true,
   priceFeedUp: true,
-  quoteAsset: 'WETH-T',
+  quoteAsset: 'WETH',
   onClick: mockCallback,
   holdings: [
     { symbol: 'ANT-T', balance: '0.0000', price: '0.0035', fraction: '0.0000' },
@@ -17,13 +17,13 @@ const data = {
     { symbol: 'ZRX-T', balance: '0.0000', price: '0.0024', fraction: '0.0000' },
     { symbol: 'REQ-T', balance: '0.0000', price: '0.0001', fraction: '0.0000' },
     {
-      symbol: 'WETH-T',
+      symbol: 'WETH',
       balance: '0.5166',
       price: '1.0000',
       fraction: '50.5764',
     },
     {
-      symbol: 'MLN-T',
+      symbol: 'MLN',
       balance: '10.7338',
       price: '0.0470',
       fraction: '49.4236',

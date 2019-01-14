@@ -1,7 +1,0 @@
-.statistics__table {
-  margin-top: var(--space-m);
-}
-
-.statistics__table :global(.table__cell) {
-  width: 50%;
-}

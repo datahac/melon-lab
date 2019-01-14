@@ -16,7 +16,6 @@ const initialValues = {
   name: '',
   exchanges: [],
   terms: false,
-  gasPrice: '5',
   policies: [],
   performanceFee: '',
   managementFee: '',
@@ -33,35 +32,29 @@ const withForm = withFormik({
           'is-unique',
           'There is already a fund with this name.',
           async value => {
-            const { data } =
-              value &&
-              (await props.client.query({
+            if (value) {
+              const { data } = await props.client.query({
                 query: uniqueFundQuery,
                 variables: {
                   name: value,
                 },
-              }));
+              });
 
-            return !data.fundByName;
+              return !data.fundByName;
+            }
+
+            return false;
           },
         ),
       exchanges: Yup.array().required('Exchanges are required.'),
-      terms: Yup.boolean().oneOf([true], 'Must Accept Terms and Conditions'),
-      gasPrice: Yup.number()
-        .required('Gas price is required.')
-        .moreThan(0, 'Please enter a valid gas price'),
+      terms: Yup.boolean().test(
+        'is-checked',
+        'Must Accept Terms and Conditions',
+        value => (value !== true ? false : true),
+      ),
     }),
   enableReinitialize: true,
-  handleSubmit: (values, form) => {
-    form.props.executeSetup({
-      variables: {
-        name: values.name,
-        exchanges: values.exchanges,
-        gasPrice: values.gasPrice,
-        gasLimit: form.props.gasLimit,
-      },
-    });
-  },
+  handleSubmit: (values, form) => form.props.setFundValues(values),
 });
 
 const withFormHandlers = withHandlers({
@@ -88,10 +81,12 @@ const withFormHandlers = withHandlers({
       ]);
     }
   },
-  onClickNext: props => e => {
+  onClickNext: props => async e => {
+    e.preventDefault();
     const fields = props.steps[props.page].validateFields;
+
     if (typeof fields !== 'undefined' && fields) {
-      fields.map(item => props.setFieldTouched(item));
+      await fields.map(item => props.setFieldTouched(item, true, true));
 
       props.validateForm().then(errors => {
         if (fields.some(item => errors[item])) {
@@ -104,7 +99,8 @@ const withFormHandlers = withHandlers({
 
     return props.setPage(props.page + 1);
   },
-  onClickPrev: props => event => {
+  onClickPrev: props => e => {
+    e.preventDefault();
     return props.setPage(props.page - 1);
   },
 });

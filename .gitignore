@@ -3,8 +3,12 @@ node_modules/
 
 # Generated files
 package-lock.json
+yalc.lock
 coverage/
 build/
+
+# Log files.
+*.log
 
 # Ignore all dot files.
 .*

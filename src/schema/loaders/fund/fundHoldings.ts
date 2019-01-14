@@ -1,19 +1,39 @@
 import * as R from 'ramda';
-import { getHoldingsAndPrices } from '@melonproject/melon.js';
+import * as Tm from '@melonproject/token-math';
+import {
+  getFundHoldings,
+  isEmptyAddress,
+  isAddress,
+} from '@melonproject/protocol';
+import { getTokenByAddress } from '@melonproject/protocol/lib/utils/environment/getTokenByAddress';
 
-async function fundHoldings(environment, contract) {
-  const address = contract.instance.address;
-  const holdings =
-    (environment &&
-      (await getHoldingsAndPrices(environment, {
-        fundAddress: address,
-      }))) ||
-    [];
+async function fundHoldings(environment, address) {
+  const { 0: quantities, 1: tokens } = await getFundHoldings(
+    environment,
+    address,
+  );
 
-  return holdings.map(holding => ({
-    ...holding,
-    fund: address,
-  }));
+  const availableTokens = R.pathOr(
+    [],
+    ['deployment', 'thirdPartyContracts', 'tokens'],
+    environment,
+  ).map(value => {
+    return {
+      quantity: 0,
+      token: value,
+    };
+  });
+
+  const holdings = tokens
+    .filter(value => {
+      return isAddress(value) && !isEmptyAddress(value);
+    })
+    .map((value, key) => {
+      const token = getTokenByAddress(environment, value);
+      return Tm.createQuantity(token, quantities[key]);
+    });
+
+  return R.unionWith(R.eqBy(R.prop('token')), holdings, availableTokens);
 }
 
 export default R.curryN(2, fundHoldings);

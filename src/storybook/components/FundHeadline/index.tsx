@@ -1,23 +1,25 @@
 import React, { StatelessComponent, Fragment } from 'react';
 import Icon from '~/blocks/Icon';
 import Spinner from '~/blocks/Spinner';
-import displayNumber from '~/utils/displayNumber';
+import displayQuantity from '~/utils/displayQuantity';
+import displayPrice from '~/utils/displayPrice';
+import * as Tm from '@melonproject/token-math';
 
 import styles from './styles.css';
 
 export interface FundHeadlineProps {
   name?: string;
-  sharePrice?: string;
-  gav?: string;
+  sharePrice?: Tm.PriceInterface;
+  gav?: Tm.QuantityInterface;
   rank?: string;
   totalFunds?: string;
   quoteAsset?: string;
-  decimals?: number;
   owner?: string;
   account?: string;
   address?: string;
   track?: string;
   loading?: boolean;
+  decimals?: number;
 }
 
 const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
@@ -26,25 +28,28 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   gav,
   rank,
   totalFunds,
-  quoteAsset,
-  decimals = 4,
   owner,
   account,
   address,
   track,
   loading,
+  decimals = 4,
 }) => {
   const isOwner = owner === account;
   const buildTwitterUrl = () => {
     const text = isOwner
       ? track !== 'live'
-        ? `My #MelonFund "${name}" has a share price currently of ${sharePrice}. Have a look:`
+        ? `My #MelonFund "${name}" has a share price currently of ${sharePrice &&
+            displayPrice(sharePrice)}. Have a look:`
         : `Check out my on-chain decentralized hedge fund "${name}". ` +
-          `It currently has a share price of ${sharePrice}. Have a look:`
+          `It currently has a share price of ${sharePrice &&
+            displayPrice(sharePrice)}. Have a look:`
       : track !== 'live'
-      ? `The #MelonFund "${name}" has a share price currently of ${sharePrice}. Have a look:`
+      ? `The #MelonFund "${name}" has a share price currently of ${sharePrice &&
+          displayPrice(sharePrice)}. Have a look:`
       : `Check out this on-chain decentralized hedge fund "${name}". ` +
-        `It currently has a share price of ${sharePrice}. Have a look:`;
+        `It currently has a share price of ${sharePrice &&
+          displayPrice(sharePrice)}. Have a look:`;
 
     const url =
       track === 'live'
@@ -86,12 +91,12 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">Share price</div>
-            {displayNumber(sharePrice, decimals)} {quoteAsset}
+            {sharePrice && displayPrice(sharePrice, decimals)}
             /Share
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">AUM</div>
-            {displayNumber(gav, decimals)} {quoteAsset}
+            {gav && displayQuantity(gav, decimals)}
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">Ranking</div>

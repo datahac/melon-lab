@@ -20,5 +20,5 @@
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../protocol/src/utils/deploy/deployThirdParty.ts"],
 }

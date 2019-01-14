@@ -33,14 +33,14 @@ exports[`Switch should render correctly 1`] = `
       data-label-left="Buy"
       data-label-right="Sell"
     >
-      ETH-T-M
+      ETH-M
     </span>
     <span
       className="switch__label"
       data-label-left="Buy"
       data-label-right="Sell"
     >
-      MLN-T-M
+      MLN-M
     </span>
     <div
       className="switch__icon"

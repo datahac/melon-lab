@@ -64,3 +64,8 @@
 .modal__content {
   margin: var(--space-m);
 }
+
+.modal__spinner {
+  margin: var(--space-m) auto;
+  width: 50px;
+}

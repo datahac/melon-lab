@@ -2,7 +2,7 @@
 
 exports[`OrderForm should render correctly 1`] = `
 <WithFormik(withHandlers(Component))
-  baseTokenSymbol="ETH-T-M"
+  baseTokenSymbol="ETH-M"
   dataValid={true}
   decimals={6}
   exchanges={
@@ -25,23 +25,23 @@ exports[`OrderForm should render correctly 1`] = `
       "tokens": Object {
         "baseToken": Object {
           "balance": 30,
-          "name": "ETH-T",
+          "name": "ETH",
         },
         "quoteToken": Object {
           "balance": 20,
-          "name": "MLN-T",
+          "name": "MLN",
         },
       },
     }
   }
-  quoteTokenSymbol="MLN-T-M"
+  quoteTokenSymbol="MLN-M"
   selectedExchange="RadarRelay"
   selectedOrderType="Buy"
   strategy="Limit"
   total=""
 >
   <Formik
-    baseTokenSymbol="ETH-T-M"
+    baseTokenSymbol="ETH-M"
     dataValid={true}
     decimals={6}
     enableReinitialize={true}
@@ -66,11 +66,11 @@ exports[`OrderForm should render correctly 1`] = `
         "tokens": Object {
           "baseToken": Object {
             "balance": 30,
-            "name": "ETH-T",
+            "name": "ETH",
           },
           "quoteToken": Object {
             "balance": 20,
-            "name": "MLN-T",
+            "name": "MLN",
           },
         },
       }
@@ -78,7 +78,7 @@ exports[`OrderForm should render correctly 1`] = `
     initialValues={Object {}}
     isInitialValid={false}
     onSubmit={[Function]}
-    quoteTokenSymbol="MLN-T-M"
+    quoteTokenSymbol="MLN-M"
     render={[Function]}
     selectedExchange="RadarRelay"
     selectedOrderType="Buy"
@@ -89,7 +89,7 @@ exports[`OrderForm should render correctly 1`] = `
     validationSchema={[Function]}
   >
     <withHandlers(Component)
-      baseTokenSymbol="ETH-T-M"
+      baseTokenSymbol="ETH-M"
       dataValid={true}
       decimals={6}
       dirty={false}
@@ -118,11 +118,11 @@ exports[`OrderForm should render correctly 1`] = `
           "tokens": Object {
             "baseToken": Object {
               "balance": 30,
-              "name": "ETH-T",
+              "name": "ETH",
             },
             "quoteToken": Object {
               "balance": 20,
-              "name": "MLN-T",
+              "name": "MLN",
             },
           },
         }
@@ -131,7 +131,7 @@ exports[`OrderForm should render correctly 1`] = `
       isSubmitting={false}
       isValid={false}
       isValidating={false}
-      quoteTokenSymbol="MLN-T-M"
+      quoteTokenSymbol="MLN-M"
       registerField={[Function]}
       resetForm={[Function]}
       selectedExchange="RadarRelay"
@@ -159,7 +159,7 @@ exports[`OrderForm should render correctly 1`] = `
       values={Object {}}
     >
       <Component
-        baseTokenSymbol="ETH-T-M"
+        baseTokenSymbol="ETH-M"
         dataValid={true}
         decimals={6}
         dirty={false}
@@ -188,11 +188,11 @@ exports[`OrderForm should render correctly 1`] = `
             "tokens": Object {
               "baseToken": Object {
                 "balance": 30,
-                "name": "ETH-T",
+                "name": "ETH",
               },
               "quoteToken": Object {
                 "balance": 20,
-                "name": "MLN-T",
+                "name": "MLN",
               },
             },
           }
@@ -202,7 +202,7 @@ exports[`OrderForm should render correctly 1`] = `
         isValid={false}
         isValidating={false}
         onChange={[Function]}
-        quoteTokenSymbol="MLN-T-M"
+        quoteTokenSymbol="MLN-M"
         registerField={[Function]}
         resetForm={[Function]}
         selectedExchange="RadarRelay"
@@ -336,8 +336,8 @@ exports[`OrderForm should render correctly 1`] = `
                   onChange={[Function]}
                   options={
                     Array [
-                      "ETH-T-M",
-                      "MLN-T-M",
+                      "ETH-M",
+                      "MLN-M",
                     ]
                   }
                 >
@@ -364,14 +364,14 @@ exports[`OrderForm should render correctly 1`] = `
                         data-label-left="Buy"
                         data-label-right="Sell"
                       >
-                        ETH-T-M
+                        ETH-M
                       </span>
                       <span
                         className="jsx-__scopedHash switch__label"
                         data-label-left="Buy"
                         data-label-right="Sell"
                       >
-                        MLN-T-M
+                        MLN-M
                       </span>
                       <div
                         className="jsx-__scopedHash switch__icon"
@@ -391,11 +391,11 @@ exports[`OrderForm should render correctly 1`] = `
                     Object {
                       "baseToken": Object {
                         "balance": 30,
-                        "name": "ETH-T",
+                        "name": "ETH",
                       },
                       "quoteToken": Object {
                         "balance": 20,
-                        "name": "MLN-T",
+                        "name": "MLN",
                       },
                     }
                   }
@@ -483,7 +483,7 @@ exports[`OrderForm should render correctly 1`] = `
                         <span
                           className="jsx-__scopedHash order-info__balance-desc"
                         >
-                          ETH-T
+                          ETH
                           :
                         </span>
                          
@@ -520,7 +520,7 @@ exports[`OrderForm should render correctly 1`] = `
                         <span
                           className="jsx-__scopedHash order-info__balance-desc"
                         >
-                          MLN-T
+                          MLN
                           :
                         </span>
                          

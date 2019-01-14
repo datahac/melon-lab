@@ -82,17 +82,17 @@ const restoreMainWindow = async () => {
         resolve();
       });
     });
-  }
 
-  mainWindow.loadURL(
-    isDev
-      ? 'http://localhost:3000/'
-      : url.format({
-          pathname: 'index.html',
-          protocol: 'file:',
-          slashes: true,
-        }),
-  );
+    mainWindow.loadURL('http://localhost:3000/');
+  } else {
+    const appUrl = url.format({
+      pathname: 'index.html',
+      protocol: 'file:',
+      slashes: true,
+    });
+
+    mainWindow.loadURL(appUrl);
+  }
 };
 
 electron.app.on('window-all-closed', () => {

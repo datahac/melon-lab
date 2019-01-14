@@ -17,9 +17,9 @@ const WalletMutation = ({ onCompleted, children }) => (
       cache.writeQuery({
         query: gql`
           {
+            hasStoredWallet
             allAccounts
             defaultAccount
-            hasStoredWallet
           }
         `,
         data: {

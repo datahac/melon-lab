@@ -1,15 +1,5 @@
 import React, { StatelessComponent } from 'react';
-import Button from '~/blocks/Button';
 import Spinner from '~/blocks/Spinner';
-import {
-  CellBody,
-  CellHead,
-  Row,
-  Table,
-  TableBody,
-  TableHead,
-} from '~/blocks/Table';
-import displayNumber from '~/utils/displayNumber';
 import Holding from '~/blocks/Holding';
 
 import styles from './styles.css';
@@ -49,8 +39,8 @@ export const Holdings: StatelessComponent<HoldingsProps> = ({
             <Holding
               key={asset.symbol}
               fraction={asset.fraction}
-              tokenSymbol={asset.tokenSymbol}
-              tokenName={asset.tokenName}
+              symbol={asset.symbol}
+              name={asset.name}
               price={asset.price}
               balance={asset.balance}
               active={baseAsset === asset.symbol}

@@ -1,9 +1,8 @@
-import Utils from 'ethers-utils';
+import * as R from 'ramda';
+import { getName } from '@melonproject/protocol';
 
-async function fundName(contract) {
-  const bytes = await contract.instance.getName.call();
-
-  return Utils.toUtf8String(Utils.stripZeros(bytes.reverse()).reverse());
+function fundName(environment, address) {
+  return getName(environment, address);
 }
 
-export default fundName;
+export default R.curryN(2, fundName);

@@ -6,13 +6,10 @@ exports[`Modal should render correctly 1`] = `
   bodyOpenClassName="ReactModal__Body--open"
   className="modal__wrap"
   closeTimeoutMS={0}
-  interactionHandler={[MockFunction]}
   isOpen={true}
-  loading={false}
   overlayClassName="modal__overlay"
   parentSelector={[Function]}
   portalClassName="ReactModalPortal"
-  primaryInteraction="primaryInteraction"
   role="dialog"
   shouldCloseOnEsc={true}
   shouldCloseOnOverlayClick={true}
@@ -44,7 +41,27 @@ exports[`Modal should render correctly 1`] = `
     Hello World
     <div
       className="modal__actions"
-    />
+    >
+      <div
+        className="modal__action"
+      >
+        <Button
+          onClick={[MockFunction]}
+          style="secondary"
+        >
+          First Button
+        </Button>
+      </div>
+      <div
+        className="modal__action"
+      >
+        <Button
+          onClick={[MockFunction]}
+        >
+          Second Button
+        </Button>
+      </div>
+    </div>
   </div>
 </Modal>
 `;

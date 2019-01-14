@@ -18,9 +18,6 @@ exports[`OpenOrders should render correctly 1`] = `
       rendered
     </type>
   </style>
-  <h3>
-    Open orders
-  </h3>
   <div
     className="open-orders__table-wrap"
   >
@@ -30,7 +27,9 @@ exports[`OpenOrders should render correctly 1`] = `
           isHead={true}
           size="small"
         >
-          <CellHead>
+          <CellHead
+            noPadding={false}
+          >
             Time
           </CellHead>
           <CellHead>
@@ -51,10 +50,14 @@ exports[`OpenOrders should render correctly 1`] = `
           <CellHead>
             Buy Quantity
           </CellHead>
-          <CellHead>
+          <CellHead
+            noPadding={false}
+          >
             Sell Quantity
           </CellHead>
-          <CellHead />
+          <CellHead
+            noPadding={false}
+          />
         </Row>
       </TableHead>
       <TableBody>
@@ -62,7 +65,9 @@ exports[`OpenOrders should render correctly 1`] = `
           key="12322"
           size="small"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -76,10 +81,10 @@ exports[`OpenOrders should render correctly 1`] = `
             </span>
           </CellBody>
           <CellBody>
-            WETH-T
+            WETH
           </CellBody>
           <CellBody>
-            MLN-T
+            MLN
           </CellBody>
           <CellBody>
             0.0672
@@ -87,10 +92,14 @@ exports[`OpenOrders should render correctly 1`] = `
           <CellBody>
             0.1423
           </CellBody>
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             2.1180
           </CellBody>
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             <Button
               disabled={false}
               onClick={[Function]}
@@ -105,7 +114,9 @@ exports[`OpenOrders should render correctly 1`] = `
           key="29468"
           size="small"
         >
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             01. Jan 1970 01:00
           </CellBody>
           <CellBody>
@@ -119,10 +130,10 @@ exports[`OpenOrders should render correctly 1`] = `
             </span>
           </CellBody>
           <CellBody>
-            WETH-T
+            WETH
           </CellBody>
           <CellBody>
-            MLN-T
+            MLN
           </CellBody>
           <CellBody>
             0.0672
@@ -130,10 +141,14 @@ exports[`OpenOrders should render correctly 1`] = `
           <CellBody>
             0.1423
           </CellBody>
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             2.1180
           </CellBody>
-          <CellBody>
+          <CellBody
+            noPadding={false}
+          >
             <Button
               disabled={false}
               onClick={[Function]}
@@ -168,13 +183,12 @@ exports[`OpenOrders should render correctly without orders 1`] = `
       rendered
     </type>
   </style>
-  <h3>
-    Open orders
-  </h3>
   <div
     className="open-orders__table-wrap"
   >
-    <p>
+    <p
+      className="open-orders__no-items"
+    >
       No open orders
     </p>
   </div>

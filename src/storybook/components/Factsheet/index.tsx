@@ -2,8 +2,8 @@ import React, { StatelessComponent, Fragment } from 'react';
 import Button from '~/blocks/Button';
 import Spinner from '~/blocks/Spinner';
 import Link from '~/link';
-import displayNumber from '~/utils/displayNumber';
 import format from 'date-fns/format';
+import * as Tm from '@melonproject/token-math';
 
 import styles from './styles.css';
 
@@ -15,10 +15,11 @@ export interface FactsheetProps {
   performanceReward?: string;
   personalStake?: string;
   reportUrl?: string;
-  shutdown: () => void;
+  handleShutDown: () => void;
   totalSupply?: string;
   tweetHref?: string;
   isManager?: boolean;
+  isShutdown?: boolean;
 }
 
 const Factsheet: StatelessComponent<FactsheetProps> = ({
@@ -29,10 +30,10 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
   performanceReward,
   personalStake,
   reportUrl,
-  shutdown,
+  handleShutDown,
   totalSupply,
-  account,
   isManager,
+  isShutdown,
 }) => (
   <div className="factsheet">
     <style jsx>{styles}</style>
@@ -43,12 +44,11 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
     ) : (
       <Fragment>
         <div className="factsheet__item">
-          Creation date: {format(inception, 'DD. MMM YYYY HH:mm')}
+          Creation date: {inception && format(inception, 'DD. MMM YYYY HH:mm')}
           <br />
-          Total number of shares: {totalSupply}
+          Total number of shares: {totalSupply && Tm.toFixed(totalSupply)}
           <br />
-          Shares owned by me:{' '}
-          {displayNumber(personalStake ? personalStake : '0')}
+          Shares owned by me: {personalStake && Tm.toFixed(personalStake)}
         </div>
         <div className="factsheet__item">
           Management Reward: {managementReward}%<br />
@@ -69,9 +69,9 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
             </a>
           </Link>
         </div>
-        {!isCompetition && isManager && (
+        {!isShutdown && !isCompetition && isManager && (
           <div className="factsheet__item">
-            <Button onClick={shutdown} style="danger" size="small">
+            <Button onClick={handleShutDown} style="danger" size="small">
               Irreversibly shut down fund
             </Button>
           </div>

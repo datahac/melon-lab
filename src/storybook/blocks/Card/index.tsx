@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
 import format from 'date-fns/format';
-import displayNumber from '~/utils/displayNumber';
+import displayPrice from '~/utils/displayPrice';
 import Link from '~/blocks/Link';
 import Icon from '~/blocks/Icon';
+import * as Tm from '@melonproject/token-math';
 
 import styles from './styles.css';
 
@@ -12,9 +13,10 @@ export interface CardProps {
   isActive?: boolean;
   name?: string;
   rank?: number;
-  sharePrice?: string;
+  sharePrice?: Tm.PriceInterface;
   reportUrl?: string;
   onClick?: React.MouseEventHandler;
+  decimals?: number;
 }
 
 const Card: StatelessComponent<CardProps> = ({
@@ -25,6 +27,7 @@ const Card: StatelessComponent<CardProps> = ({
   sharePrice,
   reportUrl,
   onClick,
+  decimals = 4,
 }) => {
   const cardClassNames = classNames('card', {
     'card--active': isActive,
@@ -45,7 +48,7 @@ const Card: StatelessComponent<CardProps> = ({
           <div className="card__info">
             <div className="card__share-price">
               <span className="card__label">Share price</span>{' '}
-              {displayNumber(sharePrice)}
+              {sharePrice && displayPrice(sharePrice, decimals)}
             </div>
             <div className="card__inception-date">
               <span className="card__label">Inception Date</span>{' '}

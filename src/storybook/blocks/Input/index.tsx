@@ -24,7 +24,7 @@ export interface InputProps {
 }
 
 const Input: StatelessComponent<InputProps> = ({
-  decimals = 4,
+  decimals = 0,
   disabled,
   error,
   formatNumber,

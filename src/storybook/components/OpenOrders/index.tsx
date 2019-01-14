@@ -10,7 +10,7 @@ import {
   TableHead,
 } from '~/blocks/Table';
 import format from 'date-fns/format';
-import displayNumber from '~/utils/displayNumber';
+import displayQuantity from '~/utils/displayQuantity';
 
 import styles from './styles.css';
 
@@ -87,10 +87,15 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                       </CellBody>
                       <CellBody>{order.sellSymbol}</CellBody>
                       <CellBody>{order.buySymbol}</CellBody>
-                      <CellBody>{displayNumber(order.price)}</CellBody>
-                      <CellBody>{displayNumber(order.sellHowMuch)}</CellBody>
+                      <CellBody>
+                        {order.price && displayQuantity(order.price)}
+                      </CellBody>
+                      <CellBody>
+                        {order.sellHowMuch &&
+                          displayQuantity(order.sellHowMuch)}
+                      </CellBody>
                       <CellBody noPadding={false}>
-                        {displayNumber(order.buyHowMuch)}
+                        {order.buyHowMuch && displayQuantity(order.buyHowMuch)}
                       </CellBody>
                       {isManager && (
                         <CellBody noPadding={false}>

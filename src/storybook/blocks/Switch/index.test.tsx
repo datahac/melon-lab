@@ -3,7 +3,7 @@ import Switch from './index';
 
 const mockCallback = jest.fn();
 const data = {
-  options: ['ETH-T-M', 'MLN-T-M'],
+  options: ['ETH-M', 'MLN-M'],
   labels: ['Buy', 'Sell'],
   name: 'name',
   value: 'value',

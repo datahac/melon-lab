@@ -1,44 +1,53 @@
+import * as Tm from '@melonproject/token-math';
 import { withFormik } from 'formik';
-import * as Yup from 'yup';
-import {
-  divide,
-  greaterThan,
-  max,
-  min,
-  multiply,
-} from '~/utils/functionalBigNumber';
 import { withHandlers, compose } from 'recompose';
-
-const validation = props => {
-  const numberFormat = (0).toFixed(props.decimals || 4);
-  const minNumber = numberFormat.slice(0, -1) + '1';
-
-  return Yup.object().shape({
-    price: Yup.number()
-      .min(minNumber, `Minimum price is ${minNumber}`)
-      .required('Price is required.'),
-    quantity: Yup.number()
-      .min(minNumber, `Minimum quantity is ${minNumber}`)
-      .required('Quantity is required.'),
-    total: Yup.number()
-      .min(minNumber, `Minimum total is ${minNumber}`)
-      .required('Total is required.'),
-  });
-};
+import { FormErros } from '~/components/OrderForm';
 
 const initialValues = {
-  price: '',
-  type: 'sell',
+  type: 'Buy',
   strategy: 'Market',
-  quantity: '',
-  total: '',
-  exchange: '',
+  quantity: null,
+  total: null,
+  price: null,
+  exchange: null,
 };
 
 const withForm = withFormik({
   mapPropsToValues: props =>
-    props.formValues ? { ...props.formValues } : initialValues,
-  validationSchema: props => validation(props),
+    props.formValues ? props.formValues : initialValues,
+  validate: (values, props) => {
+    let errors: FormErros = {};
+
+    if (!values.price) {
+      errors.price = 'Required';
+    } else if (Tm.isZero(values.price.quote)) {
+      errors.price = 'Invalid price';
+    }
+
+    if (!values.quantity) {
+      errors.quantity = 'Required';
+    } else if (Tm.isZero(values.quantity)) {
+      errors.quantity = 'Invalid quantity';
+    } else if (
+      Tm.greaterThan(values.quantity, props.baseToken) &&
+      values.type === 'Sell'
+    ) {
+      errors.quantity = 'Insufficient balance';
+    }
+
+    if (!values.total) {
+      errors.total = 'Required';
+    } else if (Tm.isZero(values.total)) {
+      errors.total = 'Invalid total';
+    } else if (
+      Tm.greaterThan(values.total, props.quoteToken) &&
+      values.type === 'Buy'
+    ) {
+      errors.total = 'Insufficient balance';
+    }
+
+    return errors;
+  },
   enableReinitialize: true,
   handleSubmit: (values, form) =>
     form.props.onSubmit && form.props.onSubmit(values),
@@ -46,57 +55,44 @@ const withForm = withFormik({
 
 const withFormHandlers = withHandlers({
   onChange: props => event => {
-    const { setFieldValue, tokens, values } = props;
+    const { setFieldValue, baseToken, quoteToken, values } = props;
     const { name, value } = event.target;
 
-    let maxTotal;
-    let maxQuantity;
-
-    const typeValue = name === 'type' ? value : values.orderType;
-    const totalValue = name === 'total' ? value : values.total;
-    const quantityValue = name === 'quantity' ? value : values.quantity;
-
-    setFieldValue(name, value);
-
-    if (values.strategy === 'Market') {
-      maxTotal =
-        typeValue === 'Buy'
-          ? min(tokens.quoteToken.balance, totalValue)
-          : totalValue;
-      maxQuantity =
-        typeValue === 'Sell'
-          ? max(tokens.baseToken.balance, quantityValue)
-          : quantityValue;
-    } else if (values.strategy === 'Limit') {
-      maxTotal = typeValue === 'Buy' ? tokens.quoteToken.balance : Infinity;
-      maxQuantity = typeValue === 'Sell' ? tokens.baseToken.balance : Infinity;
+    if (name === 'type' || name === 'strategy') {
+      setFieldValue(name, value);
     }
 
-    if (name === 'total') {
-      if (greaterThan(value, maxTotal)) {
-        setFieldValue('total', maxTotal);
-      } else if (values.price) {
-        const quantity = divide(value, values.price).toString(10);
-        if (values.quantity !== value) {
-          setFieldValue('quantity', quantity);
-        }
+    if (name === 'price') {
+      const price = Tm.createPrice(
+        Tm.createQuantity(baseToken.token, 1),
+        Tm.createQuantity(quoteToken.token, value || 0),
+      );
+      setFieldValue('price', price);
+
+      if (values.quantity) {
+        const total = Tm.valueIn(price, values.quantity);
+        setFieldValue('total', total);
       }
     }
 
     if (name === 'quantity') {
-      if (greaterThan(value, maxQuantity)) {
-        setFieldValue('quantity', maxQuantity);
-      } else if (values.price) {
-        const total = multiply(value, values.price).toString(10);
-        if (values.total !== value) {
-          setFieldValue('total', total);
-        }
+      const quantity = Tm.createQuantity(baseToken.token, value || 0);
+      setFieldValue('quantity', quantity);
+
+      if (values.price) {
+        const total = Tm.valueIn(values.price, quantity);
+        setFieldValue('total', total);
       }
     }
 
-    if (name === 'price' && values.quantity) {
-      const total = multiply(values.quantity, value).toString(10);
+    if (name === 'total') {
+      const total = Tm.createQuantity(quoteToken.token, value || 0);
       setFieldValue('total', total);
+
+      if (values.price) {
+        const quantity = Tm.valueIn(values.price, total);
+        setFieldValue('quantity', quantity);
+      }
     }
   },
 });

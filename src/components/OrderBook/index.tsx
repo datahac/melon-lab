@@ -1,65 +1,85 @@
-import { averagePrice } from '@melonproject/melon.js';
-import { withHandlers } from 'recompose';
+import React from 'react';
+import * as R from 'ramda';
 import OrderBook from '~/components/OrderBook';
-import { min, toBigNumber } from '~/utils/functionalBigNumber';
+import Composer from 'react-composer';
+import { Query } from '~/apollo';
+import gql from 'graphql-tag';
+import { aggregateOrders } from '@melonproject/exchange-aggregator/lib/exchanges/aggregate';
 
-const withSetOrderHandler = withHandlers({
-  setBuyOrder: props => (volume, exchange, subset, symbol) => {
-    const balance = props.holdings.find(h => h.symbol === symbol).balance;
-    const price = averagePrice('sell', subset);
-    const total = min(toBigNumber(balance), price.times(volume));
-    const amount = total.div(price);
-
-    props.setOrder({
-      strategy: 'Market',
-      type: 'buy',
-      exchange,
-      quantity: amount.toString(),
-      total: total.toString(),
-      price: price.toString(),
-    });
-  },
-  setSellOrder: props => (volume, exchange, subset, symbol) => {
-    const balance = props.holdings.find(h => h.symbol === symbol).balance;
-    const price = averagePrice('buy', subset);
-    const amount = min(toBigNumber(balance), volume);
-    const total = price.times(amount);
-
-    props.setOrder({
-      strategy: 'Market',
-      type: 'sell',
-      exchange,
-      quantity: amount.toString(),
-      total: total.toString(),
-      price: price.toString(),
-    });
-  },
-  setExchange: props => e => {
-    const { exchanges, availableExchanges } = props;
-    const value = e.target.value;
-    const selectedExchanges = exchanges;
-
-    if (value === 'ALL') {
-      if (
-        exchanges.length ===
-        availableExchanges.map(exchange => exchange.value).length
-      ) {
-        return props.setExchanges([]);
-      } else {
-        return props.setExchanges(
-          availableExchanges.map(exchange => exchange.value),
-        );
+const query = gql`
+  query OrdersQuery($base: String!, $quote: String!, $exchange: ExchangeEnum!) {
+    orders(base: $base, quote: $quote, exchange: $exchange) {
+      id
+      trade {
+        base {
+          quantity
+          token {
+            symbol
+            decimals
+            address
+          }
+        }
+        quote {
+          quantity
+          token {
+            symbol
+            decimals
+            address
+          }
+        }
       }
-    } else {
-      if (!exchanges.includes(value)) {
-        selectedExchanges.push(value);
-      } else {
-        const index = selectedExchanges.indexOf(value);
-        selectedExchanges.splice(index, 1);
-      }
+      type
+      exchange
     }
-    return props.setExchanges(selectedExchanges);
-  },
-});
+  }
+`;
 
-export default withSetOrderHandler(OrderBook);
+const OrdersQuery = ({ exchange, baseAsset, quoteAsset, children }) => (
+  <Query
+    query={query}
+    variables={{
+      exchange,
+      base: baseAsset,
+      quote: quoteAsset,
+    }}
+  >
+    {children}
+  </Query>
+);
+
+const AggregatedOrders = ({ baseAsset, quoteAsset, exchanges, children }) => (
+  <Composer
+    components={exchanges.map(exchange => (
+      <OrdersQuery
+        exchange={exchange}
+        quoteAsset={quoteAsset}
+        baseAsset={baseAsset}
+      />
+    ))}
+  >
+    {orderResponses => {
+      const loading = !!orderResponses.find(R.propEq('loading', true));
+      const orders = [].concat(
+        ...orderResponses.map(R.pathOr([], ['data', 'orders'])),
+      );
+      const orderbook = aggregateOrders(orders);
+
+      return children({
+        ...orderbook,
+        loading,
+      });
+    }}
+  </Composer>
+);
+
+export default ({ baseAsset, quoteAsset, exchanges }) => (
+  <AggregatedOrders
+    exchanges={exchanges}
+    quoteAsset={quoteAsset}
+    baseAsset={baseAsset}
+  >
+    {({ asks, bids, loading }) => (
+      <OrderBook loading={loading} bids={bids} asks={asks} />
+    )}
+  </AggregatedOrders>
+);

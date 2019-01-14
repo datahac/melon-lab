@@ -1,21 +1,18 @@
 import React from 'react';
-import Form from './';
-import ParticipationForm from './container';
-
-const onSubmit = jest.fn();
+import ParticipationForm from './';
 
 const data = {
-  initialValues: {
-    price: 1.0,
-    type: 'Slices',
+  values: {
+    price: 1,
+    type: 'Invest',
+    quantity: 1,
+    total: 1,
   },
+  errors: {},
+  touched: {},
   decimals: 4,
   setup: true,
-  priceFeedUp: true,
-  quoteAsset: 'WETH-T',
-  fund: {
-    sharePrice: 5,
-  },
+  quoteAsset: 'WETH',
 };
 
 describe('ParticipationForm', () => {

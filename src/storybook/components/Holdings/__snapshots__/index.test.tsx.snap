@@ -29,6 +29,7 @@ exports[`Holdings should render correctly 1`] = `
       key="ANT-T"
       onClickHolding={[Function]}
       price="0.0035"
+      symbol="ANT-T"
     />
     <Holding
       active={false}
@@ -37,6 +38,7 @@ exports[`Holdings should render correctly 1`] = `
       key="BAT-T"
       onClickHolding={[Function]}
       price="0.0007"
+      symbol="BAT-T"
     />
     <Holding
       active={false}
@@ -45,6 +47,7 @@ exports[`Holdings should render correctly 1`] = `
       key="DGD-T"
       onClickHolding={[Function]}
       price="0.0000"
+      symbol="DGD-T"
     />
     <Holding
       active={false}
@@ -53,6 +56,7 @@ exports[`Holdings should render correctly 1`] = `
       key="DGX-T"
       onClickHolding={[Function]}
       price="0.0000"
+      symbol="DGX-T"
     />
     <Holding
       active={false}
@@ -61,6 +65,7 @@ exports[`Holdings should render correctly 1`] = `
       key="GNO-T"
       onClickHolding={[Function]}
       price="0.1113"
+      symbol="GNO-T"
     />
     <Holding
       active={false}
@@ -69,6 +74,7 @@ exports[`Holdings should render correctly 1`] = `
       key="REP-T"
       onClickHolding={[Function]}
       price="0.0648"
+      symbol="REP-T"
     />
     <Holding
       active={false}
@@ -77,6 +83,7 @@ exports[`Holdings should render correctly 1`] = `
       key="ZRX-T"
       onClickHolding={[Function]}
       price="0.0024"
+      symbol="ZRX-T"
     />
     <Holding
       active={false}
@@ -85,22 +92,25 @@ exports[`Holdings should render correctly 1`] = `
       key="REQ-T"
       onClickHolding={[Function]}
       price="0.0001"
+      symbol="REQ-T"
     />
     <Holding
       active={false}
       balance="0.5166"
       fraction="50.5764"
-      key="WETH-T"
+      key="WETH"
       onClickHolding={null}
       price="1.0000"
+      symbol="WETH"
     />
     <Holding
       active={false}
       balance="10.7338"
       fraction="49.4236"
-      key="MLN-T"
+      key="MLN"
       onClickHolding={[Function]}
       price="0.0470"
+      symbol="MLN"
     />
     <Holding
       active={false}
@@ -109,6 +119,7 @@ exports[`Holdings should render correctly 1`] = `
       key="MKR-T"
       onClickHolding={[Function]}
       price="1.3430"
+      symbol="MKR-T"
     />
     <Holding
       active={false}
@@ -117,6 +128,7 @@ exports[`Holdings should render correctly 1`] = `
       key="DAI-T"
       onClickHolding={[Function]}
       price="0.0021"
+      symbol="DAI-T"
     />
     <Holding
       active={false}
@@ -125,6 +137,7 @@ exports[`Holdings should render correctly 1`] = `
       key="KNC-T"
       onClickHolding={[Function]}
       price="0.0276"
+      symbol="KNC-T"
     />
     <Holding
       active={false}
@@ -133,6 +146,7 @@ exports[`Holdings should render correctly 1`] = `
       key="JNT-T"
       onClickHolding={[Function]}
       price="0.0003"
+      symbol="JNT-T"
     />
     <Holding
       active={false}
@@ -141,6 +155,7 @@ exports[`Holdings should render correctly 1`] = `
       key="OMG-T"
       onClickHolding={[Function]}
       price="0.0150"
+      symbol="OMG-T"
     />
     <Holding
       active={false}
@@ -149,6 +164,7 @@ exports[`Holdings should render correctly 1`] = `
       key="NMR-T"
       onClickHolding={[Function]}
       price="0.0184"
+      symbol="NMR-T"
     />
   </div>
 </div>
@@ -183,6 +199,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="ANT-T"
       onClickHolding={[Function]}
       price="0.0035"
+      symbol="ANT-T"
     />
     <Holding
       active={false}
@@ -191,6 +208,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="BAT-T"
       onClickHolding={[Function]}
       price="0.0007"
+      symbol="BAT-T"
     />
     <Holding
       active={false}
@@ -199,6 +217,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="DGD-T"
       onClickHolding={[Function]}
       price="0.0000"
+      symbol="DGD-T"
     />
     <Holding
       active={false}
@@ -207,6 +226,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="DGX-T"
       onClickHolding={[Function]}
       price="0.0000"
+      symbol="DGX-T"
     />
     <Holding
       active={false}
@@ -215,6 +235,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="GNO-T"
       onClickHolding={[Function]}
       price="0.1113"
+      symbol="GNO-T"
     />
     <Holding
       active={false}
@@ -223,6 +244,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="REP-T"
       onClickHolding={[Function]}
       price="0.0648"
+      symbol="REP-T"
     />
     <Holding
       active={false}
@@ -231,6 +253,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="ZRX-T"
       onClickHolding={[Function]}
       price="0.0024"
+      symbol="ZRX-T"
     />
     <Holding
       active={false}
@@ -239,22 +262,25 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="REQ-T"
       onClickHolding={[Function]}
       price="0.0001"
+      symbol="REQ-T"
     />
     <Holding
       active={false}
       balance="0.5166"
       fraction="50.5764"
-      key="WETH-T"
+      key="WETH"
       onClickHolding={null}
       price="1.0000"
+      symbol="WETH"
     />
     <Holding
       active={false}
       balance="10.7338"
       fraction="49.4236"
-      key="MLN-T"
+      key="MLN"
       onClickHolding={[Function]}
       price="0.0470"
+      symbol="MLN"
     />
     <Holding
       active={false}
@@ -263,6 +289,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="MKR-T"
       onClickHolding={[Function]}
       price="1.3430"
+      symbol="MKR-T"
     />
     <Holding
       active={false}
@@ -271,6 +298,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="DAI-T"
       onClickHolding={[Function]}
       price="0.0021"
+      symbol="DAI-T"
     />
     <Holding
       active={false}
@@ -279,6 +307,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="KNC-T"
       onClickHolding={[Function]}
       price="0.0276"
+      symbol="KNC-T"
     />
     <Holding
       active={false}
@@ -287,6 +316,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="JNT-T"
       onClickHolding={[Function]}
       price="0.0003"
+      symbol="JNT-T"
     />
     <Holding
       active={false}
@@ -295,6 +325,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="OMG-T"
       onClickHolding={[Function]}
       price="0.0150"
+      symbol="OMG-T"
     />
     <Holding
       active={false}
@@ -303,6 +334,7 @@ exports[`Holdings should render correctly without price feed 1`] = `
       key="NMR-T"
       onClickHolding={[Function]}
       price="0.0184"
+      symbol="NMR-T"
     />
   </div>
 </div>

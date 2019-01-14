@@ -1,179 +1,314 @@
 import DataLoader from 'dataloader';
+import memoizeOne from 'memoize-one';
+import * as R from 'ramda';
+import { pluck, map } from 'rxjs/operators';
 import takeLast from './utils/takeLast';
 import importWallet from './loaders/wallet/decryptWallet';
 import restoreWallet from './loaders/wallet/restoreWallet';
 import generateMnemonic from './loaders/wallet/generateMnemonic';
-import getFundContract from './loaders/fund/fundContract';
 import getFundInception from './loaders/fund/fundInception';
-import getFundModules from './loaders/fund/fundModules';
 import getFundOwner from './loaders/fund/fundOwner';
 import getFundName from './loaders/fund/fundName';
+import getFundRoutes from './loaders/fund/fundRoutes';
 import getFundHoldings from './loaders/fund/fundHoldings';
+import getFundDenominationAsset from './loaders/fund/fundDenominationAsset';
+import getFundNativeAsset from './loaders/fund/fundNativeAsset';
 import getFundTotalSupply from './loaders/fund/fundTotalSupply';
 import getFundCalculations from './loaders/fund/fundCalculations';
-import getFundOpenOrders from './loaders/fund/fundOpenOrders';
-import getFundParticipation from './loaders/fund/fundParticipation';
 import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
-import getNativeBalance from './loaders/balance/nativeBalance';
-import getEtherBalance from './loaders/balance/etherBalance';
-import getMelonBalance from './loaders/balance/melonBalance';
-import getRecentTrades from './loaders/recentTrades';
-import getPrice from './loaders/tokenPrice';
+import getFundIsShutdown from './loaders/fund/fundIsShutdown';
+import getFundParticipation from './loaders/fund/fundParticipation';
+import getQuoteToken from './loaders/quoteToken';
+import getAssetPrice from './loaders/assetPrice';
+import getExchangeOrders from './loaders/exchangeOrders';
+import getFundIsComplete from './loaders/fund/fundIsComplete';
+import getSymbolBalance from './loaders/symbolBalance';
+import getSymbolBalanceObservable from './loaders/symbolBalanceObservable';
+import resolveNetwork from './utils/resolveNetwork';
+import getRoutes from './loaders/routes';
 
-const contractCache = contract => contract.instance.address;
-
-export default streams => {
-  // TODO: Does this need a custom cache key function?
-  const symbolPrice = new DataLoader(async symbols => {
-    const environment = await takeLast(streams.environment$);
-    const fn = getPrice(environment);
-    return Promise.all((environment && symbols.map(fn)) || []);
+export default (environment, streams) => {
+  const fundIsComplete = new DataLoader(addresses => {
+    const fn = getFundIsComplete(environment);
+    return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundAddressFromManager = new DataLoader(async addresses => {
-    const environment = await takeLast(streams.environment$);
+  const fundAddressFromManager = new DataLoader(addresses => {
     const fn = getFundAddressFromManager(environment);
-    return Promise.all((environment && addresses.map(fn)) || []);
+    return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundContract = new DataLoader(async addresses => {
-    const environment = await takeLast(streams.environment$);
-    const fn = getFundContract(environment);
-    return Promise.all((environment && addresses.map(fn)) || []);
+  const routes = new DataLoader(addresses => {
+    const fn = getRoutes(environment);
+    return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundName = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundName)),
-    {
-      cacheKeyFn: contractCache,
-    },
-  );
+  const fundName = new DataLoader(addresses => {
+    const fn = getFundName(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
 
-  const fundInception = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundInception)),
-    {
-      cacheKeyFn: contractCache,
-    },
-  );
+  const fundDenominationAsset = new DataLoader(async addresses => {
+    const routes = await fundRoutes.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { accountingAddress } = routes[key] || {
+          accountingAddress: null,
+        };
 
-  const fundModules = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundModules)),
-    {
-      cacheKeyFn: contractCache,
-    },
-  );
+        return (
+          accountingAddress &&
+          getFundDenominationAsset(environment, accountingAddress)
+        );
+      }),
+    );
+  });
 
-  const fundOwner = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundOwner)),
-    {
-      cacheKeyFn: contractCache,
-    },
-  );
+  const fundNativeAsset = new DataLoader(async addresses => {
+    const routes = await fundRoutes.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { accountingAddress } = routes[key] || {
+          accountingAddress: null,
+        };
 
-  const fundTotalSupply = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundTotalSupply)),
-    {
-      cacheKeyFn: contractCache,
-    },
-  );
+        return (
+          accountingAddress &&
+          getFundNativeAsset(environment, accountingAddress)
+        );
+      }),
+    );
+  });
 
-  const fundCalculations = new DataLoader(
-    contracts => Promise.all(contracts.map(getFundCalculations)),
-    {
-      cacheKeyFn: contractCache,
-    },
-  );
+  const fundReady = new DataLoader(async addresses => {
+    const routes = await fundRoutes.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        return !!(routes && routes[key]);
+      }),
+    );
+  });
 
-  const fundHoldings = new DataLoader(
-    async contracts => {
-      const environment = await takeLast(streams.environment$);
-      const fn = getFundHoldings(environment);
-      return Promise.all((environment && contracts.map(fn)) || []);
-    },
-    {
-      cacheKeyFn: contractCache,
-    },
-  );
+  const fundOwner = new DataLoader(addresses => {
+    const fn = getFundOwner(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
 
-  const fundOpenOrders = new DataLoader(
-    async contracts => {
-      const environment = await takeLast(streams.environment$);
-      const config = await takeLast(streams.config$);
-      const fn = getFundOpenOrders(environment, config);
-      return Promise.all((environment && config && contracts.map(fn)) || []);
-    },
-    {
-      cacheKeyFn: contractCache,
-    },
-  );
+  const fundRoutes = new DataLoader(addresses => {
+    const fn = getFundRoutes(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
+
+  const fundTotalSupply = new DataLoader(async addresses => {
+    const routes = await fundRoutes.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { sharesAddress } = routes[key] || {
+          sharesAddress: null,
+        };
+
+        return sharesAddress && getFundTotalSupply(environment, sharesAddress);
+      }),
+    );
+  });
+
+  const fundRank = new DataLoader(async addresses => {
+    const ranking = (await takeLast(streams.ranking$)) || [];
+    return Promise.all(
+      addresses.map(address => {
+        const entry = R.find(R.propEq('address', address), ranking);
+        return R.propOr(0, 'rank', entry);
+      }),
+    );
+  });
+
+  const fundInception = new DataLoader(addresses => {
+    const fn = getFundInception(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
+
+  const fundCalculations = new DataLoader(async addresses => {
+    const routes = await fundRoutes.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { accountingAddress } = routes[key] || {
+          accountingAddress: null,
+        };
+
+        return (
+          accountingAddress &&
+          getFundCalculations(environment, accountingAddress)
+        );
+      }),
+    );
+  });
+
+  const fundHoldings = new DataLoader(async addresses => {
+    const routes = await fundRoutes.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { accountingAddress } = routes[key] || {
+          accountingAddress: null,
+        };
+
+        return (
+          accountingAddress && getFundHoldings(environment, accountingAddress)
+        );
+      }),
+    );
+  });
+
+  const fundIsShutdown = new DataLoader(addresses => {
+    const fn = getFundIsShutdown(environment);
+    return Promise.all(addresses.map(fn) || []);
+  });
 
   const fundParticipation = new DataLoader(
     async pairs => {
-      const environment = await takeLast(streams.environment$);
-      const fn = getFundParticipation(environment);
-      const result = pairs.map(pair => fn(pair.fund, pair.investor));
-      return Promise.all((environment && result) || []);
-    },
-    {
-      cacheKeyFn: pair => `${contractCache(pair.fund)}:${pair.investor}`,
-    },
-  );
+      const funds = pairs.map(pair => pair.fund);
+      const investors = pairs.map(pair => pair.investor);
+      const routes = await fundRoutes.loadMany(funds);
+      return Promise.all(
+        investors.map((investor, key) => {
+          const { sharesAddress } = routes[key] || {
+            sharesAddress: null,
+          };
 
-  const etherBalance = new DataLoader(async addresses => {
-    const environment = await takeLast(streams.environment$);
-    const config = await takeLast(streams.config$);
-    const fn = getEtherBalance(environment, config);
-    return Promise.all((environment && config && addresses.map(fn)) || []);
-  });
-
-  const melonBalance = new DataLoader(async addresses => {
-    const environment = await takeLast(streams.environment$);
-    const config = await takeLast(streams.config$);
-    const fn = getMelonBalance(environment, config);
-    return Promise.all((environment && config && addresses.map(fn)) || []);
-  });
-
-  const nativeBalance = new DataLoader(async addresses => {
-    const environment = await takeLast(streams.environment$);
-    const config = await takeLast(streams.config$);
-    const fn = getNativeBalance(environment, config);
-    return Promise.all((environment && config && addresses.map(fn)) || []);
-  });
-
-  const recentTrades = new DataLoader(
-    async pairs => {
-      const environment = await takeLast(streams.environment$);
-      const fn = getRecentTrades(environment);
-      const result = pairs.map(pair =>
-        fn(pair.baseTokenSymbol, pair.quoteTokenSymbol),
+          return (
+            sharesAddress &&
+            getFundParticipation(environment, sharesAddress, investor)
+          );
+        }),
       );
-
-      return Promise.all((environment && result) || []);
     },
     {
-      cacheKeyFn: pair => `${pair.baseTokenSymbol}:${pair.quoteTokenSymbol}`,
+      cacheKeyFn: pair => `${pair.fund}:${pair.investor}`,
     },
   );
+
+  const fundByName = new DataLoader(async names => {
+    const ranking = await fundRanking();
+    return Promise.all(
+      names.map(name => {
+        const entry = R.find(R.propEq('name', name), ranking);
+        return R.prop('address', entry);
+      }),
+    );
+  });
+
+  const fundRanking = memoizeOne(() => {
+    return takeLast(streams.ranking$);
+  });
+
+  const symbolBalance = new DataLoader(
+    async pairs => {
+      const fn = getSymbolBalance(environment);
+      const result = pairs.map(pair => fn(pair.symbol, pair.address));
+      return Promise.all(result || []);
+    },
+    {
+      cacheKeyFn: pair => `${pair.symbol}:${pair.address}`,
+    },
+  );
+
+  const symbolBalanceObservable = new DataLoader(
+    async pairs => {
+      const fn = getSymbolBalanceObservable(environment, streams);
+      const result = pairs.map(pair => fn(pair.symbol, pair.address));
+      return Promise.all(result || []);
+    },
+    {
+      cacheKeyFn: pair => `${pair.symbol}:${pair.address}`,
+    },
+  );
+
+  const assetPrice = new DataLoader(
+    tokens => {
+      const fn = getAssetPrice(environment);
+      return Promise.all(tokens.map(fn) || []);
+    },
+    {
+      cacheKeyFn: token => `${token.symbol}`,
+    },
+  );
+
+  const exchangeOrders = new DataLoader(
+    pairs => {
+      const fn = getExchangeOrders(environment);
+      const result = pairs.map(pair =>
+        fn(pair.exchange, pair.base, pair.quote),
+      );
+      return Promise.all(result || []);
+    },
+    {
+      cacheKeyFn: options =>
+        `${options.exchange}:${options.base}:${options.quote}`,
+    },
+  );
+
+  const quoteToken = memoizeOne(() => {
+    return getQuoteToken(
+      environment,
+      environment.deployment.melonContracts.priceSource,
+    );
+  });
+
+  const currentBlock = memoizeOne(() => {
+    return takeLast(streams.block$.pipe(pluck('number')));
+  });
+
+  const nodeSynced = memoizeOne(() => {
+    return takeLast(streams.syncing$.pipe(map(value => !value)));
+  });
+
+  const priceFeedUp = memoizeOne(() => {
+    return takeLast(streams.recentPrice$);
+  });
+
+  const peerCount = memoizeOne(() => {
+    return takeLast(streams.peers$);
+  });
+
+  const versionDeployment = memoizeOne(() => {
+    return environment.deployment;
+  });
+
+  const networkName = memoizeOne(async () => {
+    return resolveNetwork(await environment.eth.net.getId());
+  });
 
   return {
+    assetPrice,
+    currentBlock,
     fundAddressFromManager,
-    fundContract,
-    fundName,
-    fundInception,
-    fundModules,
-    fundOwner,
-    fundTotalSupply,
+    fundByName,
     fundCalculations,
     fundHoldings,
-    fundOpenOrders,
+    fundInception,
+    fundIsShutdown,
+    fundName,
+    fundNativeAsset,
+    fundOwner,
     fundParticipation,
-    recentTrades,
-    symbolPrice,
-    nativeBalance,
-    melonBalance,
-    etherBalance,
+    fundDenominationAsset,
+    fundRank,
+    fundRanking,
+    fundReady,
+    fundRoutes,
+    fundTotalSupply,
     generateMnemonic,
     importWallet,
+    networkName,
+    nodeSynced,
+    peerCount,
+    priceFeedUp,
+    quoteToken,
     restoreWallet,
+    symbolBalance,
+    symbolBalanceObservable,
+    versionDeployment,
+    fundIsComplete,
+    routes,
+    exchangeOrders,
   };
 };

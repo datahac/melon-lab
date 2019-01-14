@@ -17,7 +17,7 @@ exports[`CellBody should render correctly 1`] = `
     </type>
   </style>
   <td
-    className="table__cell"
+    className="table__cell table__cell--no-padding"
   >
     Default button
   </td>
@@ -41,7 +41,7 @@ exports[`CellHead should render correctly 1`] = `
     </type>
   </style>
   <th
-    className="table__cell"
+    className="table__cell table__cell--no-padding"
   >
     Default button
   </th>

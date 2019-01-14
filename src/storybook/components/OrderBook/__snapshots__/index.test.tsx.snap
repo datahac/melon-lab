@@ -51,7 +51,7 @@ exports[`Order book should render correctly 1`] = `
               "buy": Object {
                 "__typename": "HowMuchOfAsset",
                 "howMuch": "1",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -60,7 +60,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "1.5",
               "sell": Object {
                 "howMuch": "1.5",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -71,7 +71,7 @@ exports[`Order book should render correctly 1`] = `
               "buy": Object {
                 "__typename": "HowMuchOfAsset",
                 "howMuch": "1",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -80,7 +80,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "0.5",
               "sell": Object {
                 "howMuch": "0.5",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -90,7 +90,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "288.419178541452765",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -104,7 +104,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "82308000392722064780839831843676531186157865405440223968573990222569806632804",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xbbe3e3d22f889e0d3f8b3636c1b20e10e96eb319871a28cf131c6e71deb3c023",
@@ -121,7 +121,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "288.419178541452765",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -130,7 +130,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "0.03467175813539999996",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -140,7 +140,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "290.149693612701481",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -149,7 +149,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "0.03446496832544731614",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -159,7 +159,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "290.149693612701481",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -173,7 +173,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "113800866172774416504623384277397812966239744209968072974179274104386711996",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x944213f861cd9ebfdf17d85bd38493123b47379aa80837327f011b29d3530615",
@@ -190,7 +190,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "293.322304576657462",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -199,7 +199,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "0.03409219089026548669",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -209,7 +209,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "293.322304576657462",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -223,7 +223,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "96776313600780594239625648986583570374390282304979507394055377602011602578406",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xfd16b2de5004732fa9425cc0dc0ad7001efbfb46af58dc06bd54ecf1f2bfec90",
@@ -240,7 +240,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.071753897696348",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -254,7 +254,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "62745833173228774081066255167991918157047470531730258564989614196330867701429",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x1884daf5d8495f14af59ea4690e3ee17c878269ac6b260eea1c8f7e452a2889c",
@@ -271,7 +271,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.071753897696348",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -280,7 +280,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "0.03366190110233009704",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -290,7 +290,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.648592254779253",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -299,7 +299,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "0.03359666485988372095",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -309,7 +309,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.648592254779253",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -323,7 +323,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "65765178849432166838664565564223588120931810247755896294500846507735706768778",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x6c1a8a8f8ce3cc8f128206f66838cd8461f92ae9a7b9604dbdd4e1d394b63783",
@@ -340,7 +340,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "301.398041575818139",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -354,7 +354,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "7615851857606809569329377127359118203606056606422405268266811601217946939114",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xee87f4c319bf0ecff6a1daab1e3845b5d2b59697422a7c36b445851c6d348923",
@@ -371,7 +371,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "301.398041575818139",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -380,7 +380,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "0.03317871591904306221",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -390,7 +390,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "305.435910075398478",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -399,7 +399,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "0.03274009266798866853",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -409,7 +409,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "305.435910075398478",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -423,7 +423,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "67251964846712113589105067487459297212505430254706952884314748608752903382916",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x2e86e9b5ab5ec0993c67fab778cd9d5a14a5825be56e2a7b03ada9a6590d72fa",
@@ -440,7 +440,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "308.031682682271553",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -449,7 +449,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "0.03246419301067415727",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -459,7 +459,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "308.031682682271553",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -473,7 +473,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "74548636906738055573517807206275655438527861345553564536259842939483268685658",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xc3f1ca83fddf84c200d34acc5c481d9984479586a1ee66c5430e8b80eb2adc4d",
@@ -490,7 +490,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "311.492712824768986",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -499,7 +499,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "0.03210347975499999999",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -509,7 +509,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "311.492712824768986",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -523,7 +523,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "25598525409006788019377570006798783760140035732676827506219796205888225011364",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xc48e2030b9b461288ce08c3f6bb86255367400043e9c8ee1849ce2efcbbdf887",
@@ -540,7 +540,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "313.511647074559155",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -554,7 +554,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "3706839253204025122373570205042155544336209410007250498015918615454407753340",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x7310266ff404a6a93864a2cd556ea61c6b74b780994f82d685a79981e386ee50",
@@ -571,7 +571,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "313.511647074559155",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -580,7 +580,7 @@ exports[`Order book should render correctly 1`] = `
               "price": "0.03189674161490340389",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -601,7 +601,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -615,7 +615,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "96302967355552289024967882824636622547821090945630919770220103279947185869454",
               "sell": Object {
                 "howMuch": "287.842916446464847",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x72bfb761e03106fb0fba6386534f28cf20a8c7ba334509931676e644b97cfcb8",
@@ -632,7 +632,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -646,7 +646,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "71419178349408508286422820083917115708971497327642429272764937832088207492971",
               "sell": Object {
                 "howMuch": "286.115858947786058",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x00d84e8ea393d4170e7bb9c66fa46476d0bffddfbb36188c30841e2e5f8fafcc",
@@ -663,7 +663,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -677,7 +677,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "269638644306083619498395204910965153249475175197150846272235434328185974335",
               "sell": Object {
                 "howMuch": "282.949586866874945",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x9ebcfb3d1149083618b14a4598a59b07bd7a55f2680f25110729504683f0f4be",
@@ -694,7 +694,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -708,7 +708,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "11237167879966232763183679966800023000333042005442680810034960123858343145310",
               "sell": Object {
                 "howMuch": "279.207628953070902",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x7bd2faf08d912e7d1650b480cdf6badc6466f55e4bbbbd08c0e5247fbb664b1f",
@@ -725,7 +725,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -739,7 +739,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "14154721986762677035650990823345620946275899562927278438693307924695347344745",
               "sell": Object {
                 "howMuch": "278.631943120177972",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x84a74973981d2f02ca1f51b924bb9f85551ebad84e982b1a8f3529f945829493",
@@ -756,7 +756,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -770,7 +770,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "90624116958836631220516209284885658559310621026154292720396243182305185376953",
               "sell": Object {
                 "howMuch": "274.889985206373929",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x9d6273c58a14a179b9facb2e924dfde44bbc30fc59c144f40b29ca5db1f164cd",
@@ -787,7 +787,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -801,7 +801,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "96984606670502401008398164020895826389427215450890718580579115369194040537072",
               "sell": Object {
                 "howMuch": "270.860184376123421",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x2648712d6c303288705454d419488e079f05cc0c7ae667c74d9a2495b3f824ca",
@@ -818,7 +818,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -832,7 +832,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "4604886630858074681010333900934157298352445667281895938132549745140729661927",
               "sell": Object {
                 "howMuch": "268.269598128105237",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x102d578205eb350388dd237c9f22a4330b7068349fd1d59cc1ea755c29487fc4",
@@ -849,7 +849,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -863,7 +863,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "53240587075232308532158794728103004523642036280233110642393823050523708831112",
               "sell": Object {
                 "howMuch": "264.815483130747659",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x3721f05f8ece65e0c12aa76371d55de8eedb5fe80b114476ccda67f87233bc09",
@@ -880,7 +880,7 @@ exports[`Order book should render correctly 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -894,7 +894,7 @@ exports[`Order book should render correctly 1`] = `
               "salt": "1233177404392475891618488288211937198800448430268037754937622680273608094462",
               "sell": Object {
                 "howMuch": "262.800582715622405",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0xe476f92dce1a86dd8d4da6bc22ec4a7c5ba3f1c3c4ad1db3057be53845205e39",
@@ -1016,7 +1016,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "buy": Object {
                 "__typename": "HowMuchOfAsset",
                 "howMuch": "1",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1025,7 +1025,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "1.5",
               "sell": Object {
                 "howMuch": "1.5",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1036,7 +1036,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "buy": Object {
                 "__typename": "HowMuchOfAsset",
                 "howMuch": "1",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1045,7 +1045,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "0.5",
               "sell": Object {
                 "howMuch": "0.5",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1055,7 +1055,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "288.419178541452765",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1069,7 +1069,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "82308000392722064780839831843676531186157865405440223968573990222569806632804",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xbbe3e3d22f889e0d3f8b3636c1b20e10e96eb319871a28cf131c6e71deb3c023",
@@ -1086,7 +1086,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "288.419178541452765",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1095,7 +1095,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "0.03467175813539999996",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1105,7 +1105,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "290.149693612701481",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1114,7 +1114,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "0.03446496832544731614",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1124,7 +1124,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "290.149693612701481",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1138,7 +1138,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "113800866172774416504623384277397812966239744209968072974179274104386711996",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x944213f861cd9ebfdf17d85bd38493123b47379aa80837327f011b29d3530615",
@@ -1155,7 +1155,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "293.322304576657462",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1164,7 +1164,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "0.03409219089026548669",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1174,7 +1174,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "293.322304576657462",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1188,7 +1188,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "96776313600780594239625648986583570374390282304979507394055377602011602578406",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xfd16b2de5004732fa9425cc0dc0ad7001efbfb46af58dc06bd54ecf1f2bfec90",
@@ -1205,7 +1205,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.071753897696348",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1219,7 +1219,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "62745833173228774081066255167991918157047470531730258564989614196330867701429",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x1884daf5d8495f14af59ea4690e3ee17c878269ac6b260eea1c8f7e452a2889c",
@@ -1236,7 +1236,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.071753897696348",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1245,7 +1245,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "0.03366190110233009704",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1255,7 +1255,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.648592254779253",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1264,7 +1264,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "0.03359666485988372095",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1274,7 +1274,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.648592254779253",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1288,7 +1288,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "65765178849432166838664565564223588120931810247755896294500846507735706768778",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x6c1a8a8f8ce3cc8f128206f66838cd8461f92ae9a7b9604dbdd4e1d394b63783",
@@ -1305,7 +1305,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "301.398041575818139",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1319,7 +1319,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "7615851857606809569329377127359118203606056606422405268266811601217946939114",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xee87f4c319bf0ecff6a1daab1e3845b5d2b59697422a7c36b445851c6d348923",
@@ -1336,7 +1336,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "301.398041575818139",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1345,7 +1345,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "0.03317871591904306221",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1355,7 +1355,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "305.435910075398478",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1364,7 +1364,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "0.03274009266798866853",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1374,7 +1374,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "305.435910075398478",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1388,7 +1388,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "67251964846712113589105067487459297212505430254706952884314748608752903382916",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x2e86e9b5ab5ec0993c67fab778cd9d5a14a5825be56e2a7b03ada9a6590d72fa",
@@ -1405,7 +1405,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "308.031682682271553",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1414,7 +1414,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "0.03246419301067415727",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1424,7 +1424,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "308.031682682271553",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1438,7 +1438,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "74548636906738055573517807206275655438527861345553564536259842939483268685658",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xc3f1ca83fddf84c200d34acc5c481d9984479586a1ee66c5430e8b80eb2adc4d",
@@ -1455,7 +1455,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "311.492712824768986",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1464,7 +1464,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "0.03210347975499999999",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1474,7 +1474,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "311.492712824768986",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1488,7 +1488,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "25598525409006788019377570006798783760140035732676827506219796205888225011364",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xc48e2030b9b461288ce08c3f6bb86255367400043e9c8ee1849ce2efcbbdf887",
@@ -1505,7 +1505,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "313.511647074559155",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1519,7 +1519,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "3706839253204025122373570205042155544336209410007250498015918615454407753340",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x7310266ff404a6a93864a2cd556ea61c6b74b780994f82d685a79981e386ee50",
@@ -1536,7 +1536,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "313.511647074559155",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1545,7 +1545,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "price": "0.03189674161490340389",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1566,7 +1566,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1580,7 +1580,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "96302967355552289024967882824636622547821090945630919770220103279947185869454",
               "sell": Object {
                 "howMuch": "287.842916446464847",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x72bfb761e03106fb0fba6386534f28cf20a8c7ba334509931676e644b97cfcb8",
@@ -1597,7 +1597,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1611,7 +1611,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "71419178349408508286422820083917115708971497327642429272764937832088207492971",
               "sell": Object {
                 "howMuch": "286.115858947786058",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x00d84e8ea393d4170e7bb9c66fa46476d0bffddfbb36188c30841e2e5f8fafcc",
@@ -1628,7 +1628,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1642,7 +1642,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "269638644306083619498395204910965153249475175197150846272235434328185974335",
               "sell": Object {
                 "howMuch": "282.949586866874945",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x9ebcfb3d1149083618b14a4598a59b07bd7a55f2680f25110729504683f0f4be",
@@ -1659,7 +1659,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1673,7 +1673,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "11237167879966232763183679966800023000333042005442680810034960123858343145310",
               "sell": Object {
                 "howMuch": "279.207628953070902",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x7bd2faf08d912e7d1650b480cdf6badc6466f55e4bbbbd08c0e5247fbb664b1f",
@@ -1690,7 +1690,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1704,7 +1704,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "14154721986762677035650990823345620946275899562927278438693307924695347344745",
               "sell": Object {
                 "howMuch": "278.631943120177972",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x84a74973981d2f02ca1f51b924bb9f85551ebad84e982b1a8f3529f945829493",
@@ -1721,7 +1721,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1735,7 +1735,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "90624116958836631220516209284885658559310621026154292720396243182305185376953",
               "sell": Object {
                 "howMuch": "274.889985206373929",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x9d6273c58a14a179b9facb2e924dfde44bbc30fc59c144f40b29ca5db1f164cd",
@@ -1752,7 +1752,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1766,7 +1766,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "96984606670502401008398164020895826389427215450890718580579115369194040537072",
               "sell": Object {
                 "howMuch": "270.860184376123421",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x2648712d6c303288705454d419488e079f05cc0c7ae667c74d9a2495b3f824ca",
@@ -1783,7 +1783,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1797,7 +1797,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "4604886630858074681010333900934157298352445667281895938132549745140729661927",
               "sell": Object {
                 "howMuch": "268.269598128105237",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x102d578205eb350388dd237c9f22a4330b7068349fd1d59cc1ea755c29487fc4",
@@ -1814,7 +1814,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1828,7 +1828,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "53240587075232308532158794728103004523642036280233110642393823050523708831112",
               "sell": Object {
                 "howMuch": "264.815483130747659",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x3721f05f8ece65e0c12aa76371d55de8eedb5fe80b114476ccda67f87233bc09",
@@ -1845,7 +1845,7 @@ exports[`Order book should render correctly without entries 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1859,7 +1859,7 @@ exports[`Order book should render correctly without entries 1`] = `
               "salt": "1233177404392475891618488288211937198800448430268037754937622680273608094462",
               "sell": Object {
                 "howMuch": "262.800582715622405",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0xe476f92dce1a86dd8d4da6bc22ec4a7c5ba3f1c3c4ad1db3057be53845205e39",
@@ -1933,7 +1933,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "buy": Object {
                 "__typename": "HowMuchOfAsset",
                 "howMuch": "1",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1942,7 +1942,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "1.5",
               "sell": Object {
                 "howMuch": "1.5",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1953,7 +1953,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "buy": Object {
                 "__typename": "HowMuchOfAsset",
                 "howMuch": "1",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -1962,7 +1962,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "0.5",
               "sell": Object {
                 "howMuch": "0.5",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -1972,7 +1972,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "288.419178541452765",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -1986,7 +1986,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "82308000392722064780839831843676531186157865405440223968573990222569806632804",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xbbe3e3d22f889e0d3f8b3636c1b20e10e96eb319871a28cf131c6e71deb3c023",
@@ -2003,7 +2003,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "288.419178541452765",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -2012,7 +2012,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "0.03467175813539999996",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -2022,7 +2022,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "290.149693612701481",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -2031,7 +2031,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "0.03446496832544731614",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -2041,7 +2041,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "290.149693612701481",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2055,7 +2055,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "113800866172774416504623384277397812966239744209968072974179274104386711996",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x944213f861cd9ebfdf17d85bd38493123b47379aa80837327f011b29d3530615",
@@ -2072,7 +2072,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "293.322304576657462",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -2081,7 +2081,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "0.03409219089026548669",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -2091,7 +2091,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "293.322304576657462",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2105,7 +2105,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "96776313600780594239625648986583570374390282304979507394055377602011602578406",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xfd16b2de5004732fa9425cc0dc0ad7001efbfb46af58dc06bd54ecf1f2bfec90",
@@ -2122,7 +2122,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.071753897696348",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2136,7 +2136,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "62745833173228774081066255167991918157047470531730258564989614196330867701429",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x1884daf5d8495f14af59ea4690e3ee17c878269ac6b260eea1c8f7e452a2889c",
@@ -2153,7 +2153,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.071753897696348",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -2162,7 +2162,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "0.03366190110233009704",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -2172,7 +2172,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.648592254779253",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -2181,7 +2181,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "0.03359666485988372095",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -2191,7 +2191,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "297.648592254779253",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2205,7 +2205,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "65765178849432166838664565564223588120931810247755896294500846507735706768778",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x6c1a8a8f8ce3cc8f128206f66838cd8461f92ae9a7b9604dbdd4e1d394b63783",
@@ -2222,7 +2222,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "301.398041575818139",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2236,7 +2236,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "7615851857606809569329377127359118203606056606422405268266811601217946939114",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xee87f4c319bf0ecff6a1daab1e3845b5d2b59697422a7c36b445851c6d348923",
@@ -2253,7 +2253,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "301.398041575818139",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -2262,7 +2262,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "0.03317871591904306221",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -2272,7 +2272,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "305.435910075398478",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -2281,7 +2281,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "0.03274009266798866853",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -2291,7 +2291,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "305.435910075398478",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2305,7 +2305,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "67251964846712113589105067487459297212505430254706952884314748608752903382916",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x2e86e9b5ab5ec0993c67fab778cd9d5a14a5825be56e2a7b03ada9a6590d72fa",
@@ -2322,7 +2322,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "308.031682682271553",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -2331,7 +2331,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "0.03246419301067415727",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -2341,7 +2341,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "308.031682682271553",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2355,7 +2355,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "74548636906738055573517807206275655438527861345553564536259842939483268685658",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xc3f1ca83fddf84c200d34acc5c481d9984479586a1ee66c5430e8b80eb2adc4d",
@@ -2372,7 +2372,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "311.492712824768986",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -2381,7 +2381,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "0.03210347975499999999",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -2391,7 +2391,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "311.492712824768986",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2405,7 +2405,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "25598525409006788019377570006798783760140035732676827506219796205888225011364",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0xc48e2030b9b461288ce08c3f6bb86255367400043e9c8ee1849ce2efcbbdf887",
@@ -2422,7 +2422,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "313.511647074559155",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2436,7 +2436,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "3706839253204025122373570205042155544336209410007250498015918615454407753340",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "signature": Object {
                 "r": "0x7310266ff404a6a93864a2cd556ea61c6b74b780994f82d685a79981e386ee50",
@@ -2453,7 +2453,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "313.511647074559155",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "exchange": "OASIS_DEX",
               "exchangeContractAddress": "0xbED692938E714Da2a1d5407E5D99658F7D4c8079",
@@ -2462,7 +2462,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "price": "0.03189674161490340389",
               "sell": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "type": "buy",
             },
@@ -2483,7 +2483,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2497,7 +2497,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "96302967355552289024967882824636622547821090945630919770220103279947185869454",
               "sell": Object {
                 "howMuch": "287.842916446464847",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x72bfb761e03106fb0fba6386534f28cf20a8c7ba334509931676e644b97cfcb8",
@@ -2514,7 +2514,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2528,7 +2528,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "71419178349408508286422820083917115708971497327642429272764937832088207492971",
               "sell": Object {
                 "howMuch": "286.115858947786058",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x00d84e8ea393d4170e7bb9c66fa46476d0bffddfbb36188c30841e2e5f8fafcc",
@@ -2545,7 +2545,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2559,7 +2559,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "269638644306083619498395204910965153249475175197150846272235434328185974335",
               "sell": Object {
                 "howMuch": "282.949586866874945",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x9ebcfb3d1149083618b14a4598a59b07bd7a55f2680f25110729504683f0f4be",
@@ -2576,7 +2576,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2590,7 +2590,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "11237167879966232763183679966800023000333042005442680810034960123858343145310",
               "sell": Object {
                 "howMuch": "279.207628953070902",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x7bd2faf08d912e7d1650b480cdf6badc6466f55e4bbbbd08c0e5247fbb664b1f",
@@ -2607,7 +2607,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2621,7 +2621,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "14154721986762677035650990823345620946275899562927278438693307924695347344745",
               "sell": Object {
                 "howMuch": "278.631943120177972",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x84a74973981d2f02ca1f51b924bb9f85551ebad84e982b1a8f3529f945829493",
@@ -2638,7 +2638,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2652,7 +2652,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "90624116958836631220516209284885658559310621026154292720396243182305185376953",
               "sell": Object {
                 "howMuch": "274.889985206373929",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x9d6273c58a14a179b9facb2e924dfde44bbc30fc59c144f40b29ca5db1f164cd",
@@ -2669,7 +2669,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2683,7 +2683,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "96984606670502401008398164020895826389427215450890718580579115369194040537072",
               "sell": Object {
                 "howMuch": "270.860184376123421",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x2648712d6c303288705454d419488e079f05cc0c7ae667c74d9a2495b3f824ca",
@@ -2700,7 +2700,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2714,7 +2714,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "4604886630858074681010333900934157298352445667281895938132549745140729661927",
               "sell": Object {
                 "howMuch": "268.269598128105237",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x102d578205eb350388dd237c9f22a4330b7068349fd1d59cc1ea755c29487fc4",
@@ -2731,7 +2731,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2745,7 +2745,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "53240587075232308532158794728103004523642036280233110642393823050523708831112",
               "sell": Object {
                 "howMuch": "264.815483130747659",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0x3721f05f8ece65e0c12aa76371d55de8eedb5fe80b114476ccda67f87233bc09",
@@ -2762,7 +2762,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
             "order": Object {
               "buy": Object {
                 "howMuch": "10",
-                "symbol": "WETH-T",
+                "symbol": "WETH",
               },
               "exchange": "ERC_DEX",
               "exchangeContractAddress": "0x90fe2af704b34e0224bf2299c838e04d4dcf1364",
@@ -2776,7 +2776,7 @@ exports[`Order book should render correctly without isReadyToTrade 1`] = `
               "salt": "1233177404392475891618488288211937198800448430268037754937622680273608094462",
               "sell": Object {
                 "howMuch": "262.800582715622405",
-                "symbol": "MLN-T",
+                "symbol": "MLN",
               },
               "signature": Object {
                 "r": "0xe476f92dce1a86dd8d4da6bc22ec4a7c5ba3f1c3c4ad1db3057be53845205e39",

@@ -10,15 +10,21 @@ const query = gql`
         exchange
         exchangeContractAddress
         type
-        price
         timestamp
-        buy {
-          howMuch
-          symbol
-        }
-        sell {
-          howMuch
-          symbol
+        price {
+          base {
+            quantity
+            token {
+              symbol
+            }
+          }
+
+          quote {
+            quantity
+            token {
+              symbol
+            }
+          }
         }
       }
     }

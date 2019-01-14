@@ -4,11 +4,27 @@ import { Query } from '~/apollo';
 const query = gql`
   query RankingQuery {
     rankings {
+      id
       rank
       address
       name
       inception
-      sharePrice
+      sharePrice {
+        base {
+          token {
+            symbol
+            decimals
+          }
+          quantity
+        }
+        quote {
+          token {
+            symbol
+            decimals
+          }
+          quantity
+        }
+      }
     }
   }
 `;

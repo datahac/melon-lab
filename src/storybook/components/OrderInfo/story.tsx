@@ -2,18 +2,69 @@ import { storiesOf } from '@storybook/react';
 import React from 'react';
 import OrderInfo from './index';
 
-const data = {
-  lastPrice: 0.5,
-  bid: 0,
-  ask: 0,
+export const data = {
+  lastPrice: {
+    base: {
+      quantity: 1000000000000000000,
+      token: {
+        symbol: 'ETH',
+        decimals: 18,
+      },
+    },
+    quote: {
+      quantity: 1000000000000000000,
+      token: {
+        symbol: 'ETH',
+        decimals: 18,
+      },
+    },
+  },
+  bid: {
+    base: {
+      quantity: 1000000000000000000,
+      token: {
+        symbol: 'ETH',
+        decimals: 18,
+      },
+    },
+    quote: {
+      quantity: 1000000000000000000,
+      token: {
+        symbol: 'ETH',
+        decimals: 18,
+      },
+    },
+  },
+  ask: {
+    base: {
+      quantity: 1000000000000000000,
+      token: {
+        symbol: 'ETH',
+        decimals: 18,
+      },
+    },
+    quote: {
+      quantity: 1000000000000000000,
+      token: {
+        symbol: 'ETH',
+        decimals: 18,
+      },
+    },
+  },
   tokens: {
     baseToken: {
-      name: 'ETH-T',
-      balance: 30.0,
+      quantity: 3000000000000000000,
+      token: {
+        symbol: 'ETH',
+        decimals: 18,
+      },
     },
     quoteToken: {
-      name: 'MLN-T',
-      balance: 20.0,
+      quantity: 1000000000000000000,
+      token: {
+        symbol: 'MLN',
+        decimals: 18,
+      },
     },
   },
 };

@@ -30,7 +30,7 @@ export default class DefaultTemplateContainer extends React.PureComponent {
                 canInvest: capabibility && capabibility.canInvest,
                 canInteract: capabibility && capabibility.canInteract,
                 canonicalPriceFeedAddress:
-                  configuration && configuration.canonicalPriceFeedAddress,
+                  configuration && configuration.melonContracts.priceSource,
                 network: network && network.network,
                 currentBlock: network && network.currentBlock,
                 blockOverdue: network && network.blockOverdue,

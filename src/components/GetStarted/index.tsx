@@ -4,11 +4,11 @@ import GetStarted from '~/components/GetStarted';
 import { AccountConsumer } from '+/components/AccountContext';
 import { BalanceConsumer } from '+/components/BalanceContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
-import { isZero } from '~/utils/functionalBigNumber';
+import * as Tm from '@melonproject/token-math';
 
 const getLink = (account, weth, fund) => {
   if (account) {
-    if (weth && !isZero(weth)) {
+    if (weth && Tm.isZero(weth.quantity)) {
       return {
         href: '/wallet',
         text: 'Fund your wallet',
@@ -45,8 +45,12 @@ export default class GetStartedContainer extends React.PureComponent {
           <FundManagerConsumer />,
         ]}
       >
-        {([account, balance, fund]) => {
-          const link = getLink(account, balance && balance.weth, fund);
+        {([account, balance, managerProps]) => {
+          const link = getLink(
+            account,
+            balance && balance.weth,
+            managerProps.fund,
+          );
 
           return <GetStarted link={link} {...this.props} />;
         }}

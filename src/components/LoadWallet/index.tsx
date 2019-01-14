@@ -1,9 +1,11 @@
 import React from 'react';
 import Composer from 'react-composer';
-import LoadWallet from '~/components/LoadWallet/container';
+import LoadWallet from '~/components/LoadWallet';
 import { withRouter } from 'next/router';
 import { WalletQuery, WalletMutation } from './data/wallet';
+import withForm from './withForm';
 
+const LoadWalletForm = withForm(LoadWallet);
 class LoadWalletContainer extends React.Component {
   state = {
     error: null,
@@ -18,13 +20,17 @@ class LoadWalletContainer extends React.Component {
       <Composer
         components={[
           <WalletQuery />,
-          <WalletMutation
-            onCompleted={() => {
-              this.props.router.replace({
-                pathname: '/wallet',
-              });
-            }}
-          />,
+          ({ render }) => (
+            <WalletMutation
+              onCompleted={() => {
+                this.props.router.push({
+                  pathname: '/wallet',
+                });
+              }}
+            >
+              {(a, b) => render([a, b])}
+            </WalletMutation>
+          ),
         ]}
       >
         {([walletProps, [loadWallet, mutationProps]]) => {
@@ -33,7 +39,7 @@ class LoadWalletContainer extends React.Component {
           const isLoading = mutationProps.loading || walletProps.loading;
 
           return (
-            <LoadWallet
+            <LoadWalletForm
               hasStoredWallet={hasStoredWallet}
               serverError={this.state.error}
               onSubmit={values => {

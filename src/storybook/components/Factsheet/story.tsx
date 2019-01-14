@@ -14,12 +14,23 @@ const data = {
   name: 'Melon Fund',
   numberOfFunds: '12',
   performanceReward: '0.0000',
-  personalStake: '1.0000',
-  quoteAsset: 'WETH-T',
+  personalStake: {
+    quantity: '1',
+    token: {
+      decimals: 0,
+    },
+  },
+  quoteAsset: {
+    symbol: 'WETH',
+  },
   rank: '1',
-  sharePrice: '0.9824',
   shutdown: action('shitdown'),
-  totalSupply: '1.0000',
+  totalSupply: {
+    quantity: '1',
+    token: {
+      decimals: 0,
+    },
+  },
   tweetHref: 'melonport',
   reportUrl: 'https://melon-reporting.now.sh/report/',
 };

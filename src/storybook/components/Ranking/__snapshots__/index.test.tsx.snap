@@ -18,9 +18,6 @@ exports[`Ranking should render correctly 1`] = `
       rendered
     </type>
   </style>
-  <h2>
-    Funds Ranking
-  </h2>
   <div
     className="ranking__table-wrap"
   >
@@ -72,9 +69,6 @@ exports[`Ranking should render correctly when loading 1`] = `
       rendered
     </type>
   </style>
-  <h2>
-    Funds Ranking
-  </h2>
   <div
     className="ranking__loading"
   >

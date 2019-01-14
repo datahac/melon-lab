@@ -20,7 +20,7 @@ class WalletContainer extends React.PureComponent {
           <WalletQuery />,
           <WalletMutation
             onCompleted={() => {
-              this.props.router.replace({
+              this.props.router.push({
                 pathname: '/wallet',
               });
             }}
@@ -29,7 +29,7 @@ class WalletContainer extends React.PureComponent {
       >
         {([
           account,
-          associatedFund,
+          managerProps,
           balances,
           network,
           walletProps,
@@ -40,7 +40,7 @@ class WalletContainer extends React.PureComponent {
 
           return (
             <Wallet
-              associatedFund={associatedFund}
+              associatedFund={managerProps.fund}
               balances={{
                 eth: balances.eth,
                 mln: balances.mln,

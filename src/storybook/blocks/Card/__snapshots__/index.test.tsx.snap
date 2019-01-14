@@ -52,7 +52,7 @@ exports[`Card should render correctly 1`] = `
             Share price
           </span>
            
-          1.0081
+          1.0000 ETH
         </div>
         <div
           className="card__inception-date"

@@ -28,9 +28,6 @@ exports[`Input should render correctly 1`] = `
     name="name"
     type="text"
   />
-  <div
-    className="input__error"
-  />
 </div>
 `;
 
@@ -61,7 +58,7 @@ exports[`Input should render correctly with number 1`] = `
     allowEmptyFormatting={false}
     allowNegative={true}
     className="input__field"
-    decimalScale={4}
+    decimalScale={0}
     decimalSeparator="."
     displayType="input"
     fixedDecimalScale={true}
@@ -77,10 +74,8 @@ exports[`Input should render correctly with number 1`] = `
     onValueChange={[Function]}
     prefix=""
     suffix=""
+    thousandsGroupStyle="thousand"
     type="text"
-  />
-  <div
-    className="input__error"
   />
 </div>
 `;

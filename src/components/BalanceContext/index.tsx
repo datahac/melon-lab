@@ -14,21 +14,49 @@ export const BalanceContext = React.createContext(defaults);
 
 export const balanceQuery = gql`
   query BalanceQuery($account: String!) {
-    eth: balance(address: $account, token: ETH)
-    weth: balance(address: $account, token: WETH)
-    mln: balance(address: $account, token: MLN)
+    eth: balance(address: $account, symbol: "ETH") {
+      quantity
+      token {
+        decimals
+        symbol
+        address
+      }
+    }
+    weth: balance(address: $account, symbol: "WETH") {
+      quantity
+      token {
+        decimals
+        symbol
+        address
+      }
+    }
+    mln: balance(address: $account, symbol: "MLN") {
+      quantity
+      token {
+        decimals
+        symbol
+        address
+      }
+    }
   }
 `;
 
 const balanceSubscription = gql`
-  subscription BalanceSubscription($account: String!, $token: TokenEnum!) {
-    balance(address: $account, token: $token)
+  subscription BalanceSubscription($account: String!, $symbol: String!) {
+    balance(address: $account, symbol: $symbol) {
+      quantity
+      token {
+        decimals
+        symbol
+        address
+      }
+    }
   }
 `;
 
 class SubscriptionHandler extends React.Component {
   componentDidUpdate(prevProps) {
-    if (this.props.account && this.props.account !== prevProps.account) {
+    if (this.props.account && !this.props.loading && prevProps.loading) {
       this.unsubscribe && this.unsubscribe();
       this.unsubscribe = this.props.subscribe();
     }
@@ -62,14 +90,14 @@ export class BalanceProvider extends React.PureComponent {
       >
         {([account, props]) => {
           const subscribe = () => {
-            const subscribeToToken = (token, field) => {
+            const subscribeToToken = (symbol, field) => {
               return props.subscribeToMore({
                 document: balanceSubscription,
-                variables: { account, token },
+                variables: { account, symbol },
                 updateQuery: (previous, { subscriptionData: result }) => {
                   return {
-                    ...(previous || {}),
-                    [field]: result && result.data && result.data.balance,
+                    ...previous,
+                    [field]: result.data.balance,
                   };
                 },
               });
@@ -89,7 +117,11 @@ export class BalanceProvider extends React.PureComponent {
           };
 
           return (
-            <SubscriptionHandler subscribe={subscribe} account={account}>
+            <SubscriptionHandler
+              loading={props.loading}
+              subscribe={subscribe}
+              account={account}
+            >
               <BalanceContext.Provider
                 value={{
                   ...defaults,

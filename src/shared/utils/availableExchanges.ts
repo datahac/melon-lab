@@ -1,20 +1,8 @@
-const availableExchanges = [
-  {
-    value: 'RADAR_RELAY',
-    text: 'Radar Relay',
-  },
-  {
-    value: 'ERC_DEX',
-    text: 'ERC Dex',
-  },
-  {
-    value: 'OASIS_DEX',
-    text: 'OasisDex',
-  },
-  {
-    value: 'KYBER_NETWORK',
-    text: 'Kyber',
-  },
-];
+const availableExchanges = {
+  RADAR_RELAY: 'Radar Relay',
+  ETHFINEX: 'ETHFinex',
+  OASIS_DEX: 'OasisDex',
+  KYBER_NETWORK: 'Kyber',
+};
 
 export default availableExchanges;

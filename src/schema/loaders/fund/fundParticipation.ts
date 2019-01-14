@@ -1,14 +1,8 @@
 import * as R from 'ramda';
-import { getParticipation } from '@melonproject/melon.js';
+import { balanceOf } from '@melonproject/protocol';
 
-function fundParticipation(environment, fund, investor) {
-  return (
-    environment &&
-    getParticipation(environment, {
-      fundAddress: fund.instance.address,
-      investorAddress: investor,
-    })
-  );
+function fundParticipation(environment, sharesAddress, investorAddress) {
+  return balanceOf(environment, sharesAddress, { address: investorAddress });
 }
 
 export default R.curryN(3, fundParticipation);

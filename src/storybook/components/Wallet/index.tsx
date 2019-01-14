@@ -6,6 +6,7 @@ import Spinner from '~/blocks/Spinner';
 import styles from './styles.css';
 
 export interface WalletSettingsProps {
+  hasWallet: boolean;
   currentAddress?: string;
   deleteWallet: () => void;
   isCompetition?: boolean;
@@ -15,6 +16,7 @@ export interface WalletSettingsProps {
 export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
   currentAddress,
   deleteWallet,
+  hasWallet,
   isCompetition,
   loading,
 }) => {
@@ -66,6 +68,13 @@ export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
             </Fragment>
           )}
 
+          {hasWallet && (
+            <div className="wallet__button">
+              <Link style={isDanger} size="medium" href="/wallet/load">
+                Log in to existing wallet
+              </Link>
+            </div>
+          )}
           {!isCompetition && (
             <div className="wallet__button">
               <Link style={isDanger} size="medium" href="/wallet/generate">

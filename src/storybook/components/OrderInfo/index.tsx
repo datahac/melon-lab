@@ -1,97 +1,56 @@
-import React, { StatelessComponent } from 'react';
-import NumberFormat from 'react-number-format';
+import React, { StatelessComponent, Fragment } from 'react';
+import * as Tm from '@melonproject/token-math';
+import * as R from 'ramda';
 
 import styles from './styles.css';
 
 export interface OrderInfoProps {
-  ask?: number;
-  bid?: number;
-  lastPrice?: number;
-  tokens: {
-    [key: string]: {
-      name: string;
-      balance: number;
-    };
-  };
+  ask?: Tm.PriceInterface;
+  bid?: Tm.PriceInterface;
+  lastPrice?: Tm.PriceInterface;
+  baseToken: Tm.QuantityInterface;
+  quoteToken: Tm.QuantityInterface;
 }
 
 const OrderInfo: StatelessComponent<OrderInfoProps> = ({
   ask,
   bid,
   lastPrice,
-  tokens,
+  baseToken,
+  quoteToken,
 }) => (
   <div className="order-info">
     <style jsx>{styles}</style>
     <div className="order-info__prices">
       <div className="order-info__last-price">
         {lastPrice ? (
-          <NumberFormat
-            value={lastPrice}
-            decimalScale={4}
-            fixedDecimalScale={true}
-            displayType="text"
-            thousandSeparator={true}
-          />
+          <Fragment>{Tm.toFixed(lastPrice)}</Fragment>
         ) : (
           <span>N/A</span>
         )}
         <span className="order-info__price-desc">Last Price</span>
       </div>
       <div className="order-info__bid">
-        {bid ? (
-          <NumberFormat
-            value={bid}
-            decimalScale={4}
-            fixedDecimalScale={true}
-            displayType="text"
-            type="text"
-            thousandSeparator={true}
-          />
-        ) : (
-          <span>N/A</span>
-        )}
+        {bid ? <Fragment>{Tm.toFixed(bid)}</Fragment> : <span>N/A</span>}
         <span className="order-info__price-desc">Bid</span>
       </div>
       <div className="order-info__ask">
-        {ask ? (
-          <NumberFormat
-            value={ask}
-            decimalScale={4}
-            fixedDecimalScale={true}
-            displayType="text"
-            thousandSeparator={true}
-          />
-        ) : (
-          <span>N/A</span>
-        )}
+        {ask ? <Fragment>{Tm.toFixed(ask)}</Fragment> : <span>N/A</span>}
         <span className="order-info__price-desc">Ask</span>
       </div>
     </div>
     <div className="order-info__balances">
       <div className="order-info__balance">
         <span className="order-info__balance-desc">
-          {tokens.baseToken.name}:
+          {R.path(['token', 'symbol'], baseToken)}:
         </span>{' '}
-        <NumberFormat
-          value={tokens.baseToken.balance}
-          decimalScale={4}
-          fixedDecimalScale={true}
-          displayType="text"
-          thousandSeparator={true}
-        />
+        {baseToken && Tm.toFixed(baseToken)}
       </div>
       <div className="order-info__balance">
         <span className="order-info__balance-desc">
-          {tokens.quoteToken.name}:
+          {R.path(['token', 'symbol'], quoteToken)}:
         </span>{' '}
-        <NumberFormat
-          value={tokens.quoteToken.balance}
-          decimalScale={4}
-          fixedDecimalScale={true}
-          displayType="text"
-          thousandSeparator={true}
-        />
+        {quoteToken && Tm.toFixed(quoteToken)}
       </div>
     </div>
   </div>

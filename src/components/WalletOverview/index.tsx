@@ -1,11 +1,12 @@
 import React from 'react';
 import Composer from 'react-composer';
 import WalletOverview from '~/components/WalletOverview';
-import { WalletQuery, WalletMutation } from './data/wallet';
+import { WalletQuery } from './data/wallet';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import { AccountConsumer } from '+/components/AccountContext';
 import { BalanceConsumer } from '+/components/BalanceContext';
 import { NetworkConsumer } from '+/components/NetworkContext';
+import { SetupConsumer } from '+/components/SetupContext';
 
 export default class WalletOverviewContainer extends React.PureComponent {
   render() {
@@ -16,31 +17,19 @@ export default class WalletOverviewContainer extends React.PureComponent {
           <AccountConsumer />,
           <BalanceConsumer />,
           <FundManagerConsumer />,
+          <SetupConsumer />,
           <WalletQuery />,
-          <WalletMutation />,
         ]}
       >
-        {([
-          network,
-          account,
-          balances,
-          associatedFund,
-          walletProps,
-          deleteWallet,
-        ]) => {
-          const hasWallet =
-            walletProps.data && walletProps.data.hasStoredWallet;
-
+        {([network, account, balances, manager, setup, walletProps]) => {
           return (
             <WalletOverview
-              associatedFund={associatedFund}
+              associatedFund={manager.fund}
               balances={balances}
-              deleteWallet={deleteWallet}
               loading={walletProps.loading}
-              hasAccount={!!account}
-              hasWallet={hasWallet}
               currentAddress={account}
               networkId={network.network}
+              isComplete={setup.isComplete}
             />
           );
         }}

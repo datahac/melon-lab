@@ -1,12 +1,9 @@
-import {
-  encryptWallet,
-  importWalletFromMnemonic,
-} from '@melonproject/melon.js';
+import Wallet from 'ethers-wallet';
 
 const noop = (decrypted, encrypted) => {};
 async function restoreWallet(mnemonic, password, callback = noop) {
-  const decrypted = await importWalletFromMnemonic(mnemonic);
-  const encrypted = await encryptWallet(decrypted, password);
+  const decrypted = Wallet.Wallet.fromMnemonic(mnemonic);
+  const encrypted = await decrypted.encrypt(password);
   await callback(decrypted, encrypted);
 
   return [decrypted.address];

@@ -1,166 +1,264 @@
 # Fields that are only safe within the native app environment and are blocked
 # from execution in the hosted / web environment.
 directive @insecure on FIELD_DEFINITION
+directive @client on FIELD
+directive @authenticated on FIELD
 
-scalar JSON
+directive @sign(
+  source: String = "unsigned"
+  target: String = "signed"
+) on FIELD
+
+directive @account(
+  arg: String = "from"
+) on FIELD
+
 scalar DateTime
-
-enum ExchangeContractEnum {
-  ZERO_EX_EXCHANGE
-  KYBER_NETWORK_PROXY
-  MATCHING_MARKET
-}
 
 enum ExchangeEnum {
   RADAR_RELAY
   OASIS_DEX
-  ERC_DEX
   KYBER_NETWORK
+  ETHFINEX
 }
 
-enum TokenEnum {
-  WETH
-  ETH
-  MLN
+enum OrderTypeEnum {
+  ASK
+  BID
 }
 
-enum ProviderEnum {
-  INJECTED
-  LOCAL
-  HOSTED
-  CUSTOM
-  NONE
-}
-
-enum ConfigKeyEnum {
-  CANONICAL_PRICE_FEED_ADDRESS
-  COMPETITION_COMPLIANCE_ADDRESS
-  ONLY_MANAGER_COMPETITION_ADDRESS
-  NO_COMPLIANCE_ADDRESS
-  MATCHING_MARKET_ADDRESS
-  MATCHING_MARKET_ADAPTER
-  ZERO_EX_V1_ADDRESS
-  ZERO_EX_V1_ADAPTER_ADDRESS
-  RANKING_ADDRESS
-  RISK_MANAGEMENT_ADDRESS
-  VERSION_ADDRESS
-  GOVERNANCE_ADDRESS
-  OLYMPIAD_ADDRESS
-  KYBER_NETWORK_ADDRESS
-  KYBER_ADAPTER
-}
-
-type Ranking {
-  rank: Int
-  address: String!
-  name: String!
-  inception: DateTime!
-  fund: Fund
-  sharePrice: String!
-}
-
-type Fund {
-  rank: Int
-  address: String!
-  name: String!
-  inception: DateTime!
-  gav: String!
-  nav: String!
-  owner: String
-  modules: [String]
-  holdings: [Holding]
-  sharePrice: String!
-  totalSupply: String
-  personalStake(investor: String!): String
-  managementReward: String
-  performanceReward: String
-  unclaimedRewards: String
-  rewardsShareQuantity: String
-  subscriptionAllowed: Boolean
-  redemptionAllowed: Boolean
-}
-
-type Holding {
-  symbol: String!
-  balance: String!
-  price: String!
-  fraction: String!
-}
-
-type HowMuchOfAsset {
-  symbol: String!
-  howMuch: String!
-}
-
-type Trade {
-  price: String
-  quantity: String
-  timestamp: String
-  type: String
+enum FundSetupStepEnum {
+  CREATE_ACCOUNTING
+  CREATE_FEE_MANAGER
+  CREATE_PARTICIPATION
+  CREATE_POLICY_MANAGER
+  CREATE_SHARES
+  CREATE_TRADING
+  CREATE_VAULT
 }
 
 interface Order {
-  maker: String
-  taker: String
-  isActive: Boolean!
-  type: String!
-  buy: HowMuchOfAsset!
-  sell: HowMuchOfAsset!
-  price: String!
-  exchangeContractAddress: String
-  exchange: String
+  id: String
+  trade: Price!
+  price: String
+  volume: String!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+}
+
+type EthfinexOrder implements Order {
+  id: String
+  trade: Price!
+  price: String
+  volume: String!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
 }
 
 type ZeroExOrder implements Order {
-  maker: String
-  taker: String
-  isActive: Boolean!
-  type: String!
-  buy: HowMuchOfAsset!
-  sell: HowMuchOfAsset!
-  price: String!
-  expiration: String
-  salt: String!
-  makerFee: String!
-  takerFee: String!
-  signature: Signature
-  feeRecipient: String
-  timestamp: DateTime
-  exchange: String
-  exchangeContractAddress: String
+  id: String
+  trade: Price!
+  price: String
+  volume: String!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+  metadata: ZeroExOrderMetadata
 }
 
 type OasisDexOrder implements Order {
+  id: String
+  trade: Price!
+  price: String
+  volume: String!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+  metadata: OasisDexOrderMetadata
+}
+
+type KyberNetworkOrder implements Order {
+  id: String
+  trade: Price!
+  price: String
+  volume: String!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+}
+
+type ZeroExOrderMetadata {
+  exchangeAddress: String
+  senderAddress: String
+  makerAddress: String
+  takerAddress: String
+  makerAssetData: String
+  takerAssetData: String
+  feeRecipientAddress: String
+  makerAssetAmount: String
+  takerAssetAmount: String
+  makerFee: String
+  takerFee: String
+  expirationTimeSeconds: Int
+  signature: String
+  salt: String
+}
+
+type OasisDexOrderMetadata {
+  id: String!
   maker: String
   taker: String
   isActive: Boolean!
-  type: String!
-  buy: HowMuchOfAsset!
-  sell: HowMuchOfAsset!
-  price: String!
-  id: String!
-  timestamp: DateTime
-  exchange: String
   exchangeContractAddress: String
 }
 
-type Orderbook {
-  allOrders: [Order]
-  sellEntries: [OrderbookEntry]
-  buyEntries: [OrderbookEntry]
-  totalBuyVolume: String
-  totalSellVolume: String
+type Price {
+  base: Quantity
+  quote: Quantity
 }
 
-type OrderbookEntry {
-  volume: String
-  order: Order
+type Quantity {
+  token: Token
+  quantity: String
+}
+
+type Token {
+  symbol: String
+  decimals: Int
+  address: String
+}
+
+type Ranking {
+  id: String
+  rank: Int
+  address: String
+  name: String
+  inception: DateTime
+  fund: Fund
+  sharePrice: Price
+}
+
+type Routes {
+  accountingAddress: String
+  feeManagerAddress: String
+  participationAddress: String
+  policyManagerAddress: String
+  priceSourceAddress: String
+  registryAddress: String
+  sharesAddress: String
+  tradingAddress: String
+  vaultAddress: String
+  versionAddress: String
+}
+
+type Fund {
+  id: String
+  rank: Int
+  address: String
+  name: String
+  inception: DateTime
+  gav: Quantity
+  nav: Quantity
+  owner: String
+  routes: Routes
+  denominationAsset: Token
+  nativeAsset: Token
+  holdings: [Holding]
+  sharePrice: Price
+  totalSupply: Quantity
+  personalStake(investor: String): Quantity
+  managementReward: Quantity
+  managementFeeRate: String
+  performanceReward: Quantity
+  performanceFeeRate: String
+  unclaimedFees: Quantity
+  feesShareQuantity: Quantity
+  isShutdown: Boolean
+  isComplete: Boolean
+}
+
+type Holding {
+  balance: Quantity!
+  price: Price!
+  fraction: String!
+}
+
+type Trade {
+  price: Price
+  quantity: Quantity
+  timestamp: String
+  type: String
 }
 
 type Signature {
   r: String!
   s: String!
   v: Int!
+}
+
+type ExchangeConfig {
+  adapterAddress: String!
+  exchangeAddress: String!
+  takesCustody: Boolean!
+}
+
+type AdapterAddresses {
+  kyberAdapter: String!
+  matchingMarketAdapter: String!
+  zeroExAdapter: String!
+}
+
+type PolicyAddresses {
+  priceTolerance: String!
+  userWhitelist: String!
+}
+
+type FactoryAddresses {
+  accountingFactory: String!
+  feeManagerFactory: String!
+  participationFactory: String!
+  policyManagerFactory: String!
+  sharesFactory: String!
+  tradingFactory: String!
+  vaultFactory: String!
+}
+
+type ThirdPartyContracts {
+  exchanges: [ExchangeConfig]!
+  tokens: [Token]!
+}
+
+type MelonContracts {
+  priceSource: String!
+  adapters: AdapterAddresses!
+  policies: PolicyAddresses!
+  engine: String!
+  registry: String!
+  version: String!
+  ranking: String!
+}
+
+type Deployment {
+  melonContracts: MelonContracts!
+  thirdPartyContracts: ThirdPartyContracts!
+  version: String
+  ranking: String
+  tokens: [Token]
+}
+
+type UnsignedTransaction {
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
+}
+
+input UnsignedTransactionInput {
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
 }
 
 type Query {
@@ -171,7 +269,7 @@ type Query {
   "Fetch the associated fund of an account."
   associatedFund(
     "The address of the account to load the fund for."
-    account: String!
+    manager: String
   ): String
 
   "Loads a fund by its name."
@@ -181,63 +279,159 @@ type Query {
   ): Fund
 
   network: String
-  provider: String
   currentBlock: String
   nodeSynced: Boolean
   priceFeedUp: Boolean
   peerCount: String
-  versionConfig(key: ConfigKeyEnum!): String
+  contractDeployment: Deployment
   totalFunds: Int
-  balance(token: TokenEnum!, address: String!): String
-  price(symbol: String!): String
+  balance(symbol: String!, address: String): Quantity
   fund(address: String!): Fund
-  funds(addresses: [String]): [Fund]
   rankings: [Ranking]
+  orders(
+    exchange: ExchangeEnum!
+    base: String!
+    quote: String!
+  ): [Order]
 
-  # TODO: Move this to the Fund type.
-  openOrders(address: String!): [Order]
-  recentTrades(baseTokenSymbol: String!, quoteTokenSymbol: String!): [Trade]
+  "Loads the current routes for fund creation for a fund manager address."
+  routes(
+    "The address of the fund manager."
+    manager: String
+  ): Routes
 }
 
 type Mutation {
-  cancelOpenOrder(
-    orderId: String!
+  # TODO: Give more fund configuration options: Policies, pricefeed, ...
+  """
+  Estimates the number of gas units required for the "beginSetup" transaction.
+  """
+  estimateFundSetupBegin(
+    name: String!
+    exchanges: [String]!
+  ): UnsignedTransaction
+
+  """
+  Executes the "beginSetup" transaction with the given gas price per unit.
+  """
+  executeFundSetupBegin(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+  ): String
+
+  """
+  Estimates the number of gas units required for a fund setup step transaction.
+  """
+  estimateFundSetupStep(
+    "The step in the fund factory process."
+    step: FundSetupStepEnum!
+  ): UnsignedTransaction
+
+  """
+  Executes a fund setup step transaction with the given gas price per unit.
+  """
+  executeFundSetupStep(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    "The step in the fund factory process."
+    step: FundSetupStepEnum!
+  ): Boolean
+
+  """
+  Estimates the number of gas units required for the "completeSetup" transaction.
+  """
+  estimateFundSetupComplete: UnsignedTransaction
+
+  """
+  Executes the "completeSetup" transaction with the given gas price per unit.
+  """
+  executeFundSetupComplete(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+  ): String
+
+  """
+  Estimates the number of gas units required for the "request investment" transaction.
+  """
+  estimateRequestInvestment(
     fundAddress: String!
-    makerAssetSymbol: String!
-    takerAssetSymbol: String!
-  ): [Order]
+    investmentAmount: String!
+  ): UnsignedTransaction
 
   """
-  Estimates the number of gas units required for the "setup fund" transaction.
+  Executes the "request investment" transaction with the given gas price per unit.
   """
-  estimateSetupFund(
-    name: String!
-    exchanges: [ExchangeContractEnum]!
-  ): String
+  executeRequestInvestment(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean
 
   """
-  Executes the "setup fund" transaction with the given gas price per unit.
+  Estimates the number of gas units required for the "execute request" transaction.
   """
-  executeSetupFund(
-    name: String!
-    exchanges: [ExchangeContractEnum]!
-    gasPrice: String!
-    gasLimit: String!
-  ): String
+  estimateExecuteRequest(
+    fundAddress: String!
+  ): UnsignedTransaction
 
-  estimateTakeOrder(
-    order: JSON!
-    quantity: String!
-    address: String!
-  ): String
+  """
+  Executes the "execute request" transaction with the given gas price per unit.
+  """
+  executeExecuteRequest(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean
 
-  executeTakeOrder(
-    order: JSON!
-    quantity: String!
-    address: String!
-    gasPrice: String!
-    gasLimit: String!
-  ): String
+  """
+  Estimates the number of gas units required for the "approve transfer" transaction.
+  """
+  estimateApproveTransfer(
+    fundAddress: String!
+    investmentAmount: String!
+  ): UnsignedTransaction
+
+  """
+  Executes the "execute request" transaction with the given gas price per unit.
+  """
+  executeShutDownFund(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean
+
+  """
+  Estimates the number of gas units required for the "approve transfer" transaction.
+  """
+  estimateShutDownFund(
+    fundAddress: String!
+  ): UnsignedTransaction
+
+  """
+  Executes the "approve transfer" transaction with the given gas price per unit.
+  """
+  executeApproveTransfer(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+    investmentAmount: String!
+  ): Boolean
+
+  """
+  Estimates the number of gas units required for the "trigger reward all fees" transaction.
+  """
+  estimateTriggerRewardAllFees(
+    fundAddress: String!
+  ): UnsignedTransaction
+
+  """
+  Executes the "trigger reward all fees" transaction with the given gas price per unit.
+  """
+  executeTriggerRewardAllFees(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Quantity
 
   """
   Export the currently active wallet in its encrypted form.
@@ -295,26 +489,14 @@ type Mutation {
 }
 
 type Subscription {
-  network: String
-  provider: String
   currentBlock: String
   nodeSynced: Boolean
   priceFeedUp: Boolean
   peerCount: String
-  versionConfig(key: ConfigKeyEnum!): String
-  totalFunds: Int
-  rankings: [Ranking]
-  balance(token: TokenEnum!, address: String!): String
-  orderbook(
-    baseTokenSymbol: String!
-    quoteTokenSymbol: String!
-    exchanges: [ExchangeEnum] = [
-      "RADAR_RELAY"
-      "OASIS_DEX"
-      "ERC_DEX"
-      "KYBER_NETWORK"
-    ]
-  ): Orderbook
+  balance(
+    symbol: String!
+    address: String
+  ): Quantity
 }
 
 schema {

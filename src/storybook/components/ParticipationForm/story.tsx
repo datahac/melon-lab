@@ -1,18 +1,20 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import ParticipationForm from './container';
+import ParticipationForm from './';
 
 const data = {
-  initialValues: {
-    price: 1.0,
+  values: {
+    price: 1,
     type: 'Invest',
+    quantity: 1,
+    total: 1,
   },
+  errors: {},
+  touched: {},
   decimals: 4,
   setup: true,
-  priceFeedUp: true,
-  quoteAsset: 'WETH-T',
-  fund: {
-    sharePrice: 5,
+  quoteToken: {
+    symbol: 'WETH',
   },
 };
 

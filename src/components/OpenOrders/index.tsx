@@ -9,9 +9,9 @@ import * as R from 'ramda';
 const withMappedOrders = withPropsOnChange(['orders'], props => ({
   orders: props.orders.map(order => ({
     ...order,
-    buyHowMuch: order.buy.howMuch,
+    buyHowMuch: order.buy.quantity,
     buySymbol: order.buy.symbol,
-    sellHowMuch: order.sell.howMuch,
+    sellHowMuch: order.sell.quantity,
     sellSymbol: order.sell.symbol,
   })),
 }));

@@ -1,4 +1,5 @@
 import React from 'react';
+import * as R from 'ramda';
 import Composer from 'react-composer';
 import OrderForm from '~/components/OrderForm';
 import { NetworkConsumer } from '+/components/NetworkContext';
@@ -11,19 +12,26 @@ const WrappedOrderForm = withForm(OrderForm);
 export default class OrderFormContainer extends React.PureComponent {
   getTokenBalance = asset => {
     const { holdings } = this.props;
+    const balance = R.compose(
+      R.propOr(0, 'balance'),
+      R.find(holding => holding.balance.token.symbol === asset),
+    )(holdings);
+
     return {
-      name: asset,
-      balance:
-        holdings &&
-        holdings.length &&
-        holdings.find(holding => holding.symbol === asset).balance.toString(10),
+      quantity: R.pathOr(0, ['quantity'], balance),
+      token: {
+        ...balance.token,
+        symbol: R.pathOr(asset, ['token', 'symbol'], balance),
+        decimals: R.pathOr(18, ['token', 'decimals'], balance),
+        address: R.pathOr('', ['token', 'address'], balance),
+      },
     };
   };
 
   render() {
     return (
       <Composer components={[<NetworkConsumer />, <FundManagerConsumer />]}>
-        {([network, associatedFund]) => {
+        {([network, managerProps]) => {
           const {
             address,
             quoteAsset,
@@ -33,21 +41,15 @@ export default class OrderFormContainer extends React.PureComponent {
           } = this.props;
 
           const isManager =
-            !!associatedFund && isSameAddress(associatedFund, address);
-
-          const tokens = {
-            baseToken: this.getTokenBalance(this.props.baseAsset),
-            quoteToken: this.getTokenBalance(this.props.quoteAsset),
-          };
+            !!managerProps.fund && isSameAddress(managerProps.fund, address);
 
           return (
             <WrappedOrderForm
-              tokens={tokens}
+              baseToken={this.getTokenBalance(baseAsset)}
+              quoteToken={this.getTokenBalance(quoteAsset)}
               isCompetition={false}
               isManager={isManager}
               holdings={holdings}
-              quoteAsset={quoteAsset}
-              baseAsset={baseAsset}
               formValues={formValues}
               priceFeedUp={network && network.priceFeedUp}
             />
