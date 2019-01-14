@@ -30,7 +30,7 @@ const Container = ({ address, children }) => {
         <HoldingsQuery address={address} />,
         ({ results: [account], render }) => (
           <FundQuery address={address} account={account} children={render} />
-        )
+        ),
       ]}
     >
       {children}

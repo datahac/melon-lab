@@ -61,7 +61,9 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
                 name="exchanges"
                 value={exchange.value}
                 text={exchange.text}
-                defaultChecked={selectedExchanges.indexOf(exchange.value) !== -1}
+                defaultChecked={
+                  selectedExchanges.indexOf(exchange.value) !== -1
+                }
                 disabled={loading}
               />
             </div>

@@ -17,13 +17,13 @@ const withForm = withFormik({
 
     if (!values.quantity) {
       errors.quantity = 'Required';
-    } else if (Tm.izZero(values.quantity.quantity)) {
+    } else if (Tm.isZero(values.quantity.quantity)) {
       errors.quantity = 'Invalid quantity';
     }
 
     if (!values.total) {
       errors.total = 'Required';
-    } else if (Tm.izZero(values.total.quantity)) {
+    } else if (Tm.isZero(values.total.quantity)) {
       errors.total = 'Invalid quantity';
     }
 
@@ -47,7 +47,7 @@ const withFormHandlers = compose(
         props.setFieldValue('quantity', quantity);
 
         const total = Tm.valueIn(values.price, quantity);
-        if (!Tm.isEqual(values.total, total)) {
+        if (!Tm.isEqual(values.total.quantity, total.quantity)) {
           props.setFieldValue('total', total);
         }
       }
@@ -60,7 +60,7 @@ const withFormHandlers = compose(
         props.setFieldValue('total', total);
 
         const quantity = Tm.valueIn(values.price, total);
-        if (!Tm.isEqual(values.quantity, quantity)) {
+        if (!Tm.isEqual(values.quantity.quantity, quantity.quantity)) {
           props.setFieldValue('quantity', quantity);
         }
       }

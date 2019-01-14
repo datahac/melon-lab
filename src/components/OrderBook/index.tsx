@@ -79,11 +79,7 @@ export default ({ baseAsset, quoteAsset, exchanges }) => (
     baseAsset={baseAsset}
   >
     {({ asks, bids, loading }) => (
-      <OrderBook
-        loading={loading}
-        bids={bids}
-        asks={asks}
-      />
+      <OrderBook loading={loading} bids={bids} asks={asks} />
     )}
   </AggregatedOrders>
 );
