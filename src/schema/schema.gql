@@ -4,14 +4,9 @@ directive @insecure on FIELD_DEFINITION
 directive @client on FIELD
 directive @authenticated on FIELD
 
-directive @sign(
-  source: String = "unsigned"
-  target: String = "signed"
-) on FIELD
+directive @sign(source: String = "unsigned", target: String = "signed") on FIELD
 
-directive @account(
-  arg: String = "from"
-) on FIELD
+directive @account(arg: String = "from") on FIELD
 
 scalar DateTime
 
@@ -273,10 +268,7 @@ type Query {
   ): String
 
   "Loads a fund by its name."
-  fundByName(
-    "The name of the fund to load."
-    name: String!
-  ): Fund
+  fundByName("The name of the fund to load." name: String!): Fund
 
   network: String
   currentBlock: String
@@ -288,17 +280,10 @@ type Query {
   balance(symbol: String!, address: String): Quantity
   fund(address: String!): Fund
   rankings: [Ranking]
-  orders(
-    exchange: ExchangeEnum!
-    base: String!
-    quote: String!
-  ): [Order]
+  orders(exchange: ExchangeEnum!, base: String!, quote: String!): [Order]
 
   "Loads the current routes for fund creation for a fund manager address."
-  routes(
-    "The address of the fund manager."
-    manager: String
-  ): Routes
+  routes("The address of the fund manager." manager: String): Routes
 }
 
 type Mutation {
@@ -370,9 +355,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "execute request" transaction.
   """
-  estimateExecuteRequest(
-    fundAddress: String!
-  ): UnsignedTransaction
+  estimateExecuteRequest(fundAddress: String!): UnsignedTransaction
 
   """
   Executes the "execute request" transaction with the given gas price per unit.
@@ -403,9 +386,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "approve transfer" transaction.
   """
-  estimateShutDownFund(
-    fundAddress: String!
-  ): UnsignedTransaction
+  estimateShutDownFund(fundAddress: String!): UnsignedTransaction
 
   """
   Executes the "approve transfer" transaction with the given gas price per unit.
@@ -420,9 +401,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "trigger reward all fees" transaction.
   """
-  estimateTriggerRewardAllFees(
-    fundAddress: String!
-  ): UnsignedTransaction
+  estimateTriggerRewardAllFees(fundAddress: String!): UnsignedTransaction
 
   """
   Executes the "trigger reward all fees" transaction with the given gas price per unit.
@@ -432,6 +411,17 @@ type Mutation {
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
   ): Quantity
+
+  """
+  Estimates the number of gas units required for the "make order" transaction.
+  """
+  estimateMakeOrder(
+    exchange: ExchangeEnum!
+    buyToken: String!
+    buyQuantity: String!
+    sellToken: String!
+    sellQuantity: String!
+  ): UnsignedTransaction
 
   """
   Export the currently active wallet in its encrypted form.
@@ -493,10 +483,7 @@ type Subscription {
   nodeSynced: Boolean
   priceFeedUp: Boolean
   peerCount: String
-  balance(
-    symbol: String!
-    address: String
-  ): Quantity
+  balance(symbol: String!, address: String): Quantity
 }
 
 schema {

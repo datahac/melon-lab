@@ -1972,6 +1972,14 @@
     yup "^0.26.6"
     zen-observable-ts "^0.8.10"
 
+"@melonproject/token-math@0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.1.5.tgz#ec8c31355162602f448dc19996e7350da3b4479c"
+  integrity sha512-kJ9FkvGXW8DUEp76V8/Rz8ynsuvWEmjRxd5qb81GrYSJhdO8/cUbJBTX8Xk6ljCRJd0vmRwSxNQlNm/XdIF5KA==
+  dependencies:
+    jsbi "^2.0.5"
+    web3-utils "^1.0.0-beta.36"
+
 "@melonproject/token-math@^0.0.31":
   version "0.0.31"
   resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.0.31.tgz#f447eee440ca620b3f6ffb3ac17e40179f080745"
@@ -1984,14 +1992,6 @@
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.1.2.tgz#6130f55d213bf92e0d31289a8fe4f4ce3d53c787"
   integrity sha512-v4LNKjDwpQFjkbmZG556jZ1mtt8nTDy2k/+qUCaDVrjgjXXyv5+6bv7VsgxV9oLEFvUHz+V1lOLw+FlAgP5MBA==
-  dependencies:
-    jsbi "^2.0.5"
-    web3-utils "^1.0.0-beta.36"
-
-"@melonproject/token-math@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.1.4.tgz#1fb7ff120727cdc52c95e1aabd6ba4b6dd9c2213"
-  integrity sha512-YMI11dFRe/zUnB7MeC822xx3eA0PMFr5tZOG9bYJY53mm8xZ+6uVFYVKKHDcoESsO7lkXemKi2NRb4bh3FhfCg==
   dependencies:
     jsbi "^2.0.5"
     web3-utils "^1.0.0-beta.36"

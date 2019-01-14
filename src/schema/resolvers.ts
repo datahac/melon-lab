@@ -1,26 +1,29 @@
-import * as R from 'ramda';
-import * as keytar from 'keytar';
-import * as Tm from '@melonproject/token-math';
-import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
-import { map, pluck, distinctUntilChanged, skip } from 'rxjs/operators';
 import {
-  requestInvestment,
-  executeRequest,
   approve as approveTransfer,
-  shutDownFund,
   beginSetup,
+  completeSetup,
+  createAccounting,
+  createFeeManager,
   createParticipation,
   createPolicyManager,
   createShares,
   createTrading,
   createVault,
-  createFeeManager,
-  createAccounting,
-  completeSetup,
+  executeRequest,
+  getTokenBySymbol,
+  makeOasisDexOrder,
+  requestInvestment,
+  shutDownFund,
   triggerRewardAllFees,
+  withDifferentAccount,
 } from '@melonproject/protocol';
-import toAsyncIterator from './utils/toAsyncIterator';
+import * as Tm from '@melonproject/token-math';
+import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
+import * as keytar from 'keytar';
+import * as R from 'ramda';
+import { distinctUntilChanged, map, pluck, skip } from 'rxjs/operators';
 import sameBlock from './utils/sameBlock';
+import toAsyncIterator from './utils/toAsyncIterator';
 
 export default {
   DateTime,
@@ -586,6 +589,36 @@ export default {
       );
 
       return !!result;
+    },
+    estimateMakeOrder: async (
+      _,
+      { from, exchange, buyToken, buyQuantity, sellToken, sellQuantity },
+      { environment, loaders },
+    ) => {
+      const fund = await loaders.fundAddressFromManager.load(from);
+      const { tradingAddress } = await loaders.fundRoutes.load(fund);
+
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+
+      if (exchange === 'OASIS_DEX') {
+        const makerQuantity = Tm.createQuantity(
+          getTokenBySymbol(environment, sellToken),
+          sellQuantity,
+        );
+        const takerQuantity = Tm.createQuantity(
+          getTokenBySymbol(environment, buyToken),
+          buyQuantity,
+        );
+
+        const result = await makeOasisDexOrder.prepare(env, tradingAddress, {
+          makerQuantity,
+          takerQuantity,
+        });
+
+        return result && result.rawTransaction;
+      }
+
+      throw new Error(`Make order not implemented for ${exchange}`);
     },
     deleteWallet: async () => {
       const credentials = (await keytar.findCredentials('melon.fund')) || [];
