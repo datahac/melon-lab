@@ -1929,10 +1929,10 @@
   dependencies:
     events "^3.0.0"
 
-"@melonproject/exchange-aggregator@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.0.11.tgz#9212b886b19bd21bf57004e4e2fd5e066601b026"
-  integrity sha512-DRWn/N41IEyC81jyXBKdrz1Q6X1j3grn3Vtr6zN6sCQL0EukuVVL2o7ywVYXSIwwGgAz/oBY0LWMNRgWnuTkyQ==
+"@melonproject/exchange-aggregator@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.0.12.tgz#df3d3dd217143c32dfe51d4a2ac5a5e42e2ac831"
+  integrity sha512-RDpJVxK40ajY0fbQpCx27QbKhoGkTLsg5Rf1eHbvR/792CBnuVhFKdtv1FErflYc2Ix7/WEzDFyNnhLllzgMgQ==
   dependencies:
     "@melonproject/protocol" "^0.9.0-alpha.25"
     "@melonproject/token-math" "^0.1.2"
