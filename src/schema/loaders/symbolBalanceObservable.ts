@@ -1,46 +1,22 @@
 import * as R from 'ramda';
 import * as Rx from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { balanceOf } from '@melonproject/protocol';
-import { getEthBalance, extractQuantity } from './symbolBalance';
+import { switchMap } from 'rxjs/operators';
+import { balanceOf, getTokenBySymbol } from '@melonproject/protocol';
+import { getEthBalance } from './symbolBalance';
 
 export const getSymbolBalanceObservable = R.curryN(
   4,
   (environment, streams, symbol, address) => {
     if (symbol === 'ETH') {
-      const stream$ = streams.block$.pipe(
-        switchMap(() => {
-          return getEthBalance(environment, address);
-        }),
-      );
-
-      return stream$.pipe(
-        map(quantity => ({
-          quantity: extractQuantity(quantity),
-          token: {
-            decimals: quantity.token.decimals,
-            symbol: quantity.token.symbol,
-            address: quantity.token.address,
-          },
-        })),
+      return streams.block$.pipe(
+        switchMap(() => getEthBalance(environment, address)),
       );
     }
 
-    const token = environment.deployment.thirdPartyContracts.tokens.find(
-      item => item.symbol === symbol,
-    );
-    const zen = balanceOf.observable(environment, token.address, { address });
-
-    return Rx.from(zen).pipe(
-      map(quantity => ({
-        quantity: extractQuantity(quantity),
-        token: {
-          decimals: quantity.token.decimals,
-          symbol: quantity.token.symbol,
-          address: quantity.token.address,
-        },
-      })),
-    );
+    const token = getTokenBySymbol(environment, symbol);
+    const zen =
+      token && balanceOf.observable(environment, token.address, { address });
+    return (zen && Rx.from(zen)) || Rx.empty();
   },
 );
 

@@ -9,8 +9,8 @@ import styles from './styles.css';
 
 export interface FundHeadlineProps {
   name?: string;
-  sharePrice?: Tm.price.PriceInterface;
-  gav?: Tm.quantity.QuantityInterface;
+  sharePrice?: Tm.PriceInterface;
+  gav?: Tm.QuantityInterface;
   rank?: string;
   totalFunds?: string;
   quoteAsset?: string;

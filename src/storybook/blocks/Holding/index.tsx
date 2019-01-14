@@ -5,8 +5,8 @@ import * as Tm from '@melonproject/token-math';
 
 export interface HoldingProps {
   fraction?: number;
-  balance?: Tm.quantity.QuantityInterface;
-  price?: Tm.price.PriceInterface;
+  balance?: Tm.QuantityInterface;
+  price?: Tm.PriceInterface;
   name?: string;
   symbol?: string;
   active?: boolean;
@@ -47,10 +47,10 @@ const Holding: StatelessComponent<HoldingProps> = ({
           <span className="holding__name">{name}</span>
         </div>
         <div className="holding__price">
-          {price && Tm.price.toFixed(price, decimals)}
+          {price && Tm.toFixed(price, decimals)}
         </div>
         <div className="holding__balance">
-          {balance && Tm.quantity.toFixed(balance, decimals)}
+          {balance && Tm.toFixed(balance, decimals)}
         </div>
       </div>
     </div>

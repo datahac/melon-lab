@@ -18,18 +18,12 @@ const OrderBookTable = ({
 
   const calculateBar = (prevEntry, entry, totalVolume) => {
     const getPercentage = (cumulativeVolume, totalVolume) => {
-      return Tm.bigInteger.multiply(
-        Tm.bigInteger.divide(cumulativeVolume, totalVolume),
-        100,
-      );
+      return Tm.multiply(Tm.divide(cumulativeVolume, totalVolume), 100);
     };
 
     const percentageDiff =
       prevEntry &&
-      getPercentage(
-        Tm.bigInteger.subtract(entry.volume, prevEntry.volume),
-        totalVolume,
-      );
+      getPercentage(Tm.subtract(entry.volume, prevEntry.volume), totalVolume);
 
     const prevEntryPercentage =
       prevEntry && getPercentage(prevEntry.volume, totalVolume);

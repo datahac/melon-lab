@@ -20,16 +20,16 @@ const withForm = withFormik({
 
     if (!values.price) {
       errors.price = 'Required';
-    } else if (Tm.bigInteger.isZero(values.price.quote)) {
+    } else if (Tm.isZero(values.price.quote)) {
       errors.price = 'Invalid price';
     }
 
     if (!values.quantity) {
       errors.quantity = 'Required';
-    } else if (Tm.bigInteger.isZero(values.quantity)) {
+    } else if (Tm.isZero(values.quantity)) {
       errors.quantity = 'Invalid quantity';
     } else if (
-      Tm.bigInteger.greaterThan(values.quantity, props.baseToken) &&
+      Tm.greaterThan(values.quantity, props.baseToken) &&
       values.type === 'Sell'
     ) {
       errors.quantity = 'Insufficient balance';
@@ -37,10 +37,10 @@ const withForm = withFormik({
 
     if (!values.total) {
       errors.total = 'Required';
-    } else if (Tm.bigInteger.isZero(values.total)) {
+    } else if (Tm.isZero(values.total)) {
       errors.total = 'Invalid total';
     } else if (
-      Tm.bigInteger.greaterThan(values.total, props.quoteToken) &&
+      Tm.greaterThan(values.total, props.quoteToken) &&
       values.type === 'Buy'
     ) {
       errors.total = 'Insufficient balance';
@@ -63,34 +63,34 @@ const withFormHandlers = withHandlers({
     }
 
     if (name === 'price') {
-      const price = Tm.price.createPrice(
-        Tm.quantity.createQuantity(baseToken.token, 1),
-        Tm.quantity.createQuantity(quoteToken.token, value || 0),
+      const price = Tm.createPrice(
+        Tm.createQuantity(baseToken.token, 1),
+        Tm.createQuantity(quoteToken.token, value || 0),
       );
       setFieldValue('price', price);
 
       if (values.quantity) {
-        const total = Tm.price.valueIn(price, values.quantity);
+        const total = Tm.valueIn(price, values.quantity);
         setFieldValue('total', total);
       }
     }
 
     if (name === 'quantity') {
-      const quantity = Tm.quantity.createQuantity(baseToken.token, value || 0);
+      const quantity = Tm.createQuantity(baseToken.token, value || 0);
       setFieldValue('quantity', quantity);
 
       if (values.price) {
-        const total = Tm.price.valueIn(values.price, quantity);
+        const total = Tm.valueIn(values.price, quantity);
         setFieldValue('total', total);
       }
     }
 
     if (name === 'total') {
-      const total = Tm.quantity.createQuantity(quoteToken.token, value || 0);
+      const total = Tm.createQuantity(quoteToken.token, value || 0);
       setFieldValue('total', total);
 
       if (values.price) {
-        const quantity = Tm.price.valueIn(values.price, total);
+        const quantity = Tm.valueIn(values.price, total);
         setFieldValue('quantity', quantity);
       }
     }

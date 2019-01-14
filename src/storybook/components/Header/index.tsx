@@ -149,7 +149,7 @@ export const Header: StatelessComponent<HeaderProps> = ({
           {ethBalance && (
             <span className="header__account-balances">
               <span className="header__account-balance">
-                ETH {Tm.quantity.toFixed(ethBalance)}
+                ETH {Tm.toFixed(ethBalance)}
               </span>
             </span>
           )}

@@ -16,9 +16,9 @@ interface FormValues {
   exchange: string;
   type: string;
   strategy: string;
-  price: Tm.price.PriceInterface;
-  quantity: Tm.quantity.QuantityInterface;
-  total: Tm.quantity.QuantityInterface;
+  price: Tm.PriceInterface;
+  quantity: Tm.QuantityInterface;
+  total: Tm.QuantityInterface;
 }
 
 export interface FormErrors {
@@ -38,8 +38,8 @@ export interface OrderFormProps {
   }>;
   handleBlur?: () => void;
   handleSubmit?: () => void;
-  baseToken: Tm.quantity.QuantityInterface;
-  quoteToken: Tm.quantity.QuantityInterface;
+  baseToken: Tm.QuantityInterface;
+  quoteToken: Tm.QuantityInterface;
   isCompetition?: boolean;
   isManager?: boolean;
   onChange?: React.ChangeEvent<any>;
@@ -47,9 +47,9 @@ export interface OrderFormProps {
   touched: any;
   type?: string;
   values: FormValues;
-  lastPrice: Tm.price.PriceInterface;
-  ask: Tm.price.PriceInterface;
-  bid: Tm.price.PriceInterface;
+  lastPrice: Tm.PriceInterface;
+  ask: Tm.PriceInterface;
+  bid: Tm.PriceInterface;
 }
 
 export const OrderForm: StatelessComponent<OrderFormProps> = ({
@@ -142,7 +142,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div>
         <div className="order-form__input">
           <Input
-            value={values.price && Tm.price.toFixed(values.price, decimals)}
+            value={values.price && Tm.toFixed(values.price, decimals)}
             disabled={isMarket || !priceFeedUp || !isManager}
             label="Price"
             name="price"
@@ -158,9 +158,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div>
         <div className="order-form__input">
           <Input
-            value={
-              values.quantity && Tm.quantity.toFixed(values.quantity, decimals)
-            }
+            value={values.quantity && Tm.toFixed(values.quantity, decimals)}
             label="Quantity"
             name="quantity"
             insideLabel="true"
@@ -176,7 +174,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
         </div>
         <div className="order-form__input">
           <Input
-            value={values.total && Tm.quantity.toFixed(values.total, decimals)}
+            value={values.total && Tm.toFixed(values.total, decimals)}
             label={`Total (${R.path(['token', 'symbol'], quoteToken)})`}
             name="total"
             insideLabel="true"

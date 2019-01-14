@@ -13,7 +13,7 @@ export interface CardProps {
   isActive?: boolean;
   name?: string;
   rank?: number;
-  sharePrice?: Tm.price.PriceInterface;
+  sharePrice?: Tm.PriceInterface;
   reportUrl?: string;
   onClick?: React.MouseEventHandler;
   decimals?: number;

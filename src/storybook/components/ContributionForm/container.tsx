@@ -12,13 +12,13 @@ const calculateInputs = (props, field, value) => {
   const amountValue = field === 'amount' ? value : values.amount;
 
   if (field === 'amount') {
-    const total = Tm.bigInteger.multiply(amountValue, 60);
+    const total = Tm.multiply(amountValue, 60);
 
     if (values.total !== total) {
       props.setFieldValue('total', total);
     }
   } else if (field === 'total') {
-    const amount = Tm.bigInteger.divide(totalValue, 60);
+    const amount = Tm.divide(totalValue, 60);
 
     if (amount !== values.amount) {
       if (values.amount !== amount) {

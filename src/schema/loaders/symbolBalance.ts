@@ -1,42 +1,21 @@
 import * as R from 'ramda';
-import { balanceOf } from '@melonproject/protocol';
-import * as tokenMath from '@melonproject/token-math';
-
-export const extractQuantity = quantity => {
-  return quantity && quantity.quantity.toString();
-};
+import * as Tm from '@melonproject/token-math';
+import { balanceOf, getTokenBySymbol } from '@melonproject/protocol';
 
 export const getEthBalance = async (environment, address) => {
   const balance = await environment.eth.getBalance(address);
-  const quantity = tokenMath.quantity.createQuantity('ETH', balance.toString());
+  const token = Tm.createToken('ETH');
+  const quantity = Tm.createQuantity(token, balance.toString());
   return quantity;
 };
 
-export const getTokenBalance = async (environment, symbol, address) => {
-  const token = environment.deployment.thirdPartyContracts.tokens.find(
-    item => item.symbol === symbol,
-  );
-  const quantity = await balanceOf(environment, token.address, { address });
-  return quantity;
-};
+export const getSymbolBalance = R.curryN(3, (environment, symbol, address) => {
+  if (symbol === 'ETH') {
+    return getEthBalance(environment, address);
+  }
 
-export const getSymbolBalance = R.curryN(
-  3,
-  async (environment, symbol, address) => {
-    const quantity =
-      symbol === 'ETH'
-        ? await getEthBalance(environment, address)
-        : await getTokenBalance(environment, symbol, address);
-
-    return {
-      quantity: extractQuantity(quantity),
-      token: {
-        decimals: quantity.token.decimals,
-        symbol: quantity.token.symbol,
-        address: quantity.token.address,
-      },
-    };
-  },
-);
+  const token = getTokenBySymbol(environment, symbol);
+  return (token && balanceOf(environment, token.address, { address })) || null;
+});
 
 export default getSymbolBalance;

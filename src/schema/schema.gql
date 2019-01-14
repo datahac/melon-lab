@@ -22,12 +22,6 @@ enum ExchangeEnum {
   ETHFINEX
 }
 
-enum SymbolEnum {
-  WETH
-  ETH
-  MLN
-}
-
 enum OrderTypeEnum {
   ASK
   BID
@@ -291,7 +285,7 @@ type Query {
   peerCount: String
   contractDeployment: Deployment
   totalFunds: Int
-  balance(symbol: SymbolEnum!, address: String): Quantity
+  balance(symbol: String!, address: String): Quantity
   fund(address: String!): Fund
   rankings: [Ranking]
   orders(
@@ -500,7 +494,7 @@ type Subscription {
   priceFeedUp: Boolean
   peerCount: String
   balance(
-    symbol: SymbolEnum!
+    symbol: String!
     address: String
   ): Quantity
 }

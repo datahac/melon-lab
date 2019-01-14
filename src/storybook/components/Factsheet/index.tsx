@@ -46,11 +46,9 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
         <div className="factsheet__item">
           Creation date: {inception && format(inception, 'DD. MMM YYYY HH:mm')}
           <br />
-          Total number of shares:{' '}
-          {totalSupply && Tm.quantity.toFixed(totalSupply)}
+          Total number of shares: {totalSupply && Tm.toFixed(totalSupply)}
           <br />
-          Shares owned by me:{' '}
-          {personalStake && Tm.quantity.toFixed(personalStake)}
+          Shares owned by me: {personalStake && Tm.toFixed(personalStake)}
         </div>
         <div className="factsheet__item">
           Management Reward: {managementReward}%<br />

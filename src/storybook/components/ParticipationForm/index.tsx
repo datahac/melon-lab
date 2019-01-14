@@ -10,9 +10,9 @@ import * as R from 'ramda';
 import styles from './styles.css';
 
 export interface FormValues {
-  price: Tm.price.PriceInterface;
-  quantity: Tm.quantity.QuantityInterface;
-  total: Tm.quantity.QuantityInterface;
+  price: Tm.PriceInterface;
+  quantity: Tm.QuantityInterface;
+  total: Tm.QuantityInterface;
   type: string;
 }
 
@@ -82,10 +82,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
 
             <div className="participation-form__input">
               <Input
-                value={
-                  values.quantity &&
-                  Tm.quantity.toFixed(values.quantity, decimals)
-                }
+                value={values.quantity && Tm.toFixed(values.quantity, decimals)}
                 type="number"
                 label="Quantity (Shares)"
                 name="quantity"
@@ -104,9 +101,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
               <Fragment>
                 <div className="participation-form__input">
                   <Input
-                    value={
-                      values.price && Tm.price.toFixed(values.price, decimals)
-                    }
+                    value={values.price && Tm.toFixed(values.price, decimals)}
                     type="number"
                     label={`Price (${R.path(
                       ['quote', 'token', 'symbol'],
@@ -126,10 +121,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 </div>
                 <div className="participation-form__input">
                   <Input
-                    value={
-                      values.total &&
-                      Tm.quantity.toFixed(values.total, decimals)
-                    }
+                    value={values.total && Tm.toFixed(values.total, decimals)}
                     type="number"
                     label={`Total (${R.path(
                       ['token', 'symbol'],

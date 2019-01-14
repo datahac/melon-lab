@@ -14,33 +14,41 @@ export const BalanceContext = React.createContext(defaults);
 
 export const balanceQuery = gql`
   query BalanceQuery($account: String!) {
-    eth: balance(address: $account, symbol: ETH) {
+    eth: balance(address: $account, symbol: "ETH") {
       quantity
       token {
         decimals
+        symbol
+        address
       }
     }
-    weth: balance(address: $account, symbol: WETH) {
+    weth: balance(address: $account, symbol: "WETH") {
       quantity
       token {
         decimals
+        symbol
+        address
       }
     }
-    mln: balance(address: $account, symbol: MLN) {
+    mln: balance(address: $account, symbol: "MLN") {
       quantity
       token {
         decimals
+        symbol
+        address
       }
     }
   }
 `;
 
 const balanceSubscription = gql`
-  subscription BalanceSubscription($account: String!, $symbol: SymbolEnum!) {
+  subscription BalanceSubscription($account: String!, $symbol: String!) {
     balance(address: $account, symbol: $symbol) {
       quantity
       token {
         decimals
+        symbol
+        address
       }
     }
   }

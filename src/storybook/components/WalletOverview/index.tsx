@@ -41,27 +41,21 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
                 ETH:
                 <br />
                 <span className="wallet-overview__balance-value">
-                  {balances &&
-                    balances.eth &&
-                    Tm.quantity.toFixed(balances.eth)}
+                  {balances && balances.eth && Tm.toFixed(balances.eth)}
                 </span>
               </div>
               <div className="wallet-overview__balance">
                 MLN:
                 <br />
                 <span className="wallet-overview__balance-value">
-                  {balances &&
-                    balances.mln &&
-                    Tm.quantity.toFixed(balances.mln)}
+                  {balances && balances.mln && Tm.toFixed(balances.mln)}
                 </span>
               </div>
               <div className="wallet-overview__balance">
                 WETH:
                 <br />
                 <span className="wallet-overview__balance-value">
-                  {balances &&
-                    balances.weth &&
-                    Tm.quantity.toFixed(balances.weth)}
+                  {balances && balances.weth && Tm.toFixed(balances.weth)}
                 </span>
               </div>
             </div>
@@ -76,8 +70,7 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
 
             {associatedFund && !isComplete && (
               <Fragment>
-                {balances &&
-                (!balances.eth || Tm.bigInteger.isZero(balances.eth)) ? (
+                {balances && (!balances.eth || Tm.isZero(balances.eth)) ? (
                   <InsufficientFunds
                     eth={balances.eth}
                     weth={balances.weth}
@@ -108,8 +101,7 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
 
             {!associatedFund && (
               <Fragment>
-                {balances &&
-                (!balances.eth || Tm.bigInteger.isZero(balances.eth)) ? (
+                {balances && (!balances.eth || Tm.isZero(balances.eth)) ? (
                   <InsufficientFunds
                     eth={balances.eth}
                     weth={balances.weth}

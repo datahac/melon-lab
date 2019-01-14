@@ -67,7 +67,7 @@ export default {
     },
     fund: (_, { address }, { loaders }) => {
       return (
-        (Tm.address.isAddress(address) &&
+        (Tm.isAddress(address) &&
           loaders.fundReady
             .load(address)
             .then(
@@ -192,8 +192,8 @@ export default {
           throw new Error('Invalid order type.');
       }
     },
-    price: parent => Tm.price.toFixed(parent.trade),
-    volume: parent => Tm.quantity.toFixed(parent.trade.base),
+    price: parent => Tm.toFixed(parent.trade),
+    volume: parent => Tm.toFixed(parent.trade.base),
   },
   ZeroExOrder: {
     metadata: parent => parent.original.signedOrder,
@@ -249,7 +249,7 @@ export default {
       const enhancedEnvironment = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -267,7 +267,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -288,7 +288,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -317,7 +317,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -331,7 +331,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -345,7 +345,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -365,16 +365,13 @@ export default {
       });
 
       const params = {
-        investmentAmount: Tm.quantity.createQuantity(
-          nativeToken,
-          investmentAmount,
-        ),
+        investmentAmount: Tm.createQuantity(nativeToken, investmentAmount),
       };
 
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -398,7 +395,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -420,14 +417,14 @@ export default {
       );
       const quoteToken = await loaders.quoteToken();
       const params = {
-        howMuch: Tm.quantity.createQuantity(quoteToken, investmentAmount),
+        howMuch: Tm.createQuantity(quoteToken, investmentAmount),
         spender: participationAddress,
       };
 
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -447,12 +444,12 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
       const params = {
-        howMuch: Tm.quantity.createQuantity(quoteToken, investmentAmount),
+        howMuch: Tm.createQuantity(quoteToken, investmentAmount),
         spender: participationAddress,
       };
 
@@ -471,7 +468,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -491,7 +488,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -511,7 +508,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -537,7 +534,7 @@ export default {
       const enhancedEnvironment = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -560,7 +557,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 
@@ -578,7 +575,7 @@ export default {
       const env = {
         ...environment,
         wallet: {
-          address: new Tm.address.Address(from),
+          address: new Tm.Address(from),
         },
       };
 

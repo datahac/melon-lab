@@ -7,11 +7,9 @@ const withForm = withFormik({
   mapPropsToValues: props => ({
     price: props.sharePrice,
     total:
-      props.sharePrice &&
-      Tm.quantity.createQuantity(props.sharePrice.quote.token, 0),
+      props.sharePrice && Tm.createQuantity(props.sharePrice.quote.token, 0),
     quantity:
-      props.sharePrice &&
-      Tm.quantity.createQuantity(props.sharePrice.base.token, 0),
+      props.sharePrice && Tm.createQuantity(props.sharePrice.base.token, 0),
     type: 'Invest',
   }),
   validate: values => {
@@ -19,13 +17,13 @@ const withForm = withFormik({
 
     if (!values.quantity) {
       errors.quantity = 'Required';
-    } else if (Tm.bigInteger.izZero(values.quantity.quantity)) {
+    } else if (Tm.izZero(values.quantity.quantity)) {
       errors.quantity = 'Invalid quantity';
     }
 
     if (!values.total) {
       errors.total = 'Required';
-    } else if (Tm.bigInteger.izZero(values.total.quantity)) {
+    } else if (Tm.izZero(values.total.quantity)) {
       errors.total = 'Invalid quantity';
     }
 
@@ -42,27 +40,27 @@ const withFormHandlers = compose(
       const { values } = props;
 
       if (name === 'quantity') {
-        const quantity = Tm.quantity.createQuantity(
+        const quantity = Tm.createQuantity(
           props.sharePrice.base.token,
           parseFloat(value) || 0,
         );
         props.setFieldValue('quantity', quantity);
 
-        const total = Tm.price.valueIn(values.price, quantity);
-        if (!Tm.quantity.isEqual(values.total, total)) {
+        const total = Tm.valueIn(values.price, quantity);
+        if (!Tm.isEqual(values.total, total)) {
           props.setFieldValue('total', total);
         }
       }
 
       if (name === 'total') {
-        const total = Tm.quantity.createQuantity(
+        const total = Tm.createQuantity(
           props.sharePrice.quote.token,
           parseFloat(value) || 0,
         );
         props.setFieldValue('total', total);
 
-        const quantity = Tm.price.valueIn(values.price, total);
-        if (!Tm.bigInteger.isEqual(values.quantity, quantity)) {
+        const quantity = Tm.valueIn(values.price, total);
+        if (!Tm.isEqual(values.quantity, quantity)) {
           props.setFieldValue('quantity', quantity);
         }
       }

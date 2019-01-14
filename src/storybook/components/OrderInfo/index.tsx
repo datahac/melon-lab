@@ -5,11 +5,11 @@ import * as R from 'ramda';
 import styles from './styles.css';
 
 export interface OrderInfoProps {
-  ask?: Tm.price.PriceInterface;
-  bid?: Tm.price.PriceInterface;
-  lastPrice?: Tm.price.PriceInterface;
-  baseToken: Tm.quantity.QuantityInterface;
-  quoteToken: Tm.quantity.QuantityInterface;
+  ask?: Tm.PriceInterface;
+  bid?: Tm.PriceInterface;
+  lastPrice?: Tm.PriceInterface;
+  baseToken: Tm.QuantityInterface;
+  quoteToken: Tm.QuantityInterface;
 }
 
 const OrderInfo: StatelessComponent<OrderInfoProps> = ({
@@ -24,18 +24,18 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
     <div className="order-info__prices">
       <div className="order-info__last-price">
         {lastPrice ? (
-          <Fragment>{Tm.price.toFixed(lastPrice)}</Fragment>
+          <Fragment>{Tm.toFixed(lastPrice)}</Fragment>
         ) : (
           <span>N/A</span>
         )}
         <span className="order-info__price-desc">Last Price</span>
       </div>
       <div className="order-info__bid">
-        {bid ? <Fragment>{Tm.price.toFixed(bid)}</Fragment> : <span>N/A</span>}
+        {bid ? <Fragment>{Tm.toFixed(bid)}</Fragment> : <span>N/A</span>}
         <span className="order-info__price-desc">Bid</span>
       </div>
       <div className="order-info__ask">
-        {ask ? <Fragment>{Tm.price.toFixed(ask)}</Fragment> : <span>N/A</span>}
+        {ask ? <Fragment>{Tm.toFixed(ask)}</Fragment> : <span>N/A</span>}
         <span className="order-info__price-desc">Ask</span>
       </div>
     </div>
@@ -44,13 +44,13 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
         <span className="order-info__balance-desc">
           {R.path(['token', 'symbol'], baseToken)}:
         </span>{' '}
-        {baseToken && Tm.quantity.toFixed(baseToken)}
+        {baseToken && Tm.toFixed(baseToken)}
       </div>
       <div className="order-info__balance">
         <span className="order-info__balance-desc">
           {R.path(['token', 'symbol'], quoteToken)}:
         </span>{' '}
-        {quoteToken && Tm.quantity.toFixed(quoteToken)}
+        {quoteToken && Tm.toFixed(quoteToken)}
       </div>
     </div>
   </div>

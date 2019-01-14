@@ -28,15 +28,10 @@ export class CapabilityProvider extends React.PureComponent {
 
           const hasAccount = !!account;
           const hasEth =
-            hasAccount &&
-            ethBalance &&
-            !Tm.bigInteger.isZero(ethBalance.quantity);
+            hasAccount && ethBalance && !Tm.isZero(ethBalance.quantity);
           const hasWeth =
-            hasAccount &&
-            wethBalance &&
-            !Tm.bigInteger.isZero(wethBalance.quantity);
-          const hasCurrentBlock =
-            currentBlock && !Tm.bigInteger.isZero(currentBlock);
+            hasAccount && wethBalance && !Tm.isZero(wethBalance.quantity);
+          const hasCurrentBlock = currentBlock && !Tm.isZero(currentBlock);
           const isSynced = !!nodeSynced;
           const isCompetition = false; // TODO: Make this configurable.
 

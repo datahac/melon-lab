@@ -88,14 +88,14 @@ const getTestEnvironment = async (track: string) => {
   const tokens = thirdPartyContracts.tokens;
   const [ethToken, mlnToken] = tokens;
 
-  const mlnPrice = Tm.price.createPrice(
-    Tm.quantity.createQuantity(mlnToken, '1'),
-    Tm.quantity.createQuantity(ethToken, '2'),
+  const mlnPrice = Tm.createPrice(
+    Tm.createQuantity(mlnToken, '1'),
+    Tm.createQuantity(ethToken, '2'),
   );
 
-  const ethPrice = Tm.price.createPrice(
-    Tm.quantity.createQuantity(ethToken, '1'),
-    Tm.quantity.createQuantity(ethToken, '1'),
+  const ethPrice = Tm.createPrice(
+    Tm.createQuantity(ethToken, '1'),
+    Tm.createQuantity(ethToken, '1'),
   );
 
   await update(withDeployment, priceSource, [ethPrice, mlnPrice]);
@@ -104,18 +104,18 @@ const getTestEnvironment = async (track: string) => {
     withDeployment.deployment.exchangeConfigs.MatchingMarket.exchange;
 
   await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-    buy: Tm.quantity.createQuantity(mlnToken, 1),
-    sell: Tm.quantity.createQuantity(ethToken, 1),
+    buy: Tm.createQuantity(mlnToken, 1),
+    sell: Tm.createQuantity(ethToken, 1),
   });
 
   await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-    buy: Tm.quantity.createQuantity(mlnToken, 2),
-    sell: Tm.quantity.createQuantity(ethToken, 1),
+    buy: Tm.createQuantity(mlnToken, 2),
+    sell: Tm.createQuantity(ethToken, 1),
   });
 
   await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-    buy: Tm.quantity.createQuantity(mlnToken, 3),
-    sell: Tm.quantity.createQuantity(ethToken, 1),
+    buy: Tm.createQuantity(mlnToken, 3),
+    sell: Tm.createQuantity(ethToken, 1),
   });
 
   return {

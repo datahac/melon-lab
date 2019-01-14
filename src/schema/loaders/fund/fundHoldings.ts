@@ -30,7 +30,7 @@ async function fundHoldings(environment, address) {
     })
     .map((value, key) => {
       const token = getTokenByAddress(environment, value);
-      return Tm.quantity.createQuantity(token, quantities[key]);
+      return Tm.createQuantity(token, quantities[key]);
     });
 
   return R.unionWith(R.eqBy(R.prop('token')), holdings, availableTokens);
