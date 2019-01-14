@@ -249,30 +249,16 @@ export default {
       };
 
       // TODO: The environment should not hold account data. Maybe?
-      const enhancedEnvironment = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
-      const result = await beginSetup.prepare(
-        enhancedEnvironment,
-        version,
-        params,
-      );
+      const result = await beginSetup.prepare(env, version, params);
 
       return result && result.rawTransaction;
     },
     executeFundSetupBegin: (_, { from, signed }, { environment }) => {
       const transaction = signed.rawTransaction;
       const version = environment.deployment.melonContracts.version;
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
       return beginSetup.send(env, version, transaction);
     },
@@ -288,13 +274,7 @@ export default {
         CREATE_VAULT: createVault,
       }[step];
 
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
-
+      const env = withDifferentAccount(environment, new Tm.Address(from));
       const result = await fn.prepare(env, version);
 
       return result && result.rawTransaction;
@@ -317,13 +297,7 @@ export default {
         CREATE_VAULT: createVault,
       }[step];
 
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
-
+      const env = withDifferentAccount(environment, new Tm.Address(from));
       const result = await fn.send(env, version, transaction);
 
       return !!result;
@@ -331,13 +305,7 @@ export default {
 
     estimateFundSetupComplete: async (_, { from }, { environment }) => {
       const version = environment.deployment.melonContracts.version;
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
-
+      const env = withDifferentAccount(environment, new Tm.Address(from));
       const result = await completeSetup.prepare(env, version);
 
       return result && result.rawTransaction;
@@ -345,12 +313,7 @@ export default {
     executeFundSetupComplete: async (_, { from, signed }, { environment }) => {
       const version = environment.deployment.melonContracts.version;
       const transaction = signed.rawTransaction;
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
       return completeSetup.send(env, version, transaction);
     },
@@ -371,12 +334,7 @@ export default {
         investmentAmount: Tm.createQuantity(nativeToken, investmentAmount),
       };
 
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
       const result = await requestInvestment.prepare(
         env,
@@ -395,12 +353,7 @@ export default {
         fundAddress,
       );
       const transaction = signed.rawTransaction;
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
       const result = await requestInvestment.send(
         env,
@@ -424,12 +377,7 @@ export default {
         spender: participationAddress,
       };
 
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
       const result = await approveTransfer.prepare(env, params);
       return result && result.rawTransaction;
@@ -444,12 +392,7 @@ export default {
       );
       const quoteToken = await loaders.quoteToken();
       const transaction = signed.rawTransaction;
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
       const params = {
         howMuch: Tm.createQuantity(quoteToken, investmentAmount),
@@ -468,12 +411,7 @@ export default {
       const { participationAddress } = await loaders.fundRoutes.load(
         fundAddress,
       );
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
       const result = await executeRequest.prepare(env, participationAddress);
 
@@ -488,12 +426,7 @@ export default {
         fundAddress,
       );
       const transaction = signed.rawTransaction;
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
       const result = await executeRequest.send(
         env,
@@ -508,12 +441,7 @@ export default {
         hub: fundAddress,
       };
 
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
       const result = await shutDownFund.prepare(
         env,
@@ -534,19 +462,9 @@ export default {
         hub: fundAddress,
       };
 
-      const enhancedEnvironment = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
-      const result = await shutDownFund.send(
-        enhancedEnvironment,
-        version,
-        transaction,
-        params,
-      );
+      const result = await shutDownFund.send(env, version, transaction, params);
 
       return !!result;
     },
@@ -557,12 +475,7 @@ export default {
     ) => {
       const { feeManagerAddress } = await loaders.fundRoutes.load(fundAddress);
 
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
       const result = await triggerRewardAllFees.prepare(env, feeManagerAddress);
 
@@ -575,12 +488,7 @@ export default {
     ) => {
       const { feeManagerAddress } = await loaders.fundRoutes.load(fundAddress);
       const transaction = signed.rawTransaction;
-      const env = {
-        ...environment,
-        wallet: {
-          address: new Tm.Address(from),
-        },
-      };
+      const env = withDifferentAccount(environment, new Tm.Address(from));
 
       const result = await triggerRewardAllFees.send(
         env,
