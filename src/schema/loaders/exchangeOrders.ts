@@ -1,7 +1,6 @@
 import * as R from 'ramda';
 import { Exchange, Network } from '@melonproject/exchange-aggregator/lib/types';
-import { fetchEthfinexOrders } from '@melonproject/exchange-aggregator/lib/exchanges/ethfinex';
-import { fetchOasisDexOrders } from '@melonproject/exchange-aggregator/lib/exchanges/oasis-dex';
+import { exchanges } from '@melonproject/exchange-aggregator';
 import { Environment } from '@melonproject/protocol/lib/utils/environment/Environment';
 import { getTokenBySymbol } from '@melonproject/protocol/lib/utils/environment/getTokenBySymbol';
 
@@ -24,7 +23,7 @@ export default R.curryN(
     const result = (() => {
       switch (exchange) {
         case 'OASIS_DEX':
-          return fetchOasisDexOrders({
+          return exchanges.oasisdex.fetch({
             ...options,
             environment,
           });
@@ -33,7 +32,7 @@ export default R.curryN(
         case 'KYBER_NETWORK':
           return Promise.resolve([]);
         case 'ETHFINEX':
-          return fetchEthfinexOrders(options);
+          return exchanges.ethfinex.fetch(options);
         default:
           throw new Error('Invalid exchange.');
       }
