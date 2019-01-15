@@ -1,6 +1,9 @@
 import * as R from 'ramda';
-import { Exchange, Network } from '@melonproject/exchange-aggregator/lib/types';
-import { exchanges } from '@melonproject/exchange-aggregator';
+import {
+  exchanges,
+  Exchange,
+  Network,
+} from '@melonproject/exchange-aggregator';
 import { Environment } from '@melonproject/protocol/lib/utils/environment/Environment';
 import { getTokenBySymbol } from '@melonproject/protocol/lib/utils/environment/getTokenBySymbol';
 
@@ -28,9 +31,9 @@ export default R.curryN(
             environment,
           });
         case 'RADAR_RELAY':
-          return Promise.resolve([]);
+          return exchanges.radarrelay.fetch(options);
         case 'KYBER_NETWORK':
-          return Promise.resolve([]);
+          return exchanges.kyber.fetch(options);
         case 'ETHFINEX':
           return exchanges.ethfinex.fetch(options);
         default:

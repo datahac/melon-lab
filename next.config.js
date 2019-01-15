@@ -93,6 +93,10 @@ module.exports = withTypeScript(Object.assign({}, distConfig, {
       loader: 'svg-sprite-loader',
     });
 
+    config.node = {
+      fs: 'empty',
+    };
+
     return config;
   },
 }));

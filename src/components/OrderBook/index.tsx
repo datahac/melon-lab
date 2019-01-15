@@ -4,7 +4,7 @@ import OrderBook from '~/components/OrderBook';
 import Composer from 'react-composer';
 import { Query } from '~/apollo';
 import gql from 'graphql-tag';
-import { aggregateOrders } from '@melonproject/exchange-aggregator/lib/exchanges/aggregate';
+import { aggregateOrders } from '@melonproject/exchange-aggregator';
 import availableExchanges from '~/utils/availableExchanges';
 
 const query = gql`
