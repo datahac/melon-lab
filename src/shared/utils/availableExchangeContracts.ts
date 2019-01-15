@@ -5,11 +5,15 @@ const availableExchangeContracts = [
   },
   {
     value: 'ZERO_EX_EXCHANGE',
-    text: '0x',
+    text: 'Radar Relay',
   },
   {
-    value: 'KYBER_NETWORK_PROXY',
+    value: 'KYBER_NETWORK',
     text: 'Kyber Network',
+  },
+  {
+    value: 'ETHFINEX',
+    text: 'ETH Finex',
   },
 ];
 
