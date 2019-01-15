@@ -219,7 +219,7 @@ export default {
   Mutation: {
     estimateFundSetupBegin: async (
       _,
-      { from, name, exchanges },
+      { from, name, exchanges, managementFee, performanceFee },
       { environment, loaders },
     ) => {
       const quoteToken = await loaders.quoteToken();
@@ -237,9 +237,32 @@ export default {
         return token.symbol === 'MLN';
       });
 
-      // TODO: Properly handle provided fees, exchanges, tokens, etc.
+      const fees = [
+        {
+          feeAddress: environment.deployment.melonContracts.fees.managementFee.toLowerCase(),
+          feePeriod: new Tm.BigInteger(0),
+          feeRate: new Tm.BigInteger(
+            Tm.multiply(
+              new Tm.BigInteger(managementFee),
+              Tm.power(new Tm.BigInteger(10), new Tm.BigInteger(16)),
+            ),
+          ),
+        },
+        {
+          feeAddress: environment.deployment.melonContracts.fees.performanceFee.toLowerCase(),
+          feePeriod: new Tm.BigInteger(86400 * 90),
+          feeRate: new Tm.BigInteger(
+            Tm.multiply(
+              new Tm.BigInteger(performanceFee),
+              Tm.power(new Tm.BigInteger(10), new Tm.BigInteger(16)),
+            ),
+          ),
+        },
+      ];
+
+      // TODO: Properly handle provided exchanges, tokens, etc.
       const params = {
-        fees: [],
+        fees,
         defaultTokens: [quoteToken, mlnToken],
         exchangeConfigs,
         fundName: name,

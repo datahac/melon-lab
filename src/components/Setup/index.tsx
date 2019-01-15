@@ -10,7 +10,7 @@ import StepRiskProfile from '~/components/SetupForm/StepRiskProfile';
 import StepTerms from '~/components/SetupForm/StepTerms';
 import StepOverview from '~/components/SetupForm/StepOverview';
 import SetupForm from '~/components/SetupForm';
-// import StepFeeStructure from '~/components/SetupForm/StepFeeStructure';
+import StepFeeStructure from '~/components/SetupForm/StepFeeStructure';
 import Link from '~/blocks/Link';
 import { withApollo } from 'react-apollo';
 import Composer from 'react-composer';
@@ -53,12 +53,12 @@ const SetupFormContainer = withForm(props => (
           availableExchangeContracts={availableExchangeContracts}
         />
       </WizardPage>
-      {/* <WizardPage
+      <WizardPage
         onClickNext={props.onClickNext}
         onClickPrev={props.onClickPrev}
       >
         <StepFeeStructure {...props} />
-      </WizardPage> */}
+      </WizardPage>
       <WizardPage
         onClickNext={props.onClickNext}
         onClickPrev={props.onClickPrev}
@@ -108,10 +108,11 @@ class Setup extends React.Component {
         name: 'Fund',
         validateFields: ['name', 'exchanges'],
       },
-      // {
-      //   key: 'fee-structure',
-      //   name: 'Fee structure',
-      // },
+      {
+        key: 'fee-structure',
+        name: 'Fee structure',
+        validateFields: ['performanceFee', 'managementFee'],
+      },
       {
         key: 'risk-profile',
         name: 'Risk Profile',
@@ -207,13 +208,3 @@ export default compose(
   withRouter,
   withApollo,
 )(Setup);
-
-// Begin
-// - fund === false
-
-// Step
-// - fund === true
-// - IsInProgress === true
-
-// End
-// - fund === true

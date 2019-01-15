@@ -5,9 +5,18 @@ import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
 
 const estimateFundSetupBeginMutation = gql`
-  mutation EstimateFundSetupBegin($name: String!, $exchanges: [String]!) {
-    estimate: estimateFundSetupBegin(name: $name, exchanges: $exchanges)
-      @account {
+  mutation EstimateFundSetupBegin(
+    $name: String!
+    $exchanges: [String]!
+    $performanceFee: String!
+    $managementFee: String!
+  ) {
+    estimate: estimateFundSetupBegin(
+      name: $name
+      exchanges: $exchanges
+      performanceFee: $performanceFee
+      managementFee: $managementFee
+    ) @account {
       data
       from
       gas
@@ -49,6 +58,8 @@ export default withRouter(props => (
       variables: () => ({
         name: props.values.name,
         exchanges: props.values.exchanges,
+        performanceFee: props.values.performanceFee,
+        managementFee: props.values.managementFee,
       }),
     }}
     execute={{

@@ -4,8 +4,6 @@ import Input from '~/blocks/Input';
 import styles from './styles.css';
 
 interface FormValues {
-  name: string;
-  exchanges: any;
   managementFee: string;
   performanceFee: string;
 }
@@ -38,8 +36,10 @@ export const StepFeeStructure: StatelessComponent<StepFeeStructureProps> = ({
         required={true}
         name="managementFee"
         type="text"
-        placeholder="Management fee"
+        placeholder="Management fee in %"
         error={touched.managementFee && errors.managementFee}
+        min={0}
+        max={100}
       />
       <h4>Performance fee</h4>
       <Input
@@ -49,8 +49,10 @@ export const StepFeeStructure: StatelessComponent<StepFeeStructureProps> = ({
         required={true}
         name="performanceFee"
         type="text"
-        placeholder="Performance fee"
+        placeholder="Performance fee in %"
         error={touched.performanceFee && errors.performanceFee}
+        min={0}
+        max={100}
       />
     </div>
   );

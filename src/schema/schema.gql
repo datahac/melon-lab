@@ -294,6 +294,8 @@ type Mutation {
   estimateFundSetupBegin(
     name: String!
     exchanges: [String]!
+    performanceFee: String!
+    managementFee: String!
   ): UnsignedTransaction
 
   """
