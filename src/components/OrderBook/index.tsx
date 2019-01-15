@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as R from 'ramda';
 import OrderBook from '~/components/OrderBook';
 import Composer from 'react-composer';
 import { Query } from '~/apollo';
 import gql from 'graphql-tag';
 import { aggregateOrders } from '@melonproject/exchange-aggregator/lib/exchanges/aggregate';
+import availableExchanges from '~/utils/availableExchanges';
 
 const query = gql`
   query OrdersQuery($base: String!, $quote: String!, $exchange: ExchangeEnum!) {
@@ -72,14 +73,52 @@ const AggregatedOrders = ({ baseAsset, quoteAsset, exchanges, children }) => (
   </Composer>
 );
 
-export default ({ baseAsset, quoteAsset, exchanges }) => (
-  <AggregatedOrders
-    exchanges={exchanges}
-    quoteAsset={quoteAsset}
-    baseAsset={baseAsset}
-  >
-    {({ asks, bids, loading }) => (
-      <OrderBook loading={loading} bids={bids} asks={asks} />
-    )}
-  </AggregatedOrders>
-);
+export default ({ baseAsset, quoteAsset }) => {
+  const [selectedExchanges, setExchanges] = useState(
+    Object.keys(availableExchanges),
+  );
+
+  const updateExchanges = e => {
+    const value = e.target.value;
+    const tempExchanges = selectedExchanges;
+
+    if (value === 'ALL') {
+      if (
+        selectedExchanges.length ===
+        Object.keys(availableExchanges).map(([key]) => key).length
+      ) {
+        return setExchanges([]);
+      } else {
+        return setExchanges(Object.keys(availableExchanges));
+      }
+    } else {
+      if (!selectedExchanges.includes(value)) {
+        tempExchanges.push(value);
+      } else {
+        const index = selectedExchanges.indexOf(value);
+        tempExchanges.splice(index, 1);
+      }
+    }
+
+    return setExchanges(tempExchanges);
+  };
+
+  return (
+    <AggregatedOrders
+      exchanges={selectedExchanges}
+      quoteAsset={quoteAsset}
+      baseAsset={baseAsset}
+    >
+      {({ asks, bids, loading }) => (
+        <OrderBook
+          loading={loading}
+          bids={bids}
+          asks={asks}
+          availableExchanges={Object.entries(availableExchanges)}
+          setExchange={updateExchanges}
+          selectedExchanges={selectedExchanges}
+        />
+      )}
+    </AggregatedOrders>
+  );
+};

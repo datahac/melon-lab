@@ -15,7 +15,6 @@ import OrderBook from '+/components/OrderBook';
 import FundQuery from './data/fund';
 import HoldingsQuery from './data/holdings';
 import isSameAddress from '~/utils/isSameAddress';
-import availableExchanges from '~/utils/availableExchanges';
 
 const Container = ({ address, children }) => {
   return (
@@ -40,7 +39,6 @@ const Container = ({ address, children }) => {
 
 export default class ManageTemplateContainer extends React.Component {
   state = {
-    exchanges: Object.keys(availableExchanges),
     order: {
       type: 'Buy',
       strategy: 'Market',
@@ -52,7 +50,6 @@ export default class ManageTemplateContainer extends React.Component {
   };
 
   render() {
-    const { exchanges } = this.state;
     const { address, quoteAsset, baseAsset } = this.props;
 
     return (
@@ -122,7 +119,6 @@ export default class ManageTemplateContainer extends React.Component {
               }}
               OrderBook={OrderBook}
               OrderBookProps={{
-                exchanges,
                 quoteAsset,
                 baseAsset,
               }}

@@ -49,21 +49,19 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
               text="All"
               defaultChecked={
                 selectedExchanges.length ===
-                availableExchanges.map(exchange => exchange.value).length
+                availableExchanges.map(([key]) => key).length
               }
               disabled={loading}
             />
           </div>
-          {availableExchanges.map(exchange => (
-            <div className="orderbook__exchange" key={exchange.value}>
+          {availableExchanges.map(([key, value]) => (
+            <div className="orderbook__exchange" key={key}>
               <Checkbox
                 onInputChange={setExchange}
                 name="exchanges"
-                value={exchange.value}
-                text={exchange.text}
-                defaultChecked={
-                  selectedExchanges.indexOf(exchange.value) !== -1
-                }
+                value={key}
+                text={value}
+                defaultChecked={selectedExchanges.indexOf(key) !== -1}
                 disabled={loading}
               />
             </div>
