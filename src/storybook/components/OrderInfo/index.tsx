@@ -1,6 +1,6 @@
-import React, { StatelessComponent, Fragment } from 'react';
 import * as Tm from '@melonproject/token-math';
 import * as R from 'ramda';
+import React, { Fragment, StatelessComponent } from 'react';
 
 import styles from './styles.css';
 
@@ -20,7 +20,7 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
   quoteToken,
 }) => (
   <div className="order-info">
-    <style jsx>{styles}</style>
+    <style jsx={true}>{styles}</style>
     <div className="order-info__prices">
       <div className="order-info__last-price">
         {lastPrice ? (
@@ -44,7 +44,7 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
         <span className="order-info__balance-desc">
           {R.path(['token', 'symbol'], baseToken)}:
         </span>{' '}
-        {baseToken && Tm.toFixed(baseToken)}
+        {Tm.isQuantity(baseToken) && Tm.toFixed(baseToken)}
       </div>
       <div className="order-info__balance">
         <span className="order-info__balance-desc">

@@ -426,6 +426,15 @@ type Mutation {
   ): UnsignedTransaction
 
   """
+  Executes the "make order" transaction with the given gas price per unit.
+  """
+  executeMakeOrder(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    exchange: ExchangeEnum!
+  ): Order
+
+  """
   Export the currently active wallet in its encrypted form.
   """
   exportWallet(
