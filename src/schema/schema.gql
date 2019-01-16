@@ -435,6 +435,26 @@ type Mutation {
   ): Order
 
   """
+  Estimates the number of gas units required for the "cancel order" transaction.
+  """
+  # TODO: Same signature for all exchanges
+  estimateCancelOrder(
+    exchange: ExchangeEnum!
+    id: String!
+    buyToken: String!
+    sellToken: String!
+  ): UnsignedTransaction
+
+  """
+  Executes the "cancel order" transaction with the given gas price per unit.
+  """
+  executeCancelOrder(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    exchange: ExchangeEnum!
+  ): Boolean
+
+  """
   Export the currently active wallet in its encrypted form.
   """
   exportWallet(

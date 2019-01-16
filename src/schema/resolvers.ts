@@ -1,6 +1,7 @@
 import {
   approve as approveTransfer,
   beginSetup,
+  cancelOasisDexOrder,
   completeSetup,
   createAccounting,
   createFeeManager,
@@ -543,7 +544,6 @@ export default {
     ) => {
       const fund = await loaders.fundAddressFromManager.load(from);
       const { tradingAddress } = await loaders.fundRoutes.load(fund);
-
       const env = withDifferentAccount(environment, new Tm.Address(from));
 
       if (exchange === 'OASIS_DEX') {
@@ -612,6 +612,56 @@ export default {
       }
 
       throw new Error(`Make order not implemented for ${exchange}`);
+    },
+    estimateCancelOrder: async (
+      _,
+      { from, exchange, id, buyToken, sellToken },
+      { environment, loaders },
+    ) => {
+      const fund = await loaders.fundAddressFromManager.load(from);
+      const { tradingAddress } = await loaders.fundRoutes.load(fund);
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+
+      if (exchange === 'OASIS_DEX') {
+        const makerAsset = new Tm.Address(
+          getTokenBySymbol(env, sellToken).address || '',
+        );
+        const takerAsset = new Tm.Address(
+          getTokenBySymbol(env, buyToken).address || '',
+        );
+
+        const result = await cancelOasisDexOrder.prepare(env, tradingAddress, {
+          id,
+          maker: tradingAddress,
+          makerAsset,
+          takerAsset,
+        });
+
+        return result && result.rawTransaction;
+      }
+
+      throw new Error(`Cancel order not implemented for ${exchange}`);
+    },
+    executeCancelOrder: async (
+      _,
+      { from, signed, exchange },
+      { environment, loaders },
+    ) => {
+      const fund = await loaders.fundAddressFromManager.load(from);
+      const { tradingAddress } = await loaders.fundRoutes.load(fund);
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+
+      if (exchange === 'OASIS_DEX') {
+        const result = await cancelOasisDexOrder.send(
+          env,
+          tradingAddress,
+          signed.rawTransaction,
+        );
+
+        return !!result;
+      }
+
+      throw new Error(`Cancel order not implemented for ${exchange}`);
     },
     deleteWallet: async () => {
       const credentials = (await keytar.findCredentials('melon.fund')) || [];
