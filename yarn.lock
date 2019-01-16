@@ -1950,10 +1950,10 @@
   dependencies:
     source-map-support "^0.5.3"
 
-"@melonproject/protocol@0.9.2":
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.2.tgz#484d1f0a3f98460f4c1ce7bf5e2d6ed6098315db"
-  integrity sha512-cAB92gW2Np1TBWk74gDT/lTRFhRrNr76fWvVwU9Nf6lqtJFw6+cU6Czz+T4Yx/t63LfG8BmqbkKrXIARF0MYFQ==
+"@melonproject/protocol@0.9.3":
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.3.tgz#e30cffdb6761cafdfb570bbc66f97911719d9e0f"
+  integrity sha512-R2/ZU0MpfaGAdVELThN5C6aUcKp6Ix6eN7ezc76xC+/HO1Fcy1HxOYyYNbS4KSkapEjhLjnBvHnu8BELx6LA3w==
   dependencies:
     "@0x/contract-wrappers" "^4.1.1"
     "@0x/order-utils" "^3.0.2"
