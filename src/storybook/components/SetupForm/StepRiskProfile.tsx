@@ -2,17 +2,29 @@ import React, { StatelessComponent } from 'react';
 import Policies from '~/components/Policies';
 
 import styles from './styles.css';
+import { ObjectCache } from 'apollo-cache-inmemory';
 
+interface FormValues {
+  policies: ObjectCache;
+}
 export interface StepRiskProfileProps {
+  errors?: any;
+  handleBlur?: () => void;
+  handleChange?: () => void;
+  touched?: any;
+  values: FormValues;
+  onActivatePolicy;
   availablePolicies;
-  activatePolicy;
-  activatedPolicies;
 }
 
 export const StepRiskProfile: StatelessComponent<StepRiskProfileProps> = ({
+  onActivatePolicy,
+  values,
+  errors,
+  touched,
+  handleBlur,
+  handleChange,
   availablePolicies,
-  activatePolicy,
-  activatedPolicies,
 }) => {
   return (
     <div className="setup__step">
@@ -24,9 +36,13 @@ export const StepRiskProfile: StatelessComponent<StepRiskProfileProps> = ({
       </p>
 
       <Policies
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        values={values}
+        errors={errors}
+        touched={touched}
+        onActivatePolicy={onActivatePolicy}
         availablePolicies={availablePolicies}
-        activatePolicy={activatePolicy}
-        activatedPolicies={activatedPolicies}
       />
     </div>
   );

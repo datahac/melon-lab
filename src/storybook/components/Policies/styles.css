@@ -12,7 +12,6 @@
   padding: var(--space-m);
   border: 1px solid var(--color-border);
   justify-content: space-between;
-  line-height: 1;
 }
 
 .policies__item-wrap--inactive {
@@ -26,12 +25,12 @@
 .policies__item-wrap--active {
   text-align: center;
   flex-direction: column;
-  border: 1px solid var(--color-primary-dark);
 }
 
 .policies__item-add {
   flex: 0 1 auto;
   line-height: 0;
+  color: var(--color-border);
 }
 
 .policies__item {
@@ -41,4 +40,20 @@
   @media (--viewport-m) {
     flex: 0 0 33.33%;
   }
+}
+
+.policies__item-name {
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-xs);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.policies__item-remove {
+  margin-top: var(--space-xs);
+}
+
+.policies__item-desc {
+  margin-top: var(--space-xs);
+  font-size: var(--font-size-s);
 }

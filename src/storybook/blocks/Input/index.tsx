@@ -21,6 +21,9 @@ export interface InputProps {
   type?: string;
   value?: string;
   maxlength?: number;
+  min?: number;
+  max?: number;
+  centerText?: boolean;
 }
 
 const Input: StatelessComponent<InputProps> = ({
@@ -40,10 +43,14 @@ const Input: StatelessComponent<InputProps> = ({
   type = 'text',
   value,
   maxlength,
+  min,
+  max,
+  centerText,
 }) => {
   const inputClassNames = classNames('input', {
     'input--inside-label': insideLabel,
     'input--has-error': error,
+    'input--center-text': centerText,
   });
 
   return (
@@ -66,6 +73,8 @@ const Input: StatelessComponent<InputProps> = ({
           fixedDecimalScale={true}
           isNumericString={true}
           type="text"
+          min={min}
+          max={max}
         />
       ) : (
         <input
@@ -81,6 +90,8 @@ const Input: StatelessComponent<InputProps> = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
+          min={min}
+          max={max}
         />
       )}
       {error && <div className="input__error">{error}</div>}

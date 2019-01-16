@@ -1,14 +1,12 @@
-const availablePolicies = [
-  // {
-  //   key: 'max-positions',
-  //   name: 'Max positions',
-  //   description: 'Hello world',
-  //   type: 'PolicySlider',
-  //   limitations: {
-  //     min: 1,
-  //     max: 100,
-  //   },
-  // },
-];
+import Input from '~/blocks/Input';
+
+const availablePolicies = {
+  priceTolerance: {
+    name: 'Price tolerance',
+    desc: 'The higher the tolerance, the greater the risk',
+    Component: Input,
+    unit: '%',
+  },
+};
 
 export default availablePolicies;

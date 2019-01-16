@@ -65,14 +65,8 @@ const SetupFormContainer = withForm(props => (
       >
         <StepRiskProfile
           {...props}
-          activatedPolicies={props.values.policies}
-          availablePolicies={availablePolicies.filter(
-            availablePolicy =>
-              !props.values.policies
-                .map(policy => policy.val)
-                .includes(availablePolicy.val),
-          )}
-          activatePolicy={props.onActivatePolicy}
+          onActivatePolicy={props.onActivatePolicy}
+          availablePolicies={availablePolicies}
         />
       </WizardPage>
       <WizardPage
@@ -116,6 +110,7 @@ class Setup extends React.Component {
       {
         key: 'risk-profile',
         name: 'Risk Profile',
+        validateFields: ['policies.priceTolerance'],
       },
       {
         key: 'terms-conditions',

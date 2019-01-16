@@ -16,7 +16,7 @@ const initialValues = {
   name: '',
   exchanges: [],
   terms: false,
-  policies: [],
+  policies: {},
   performanceFee: '',
   managementFee: '',
 };
@@ -62,6 +62,12 @@ const withForm = withFormik({
         .positive('Fee must be positive')
         .max(100, 'Fee can not be greater than 100')
         .integer('Fee must be an integer'),
+      policies: Yup.object().shape({
+        priceTolerance: Yup.number()
+          .positive('Fee must be positive')
+          .max(100, 'Fee can not be greater than 100')
+          .integer('Fee must be an integer'),
+      }),
     }),
   enableReinitialize: true,
   handleSubmit: (values, form) => form.props.setFundValues(values),
@@ -69,14 +75,15 @@ const withForm = withFormik({
 
 const withFormHandlers = withHandlers({
   onActivatePolicy: props => value => {
-    const { policies } = props.values;
-
-    if (!R.find(R.propEq('key', value.key), policies)) {
-      props.setFieldValue('policies', [...policies, value]);
+    if (value in props.values.policies) {
+      const tempValues = props.values.policies;
+      delete tempValues[value];
+      props.setFieldValue('policies', tempValues);
     } else {
-      props.setFieldValue('policies', [
-        ...policies.filter(item => item.key !== value.key),
-      ]);
+      props.setFieldValue('policies', {
+        ...props.values.policies,
+        [value]: 0,
+      });
     }
   },
   onChangeExchanges: props => event => {
@@ -99,7 +106,14 @@ const withFormHandlers = withHandlers({
       await fields.map(item => props.setFieldTouched(item, true, true));
 
       props.validateForm().then(errors => {
-        if (fields.some(item => errors[item])) {
+        if (
+          fields.some(item =>
+            item.includes('.')
+              ? errors[item.split('.')[0]] &&
+                errors[item.split('.')[0]][item.split('.')[1]]
+              : errors[item],
+          )
+        ) {
           return props.setPage(props.page);
         }
 
