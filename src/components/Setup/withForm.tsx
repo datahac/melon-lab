@@ -2,7 +2,6 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { withHandlers, compose } from 'recompose';
 import gql from 'graphql-tag';
-import * as R from 'ramda';
 
 const uniqueFundQuery = gql`
   query UniqueFundQuery($name: String!) {
@@ -17,8 +16,10 @@ const initialValues = {
   exchanges: [],
   terms: false,
   policies: {},
-  performanceFee: '',
-  managementFee: '',
+  fees: {
+    performanceFee: '',
+    managementFee: '',
+  },
 };
 
 const withForm = withFormik({
@@ -52,18 +53,22 @@ const withForm = withFormik({
         'Must Accept Terms and Conditions',
         value => (value !== true ? false : true),
       ),
-      performanceFee: Yup.number()
-        .required('Performance fee is required.')
-        .positive('Fee must be positive')
-        .max(100, 'Fee can not be greater than 100')
-        .integer('Fee must be an integer'),
-      managementFee: Yup.number()
-        .required('Management fee   is required.')
-        .positive('Fee must be positive')
-        .max(100, 'Fee can not be greater than 100')
-        .integer('Fee must be an integer'),
       policies: Yup.object().shape({
         priceTolerance: Yup.number()
+          .positive('Fee must be positive')
+          .max(100, 'Fee can not be greater than 100')
+          .integer('Fee must be an integer'),
+      }),
+      fees: Yup.object().shape({
+        performanceFee: Yup.number()
+          .typeError('Performance fee is required')
+          .required('Performance fee is required')
+          .positive('Fee must be positive')
+          .max(100, 'Fee can not be greater than 100')
+          .integer('Fee must be an integer'),
+        managementFee: Yup.number()
+          .typeError('Management fee is required')
+          .required('Management fee is required')
           .positive('Fee must be positive')
           .max(100, 'Fee can not be greater than 100')
           .integer('Fee must be an integer'),

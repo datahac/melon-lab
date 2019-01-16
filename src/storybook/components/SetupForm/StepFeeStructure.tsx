@@ -4,8 +4,10 @@ import Input from '~/blocks/Input';
 import styles from './styles.css';
 
 interface FormValues {
-  managementFee: string;
-  performanceFee: string;
+  fees: {
+    managementFee: string;
+    performanceFee: string;
+  };
 }
 
 export interface StepFeeStructureProps {
@@ -23,39 +25,43 @@ export const StepFeeStructure: StatelessComponent<StepFeeStructureProps> = ({
   handleChange,
   touched,
   values,
-}) => {
-  return (
-    <div className="setup__step">
-      <style jsx>{styles}</style>
-      <h3>Fee structure</h3>
-      <h4>Management fee</h4>
-      <Input
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.managementFee}
-        required={true}
-        name="managementFee"
-        type="text"
-        placeholder="Management fee in %"
-        error={touched.managementFee && errors.managementFee}
-        min={0}
-        max={100}
-      />
-      <h4>Performance fee</h4>
-      <Input
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.performanceFee}
-        required={true}
-        name="performanceFee"
-        type="text"
-        placeholder="Performance fee in %"
-        error={touched.performanceFee && errors.performanceFee}
-        min={0}
-        max={100}
-      />
-    </div>
-  );
-};
+}) => (
+  <div className="setup__step">
+    <style jsx>{styles}</style>
+    <h3>Fee structure</h3>
+    <h4>Management fee</h4>
+    <Input
+      onChange={handleChange}
+      onBlur={handleBlur}
+      value={values.fees && values.fees.managementFee}
+      required={true}
+      name="fees.managementFee"
+      type="number"
+      placeholder="Management fee in %"
+      error={
+        !!touched.fees &&
+        !!touched.fees.managementFee &&
+        !!errors.fees &&
+        errors.fees.managementFee
+      }
+    />
+    <h4>Performance fee</h4>
+    <Input
+      onChange={handleChange}
+      onBlur={handleBlur}
+      value={values.fees && values.fees.performanceFee}
+      required={true}
+      name="fees.performanceFee"
+      type="number"
+      placeholder="Performance fee in %"
+      error={
+        !!touched.fees &&
+        !!touched.fees.performanceFee &&
+        !!errors.fees &&
+        errors.fees.performanceFee
+      }
+    />
+  </div>
+);
 
 export default StepFeeStructure;

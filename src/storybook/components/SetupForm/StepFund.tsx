@@ -1,6 +1,7 @@
 import React, { StatelessComponent } from 'react';
 import Input from '~/blocks/Input';
 import Selector from '~/components/Selector';
+import availableExchangeContracts from '~/utils/availableExchangeContracts';
 
 import styles from './styles.css';
 
@@ -17,7 +18,6 @@ export interface StepNameProps {
   touched?: any;
   values: FormValues;
   address: string;
-  availableExchangeContracts;
   onChangeExchanges;
 }
 
@@ -27,7 +27,6 @@ export const StepName: StatelessComponent<StepNameProps> = ({
   handleChange,
   touched,
   values,
-  availableExchangeContracts,
   onChangeExchanges,
 }) => {
   return (

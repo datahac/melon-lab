@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import { withRouter } from 'next/router';
 import { compose } from 'recompose';
-import availableExchangeContracts from '~/utils/availableExchangeContracts';
-import availablePolicies from '~/utils/availablePolicies';
 import Wizard from '~/components/Wizard';
 import WizardPage from '~/components/WizardPage';
 import StepFund from '~/components/SetupForm/StepFund';
@@ -44,14 +42,7 @@ const SetupFormContainer = withForm(props => (
           },
         }}
       >
-        <StepFund
-          {...props}
-          canonicalPriceFeedAddress={
-            props.configuration.melonContracts.priceSource
-          }
-          noComplianceAddress={props.configuration.noComplianceAddress}
-          availableExchangeContracts={availableExchangeContracts}
-        />
+        <StepFund {...props} />
       </WizardPage>
       <WizardPage
         onClickNext={props.onClickNext}
@@ -63,11 +54,7 @@ const SetupFormContainer = withForm(props => (
         onClickNext={props.onClickNext}
         onClickPrev={props.onClickPrev}
       >
-        <StepRiskProfile
-          {...props}
-          onActivatePolicy={props.onActivatePolicy}
-          availablePolicies={availablePolicies}
-        />
+        <StepRiskProfile {...props} onActivatePolicy={props.onActivatePolicy} />
       </WizardPage>
       <WizardPage
         onClickNext={props.onClickNext}
@@ -82,10 +69,7 @@ const SetupFormContainer = withForm(props => (
           onClick: () => props.submitForm(),
         }}
       >
-        <StepOverview
-          {...props}
-          availableExchangeContracts={availableExchangeContracts}
-        />
+        <StepOverview {...props} />
       </WizardPage>
     </Wizard>
   </SetupForm>
@@ -105,7 +89,7 @@ class Setup extends React.Component {
       {
         key: 'fee-structure',
         name: 'Fee structure',
-        validateFields: ['performanceFee', 'managementFee'],
+        validateFields: ['fees.performanceFee', 'fees.managementFee'],
       },
       {
         key: 'risk-profile',

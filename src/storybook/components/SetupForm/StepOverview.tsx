@@ -1,18 +1,15 @@
 import React, { StatelessComponent } from 'react';
 import { CellBody, CellHead, Row, Table, TableBody } from '~/blocks/Table';
 import availablePolicies from '~/utils/availablePolicies';
+import availableExchangeContracts from '~/utils/availableExchangeContracts';
 
 import styles from './styles.css';
 
 export interface StepTermsProps {
   values;
-  availableExchangeContracts;
 }
 
-export const StepTerms: StatelessComponent<StepTermsProps> = ({
-  values,
-  availableExchangeContracts,
-}) => (
+export const StepTerms: StatelessComponent<StepTermsProps> = ({ values }) => (
   <div className="setup__step">
     <style jsx>{styles}</style>
     <h3>Overview</h3>
@@ -36,8 +33,12 @@ export const StepTerms: StatelessComponent<StepTermsProps> = ({
         <Row>
           <CellHead>Fees</CellHead>
           <CellBody>
-            <div>Management Fee: {values.managementFee}%</div>
-            <div>Performance Fee: {values.performanceFee}%</div>
+            <div>
+              Management Fee: {values.fees && values.fees.managementFee}%
+            </div>
+            <div>
+              Performance Fee: {values.fees && values.fees.performanceFee}%
+            </div>
           </CellBody>
         </Row>
         <Row>

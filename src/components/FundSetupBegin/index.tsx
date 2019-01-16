@@ -8,8 +8,8 @@ const estimateFundSetupBeginMutation = gql`
   mutation EstimateFundSetupBegin(
     $name: String!
     $exchanges: [String]!
-    $performanceFee: String!
-    $managementFee: String!
+    $performanceFee: Float!
+    $managementFee: Float!
   ) {
     estimate: estimateFundSetupBegin(
       name: $name
@@ -58,8 +58,8 @@ export default withRouter(props => (
       variables: () => ({
         name: props.values.name,
         exchanges: props.values.exchanges,
-        performanceFee: props.values.performanceFee,
-        managementFee: props.values.managementFee,
+        performanceFee: props.values.fees.performanceFee,
+        managementFee: props.values.fees.managementFee,
       }),
     }}
     execute={{
