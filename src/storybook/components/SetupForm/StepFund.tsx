@@ -10,16 +10,10 @@ interface FormValues {
 }
 
 export interface StepNameProps {
-  competitionName?: string;
-  canonicalPriceFeedAddress: string;
-  competitionComplianceAddress: string;
-  noComplianceAddress: string;
   errors?: any;
   handleBlur?: () => void;
   handleChange?: () => void;
   handleSubmit?: () => void;
-  isCompetition?: boolean;
-  network?: string;
   touched?: any;
   values: FormValues;
   address: string;
@@ -28,15 +22,9 @@ export interface StepNameProps {
 }
 
 export const StepName: StatelessComponent<StepNameProps> = ({
-  competitionName,
-  canonicalPriceFeedAddress,
-  competitionComplianceAddress,
-  noComplianceAddress,
   errors,
   handleBlur,
   handleChange,
-  isCompetition,
-  network,
   touched,
   values,
   availableExchangeContracts,
@@ -64,50 +52,6 @@ export const StepName: StatelessComponent<StepNameProps> = ({
         availableItems={availableExchangeContracts}
         selectedItems={values.exchanges}
       />
-      <div className="setup-form__info">
-        Pricefeed:{' '}
-        <a
-          href={`https://${
-            network === 'KOVAN' ? 'kovan.' : ''
-          }etherscan.io/address/${canonicalPriceFeedAddress}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <strong>Canonical PriceFeed</strong>
-        </a>
-        <br />
-        Asset Registrar: <strong>Melon {competitionName} Asset Universe</strong>
-        {isCompetition ? (
-          <div>
-            Compliance (invest/redeem):{' '}
-            <a
-              href={`https://${
-                network === 'KOVAN' ? 'kovan.' : ''
-              }etherscan.io/address/${competitionComplianceAddress}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <strong>
-                Only {competitionName} contribution contract can invest
-              </strong>
-            </a>
-          </div>
-        ) : (
-          <div>
-            Compliance (invest/redeem):{' '}
-            <a
-              href={`https://${
-                network === 'KOVAN' ? 'kovan.' : ''
-              }etherscan.io/address/${noComplianceAddress}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <strong>No compliance - anyone can invest (in WETH)</strong>
-            </a>
-          </div>
-        )}
-        Risk Management: <strong>Disabled (all trades allowed)</strong>
-      </div>
     </div>
   );
 };
