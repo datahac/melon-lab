@@ -17,6 +17,14 @@
   }
 }
 
+.ranking__no-funds {
+  padding: 0 16px;
+
+  @media (--viewport-m) {
+    padding: 0;
+  }
+}
+
 .ranking__filters {
   display: flex;
   align-items: center;

@@ -44,23 +44,24 @@ class InvestContainer extends React.PureComponent {
               {...this.props}
               setInvestValues={this.setInvestValues}
               loading={R.path(['loading'], queryProps)}
+              noFund={
+                !!R.path(['error'], queryProps) ||
+                !R.path(['data', 'fund'], queryProps)
+              }
               sharePrice={R.path(['data', 'fund', 'sharePrice'], queryProps)}
             />
-
             <ApproveTransfer
               fundAddress={this.props.address}
               values={this.state.values}
               setStep={this.setStep}
               step={this.state.step}
             />
-
             <RequestInvestment
               fundAddress={this.props.address}
               values={this.state.values}
               setStep={this.setStep}
               step={this.state.step}
             />
-
             <ExecuteRequest
               fundAddress={this.props.address}
               setStep={this.setStep}

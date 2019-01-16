@@ -50,10 +50,10 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
           <br />
           Shares owned by me: {personalStake && Tm.toFixed(personalStake)}
         </div>
-        <div className="factsheet__item">
+        {/* <div className="factsheet__item">
           Management Reward: {managementReward}%<br />
           Performance Reward: {performanceReward}%
-        </div>
+        </div> */}
         <div className="factsheet__item">
           <a
             href="https://ipfs.io/ipfs/Qmc9JRw4zarrs6gJwu6tC58UAgeEujNg9VMWcH8MUEd5TW/"

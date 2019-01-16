@@ -229,6 +229,21 @@ export default {
         thirdPartyContracts: { tokens },
       } = environment.deployment;
 
+      const selectedExchanges = {
+        ...(exchanges.includes('ZERO_EX_EXCHANGE') && {
+          ZeroEx: exchangeConfigs.ZeroEx,
+        }),
+        ...(exchanges.includes('MATCHING_MARKET') && {
+          MatchingMarket: exchangeConfigs.MatchingMarket,
+        }),
+        ...(exchanges.includes('KYBER_NETWORK') && {
+          KyberNetwork: exchangeConfigs.KyberNetwork,
+        }),
+        ...(exchanges.includes('ETHFINEX') && {
+          Ethfinex: exchangeConfigs.Ethfinex,
+        }),
+      };
+
       const nativeToken = tokens.find(token => {
         return token.symbol === 'WETH';
       });
@@ -264,7 +279,7 @@ export default {
       const params = {
         fees,
         defaultTokens: [quoteToken, mlnToken],
-        exchangeConfigs,
+        exchangeConfigs: selectedExchanges,
         fundName: name,
         priceSource,
         quoteToken,

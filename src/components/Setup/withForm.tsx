@@ -55,11 +55,13 @@ const withForm = withFormik({
       performanceFee: Yup.number()
         .required('Performance fee is required.')
         .positive('Fee must be positive')
-        .max(100, 'Fee can not be greater than 100'),
+        .max(100, 'Fee can not be greater than 100')
+        .integer('Fee must be an integer'),
       managementFee: Yup.number()
         .required('Management fee   is required.')
         .positive('Fee must be positive')
-        .max(100, 'Fee can not be greater than 100'),
+        .max(100, 'Fee can not be greater than 100')
+        .integer('Fee must be an integer'),
     }),
   enableReinitialize: true,
   handleSubmit: (values, form) => form.props.setFundValues(values),
