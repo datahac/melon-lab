@@ -15,6 +15,7 @@ export interface RankingProps {
   setSearch: (search: string) => void;
   setOrdering: (field: string) => void;
   associatedFund?: string;
+  availableOrdering;
 }
 
 export const Ranking: StatelessComponent<RankingProps> = ({
@@ -53,9 +54,10 @@ export const Ranking: StatelessComponent<RankingProps> = ({
             />
           </div>
         </div>
-        <div className="ranking__funds">
-          {funds &&
-            funds.map(fund => (
+
+        {funds.length > 0 ? (
+          <div className="ranking__funds">
+            {funds.map(fund => (
               <Link
                 key={fund.address}
                 href={`/manage?address=${fund.address}&base=MLN&quote=WETH`}
@@ -63,7 +65,10 @@ export const Ranking: StatelessComponent<RankingProps> = ({
                 <Card isActive={fund.address === associatedFund} {...fund} />
               </Link>
             ))}
-        </div>
+          </div>
+        ) : (
+          <div className="ranking__no-funds">No funds are available</div>
+        )}
       </div>
     )}
   </div>
