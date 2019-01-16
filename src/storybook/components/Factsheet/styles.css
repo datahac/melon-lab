@@ -29,6 +29,11 @@
   border-right: 0px solid var(--color-border);
 }
 
+.factsheet__item:first-child:nth-last-child(2),
+.factsheet__item:first-child:nth-last-child(2) ~ .factsheet__item {
+  flex: 0 1 50%;
+}
+
 .factsheet__item:first-child:nth-last-child(3),
 .factsheet__item:first-child:nth-last-child(3) ~ .factsheet__item {
   flex: 0 1 33.33%;
