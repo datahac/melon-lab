@@ -455,9 +455,9 @@ type Mutation {
   ): Boolean
 
   # Policies
-  estimateDeployUserWhitelist(whitelist: [String]): UnsignedTransaction
-  estimateDeployAssetBlacklist(blacklist: [String]): UnsignedTransaction
-  estimateDeployAssetWhitelist(whitelist: [String]): UnsignedTransaction
+  estimateDeployUserWhitelist(addresses: [String]): UnsignedTransaction
+  estimateDeployAssetBlacklist(symbols: [String]): UnsignedTransaction
+  estimateDeployAssetWhitelist(symbols: [String]): UnsignedTransaction
   estimateDeployMaxConcentration(percent: Float): UnsignedTransaction
   estimateDeployMaxPositions(positions: Int): UnsignedTransaction
   estimateDeployPriceTolerance(percent: Int): UnsignedTransaction

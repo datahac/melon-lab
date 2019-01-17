@@ -667,7 +667,7 @@ export default {
     },
     estimateDeployUserWhitelist: async (
       _,
-      { from, whitelist },
+      { from, addresses },
       { environment, loaders },
     ) => {
       const env = withDifferentAccount(environment, new Tm.Address(from));
@@ -675,37 +675,45 @@ export default {
       const result = await deployContract.prepare(
         env,
         Contracts.UserWhitelist,
-        [whitelist],
+        [addresses],
       );
 
       return result.unsignedTransaction;
     },
     estimateDeployAssetBlacklist: async (
       _,
-      { from, blacklist },
+      { from, symbols },
       { environment, loaders },
     ) => {
       const env = withDifferentAccount(environment, new Tm.Address(from));
 
+      const addresses = symbols.map(
+        symbol => getTokenBySymbol(env, symbol).address,
+      );
+
       const result = await deployContract.prepare(
         env,
         Contracts.AssetBlacklist,
-        [blacklist],
+        [addresses],
       );
 
       return result.unsignedTransaction;
     },
     estimateDeployAssetWhitelist: async (
       _,
-      { from, whitelist },
+      { from, symbols },
       { environment, loaders },
     ) => {
       const env = withDifferentAccount(environment, new Tm.Address(from));
 
+      const addresses = symbols.map(
+        symbol => getTokenBySymbol(env, symbol).address,
+      );
+
       const result = await deployContract.prepare(
         env,
         Contracts.AssetWhitelist,
-        [whitelist],
+        [addresses],
       );
 
       return result.unsignedTransaction;
