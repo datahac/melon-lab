@@ -10,7 +10,9 @@ import isSameAddress from '~/utils/isSameAddress';
 import availableExchanges from '~/utils/availableExchanges';
 
 const WrappedOrderForm = withForm(props => {
-  const exchanges = Object.keys(availableExchanges).reduce(
+  const exchanges = Object.keys(
+    R.omit(['KYBER_NETWORK'], availableExchanges),
+  ).reduce(
     (carry, current) =>
       carry.concat([
         {
