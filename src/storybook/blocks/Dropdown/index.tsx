@@ -6,7 +6,7 @@ export interface DropdownProps {
   disabled?: boolean;
   label?: string;
   name: string;
-  onChange: (value, event) => void;
+  onChange: () => void;
   options: Array<{
     value: string;
     name: string;

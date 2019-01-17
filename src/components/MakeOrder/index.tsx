@@ -77,8 +77,7 @@ export default withRouter(props => (
     estimate={{
       mutation: estimateMakeOrderMutation,
       variables: () => ({
-        // TODO: Add echange selector
-        exchange: 'OASIS_DEX',
+        exchange: props.values.exchange,
         buyToken:
           props.values.type === 'Buy'
             ? props.values.price.base.token.symbol
@@ -101,10 +100,9 @@ export default withRouter(props => (
       mutation: executeMakeOrderMutation,
       variables: (_, transaction) => ({
         ...transaction,
-        // TODO: Add echange selector
-        exchange: 'OASIS_DEX',
+        exchange: props.values.exchange,
       }),
-      onCompleted: values => {
+      onCompleted: () => {
         props.resetForm();
         props.setOrderFormValues(null);
       },

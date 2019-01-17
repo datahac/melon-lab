@@ -47,7 +47,7 @@ const withFormHandlers = withHandlers({
     const { setFieldValue, baseToken, quoteToken, values } = props;
     const { name, value } = event.target;
 
-    if (name === 'type' || name === 'strategy') {
+    if (name === 'type' || name === 'strategy' || name === 'exchange') {
       setFieldValue(name, value);
     }
 

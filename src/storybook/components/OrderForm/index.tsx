@@ -1,6 +1,6 @@
 import React, { StatelessComponent } from 'react';
 import Button from '~/blocks/Button';
-// import Dropdown from '~/blocks/Dropdown';
+import Dropdown from '~/blocks/Dropdown';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
 import Notification from '~/blocks/Notification';
@@ -121,16 +121,6 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             disabled={isMarket || !priceFeedUp || !isManager}
           />
         </div>
-        {/* <div className="order-form__dropdown">
-          <Dropdown
-            name="exchange"
-            value={values.exchange}
-            options={exchanges}
-            label="Exchange"
-            onChange={onChange}
-            disabled={isMarket || !priceFeedUp}
-          />
-        </div> */}
         <div className="order-form__order-info">
           <OrderInfo
             baseToken={baseToken}
@@ -140,6 +130,18 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             bid={bid}
           />
         </div>
+        {!isMarket && (
+          <div className="order-form__dropdown">
+            <Dropdown
+              name="exchange"
+              value={values.exchange}
+              options={exchanges}
+              label="Exchange"
+              onChange={onChange}
+              disabled={isMarket || !priceFeedUp}
+            />
+          </div>
+        )}
         <div className="order-form__input">
           <Input
             value={values.price && Tm.toFixed(values.price, decimals)}

@@ -7,18 +7,36 @@ import { FundManagerConsumer } from '+/components/FundManagerContext';
 import MakeOrder from '+/components/MakeOrder';
 import withForm from './withForm';
 import isSameAddress from '~/utils/isSameAddress';
+import availableExchanges from '~/utils/availableExchanges';
 
-const WrappedOrderForm = withForm(props => (
-  <Fragment>
-    <MakeOrder
-      values={props.orderFormValues}
-      setOrderFormValues={props.setOrderFormValues}
-      resetForm={props.resetForm}
-    />
+const WrappedOrderForm = withForm(props => {
+  const exchanges = Object.keys(availableExchanges).reduce(
+    (carry, current) =>
+      carry.concat([
+        {
+          name: availableExchanges[current],
+          value: current,
+        },
+      ]),
+    [],
+  );
 
-    <OrderForm {...props} setOrderFormValues={props.setOrderFormValues} />
-  </Fragment>
-));
+  return (
+    <Fragment>
+      <MakeOrder
+        values={props.orderFormValues}
+        setOrderFormValues={props.setOrderFormValues}
+        resetForm={props.resetForm}
+      />
+
+      <OrderForm
+        {...props}
+        setOrderFormValues={props.setOrderFormValues}
+        exchanges={exchanges}
+      />
+    </Fragment>
+  );
+});
 
 export default class OrderFormContainer extends React.PureComponent {
   state = {

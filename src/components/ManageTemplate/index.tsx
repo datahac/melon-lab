@@ -45,7 +45,7 @@ export default class ManageTemplateContainer extends React.Component {
       price: null,
       quantity: null,
       total: null,
-      exchange: null,
+      exchange: 'OASIS_DEX',
     },
   };
 
