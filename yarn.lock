@@ -9138,7 +9138,12 @@ graphql-subscriptions@^1.0.0:
   dependencies:
     iterall "^1.2.1"
 
-graphql-tag@^2.10.0, graphql-tag@^2.9.2:
+graphql-tag@^2.10.1:
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.10.1.tgz#10aa41f1cd8fae5373eaf11f1f67260a3cad5e02"
+  integrity sha512-jApXqWBzNXQ8jYa/HLkZJaVw9jgwNqZkywa2zfFn16Iv1Zb7ELNHkJaXHR7Quvd5SIGsy6Ny7SUKATgnu05uEg==
+
+graphql-tag@^2.9.2:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.10.0.tgz#87da024be863e357551b2b8700e496ee2d4353ae"
   integrity sha512-9FD6cw976TLLf9WYIUPCaaTpniawIjHWZSwIRZSjrfufJamcXbVVYfN2TWvJYbw0Xf2JjYbl1/f2+wDnBVw3/w==
@@ -9164,10 +9169,10 @@ graphql-upload@^8.0.2:
     http-errors "^1.7.1"
     object-path "^0.11.4"
 
-graphql@^14.0.2:
-  version "14.0.2"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.0.2.tgz#7dded337a4c3fd2d075692323384034b357f5650"
-  integrity sha512-gUC4YYsaiSJT1h40krG3J+USGlwhzNTXSb4IOZljn9ag5Tj+RkoXrWp+Kh7WyE3t1NCfab5kzCuxBIvOMERMXw==
+graphql@^14.1.1:
+  version "14.1.1"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.1.1.tgz#d5d77df4b19ef41538d7215d1e7a28834619fac0"
+  integrity sha512-C5zDzLqvfPAgTtP8AUPIt9keDabrdRAqSWjj2OPRKrKxI9Fb65I36s1uCs1UUBFnSWTdO7hyHi7z1ZbwKMKF6Q==
   dependencies:
     iterall "^1.2.2"
 
@@ -12286,10 +12291,10 @@ neo-async@^2.5.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
 
-next-with-apollo@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/next-with-apollo/-/next-with-apollo-3.3.1.tgz#f7e3d5e3d26b5f0649d7a172897e93964c748d26"
-  integrity sha512-sxJcx39okz6iw/Ed2qI39dvNQJvjM9xc1erZSL3bNGDmTSCtrDnkC1jO/AumWNeL1X9zjA+pHqIXUlgi+xp5vw==
+next-with-apollo@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/next-with-apollo/-/next-with-apollo-3.3.2.tgz#a3bb092fb20c903f127ef7449008247a6d826189"
+  integrity sha512-I6Oq59ASMX2XtrhCaW4dIXs//uRNELo19CQ6scjTlPhxyePiDBY3xBYOEVFoULdBeBEnFpULIpj2BH5ejGCQHA==
   dependencies:
     "@types/react-dom" "^16.0.11"
     isomorphic-unfetch "^3.0.0"
@@ -18644,19 +18649,7 @@ yauzl@^2.4.2:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.1.0"
 
-yup@^0.26.2:
-  version "0.26.6"
-  resolved "https://registry.yarnpkg.com/yup/-/yup-0.26.6.tgz#07e216a1424861f17958fef1d4775c64ef985724"
-  integrity sha512-Lfj8pAtQ/cDu/wsCuXt2ArQ0uUO/9nfr+EwlD9oQrWIErtjURjdSXYTS1ycN7T/Ok+IUTy23Tdo6Wo0f/wMMBw==
-  dependencies:
-    "@babel/runtime" "7.0.0"
-    fn-name "~2.0.1"
-    lodash "^4.17.10"
-    property-expr "^1.5.0"
-    synchronous-promise "^2.0.5"
-    toposort "^2.0.2"
-
-yup@^0.26.6:
+yup@^0.26.6, yup@^0.26.7:
   version "0.26.7"
   resolved "https://registry.yarnpkg.com/yup/-/yup-0.26.7.tgz#7480312d1a3efd8a2f5c1f98b0f11fc21c80efc8"
   integrity sha512-JrOZlPHNYTVerwrIS3x+F8/U/87lNNQU/ig3Y8b2dehZRhdegHVBr5AnUSB+kLLs3Gp9ne8ZybPtTGITKndu+w==

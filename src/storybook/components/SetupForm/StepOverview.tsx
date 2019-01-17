@@ -42,7 +42,7 @@ export const StepTerms: StatelessComponent<StepTermsProps> = ({ values }) => (
             </div>
           </CellBody>
         </Row>
-        {R.isEmpty(values.policies) && (
+        {!R.isEmpty(values.policies) && (
           <Row>
             <CellHead>Policies</CellHead>
             <CellBody>
