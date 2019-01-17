@@ -10,6 +10,7 @@ import {
   createShares,
   createTrading,
   createVault,
+  deployContract,
   executeRequest,
   getTokenBySymbol,
   makeOasisDexOrder,
@@ -18,6 +19,7 @@ import {
   triggerRewardAllFees,
   withDifferentAccount,
 } from '@melonproject/protocol';
+import { Contracts } from '@melonproject/protocol/lib/Contracts';
 import * as Tm from '@melonproject/token-math';
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import * as keytar from 'keytar';
@@ -662,6 +664,105 @@ export default {
       }
 
       throw new Error(`Cancel order not implemented for ${exchange}`);
+    },
+    estimateDeployUserWhitelist: async (
+      _,
+      { from, whitelist },
+      { environment, loaders },
+    ) => {
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+
+      const result = await deployContract.prepare(
+        env,
+        Contracts.UserWhitelist,
+        [whitelist],
+      );
+
+      return result.unsignedTransaction;
+    },
+    estimateDeployAssetBlacklist: async (
+      _,
+      { from, blacklist },
+      { environment, loaders },
+    ) => {
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+
+      const result = await deployContract.prepare(
+        env,
+        Contracts.AssetBlacklist,
+        [blacklist],
+      );
+
+      return result.unsignedTransaction;
+    },
+    estimateDeployAssetWhitelist: async (
+      _,
+      { from, whitelist },
+      { environment, loaders },
+    ) => {
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+
+      const result = await deployContract.prepare(
+        env,
+        Contracts.AssetWhitelist,
+        [whitelist],
+      );
+
+      return result.unsignedTransaction;
+    },
+    estimateDeployMaxConcentration: async (
+      _,
+      { from, percent },
+      { environment, loaders },
+    ) => {
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+
+      const result = await deployContract.prepare(
+        env,
+        Contracts.MaxConcentration,
+        [
+          `${Tm.divide(
+            Tm.appendDecimals(Tm.createToken('ETH'), percent),
+            100,
+          )}`,
+        ],
+      );
+      return result.unsignedTransaction;
+    },
+    estimateDeployMaxPositions: async (
+      _,
+      { from, positions },
+      { environment, loaders },
+    ) => {
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+
+      const result = await deployContract.prepare(env, Contracts.MaxPositions, [
+        `${positions}`,
+      ]);
+
+      return result.unsignedTransaction;
+    },
+    estimateDeployPriceTolerance: async (
+      _,
+      { from, percent },
+      { environment, loaders },
+    ) => {
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+
+      const result = await deployContract.prepare(
+        env,
+        Contracts.PriceTolerance,
+        [`${percent}`],
+      );
+
+      return result.unsignedTransaction;
+    },
+    executeDeploy: async (_, { from, signed }, { environment, loaders }) => {
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+      const result = await deployContract.send(env, {
+        signedTransaction: signed.rawTransaction,
+      });
+      return result;
     },
     deleteWallet: async () => {
       const credentials = (await keytar.findCredentials('melon.fund')) || [];

@@ -454,6 +454,15 @@ type Mutation {
     exchange: ExchangeEnum!
   ): Boolean
 
+  # Policies
+  estimateDeployUserWhitelist(whitelist: [String]): UnsignedTransaction
+  estimateDeployAssetBlacklist(blacklist: [String]): UnsignedTransaction
+  estimateDeployAssetWhitelist(whitelist: [String]): UnsignedTransaction
+  estimateDeployMaxConcentration(percent: Float): UnsignedTransaction
+  estimateDeployMaxPositions(positions: Int): UnsignedTransaction
+  estimateDeployPriceTolerance(percent: Int): UnsignedTransaction
+  executeDeploy(unsigned: UnsignedTransactionInput): String
+
   """
   Export the currently active wallet in its encrypted form.
   """
