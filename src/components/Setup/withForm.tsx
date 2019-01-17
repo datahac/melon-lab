@@ -55,6 +55,7 @@ const withForm = withFormik({
       ),
       policies: Yup.object().shape({
         priceTolerance: Yup.number()
+          .typeError('Price tolerance fee is required')
           .positive('Fee must be positive')
           .max(100, 'Fee can not be greater than 100')
           .integer('Fee must be an integer'),

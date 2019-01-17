@@ -2,6 +2,7 @@ import React, { StatelessComponent } from 'react';
 import { CellBody, CellHead, Row, Table, TableBody } from '~/blocks/Table';
 import availablePolicies from '~/utils/availablePolicies';
 import availableExchangeContracts from '~/utils/availableExchangeContracts';
+import * as R from 'ramda';
 
 import styles from './styles.css';
 
@@ -41,17 +42,19 @@ export const StepTerms: StatelessComponent<StepTermsProps> = ({ values }) => (
             </div>
           </CellBody>
         </Row>
-        <Row>
-          <CellHead>Policies</CellHead>
-          <CellBody>
-            {Object.keys(values.policies).map((keyName, i) => (
-              <div key={i}>
-                {availablePolicies[keyName].name}: {values.policies[keyName]}
-                {availablePolicies[keyName].unit}
-              </div>
-            ))}
-          </CellBody>
-        </Row>
+        {R.isEmpty(values.policies) && (
+          <Row>
+            <CellHead>Policies</CellHead>
+            <CellBody>
+              {Object.keys(values.policies).map((keyName, i) => (
+                <div key={i}>
+                  {availablePolicies[keyName].name}: {values.policies[keyName]}
+                  {availablePolicies[keyName].unit}
+                </div>
+              ))}
+            </CellBody>
+          </Row>
+        )}
       </TableBody>
     </Table>
   </div>

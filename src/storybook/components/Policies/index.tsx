@@ -80,27 +80,27 @@ export const Policies: StatelessComponent<PoliciesProps> = ({
         <Fragment>No active policies</Fragment>
       )}
 
-      <hr />
-      <h4>Inactive policies</h4>
-      {inactivePolicies.length > 0 ? (
-        <div className="policies__items">
-          {inactivePolicies.length > 0 &&
-            inactivePolicies.map(item => (
-              <div className="policies__item" key={item}>
-                <div
-                  className="policies__item-wrap policies__item-wrap--inactive"
-                  onClick={() => onActivatePolicy(item)}
-                >
-                  {availablePolicies[item].name}
-                  <span className="policies__item-add">
-                    <Icon name="icons_plus" height="16px" width="14px" />
-                  </span>
+      {inactivePolicies.length > 0 && (
+        <Fragment>
+          <hr />
+          <h4>Available policies</h4>
+          <div className="policies__items">
+            {inactivePolicies.length > 0 &&
+              inactivePolicies.map(item => (
+                <div className="policies__item" key={item}>
+                  <div
+                    className="policies__item-wrap policies__item-wrap--inactive"
+                    onClick={() => onActivatePolicy(item)}
+                  >
+                    {availablePolicies[item].name}
+                    <span className="policies__item-add">
+                      <Icon name="icons_plus" height="16px" width="14px" />
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
-        </div>
-      ) : (
-        <Fragment>No Inactive policies</Fragment>
+              ))}
+          </div>
+        </Fragment>
       )}
     </div>
   );
