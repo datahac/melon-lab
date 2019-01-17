@@ -26,7 +26,7 @@ const Toggle: StatelessComponent<ToggleProps> = ({
       type="radio"
       name={name}
       value={value}
-      defaultChecked={isChecked}
+      checked={isChecked}
       disabled={disabled}
       onChange={onChange}
       hidden

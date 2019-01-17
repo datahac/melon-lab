@@ -21,7 +21,7 @@
   cursor: pointer;
 }
 
-.toggle input:checked ~ .toggle__text {
+.toggle input:checked + .toggle__text {
   padding-bottom: calc(var(--space-s) - 2px);
   border-bottom: 4px solid var(--color-primary-dark);
   color: var(--color-black);

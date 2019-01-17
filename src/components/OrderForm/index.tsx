@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import * as R from 'ramda';
 import Composer from 'react-composer';
 import OrderForm from '~/components/OrderForm';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
+import MakeOrder from '+/components/MakeOrder';
 import withForm from './withForm';
 import isSameAddress from '~/utils/isSameAddress';
 
-const WrappedOrderForm = withForm(OrderForm);
+const WrappedOrderForm = withForm(props => (
+  <Fragment>
+    <MakeOrder
+      values={props.orderFormValues}
+      setOrderFormValues={props.setOrderFormValues}
+      resetForm={props.resetForm}
+    />
+
+    <OrderForm {...props} setOrderFormValues={props.setOrderFormValues} />
+  </Fragment>
+));
 
 export default class OrderFormContainer extends React.PureComponent {
+  state = {
+    values: null,
+  };
+
+  setOrderFormValues = values => {
+    this.setState({
+      values,
+    });
+  };
+
   getTokenBalance = asset => {
     const { holdings } = this.props;
     const balance = R.compose(
@@ -44,15 +65,19 @@ export default class OrderFormContainer extends React.PureComponent {
             !!managerProps.fund && isSameAddress(managerProps.fund, address);
 
           return (
-            <WrappedOrderForm
-              baseToken={this.getTokenBalance(baseAsset)}
-              quoteToken={this.getTokenBalance(quoteAsset)}
-              isCompetition={false}
-              isManager={isManager}
-              holdings={holdings}
-              formValues={formValues}
-              priceFeedUp={network && network.priceFeedUp}
-            />
+            <Fragment>
+              <WrappedOrderForm
+                setOrderFormValues={this.setOrderFormValues}
+                baseToken={this.getTokenBalance(baseAsset)}
+                quoteToken={this.getTokenBalance(quoteAsset)}
+                isCompetition={false}
+                isManager={isManager}
+                holdings={holdings}
+                formValues={formValues}
+                priceFeedUp={network && network.priceFeedUp}
+                orderFormValues={this.state.values}
+              />
+            </Fragment>
           );
         }}
       </Composer>

@@ -3,18 +3,8 @@ import { withFormik } from 'formik';
 import { withHandlers, compose } from 'recompose';
 import { FormErros } from '~/components/OrderForm';
 
-const initialValues = {
-  type: 'Buy',
-  strategy: 'Market',
-  quantity: null,
-  total: null,
-  price: null,
-  exchange: null,
-};
-
 const withForm = withFormik({
-  mapPropsToValues: props =>
-    props.formValues ? props.formValues : initialValues,
+  mapPropsToValues: props => props.formValues,
   validate: (values, props) => {
     let errors: FormErros = {};
 
@@ -49,8 +39,7 @@ const withForm = withFormik({
     return errors;
   },
   enableReinitialize: true,
-  handleSubmit: (values, form) =>
-    form.props.onSubmit && form.props.onSubmit(values),
+  handleSubmit: (values, form) => form.props.setOrderFormValues(values),
 });
 
 const withFormHandlers = withHandlers({
