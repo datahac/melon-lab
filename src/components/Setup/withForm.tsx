@@ -64,13 +64,13 @@ const withForm = withFormik({
         performanceFee: Yup.number()
           .typeError('Performance fee is required')
           .required('Performance fee is required')
-          .positive('Fee must be positive')
+          .min(0, 'Fee must be positive')
           .max(100, 'Fee can not be greater than 100')
           .integer('Fee must be an integer'),
         managementFee: Yup.number()
           .typeError('Management fee is required')
           .required('Management fee is required')
-          .positive('Fee must be positive')
+          .min(0, 'Fee must be positive')
           .max(100, 'Fee can not be greater than 100')
           .integer('Fee must be an integer'),
       }),
