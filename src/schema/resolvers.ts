@@ -11,12 +11,14 @@ import {
   Contracts,
   createAccounting,
   createFeeManager,
+  createOrder,
   createParticipation,
   createPolicyManager,
   createShares,
   createTrading,
   createVault,
   deployContract,
+  Exchanges,
   executeRequest,
   FunctionSignatures,
   getTokenBySymbol,
@@ -32,6 +34,8 @@ import * as Tm from '@melonproject/token-math';
 import { registerServer } from 'apollo-server-express';
 import sameBlock from './utils/sameBlock';
 import toAsyncIterator from './utils/toAsyncIterator';
+
+const stringifyObject = R.mapObjIndexed((value, key) => `${value}`);
 
 export default {
   DateTime,
@@ -669,6 +673,34 @@ export default {
       }
 
       throw new Error(`Cancel order not implemented for ${exchange}`);
+    },
+    create0xOrder: async (
+      _,
+      { from, buyToken, buyQuantity, sellToken, sellQuantity },
+      { environment, loaders },
+    ) => {
+      const fund = await loaders.fundAddressFromManager.load(from);
+      const { tradingAddress } = await loaders.fundRoutes.load(fund);
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+      const zeroExAddress =
+        env.deployment.exchangeConfigs[Exchanges.ZeroEx].exchange;
+
+      const makerQuantity = Tm.createQuantity(
+        getTokenBySymbol(environment, sellToken),
+        sellQuantity,
+      );
+      const takerQuantity = Tm.createQuantity(
+        getTokenBySymbol(environment, buyToken),
+        buyQuantity,
+      );
+
+      const order = await createOrder(env, zeroExAddress, {
+        makerQuantity,
+        takerQuantity,
+        makerAddress: tradingAddress,
+      });
+
+      return stringifyObject(order);
     },
     estimateDeployUserWhitelist: async (
       _,

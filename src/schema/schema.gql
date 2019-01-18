@@ -5,6 +5,7 @@ directive @client on FIELD
 directive @authenticated on FIELD
 
 directive @sign(source: String = "unsigned", target: String = "signed") on FIELD
+directive @signMessage on FIELD
 
 directive @account(arg: String = "from") on FIELD
 
@@ -53,6 +54,7 @@ type EthfinexOrder implements Order {
   volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
+  metadata: ZeroExOrderMetadata
 }
 
 type ZeroExOrder implements Order {
@@ -62,7 +64,7 @@ type ZeroExOrder implements Order {
   volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
-  metadata: ZeroExOrderMetadata
+  metadata: ZeroExOrder
 }
 
 type OasisDexOrder implements Order {
@@ -85,20 +87,37 @@ type KyberNetworkOrder implements Order {
 }
 
 type ZeroExOrderMetadata {
-  exchangeAddress: String
-  senderAddress: String
-  makerAddress: String
-  takerAddress: String
-  makerAssetData: String
-  takerAssetData: String
-  feeRecipientAddress: String
-  makerAssetAmount: String
-  takerAssetAmount: String
-  makerFee: String
-  takerFee: String
-  expirationTimeSeconds: Int
+  exchangeAddress: String!
+  senderAddress: String!
+  makerAddress: String!
+  takerAddress: String!
+  makerAssetData: String!
+  takerAssetData: String!
+  feeRecipientAddress: String!
+  makerAssetAmount: String!
+  takerAssetAmount: String!
+  makerFee: String!
+  takerFee: String!
+  expirationTimeSeconds: Int!
+  salt: String!
   signature: String
-  salt: String
+}
+
+type SignedZeroExOrderMetadata {
+  exchangeAddress: String!
+  senderAddress: String!
+  makerAddress: String!
+  takerAddress: String!
+  makerAssetData: String!
+  takerAssetData: String!
+  feeRecipientAddress: String!
+  makerAssetAmount: String!
+  takerAssetAmount: String!
+  makerFee: String!
+  takerFee: String!
+  expirationTimeSeconds: Int!
+  salt: String!
+  signature: String!
 }
 
 type OasisDexOrderMetadata {
@@ -266,6 +285,22 @@ input PolicyInput {
   type: PolicyTypeEnum!
 }
 
+input SignZeroExOrderInput {
+  exchangeAddress: String!
+  senderAddress: String!
+  makerAddress: String!
+  takerAddress: String!
+  makerAssetData: String!
+  takerAssetData: String!
+  feeRecipientAddress: String!
+  makerAssetAmount: String!
+  takerAssetAmount: String!
+  makerFee: String!
+  takerFee: String!
+  expirationTimeSeconds: Int!
+  salt: String!
+}
+
 type Query {
   defaultAccount: String @insecure
   allAccounts: [String] @insecure
@@ -427,6 +462,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "make order" transaction.
   """
+  # TODO: Rename to estimateOasisDexOrder
   estimateMakeOrder(
     exchange: ExchangeEnum!
     buyToken: String!
@@ -463,6 +499,25 @@ type Mutation {
     unsigned: UnsignedTransactionInput!
     exchange: ExchangeEnum!
   ): Boolean
+
+  # TODO: Write resolver
+  create0xOrder(
+    buyToken: String!
+    buyQuantity: String!
+    sellToken: String!
+    sellQuantity: String!
+  ): ZeroExOrderMetadata
+
+  # TODO: Write resolver
+  createEthfinexOrder(
+    buyToken: String!
+    buyQuantity: String!
+    sellToken: String!
+    sellQuantity: String!
+  ): ZeroExOrderMetadata
+
+  # TODO: Write resolver
+  signOrder(unsignedOrder: SignZeroExOrderInput!): SignedZeroExOrderMetadata
 
   # Policies
   estimateDeployUserWhitelist(addresses: [String]): UnsignedTransaction
