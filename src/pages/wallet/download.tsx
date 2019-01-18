@@ -1,8 +1,8 @@
 import React from 'react';
 import DefaultTemplate from '+/components/DefaultTemplate';
 import DownloadWallet from '+/components/DownloadWallet';
-import checkIsLoggedIn from '~/utils/checkIsLoggedIn';
-import isError from '~/utils/isError';
+import checkIsLoggedIn from '~/shared/utils/checkIsLoggedIn';
+import isError from '~/shared/utils/isError';
 import Error from '~/error';
 
 export default class WalletDownloadPage extends React.Component {

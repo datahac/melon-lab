@@ -1,7 +1,7 @@
 import React from 'react';
 import Composer from 'react-composer';
 import gql from 'graphql-tag';
-import { Query } from '~/apollo';
+import { Query } from '~/shared/graphql/apollo';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import * as R from 'ramda';
 

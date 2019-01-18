@@ -1,8 +1,8 @@
 import React from 'react';
 import Wallet from '+/components/Wallet';
 import WalletTemplate from '+/components/WalletTemplate';
-import redirect from '~/utils/redirect';
-import checkIsLoggedIn from '~/utils/checkIsLoggedIn';
+import redirect from '~/shared/utils/redirect';
+import checkIsLoggedIn from '~/shared/utils/checkIsLoggedIn';
 
 export default class WalletIndexPage extends React.Component {
   static async getInitialProps(context) {

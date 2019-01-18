@@ -5,7 +5,7 @@ import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import FeeForm from '~/components/FeeForm';
 import Composer from 'react-composer';
-import { Mutation } from '~/apollo';
+import { Mutation } from '~/shared/graphql/apollo';
 import withForm from './withForm';
 import { compose } from 'recompose';
 import { withRouter } from 'next/router';

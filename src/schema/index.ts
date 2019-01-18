@@ -1,67 +1,14 @@
 import { makeExecutableSchema } from 'graphql-tools';
-import { publishReplay } from 'rxjs/operators';
 import Accounts from 'web3-eth-accounts';
 import resolvers from './resolvers';
-import createLoaders from './loaders';
-import subscribeBlock from './utils/subscribeBlock';
-import currentRanking from './utils/currentRanking';
-import subscribeSyncing from './utils/subscribeSyncing';
-import hasRecentPrice from './utils/hasRecentPrice';
-import currentPeers from './utils/currentPeers';
-import InsecureDirective from './directives/InsecureDirective';
 import addQueryDirectives from './directives/addQueryDirectives';
 import * as typeDefs from './schema.gql';
 
-export async function createContext(environment, wallet = null) {
-  // The current wallet (in an electron context);
-  let currentWallet = wallet;
-
-  const block$ = subscribeBlock(environment).pipe(publishReplay(1));
-  const syncing$ = subscribeSyncing(environment).pipe(publishReplay(1));
-  const peers$ = currentPeers(environment, block$).pipe(publishReplay(1));
-  const recentPrice$ = hasRecentPrice(environment, block$).pipe(
-    publishReplay(1),
-  );
-  const ranking$ = currentRanking(environment, block$).pipe(publishReplay(1));
-
-  const streams = {
-    peers$,
-    block$,
-    ranking$,
-    syncing$,
-    recentPrice$,
-  };
-
-  Object.values(streams).forEach(stream$ => stream$.connect());
-
-  return () => ({
-    environment,
-    streams,
-    loaders: {
-      setWallet: value => {
-        currentWallet = value;
-      },
-      getWallet: () => {
-        return currentWallet;
-      },
-      ...createLoaders(environment, streams),
-    },
-  });
-}
-
-const schema = makeExecutableSchema({
+export const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
   inheritResolversFromInterfaces: true,
-  schemaDirectives: {
-    insecure: InsecureDirective,
-  },
 });
-
-const defaultAccount = ({ loaders }) => {
-  const wallet = loaders.getWallet();
-  return (wallet && wallet.address) || undefined;
-};
 
 addQueryDirectives(schema, {
   sign: async (resolve, source, args, context, info, directiveArgs) => {
@@ -87,7 +34,13 @@ addQueryDirectives(schema, {
     return resolve(source, newArgs, context, info);
   },
   account: (resolve, source, args, context, info, directiveArgs) => {
-    const account = args[directiveArgs.arg] || defaultAccount(context);
+    const account =
+      args[directiveArgs.arg] ||
+      (() => {
+        const wallet = context.loaders.getWallet();
+        return (wallet && wallet.address) || undefined;
+      })();
+
     const newArgs = {
       ...args,
       [directiveArgs.arg]: account,
@@ -96,5 +49,3 @@ addQueryDirectives(schema, {
     return resolve(source, newArgs, context, info);
   },
 });
-
-export default schema;

@@ -1,7 +1,7 @@
 import Holdings from '~/components/Holdings';
 import Router from 'next/router';
 import * as R from 'ramda';
-import tokens from '~/utils/tokens';
+import tokens from '~/shared/utils/tokens';
 
 const mapHoldings = R.curryN(2, (nav, asset) => {
   const token = R.find(R.propEq('key', asset.balance.token.symbol), tokens);

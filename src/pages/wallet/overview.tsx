@@ -3,8 +3,8 @@ import Composer from 'react-composer';
 import WalletOverview from '+/components/WalletOverview';
 import WalletTemplate from '+/components/WalletTemplate';
 import Link from '~/blocks/Link';
-import redirect from '~/utils/redirect';
-import checkIsLoggedIn from '~/utils/checkIsLoggedIn';
+import redirect from '~/shared/utils/redirect';
+import checkIsLoggedIn from '~/shared/utils/checkIsLoggedIn';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { AccountConsumer } from '+/components/AccountContext';
 

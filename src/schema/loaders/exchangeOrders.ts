@@ -16,7 +16,7 @@ export default R.curryN(
     quote: string,
   ) => {
     const options = {
-      network: Network.KOVAN,
+      network: Network.MAINNET,
       pair: {
         base: getTokenBySymbol(environment, base),
         quote: getTokenBySymbol(environment, quote),

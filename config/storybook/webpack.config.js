@@ -7,7 +7,7 @@ module.exports = config => {
 
   config.resolve.alias = Object.assign({}, config.resolve.alias, {
     '~/static': path.join(src, 'static'),
-    '~/utils': path.join(src, 'shared', 'utils'),
+    '~/shared': path.join(src, 'shared'),
     '~/design': path.join(base, 'design'),
     '~/components': path.join(base, 'components'),
     '~/blocks': path.join(base, 'blocks'),

@@ -10,7 +10,7 @@ import {
   TableHead,
 } from '~/blocks/Table';
 import format from 'date-fns/format';
-import displayQuantity from '~/utils/displayQuantity';
+import displayQuantity from '~/shared/utils/displayQuantity';
 
 import styles from './styles.css';
 

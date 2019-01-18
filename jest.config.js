@@ -9,7 +9,7 @@ module.exports = {
     "^~/blocks/(.*)$": "<rootDir>/src/storybook/blocks/$1",
     "^~/components/(.*)$": "<rootDir>/src/storybook/components/$1",
     "^~/containers/(.*)$": "<rootDir>/src/storybook/containers/$1",
-    "^~/utils/(.*)$": "<rootDir>/src/shared/utils/$1",
+    "^~/shared/(.*)$": "<rootDir>/src/shared/$1",
     "^~/link$": "<rootDir>/src/storybook/link"
   },
   "snapshotSerializers": ["enzyme-to-json/serializer"],

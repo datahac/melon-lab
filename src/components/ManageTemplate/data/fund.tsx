@@ -1,4 +1,4 @@
-import { Query } from '~/apollo';
+import { Query } from '~/shared/graphql/apollo';
 import gql from 'graphql-tag';
 
 export const query = gql`

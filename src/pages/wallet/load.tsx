@@ -1,8 +1,8 @@
 import React from 'react';
 import LoadWallet from '+/components/LoadWallet';
 import DefaultTemplate from '+/components/DefaultTemplate';
-import checkHasWallet from '~/utils/checkHasWallet';
-import isError from '~/utils/isError';
+import checkHasWallet from '~/shared/utils/checkHasWallet';
+import isError from '~/shared/utils/isError';
 import Error from '~/error';
 
 export default class WalletLoadPage extends React.Component {

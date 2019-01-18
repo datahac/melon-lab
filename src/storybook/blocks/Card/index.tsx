@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
 import format from 'date-fns/format';
-import displayPrice from '~/utils/displayPrice';
+import displayPrice from '~/shared/utils/displayPrice';
 import Link from '~/blocks/Link';
 import Icon from '~/blocks/Icon';
 import * as Tm from '@melonproject/token-math';

@@ -8,7 +8,7 @@ import { NetworkProvider } from '+/components/NetworkContext';
 import { CapabilityProvider } from '+/components/CapabilityContext';
 import { SetupProvider } from '+/components/SetupContext';
 import React from 'react';
-import withApollo from '~/apollo';
+import withApollo from '~/shared/graphql/apollo';
 
 import '~/static/images/logos.svg';
 import '~/static/images/icons.svg';
