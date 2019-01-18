@@ -51,7 +51,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_ACCOUNTING',
         }),
-        isComplete: R.pathOr(false, ['setup', 'accountingAddress'], props),
+        isComplete: R.pathOr(false, ['routes', 'accountingAddress'], props),
         name: 'createAccounting',
       },
       {
@@ -59,7 +59,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_FEE_MANAGER',
         }),
-        isComplete: R.pathOr(false, ['setup', 'feeManagerAddress'], props),
+        isComplete: R.pathOr(false, ['routes', 'feeManagerAddress'], props),
         name: 'createFeeManager',
       },
       {
@@ -67,7 +67,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_PARTICIPATION',
         }),
-        isComplete: R.pathOr(false, ['setup', 'participationAddress'], props),
+        isComplete: R.pathOr(false, ['routes', 'participationAddress'], props),
         name: 'createParticipation',
       },
       {
@@ -75,7 +75,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_POLICY_MANAGER',
         }),
-        isComplete: R.pathOr(false, ['setup', 'policyManagerAddress'], props),
+        isComplete: R.pathOr(false, ['routes', 'policyManagerAddress'], props),
         name: 'createPolicyManager',
       },
       {
@@ -83,7 +83,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_SHARES',
         }),
-        isComplete: R.pathOr(false, ['setup', 'sharesAddress'], props),
+        isComplete: R.pathOr(false, ['routes', 'sharesAddress'], props),
         name: 'createShares',
       },
       {
@@ -91,7 +91,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_TRADING',
         }),
-        isComplete: R.pathOr(false, ['setup', 'tradingAddress'], props),
+        isComplete: R.pathOr(false, ['routes', 'tradingAddress'], props),
         name: 'createTrading',
       },
       {
@@ -99,7 +99,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_VAULT',
         }),
-        isComplete: R.pathOr(false, ['setup', 'vaultAddress'], props),
+        isComplete: R.pathOr(false, ['routes', 'vaultAddress'], props),
         name: 'createVault',
       },
     ]}

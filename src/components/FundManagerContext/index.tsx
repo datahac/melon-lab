@@ -6,6 +6,7 @@ import { AccountConsumer } from '+/components/AccountContext';
 
 const defaults = {
   fund: null,
+  routes: null,
   update: () => {
     throw new Error('Cannot set the current step without an account.');
   },
@@ -16,6 +17,15 @@ export const FundManagerContext = React.createContext(defaults);
 export const fundManagerQuery = gql`
   query FundManagerQuery {
     fund: associatedFund @account(arg: "manager") @authenticated
+    routes @account(arg: "manager") @authenticated {
+      accountingAddress
+      feeManagerAddress
+      participationAddress
+      policyManagerAddress
+      sharesAddress
+      tradingAddress
+      vaultAddress
+    }
   }
 `;
 
@@ -51,6 +61,10 @@ export class FundManagerProvider extends React.PureComponent {
                 data: {
                   ...data,
                   ...values,
+                  routes: {
+                    ...data.routes,
+                    ...values.routes,
+                  },
                 },
               });
             },

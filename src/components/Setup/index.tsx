@@ -147,8 +147,8 @@ class Setup extends React.Component {
 
             <FundSetupStep
               progress={setup.setupInProgress}
-              update={setup.update}
-              setup={setup}
+              update={manager.update}
+              routes={manager.routes}
             />
 
             <FundSetupComplete

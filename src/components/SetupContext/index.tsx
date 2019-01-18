@@ -9,13 +9,6 @@ const defaults = {
   setupBegin: false,
   setupComplete: false,
   setupInProgress: false,
-  accountingAddress: false,
-  feeManagerAddress: false,
-  participationAddress: false,
-  policyManagerAddress: false,
-  sharesAddress: false,
-  tradingAddress: false,
-  vaultAddress: false,
   update: () => {
     throw new Error('Cannot set the fund status.');
   },
@@ -29,15 +22,6 @@ export const fundQuery = gql`
       id
       isComplete
       isShutdown
-    }
-    routes @account(arg: "manager") @authenticated {
-      accountingAddress
-      feeManagerAddress
-      participationAddress
-      policyManagerAddress
-      sharesAddress
-      tradingAddress
-      vaultAddress
     }
   }
 `;
@@ -63,7 +47,7 @@ export class SetupProvider extends React.PureComponent {
         {([manager, setup]) => {
           const routesValues = R.without(
             ['Routes'],
-            R.values(R.path(['data', 'routes'], setup)),
+            R.values(R.path(['routes'], manager)),
           );
 
           const hasRoutes =
@@ -83,27 +67,33 @@ export class SetupProvider extends React.PureComponent {
             setupInProgress,
             setupComplete: hasRoutes && !isComplete,
             accountingAddress: !!R.path(
-              ['data', 'routes', 'accountingAddress'],
+              ['manager', 'routes', 'accountingAddress'],
               setup,
             ),
             feeManagerAddress: !!R.path(
-              ['data', 'routes', 'feeManagerAddress'],
+              ['manager', 'routes', 'feeManagerAddress'],
               setup,
             ),
             participationAddress: !!R.path(
-              ['data', 'routes', 'participationAddress'],
+              ['manager', 'routes', 'participationAddress'],
               setup,
             ),
             policyManagerAddress: !!R.path(
-              ['data', 'routes', 'policyManagerAddress'],
+              ['manager', 'routes', 'policyManagerAddress'],
               setup,
             ),
-            sharesAddress: !!R.path(['data', 'routes', 'sharesAddress'], setup),
+            sharesAddress: !!R.path(
+              ['manager', 'routes', 'sharesAddress'],
+              setup,
+            ),
             tradingAddress: !!R.path(
-              ['data', 'routes', 'tradingAddress'],
+              ['manager', 'routes', 'tradingAddress'],
               setup,
             ),
-            vaultAddress: !!R.path(['data', 'routes', 'vaultAddress'], setup),
+            vaultAddress: !!R.path(
+              ['manager', 'routes', 'vaultAddress'],
+              setup,
+            ),
           };
 
           const value = {
@@ -117,10 +107,6 @@ export class SetupProvider extends React.PureComponent {
                 skip: !manager.fund,
                 data: {
                   ...R.path(['data'], setup),
-                  routes: {
-                    ...R.path(['data', 'routes'], setup),
-                    ...values.routes,
-                  },
                   fund: {
                     ...R.path(['data', 'fund'], setup),
                     ...values.fund,
