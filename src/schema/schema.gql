@@ -500,7 +500,6 @@ type Mutation {
     exchange: ExchangeEnum!
   ): Boolean
 
-  # TODO: Write resolver
   create0xOrder(
     buyToken: String!
     buyQuantity: String!
@@ -508,7 +507,6 @@ type Mutation {
     sellQuantity: String!
   ): ZeroExOrderMetadata
 
-  # TODO: Write resolver
   createEthfinexOrder(
     buyToken: String!
     buyQuantity: String!
