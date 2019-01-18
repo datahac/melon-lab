@@ -66,34 +66,6 @@ export class SetupProvider extends React.PureComponent {
             setupBegin: !manager.fund && !setupInProgress && !isComplete,
             setupInProgress,
             setupComplete: hasRoutes && !isComplete,
-            accountingAddress: !!R.path(
-              ['manager', 'routes', 'accountingAddress'],
-              setup,
-            ),
-            feeManagerAddress: !!R.path(
-              ['manager', 'routes', 'feeManagerAddress'],
-              setup,
-            ),
-            participationAddress: !!R.path(
-              ['manager', 'routes', 'participationAddress'],
-              setup,
-            ),
-            policyManagerAddress: !!R.path(
-              ['manager', 'routes', 'policyManagerAddress'],
-              setup,
-            ),
-            sharesAddress: !!R.path(
-              ['manager', 'routes', 'sharesAddress'],
-              setup,
-            ),
-            tradingAddress: !!R.path(
-              ['manager', 'routes', 'tradingAddress'],
-              setup,
-            ),
-            vaultAddress: !!R.path(
-              ['manager', 'routes', 'vaultAddress'],
-              setup,
-            ),
           };
 
           const value = {
