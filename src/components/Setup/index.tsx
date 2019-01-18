@@ -17,9 +17,7 @@ import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import { SetupConsumer } from '+/components/SetupContext';
 import withForm from './withForm';
-import FundSetupBegin from '+/components/FundSetupBegin';
 import FundSetupStep from '+/components/FundSetupStep';
-import FundSetupComplete from '+/components/FundSetupComplete';
 
 const SetupFormContainer = withForm(props => (
   <SetupForm
@@ -138,23 +136,18 @@ class Setup extends React.Component {
       >
         {([account, configuration, manager, setup]) => (
           <Fragment>
-            <FundSetupBegin
-              progress={setup.setupBegin && !!this.state.values}
+            <FundSetupStep
+              progress={
+                (setup.setupBegin && !!this.state.values) ||
+                setup.setupInProgress ||
+                setup.setupComplete
+              }
               values={this.state.values}
               update={manager.update}
-              setFundValues={this.setFundValues}
-            />
-
-            <FundSetupStep
-              progress={setup.setupInProgress}
-              update={manager.update}
+              updateSetup={setup.update}
               routes={manager.routes}
-            />
-
-            <FundSetupComplete
-              progress={setup.setupComplete}
               fund={manager.fund}
-              update={setup.update}
+              setup={setup}
             />
 
             {!manager.fund && (

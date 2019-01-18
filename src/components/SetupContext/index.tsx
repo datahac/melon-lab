@@ -9,6 +9,7 @@ const defaults = {
   setupBegin: false,
   setupComplete: false,
   setupInProgress: false,
+  isComplete: false,
   update: () => {
     throw new Error('Cannot set the fund status.');
   },
@@ -66,6 +67,7 @@ export class SetupProvider extends React.PureComponent {
             setupBegin: !manager.fund && !setupInProgress && !isComplete,
             setupInProgress,
             setupComplete: hasRoutes && !isComplete,
+            isComplete,
           };
 
           const value = {
