@@ -93,7 +93,10 @@ export default class ModalTransactions extends React.Component {
         })}
       >
         {results => {
-          const transaction = R.path(['data', 'estimate'], results[0][1]);
+          const transaction = R.path(
+            ['data', 'estimate'],
+            !R.isEmpty(results) && results[0][1],
+          );
 
           const doEstimate = () => {
             const variables = R.pathOr(
@@ -132,15 +135,21 @@ export default class ModalTransactions extends React.Component {
             <WithFormModal
               handleCancel={this.props.handleCancel}
               error={false}
-              loading={results[0][1].loading || results[1][1].loading}
-              gasPrice={R.path(['data', 'estimate', 'gasPrice'], results[0][1])}
+              loading={
+                !R.isEmpty(results) &&
+                (results[0][1].loading || results[1][1].loading)
+              }
+              gasPrice={R.path(
+                ['data', 'estimate', 'gasPrice'],
+                !R.isEmpty(results) && results[0][1],
+              )}
               text={this.props.text}
               open={this.props.open}
               fees={fees}
               estimate={doEstimate}
               execute={doExecute}
               estimations={this.props.estimations}
-              step={estimations[0].name}
+              step={!R.isEmpty(estimations) && estimations[0].name}
             />
           );
         }}

@@ -6,10 +6,15 @@ import { FundManagerConsumer } from '+/components/FundManagerContext';
 import * as R from 'ramda';
 
 const defaults = {
-  isComplete: null,
-  isShutdown: null,
-  isInProgress: null,
-  routes: null,
+  setupBegin: false,
+  accountingAddress: false,
+  feeManagerAddress: false,
+  participationAddress: false,
+  policyManagerAddress: false,
+  sharesAddress: false,
+  tradingAddress: false,
+  vaultAddress: false,
+  setupComplete: false,
   update: () => {
     throw new Error('Cannot set the fund status.');
   },
@@ -57,33 +62,47 @@ export class SetupProvider extends React.PureComponent {
         {([manager, setup]) => {
           const routesValues = R.without(
             ['Routes'],
-            R.values(R.pathOr(false, ['data', 'routes'], setup)),
+            R.values(R.path(['data', 'routes'], setup)),
           );
 
-          const isInProgress =
+          const hasRoutes =
+            !R.isEmpty(routesValues) &&
+            routesValues.every(item => item !== null);
+
+          const isComplete = R.path(['data', 'fund', 'isComplete'], setup);
+
+          const setupInProgress =
+            !R.isEmpty(routesValues) &&
             (routesValues.every(item => item === null) ||
               routesValues.some(item => item === null)) &&
             !!manager.fund;
 
-          const isComplete = R.pathOr(
-            false,
-            ['data', 'fund', 'isComplete'],
-            setup,
-          );
-
-          const isShutdown = R.pathOr(
-            false,
-            ['data', 'fund', 'isShutdown'],
-            setup,
-          );
-
-          const routes = R.pathOr(null, ['data', 'routes'], setup);
-
           const data = {
-            isComplete,
-            isShutdown,
-            isInProgress,
-            routes,
+            setupBegin: !manager.fund && !setupInProgress && !isComplete,
+            setupInProgress,
+            setupComplete: hasRoutes && !isComplete,
+            accountingAddress: !!R.path(
+              ['data', 'routes', 'accountingAddress'],
+              setup,
+            ),
+            feeManagerAddress: !!R.path(
+              ['data', 'routes', 'feeManagerAddress'],
+              setup,
+            ),
+            participationAddress: !!R.path(
+              ['data', 'routes', 'participationAddress'],
+              setup,
+            ),
+            policyManagerAddress: !!R.path(
+              ['data', 'routes', 'policyManagerAddress'],
+              setup,
+            ),
+            sharesAddress: !!R.path(['data', 'routes', 'sharesAddress'], setup),
+            tradingAddress: !!R.path(
+              ['data', 'routes', 'tradingAddress'],
+              setup,
+            ),
+            vaultAddress: !!R.path(['data', 'routes', 'vaultAddress'], setup),
           };
 
           const value = {

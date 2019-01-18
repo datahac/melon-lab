@@ -139,24 +139,20 @@ class Setup extends React.Component {
         {([account, configuration, manager, setup]) => (
           <Fragment>
             <FundSetupBegin
-              progress={!manager.fund}
+              progress={setup.setupBegin && !!this.state.values}
               values={this.state.values}
               update={manager.update}
               setFundValues={this.setFundValues}
             />
 
-            {setup.routes && setup.isInProgress && (
-              <FundSetupStep
-                progress={!!manager.fund && !setup.isComplete}
-                update={setup.update}
-                routes={setup.routes}
-              />
-            )}
+            <FundSetupStep
+              progress={setup.setupInProgress}
+              update={setup.update}
+              setup={setup}
+            />
 
             <FundSetupComplete
-              progress={
-                !!manager.fund && !setup.isComplete && !setup.isInProgress
-              }
+              progress={setup.setupComplete}
               fund={manager.fund}
               update={setup.update}
             />

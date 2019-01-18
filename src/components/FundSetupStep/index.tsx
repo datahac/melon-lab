@@ -4,16 +4,6 @@ import ModalTransactions from '+/components/ModalTransactions';
 import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
 
-const steps = {
-  CREATE_ACCOUNTING: 'createAccounting',
-  CREATE_FEE_MANAGER: 'createFeeManager',
-  CREATE_PARTICIPATION: 'createParticipation',
-  CREATE_POLICY_MANAGER: 'createPolicyManager',
-  CREATE_SHARES: 'createShares',
-  CREATE_TRADING: 'createTrading',
-  CREATE_VAULT: 'createVault',
-};
-
 const estimateFundSetupStepMutation = gql`
   mutation EstimateFundSetupStep($step: FundSetupStepEnum!) {
     estimate: estimateFundSetupStep(step: $step) @account {
@@ -61,7 +51,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_ACCOUNTING',
         }),
-        isComplete: !!props.routes.accountingAddress,
+        isComplete: R.pathOr(false, ['setup', 'accountingAddress'], props),
         name: 'createAccounting',
       },
       {
@@ -69,7 +59,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_FEE_MANAGER',
         }),
-        isComplete: !!props.routes.feeManagerAddress,
+        isComplete: R.pathOr(false, ['setup', 'feeManagerAddress'], props),
         name: 'createFeeManager',
       },
       {
@@ -77,7 +67,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_PARTICIPATION',
         }),
-        isComplete: !!props.routes.participationAddress,
+        isComplete: R.pathOr(false, ['setup', 'participationAddress'], props),
         name: 'createParticipation',
       },
       {
@@ -85,7 +75,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_POLICY_MANAGER',
         }),
-        isComplete: !!props.routes.policyManagerAddress,
+        isComplete: R.pathOr(false, ['setup', 'policyManagerAddress'], props),
         name: 'createPolicyManager',
       },
       {
@@ -93,7 +83,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_SHARES',
         }),
-        isComplete: !!props.routes.sharesAddress,
+        isComplete: R.pathOr(false, ['setup', 'sharesAddress'], props),
         name: 'createShares',
       },
       {
@@ -101,7 +91,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_TRADING',
         }),
-        isComplete: !!props.routes.tradingAddress,
+        isComplete: R.pathOr(false, ['setup', 'tradingAddress'], props),
         name: 'createTrading',
       },
       {
@@ -109,7 +99,7 @@ export default withRouter(props => (
         variables: () => ({
           step: 'CREATE_VAULT',
         }),
-        isComplete: !!props.routes.vaultAddress,
+        isComplete: R.pathOr(false, ['setup', 'vaultAddress'], props),
         name: 'createVault',
       },
     ]}
