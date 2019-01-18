@@ -7,6 +7,8 @@ import * as R from 'ramda';
 
 const defaults = {
   setupBegin: false,
+  setupComplete: false,
+  setupInProgress: false,
   accountingAddress: false,
   feeManagerAddress: false,
   participationAddress: false,
@@ -14,7 +16,6 @@ const defaults = {
   sharesAddress: false,
   tradingAddress: false,
   vaultAddress: false,
-  setupComplete: false,
   update: () => {
     throw new Error('Cannot set the fund status.');
   },
