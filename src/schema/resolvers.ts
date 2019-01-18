@@ -1,8 +1,14 @@
+import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
+import * as keytar from 'keytar';
+import * as R from 'ramda';
+import { distinctUntilChanged, map, pluck, skip } from 'rxjs/operators';
+
 import {
   approve as approveTransfer,
   beginSetup,
   cancelOasisDexOrder,
   completeSetup,
+  Contracts,
   createAccounting,
   createFeeManager,
   createParticipation,
@@ -12,19 +18,18 @@ import {
   createVault,
   deployContract,
   executeRequest,
+  FunctionSignatures,
   getTokenBySymbol,
   makeOasisDexOrder,
+  register,
   requestInvestment,
   shutDownFund,
   triggerRewardAllFees,
   withDifferentAccount,
 } from '@melonproject/protocol';
-import { Contracts } from '@melonproject/protocol/lib/Contracts';
 import * as Tm from '@melonproject/token-math';
-import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
-import * as keytar from 'keytar';
-import * as R from 'ramda';
-import { distinctUntilChanged, map, pluck, skip } from 'rxjs/operators';
+
+import { registerServer } from 'apollo-server-express';
 import sameBlock from './utils/sameBlock';
 import toAsyncIterator from './utils/toAsyncIterator';
 
@@ -770,6 +775,67 @@ export default {
       const result = await deployContract.send(env, {
         signedTransaction: signed.rawTransaction,
       });
+      return result;
+    },
+    estimateRegisterPolicies: async (
+      _,
+      { from, policies },
+      { environment, loaders },
+    ) => {
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+      const fund = await loaders.fundAddressFromManager.load(from);
+      const { policyManagerAddress } = await loaders.fundRoutes.load(fund);
+
+      const registrations = policies.reduce((carry, current) => {
+        if (current.type === 'TRADE') {
+          return [
+            {
+              method: FunctionSignatures.takeOrder,
+              policy: current.address,
+            },
+            {
+              method: FunctionSignatures.makeOrder,
+              policy: current.address,
+            },
+            {
+              method: FunctionSignatures.cancelOrder,
+              policy: current.address,
+            },
+            ...carry,
+          ];
+        } else {
+          return [
+            {
+              method: FunctionSignatures.executeRequestFor,
+              policy: current.address,
+            },
+          ];
+        }
+      }, []);
+
+      const result = await register.prepare(
+        env,
+        policyManagerAddress,
+        registrations,
+      );
+
+      return result.rawTransaction;
+    },
+    executeRegisterPolicies: async (
+      _,
+      { from, signed },
+      { environment, loaders },
+    ) => {
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+      const fund = await loaders.fundAddressFromManager.load(from);
+      const { policyManagerAddress } = await loaders.fundRoutes.load(fund);
+
+      const result = await register.send(
+        env,
+        policyManagerAddress,
+        signed.rawTransaction,
+      );
+
       return result;
     },
     deleteWallet: async () => {

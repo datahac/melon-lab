@@ -32,6 +32,11 @@ enum FundSetupStepEnum {
   CREATE_VAULT
 }
 
+enum PolicyTypeEnum {
+  TRADE
+  INVEST
+}
+
 interface Order {
   id: String
   trade: Price!
@@ -256,6 +261,11 @@ input UnsignedTransactionInput {
   value: String
 }
 
+input PolicyInput {
+  address: String!
+  type: PolicyTypeEnum!
+}
+
 type Query {
   defaultAccount: String @insecure
   allAccounts: [String] @insecure
@@ -462,6 +472,9 @@ type Mutation {
   estimateDeployMaxPositions(positions: Int): UnsignedTransaction
   estimateDeployPriceTolerance(percent: Int): UnsignedTransaction
   executeDeploy(unsigned: UnsignedTransactionInput): String
+
+  estimateRegisterPolicies(policies: [PolicyInput]!): UnsignedTransaction
+  executeRegisterPolicies(unsigned: UnsignedTransactionInput): Boolean
 
   """
   Export the currently active wallet in its encrypted form.
