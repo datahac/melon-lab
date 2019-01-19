@@ -3,101 +3,15 @@ import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
 import * as R from 'ramda';
 import React from 'react';
-import { estimateFundSetupBeginMutation } from '../../shared/graphql/schema/queries/estimateFundSetupBeginMutation.gql';
 
-const executeFundSetupBeginMutation = gql`
-  mutation ExecuteFundSetupBegin(
-    $data: String!
-    $from: String!
-    $gas: String!
-    $gasPrice: String!
-    $to: String!
-    $value: String!
-  ) {
-    execute: executeFundSetupBegin(
-      unsigned: {
-        data: $data
-        from: $from
-        gas: $gas
-        gasPrice: $gasPrice
-        to: $to
-        value: $value
-      }
-    ) @sign @account
-  }
-`;
-
-const estimateFundSetupStepMutation = gql`
-  mutation EstimateFundSetupStep($step: FundSetupStepEnum!) {
-    estimate: estimateFundSetupStep(step: $step) @account {
-      data
-      from
-      gas
-      gasPrice
-      to
-      value
-    }
-  }
-`;
-
-const executeFundSetupStepMutation = gql`
-  mutation ExecuteFundSetupStep(
-    $data: String!
-    $from: String!
-    $gas: String!
-    $gasPrice: String!
-    $to: String!
-    $value: String!
-    $step: FundSetupStepEnum!
-  ) {
-    execute: executeFundSetupStep(
-      step: $step
-      unsigned: {
-        data: $data
-        from: $from
-        gas: $gas
-        gasPrice: $gasPrice
-        to: $to
-        value: $value
-      }
-    ) @sign @account
-  }
-`;
-
-const estimateFundSetupCompleteMutation = gql`
-  mutation EstimateFundSetupComplete {
-    estimate: estimateFundSetupComplete @account {
-      data
-      from
-      gas
-      gasPrice
-      to
-      value
-    }
-  }
-`;
-
-const executeFundSetupCompleteMutation = gql`
-  mutation ExecuteFundSetupComplete(
-    $data: String!
-    $from: String!
-    $gas: String!
-    $gasPrice: String!
-    $to: String!
-    $value: String!
-  ) {
-    execute: executeFundSetupComplete(
-      unsigned: {
-        data: $data
-        from: $from
-        gas: $gas
-        gasPrice: $gasPrice
-        to: $to
-        value: $value
-      }
-    ) @sign @account
-  }
-`;
+import {
+  estimateFundSetupBeginMutation,
+  estimateFundSetupCompleteMutation,
+  estimateFundSetupStepMutation,
+  executeFundSetupBeginMutation,
+  executeFundSetupCompleteMutation,
+  executeFundSetupStepMutation,
+} from '../../shared/graphql/schema/queries/fundSetup.gql';
 
 export default withRouter(props => (
   <ModalTransactions
