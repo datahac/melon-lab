@@ -5,7 +5,7 @@ export default apolloClient =>
     .query({
       query: gql`
         query IsLoggedInQuery {
-          defaultAccount @client
+          defaultAccount
         }
       `,
     })

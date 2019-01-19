@@ -2,15 +2,18 @@ import {
   switchMap,
   throttleTime,
   distinctUntilKeyChanged,
-  startWith,
 } from 'rxjs/operators';
 
 function currentPeers(environment, block$) {
   return block$.pipe(
     distinctUntilKeyChanged('number'),
     throttleTime(5000),
-    switchMap(() => environment.eth.net.getPeerCount()),
-    startWith(environment.eth.net.getPeerCount()),
+    switchMap(() =>
+      environment.eth.net.getPeerCount().then(a => {
+        console.log(a);
+        return a;
+      }),
+    ),
   );
 }
 

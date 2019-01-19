@@ -1,6 +1,5 @@
 # Fields that are only safe within the native app environment and are blocked
 # from execution in the hosted / web environment.
-directive @client on FIELD
 directive @authenticated on FIELD
 directive @sign(source: String = "unsigned", target: String = "signed") on FIELD
 directive @account(arg: String = "from") on FIELD

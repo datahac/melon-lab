@@ -17,7 +17,6 @@ module.exports = withTypeScript(Object.assign({}, distConfig, {
       '~/design': path.join(srcDir, 'storybook', 'design'),
       '~/static': path.join(srcDir, 'static'),
       '~/shared': path.join(srcDir, 'shared'),
-      '~/schema': path.join(srcDir, 'schema'), 
       '~/error': path.join(srcDir, 'pages', '_error'),
 
       // TODO: Give this a better name.

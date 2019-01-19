@@ -4,7 +4,12 @@ import OrderBook from '~/components/OrderBook';
 import Composer from 'react-composer';
 import { Query } from '~/shared/graphql/apollo';
 import gql from 'graphql-tag';
-import { aggregateOrders } from '@melonproject/exchange-aggregator';
+import {
+  isBidOrder,
+  isAskOrder,
+  sortOrders,
+  reduceOrderVolumes,
+} from '@melonproject/exchange-aggregator';
 import availableExchanges from '~/shared/utils/availableExchanges';
 
 const query = gql`
@@ -64,10 +69,20 @@ const AggregatedOrders = ({ baseAsset, quoteAsset, exchanges, children }) => (
       const orders = [].concat(
         ...orderResponses.map(R.pathOr([], ['data', 'orders'])),
       );
-      const orderbook = aggregateOrders(orders);
+
+      const asks = orders
+        .filter(isAskOrder)
+        .sort(sortOrders)
+        .reduce(reduceOrderVolumes, []);
+
+      const bids = orders
+        .filter(isBidOrder)
+        .sort(sortOrders)
+        .reduce(reduceOrderVolumes, []);
 
       return children({
-        ...orderbook,
+        asks,
+        bids,
         loading,
       });
     }}

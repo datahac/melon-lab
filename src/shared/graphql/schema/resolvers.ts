@@ -1,7 +1,7 @@
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import * as keytar from 'keytar';
 import * as R from 'ramda';
-import { distinctUntilChanged, map, pluck, skip } from 'rxjs/operators';
+import { distinctUntilChanged, map, pluck, skip, tap } from 'rxjs/operators';
 
 import {
   approve as approveTransfer,
@@ -911,7 +911,6 @@ export default {
         const stream$ = streams.block$.pipe(
           pluck('number'),
           distinctUntilChanged(sameBlock),
-          skip(1),
         );
 
         return toAsyncIterator(stream$);
@@ -923,18 +922,18 @@ export default {
         const stream$ = streams.syncing$.pipe(
           map(state => !state),
           distinctUntilChanged(R.equals),
-          skip(1),
         );
 
         return toAsyncIterator(stream$);
       },
     },
     priceFeedUp: {
-      resolve: value => value,
+      resolve: value => {
+        return value;
+      },
       subscribe: (_, __, { streams }) => {
         const stream$ = streams.recentPrice$.pipe(
           distinctUntilChanged(R.equals),
-          skip(1),
         );
 
         return toAsyncIterator(stream$);
@@ -944,8 +943,8 @@ export default {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
         const stream$ = streams.peers$.pipe(
+          tap(value => console.log('tap', value)),
           distinctUntilChanged(R.equals),
-          skip(1),
         );
 
         return toAsyncIterator(stream$);

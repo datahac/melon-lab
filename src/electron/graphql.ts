@@ -1,15 +1,13 @@
-import { SchemaLink } from 'apollo-link-schema';
-import { schema } from '~/schema';
-import { createContext } from '~/schema/context';
-import { getEnvironment, getWallet } from '~/schema/environment';
-import { createIpcExecutor } from '~/shared/graphql/server';
+import { schema } from '~/shared/graphql/schema';
+import { createContext } from '~/shared/graphql/schema/context';
+import { getEnvironment, getWallet } from '~/shared/graphql/schema/environment';
+import { createIpcExecutor, createSchemaLink } from '~/shared/graphql/server';
 import { ipcMain } from 'electron';
 
 export default async () => {
-  const context = await createContext(
-    await getEnvironment(),
-    await getWallet(),
-  );
-  const link = new SchemaLink({ schema, context });
+  const environment = await getEnvironment();
+  const wallet = await getWallet();
+  const context = await createContext(environment, wallet);
+  const link = createSchemaLink({ schema, context });
   return createIpcExecutor({ link, ipc: ipcMain });
 };

@@ -7,7 +7,6 @@ module.exports = {
 
     const base = path.resolve(__dirname, 'src');
     config.resolve.alias = Object.assign({}, config.resolve.alias, {
-      '~/schema': path.join(base, 'schema'),
       '~/shared': path.join(base, 'shared'),
     });
 

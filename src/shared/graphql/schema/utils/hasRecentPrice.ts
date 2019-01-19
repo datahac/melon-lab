@@ -2,7 +2,6 @@ import * as Rx from 'rxjs';
 import {
   distinctUntilKeyChanged,
   throttleTime,
-  startWith,
   timeout,
   retryWhen,
   delay,
@@ -24,7 +23,6 @@ const requestHasRecentPrice = environment => {
 const hasRecentPrice = (environment, block$) => {
   const throttled$ = block$.pipe(
     distinctUntilKeyChanged('number'),
-    startWith(null),
     throttleTime(5000),
   );
 

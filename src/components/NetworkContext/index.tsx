@@ -109,7 +109,8 @@ export class NetworkProvider extends React.PureComponent {
                 document: subscription,
                 updateQuery: (previous, { subscriptionData: result }) => {
                   return {
-                    ...(previous || {}),
+                    ...defaults,
+                    ...previous,
                     [field]: result && result.data && result.data[field],
                   };
                 },

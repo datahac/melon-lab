@@ -3,7 +3,7 @@ import { Mutation } from '~/shared/graphql/apollo';
 
 const mutation = gql`
   mutation ImportWallet($file: String!, $password: String!) {
-    importWallet(wallet: $file, password: $password) @client
+    importWallet(wallet: $file, password: $password)
   }
 `;
 

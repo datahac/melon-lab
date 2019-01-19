@@ -6,7 +6,7 @@ export const AccountContext = React.createContext(null);
 
 export const accountQuery = gql`
   query AccountQuery {
-    defaultAccount @client
+    defaultAccount
   }
 `;
 

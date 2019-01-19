@@ -2125,6 +2125,11 @@
   dependencies:
     "@types/ethereum-protocol" "*"
 
+"@types/graphql@^14.0.5":
+  version "14.0.5"
+  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.5.tgz#e696292fd2d77dc168b5b791710f83463aa39abd"
+  integrity sha512-bwGYLE0SRy5ZraC91dqI2bxbspfm10kyJ2Yjuvk4OjdGznh7fkoWW+xXZHfFydJaqu9syZi099cpiZw3GlPDiA==
+
 "@types/hdkey@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@types/hdkey/-/hdkey-0.7.0.tgz#6734d138e3c597f241be8fae2e60c2949bc3af87"
@@ -2820,13 +2825,6 @@ apollo-link-http-common@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.8.tgz#c6deedfc2739db8b11013c3c2d2ccd657152941f"
   integrity sha512-gGmXZN8mr7e9zjopzKQfZ7IKnh8H12NxBDzvp9nXI3U82aCVb72p+plgoYLcpMY8w6krvoYjgicFmf8LO20TCQ==
-  dependencies:
-    apollo-link "^1.2.6"
-
-apollo-link-schema@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/apollo-link-schema/-/apollo-link-schema-1.1.4.tgz#23877dd4f513a0403cecc561b5a9b7886f2f0a45"
-  integrity sha512-X6fW5ZxG64iOMosejwkdKn6NCVTYsbIO/jvvr2WqqMzUKgU4qzhOfYAFPYpoJf11HO7oRMQj6HRS6rrteisX2A==
   dependencies:
     apollo-link "^1.2.6"
 

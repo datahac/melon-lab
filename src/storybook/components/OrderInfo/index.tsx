@@ -24,18 +24,28 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
     <div className="order-info__prices">
       <div className="order-info__last-price">
         {lastPrice ? (
-          <Fragment>{Tm.toFixed(lastPrice)}</Fragment>
+          <Fragment>
+            {lastPrice && Tm.isPrice(lastPrice) && Tm.toFixed(lastPrice)}
+          </Fragment>
         ) : (
           <span>N/A</span>
         )}
         <span className="order-info__price-desc">Last Price</span>
       </div>
       <div className="order-info__bid">
-        {bid ? <Fragment>{Tm.toFixed(bid)}</Fragment> : <span>N/A</span>}
+        {bid && Tm.isQuantity(bid) ? (
+          <Fragment>{Tm.toFixed(bid)}</Fragment>
+        ) : (
+          <span>N/A</span>
+        )}
         <span className="order-info__price-desc">Bid</span>
       </div>
       <div className="order-info__ask">
-        {ask ? <Fragment>{Tm.toFixed(ask)}</Fragment> : <span>N/A</span>}
+        {bid && Tm.isQuantity(ask) ? (
+          <Fragment>{Tm.toFixed(ask)}</Fragment>
+        ) : (
+          <span>N/A</span>
+        )}
         <span className="order-info__price-desc">Ask</span>
       </div>
     </div>
@@ -44,13 +54,13 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
         <span className="order-info__balance-desc">
           {R.path(['token', 'symbol'], baseToken)}:
         </span>{' '}
-        {Tm.isQuantity(baseToken) && Tm.toFixed(baseToken)}
+        {baseToken && Tm.isQuantity(baseToken) && Tm.toFixed(baseToken)}
       </div>
       <div className="order-info__balance">
         <span className="order-info__balance-desc">
           {R.path(['token', 'symbol'], quoteToken)}:
         </span>{' '}
-        {quoteToken && Tm.toFixed(quoteToken)}
+        {quoteToken && Tm.isQuantity(quoteToken) && Tm.toFixed(quoteToken)}
       </div>
     </div>
   </div>

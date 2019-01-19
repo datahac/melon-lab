@@ -5,7 +5,7 @@ export default apolloClient =>
     .query({
       query: gql`
         query WalletQuery {
-          hasStoredWallet @client
+          hasStoredWallet
         }
       `,
     })

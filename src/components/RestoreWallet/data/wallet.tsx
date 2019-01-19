@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 
 const mutation = gql`
   mutation RestoreWallet($mnemonic: String!, $password: String!) {
-    restoreWallet(mnemonic: $mnemonic, password: $password) @client
+    restoreWallet(mnemonic: $mnemonic, password: $password)
   }
 `;
 
