@@ -1,31 +1,9 @@
-import React from 'react';
-import * as R from 'ramda';
 import ModalTransactions from '+/components/ModalTransactions';
 import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
-
-const estimateFundSetupBeginMutation = gql`
-  mutation EstimateFundSetupBegin(
-    $name: String!
-    $exchanges: [String]!
-    $performanceFee: Float!
-    $managementFee: Float!
-  ) {
-    estimate: estimateFundSetupBegin(
-      name: $name
-      exchanges: $exchanges
-      performanceFee: $performanceFee
-      managementFee: $managementFee
-    ) @account {
-      data
-      from
-      gas
-      gasPrice
-      to
-      value
-    }
-  }
-`;
+import * as R from 'ramda';
+import React from 'react';
+import { estimateFundSetupBeginMutation } from '../../shared/graphql/schema/queries/estimateFundSetupBeginMutation.gql';
 
 const executeFundSetupBeginMutation = gql`
   mutation ExecuteFundSetupBegin(

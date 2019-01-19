@@ -1,0 +1,20 @@
+mutation estimateFundSetupBeginMutation(
+  $name: String!
+  $exchanges: [String]!
+  $performanceFee: Float!
+  $managementFee: Float!
+) {
+  estimate: estimateFundSetupBegin(
+    name: $name
+    exchanges: $exchanges
+    performanceFee: $performanceFee
+    managementFee: $managementFee
+  ) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}

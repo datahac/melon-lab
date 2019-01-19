@@ -2110,6 +2110,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/jest@^23.3.13":
+  version "23.3.13"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.13.tgz#c81484b6f4ca007bb09887ed15ecb3286d58f928"
+  integrity sha512-ePl4l+7dLLmCucIwgQHAgjiepY++qcI6nb8eAwGNkB6OxmTe3Z9rQU3rSpomqu42PCCnlThZbOoxsf+qylJsLA==
+
 "@types/js-combinatorics@^0.5.29":
   version "0.5.31"
   resolved "https://registry.yarnpkg.com/@types/js-combinatorics/-/js-combinatorics-0.5.31.tgz#a61a3f625009e2e693492c158ac8afb243efecad"

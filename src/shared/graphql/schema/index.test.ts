@@ -1,5 +1,6 @@
-import { execute } from 'graphql/execution';
 import gql from 'graphql-tag';
+import { execute } from 'graphql/execution';
+
 import { schema } from '~/shared/graphql/schema';
 import { createContext } from '~/shared/graphql/schema/context';
 import { getEnvironment, getWallet } from '~/shared/graphql/schema/environment';
