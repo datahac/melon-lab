@@ -1,17 +1,17 @@
-import path from 'path';
-import fs from 'fs';
-import Wallet from 'ethers-wallet';
 import Ganache from '@melonproject/ganache-cli';
-import * as Tm from '@melonproject/token-math';
 import {
-  getTokenBySymbol,
   constructEnvironment,
-  deployThirdParty,
-  deploySystem,
   deployAllContractsConfig,
+  deploySystem,
+  deployThirdParty,
+  getTokenBySymbol,
   update,
 } from '@melonproject/protocol';
 import { makeOrderFromAccountOasisDex } from '@melonproject/protocol/lib/contracts/exchanges/transactions/makeOrderFromAccountOasisDex';
+import * as Tm from '@melonproject/token-math';
+import Wallet from 'ethers-wallet';
+import fs from 'fs';
+import path from 'path';
 import Web3Accounts from 'web3-eth-accounts';
 
 const mnemonic =
@@ -152,10 +152,9 @@ export const getEnvironment = async () => {
 
 export const getWallet = async () => {
   // Automatically log in to a wallet. Useful for development.
-  const wallet =
-    process.env.NODE_ENV === 'development'
-      ? Wallet.Wallet.fromMnemonic(mnemonic)
-      : null;
+  const wallet = ['development', 'test'].includes(process.env.NODE_ENV || '')
+    ? Wallet.Wallet.fromMnemonic(mnemonic)
+    : null;
 
   return wallet;
 };

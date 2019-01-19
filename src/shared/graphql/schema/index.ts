@@ -1,7 +1,7 @@
 import { makeExecutableSchema } from 'graphql-tools';
 import Accounts from 'web3-eth-accounts';
-import resolvers from './resolvers';
 import addQueryDirectives from './directives/addQueryDirectives';
+import resolvers from './resolvers';
 import * as typeDefs from './schema.gql';
 
 export const schema = makeExecutableSchema({

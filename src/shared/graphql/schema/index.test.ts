@@ -5,6 +5,8 @@ import { schema } from '~/shared/graphql/schema';
 import { createContext } from '~/shared/graphql/schema/context';
 import { getEnvironment, getWallet } from '~/shared/graphql/schema/environment';
 
+import { estimateFundSetupBeginMutation } from './queries/estimateFundSetupBeginMutation.gql';
+
 describe('graphql schema', () => {
   let context;
 
@@ -25,5 +27,22 @@ describe('graphql schema', () => {
 
     const result = await execute(schema, query, null, context());
     console.log(JSON.stringify(result));
+  });
+
+  it('Estimate setup fund', async () => {
+    const result = await execute(
+      schema,
+      estimateFundSetupBeginMutation,
+      null,
+      context(),
+      {
+        name: 'Test Fund',
+        exchanges: ['KYBER_NETWORK'],
+        managementFee: 2,
+        performanceFee: 20,
+      },
+    );
+
+    console.log(JSON.stringify(result, null, 2));
   });
 });
