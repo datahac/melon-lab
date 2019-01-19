@@ -24,11 +24,14 @@ import {
   executeFundSetupStepMutation,
 } from './queries/fundSetup.gql';
 
+import * as rankings from './queries/rankings.gql';
+
 jest.setTimeout(240000);
 
 describe('graphql schema', () => {
   let context;
   let fundsBefore;
+  let fundAddress;
   const fundName = `test-fund-${randomString()}`;
 
   beforeAll(async () => {
@@ -55,16 +58,7 @@ describe('graphql schema', () => {
   });
 
   it('returns the ranking', async () => {
-    const query = gql`
-      query {
-        rankings {
-          id
-          name
-        }
-      }
-    `;
-
-    const result = await execute(schema, query, null, context());
+    const result = await execute(schema, rankings, null, context());
 
     fundsBefore = R.path(['data', 'rankings'], result);
     expect(result.errors).toBeUndefined();
@@ -98,6 +92,8 @@ describe('graphql schema', () => {
 
     expect(executeSetupBegin.errors).toBeUndefined();
     expect(executeSetupBegin.data).toBeTruthy();
+
+    fundAddress = R.path(['data', 'execute'], executeSetupBegin);
 
     const steps = [
       'CREATE_ACCOUNTING',
@@ -135,6 +131,35 @@ describe('graphql schema', () => {
       expect(executeStep.data).toBeTruthy();
     }
 
-    console.log(JSON.stringify(executeSetupBegin, null, 2));
+    const estimateFundSetupComplete = await execute(
+      schema,
+      estimateFundSetupCompleteMutation,
+      null,
+      context(),
+    );
+
+    const executeFundSetupComplete = await execute(
+      schema,
+      executeFundSetupCompleteMutation,
+      null,
+      context(),
+      R.path(['data', 'estimate'], estimateFundSetupComplete),
+    );
+
+    const fundsAfterResult = await execute(schema, rankings, null, context());
+    const fundsAfter = R.path(['data', 'rankings'], fundsAfterResult);
+
+    expect(R.path(['data', 'execute'], executeSetupBegin)).toBe(
+      R.path(['data', 'execute'], executeFundSetupComplete),
+    );
+
+    expect(fundsAfter.length).toBeGreaterThan(fundsBefore.length);
+
+    const fundFromRanking = fundsAfter.find(
+      fund => fund.address === fundAddress,
+    );
+
+    expect(fundFromRanking).toBeTruthy();
+    expect(fundFromRanking.name).toBe(fundName);
   });
 });
