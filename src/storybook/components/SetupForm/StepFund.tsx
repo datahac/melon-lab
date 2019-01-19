@@ -1,7 +1,7 @@
 import React, { StatelessComponent } from 'react';
 import Input from '~/blocks/Input';
 import Selector from '~/components/Selector';
-import availableExchangeContracts from '~/utils/availableExchangeContracts';
+import availableExchangeContracts from '~/shared/utils/availableExchangeContracts';
 
 import styles from './styles.css';
 

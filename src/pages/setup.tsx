@@ -1,8 +1,8 @@
 import React from 'react';
 import DefaultTemplate from '+/components/DefaultTemplate';
 import Setup from '+/components/Setup';
-import checkHasFund from '~/utils/checkHasFund';
-import redirect from '~/utils/redirect';
+import checkHasFund from '~/shared/utils/checkHasFund';
+import redirect from '~/shared/utils/redirect';
 
 export default class SetupPage extends React.Component {
   static async getInitialProps(context) {

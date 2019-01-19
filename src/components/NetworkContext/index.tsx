@@ -1,6 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Query } from '~/apollo';
+import { Query } from '~/shared/graphql/apollo';
 
 const defaults = {
   network: null,
@@ -109,7 +109,8 @@ export class NetworkProvider extends React.PureComponent {
                 document: subscription,
                 updateQuery: (previous, { subscriptionData: result }) => {
                   return {
-                    ...(previous || {}),
+                    ...defaults,
+                    ...previous,
                     [field]: result && result.data && result.data[field],
                   };
                 },

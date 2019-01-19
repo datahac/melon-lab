@@ -1,27 +1,8 @@
-require('dotenv').config({
-  path: require('find-up').sync(['.env', '.env.defaults']),
-});
-
 const path = require('path');
-const R = require('ramda');
 const webpack = require('webpack');
 const withTypeScript = require('@zeit/next-typescript');
-
 const srcDir = path.resolve(__dirname, 'src');
-const isElectron = !!JSON.parse(process.env.ELECTRON || 'false');
 const distConfig = require('./next.config.dist.js');
-
-const apolloLink = (electron, server) => {
-  if (electron) {
-    return 'app';
-  }
-
-  if (server) {
-    return 'server';
-  }
-
-  return 'browser';
-};
 
 module.exports = withTypeScript(Object.assign({}, distConfig, {
   exportPathMap: () => require('./next.routes.js'),
@@ -35,30 +16,27 @@ module.exports = withTypeScript(Object.assign({}, distConfig, {
       '~/templates': path.join(srcDir, 'storybook', 'templates'),
       '~/design': path.join(srcDir, 'storybook', 'design'),
       '~/static': path.join(srcDir, 'static'),
-      '~/utils': path.join(srcDir, 'shared', 'utils'),
-      '~/electron': path.join(srcDir, 'electron'),
-      '~/schema': path.join(srcDir, 'schema'), 
+      '~/shared': path.join(srcDir, 'shared'),
       '~/error': path.join(srcDir, 'pages', '_error'),
 
       // TODO: Give this a better name.
       '+/components': path.join(srcDir, 'components'),
-
-      // Special alias for importing the apollo web transport.
-      '~/apollo': path.join(srcDir, 'shared', 'apollo', apolloLink(isElectron, options.isServer)),
     });
 
-    config.plugins.push(new webpack.DefinePlugin({
-      ELECTRON: isElectron,
-    }));
+    if (!options.isServer && options.dev) {
+      const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+      config.plugins.push(new BundleAnalyzerPlugin({
+        analyzerPort: 3001,
+        openAnalyzer: false,
+      }));
+    }
 
-    if (!options.isServer) {
-      if (options.dev) {
-        const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-        config.plugins.push(new BundleAnalyzerPlugin({
-          analyzerPort: 3001,
-          openAnalyzer: false,
-        }));
-      }
+    if (options.dev) {
+      config.plugins.push(new webpack.BannerPlugin({
+        raw: true,
+        entryOnly: false,
+        banner: `require('${require.resolve('source-map-support/register')}');`,
+      }));
     }
 
     config.module.rules.push({
@@ -95,6 +73,8 @@ module.exports = withTypeScript(Object.assign({}, distConfig, {
 
     config.node = {
       fs: 'empty',
+      net: 'empty',
+      tls: 'empty',
     };
 
     return config;

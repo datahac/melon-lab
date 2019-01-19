@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
-import { Mutation } from '~/apollo';
+import { Mutation } from '~/shared/graphql/apollo';
 
 const mutation = gql`
   mutation ExportWallet($password: String!) {
-    exportWallet(password: $password) @client
+    exportWallet(password: $password)
   }
 `;
 

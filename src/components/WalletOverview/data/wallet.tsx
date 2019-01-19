@@ -1,9 +1,9 @@
-import { Query } from '~/apollo';
+import { Query } from '~/shared/graphql/apollo';
 import gql from 'graphql-tag';
 
 const query = gql`
   query GetWallet {
-    hasStoredWallet @client
+    hasStoredWallet
   }
 `;
 

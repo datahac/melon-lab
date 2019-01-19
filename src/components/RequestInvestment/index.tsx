@@ -53,7 +53,7 @@ export default props => (
       mutation: estimateRequestInvestmentMutation,
       variables: () => ({
         fundAddress: props.fundAddress,
-        investmentAmount: props.values.total.quantity,
+        investmentAmount: props.values.total.quantity.toString(),
       }),
     }}
     execute={{

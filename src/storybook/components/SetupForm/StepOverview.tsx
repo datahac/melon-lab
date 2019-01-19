@@ -1,7 +1,7 @@
 import React, { StatelessComponent } from 'react';
 import { CellBody, CellHead, Row, Table, TableBody } from '~/blocks/Table';
-import availablePolicies from '~/utils/availablePolicies';
-import availableExchangeContracts from '~/utils/availableExchangeContracts';
+import availablePolicies from '~/shared/utils/availablePolicies';
+import availableExchangeContracts from '~/shared/utils/availableExchangeContracts';
 import * as R from 'ramda';
 
 import styles from './styles.css';

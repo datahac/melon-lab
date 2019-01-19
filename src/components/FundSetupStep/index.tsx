@@ -4,6 +4,51 @@ import ModalTransactions from '+/components/ModalTransactions';
 import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
 
+const estimateFundSetupBeginMutation = gql`
+  mutation EstimateFundSetupBegin(
+    $name: String!
+    $exchanges: [String]!
+    $performanceFee: Float!
+    $managementFee: Float!
+  ) {
+    estimate: estimateFundSetupBegin(
+      name: $name
+      exchanges: $exchanges
+      performanceFee: $performanceFee
+      managementFee: $managementFee
+    ) @account {
+      data
+      from
+      gas
+      gasPrice
+      to
+      value
+    }
+  }
+`;
+
+const executeFundSetupBeginMutation = gql`
+  mutation ExecuteFundSetupBegin(
+    $data: String!
+    $from: String!
+    $gas: String!
+    $gasPrice: String!
+    $to: String!
+    $value: String!
+  ) {
+    execute: executeFundSetupBegin(
+      unsigned: {
+        data: $data
+        from: $from
+        gas: $gas
+        gasPrice: $gasPrice
+        to: $to
+        value: $value
+      }
+    ) @sign @account
+  }
+`;
+
 const estimateFundSetupStepMutation = gql`
   mutation EstimateFundSetupStep($step: FundSetupStepEnum!) {
     estimate: estimateFundSetupStep(step: $step) @account {
@@ -41,11 +86,57 @@ const executeFundSetupStepMutation = gql`
   }
 `;
 
+const estimateFundSetupCompleteMutation = gql`
+  mutation EstimateFundSetupComplete {
+    estimate: estimateFundSetupComplete @account {
+      data
+      from
+      gas
+      gasPrice
+      to
+      value
+    }
+  }
+`;
+
+const executeFundSetupCompleteMutation = gql`
+  mutation ExecuteFundSetupComplete(
+    $data: String!
+    $from: String!
+    $gas: String!
+    $gasPrice: String!
+    $to: String!
+    $value: String!
+  ) {
+    execute: executeFundSetupComplete(
+      unsigned: {
+        data: $data
+        from: $from
+        gas: $gas
+        gasPrice: $gasPrice
+        to: $to
+        value: $value
+      }
+    ) @sign @account
+  }
+`;
+
 export default withRouter(props => (
   <ModalTransactions
     text={`The following method on the Melon Smart Contracts will be executed:`}
     open={props.progress}
     estimations={[
+      {
+        mutation: estimateFundSetupBeginMutation,
+        variables: () => ({
+          name: R.path(['values', 'name'], props),
+          exchanges: R.path(['values', 'exchanges'], props),
+          performanceFee: R.path(['values', 'fees', 'performanceFee'], props),
+          managementFee: R.path(['values', 'fees', 'managementFee'], props),
+        }),
+        isComplete: !!props.fund,
+        name: 'setupBegin',
+      },
       {
         mutation: estimateFundSetupStepMutation,
         variables: () => ({
@@ -102,8 +193,27 @@ export default withRouter(props => (
         isComplete: R.pathOr(false, ['routes', 'vaultAddress'], props),
         name: 'createVault',
       },
+      {
+        mutation: estimateFundSetupCompleteMutation,
+        isComplete:
+          !!props.fund &&
+          !props.setup.setupComplete &&
+          !props.setup.setupInProgress,
+        name: 'setupComplete',
+      },
     ]}
     executions={[
+      {
+        mutation: executeFundSetupBeginMutation,
+        variables: (_, transaction) => ({
+          ...transaction,
+        }),
+        update: (cache, result) => {
+          props.update(cache, {
+            fund: R.path(['data', 'execute'], result),
+          });
+        },
+      },
       {
         mutation: executeFundSetupStepMutation,
         variables: (_, transaction) => ({
@@ -198,6 +308,23 @@ export default withRouter(props => (
           props.update(cache, {
             routes: {
               vaultAddress: R.path(['data', 'execute'], result),
+            },
+          });
+        },
+      },
+      {
+        mutation: executeFundSetupCompleteMutation,
+        update: cache => {
+          props.updateSetup(cache, {
+            fund: {
+              isComplete: true,
+            },
+          });
+          // onCompleted is not working because of render
+          props.router.push({
+            pathname: '/invest',
+            query: {
+              address: props.fund,
             },
           });
         },

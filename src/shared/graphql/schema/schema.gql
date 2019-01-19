@@ -1,9 +1,6 @@
 # Fields that are only safe within the native app environment and are blocked
 # from execution in the hosted / web environment.
-directive @insecure on FIELD_DEFINITION
-directive @client on FIELD
 directive @authenticated on FIELD
-
 directive @sign(source: String = "unsigned", target: String = "signed") on FIELD
 directive @signMessage on FIELD
 
@@ -302,9 +299,9 @@ input SignZeroExOrderInput {
 }
 
 type Query {
-  defaultAccount: String @insecure
-  allAccounts: [String] @insecure
-  hasStoredWallet: Boolean @insecure
+  defaultAccount: String
+  allAccounts: [String]
+  hasStoredWallet: Boolean
 
   "Fetch the associated fund of an account."
   associatedFund(
@@ -532,7 +529,7 @@ type Mutation {
   exportWallet(
     "The password for decrypting the wallet."
     password: String!
-  ): String @insecure
+  ): String
 
   """
   Log out of the current wallet and delete its encrypted representation
@@ -540,7 +537,7 @@ type Mutation {
   encrypted wallet or restore it from its mnemonic when attempting to
   log in again.
   """
-  deleteWallet: Boolean! @insecure
+  deleteWallet: Boolean!
 
   """
   Log in to a previously stored wallet. Returns a list of possible account
@@ -549,7 +546,7 @@ type Mutation {
   loginWallet(
     "The password for decrypting the wallet."
     password: String!
-  ): [String] @insecure
+  ): [String]
 
   """
   Import and log in to wallet using a wallet JSON. Within the native app
@@ -561,7 +558,7 @@ type Mutation {
     wallet: String!
     "The password for decrypting the wallet."
     password: String!
-  ): [String] @insecure
+  ): [String]
 
   """
   Restore and login to a wallet using a mnemonic. Within the native app
@@ -573,12 +570,12 @@ type Mutation {
     mnemonic: String!
     "The password for decrypting the wallet."
     password: String!
-  ): [String] @insecure
+  ): [String]
 
   """
   Randomly generate a new mnemonic phrase.
   """
-  generateMnemonic: String @insecure
+  generateMnemonic: String
 }
 
 type Subscription {

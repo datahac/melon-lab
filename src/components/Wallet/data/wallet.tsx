@@ -1,15 +1,15 @@
-import { Query, Mutation } from '~/apollo';
+import { Query, Mutation } from '~/shared/graphql/apollo';
 import gql from 'graphql-tag';
 
 const query = gql`
   query GetWallet {
-    hasStoredWallet @client
+    hasStoredWallet
   }
 `;
 
 const mutation = gql`
   mutation DeleteWalletMutation {
-    deleteWallet @client
+    deleteWallet
   }
 `;
 

@@ -6,7 +6,7 @@ import Form from '~/blocks/Form';
 import FeeForm from '~/components/FeeForm';
 import TransactionProgress from '~/components/TransactionProgress';
 import Composer from 'react-composer';
-import { Mutation } from '~/apollo';
+import { Mutation } from '~/shared/graphql/apollo';
 import withForm from './withForm';
 import { compose } from 'recompose';
 import { withRouter } from 'next/router';
@@ -86,17 +86,20 @@ export default class ModalTransactions extends React.Component {
       <Composer
         components={R.flatten(R.zip(estimations, executions)).map(mutation => {
           return ({ render }) => (
-            <Mutation {...R.omit(['variables'], mutation)}>
+            <Mutation
+              {...R.omit(['variables', 'name', 'isComplete'], mutation)}
+            >
               {(a, b) => render([a, b])}
             </Mutation>
           );
         })}
       >
         {results => {
-          const transaction = R.path(
-            ['data', 'estimate'],
-            !R.isEmpty(results) && results[0][1],
-          );
+          const estimate = !R.isEmpty(results) && results[0][0];
+          const estimateProps = !R.isEmpty(results) && results[0][1];
+          const execute = !R.isEmpty(results) && results[1][0];
+          const executeProps = !R.isEmpty(results) && results[1][1];
+          const transaction = R.path(['data', 'estimate'], estimateProps);
 
           const doEstimate = () => {
             const variables = R.pathOr(
@@ -105,14 +108,14 @@ export default class ModalTransactions extends React.Component {
               estimations[0],
             )(estimations[0]);
 
-            results[0][0]({
+            estimate({
               variables,
             });
           };
 
-          const doExecute = async gasPrice => {
+          const doExecute = gasPrice => {
             const variables = R.pathOr(
-              () => undefined,
+              (_, transaction) => transaction,
               ['variables'],
               executions[0],
             )(executions[0], {
@@ -120,7 +123,7 @@ export default class ModalTransactions extends React.Component {
               gasPrice,
             });
 
-            results[1][0]({
+            execute({
               variables,
             });
           };
@@ -134,15 +137,9 @@ export default class ModalTransactions extends React.Component {
           return (
             <WithFormModal
               handleCancel={this.props.handleCancel}
-              error={false}
-              loading={
-                !R.isEmpty(results) &&
-                (results[0][1].loading || results[1][1].loading)
-              }
-              gasPrice={R.path(
-                ['data', 'estimate', 'gasPrice'],
-                !R.isEmpty(results) && results[0][1],
-              )}
+              error={estimateProps.error || executeProps.errors}
+              loading={estimateProps.loading || executeProps.loading}
+              gasPrice={R.path(['data', 'estimate', 'gasPrice'], estimateProps)}
               text={this.props.text}
               open={this.props.open}
               fees={fees}

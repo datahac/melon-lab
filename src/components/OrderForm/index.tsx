@@ -6,8 +6,8 @@ import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import MakeOrder from '+/components/MakeOrder';
 import withForm from './withForm';
-import isSameAddress from '~/utils/isSameAddress';
-import availableExchanges from '~/utils/availableExchanges';
+import isSameAddress from '~/shared/utils/isSameAddress';
+import availableExchanges from '~/shared/utils/availableExchanges';
 
 const WrappedOrderForm = withForm(props => {
   const exchanges = Object.keys(

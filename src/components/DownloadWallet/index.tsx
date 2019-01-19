@@ -3,7 +3,7 @@ import Composer from 'react-composer';
 import { withRouter } from 'next/router';
 import ExportWalletMutation from './data/export';
 import { AccountConsumer } from '+/components/AccountContext';
-import { downloadWallet } from '~/utils/createDownload';
+import { downloadWallet } from '~/shared/utils/createDownload';
 import withForm from './withForm';
 
 const DownloadWalletForm = withForm(DownloadWallet);

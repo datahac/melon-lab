@@ -1,16 +1,16 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Mutation, Query } from '~/apollo';
+import { Mutation, Query } from '~/shared/graphql/apollo';
 
 const loadWalletMutation = gql`
   mutation LoadWallet($password: String!) {
-    loginWallet(password: $password) @client
+    loginWallet(password: $password)
   }
 `;
 
 const storedWalletQuery = gql`
   query GetWalletQuery {
-    hasStoredWallet @client
+    hasStoredWallet
   }
 `;
 

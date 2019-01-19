@@ -1,8 +1,8 @@
 import React, { StatelessComponent, Fragment } from 'react';
 import Icon from '~/blocks/Icon';
 import Spinner from '~/blocks/Spinner';
-import displayQuantity from '~/utils/displayQuantity';
-import displayPrice from '~/utils/displayPrice';
+import displayQuantity from '~/shared/utils/displayQuantity';
+import displayPrice from '~/shared/utils/displayPrice';
 import * as Tm from '@melonproject/token-math';
 
 import styles from './styles.css';

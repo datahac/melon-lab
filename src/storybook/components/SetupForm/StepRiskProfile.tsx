@@ -1,6 +1,6 @@
 import React, { StatelessComponent } from 'react';
 import Policies from '~/components/Policies';
-import availablePolicies from '~/utils/availablePolicies';
+import availablePolicies from '~/shared/utils/availablePolicies';
 
 import styles from './styles.css';
 import { ObjectCache } from 'apollo-cache-inmemory';

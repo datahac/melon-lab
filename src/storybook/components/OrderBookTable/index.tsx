@@ -18,7 +18,9 @@ const OrderBookTable = ({ style, entries, onClickOrder, canTrade }) => {
       <style jsx>{styles}</style>
       <div className="orderbook-table__head">
         <div className="orderbook-table__head-row">
-          <div className="orderbook-table__head-cell">Ask</div>
+          <div className="orderbook-table__head-cell">
+            {style === 'sell' ? 'Ask' : 'Bid'}
+          </div>
           <div className="orderbook-table__head-cell">Vol.</div>
           <div className="orderbook-table__head-cell">Cum. Vol.</div>
         </div>

@@ -14,7 +14,7 @@ import Holdings from '+/components/Holdings';
 import OrderBook from '+/components/OrderBook';
 import FundQuery from './data/fund';
 import HoldingsQuery from './data/holdings';
-import isSameAddress from '~/utils/isSameAddress';
+import isSameAddress from '~/shared/utils/isSameAddress';
 
 const Container = ({ address, children }) => {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import Composer from 'react-composer';
 import gql from 'graphql-tag';
-import { Query } from '~/apollo';
+import { Query } from '~/shared/graphql/apollo';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import * as R from 'ramda';
 
@@ -9,6 +9,7 @@ const defaults = {
   setupBegin: false,
   setupComplete: false,
   setupInProgress: false,
+  isComplete: false,
   update: () => {
     throw new Error('Cannot set the fund status.');
   },
@@ -66,6 +67,7 @@ export class SetupProvider extends React.PureComponent {
             setupBegin: !manager.fund && !setupInProgress && !isComplete,
             setupInProgress,
             setupComplete: hasRoutes && !isComplete,
+            isComplete,
           };
 
           const value = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Query } from '~/apollo';
+import { Query } from '~/shared/graphql/apollo';
 
 const defaults = {
   melonContracts: {
