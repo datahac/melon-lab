@@ -6,7 +6,10 @@ import url from 'url';
 import { schema } from '~/shared/graphql/schema';
 import { createContext } from '~/shared/graphql/schema/context';
 import { getEnvironment, getWallet } from '~/shared/graphql/schema/environment';
-import { createIpcExecutor, createSchemaLink } from '~/shared/graphql/server';
+import {
+  createIpcExecutor,
+  createSchemaLink,
+} from 'graphql-transport-electron';
 
 const isWindows = process.platform === 'win32';
 

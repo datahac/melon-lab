@@ -10,7 +10,7 @@ import { ApolloLink } from 'apollo-link';
 import { onError } from 'apollo-link-error';
 import withApollo from 'next-with-apollo';
 import { Query as QueryBase } from 'react-apollo';
-import { createIpcLink } from '~/shared/graphql/client';
+import { createIpcLink } from 'graphql-transport-electron';
 
 export { Subscription } from 'react-apollo';
 export { Mutation } from 'react-apollo';
