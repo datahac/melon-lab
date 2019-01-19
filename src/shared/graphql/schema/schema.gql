@@ -322,7 +322,7 @@ type Query {
   balance(symbol: String!, address: String): Quantity
   fund(address: String!): Fund
   rankings: [Ranking]
-  orders(exchange: ExchangeEnum!, base: String!, quote: String!): [Order | OasisDexOrder]
+  orders(exchange: ExchangeEnum!, base: String!, quote: String!): [Order]
 
   "Loads the current routes for fund creation for a fund manager address."
   routes("The address of the fund manager." manager: String): Routes
