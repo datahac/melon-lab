@@ -17,6 +17,7 @@ module.exports = {
     require.resolve("./jest.setup"),
   ],
   "transform": {
+    "\\.(gql|graphql)$": "jest-transform-graphql",
     "^.+\\.(jsx?|tsx?)$": "ts-jest"
   },
   "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",

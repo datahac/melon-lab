@@ -1,32 +1,28 @@
 import { execute } from 'graphql/execution';
 import gql from 'graphql-tag';
-import { schema, createContext } from './';
+import { schema } from '~/shared/graphql/schema';
+import { createContext } from '~/shared/graphql/schema/context';
+import { getEnvironment, getWallet } from '~/shared/graphql/schema/environment';
 
-const environment = await getEnvironment(track, endpoint);
-// Automatically log in to a wallet. Useful for development.
-const wallet =
-  process.env.NODE_ENV === 'development' &&
-  !!JSON.parse(process.env.SERVER_SIDE_WALLET || 'false')
-    ? Wallet.Wallet.fromMnemonic(mnemonic)
-    : null;
-
-// Bootstrap the graphql server.
-const context = await createContext(environment, wallet);
-
-describe(() => {
+describe('graphql schema', () => {
   let context;
 
   beforeAll(async () => {
-    // TODO: Build environment / wallet.
+    const environment = await getEnvironment();
+    const wallet = await getWallet();
     context = await createContext(environment, wallet);
   });
 
-  it(async () => {
-    const variables = {};
+  it('returns the ranking', async () => {
     const query = gql`
-      ...
+      query {
+        rankings {
+          id
+        }
+      }
     `;
 
-    const result = await execute(schema, query, null, context, variables);
+    const result = await execute(schema, query, null, context());
+    console.log(JSON.stringify(result));
   });
 });

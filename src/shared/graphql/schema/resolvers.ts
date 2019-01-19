@@ -942,10 +942,7 @@ export default {
     peerCount: {
       resolve: value => value,
       subscribe: (_, __, { streams }) => {
-        const stream$ = streams.peers$.pipe(
-          tap(value => console.log('tap', value)),
-          distinctUntilChanged(R.equals),
-        );
+        const stream$ = streams.peers$.pipe(distinctUntilChanged(R.equals));
 
         return toAsyncIterator(stream$);
       },

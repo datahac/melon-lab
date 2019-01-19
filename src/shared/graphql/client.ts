@@ -1,5 +1,5 @@
 import { ApolloLink, Observable } from 'apollo-link';
-import { ExecutionResult, GraphQLError, print } from 'graphql';
+import { ExecutionResult, print } from 'graphql';
 import { SerializableGraphQLRequest } from './types';
 
 export interface ApolloRpcLinkOptions {
