@@ -8,3 +8,6 @@ Enzyme.configure({ adapter: new Adapter() });
 global.shallow = Enzyme.shallow;
 global.render = Enzyme.render;
 global.mount = Enzyme.mount;
+
+// Timeout
+jest.setTimeout(240000);

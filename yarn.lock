@@ -1641,7 +1641,7 @@
   dependencies:
     source-map-support "^0.5.3"
 
-"@melonproject/protocol@^0.9.0-alpha.25", "@melonproject/protocol@^0.9.3":
+"@melonproject/protocol@^0.9.0-alpha.25", "@melonproject/protocol@^0.9.7":
   version "0.9.7"
   resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.7.tgz#33aebfefcc360c6158ae8eae45b8f21c8a28f208"
   integrity sha512-zj77046Tyq6cuS8PAade+7n/v1WyV5C2xzKf4R85yo8zzTg2rICk/zzh8opf+NNpL6db3cuEHPZvIYMVfbYh7g==
