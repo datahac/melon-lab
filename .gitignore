@@ -6,6 +6,7 @@ package-lock.json
 yalc.lock
 coverage/
 build/
+app/
 
 # Log files.
 *.log
