@@ -1,31 +1,31 @@
 import DataLoader from 'dataloader';
 import memoizeOne from 'memoize-one';
 import * as R from 'ramda';
-import { pluck, map } from 'rxjs/operators';
-import takeLast from './utils/takeLast';
-import importWallet from './loaders/wallet/decryptWallet';
-import restoreWallet from './loaders/wallet/restoreWallet';
-import generateMnemonic from './loaders/wallet/generateMnemonic';
-import getFundInception from './loaders/fund/fundInception';
-import getFundOwner from './loaders/fund/fundOwner';
-import getFundName from './loaders/fund/fundName';
-import getFundRoutes from './loaders/fund/fundRoutes';
-import getFundHoldings from './loaders/fund/fundHoldings';
-import getFundDenominationAsset from './loaders/fund/fundDenominationAsset';
-import getFundNativeAsset from './loaders/fund/fundNativeAsset';
-import getFundTotalSupply from './loaders/fund/fundTotalSupply';
-import getFundCalculations from './loaders/fund/fundCalculations';
-import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
-import getFundIsShutdown from './loaders/fund/fundIsShutdown';
-import getFundParticipation from './loaders/fund/fundParticipation';
-import getQuoteToken from './loaders/quoteToken';
+import { map, pluck } from 'rxjs/operators';
 import getAssetPrice from './loaders/assetPrice';
 import getExchangeOrders from './loaders/exchangeOrders';
+import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
+import getFundCalculations from './loaders/fund/fundCalculations';
+import getFundDenominationAsset from './loaders/fund/fundDenominationAsset';
+import getFundHoldings from './loaders/fund/fundHoldings';
+import getFundInception from './loaders/fund/fundInception';
 import getFundIsComplete from './loaders/fund/fundIsComplete';
+import getFundIsShutdown from './loaders/fund/fundIsShutdown';
+import getFundName from './loaders/fund/fundName';
+import getFundNativeAsset from './loaders/fund/fundNativeAsset';
+import getFundOwner from './loaders/fund/fundOwner';
+import getFundParticipation from './loaders/fund/fundParticipation';
+import getFundRoutes from './loaders/fund/fundRoutes';
+import getFundTotalSupply from './loaders/fund/fundTotalSupply';
+import getQuoteToken from './loaders/quoteToken';
+import getRoutes from './loaders/routes';
 import getSymbolBalance from './loaders/symbolBalance';
 import getSymbolBalanceObservable from './loaders/symbolBalanceObservable';
+import importWallet from './loaders/wallet/decryptWallet';
+import generateMnemonic from './loaders/wallet/generateMnemonic';
+import restoreWallet from './loaders/wallet/restoreWallet';
 import resolveNetwork from './utils/resolveNetwork';
-import getRoutes from './loaders/routes';
+import takeLast from './utils/takeLast';
 
 export default (environment, streams) => {
   const fundIsComplete = new DataLoader(addresses => {
@@ -233,12 +233,14 @@ export default (environment, streams) => {
   );
 
   const exchangeOrders = new DataLoader(
-    pairs => {
+    async pairs => {
       const fn = getExchangeOrders(environment);
       const result = pairs.map(pair =>
         fn(pair.exchange, pair.base, pair.quote),
       );
-      return Promise.all(result || []);
+      const raw = await Promise.all(result || []);
+      console.log(raw);
+      return raw;
     },
     {
       cacheKeyFn: options =>
