@@ -1,9 +1,12 @@
-import electron from 'electron';
+import electron, { ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
 import http from 'http';
 import path from 'path';
 import url from 'url';
-import setupGql from './graphql';
+import { schema } from '~/shared/graphql/schema';
+import { createContext } from '~/shared/graphql/schema/context';
+import { getEnvironment, getWallet } from '~/shared/graphql/schema/environment';
+import { createIpcExecutor, createSchemaLink } from '~/shared/graphql/server';
 
 const isWindows = process.platform === 'win32';
 
@@ -13,7 +16,11 @@ if (isDev) {
 
 let mainWindow;
 const restoreMainWindow = async () => {
-  await setupGql();
+  const environment = await getEnvironment();
+  const wallet = await getWallet();
+  const context = await createContext(environment, wallet);
+  const link = createSchemaLink({ schema, context });
+  createIpcExecutor({ link, ipc: ipcMain });
 
   // Create the application's main menu.
   electron.Menu.setApplicationMenu(
