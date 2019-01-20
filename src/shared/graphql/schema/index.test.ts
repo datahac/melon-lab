@@ -1,12 +1,12 @@
 import {
   deposit,
+  getFundDetails,
   getTokenBySymbol,
   randomString,
   sendEth,
   withPrivateKeySigner,
 } from '@melonproject/protocol';
 import * as Tm from '@melonproject/token-math';
-import gql from 'graphql-tag';
 import { execute } from 'graphql/execution';
 import * as R from 'ramda';
 import Accounts from 'web3-eth-accounts';
@@ -29,13 +29,13 @@ import * as rankings from './queries/rankings.gql';
 jest.setTimeout(240000);
 
 describe('graphql schema', () => {
+  let environment;
   let context;
-  let fundsBefore;
   let fundAddress;
   const fundName = `test-fund-${randomString()}`;
 
   beforeAll(async () => {
-    const environment = await getEnvironment();
+    environment = await getEnvironment();
     const wallet = await getWallet();
     const accounts = new Accounts(environment.eth.currentProvider);
     const account = accounts.create();
@@ -57,12 +57,14 @@ describe('graphql schema', () => {
     context = await createContext(tester, account);
   });
 
-  it('Setup fund', async () => {
+  it('Ranking', async () => {
     const result = await execute(schema, rankings, null, context());
-
-    fundsBefore = R.path(['data', 'rankings'], result);
     expect(result.errors).toBeUndefined();
     expect(result.data).toBeTruthy();
+  });
+
+  it('Setup fund', async () => {
+    const fundsBefore = await getFundDetails(environment);
 
     const estimateSetupBegin = await execute(
       schema,
@@ -147,14 +149,13 @@ describe('graphql schema', () => {
       R.path(['data', 'estimate'], estimateFundSetupComplete),
     );
 
-    const fundsAfterResult = await execute(schema, rankings, null, context());
-    const fundsAfter = R.path(['data', 'rankings'], fundsAfterResult);
+    const fundsAfter = await getFundDetails(environment);
 
     expect(R.path(['data', 'execute'], executeSetupBegin)).toBe(
       R.path(['data', 'execute'], executeFundSetupComplete),
     );
 
-    // expect(fundsAfter.length).toBeGreaterThan(fundsBefore.length);
+    expect(fundsAfter.length).toBeGreaterThan(fundsBefore.length);
 
     const fundFromRanking = fundsAfter.find(
       fund => fund.address === fundAddress,
