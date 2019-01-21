@@ -31,22 +31,21 @@ export const TransactionProgress: StatelessComponent<
 
       <div className="transaction-progress__bar">
         {transactions.map((transaction, index) => (
-          <Fragment>
-            <div
-              className={itemClassNames(
-                transaction.isComplete,
-                transaction.name === activeTransaction,
+          <div
+            className={itemClassNames(
+              transaction.isComplete,
+              transaction.name === activeTransaction,
+            )}
+            key={index}
+            title={transaction.name}
+          >
+            <div className="transaction-progress__status">
+              {(transaction.isComplete ||
+                transaction.name === activeTransaction) && (
+                <div className="transaction-progress__checkmark" />
               )}
-              key={index}
-            >
-              <div className="transaction-progress__status">
-                {(transaction.isComplete ||
-                  transaction.name === activeTransaction) && (
-                  <div className="transaction-progress__checkmark" />
-                )}
-              </div>
             </div>
-          </Fragment>
+          </div>
         ))}
       </div>
     </div>
