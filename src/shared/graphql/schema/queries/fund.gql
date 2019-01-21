@@ -1,0 +1,29 @@
+query fundQuery($fundAddress: String) {
+  fund(address: $fundAddress) {
+    id
+    name
+    address
+    holdings {
+      balance {
+        token {
+          symbol
+          address
+          decimals
+        }
+        quantity
+      }
+    }
+    routes {
+      accountingAddress
+      feeManagerAddress
+      participationAddress
+      policyManagerAddress
+      priceSourceAddress
+      registryAddress
+      sharesAddress
+      tradingAddress
+      vaultAddress
+      versionAddress
+    }
+  }
+}

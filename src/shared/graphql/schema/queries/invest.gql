@@ -1,0 +1,71 @@
+mutation estimateRequestInvestmentMutation(
+  $investmentAmount: String!
+  $fundAddress: String!
+) {
+  estimate: estimateRequestInvestment(
+    investmentAmount: $investmentAmount
+    fundAddress: $fundAddress
+  ) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation executeRequestInvestmentMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+  $fundAddress: String!
+) {
+  execute: executeRequestInvestment(
+    fundAddress: $fundAddress
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}
+
+mutation estimateExecuteRequestMutation($fundAddress: String!) {
+  estimate: estimateExecuteRequest(fundAddress: $fundAddress) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation executeExecuteRequestMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+  $fundAddress: String!
+) {
+  execute: executeExecuteRequest(
+    fundAddress: $fundAddress
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}

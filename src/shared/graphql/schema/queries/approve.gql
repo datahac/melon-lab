@@ -1,0 +1,40 @@
+mutation estimateApproveTransferMutation(
+  $investmentAmount: String!
+  $fundAddress: String!
+) {
+  estimate: estimateApproveTransfer(
+    investmentAmount: $investmentAmount
+    fundAddress: $fundAddress
+  ) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation executeApproveTransferMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+  $investmentAmount: String!
+  $fundAddress: String!
+) {
+  execute: executeApproveTransfer(
+    investmentAmount: $investmentAmount
+    fundAddress: $fundAddress
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}

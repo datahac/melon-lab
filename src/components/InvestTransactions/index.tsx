@@ -1,132 +1,18 @@
-import React from 'react';
 import ModalTransactions from '+/components/ModalTransactions';
-import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
+import React from 'react';
 
-const estimateApproveTransferMutation = gql`
-  mutation EstimateApproveTransfer(
-    $investmentAmount: String!
-    $fundAddress: String!
-  ) {
-    estimate: estimateApproveTransfer(
-      investmentAmount: $investmentAmount
-      fundAddress: $fundAddress
-    ) @account {
-      data
-      from
-      gas
-      gasPrice
-      to
-      value
-    }
-  }
-`;
+import {
+  estimateApproveTransferMutation,
+  executeApproveTransferMutation,
+} from '../../shared/graphql/schema/queries/approve.gql';
 
-const executeApproveTransferMutation = gql`
-  mutation ExecuteApproveTransfer(
-    $data: String!
-    $from: String!
-    $gas: String!
-    $gasPrice: String!
-    $to: String!
-    $value: String!
-    $investmentAmount: String!
-    $fundAddress: String!
-  ) {
-    execute: executeApproveTransfer(
-      investmentAmount: $investmentAmount
-      fundAddress: $fundAddress
-      unsigned: {
-        data: $data
-        from: $from
-        gas: $gas
-        gasPrice: $gasPrice
-        to: $to
-        value: $value
-      }
-    ) @sign @account
-  }
-`;
-
-const estimateRequestInvestmentMutation = gql`
-  mutation EstimateRequestInvestment(
-    $investmentAmount: String!
-    $fundAddress: String!
-  ) {
-    estimate: estimateRequestInvestment(
-      investmentAmount: $investmentAmount
-      fundAddress: $fundAddress
-    ) @account {
-      data
-      from
-      gas
-      gasPrice
-      to
-      value
-    }
-  }
-`;
-
-const executeRequestInvestmentMutation = gql`
-  mutation ExecuteRequestInvestment(
-    $data: String!
-    $from: String!
-    $gas: String!
-    $gasPrice: String!
-    $to: String!
-    $value: String!
-    $fundAddress: String!
-  ) {
-    execute: executeRequestInvestment(
-      fundAddress: $fundAddress
-      unsigned: {
-        data: $data
-        from: $from
-        gas: $gas
-        gasPrice: $gasPrice
-        to: $to
-        value: $value
-      }
-    ) @sign @account
-  }
-`;
-
-const estimateExecuteRequestMutation = gql`
-  mutation EstimateExecuteRequest($fundAddress: String!) {
-    estimate: estimateExecuteRequest(fundAddress: $fundAddress) @account {
-      data
-      from
-      gas
-      gasPrice
-      to
-      value
-    }
-  }
-`;
-
-const executeExecuteRequestMutation = gql`
-  mutation ExecuteExecuteRequest(
-    $data: String!
-    $from: String!
-    $gas: String!
-    $gasPrice: String!
-    $to: String!
-    $value: String!
-    $fundAddress: String!
-  ) {
-    execute: executeExecuteRequest(
-      fundAddress: $fundAddress
-      unsigned: {
-        data: $data
-        from: $from
-        gas: $gas
-        gasPrice: $gasPrice
-        to: $to
-        value: $value
-      }
-    ) @sign @account
-  }
-`;
+import {
+  estimateExecuteRequestMutation,
+  estimateRequestInvestmentMutation,
+  executeExecuteRequestMutation,
+  executeRequestInvestmentMutation,
+} from '../../shared/graphql/schema/queries/invest.gql';
 
 export default withRouter(props => (
   <ModalTransactions

@@ -1,7 +1,9 @@
 import {
+  calcGav,
   deposit,
   getFundDetails,
   getTokenBySymbol,
+  performCalculations,
   randomString,
   sendEth,
   withPrivateKeySigner,
@@ -24,7 +26,20 @@ import {
   executeFundSetupStepMutation,
 } from './queries/fundSetup.gql';
 
-import * as rankings from './queries/rankings.gql';
+import {
+  estimateApproveTransferMutation,
+  executeApproveTransferMutation,
+} from './queries/approve.gql';
+
+import {
+  estimateExecuteRequestMutation,
+  estimateRequestInvestmentMutation,
+  executeExecuteRequestMutation,
+  executeRequestInvestmentMutation,
+} from './queries/invest.gql';
+
+import * as fundQuery from './queries/fund.gql';
+import * as rankingsQuery from './queries/rankings.gql';
 
 jest.setTimeout(240000);
 
@@ -32,6 +47,7 @@ describe('graphql schema', () => {
   let environment;
   let context;
   let fundAddress;
+  let weth;
   const fundName = `test-fund-${randomString()}`;
 
   beforeAll(async () => {
@@ -47,7 +63,7 @@ describe('graphql schema', () => {
       to: tester.wallet.address,
     });
 
-    const weth = getTokenBySymbol(environment, 'WETH');
+    weth = getTokenBySymbol(environment, 'WETH');
     const quantity = Tm.createQuantity(weth, 10);
 
     await deposit(tester, quantity.token.address, undefined, {
@@ -57,8 +73,8 @@ describe('graphql schema', () => {
     context = await createContext(tester, account);
   });
 
-  it('Ranking', async () => {
-    const result = await execute(schema, rankings, null, context());
+  it.skip('Ranking', async () => {
+    const result = await execute(schema, rankingsQuery, null, context());
     expect(result.errors).toBeUndefined();
     expect(result.data).toBeTruthy();
   });
@@ -163,5 +179,90 @@ describe('graphql schema', () => {
 
     expect(fundFromRanking).toBeTruthy();
     expect(fundFromRanking.name).toBe(fundName);
+  });
+
+  it('invest', async () => {
+    const investment = Tm.createQuantity(weth, 10);
+
+    const estimateApprove = await execute(
+      schema,
+      estimateApproveTransferMutation,
+      null,
+      context(),
+      { fundAddress, investmentAmount: investment.quantity.toString() },
+    );
+
+    const executeApprove = await execute(
+      schema,
+      executeApproveTransferMutation,
+      null,
+      context(),
+      {
+        fundAddress,
+        investmentAmount: investment.quantity.toString(),
+        ...R.path(['data', 'estimate'], estimateApprove),
+      },
+    );
+
+    expect(executeApprove.errors).toBeUndefined();
+    expect(executeApprove.data).toBeTruthy();
+
+    const estimateRequestInvestment = await execute(
+      schema,
+      estimateRequestInvestmentMutation,
+      null,
+      context(),
+      { fundAddress, investmentAmount: investment.quantity.toString() },
+    );
+
+    const executeRequestInvestment = await execute(
+      schema,
+      executeRequestInvestmentMutation,
+      null,
+      context(),
+      {
+        fundAddress,
+        ...R.path(['data', 'estimate'], estimateRequestInvestment),
+      },
+    );
+
+    expect(executeRequestInvestment.errors).toBeUndefined();
+    expect(executeRequestInvestment.data).toBeTruthy();
+
+    const estimateExecuteRequest = await execute(
+      schema,
+      estimateExecuteRequestMutation,
+      null,
+      context(),
+      { fundAddress },
+    );
+
+    const executeExecuteRequest = await execute(
+      schema,
+      executeExecuteRequestMutation,
+      null,
+      context(),
+      {
+        fundAddress,
+        ...R.path(['data', 'estimate'], estimateExecuteRequest),
+      },
+    );
+
+    expect(executeExecuteRequest.errors).toBeUndefined();
+    expect(executeExecuteRequest.data).toBeTruthy();
+
+    // const calculations = await performCalculations(environment, fundAddress);
+    // const gav = await calcGav(environment, )
+
+    const fundResult = await execute(schema, fundQuery, null, context(), {
+      fundAddress,
+    });
+
+    const holdings = R.path(['data', 'fund', 'holdings'], fundResult);
+    const wethHolding = holdings.find(holding =>
+      Tm.isEqual(holding.balance.token, weth),
+    );
+
+    expect(Tm.isEqual(wethHolding.balance, investment));
   });
 });
