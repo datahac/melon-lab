@@ -1,9 +1,10 @@
 import {
-  calcGav,
   deposit,
+  Environment,
+  Exchanges,
+  getActiveOasisDexOrders,
   getFundDetails,
   getTokenBySymbol,
-  performCalculations,
   randomString,
   sendEth,
   withPrivateKeySigner,
@@ -38,16 +39,22 @@ import {
   executeRequestInvestmentMutation,
 } from './queries/invest.gql';
 
+import {
+  estimateMakeOrderMutation,
+  executeMakeOrderMutation,
+} from './queries/oasisDex.gql';
+
 import * as fundQuery from './queries/fund.gql';
 import * as rankingsQuery from './queries/rankings.gql';
 
 jest.setTimeout(240000);
 
 describe('graphql schema', () => {
-  let environment;
+  let environment: Environment;
   let context;
   let fundAddress;
-  let weth;
+  let weth: Tm.TokenInterface;
+  let mln: Tm.TokenInterface;
   const fundName = `test-fund-${randomString()}`;
 
   beforeAll(async () => {
@@ -64,6 +71,8 @@ describe('graphql schema', () => {
     });
 
     weth = getTokenBySymbol(environment, 'WETH');
+    mln = getTokenBySymbol(environment, 'MLN');
+
     const quantity = Tm.createQuantity(weth, 10);
 
     await deposit(tester, quantity.token.address, undefined, {
@@ -89,7 +98,7 @@ describe('graphql schema', () => {
       context(),
       {
         name: fundName,
-        exchanges: ['KYBER_NETWORK'],
+        exchanges: ['MATCHING_MARKET'],
         managementFee: 2,
         performanceFee: 20,
       },
@@ -264,5 +273,85 @@ describe('graphql schema', () => {
     );
 
     expect(Tm.isEqual(wethHolding.balance, investment));
+  });
+
+  it('Oasis trade', async () => {
+    const matchingMarket = R.path(
+      ['deployment', 'exchangeConfigs', Exchanges.MatchingMarket, 'exchange'],
+      environment,
+    );
+
+    const matchingMarketAccessor = R.path(
+      ['deployment', 'melonContracts', 'adapters', 'matchingMarketAccessor'],
+      environment,
+    );
+
+    const preOrders = await getActiveOasisDexOrders(
+      environment,
+      matchingMarketAccessor,
+      {
+        targetExchange: matchingMarket,
+        buyAsset: mln.address,
+        sellAsset: weth.address,
+      },
+    );
+
+    const preOrdersSwitched = await getActiveOasisDexOrders(
+      environment,
+      matchingMarketAccessor,
+      {
+        targetExchange: matchingMarket,
+        sellAsset: mln.address,
+        buyAsset: weth.address,
+      },
+    );
+
+    const buy = Tm.createQuantity(mln, 15);
+    const sell = Tm.createQuantity(weth, 1);
+
+    const estimateMakeOrder = await execute(
+      schema,
+      estimateMakeOrderMutation,
+      null,
+      context(),
+      {
+        exchange: 'OASIS_DEX',
+        buyToken: buy.token.symbol,
+        buyQuantity: buy.quantity.toString(),
+        sellToken: sell.token.symbol,
+        sellQuantity: sell.quantity.toString(),
+      },
+    );
+
+    const executeMakeOrder = await execute(
+      schema,
+      executeMakeOrderMutation,
+      null,
+      context(),
+      {
+        exchange: 'OASIS_DEX',
+        ...R.path(['data', 'estimate'], estimateMakeOrder),
+      },
+    );
+
+    const postOrders = await getActiveOasisDexOrders(
+      environment,
+      matchingMarketAccessor,
+      {
+        targetExchange: matchingMarket,
+        sellAsset: mln.address,
+        buyAsset: weth.address,
+      },
+    );
+
+    console.log(
+      JSON.stringify(
+        { executeMakeOrder, preOrders, postOrders, preOrdersSwitched },
+        null,
+        2,
+      ),
+    );
+
+    expect(postOrders.length).toBeGreaterThan(preOrders.length);
   });
 });

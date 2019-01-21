@@ -1,74 +1,10 @@
-import React from 'react';
 import ModalTransaction from '+/components/ModalTransaction';
-import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
-
-const estimateMakeOrderMutation = gql`
-  mutation EstimateMakeOrder(
-    $exchange: ExchangeEnum!
-    $buyToken: String!
-    $buyQuantity: String!
-    $sellToken: String!
-    $sellQuantity: String!
-  ) {
-    estimate: estimateMakeOrder(
-      exchange: $exchange
-      buyToken: $buyToken
-      buyQuantity: $buyQuantity
-      sellToken: $sellToken
-      sellQuantity: $sellQuantity
-    ) @account {
-      data
-      from
-      gas
-      gasPrice
-      to
-      value
-    }
-  }
-`;
-
-const executeMakeOrderMutation = gql`
-  mutation ExecuteMakeOrder(
-    $data: String!
-    $from: String!
-    $gas: String!
-    $gasPrice: String!
-    $to: String!
-    $value: String!
-    $exchange: ExchangeEnum!
-  ) {
-    execute: executeMakeOrder(
-      exchange: $exchange
-      unsigned: {
-        data: $data
-        from: $from
-        gas: $gas
-        gasPrice: $gasPrice
-        to: $to
-        value: $value
-      }
-    ) @sign @account {
-      id
-      trade {
-        base {
-          token {
-            symbol
-          }
-        }
-        quote {
-          token {
-            symbol
-          }
-        }
-      }
-      price
-      volume
-      type
-      exchange
-    }
-  }
-`;
+import React from 'react';
+import {
+  estimateMakeOrderMutation,
+  executeMakeOrderMutation,
+} from '../../shared/graphql/schema/queries/oasisDex.gql';
 
 export default withRouter(props => (
   <ModalTransaction
