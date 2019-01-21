@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GetStarted should render correctly 1`] = `
+<div
+  className="get-started"
+>
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <h3>
+    Get started
+  </h3>
+  <div
+    className="get-started__description"
+  >
+    <p>
+      <b>
+        Melon
+      </b>
+      , [méllō], μέλλω; Greek for
+      <b>
+        "destined to be"
+      </b>
+      :
+    </p>
+    <p>
+      Blockchain software that seeks to enable participants to set up, manage and invest in technology regulated digital investment funds.
+    </p>
+    <p>
+      Set up your own technology regulated fund and discover the future of asset management.
+    </p>
+  </div>
+</div>
+`;
+
+exports[`GetStarted should render correctly with isHome 1`] = `
+<div
+  className="get-started get-started--is-home"
+>
+  <style
+    jsx={true}
+  >
+    <type
+      0="p"
+      1="r"
+      2="o"
+      3="p"
+      4="s"
+      key="key"
+    >
+      rendered
+    </type>
+  </style>
+  <div
+    className="get-started__welcome"
+  >
+    <h1
+      className="get-started__title"
+    >
+      Welcome to
+      <span
+        className="get-started__name"
+      >
+        Melon
+      </span>
+    </h1>
+  </div>
+  <div
+    className="get-started__description"
+  >
+    <p>
+      <b>
+        Melon
+      </b>
+      , [méllō], μέλλω; Greek for
+      <b>
+        "destined to be"
+      </b>
+      :
+    </p>
+    <p>
+      Blockchain software that seeks to enable participants to set up, manage and invest in technology regulated digital investment funds.
+    </p>
+    <p>
+      Set up your own technology regulated fund and discover the future of asset management.
+    </p>
+  </div>
+</div>
+`;

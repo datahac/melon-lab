@@ -1,0 +1,36 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "declaration": false,
+    "isolatedModules": true,
+    "jsx": "react",
+    "lib": ["esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "paths": {
+      "~/introspection": ["./introspection.json"],
+      "~/link": ["./storybook/link.tsx"],
+      "~/error": ["./pages/_error.tsx"],
+      "~/static/*": ["./static/*"],
+      "~/shared/*": ["./shared/*"],
+      "~/blocks/*": ["./storybook/blocks/*"],
+      "~/components/*": ["./storybook/components/*"],
+      "~/design/*": ["./storybook/design/*"],
+      "~/templates/*": ["./storybook/templates/*"],
+      "+/components/*": ["./components/*"]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext"
+  }
+}

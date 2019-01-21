@@ -6,9 +6,16 @@ artifactName: melon-manager-interface-${version}-${os}.${ext}
 asar: true
 extends: null
 
+files:
+  - package.json
+  - from: build/main
+    to: main
+  - from: build/renderer
+    to: renderer
+
 directories:
-  output: app/package
-  buildResources: src/static
+  output: app
+  buildResources: renderer/static
 
 linux:
   category: Finance

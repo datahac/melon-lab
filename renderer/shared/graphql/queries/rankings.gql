@@ -1,0 +1,14 @@
+query {
+  rankings {
+    id
+    rank
+    address
+    name
+    inception
+    sharePrice {
+      quote {
+        quantity
+      }
+    }
+  }
+}

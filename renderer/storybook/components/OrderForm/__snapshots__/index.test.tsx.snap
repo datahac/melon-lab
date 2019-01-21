@@ -1,0 +1,794 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OrderForm should render correctly 1`] = `
+<WithFormik(withHandlers(Component))
+  baseTokenSymbol="ETH-M"
+  dataValid={true}
+  decimals={6}
+  exchanges={
+    Array [
+      Object {
+        "name": "Radar Relay",
+        "value": "RadarRelay",
+      },
+      Object {
+        "name": "OasisDEX",
+        "value": "OasisDEX",
+      },
+    ]
+  }
+  info={
+    Object {
+      "ask": 0,
+      "bid": 0,
+      "lastPrice": 0.5,
+      "tokens": Object {
+        "baseToken": Object {
+          "balance": 30,
+          "name": "ETH",
+        },
+        "quoteToken": Object {
+          "balance": 20,
+          "name": "MLN",
+        },
+      },
+    }
+  }
+  quoteTokenSymbol="MLN-M"
+  selectedExchange="RadarRelay"
+  selectedOrderType="Buy"
+  strategy="Limit"
+  total=""
+>
+  <Formik
+    baseTokenSymbol="ETH-M"
+    dataValid={true}
+    decimals={6}
+    enableReinitialize={true}
+    exchanges={
+      Array [
+        Object {
+          "name": "Radar Relay",
+          "value": "RadarRelay",
+        },
+        Object {
+          "name": "OasisDEX",
+          "value": "OasisDEX",
+        },
+      ]
+    }
+    handleSubmit={[Function]}
+    info={
+      Object {
+        "ask": 0,
+        "bid": 0,
+        "lastPrice": 0.5,
+        "tokens": Object {
+          "baseToken": Object {
+            "balance": 30,
+            "name": "ETH",
+          },
+          "quoteToken": Object {
+            "balance": 20,
+            "name": "MLN",
+          },
+        },
+      }
+    }
+    initialValues={Object {}}
+    isInitialValid={false}
+    onSubmit={[Function]}
+    quoteTokenSymbol="MLN-M"
+    render={[Function]}
+    selectedExchange="RadarRelay"
+    selectedOrderType="Buy"
+    strategy="Limit"
+    total=""
+    validateOnBlur={true}
+    validateOnChange={true}
+    validationSchema={[Function]}
+  >
+    <withHandlers(Component)
+      baseTokenSymbol="ETH-M"
+      dataValid={true}
+      decimals={6}
+      dirty={false}
+      errors={Object {}}
+      exchanges={
+        Array [
+          Object {
+            "name": "Radar Relay",
+            "value": "RadarRelay",
+          },
+          Object {
+            "name": "OasisDEX",
+            "value": "OasisDEX",
+          },
+        ]
+      }
+      handleBlur={[Function]}
+      handleChange={[Function]}
+      handleReset={[Function]}
+      handleSubmit={[Function]}
+      info={
+        Object {
+          "ask": 0,
+          "bid": 0,
+          "lastPrice": 0.5,
+          "tokens": Object {
+            "baseToken": Object {
+              "balance": 30,
+              "name": "ETH",
+            },
+            "quoteToken": Object {
+              "balance": 20,
+              "name": "MLN",
+            },
+          },
+        }
+      }
+      initialValues={Object {}}
+      isSubmitting={false}
+      isValid={false}
+      isValidating={false}
+      quoteTokenSymbol="MLN-M"
+      registerField={[Function]}
+      resetForm={[Function]}
+      selectedExchange="RadarRelay"
+      selectedOrderType="Buy"
+      setError={[Function]}
+      setErrors={[Function]}
+      setFieldError={[Function]}
+      setFieldTouched={[Function]}
+      setFieldValue={[Function]}
+      setFormikState={[Function]}
+      setStatus={[Function]}
+      setSubmitting={[Function]}
+      setTouched={[Function]}
+      setValues={[Function]}
+      strategy="Limit"
+      submitCount={0}
+      submitForm={[Function]}
+      total=""
+      touched={Object {}}
+      unregisterField={[Function]}
+      validateField={[Function]}
+      validateForm={[Function]}
+      validateOnBlur={true}
+      validateOnChange={true}
+      values={Object {}}
+    >
+      <Component
+        baseTokenSymbol="ETH-M"
+        dataValid={true}
+        decimals={6}
+        dirty={false}
+        errors={Object {}}
+        exchanges={
+          Array [
+            Object {
+              "name": "Radar Relay",
+              "value": "RadarRelay",
+            },
+            Object {
+              "name": "OasisDEX",
+              "value": "OasisDEX",
+            },
+          ]
+        }
+        handleBlur={[Function]}
+        handleChange={[Function]}
+        handleReset={[Function]}
+        handleSubmit={[Function]}
+        info={
+          Object {
+            "ask": 0,
+            "bid": 0,
+            "lastPrice": 0.5,
+            "tokens": Object {
+              "baseToken": Object {
+                "balance": 30,
+                "name": "ETH",
+              },
+              "quoteToken": Object {
+                "balance": 20,
+                "name": "MLN",
+              },
+            },
+          }
+        }
+        initialValues={Object {}}
+        isSubmitting={false}
+        isValid={false}
+        isValidating={false}
+        onChange={[Function]}
+        quoteTokenSymbol="MLN-M"
+        registerField={[Function]}
+        resetForm={[Function]}
+        selectedExchange="RadarRelay"
+        selectedOrderType="Buy"
+        setError={[Function]}
+        setErrors={[Function]}
+        setFieldError={[Function]}
+        setFieldTouched={[Function]}
+        setFieldValue={[Function]}
+        setFormikState={[Function]}
+        setStatus={[Function]}
+        setSubmitting={[Function]}
+        setTouched={[Function]}
+        setValues={[Function]}
+        strategy="Limit"
+        submitCount={0}
+        submitForm={[Function]}
+        total=""
+        touched={Object {}}
+        unregisterField={[Function]}
+        validateField={[Function]}
+        validateForm={[Function]}
+        validateOnBlur={true}
+        validateOnChange={true}
+        values={Object {}}
+      >
+        <div
+          className="jsx-__scopedHash order-form"
+        >
+          <JSXStyle
+            css="__scoped"
+            styleId="__scopedHash"
+          />
+          <h3
+            className="jsx-__scopedHash"
+          >
+            Trade
+          </h3>
+          <Form
+            onSubmit={[Function]}
+          >
+            <form
+              className="form"
+              onSubmit={[Function]}
+            >
+              <div
+                className="jsx-__scopedHash order-form__toggles"
+              >
+                <div
+                  className="jsx-__scopedHash order-form__toggle"
+                >
+                  <Toggle
+                    isChecked={false}
+                    name="strategy"
+                    onChange={[Function]}
+                    text="Market"
+                    value="Market"
+                  >
+                    <label
+                      className="jsx-__scopedHash toggle"
+                    >
+                      <JSXStyle
+                        css="__scoped"
+                        styleId="__scopedHash"
+                      />
+                      <input
+                        checked={false}
+                        className="jsx-__scopedHash toggle__input"
+                        hidden={true}
+                        name="strategy"
+                        onChange={[Function]}
+                        type="radio"
+                        value="Market"
+                      />
+                      <span
+                        className="jsx-__scopedHash toggle__text"
+                      >
+                        Market
+                      </span>
+                    </label>
+                  </Toggle>
+                </div>
+                <div
+                  className="jsx-__scopedHash order-form__toggle"
+                >
+                  <Toggle
+                    isChecked={false}
+                    name="strategy"
+                    onChange={[Function]}
+                    text="Limit"
+                    value="Limit"
+                  >
+                    <label
+                      className="jsx-__scopedHash toggle"
+                    >
+                      <JSXStyle
+                        css="__scoped"
+                        styleId="__scopedHash"
+                      />
+                      <input
+                        checked={false}
+                        className="jsx-__scopedHash toggle__input"
+                        hidden={true}
+                        name="strategy"
+                        onChange={[Function]}
+                        type="radio"
+                        value="Limit"
+                      />
+                      <span
+                        className="jsx-__scopedHash toggle__text"
+                      >
+                        Limit
+                      </span>
+                    </label>
+                  </Toggle>
+                </div>
+              </div>
+              <div
+                className="jsx-__scopedHash order-form__switch"
+              >
+                <Switch
+                  disabled={true}
+                  isChecked={false}
+                  labels={
+                    Array [
+                      "Buy",
+                      "Sell",
+                    ]
+                  }
+                  name="orderType"
+                  onChange={[Function]}
+                  options={
+                    Array [
+                      "ETH-M",
+                      "MLN-M",
+                    ]
+                  }
+                >
+                  <div
+                    className="jsx-__scopedHash switch"
+                  >
+                    <JSXStyle
+                      css="__scoped"
+                      styleId="__scopedHash"
+                    />
+                    <label
+                      className="jsx-__scopedHash switch__wrapper"
+                    >
+                      <input
+                        checked={false}
+                        className="jsx-__scopedHash switch__input"
+                        disabled={true}
+                        name="orderType"
+                        onChange={[Function]}
+                        type="checkbox"
+                      />
+                      <span
+                        className="jsx-__scopedHash switch__label"
+                        data-label-left="Buy"
+                        data-label-right="Sell"
+                      >
+                        ETH-M
+                      </span>
+                      <span
+                        className="jsx-__scopedHash switch__label"
+                        data-label-left="Buy"
+                        data-label-right="Sell"
+                      >
+                        MLN-M
+                      </span>
+                      <div
+                        className="jsx-__scopedHash switch__icon"
+                      />
+                    </label>
+                  </div>
+                </Switch>
+              </div>
+              <div
+                className="jsx-__scopedHash order-form__order-info"
+              >
+                <OrderInfo
+                  ask={0}
+                  bid={0}
+                  lastPrice={0.5}
+                  tokens={
+                    Object {
+                      "baseToken": Object {
+                        "balance": 30,
+                        "name": "ETH",
+                      },
+                      "quoteToken": Object {
+                        "balance": 20,
+                        "name": "MLN",
+                      },
+                    }
+                  }
+                >
+                  <div
+                    className="jsx-__scopedHash order-info"
+                  >
+                    <JSXStyle
+                      css="__scoped"
+                      styleId="__scopedHash"
+                    />
+                    <div
+                      className="jsx-__scopedHash order-info__prices"
+                    >
+                      <div
+                        className="jsx-__scopedHash order-info__last-price"
+                      >
+                        <NumberFormat
+                          allowEmptyFormatting={false}
+                          allowNegative={true}
+                          decimalScale={4}
+                          decimalSeparator="."
+                          displayType="text"
+                          fixedDecimalScale={true}
+                          getInputRef={[Function]}
+                          isAllowed={[Function]}
+                          isNumericString={false}
+                          onBlur={[Function]}
+                          onChange={[Function]}
+                          onFocus={[Function]}
+                          onKeyDown={[Function]}
+                          onMouseUp={[Function]}
+                          onValueChange={[Function]}
+                          prefix=""
+                          suffix=""
+                          thousandSeparator={true}
+                          type="text"
+                          value={0.5}
+                        >
+                          <span>
+                            0.5000
+                          </span>
+                        </NumberFormat>
+                        <span
+                          className="jsx-__scopedHash order-info__price-desc"
+                        >
+                          Last Price
+                        </span>
+                      </div>
+                      <div
+                        className="jsx-__scopedHash order-info__bid"
+                      >
+                        <span
+                          className="jsx-__scopedHash"
+                        >
+                          N/A
+                        </span>
+                        <span
+                          className="jsx-__scopedHash order-info__price-desc"
+                        >
+                          Bid
+                        </span>
+                      </div>
+                      <div
+                        className="jsx-__scopedHash order-info__ask"
+                      >
+                        <span
+                          className="jsx-__scopedHash"
+                        >
+                          N/A
+                        </span>
+                        <span
+                          className="jsx-__scopedHash order-info__price-desc"
+                        >
+                          Ask
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      className="jsx-__scopedHash order-info__balances"
+                    >
+                      <div
+                        className="jsx-__scopedHash order-info__balance"
+                      >
+                        <span
+                          className="jsx-__scopedHash order-info__balance-desc"
+                        >
+                          ETH
+                          :
+                        </span>
+
+                        <NumberFormat
+                          allowEmptyFormatting={false}
+                          allowNegative={true}
+                          decimalScale={4}
+                          decimalSeparator="."
+                          displayType="text"
+                          fixedDecimalScale={true}
+                          getInputRef={[Function]}
+                          isAllowed={[Function]}
+                          isNumericString={false}
+                          onBlur={[Function]}
+                          onChange={[Function]}
+                          onFocus={[Function]}
+                          onKeyDown={[Function]}
+                          onMouseUp={[Function]}
+                          onValueChange={[Function]}
+                          prefix=""
+                          suffix=""
+                          thousandSeparator={true}
+                          type="text"
+                          value={30}
+                        >
+                          <span>
+                            30.0000
+                          </span>
+                        </NumberFormat>
+                      </div>
+                      <div
+                        className="jsx-__scopedHash order-info__balance"
+                      >
+                        <span
+                          className="jsx-__scopedHash order-info__balance-desc"
+                        >
+                          MLN
+                          :
+                        </span>
+
+                        <NumberFormat
+                          allowEmptyFormatting={false}
+                          allowNegative={true}
+                          decimalScale={4}
+                          decimalSeparator="."
+                          displayType="text"
+                          fixedDecimalScale={true}
+                          getInputRef={[Function]}
+                          isAllowed={[Function]}
+                          isNumericString={false}
+                          onBlur={[Function]}
+                          onChange={[Function]}
+                          onFocus={[Function]}
+                          onKeyDown={[Function]}
+                          onMouseUp={[Function]}
+                          onValueChange={[Function]}
+                          prefix=""
+                          suffix=""
+                          thousandSeparator={true}
+                          type="text"
+                          value={20}
+                        >
+                          <span>
+                            20.0000
+                          </span>
+                        </NumberFormat>
+                      </div>
+                    </div>
+                  </div>
+                </OrderInfo>
+              </div>
+              <div
+                className="jsx-__scopedHash order-form__input"
+              >
+                <Input
+                  decimals={6}
+                  disabled={true}
+                  formatNumber={true}
+                  insideLabel="true"
+                  label="Price"
+                  name="price"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  placeholder="0.000000"
+                  required={true}
+                >
+                  <div
+                    className="jsx-__scopedHash input input--inside-label"
+                  >
+                    <JSXStyle
+                      css="__scoped"
+                      styleId="__scopedHash"
+                    />
+                    <span
+                      className="jsx-__scopedHash input__label"
+                    >
+                      Price
+                    </span>
+                    <NumberFormat
+                      allowEmptyFormatting={false}
+                      allowNegative={true}
+                      className="input__field"
+                      decimalScale={6}
+                      decimalSeparator="."
+                      disabled={true}
+                      displayType="input"
+                      fixedDecimalScale={true}
+                      getInputRef={[Function]}
+                      isAllowed={[Function]}
+                      isNumericString={true}
+                      name="price"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseUp={[Function]}
+                      onValueChange={[Function]}
+                      placeholder="0.000000"
+                      prefix=""
+                      suffix=""
+                      type="text"
+                    >
+                      <input
+                        className="input__field"
+                        disabled={true}
+                        name="price"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        onKeyDown={[Function]}
+                        onMouseUp={[Function]}
+                        placeholder="0.000000"
+                        type="text"
+                        value=""
+                      />
+                    </NumberFormat>
+                    <div
+                      className="jsx-__scopedHash input__error"
+                    />
+                  </div>
+                </Input>
+              </div>
+              <div
+                className="jsx-__scopedHash order-form__input"
+              >
+                <Input
+                  decimals={6}
+                  disabled={true}
+                  formatNumber={true}
+                  insideLabel="true"
+                  label="Quantity"
+                  name="quantity"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  placeholder="0.000000"
+                  required={true}
+                >
+                  <div
+                    className="jsx-__scopedHash input input--inside-label"
+                  >
+                    <JSXStyle
+                      css="__scoped"
+                      styleId="__scopedHash"
+                    />
+                    <span
+                      className="jsx-__scopedHash input__label"
+                    >
+                      Quantity
+                    </span>
+                    <NumberFormat
+                      allowEmptyFormatting={false}
+                      allowNegative={true}
+                      className="input__field"
+                      decimalScale={6}
+                      decimalSeparator="."
+                      disabled={true}
+                      displayType="input"
+                      fixedDecimalScale={true}
+                      getInputRef={[Function]}
+                      isAllowed={[Function]}
+                      isNumericString={true}
+                      name="quantity"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseUp={[Function]}
+                      onValueChange={[Function]}
+                      placeholder="0.000000"
+                      prefix=""
+                      suffix=""
+                      type="text"
+                    >
+                      <input
+                        className="input__field"
+                        disabled={true}
+                        name="quantity"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        onKeyDown={[Function]}
+                        onMouseUp={[Function]}
+                        placeholder="0.000000"
+                        type="text"
+                        value=""
+                      />
+                    </NumberFormat>
+                    <div
+                      className="jsx-__scopedHash input__error"
+                    />
+                  </div>
+                </Input>
+              </div>
+              <div
+                className="jsx-__scopedHash order-form__input"
+              >
+                <Input
+                  decimals={6}
+                  disabled={true}
+                  formatNumber={true}
+                  insideLabel="true"
+                  label="Total"
+                  name="total"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  placeholder="0.000000"
+                  required={true}
+                >
+                  <div
+                    className="jsx-__scopedHash input input--inside-label"
+                  >
+                    <JSXStyle
+                      css="__scoped"
+                      styleId="__scopedHash"
+                    />
+                    <span
+                      className="jsx-__scopedHash input__label"
+                    >
+                      Total
+                    </span>
+                    <NumberFormat
+                      allowEmptyFormatting={false}
+                      allowNegative={true}
+                      className="input__field"
+                      decimalScale={6}
+                      decimalSeparator="."
+                      disabled={true}
+                      displayType="input"
+                      fixedDecimalScale={true}
+                      getInputRef={[Function]}
+                      isAllowed={[Function]}
+                      isNumericString={true}
+                      name="total"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseUp={[Function]}
+                      onValueChange={[Function]}
+                      placeholder="0.000000"
+                      prefix=""
+                      suffix=""
+                      type="text"
+                    >
+                      <input
+                        className="input__field"
+                        disabled={true}
+                        name="total"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        onKeyDown={[Function]}
+                        onMouseUp={[Function]}
+                        placeholder="0.000000"
+                        type="text"
+                        value=""
+                      />
+                    </NumberFormat>
+                    <div
+                      className="jsx-__scopedHash input__error"
+                    />
+                  </div>
+                </Input>
+              </div>
+              <Button
+                disabled={true}
+                type="submit"
+              >
+                <button
+                  className="jsx-__scopedHash button button--medium button--primary"
+                  disabled={true}
+                  onClick={[Function]}
+                  type="submit"
+                >
+                  <JSXStyle
+                    css="__scoped"
+                    styleId="__scopedHash"
+                  />
+                </button>
+              </Button>
+            </form>
+          </Form>
+        </div>
+      </Component>
+    </withHandlers(Component)>
+  </Formik>
+</WithFormik(withHandlers(Component))>
+`;

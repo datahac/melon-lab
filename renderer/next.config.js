@@ -1,0 +1,64 @@
+const path = require('path');
+
+module.exports = require('@zeit/next-typescript')({
+  exportPathMap: () => ({
+    '/': { page: '/' },
+  }),
+  webpack: (config, options) => {
+    config.target = 'electron-renderer';
+    config.devtool = false;
+
+    config.resolve.alias = Object.assign({}, config.resolve.alias || {}, {
+      // Override the mock link component used in storybook.
+      '~/link': 'next/link',
+      // Schema introspection for apollo.
+      '~/introspection': path.join(__dirname, 'introspection.json'),
+      '~/queries': path.join(__dirname, '..', 'queries'),
+      '~/shared': path.join(__dirname, 'shared'),
+      '~/static': path.join(__dirname, 'static'),
+      '~/error': path.join(__dirname, 'pages', '_error'),
+      // TODO: Find a better name for this.
+      '+/components': path.join(__dirname, 'components'),
+      // TODO: Move all this to a single alias for the storybook directory.
+      '~/components': path.join(__dirname, 'storybook', 'components'),
+      '~/blocks': path.join(__dirname, 'storybook', 'blocks'),
+      '~/design': path.join(__dirname, 'storybook', 'design'),
+      '~/templates': path.join(__dirname, 'storybook', 'templates'),
+    });
+
+    config.module.exprContextCritical = false;
+    config.module.rules.push({
+      test: /\.(graphql|gql)$/,
+      loader: 'graphql-tag/loader',
+    });
+
+    config.module.rules.push({
+      test: /\.css$/,
+      use: [
+        options.defaultLoaders.babel,
+        {
+          loader: require('styled-jsx/webpack').loader,
+          options: {
+            type: 'scoped'
+          },
+        },
+      ],
+    });
+
+    config.node = {
+      fs: 'empty',
+      net: 'empty',
+      tls: 'empty',
+    };
+
+    config.performance = Object.assign({}, config.performance, {
+      hints: false,
+    });
+
+    config.optimization = Object.assign({}, config.optimization, {
+      minimize: false,
+    });
+
+    return config;
+  },
+});

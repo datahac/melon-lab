@@ -4,19 +4,18 @@ node_modules.*/
 
 # Generated files
 package-lock.json
-yalc.lock
 coverage/
 build/
 app/
 
-# Log files.
+# Schema introspection
+introspection.json
+
+# Ignore all log files.
 *.log
 
 # Ignore all dot files.
 .*
-
-# Ignore all log files.
-*.log
 
 # Allowed dot files
 !.env.example

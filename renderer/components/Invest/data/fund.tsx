@@ -1,0 +1,34 @@
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+
+export const query = gql`
+  query InvestQuery($address: String!) {
+    fund(address: $address) {
+      id
+      sharePrice {
+        base {
+          token {
+            symbol
+            decimals
+          }
+          quantity
+        }
+        quote {
+          token {
+            symbol
+            decimals
+          }
+          quantity
+        }
+      }
+    }
+  }
+`;
+
+const FundInvestQuery = ({ address, children }) => (
+  <Query query={query} ssr={false} errorPolicy="all" variables={{ address }}>
+    {children}
+  </Query>
+);
+
+export { FundInvestQuery };
