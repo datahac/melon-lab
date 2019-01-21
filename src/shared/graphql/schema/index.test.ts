@@ -9,6 +9,7 @@ import {
   sendEth,
   withPrivateKeySigner,
 } from '@melonproject/protocol';
+import { allLogsWritten } from '@melonproject/protocol/lib/tests/utils/testLogger';
 import * as Tm from '@melonproject/token-math';
 import { execute } from 'graphql/execution';
 import * as R from 'ramda';
@@ -56,6 +57,10 @@ describe('graphql schema', () => {
   let weth: Tm.TokenInterface;
   let mln: Tm.TokenInterface;
   const fundName = `test-fund-${randomString()}`;
+
+  afterAll(async () => {
+    await allLogsWritten();
+  });
 
   beforeAll(async () => {
     environment = await getEnvironment();
