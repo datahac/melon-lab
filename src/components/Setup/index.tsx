@@ -17,7 +17,7 @@ import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import { SetupConsumer } from '+/components/SetupContext';
 import withForm from './withForm';
-import FundSetupStep from '+/components/FundSetupStep';
+import SetupTransactions from '+/components/SetupTransactions';
 
 const SetupFormContainer = withForm(props => (
   <SetupForm
@@ -136,7 +136,7 @@ class Setup extends React.Component {
       >
         {([account, configuration, manager, setup]) => (
           <Fragment>
-            <FundSetupStep
+            <SetupTransactions
               progress={
                 (setup.setupBegin && !!this.state.values) ||
                 setup.setupInProgress ||
@@ -150,7 +150,7 @@ class Setup extends React.Component {
               setup={setup}
             />
 
-            {!manager.fund && (
+            {(!!this.state.values || !manager.fund) && (
               <SetupFormContainer
                 {...this.props}
                 account={account}

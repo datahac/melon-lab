@@ -30,7 +30,10 @@ const withForm = withFormik({
     return errors;
   },
   enableReinitialize: true,
-  handleSubmit: (values, form) => form.props.setInvestValues(values),
+  handleSubmit: (values, form) => {
+    form.props.setInvestValues(values);
+    form.props.setStep(1);
+  },
 });
 
 const withFormHandlers = compose(

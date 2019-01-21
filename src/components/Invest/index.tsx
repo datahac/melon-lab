@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import Participation from '~/components/ParticipationForm';
-import ApproveTransfer from '+/components/ApproveTransfer';
-import RequestInvestment from '+/components/RequestInvestment';
-import ExecuteRequest from '+/components/ExecuteRequest';
+import InvestTransactions from '+/components/InvestTransactions';
 import withForm from './withForm';
 import { withRouter } from 'next/router';
 import { FundInvestQuery } from './data/fund';
@@ -49,21 +47,12 @@ class InvestContainer extends React.PureComponent {
                 !R.path(['data', 'fund'], queryProps)
               }
               sharePrice={R.path(['data', 'fund', 'sharePrice'], queryProps)}
+              setStep={this.setStep}
             />
-            <ApproveTransfer
+
+            <InvestTransactions
               fundAddress={this.props.address}
               values={this.state.values}
-              setStep={this.setStep}
-              step={this.state.step}
-            />
-            <RequestInvestment
-              fundAddress={this.props.address}
-              values={this.state.values}
-              setStep={this.setStep}
-              step={this.state.step}
-            />
-            <ExecuteRequest
-              fundAddress={this.props.address}
               setStep={this.setStep}
               step={this.state.step}
             />
