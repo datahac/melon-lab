@@ -6,7 +6,7 @@
   "private": true,
   "license": "AGPL-3.0",
   "scripts": {
-    "postinstall": "echo electron-rebuild",
+    "postinstall": "electron-rebuild",
     "prebuild": "yarn clean",
     "build": "cross-env NODE_ENV=production backpack build && cross-env NODE_ENV=production next build src && cross-env NODE_ENV=production next export src -o app/renderer && electron-builder",
     "start": "cross-env NODE_ENV=production node build/server",
