@@ -1,22 +1,42 @@
-.transaction-progress {
+.transaction-progress__bar {
   padding: var(--space-xs) 0;
   display: flex;
   flex-wrap: wrap;
+  counter-reset: step;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: var(--space-m);
+}
+
+.transaction-progress__bar::after {
+  content: '';
+  border-bottom: 1px solid var(--color-primary-dark);
+  width: 100%;
+  position: relative;
+  top: -11px;
 }
 
 .transaction-progress__item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: var(--space-xs);
-  border: 1px solid var(--color-primary-dark);
-  padding: var(--space-xs);
   border-radius: 20px;
-  margin-bottom: var(--space-xs)
+  border: 1px solid var(--color-primary-dark);
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  font-size: var(--font-size-s);
+  z-index: 1;
+  background-color: var(--color-primary);
+}
+
+.transaction-progress__item::before {
+  counter-increment: step;
+  content: counter(step);
+  width: 100%;
 }
 
 .transaction-progress__checkmark {
-  margin-left: var(--space-xs);
   display: none;
   position: relative;
   height: 20px;
@@ -44,7 +64,22 @@
   display: block;
 }
 
+.transaction-progress__item--is-complete {
+  border: none;
+}
+
+.transaction-progress__item--is-complete::before {
+  content: '';
+}
+
 .transaction-progress__item--is-active {
   font-weight: var(--font-weight-bold);
   background-color: var(--color-secondary);
+  border-radius: 20px;
+  border: 1px solid var(--color-primary-dark);
+}
+
+.transaction-progress__active-item {
+  margin-top: var(--space-xs);
+  font-weight: var(--font-weight-bold);
 }

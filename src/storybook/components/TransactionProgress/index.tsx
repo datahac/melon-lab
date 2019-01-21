@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { StatelessComponent } from 'react';
+import React, { StatelessComponent, Fragment } from 'react';
 
 import styles from './styles.css';
 
@@ -22,24 +22,33 @@ export const TransactionProgress: StatelessComponent<
 
   return (
     <div className="transaction-progress">
+      {/* {JSON.stringify(transactions)} */}
       <style jsx>{styles}</style>
-      {transactions.map((transaction, index) => (
-        <div
-          className={itemClassNames(
-            transaction.isComplete,
-            transaction.name === activeTransaction,
-          )}
-          key={index}
-        >
-          <div className="transaction-progress__name">{transaction.name}</div>
-          <div className="transaction-progress__status">
-            {(transaction.isComplete ||
-              transaction.name === activeTransaction) && (
-              <div className="transaction-progress__checkmark" />
-            )}
-          </div>
-        </div>
-      ))}
+
+      <div className="transaction-progress__active-item">
+        {activeTransaction}
+      </div>
+
+      <div className="transaction-progress__bar">
+        {transactions.map((transaction, index) => (
+          <Fragment>
+            <div
+              className={itemClassNames(
+                transaction.isComplete,
+                transaction.name === activeTransaction,
+              )}
+              key={index}
+            >
+              <div className="transaction-progress__status">
+                {(transaction.isComplete ||
+                  transaction.name === activeTransaction) && (
+                  <div className="transaction-progress__checkmark" />
+                )}
+              </div>
+            </div>
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 };

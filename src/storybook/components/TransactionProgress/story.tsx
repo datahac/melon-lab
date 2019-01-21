@@ -3,6 +3,7 @@ import React from 'react';
 import TransactionProgress from './index';
 
 const data = {
+  activeTransaction: 'createB',
   transactions: [
     {
       name: 'createA',

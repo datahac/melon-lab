@@ -1,5 +1,4 @@
 import React from 'react';
-import * as R from 'ramda';
 import ModalTransactions from '+/components/ModalTransactions';
 import gql from 'graphql-tag';
 import { withRouter } from 'next/router';
