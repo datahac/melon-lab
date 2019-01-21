@@ -15,9 +15,10 @@ const data = {
   numberOfFunds: '12',
   performanceReward: '0.0000',
   personalStake: {
-    quantity: '1',
+    quantity: '10000',
     token: {
-      decimals: 0,
+      symbol: 'ETH',
+      decimals: 4,
     },
   },
   quoteAsset: {
@@ -26,9 +27,10 @@ const data = {
   rank: '1',
   shutdown: action('shitdown'),
   totalSupply: {
-    quantity: '1',
+    quantity: '10000',
     token: {
-      decimals: 0,
+      symbol: 'ETH',
+      decimals: 4,
     },
   },
   tweetHref: 'melonport',

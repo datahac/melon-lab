@@ -9,32 +9,438 @@ const data = {
   quoteAsset: 'WETH',
   onClick: action('selectAsset'),
   holdings: [
-    { symbol: 'ANT-T', balance: '0.0000', price: '0.0035', fraction: '0.0000' },
-    { symbol: 'BAT-T', balance: '0.0000', price: '0.0007', fraction: '0.0000' },
-    { symbol: 'DGD-T', balance: '0.0000', price: '0.0000', fraction: '0.0000' },
-    { symbol: 'DGX-T', balance: '0.0000', price: '0.0000', fraction: '0.0000' },
-    { symbol: 'GNO-T', balance: '0.0000', price: '0.1113', fraction: '0.0000' },
-    { symbol: 'REP-T', balance: '0.0000', price: '0.0648', fraction: '0.0000' },
-    { symbol: 'ZRX-T', balance: '0.0000', price: '0.0024', fraction: '0.0000' },
-    { symbol: 'REQ-T', balance: '0.0000', price: '0.0001', fraction: '0.0000' },
+    {
+      symbol: 'ANT-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'BAT-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'DGD-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'DGX-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'GNO-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'REP-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'ZRX-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'REQ-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
     {
       symbol: 'WETH',
-      balance: '0.5166',
-      price: '1.0000',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
       fraction: '50.5764',
     },
     {
       symbol: 'MLN',
-      balance: '10.7338',
-      price: '0.0470',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
       fraction: '49.4236',
     },
-    { symbol: 'MKR-T', balance: '0.0000', price: '1.3430', fraction: '0.0000' },
-    { symbol: 'DAI-T', balance: '0.0000', price: '0.0021', fraction: '0.0000' },
-    { symbol: 'KNC-T', balance: '0.0000', price: '0.0276', fraction: '0.0000' },
-    { symbol: 'JNT-T', balance: '0.0000', price: '0.0003', fraction: '0.0000' },
-    { symbol: 'OMG-T', balance: '0.0000', price: '0.0150', fraction: '0.0000' },
-    { symbol: 'NMR-T', balance: '0.0000', price: '0.0184', fraction: '0.0000' },
+    {
+      symbol: 'MKR-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'DAI-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'KNC-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'JNT-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'OMG-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
+    {
+      symbol: 'NMR-T',
+      balance: {
+        quantity: '10000',
+        token: {
+          symbol: 'ETH',
+          decimals: 4,
+        },
+      },
+      price: {
+        base: {
+          quantity: '1',
+          token: {
+            symbol: 'ETH',
+            decimals: 4,
+          },
+        },
+        quote: {
+          quantity: '1',
+          token: {
+            symbol: 'MLN',
+            decimals: 4,
+          },
+        },
+      },
+      fraction: '0.0000',
+    },
   ],
 };
 

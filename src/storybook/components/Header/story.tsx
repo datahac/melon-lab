@@ -14,6 +14,13 @@ const data = {
   network: 'kovan',
   goToHome: action('goToHome'),
   goToWallet: action('goToWallet'),
+  ethBalance: {
+    quantity: '10000',
+    token: {
+      symbol: 'ETH',
+      decimals: 4,
+    },
+  },
 };
 
 storiesOf('Components|Header', module).add('Default', () => {

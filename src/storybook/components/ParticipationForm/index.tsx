@@ -33,8 +33,8 @@ export interface ParticipationFormProps {
   handleSubmit?: () => void;
   handleChange?: () => void;
   loading?: boolean;
-  noFund: boolean;
-  address: string;
+  noFund?: boolean;
+  address?: string;
 }
 
 const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({

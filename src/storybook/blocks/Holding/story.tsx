@@ -3,9 +3,30 @@ import React from 'react';
 import Holding from './index';
 
 const data = {
-  fraction: '6.2956',
-  balance: '4.328993592',
-  price: '0.0602380834',
+  fraction: 6.2956,
+  balance: {
+    quantity: '10000',
+    token: {
+      symbol: 'ETH',
+      decimals: 4,
+    },
+  },
+  price: {
+    base: {
+      quantity: '1',
+      token: {
+        symbol: 'ETH',
+        decimals: 4,
+      },
+    },
+    quote: {
+      quantity: '1',
+      token: {
+        symbol: 'MLN',
+        decimals: 4,
+      },
+    },
+  },
   symbol: 'MLN',
 };
 

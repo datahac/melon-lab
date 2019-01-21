@@ -80,7 +80,7 @@ export const getStatus = (
 
 export interface HeaderProps {
   address?: string;
-  ethBalance: number;
+  ethBalance: Tm.QuantityInterface;
   canonicalPriceFeedAddress: string;
   network: string;
   currentBlock: string;

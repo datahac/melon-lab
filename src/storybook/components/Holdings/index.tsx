@@ -1,14 +1,15 @@
 import React, { StatelessComponent } from 'react';
 import Spinner from '~/blocks/Spinner';
 import Holding from '~/blocks/Holding';
+import * as Tm from '@melonproject/token-math';
 
 import styles from './styles.css';
 
 export interface Holding {
-  balance: string;
+  balance: Tm.QuantityInterface;
   symbol: string;
   fraction: string;
-  price: string;
+  price: Tm.PriceInterface;
 }
 
 export interface HoldingsProps {

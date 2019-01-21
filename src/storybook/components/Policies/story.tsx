@@ -1,4 +1,5 @@
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import React from 'react';
 import Policies from './index';
 import Input from '~/blocks/Input';
@@ -6,17 +7,18 @@ import Input from '~/blocks/Input';
 const availablePolicies = {
   priceTolerance: {
     name: 'Price tolerance',
+    desc: 'The higher the tolerance, the greater the risk',
     Component: Input,
+    unit: '%',
   },
 };
 
 const data = {
+  onActivatePolicy: action('onActivatePolicy'),
   availablePolicies,
   values: {
-    riskProfile: {
-      priceTolerance: {
-        value: 0,
-      },
+    policies: {
+      riskProfile: 0,
     },
   },
 };

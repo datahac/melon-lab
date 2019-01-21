@@ -13,10 +13,10 @@ export interface FactsheetProps {
   loading?: boolean;
   managementReward?: string;
   performanceReward?: string;
-  personalStake?: string;
+  personalStake?: Tm.QuantityInterface;
   reportUrl?: string;
   handleShutDown: () => void;
-  totalSupply?: string;
+  totalSupply?: Tm.QuantityInterface;
   tweetHref?: string;
   isManager?: boolean;
   isShutdown?: boolean;
