@@ -20,6 +20,7 @@ export interface FactsheetProps {
   tweetHref?: string;
   isManager?: boolean;
   isShutdown?: boolean;
+  fundAddress: string;
 }
 
 const Factsheet: StatelessComponent<FactsheetProps> = ({
@@ -34,6 +35,7 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
   totalSupply,
   isManager,
   isShutdown,
+  fundAddress,
 }) => (
   <div className="factsheet">
     <style jsx>{styles}</style>
@@ -55,6 +57,17 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
           Performance Reward: {performanceReward}%
         </div> */}
         <div className="factsheet__item">
+          <Link
+            href={{
+              pathname: '/invest',
+              query: {
+                address: fundAddress,
+              },
+            }}
+          >
+            <a>Invest into this fund</a>
+          </Link>
+          <br />
           <a
             href="https://ipfs.io/ipfs/Qmc9JRw4zarrs6gJwu6tC58UAgeEujNg9VMWcH8MUEd5TW/"
             target="_blank"

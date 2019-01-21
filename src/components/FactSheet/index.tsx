@@ -44,6 +44,7 @@ export default class FactsheetContainer extends React.PureComponent {
               />
               <FactSheet
                 {...fund}
+                fundAddress={address}
                 isManager={isManager}
                 reportUrl={reportUrl}
                 loading={loading}
