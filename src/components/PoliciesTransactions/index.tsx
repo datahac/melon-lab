@@ -103,28 +103,30 @@ const executeRegisterPoliciesMutation = gql`
 export default withRouter(props => {
   const [registerPolicies, setRegisterPolicies] = useState([]);
   const [isActive, setIsActive] = useState(true);
+  const policiesValues = R.path(['values', 'policies'], props);
+
   const selectedPolicies = R.compose(
     R.map(R.zipObj(['name', 'value'])),
     R.toPairs,
-  )(R.path(['values', 'policies'], props));
+  )(policiesValues);
 
   const policiesToEstimations = {
     maxConcentration: {
       mutation: estimateDeployMaxConcentrationMutation,
       variables: () => ({
-        percent: R.pathOr(0, ['values', 'policies', 'maxConcentration'], props),
+        percent: policiesValues.maxConcentration,
       }),
     },
     priceTolerance: {
       mutation: estimateDeployPriceToleranceMutation,
       variables: () => ({
-        percent: R.pathOr(0, ['values', 'policies', 'priceTolerance'], props),
+        percent: policiesValues.priceTolerance,
       }),
     },
     maxPositions: {
       mutation: estimateDeployMaxPositionsMutation,
       variables: () => ({
-        positions: R.pathOr(0, ['values', 'policies', 'maxPositions'], props),
+        positions: policiesValues.maxPositions,
       }),
     },
   };
