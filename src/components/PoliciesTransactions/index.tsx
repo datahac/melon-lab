@@ -17,9 +17,9 @@ const estimateDeployPriceToleranceMutation = gql`
   }
 `;
 
-const estimateRegisterPoliciesMutation = gql`
-  mutation EstimateRegisterPolicies($policies: [PolicyInput]!) {
-    estimate: estimateRegisterPolicies(policies: $policies) @account {
+const estimateDeployMaxPositionsMutation = gql`
+  mutation EstimateDeployMaxPositions($positions: Int!) {
+    estimate: estimateDeployMaxPositions(positions: $positions) @account {
       data
       from
       gas
@@ -65,6 +65,19 @@ const executeDeployMutation = gql`
   }
 `;
 
+const estimateRegisterPoliciesMutation = gql`
+  mutation EstimateRegisterPolicies($policies: [PolicyInput]!) {
+    estimate: estimateRegisterPolicies(policies: $policies) @account {
+      data
+      from
+      gas
+      gasPrice
+      to
+      value
+    }
+  }
+`;
+
 const executeRegisterPoliciesMutation = gql`
   mutation ExecuteRegisterPolicies(
     $data: String!
@@ -90,91 +103,58 @@ const executeRegisterPoliciesMutation = gql`
 export default withRouter(props => {
   const [registerPolicies, setRegisterPolicies] = useState([]);
   const [isActive, setIsActive] = useState(true);
+  const selectedPolicies = R.compose(
+    R.map(R.zipObj(['name', 'value'])),
+    R.toPairs,
+  )(R.path(['values', 'policies'], props));
 
-  let policiesEstimations = [];
-  let policiesExecutions = [];
-
-  if (!!R.path(['values', 'policies', 'maxConcentration'], props)) {
-    policiesEstimations.push({
+  const policiesToEstimations = {
+    maxConcentration: {
       mutation: estimateDeployMaxConcentrationMutation,
       variables: () => ({
         percent: R.pathOr(0, ['values', 'policies', 'maxConcentration'], props),
       }),
-      isComplete: !!registerPolicies.find(
-        item => item.name === 'maxConcentration',
-      ),
-      name: 'maxConcentration',
-    });
-
-    policiesExecutions.push({
-      mutation: executeDeployMutation,
-      variables: (_, transaction) => ({
-        ...transaction,
-      }),
-      update: (_, result) => {
-        const policy = {
-          address: result.data.execute,
-          type: 'TRADE',
-          name: 'maxConcentration',
-        };
-        setRegisterPolicies([...registerPolicies, policy]);
-      },
-    });
-  }
-
-  if (!!R.path(['values', 'policies', 'priceTolerance'], props)) {
-    policiesEstimations.push({
+    },
+    priceTolerance: {
       mutation: estimateDeployPriceToleranceMutation,
       variables: () => ({
         percent: R.pathOr(0, ['values', 'policies', 'priceTolerance'], props),
       }),
-      isComplete: !!registerPolicies.find(
-        item => item.name === 'priceTolerance',
-      ),
-      name: 'priceTolerance',
-    });
-
-    policiesExecutions.push({
-      mutation: executeDeployMutation,
-      variables: (_, transaction) => ({
-        ...transaction,
-      }),
-      update: (_, result) => {
-        const policy = {
-          address: result.data.execute,
-          type: 'TRADE',
-          name: 'priceTolerance',
-        };
-        setRegisterPolicies([...registerPolicies, policy]);
-      },
-    });
-  }
-
-  if (!!R.path(['values', 'policies', 'maxPositions'], props)) {
-    policiesEstimations.push({
-      mutation: estimateDeployPriceToleranceMutation,
+    },
+    maxPositions: {
+      mutation: estimateDeployMaxPositionsMutation,
       variables: () => ({
-        percent: R.pathOr(0, ['values', 'policies', 'maxPositions'], props),
+        positions: R.pathOr(0, ['values', 'policies', 'maxPositions'], props),
       }),
-      isComplete: !!registerPolicies.find(item => item.name === 'maxPositions'),
-      name: 'maxPositions',
-    });
+    },
+  };
 
-    policiesExecutions.push({
-      mutation: executeDeployMutation,
-      variables: (_, transaction) => ({
-        ...transaction,
-      }),
-      update: (_, result) => {
-        const policy = {
-          address: result.data.execute,
-          type: 'TRADE',
-          name: 'maxPositions',
-        };
-        setRegisterPolicies([...registerPolicies, policy]);
-      },
+  const policiesEstimations =
+    selectedPolicies &&
+    selectedPolicies.map(policy => ({
+      ...policiesToEstimations[policy.name],
+      isComplete: !!registerPolicies.find(item => item.name === policy.name),
+      name: policy.name,
+    }));
+
+  const policiesExecutions =
+    selectedPolicies &&
+    selectedPolicies.map(policy => {
+      return {
+        mutation: executeDeployMutation,
+        variables: (_, transaction) => ({
+          ...transaction,
+        }),
+        update: (_, result) => {
+          const data = {
+            address: result.data.execute,
+            type: 'TRADE',
+            name: policy.name,
+          };
+          setRegisterPolicies([...registerPolicies, data]);
+        },
+      };
     });
-  }
 
   return (
     <ModalTransactions
