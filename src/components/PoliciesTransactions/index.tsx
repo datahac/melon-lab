@@ -138,7 +138,6 @@ export default withRouter(props => {
         ...transaction,
       }),
       update: (_, result) => {
-        console.log(result.data.execute);
         const policy = {
           address: result.data.execute,
           type: 'TRADE',
