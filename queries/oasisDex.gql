@@ -60,3 +60,18 @@ mutation executeMakeOrderMutation(
     exchange
   }
 }
+
+mutation estimateTakeOasisDexOrderMutation(
+  $id: String!
+  $fillQuantity: String
+) {
+  estimate: estimateTakeOasisDexOrder(id: $id, fillQuantity: $fillQuantity)
+    @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}

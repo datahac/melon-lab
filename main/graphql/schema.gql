@@ -458,7 +458,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "make order" transaction.
   """
-  # TODO: Rename to estimateOasisDexOrder
+  # TODO: Rename to estimateOasisDexOrder and remove exchange enum
   estimateMakeOrder(
     exchange: ExchangeEnum!
     buyToken: String!
@@ -470,16 +470,23 @@ type Mutation {
   """
   Executes the "make order" transaction with the given gas price per unit.
   """
+  # TODO: Rename to executeOasisDexOrder
   executeMakeOrder(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     exchange: ExchangeEnum!
-  ): Order
+  ): OasisDexOrder
+
+  estimateTakeOasisDexOrder(
+    id: String!
+    fillQuantity: String
+  ): UnsignedTransaction
+
+  executeTakeOasisDexOrder(unsigned: UnsignedTransactionInput!): Trade
 
   """
   Estimates the number of gas units required for the "cancel order" transaction.
   """
-  # TODO: Same signature for all exchanges
   estimateCancelOrder(
     exchange: ExchangeEnum!
     id: String!

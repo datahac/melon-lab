@@ -18,15 +18,18 @@ import {
   createTrading,
   createVault,
   deployContract,
+  Environment,
   Exchanges,
   executeRequest,
   FunctionSignatures,
+  getOasisDexOrder,
   getTokenBySymbol,
   getWrapperLock,
   makeOasisDexOrder,
   register,
   requestInvestment,
   shutDownFund,
+  takeOasisDexOrder,
   triggerRewardAllFees,
   withDifferentAccount,
 } from '@melonproject/protocol';
@@ -622,6 +625,38 @@ export default {
       }
 
       throw new Error(`Make order not implemented for ${exchange}`);
+    },
+    estimateTakeOasisDexOrder: async (
+      _,
+      { from, id, fillQuantity },
+      { environment, loaders },
+    ) => {
+      const env: Environment = withDifferentAccount(
+        environment,
+        new Tm.Address(from),
+      );
+      const fund = await loaders.fundAddressFromManager.load(from);
+      const { tradingAddress } = await loaders.fundRoutes.load(fund);
+      const oasisDex = R.path(
+        ['deployment', 'thirdPartyContracts', 'exchanges', 'matchingMarket'],
+        env,
+      );
+
+      const order = await getOasisDexOrder(env, oasisDex, { id });
+
+      const fillTakerQuantity = fillQuantity
+        ? Tm.createQuantity(order.buy.token, fillQuantity)
+        : order.buy;
+
+      const result = await takeOasisDexOrder.prepare(env, tradingAddress, {
+        id,
+        makerQuantity: order.sell,
+        takerQuantity: order.buy,
+        maker: order.owner,
+        fillTakerQuantity,
+      });
+
+      return result && result.rawTransaction;
     },
     estimateCancelOrder: async (
       _,
