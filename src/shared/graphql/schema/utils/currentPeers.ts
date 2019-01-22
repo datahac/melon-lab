@@ -10,7 +10,6 @@ function currentPeers(environment, block$) {
     throttleTime(5000),
     switchMap(() =>
       environment.eth.net.getPeerCount().then(a => {
-        console.log(a);
         return a;
       }),
     ),

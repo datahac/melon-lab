@@ -301,16 +301,6 @@ describe('graphql schema', () => {
       },
     );
 
-    const preOrdersSwitched = await getActiveOasisDexOrders(
-      environment,
-      matchingMarketAccessor,
-      {
-        targetExchange: matchingMarket,
-        sellAsset: mln.address,
-        buyAsset: weth.address,
-      },
-    );
-
     const buy = Tm.createQuantity(mln, 15);
     const sell = Tm.createQuantity(weth, 1);
 
@@ -344,17 +334,9 @@ describe('graphql schema', () => {
       matchingMarketAccessor,
       {
         targetExchange: matchingMarket,
-        sellAsset: mln.address,
-        buyAsset: weth.address,
+        sellAsset: weth.address,
+        buyAsset: mln.address,
       },
-    );
-
-    console.log(
-      JSON.stringify(
-        { executeMakeOrder, preOrders, postOrders, preOrdersSwitched },
-        null,
-        2,
-      ),
     );
 
     expect(postOrders.length).toBeGreaterThan(preOrders.length);

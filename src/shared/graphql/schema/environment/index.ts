@@ -99,50 +99,50 @@ const getTestEnvironment = async (track: string) => {
   const matchingMarketAddress =
     withDeployment.deployment.exchangeConfigs.MatchingMarket.exchange;
 
-  // await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-  //   buy: Tm.createQuantity(mlnToken, 1),
-  //   sell: Tm.createQuantity(wethToken, 1),
-  // });
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(mlnToken, 1),
+    sell: Tm.createQuantity(wethToken, 1),
+  });
 
-  // await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-  //   buy: Tm.createQuantity(mlnToken, 2),
-  //   sell: Tm.createQuantity(wethToken, 1),
-  // });
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(mlnToken, 2),
+    sell: Tm.createQuantity(wethToken, 1),
+  });
 
-  // await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-  //   buy: Tm.createQuantity(mlnToken, 3),
-  //   sell: Tm.createQuantity(wethToken, 1),
-  // });
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(mlnToken, 3),
+    sell: Tm.createQuantity(wethToken, 1),
+  });
 
-  // await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-  //   buy: Tm.createQuantity(mlnToken, 4),
-  //   sell: Tm.createQuantity(wethToken, 1),
-  // });
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(mlnToken, 4),
+    sell: Tm.createQuantity(wethToken, 1),
+  });
 
-  // await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-  //   buy: Tm.createQuantity(mlnToken, 6.5),
-  //   sell: Tm.createQuantity(wethToken, 1),
-  // });
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(mlnToken, 6.5),
+    sell: Tm.createQuantity(wethToken, 1),
+  });
 
-  // await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-  //   buy: Tm.createQuantity(mlnToken, 3.7),
-  //   sell: Tm.createQuantity(wethToken, 1),
-  // });
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(mlnToken, 3.7),
+    sell: Tm.createQuantity(wethToken, 1),
+  });
 
-  // await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-  //   buy: Tm.createQuantity(wethToken, 2),
-  //   sell: Tm.createQuantity(mlnToken, 1),
-  // });
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(wethToken, 2),
+    sell: Tm.createQuantity(mlnToken, 1),
+  });
 
-  // await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-  //   buy: Tm.createQuantity(wethToken, 3),
-  //   sell: Tm.createQuantity(mlnToken, 1),
-  // });
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(wethToken, 3),
+    sell: Tm.createQuantity(mlnToken, 1),
+  });
 
-  // await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
-  //   buy: Tm.createQuantity(wethToken, 3.5),
-  //   sell: Tm.createQuantity(mlnToken, 1),
-  // });
+  await makeOrderFromAccountOasisDex(withDeployment, matchingMarketAddress, {
+    buy: Tm.createQuantity(wethToken, 3.5),
+    sell: Tm.createQuantity(mlnToken, 1),
+  });
 
   return {
     ...environment,
