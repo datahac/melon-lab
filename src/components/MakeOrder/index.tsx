@@ -24,12 +24,12 @@ export default withRouter(props => (
             : props.values.price.base.token.symbol,
         buyQuantity:
           props.values.type === 'Buy'
-            ? props.values.quantity.quantity
-            : props.values.total.quantity,
+            ? props.values.quantity.quantity.toString()
+            : props.values.total.quantity.toString(),
         sellQuantity:
           props.values.type === 'Buy'
-            ? props.values.total.quantity
-            : props.values.quantity.quantity,
+            ? props.values.total.quantity.toString()
+            : props.values.quantity.quantity.toString(),
       }),
     }}
     execute={{
