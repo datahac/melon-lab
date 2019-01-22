@@ -17,6 +17,32 @@ const estimateDeployPriceToleranceMutation = gql`
   }
 `;
 
+const estimateRegisterPoliciesMutation = gql`
+  mutation EstimateRegisterPolicies($policies: [PolicyInput]!) {
+    estimate: estimateRegisterPolicies(policies: $policies) @account {
+      data
+      from
+      gas
+      gasPrice
+      to
+      value
+    }
+  }
+`;
+
+const estimateDeployMaxConcentrationMutation = gql`
+  mutation EstimateDeployMaxConcentration($percent: Float!) {
+    estimate: estimateDeployMaxConcentration(percent: $percent) @account {
+      data
+      from
+      gas
+      gasPrice
+      to
+      value
+    }
+  }
+`;
+
 const executeDeployMutation = gql`
   mutation ExecuteDeploy(
     $data: String!
@@ -36,32 +62,6 @@ const executeDeployMutation = gql`
         value: $value
       }
     ) @sign @account
-  }
-`;
-
-const estimateDeployMaxPositionsMutation = gql`
-  mutation EstimateDeployMaxPositions($positions: Int!) {
-    estimate: estimateDeployMaxPositions(positions: $positions) @account {
-      data
-      from
-      gas
-      gasPrice
-      to
-      value
-    }
-  }
-`;
-
-const estimateRegisterPoliciesMutation = gql`
-  mutation EstimateRegisterPolicies($policies: [PolicyInput]!) {
-    estimate: estimateRegisterPolicies(policies: $policies) @account {
-      data
-      from
-      gas
-      gasPrice
-      to
-      value
-    }
   }
 `;
 
@@ -93,6 +93,34 @@ export default withRouter(props => {
 
   let policiesEstimations = [];
   let policiesExecutions = [];
+
+  if (!!R.path(['values', 'policies', 'maxConcentration'], props)) {
+    policiesEstimations.push({
+      mutation: estimateDeployMaxConcentrationMutation,
+      variables: () => ({
+        percent: R.pathOr(0, ['values', 'policies', 'maxConcentration'], props),
+      }),
+      isComplete: !!registerPolicies.find(
+        item => item.name === 'maxConcentration',
+      ),
+      name: 'maxConcentration',
+    });
+
+    policiesExecutions.push({
+      mutation: executeDeployMutation,
+      variables: (_, transaction) => ({
+        ...transaction,
+      }),
+      update: (_, result) => {
+        const policy = {
+          address: result.data.execute,
+          type: 'TRADE',
+          name: 'maxConcentration',
+        };
+        setRegisterPolicies([...registerPolicies, policy]);
+      },
+    });
+  }
 
   if (!!R.path(['values', 'policies', 'priceTolerance'], props)) {
     policiesEstimations.push({

@@ -59,6 +59,16 @@ const withForm = withFormik({
           .positive('Fee must be positive')
           .max(100, 'Fee can not be greater than 100')
           .integer('Fee must be an integer'),
+        maxPositions: Yup.number()
+          .typeError('Price tolerance fee is required')
+          .positive('Fee must be positive')
+          .max(100, 'Fee can not be greater than 100')
+          .integer('Fee must be an integer'),
+        maxConcentration: Yup.number()
+          .typeError('Price tolerance fee is required')
+          .positive('Fee must be positive')
+          .max(100, 'Fee can not be greater than 100')
+          .integer('Fee must be an integer'),
       }),
       fees: Yup.object().shape({
         performanceFee: Yup.number()

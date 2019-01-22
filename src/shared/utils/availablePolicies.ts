@@ -13,6 +13,12 @@ const availablePolicies = {
     Component: Input,
     unit: '%',
   },
+  maxConcentration: {
+    name: 'Max concentration',
+    desc: 'High Diversification <-> High Concentration',
+    Component: Input,
+    unit: '%',
+  },
 };
 
 export default availablePolicies;
