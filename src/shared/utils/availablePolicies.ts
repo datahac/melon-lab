@@ -7,6 +7,12 @@ const availablePolicies = {
     Component: Input,
     unit: '%',
   },
+  maxPositions: {
+    name: 'Max position',
+    desc: 'The higher the tolerance, the greater the risk',
+    Component: Input,
+    unit: '%',
+  },
 };
 
 export default availablePolicies;

@@ -39,6 +39,19 @@ const executeDeployMutation = gql`
   }
 `;
 
+const estimateDeployMaxPositionsMutation = gql`
+  mutation EstimateDeployMaxPositions($positions: Int!) {
+    estimate: estimateDeployMaxPositions(positions: $positions) @account {
+      data
+      from
+      gas
+      gasPrice
+      to
+      value
+    }
+  }
+`;
+
 const estimateRegisterPoliciesMutation = gql`
   mutation EstimateRegisterPolicies($policies: [PolicyInput]!) {
     estimate: estimateRegisterPolicies(policies: $policies) @account {
@@ -76,56 +89,103 @@ const executeRegisterPoliciesMutation = gql`
 
 export default withRouter(props => {
   const [policies, setPolicies] = useState([]);
-  const [active, setActive] = useState(true);
+  const [isActive, setIsActive] = useState(true);
 
   return (
     <ModalTransactions
       text={`The following method on the Melon Smart Contracts will be executed:`}
-      open={active && props.progress}
+      open={isActive && props.progress}
       estimations={[
-        {
-          mutation: estimateDeployPriceToleranceMutation,
-          variables: () => ({
-            percent: R.pathOr(
-              0,
-              ['values', 'policies', 'priceTolerance'],
-              props,
-            ),
-          }),
-          isComplete: !!policies[0],
-          name: 'priceTolerance',
-        },
+        ...(!!R.path(['values', 'policies', 'priceTolerance'], props)
+          ? [
+              {
+                mutation: estimateDeployPriceToleranceMutation,
+                variables: () => ({
+                  percent: R.pathOr(
+                    0,
+                    ['values', 'policies', 'priceTolerance'],
+                    props,
+                  ),
+                }),
+                isComplete: !!policies.find(
+                  item => item.name === 'priceTolerance',
+                ),
+                name: 'priceTolerance',
+              },
+            ]
+          : []),
+        ...(!!R.path(['values', 'policies', 'maxPositions'], props)
+          ? [
+              {
+                mutation: estimateDeployPriceToleranceMutation,
+                variables: () => ({
+                  percent: R.pathOr(
+                    0,
+                    ['values', 'policies', 'maxPositions'],
+                    props,
+                  ),
+                }),
+                isComplete: !!policies.find(
+                  item => item.name === 'maxPositions',
+                ),
+                name: 'maxPositions',
+              },
+            ]
+          : []),
         {
           mutation: estimateRegisterPoliciesMutation,
           variables: () => ({
-            policies,
+            policies: policies.map(({ name, ...item }) => item),
           }),
           isComplete: false,
           name: 'registerPolicies',
         },
       ]}
       executions={[
-        {
-          mutation: executeDeployMutation,
-          variables: (_, transaction) => ({
-            ...transaction,
-          }),
-          update: (cache, result) => {
-            console.log(result.data.execute);
-            const policy = {
-              address: result.data.execute,
-              type: 'TRADE',
-            };
-            setPolicies([...policies, policy]);
-          },
-        },
+        ...(!!R.path(['values', 'policies', 'priceTolerance'], props)
+          ? [
+              {
+                mutation: executeDeployMutation,
+                variables: (_, transaction) => ({
+                  ...transaction,
+                }),
+                update: (_, result) => {
+                  const policy = {
+                    address: result.data.execute,
+                    type: 'TRADE',
+                    name: 'priceTolerance',
+                  };
+                  setPolicies([...policies, policy]);
+                },
+              },
+            ]
+          : []),
+        ...(!!R.path(['values', 'policies', 'priceTolerance'], props)
+          ? [
+              {
+                mutation: executeDeployMutation,
+                variables: (_, transaction) => ({
+                  ...transaction,
+                }),
+                update: (_, result) => {
+                  console.log(result.data.execute);
+                  const policy = {
+                    address: result.data.execute,
+                    type: 'TRADE',
+                    name: 'maxPositions',
+                  };
+                  setPolicies([...policies, policy]);
+                },
+              },
+            ]
+          : []),
         {
           mutation: executeRegisterPoliciesMutation,
           variables: (_, transaction) => ({
             ...transaction,
           }),
           update: () => {
-            setActive(false);
+            setIsActive(false);
             props.router.push({
               pathname: '/invest',
               query: {
