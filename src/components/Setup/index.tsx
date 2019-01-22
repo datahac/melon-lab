@@ -18,6 +18,8 @@ import { FundManagerConsumer } from '+/components/FundManagerContext';
 import { SetupConsumer } from '+/components/SetupContext';
 import withForm from './withForm';
 import SetupTransactions from '+/components/SetupTransactions';
+import PoliciesTransactions from '+/components/PoliciesTransactions';
+import * as R from 'ramda';
 
 const SetupFormContainer = withForm(props => (
   <SetupForm
@@ -148,6 +150,16 @@ class Setup extends React.Component {
               routes={manager.routes}
               fund={manager.fund}
               setup={setup}
+            />
+
+            <PoliciesTransactions
+              progress={
+                !R.isEmpty(R.path(['state', 'values', 'policies'], this)) &&
+                setup.isComplete &&
+                !!manager.fund
+              }
+              values={this.state.values}
+              fund={manager.fund}
             />
 
             {(!!this.state.values || !manager.fund) && (

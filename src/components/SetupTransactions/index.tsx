@@ -213,12 +213,14 @@ export default withRouter(props => (
             },
           });
           // onCompleted is not working because of render
-          props.router.push({
-            pathname: '/invest',
-            query: {
-              address: props.fund,
-            },
-          });
+          if (R.isEmpty(R.path(['values', 'policies'], props))) {
+            props.router.push({
+              pathname: '/invest',
+              query: {
+                address: props.fund,
+              },
+            });
+          }
         },
       },
     ]}
