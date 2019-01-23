@@ -20,12 +20,9 @@ electron.app.on('ready', async () => {
   main.webContents.on('will-navigate', handleRedirect(main));
   main.webContents.on('new-window', handleRedirect(main));
 
-  await Promise.all([
-    prepareServer(),
-    prepareRenderer('./renderer'),
-    prepareDevelopment(main),
-  ]);
-
+  await prepareServer();
+  await prepareRenderer('./renderer');
+  await prepareDevelopment(main);
   main.loadURL(url);
 });
 
