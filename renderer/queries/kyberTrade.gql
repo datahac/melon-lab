@@ -1,0 +1,56 @@
+mutation estimateTakeKyberMutation(
+  $buyToken: String!
+  $buyQuantity: String!
+  $sellToken: String!
+) {
+  estimate: estimateTakeKyber(
+    buyToken: $buyToken
+    buyQuantity: $buyQuantity
+    sellToken: $sellToken
+  ) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation executeTakeKyberMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+) {
+  execute: executeTakeKyber(
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account {
+    id
+    trade {
+      base {
+        token {
+          symbol
+        }
+      }
+      quote {
+        token {
+          symbol
+        }
+      }
+    }
+    price
+    volume
+    type
+    exchange
+  }
+}

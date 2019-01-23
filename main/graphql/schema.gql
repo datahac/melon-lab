@@ -512,6 +512,14 @@ type Mutation {
     exchange: ExchangeEnum!
   ): Boolean
 
+  estimateTakeKyber(
+    buyToken: String!
+    buyQuantity: String!
+    sellToken: String!
+  ): UnsignedTransaction
+
+  executeTakeKyber(unsigned: UnsignedTransactionInput): Trade
+
   create0xOrder(
     buyToken: String!
     buyQuantity: String!

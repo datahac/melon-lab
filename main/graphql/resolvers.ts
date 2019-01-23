@@ -3,6 +3,7 @@ import * as keytar from 'keytar';
 import * as R from 'ramda';
 import { distinctUntilChanged, map, pluck } from 'rxjs/operators';
 
+import * as Tm from '@melonproject/token-math';
 import {
   approve as approveTransfer,
   beginSetup,
@@ -34,9 +35,11 @@ import {
   triggerRewardAllFees,
   withDifferentAccount,
 } from '@melonproject/protocol';
-import * as Tm from '@melonproject/token-math';
+
 import sameBlock from './utils/sameBlock';
 import toAsyncIterator from './utils/toAsyncIterator';
+import { estimateTakeKyber } from './mutators/estimateTakeKyber';
+import { executeTakeKyber } from './mutators/executeTakeKyber';
 
 const stringifyObject = R.mapObjIndexed((value, key) => `${value}`);
 
@@ -839,6 +842,9 @@ export default {
 
       return stringifyObject(order);
     },
+    // tslint:disable:object-shorthand-properties-first
+    estimateTakeKyber,
+    executeTakeKyber,
     estimateDeployUserWhitelist: async (
       _,
       { from, addresses },
