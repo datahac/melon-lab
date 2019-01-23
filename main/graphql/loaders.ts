@@ -239,7 +239,6 @@ export default (environment, streams) => {
         fn(pair.exchange, pair.base, pair.quote),
       );
       const raw = await Promise.all(result || []);
-      console.log(raw);
       return raw;
     },
     {

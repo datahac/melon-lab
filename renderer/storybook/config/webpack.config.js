@@ -16,7 +16,6 @@ module.exports = config => {
     '~/link': path.join(base, 'link'),
   });
 
-  console.log(JSON.stringify(path.join(src, 'postcss.config.js')));
   config.module.rules.unshift({
     test: /\.css$/,
     use: [
