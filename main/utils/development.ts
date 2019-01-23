@@ -1,7 +1,5 @@
-import isDev from 'electron-is-dev';
-
 const installExtension = async extension => {
-  if (!isDev) {
+  if (process.env.NODE_ENV !== 'development') {
     return;
   }
 
@@ -16,7 +14,7 @@ const installExtension = async extension => {
 };
 
 export const prepareDevelopment = async window => {
-  if (!isDev) {
+  if (process.env.NODE_ENV !== 'development') {
     return;
   }
 

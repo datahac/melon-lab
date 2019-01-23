@@ -16,9 +16,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "paths": {
-      "~/introspection": ["./introspection.json"],
       "~/link": ["./storybook/link.tsx"],
       "~/error": ["./pages/_error.tsx"],
+      "~/queries/*": ["./queries/*"],
       "~/static/*": ["./static/*"],
       "~/shared/*": ["./shared/*"],
       "~/blocks/*": ["./storybook/blocks/*"],

@@ -21,9 +21,9 @@ import {
   executeFundSetupBeginMutation,
   executeFundSetupCompleteMutation,
   executeFundSetupStepMutation,
-} from '~/queries/fundSetup.gql';
+} from './queries/fundSetup.gql';
 
-import * as rankings from '~/queries/rankings.gql';
+import * as rankings from './queries/rankings.gql';
 
 jest.setTimeout(240000);
 

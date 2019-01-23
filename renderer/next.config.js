@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = require('@zeit/next-typescript')({
   exportPathMap: () => ({
@@ -13,7 +14,7 @@ module.exports = require('@zeit/next-typescript')({
       '~/link': 'next/link',
       // Schema introspection for apollo.
       '~/introspection': path.join(__dirname, 'introspection.json'),
-      '~/queries': path.join(__dirname, '..', 'queries'),
+      '~/queries': path.join(__dirname, 'queries'),
       '~/shared': path.join(__dirname, 'shared'),
       '~/static': path.join(__dirname, 'static'),
       '~/error': path.join(__dirname, 'pages', '_error'),
@@ -44,6 +45,13 @@ module.exports = require('@zeit/next-typescript')({
         },
       ],
     });
+
+    config.plugins.push(
+      new Dotenv({
+        path: find.sync(['.env', '.env.defaults']),
+        systemvars: true,
+      }),
+    );
 
     config.node = {
       fs: 'empty',

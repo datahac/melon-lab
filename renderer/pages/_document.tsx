@@ -2,15 +2,7 @@ import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
 import flush from 'styled-jsx/server';
 
-const isDev = (() => {
-  try {
-    return require('electron-is-dev');
-  } catch {
-    return false;
-  }
-})();
-
-const csp = isDev
+const csp = process.env.NODE_ENV === 'development'
   ? `default-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src data: http://localhost:8000;`
   : `default-src 'self' 'unsafe-inline'; font-src data: file:;`;
 

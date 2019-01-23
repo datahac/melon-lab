@@ -1,0 +1,104 @@
+mutation estimateFundSetupBeginMutation(
+  $name: String!
+  $exchanges: [String]!
+  $performanceFee: Float!
+  $managementFee: Float!
+) {
+  estimate: estimateFundSetupBegin(
+    name: $name
+    exchanges: $exchanges
+    performanceFee: $performanceFee
+    managementFee: $managementFee
+  ) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation executeFundSetupBeginMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+) {
+  execute: executeFundSetupBegin(
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}
+
+mutation estimateFundSetupStepMutation($step: FundSetupStepEnum!) {
+  estimate: estimateFundSetupStep(step: $step) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation executeFundSetupStepMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+  $step: FundSetupStepEnum!
+) {
+  execute: executeFundSetupStep(
+    step: $step
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}
+
+mutation estimateFundSetupCompleteMutation {
+  estimate: estimateFundSetupComplete @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation executeFundSetupCompleteMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+) {
+  execute: executeFundSetupComplete(
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}

@@ -1,6 +1,7 @@
 module.exports = {
   "verbose": true,
   "testEnvironment": "node",
+  "setupFiles": [require.resolve("./jest.setup")],
   "transform": {
     "\\.(gql|graphql)$": "jest-transform-graphql",
     "^.+\\.(jsx?|tsx?)$": "ts-jest"

@@ -1,6 +1,5 @@
 import path from 'path';
 import electron from 'electron';
-import isDev from 'electron-is-dev';
 import prepareRenderer from 'electron-next';
 import { format } from 'url';
 import { resolve } from 'app-root-path';
@@ -35,7 +34,7 @@ electron.app.on('window-all-closed', () => {
 });
 
 const appUrl = () => {
-  if (isDev) {
+  if (process.env.NODE_ENV === 'development') {
     return 'http://localhost:8000';
   }
 
