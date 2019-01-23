@@ -51,11 +51,10 @@ import {
 } from '~/queries/oasisDex.gql';
 
 import * as fundQuery from '~/queries/fund.gql';
-import * as rankingsQuery from '~/queries/rankings.gql';
 
-jest.setTimeout(60 * 1000);
+jest.setTimeout(90 * 1000);
 
-describe('graphql schema', () => {
+describe('Setup fund and trade on Oasis Dex', () => {
   let environment: Environment;
   let master: Environment;
   let context;
@@ -103,12 +102,6 @@ describe('graphql schema', () => {
     });
 
     context = await createContext(tester, account);
-  });
-
-  it.skip('Ranking', async () => {
-    const result = await execute(schema, rankingsQuery, null, context());
-    expect(result.errors).toBeUndefined();
-    expect(result.data).toBeTruthy();
   });
 
   it('Setup fund', async () => {

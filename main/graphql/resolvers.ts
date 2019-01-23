@@ -22,6 +22,7 @@ import {
   Exchanges,
   executeRequest,
   FunctionSignatures,
+  getExpectedRate,
   getOasisDexOrder,
   getTokenBySymbol,
   getWrapperLock,
@@ -107,6 +108,33 @@ export default {
     },
     routes: (_, { manager }, { loaders }) => {
       return loaders.routes.load(manager);
+    },
+    kyberPrice: async (_, { symbol, quantity, type }, { environment }) => {
+      const kyberNetworkProxy = R.path(
+        [
+          'deployment',
+          'thirdPartyContracts',
+          'exchanges',
+          'kyber',
+          'kyberNetworkProxy',
+        ],
+        environment,
+      );
+
+      const weth = getTokenBySymbol(environment, 'WETH');
+      const makerAsset =
+        type === 'BUY' ? weth : getTokenBySymbol(environment, symbol);
+      const takerAsset =
+        type === 'SELL' ? getTokenBySymbol(environment, symbol) : weth;
+
+      const fillTakerQuantity = Tm.createQuantity(takerAsset, quantity);
+      const rate = await getExpectedRate(environment, kyberNetworkProxy, {
+        makerAsset,
+        takerAsset,
+        fillTakerQuantity,
+      });
+
+      return rate;
     },
   },
   Ranking: {

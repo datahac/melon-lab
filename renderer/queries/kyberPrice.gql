@@ -1,0 +1,24 @@
+query kyberPriceQuery(
+  $symbol: String!
+  $quantity: String!
+  $type: TradeTypeEnum!
+) {
+  kyberPrice(symbol: $symbol, quantity: $quantity, type: $type) {
+    base {
+      token {
+        symbol
+        address
+        decimals
+      }
+      quantity
+    }
+    quote {
+      token {
+        symbol
+        address
+        decimals
+      }
+      quantity
+    }
+  }
+}
