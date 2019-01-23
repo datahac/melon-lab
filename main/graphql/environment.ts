@@ -3,8 +3,9 @@ import { withDeployment } from '@melonproject/protocol/lib/utils/environment/wit
 import { Tracks } from '@melonproject/protocol/lib/utils/environment/Environment';
 import Wallet from 'ethers-wallet';
 
-export const getEnvironment = () => {
+export const getEnvironment = logger => {
   const environment = constructEnvironment({
+    logger,
     endpoint: process.env.ENDPOINT,
     track: process.env.TRACK as Tracks,
   });

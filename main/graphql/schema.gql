@@ -19,6 +19,11 @@ enum OrderTypeEnum {
   BID
 }
 
+enum TradeTypeEnum {
+  BUY
+  SELL
+}
+
 enum FundSetupStepEnum {
   CREATE_ACCOUNTING
   CREATE_FEE_MANAGER
@@ -196,10 +201,12 @@ type Holding {
 }
 
 type Trade {
-  price: Price
-  quantity: Quantity
-  timestamp: String
-  type: String
+  id: String
+  trade: Price!
+  price: String
+  volume: String!
+  type: TradeTypeEnum!
+  exchange: ExchangeEnum!
 }
 
 type Signature {

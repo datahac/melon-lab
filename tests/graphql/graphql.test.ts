@@ -10,7 +10,10 @@ import {
   sendEth,
   withPrivateKeySigner,
 } from '@melonproject/protocol';
-import { allLogsWritten } from '@melonproject/protocol/lib/tests/utils/testLogger';
+import {
+  allLogsWritten,
+  testLogger,
+} from '@melonproject/protocol/lib/tests/utils/testLogger';
 import * as Tm from '@melonproject/token-math';
 import { execute } from 'graphql/execution';
 import * as R from 'ramda';
@@ -44,6 +47,7 @@ import {
   estimateMakeOrderMutation,
   estimateTakeOasisDexOrderMutation,
   executeMakeOrderMutation,
+  executeTakeOasisDexOrderMutation,
 } from '~/queries/oasisDex.gql';
 
 import * as fundQuery from '~/queries/fund.gql';
@@ -68,7 +72,7 @@ describe('graphql schema', () => {
   });
 
   beforeAll(async () => {
-    environment = await getEnvironment();
+    environment = await getEnvironment(testLogger);
     const wallet = await getWallet();
     const accounts = new Accounts(environment.eth.currentProvider);
     const account = accounts.create();
@@ -340,7 +344,7 @@ describe('graphql schema', () => {
     expect(postOrders.length).toBeGreaterThan(preOrders.length);
   });
 
-  it.skip('Oasis take order', async () => {
+  it('Oasis take order', async () => {
     const buy = Tm.createQuantity(weth, 0.1);
     const sell = Tm.createQuantity(mln, 2);
 
@@ -350,15 +354,20 @@ describe('graphql schema', () => {
       { buy, sell },
     );
 
-    const orders = await getActiveOasisDexOrders(environment, matchingMarket, {
-      targetExchange: matchingMarket,
-      buyAsset: buy.token.address,
-      sellAsset: sell.token.address,
-    });
+    const orders = await getActiveOasisDexOrders(
+      environment,
+      matchingMarketAccessor,
+      {
+        targetExchange: matchingMarket,
+        buyAsset: buy.token.address,
+        sellAsset: sell.token.address,
+      },
+    );
 
     const orderInOrderbook = orders.find(
       order => orderFromAccount.id === order.id,
     );
+
     expect(orderInOrderbook).toBeTruthy();
 
     const estimateTakeOrder = await execute(
@@ -367,11 +376,35 @@ describe('graphql schema', () => {
       null,
       context(),
       {
-        id: orderFromAccount.id,
+        id: `${orderFromAccount.id}`,
       },
     );
 
     expect(estimateTakeOrder.errors).toBeUndefined();
     expect(estimateTakeOrder.data).toBeTruthy();
+
+    const executeTakeOrder = await execute(
+      schema,
+      executeTakeOasisDexOrderMutation,
+      null,
+      context(),
+      {
+        exchange: 'OASIS_DEX',
+        ...R.path(['data', 'estimate'], estimateTakeOrder),
+      },
+    );
+
+    expect(executeTakeOrder.errors).toBeUndefined();
+    expect(executeTakeOrder.data).toBeTruthy();
+    expect(Object.keys(R.path(['data', 'execute'], executeTakeOrder))).toEqual(
+      expect.arrayContaining([
+        'id',
+        'trade',
+        'price',
+        'volume',
+        'type',
+        'exchange',
+      ]),
+    );
   });
 });
