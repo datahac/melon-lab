@@ -13,10 +13,10 @@ module.exports = {
     "^~/introspection$": "<rootDir>/introspection.json"
   },
   "snapshotSerializers": ["enzyme-to-json/serializer"],
-  "setupFiles": [require.resolve("./jest.setup")],
+  "setupFiles": ["<rootDir>/jest.setup.js"],
   "transform": {
     "\\.(gql|graphql)$": "jest-transform-graphql",
-    "^.+\\.(jsx?|tsx?)$": "ts-jest"
+    "^.+\\.tsx?$": "ts-jest"
   },
   "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   "moduleFileExtensions": [

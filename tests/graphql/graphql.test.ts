@@ -10,9 +10,9 @@ import * as Tm from '@melonproject/token-math';
 import { execute } from 'graphql/execution';
 import * as R from 'ramda';
 import Accounts from 'web3-eth-accounts';
-import { schema } from './schema';
-import { createContext } from './context';
-import { getEnvironment, getWallet } from './environment';
+import { schema } from '~/graphql/schema';
+import { createContext } from '~/graphql/context';
+import { getEnvironment, getWallet } from '~/graphql/environment';
 
 import {
   estimateFundSetupBeginMutation,
@@ -21,11 +21,9 @@ import {
   executeFundSetupBeginMutation,
   executeFundSetupCompleteMutation,
   executeFundSetupStepMutation,
-} from './queries/fundSetup.gql';
+} from '~/queries/fundSetup.gql';
 
-import * as rankings from './queries/rankings.gql';
-
-jest.setTimeout(240000);
+import * as rankings from '~/queries/rankings.gql';
 
 describe('graphql schema', () => {
   let environment;

@@ -1,7 +1,16 @@
+const path = require('path');
+
 module.exports = {
   "verbose": true,
   "testEnvironment": "node",
-  "setupFiles": ["<rootDir>/jest.setup.js"],
+  "rootDir": path.resolve(__dirname, '..'),
+  "roots": ["<rootDir>/tests"],
+  "moduleNameMapper": {
+    "^~/queries/(.*)$": "<rootDir>/renderer/queries/$1",
+    "^~/graphql/(.*)$": "<rootDir>/main/graphql/$1"
+  },
+  "snapshotSerializers": ["enzyme-to-json/serializer"],
+  "setupFiles": ["<rootDir>/tests/jest.setup.js"],
   "transform": {
     "\\.(gql|graphql)$": "jest-transform-graphql",
     "^.+\\.tsx?$": "ts-jest"
@@ -17,7 +26,7 @@ module.exports = {
   ],
   "globals": {
     "ts-jest": {
-      "tsConfig": "<rootDir>/tsconfig.json",
+      "tsConfig": "<rootDir>/tests/tsconfig.json",
       "diagnostics": false
     }
   }

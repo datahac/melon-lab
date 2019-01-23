@@ -14,7 +14,7 @@ files:
     to: renderer
 
 directories:
-  output: app
+  output: build/package
   buildResources: renderer/static
 
 linux:

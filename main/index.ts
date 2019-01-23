@@ -12,7 +12,7 @@ electron.app.on('ready', async () => {
     width: 1024,
     height: 800,
     webPreferences: {
-      nodeIntegration: !!isDev,
+      nodeIntegration: process.env.NODE_ENV === 'development',
       preload: path.resolve(__dirname, 'preload.js'),
     },
   });
