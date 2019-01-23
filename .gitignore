@@ -18,6 +18,7 @@ introspection.json
 .*
 
 # Allowed dot files
+!.nvmrc
 !.env.example
 !.env.defaults
 !.babelrc
