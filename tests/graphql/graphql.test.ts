@@ -49,6 +49,8 @@ import {
 import * as fundQuery from '~/queries/fund.gql';
 import * as rankingsQuery from '~/queries/rankings.gql';
 
+jest.setTimeout(60 * 1000);
+
 describe('graphql schema', () => {
   let environment: Environment;
   let master: Environment;
@@ -338,7 +340,7 @@ describe('graphql schema', () => {
     expect(postOrders.length).toBeGreaterThan(preOrders.length);
   });
 
-  it('Oasis take order', async () => {
+  it.skip('Oasis take order', async () => {
     const buy = Tm.createQuantity(weth, 0.1);
     const sell = Tm.createQuantity(mln, 2);
 
