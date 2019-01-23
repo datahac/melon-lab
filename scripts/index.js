@@ -36,14 +36,8 @@ commander
       }
 
       case 'renderer': {
-        const cwd = process.cwd();
-        exec('next build renderer', {
-          cwd,
-        });
-
-        exec('next export renderer -o build/renderer', {
-          cwd,
-        });
+        exec('next build renderer', { stdio: 'inherit' });
+        exec('next export renderer -o build/renderer', { stdio: 'inherit' });
 
         break;
       }

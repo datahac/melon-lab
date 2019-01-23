@@ -28,9 +28,6 @@ module.exports = {
   }),
   resolve: {
     extensions: ['.ts', '.js', '.node'],
-    alias: {
-      '~/queries': path.join(__dirname, '..', 'queries'),
-    },
   },
   module: {
     exprContextCritical: false,

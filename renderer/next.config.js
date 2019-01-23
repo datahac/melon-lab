@@ -1,4 +1,9 @@
 const path = require('path');
+const find = require('find-up');
+const Dotenv = require('dotenv-webpack');
+
+// The path to the graphql schema.
+const schema = path.resolve(__dirname, '..', 'main', 'graphql', 'schema.gql');
 
 module.exports = require('@zeit/next-typescript')({
   exportPathMap: () => ({
@@ -12,8 +17,8 @@ module.exports = require('@zeit/next-typescript')({
       // Override the mock link component used in storybook.
       '~/link': 'next/link',
       // Schema introspection for apollo.
-      '~/introspection': path.join(__dirname, 'introspection.json'),
-      '~/queries': path.join(__dirname, '..', 'queries'),
+      '~/introspection': schema,
+      '~/queries': path.join(__dirname, 'queries'),
       '~/shared': path.join(__dirname, 'shared'),
       '~/static': path.join(__dirname, 'static'),
       '~/error': path.join(__dirname, 'pages', '_error'),
@@ -29,7 +34,14 @@ module.exports = require('@zeit/next-typescript')({
     config.module.exprContextCritical = false;
     config.module.rules.push({
       test: /\.(graphql|gql)$/,
+      include: path.resolve(__dirname),
       loader: 'graphql-tag/loader',
+    });
+
+    config.module.rules.push({
+      test: /\.(graphql|gql)$/,
+      include: schema,
+      loader: require.resolve('./introspect.js'),
     });
 
     config.module.rules.push({
@@ -44,6 +56,13 @@ module.exports = require('@zeit/next-typescript')({
         },
       ],
     });
+
+    config.plugins.push(
+      new Dotenv({
+        path: find.sync(['.env', '.env.defaults']),
+        systemvars: true,
+      }),
+    );
 
     config.node = {
       fs: 'empty',

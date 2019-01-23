@@ -1,6 +1,5 @@
 import path from 'path';
 import electron from 'electron';
-import isDev from 'electron-is-dev';
 import prepareRenderer from 'electron-next';
 import { format } from 'url';
 import { resolve } from 'app-root-path';
@@ -13,7 +12,7 @@ electron.app.on('ready', async () => {
     width: 1024,
     height: 800,
     webPreferences: {
-      nodeIntegration: !!isDev,
+      nodeIntegration: process.env.NODE_ENV === 'development',
       preload: path.resolve(__dirname, 'preload.js'),
     },
   });
@@ -21,12 +20,9 @@ electron.app.on('ready', async () => {
   main.webContents.on('will-navigate', handleRedirect(main));
   main.webContents.on('new-window', handleRedirect(main));
 
-  await Promise.all([
-    prepareServer(),
-    prepareRenderer('./renderer'),
-    prepareDevelopment(main),
-  ]);
-
+  await prepareServer();
+  await prepareRenderer('./renderer');
+  await prepareDevelopment(main);
   main.loadURL(url);
 });
 
@@ -35,7 +31,7 @@ electron.app.on('window-all-closed', () => {
 });
 
 const appUrl = () => {
-  if (isDev) {
+  if (process.env.NODE_ENV === 'development') {
     return 'http://localhost:8000';
   }
 
