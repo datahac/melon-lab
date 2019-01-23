@@ -1,3 +1,7 @@
+import { execute } from 'graphql/execution';
+import * as R from 'ramda';
+import Accounts from 'web3-eth-accounts';
+
 import {
   deposit,
   Environment,
@@ -15,9 +19,6 @@ import {
   testLogger,
 } from '@melonproject/protocol/lib/tests/utils/testLogger';
 import * as Tm from '@melonproject/token-math';
-import { execute } from 'graphql/execution';
-import * as R from 'ramda';
-import Accounts from 'web3-eth-accounts';
 import { schema } from '~/graphql/schema';
 import { createContext } from '~/graphql/context';
 import { getEnvironment, getWallet } from '~/graphql/environment';

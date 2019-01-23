@@ -1,10 +1,12 @@
+import * as R from 'ramda';
+import { execute } from 'graphql/execution';
+
 import { Environment, getTokenBySymbol } from '@melonproject/protocol';
 import {
   allLogsWritten,
   testLogger,
 } from '@melonproject/protocol/lib/tests/utils/testLogger';
 import * as Tm from '@melonproject/token-math';
-import { execute } from 'graphql/execution';
 
 import { schema } from '~/graphql/schema';
 import { getEnvironment } from '~/graphql/environment';
@@ -33,7 +35,7 @@ describe('Queries that work without a fund', () => {
     context = await createContext(environment);
   });
 
-  it.skip('Ranking', async () => {
+  it('Ranking', async () => {
     const result = await execute(schema, rankingsQuery, null, context());
     expect(result.errors).toBeUndefined();
     expect(result.data).toBeTruthy();
@@ -48,6 +50,8 @@ describe('Queries that work without a fund', () => {
       type: 'BUY',
     });
 
-    console.log(JSON.stringify(result, null, 2));
+    expect(result.errors).toBeUndefined();
+    expect(result.data).toBeTruthy();
+    expect(Tm.isPrice(R.path(['data', 'kyberPrice'], result))).toBe(true);
   });
 });
