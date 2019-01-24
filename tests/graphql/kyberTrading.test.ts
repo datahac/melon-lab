@@ -102,7 +102,5 @@ describe('Take orders from kyber', () => {
         'exchange',
       ]),
     );
-
-    console.log(JSON.stringify(estimateKyberTake, null, 2));
   });
 });

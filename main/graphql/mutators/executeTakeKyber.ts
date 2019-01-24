@@ -1,5 +1,9 @@
 import * as Tm from '@melonproject/token-math';
-import { withDifferentAccount, takeOrderOnKyber } from '@melonproject/protocol';
+import {
+  withDifferentAccount,
+  takeOrderOnKyber,
+  TakeOrderOnKyberResult,
+} from '@melonproject/protocol';
 
 const executeTakeKyber = async (
   _,
@@ -15,22 +19,20 @@ const executeTakeKyber = async (
     accountingAddress,
   );
 
-  const result = await takeOrderOnKyber.send(
+  const result: TakeOrderOnKyberResult = await takeOrderOnKyber.send(
     env,
     tradingAddress,
     signed.rawTransaction,
   );
 
-  console.log(JSON.stringify(result, null, 2));
-
-  const type = Tm.isEqual(denominationAsset, result.sell.token)
+  const type = Tm.isEqual(denominationAsset, result.takerQuantity.token)
     ? 'BUY'
     : 'SELL';
 
   const trade =
     type === 'BUY'
-      ? Tm.createPrice(result.buy, result.sell)
-      : Tm.createPrice(result.sell, result.buy);
+      ? Tm.createPrice(result.makerQuantity, result.takerQuantity)
+      : Tm.createPrice(result.takerQuantity, result.makerQuantity);
 
   const volume = Tm.toFixed(trade.quote);
 
