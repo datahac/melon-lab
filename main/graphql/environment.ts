@@ -21,6 +21,9 @@ export const getWallet = async () => {
   if (process.env.MNEMONIC && development) {
     return Wallet.Wallet.fromMnemonic(process.env.MNEMONIC);
   }
+  if (process.env.PRIVATE_KEY && development) {
+    return new Wallet.Wallet(process.env.PRIVATE_KEY);
+  }
 
   return null;
 };

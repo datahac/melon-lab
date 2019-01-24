@@ -53,7 +53,7 @@ import {
 
 import * as fundQuery from '~/queries/fund.gql';
 
-jest.setTimeout(90 * 1000);
+jest.setTimeout(1200000);
 
 describe('Setup fund and trade on Oasis Dex', () => {
   let environment: Environment;
@@ -89,14 +89,14 @@ describe('Setup fund and trade on Oasis Dex', () => {
     );
 
     await sendEth(master, {
-      howMuch: Tm.createQuantity('ETH', 100),
+      howMuch: Tm.createQuantity('ETH', 2),
       to: tester.wallet.address,
     });
 
     weth = getTokenBySymbol(environment, 'WETH');
     mln = getTokenBySymbol(environment, 'MLN');
 
-    const quantity = Tm.createQuantity(weth, 10);
+    const quantity = Tm.createQuantity(weth, 1);
 
     await deposit(tester, quantity.token.address, undefined, {
       value: quantity.quantity.toString(),
@@ -208,7 +208,7 @@ describe('Setup fund and trade on Oasis Dex', () => {
   });
 
   it('invest', async () => {
-    const investment = Tm.createQuantity(weth, 10);
+    const investment = Tm.createQuantity(weth, 1);
 
     const estimateApprove = await execute(
       schema,
@@ -303,8 +303,8 @@ describe('Setup fund and trade on Oasis Dex', () => {
       },
     );
 
-    const buy = Tm.createQuantity(mln, 15);
-    const sell = Tm.createQuantity(weth, 1);
+    const buy = Tm.createQuantity(mln, 7.5);
+    const sell = Tm.createQuantity(weth, 0.5);
 
     const estimateMakeOrder = await execute(
       schema,

@@ -25,7 +25,8 @@ import {
   executeTakeKyberMutation,
 } from '~/queries/kyberTrade.gql';
 
-jest.setTimeout(90 * 1000);
+// jest.setTimeout(90 * 1000);
+jest.setTimeout(1200000);
 
 describe('Take orders from kyber', () => {
   let environment: Environment;
@@ -47,14 +48,14 @@ describe('Take orders from kyber', () => {
     const tester = await withPrivateKeySigner(environment, account.privateKey);
 
     await sendEth(master, {
-      howMuch: Tm.createQuantity('ETH', 100),
+      howMuch: Tm.createQuantity('ETH', 3),
       to: tester.wallet.address,
     });
 
     weth = getTokenBySymbol(environment, 'WETH');
     mln = getTokenBySymbol(environment, 'MLN');
 
-    const quantity = Tm.createQuantity(weth, 10);
+    const quantity = Tm.createQuantity(weth, 2);
 
     await deposit(tester, quantity.token.address, undefined, {
       value: quantity.quantity.toString(),
