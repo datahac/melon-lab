@@ -1,9 +1,11 @@
 # Fields that are only safe within the native app environment and are blocked
 # from execution in the hosted / web environment.
-directive @authenticated on FIELD
-directive @sign(source: String = "unsigned", target: String = "signed") on FIELD
-directive @signMessage on FIELD
-directive @account(arg: String = "from") on FIELD
+directive @authenticated on FIELD | FIELD_DEFINITION
+directive @sign(
+  source: String = "unsigned"
+  target: String = "signed"
+) on FIELD | FIELD_DEFINITION
+directive @account(arg: String = "from") on FIELD | FIELD_DEFINITION
 
 scalar DateTime
 
@@ -346,7 +348,7 @@ type Mutation {
     exchanges: [String]!
     performanceFee: Float!
     managementFee: Float!
-  ): UnsignedTransaction
+  ): UnsignedTransaction @account
 
   """
   Executes the "beginSetup" transaction with the given gas price per unit.
@@ -354,7 +356,7 @@ type Mutation {
   executeFundSetupBegin(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
-  ): String
+  ): String @account @sign
 
   """
   Estimates the number of gas units required for a fund setup step transaction.
@@ -362,7 +364,7 @@ type Mutation {
   estimateFundSetupStep(
     "The step in the fund factory process."
     step: FundSetupStepEnum!
-  ): UnsignedTransaction
+  ): UnsignedTransaction @account
 
   """
   Executes a fund setup step transaction with the given gas price per unit.
@@ -372,12 +374,12 @@ type Mutation {
     unsigned: UnsignedTransactionInput!
     "The step in the fund factory process."
     step: FundSetupStepEnum!
-  ): Boolean
+  ): Boolean @account @sign
 
   """
   Estimates the number of gas units required for the "completeSetup" transaction.
   """
-  estimateFundSetupComplete: UnsignedTransaction
+  estimateFundSetupComplete: UnsignedTransaction @account
 
   """
   Executes the "completeSetup" transaction with the given gas price per unit.
@@ -385,7 +387,7 @@ type Mutation {
   executeFundSetupComplete(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
-  ): String
+  ): String @account @sign
 
   """
   Estimates the number of gas units required for the "request investment" transaction.
@@ -393,7 +395,7 @@ type Mutation {
   estimateRequestInvestment(
     fundAddress: String!
     investmentAmount: String!
-  ): UnsignedTransaction
+  ): UnsignedTransaction @account
 
   """
   Executes the "request investment" transaction with the given gas price per unit.
@@ -402,12 +404,12 @@ type Mutation {
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
-  ): Boolean
+  ): Boolean @account @sign
 
   """
   Estimates the number of gas units required for the "execute request" transaction.
   """
-  estimateExecuteRequest(fundAddress: String!): UnsignedTransaction
+  estimateExecuteRequest(fundAddress: String!): UnsignedTransaction @account
 
   """
   Executes the "execute request" transaction with the given gas price per unit.
@@ -416,7 +418,7 @@ type Mutation {
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
-  ): Boolean
+  ): Boolean @account @sign
 
   """
   Estimates the number of gas units required for the "approve transfer" transaction.
@@ -424,7 +426,7 @@ type Mutation {
   estimateApproveTransfer(
     fundAddress: String!
     investmentAmount: String!
-  ): UnsignedTransaction
+  ): UnsignedTransaction @account
 
   """
   Executes the "execute request" transaction with the given gas price per unit.
@@ -433,12 +435,12 @@ type Mutation {
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
-  ): Boolean
+  ): Boolean @account @sign
 
   """
   Estimates the number of gas units required for the "approve transfer" transaction.
   """
-  estimateShutDownFund(fundAddress: String!): UnsignedTransaction
+  estimateShutDownFund(fundAddress: String!): UnsignedTransaction @account
 
   """
   Executes the "approve transfer" transaction with the given gas price per unit.
@@ -448,12 +450,13 @@ type Mutation {
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
     investmentAmount: String!
-  ): Boolean
+  ): Boolean @account @sign
 
   """
   Estimates the number of gas units required for the "trigger reward all fees" transaction.
   """
   estimateTriggerRewardAllFees(fundAddress: String!): UnsignedTransaction
+    @account
 
   """
   Executes the "trigger reward all fees" transaction with the given gas price per unit.
@@ -462,7 +465,7 @@ type Mutation {
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
-  ): Quantity
+  ): Quantity @account @sign
 
   """
   Estimates the number of gas units required for the "make order" transaction.
@@ -474,7 +477,7 @@ type Mutation {
     buyQuantity: String!
     sellToken: String!
     sellQuantity: String!
-  ): UnsignedTransaction
+  ): UnsignedTransaction @account
 
   """
   Executes the "make order" transaction with the given gas price per unit.
@@ -484,14 +487,16 @@ type Mutation {
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     exchange: ExchangeEnum!
-  ): OasisDexOrder
+  ): OasisDexOrder @account @sign
 
   estimateTakeOasisDexOrder(
     id: String!
     fillQuantity: String
-  ): UnsignedTransaction
+  ): UnsignedTransaction @account
 
   executeTakeOasisDexOrder(unsigned: UnsignedTransactionInput!): Trade
+    @account
+    @sign
 
   """
   Estimates the number of gas units required for the "cancel order" transaction.
@@ -501,7 +506,7 @@ type Mutation {
     id: String!
     buyToken: String!
     sellToken: String!
-  ): UnsignedTransaction
+  ): UnsignedTransaction @account
 
   """
   Executes the "cancel order" transaction with the given gas price per unit.
@@ -510,15 +515,15 @@ type Mutation {
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     exchange: ExchangeEnum!
-  ): Boolean
+  ): Boolean @account @sign
 
   estimateTakeKyber(
     buyToken: String!
     buyQuantity: String!
     sellToken: String!
-  ): UnsignedTransaction
+  ): UnsignedTransaction @account
 
-  executeTakeKyber(unsigned: UnsignedTransactionInput): Trade
+  executeTakeKyber(unsigned: UnsignedTransactionInput): Trade @account @sign
 
   create0xOrder(
     buyToken: String!
@@ -535,16 +540,19 @@ type Mutation {
   ): ZeroExOrderMetadata
 
   # Policies
-  estimateDeployUserWhitelist(addresses: [String]): UnsignedTransaction
-  estimateDeployAssetBlacklist(symbols: [String]): UnsignedTransaction
-  estimateDeployAssetWhitelist(symbols: [String]): UnsignedTransaction
-  estimateDeployMaxConcentration(percent: Float): UnsignedTransaction
-  estimateDeployMaxPositions(positions: Int): UnsignedTransaction
-  estimateDeployPriceTolerance(percent: Int): UnsignedTransaction
-  executeDeploy(unsigned: UnsignedTransactionInput): String
+  estimateDeployUserWhitelist(addresses: [String]): UnsignedTransaction @account
+  estimateDeployAssetBlacklist(symbols: [String]): UnsignedTransaction @account
+  estimateDeployAssetWhitelist(symbols: [String]): UnsignedTransaction @account
+  estimateDeployMaxConcentration(percent: Float): UnsignedTransaction @account
+  estimateDeployMaxPositions(positions: Int): UnsignedTransaction @account
+  estimateDeployPriceTolerance(percent: Int): UnsignedTransaction @account
+  executeDeploy(unsigned: UnsignedTransactionInput): String @account @sign
 
   estimateRegisterPolicies(policies: [PolicyInput]!): UnsignedTransaction
+    @account
   executeRegisterPolicies(unsigned: UnsignedTransactionInput): Boolean
+    @account
+    @sign
 
   """
   Export the currently active wallet in its encrypted form.

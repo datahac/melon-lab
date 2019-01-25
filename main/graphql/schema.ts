@@ -1,6 +1,8 @@
 import { makeExecutableSchema } from 'graphql-tools';
 import Accounts from 'web3-eth-accounts';
 import addQueryDirectives from './directives/addQueryDirectives';
+// import { SignDirective } from './directives/SignDirective';
+// import { AccountDirective } from './directives/AccountDirective';
 import resolvers from './resolvers';
 import * as typeDefs from './schema.gql';
 
@@ -8,6 +10,10 @@ export const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
   inheritResolversFromInterfaces: true,
+  // schemaDirectives: {
+  //   account: AccountDirective,
+  //   sign: SignDirective,
+  // },
 });
 
 addQueryDirectives(schema, {
