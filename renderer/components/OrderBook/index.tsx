@@ -74,7 +74,8 @@ const AggregatedOrders = ({ baseAsset, quoteAsset, exchanges, children }) => (
 
       const asks = orders
         .filter(isAskOrder)
-        .sort(sortOrders)
+        // HACK!! TODO: Move this to exchange-aggregator!
+        .sort((a, b) => -sortOrders(a, b))
         .reduce(reduceOrderVolumes, []);
 
       const bids = orders
@@ -106,17 +107,15 @@ export default ({ baseAsset, quoteAsset }) => {
         Object.keys(availableExchanges).map(([key]) => key).length
       ) {
         return setExchanges([]);
-      } 
-        return setExchanges(Object.keys(availableExchanges));
-      
-    } 
-      if (!selectedExchanges.includes(value)) {
-        tempExchanges.push(value);
-      } else {
-        const index = selectedExchanges.indexOf(value);
-        tempExchanges.splice(index, 1);
       }
-    
+      return setExchanges(Object.keys(availableExchanges));
+    }
+    if (!selectedExchanges.includes(value)) {
+      tempExchanges.push(value);
+    } else {
+      const index = selectedExchanges.indexOf(value);
+      tempExchanges.splice(index, 1);
+    }
 
     return setExchanges(tempExchanges);
   };

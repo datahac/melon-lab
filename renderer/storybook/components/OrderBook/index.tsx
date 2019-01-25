@@ -23,21 +23,21 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
   asks = [],
   bids = [],
   setExchange,
-  selectedExchanges = [],
+  selectedExchanges = ['OASIS_DEX'],
   availableExchanges = [],
   isManager = false,
 }) => {
   const setSellOrder = index => {
-    // TODO:
+    console.log('TODO: setSellOrder', index);
   };
 
   const setBuyOrder = index => {
-    // TODO:
+    console.log('TODO: setBuyOrder', index);
   };
 
   return (
     <div className="orderbook">
-      <style jsx>{styles}</style>
+      <style jsx={true}>{styles}</style>
       {availableExchanges && (
         <div className="orderbook__exchanges">
           <div className="orderbook__exchange-label">Exchanges:</div>
@@ -71,12 +71,12 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
 
       {loading ? (
         <div className="orderbook__loading">
-          <Spinner icon />
+          <Spinner icon={true} />
         </div>
       ) : (
         <Fragment>
           {bids.length === 0 && asks.length === 0 ? (
-            <Notification isWarning>
+            <Notification isWarning={true}>
               No orders on the orderbook for this trading pair
             </Notification>
           ) : (
@@ -84,13 +84,13 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
               <div className="orderbook__tables">
                 <OrderBookTable
                   style="buy"
-                  entries={asks}
+                  entries={bids}
                   onClickOrder={isManager && setSellOrder}
                   canTrade={isManager}
                 />
                 <OrderBookTable
                   style="sell"
-                  entries={bids}
+                  entries={asks}
                   onClickOrder={isManager && setBuyOrder}
                   canTrade={isManager}
                 />
