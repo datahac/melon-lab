@@ -14,8 +14,6 @@ export interface WalletOverviewProps {
   isComplete?: boolean;
   balances?: {
     eth?: string;
-    mln?: string;
-    weth?: string;
   };
 }
 
@@ -28,9 +26,9 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
   isComplete,
 }) => (
   <div className="wallet-overview">
-    <style jsx>{styles}</style>
+    <style jsx={true}>{styles}</style>
     {loading ? (
-      <Spinner icon size="small" />
+      <Spinner icon={true} size="small" />
     ) : (
       <Fragment>
         {currentAddress && (
@@ -42,20 +40,6 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
                 <br />
                 <span className="wallet-overview__balance-value">
                   {balances && balances.eth && Tm.toFixed(balances.eth)}
-                </span>
-              </div>
-              <div className="wallet-overview__balance">
-                MLN:
-                <br />
-                <span className="wallet-overview__balance-value">
-                  {balances && balances.mln && Tm.toFixed(balances.mln)}
-                </span>
-              </div>
-              <div className="wallet-overview__balance">
-                WETH:
-                <br />
-                <span className="wallet-overview__balance-value">
-                  {balances && balances.weth && Tm.toFixed(balances.weth)}
                 </span>
               </div>
             </div>
@@ -73,7 +57,6 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
                 {balances && (!balances.eth || Tm.isZero(balances.eth)) ? (
                   <InsufficientFunds
                     eth={balances.eth}
-                    weth={balances.weth}
                     address={currentAddress}
                   />
                 ) : (
@@ -104,7 +87,6 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
                 {balances && (!balances.eth || Tm.isZero(balances.eth)) ? (
                   <InsufficientFunds
                     eth={balances.eth}
-                    weth={balances.weth}
                     address={currentAddress}
                   />
                 ) : (

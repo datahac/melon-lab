@@ -4,24 +4,21 @@ import Notification from '~/blocks/Notification/index';
 
 export interface InsufficientFundsProps {
   eth: string;
-  weth: string;
   address: string;
 }
 
 export const InsufficientFunds: StatelessComponent<InsufficientFundsProps> = ({
   eth,
-  weth,
   address,
 }) => (
-  <Notification isWarning>
+  <Notification isWarning={true}>
     <b>Insufficient ETH Balance</b>
     <p>
-      You don't have enough Kovan Ether or Kovan W-ETH. Current balances: {weth}{' '}
-      WETH, {eth} ETH
+      You don't have enough Ether. Current balance: {eth} ETH
       <br />
-      To get started, head to our faucet to receive Kovan Ether and Kovan Melon
+      To get started, head to faucet to receive Ether.
       <br />
-      Once you have received ETH and MLN, go ahead and create your Melon fund.
+      Once you have received ETH, go ahead and create your Melon fund.
     </p>
 
     <Link

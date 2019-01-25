@@ -41,11 +41,7 @@ class WalletContainer extends React.PureComponent {
           return (
             <Wallet
               associatedFund={managerProps.fund}
-              balances={{
-                eth: balances.eth,
-                mln: balances.mln,
-                weth: balances.weth,
-              }}
+              balances={balances}
               deleteWallet={deleteWallet}
               loading={walletProps.loading}
               hasAccount={!!account}

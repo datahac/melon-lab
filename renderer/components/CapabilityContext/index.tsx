@@ -21,7 +21,6 @@ export class CapabilityProvider extends React.PureComponent {
         ]}
       >
         {([account, balance, network]) => {
-          const wethBalance = balance && balance.weth;
           const ethBalance = balance && balance.eth;
           const currentBlock = network && network.currentBlock;
           const nodeSynced = network && network.nodeSynced;
@@ -29,21 +28,17 @@ export class CapabilityProvider extends React.PureComponent {
           const hasAccount = !!account;
           const hasEth =
             hasAccount && ethBalance && !Tm.isZero(ethBalance.quantity);
-          const hasWeth =
-            hasAccount && wethBalance && !Tm.isZero(wethBalance.quantity);
           const hasCurrentBlock = currentBlock && !Tm.isZero(currentBlock);
           const isSynced = !!nodeSynced;
-          const isCompetition = false; // TODO: Make this configurable.
 
           const canInteract =
             isSynced && hasAccount && hasCurrentBlock && hasEth;
-          const canInvest = isCompetition
-            ? canInteract
-            : canInteract && hasWeth;
+          const canInvest = canInteract;
 
           return (
             <CapabilityContext.Provider
               value={{
+                // TODO: Remove this?
                 canInvest,
                 canInteract,
               }}

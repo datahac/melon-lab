@@ -14,18 +14,6 @@ const data = {
         decimals: 4,
       },
     },
-    mln: {
-      quantity: 1,
-      token: {
-        decimals: 4,
-      },
-    },
-    weth: {
-      quantity: 1,
-      token: {
-        decimals: 4,
-      },
-    },
   },
   loading: false,
 };

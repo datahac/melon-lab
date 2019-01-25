@@ -6,9 +6,9 @@ import { BalanceConsumer } from '+/components/BalanceContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import * as Tm from '@melonproject/token-math';
 
-const getLink = (account, weth, fund) => {
+const getLink = (account, eth, fund) => {
   if (account) {
-    if (weth && Tm.isZero(weth.quantity)) {
+    if (eth && Tm.isZero(eth.quantity)) {
       return {
         href: '/wallet',
         text: 'Fund your wallet',
@@ -46,11 +46,7 @@ export default class GetStartedContainer extends React.PureComponent {
         ]}
       >
         {([account, balance, managerProps]) => {
-          const link = getLink(
-            account,
-            balance && balance.weth,
-            managerProps.fund,
-          );
+          const link = getLink(account, balance.eth, managerProps.fund);
 
           return <GetStarted link={link} {...this.props} />;
         }}
