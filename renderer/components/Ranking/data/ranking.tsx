@@ -30,7 +30,7 @@ const query = gql`
 `;
 
 const RankingQuery = ({ children }) => (
-  <Query query={query} ssr={false} errorPolicy="all">
+  <Query query={query} ssr={false} errorPolicy="all" fetchPolicy="no-cache">
     {children}
   </Query>
 );

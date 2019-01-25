@@ -15,7 +15,7 @@ async function fundHoldings(environment, address) {
   });
 
   const fundHoldings = R.unionWith(
-    R.eqBy(R.prop('token')),
+    R.eqBy(R.path(['token', 'symbol'])),
     holdings,
     availableTokens,
   );
