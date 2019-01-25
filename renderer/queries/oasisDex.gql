@@ -58,6 +58,9 @@ mutation executeMakeOrderMutation(
     volume
     type
     exchange
+    metadata {
+      isActive
+    }
   }
 }
 

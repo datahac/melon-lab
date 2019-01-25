@@ -320,10 +320,22 @@ describe('Setup fund and trade on Oasis Dex', () => {
       },
     );
 
-    await execute(schema, executeMakeOrderMutation, null, context(), {
-      exchange: 'OASIS_DEX',
-      ...R.path(['data', 'estimate'], estimateMakeOrder),
-    });
+    expect(estimateMakeOrder.errors).toBeUndefined();
+    expect(estimateMakeOrder.data).toBeTruthy();
+
+    const result = await execute(
+      schema,
+      executeMakeOrderMutation,
+      null,
+      context(),
+      {
+        exchange: 'OASIS_DEX',
+        ...R.path(['data', 'estimate'], estimateMakeOrder),
+      },
+    );
+
+    expect(result.errors).toBeUndefined();
+    expect(result.data).toBeTruthy();
 
     const postOrders = await getActiveOasisDexOrders(
       environment,
@@ -335,7 +347,11 @@ describe('Setup fund and trade on Oasis Dex', () => {
       },
     );
 
-    expect(postOrders.length).toBeGreaterThan(preOrders.length);
+    if (R.path(['data', 'metadata', 'isActive'], result)) {
+      expect(postOrders.length).toBeGreaterThan(preOrders.length);
+    } else {
+      expect(postOrders.length).toBe(preOrders.length);
+    }
   });
 
   it('Oasis take order', async () => {
@@ -362,7 +378,11 @@ describe('Setup fund and trade on Oasis Dex', () => {
       order => orderFromAccount.id === order.id,
     );
 
-    expect(orderInOrderbook).toBeTruthy();
+    if (!orderFromAccount.matched) {
+      expect(orderInOrderbook).toBeTruthy();
+    }
+
+    const orderToTake = orderFromAccount.matched ? orders[0] : orderFromAccount;
 
     const estimateTakeOrder = await execute(
       schema,
@@ -370,7 +390,7 @@ describe('Setup fund and trade on Oasis Dex', () => {
       null,
       context(),
       {
-        id: `${orderFromAccount.id}`,
+        id: `${orderToTake.id}`,
       },
     );
 

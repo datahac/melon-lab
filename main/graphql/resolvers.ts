@@ -650,6 +650,10 @@ export default {
           exchange,
           id: result.id,
           price: Tm.toFixed(trade),
+          metadata: {
+            id: result.id,
+            isActive: !result.matched,
+          },
         };
 
         return order;
