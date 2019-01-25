@@ -50,6 +50,7 @@ const OrdersQuery = ({ exchange, baseAsset, quoteAsset, children }) => (
       base: baseAsset,
       quote: quoteAsset,
     }}
+    fetchPolicy="no-cache"
   >
     {children}
   </Query>
@@ -105,17 +106,17 @@ export default ({ baseAsset, quoteAsset }) => {
         Object.keys(availableExchanges).map(([key]) => key).length
       ) {
         return setExchanges([]);
-      } else {
+      } 
         return setExchanges(Object.keys(availableExchanges));
-      }
-    } else {
+      
+    } 
       if (!selectedExchanges.includes(value)) {
         tempExchanges.push(value);
       } else {
         const index = selectedExchanges.indexOf(value);
         tempExchanges.splice(index, 1);
       }
-    }
+    
 
     return setExchanges(tempExchanges);
   };
