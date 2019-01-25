@@ -59,6 +59,7 @@ mutation executeMakeOrderMutation(
     type
     exchange
     metadata {
+      id
       isActive
     }
   }
