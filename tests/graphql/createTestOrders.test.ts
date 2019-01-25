@@ -39,29 +39,29 @@ describe('Create test orders', () => {
     );
 
     await makeOrderFromAccountOasisDex(master, matchingMarket, {
-      buy: Tm.createQuantity(weth, 0.6),
+      buy: Tm.createQuantity(weth, 0.06),
       sell: Tm.createQuantity(mln, 1),
     });
     await makeOrderFromAccountOasisDex(master, matchingMarket, {
-      buy: Tm.createQuantity(weth, 0.65),
+      buy: Tm.createQuantity(weth, 0.065),
       sell: Tm.createQuantity(mln, 1),
     });
     await makeOrderFromAccountOasisDex(master, matchingMarket, {
-      buy: Tm.createQuantity(weth, 0.7),
+      buy: Tm.createQuantity(weth, 0.07),
       sell: Tm.createQuantity(mln, 1),
     });
 
     await makeOrderFromAccountOasisDex(master, matchingMarket, {
       buy: Tm.createQuantity(mln, 1),
-      sell: Tm.createQuantity(weth, 0.5),
+      sell: Tm.createQuantity(weth, 0.05),
     });
     await makeOrderFromAccountOasisDex(master, matchingMarket, {
       buy: Tm.createQuantity(mln, 1),
-      sell: Tm.createQuantity(weth, 0.45),
+      sell: Tm.createQuantity(weth, 0.045),
     });
     await makeOrderFromAccountOasisDex(master, matchingMarket, {
       buy: Tm.createQuantity(mln, 1),
-      sell: Tm.createQuantity(weth, 0.4),
+      sell: Tm.createQuantity(weth, 0.04),
     });
   });
 });
