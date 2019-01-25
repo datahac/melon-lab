@@ -391,6 +391,7 @@ describe('Setup fund and trade on Oasis Dex', () => {
       context(),
       {
         id: `${orderToTake.id}`,
+        fillQuantity: '500000000000000000',
       },
     );
 
