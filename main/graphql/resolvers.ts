@@ -44,6 +44,13 @@ import { executeTakeKyber } from './mutators/executeTakeKyber';
 
 const stringifyObject = R.mapObjIndexed((value, key) => `${value}`);
 
+const exchangeMap = {
+  [Exchanges.ZeroEx]: 'RADAR_RELAY',
+  [Exchanges.MatchingMarket]: 'OASIS_DEX',
+  [Exchanges.KyberNetwork]: 'KYBER_NETWORK',
+  [Exchanges.Ethfinex]: 'ETHFINEX',
+};
+
 export default {
   DateTime,
   Query: {
@@ -151,21 +158,33 @@ export default {
       );
 
       const result = openOrders.map(order => {
+        const type = Tm.isEqual(denominationAsset, order.makerQuantity.token)
+          ? 'BID'
+          : 'ASK';
+
+        const trade =
+          type === 'BID'
+            ? Tm.createPrice(order.takerQuantity, order.makerQuantity)
+            : Tm.createPrice(order.makerQuantity, order.takerQuantity);
+
+        const volume = Tm.toFixed(trade.quote);
+        const price = Tm.toFixed(trade);
+        const exchange = exchangeMap[order.exchange];
+
         return {
-          id: openOrders.id,
-          trade: {},
+          id: order.id,
+          type,
+          trade,
+          volume,
+          price,
+          exchange,
+          metadata: {
+            id: order.id,
+          },
         };
       });
 
-      try {
-        console.log('POST CALL');
-
-        console.log(JSON.stringify({ openOrders }, null, 2));
-
-        return openOrders;
-      } catch (error) {
-        console.error(error);
-      }
+      return result;
     },
   },
   Ranking: {
