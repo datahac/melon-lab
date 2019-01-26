@@ -36,6 +36,11 @@ const query = gql`
       }
       type
       exchange
+      ... on OasisDexOrder {
+        metadata {
+          id
+        }
+      }
     }
   }
 `;
@@ -92,7 +97,7 @@ const AggregatedOrders = ({ baseAsset, quoteAsset, exchanges, children }) => (
   </Composer>
 );
 
-export default ({ baseAsset, quoteAsset }) => {
+export default ({ baseAsset, quoteAsset, isManager, setOrder }) => {
   const [selectedExchanges, setExchanges] = useState(
     Object.keys(availableExchanges),
   );
@@ -134,6 +139,8 @@ export default ({ baseAsset, quoteAsset }) => {
           availableExchanges={Object.entries(availableExchanges)}
           setExchange={updateExchanges}
           selectedExchanges={selectedExchanges}
+          isManager={isManager}
+          setOrder={setOrder}
         />
       )}
     </AggregatedOrders>

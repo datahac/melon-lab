@@ -6,10 +6,17 @@ import OrderBookTable from '~/components/OrderBookTable';
 
 import styles from './styles.css';
 
+export interface SetOrderProps {
+  id;
+  price;
+  quantity;
+  total;
+  type;
+}
+
 export interface OrderBookProps {
   isManager: boolean;
-  setSellOrder: (volume, exchange, subset, balance) => void;
-  setBuyOrder: (volume, exchange, subset, balance) => void;
+  setOrder: (args: SetOrderProps) => void;
   setExchange: (e) => void;
   selectedExchanges: any;
   availableExchanges: any;
@@ -26,13 +33,16 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
   selectedExchanges = ['OASIS_DEX'],
   availableExchanges = [],
   isManager = false,
+  setOrder = () => {},
 }) => {
-  const setSellOrder = index => {
-    console.log('TODO: setSellOrder', index);
+  const setSellOrder = id => {
+    const order = bids.find(b => b.id === id);
+    setOrder(order);
   };
 
-  const setBuyOrder = index => {
-    console.log('TODO: setBuyOrder', index);
+  const setBuyOrder = id => {
+    const order = asks.find(b => b.id === id);
+    setOrder(order);
   };
 
   return (

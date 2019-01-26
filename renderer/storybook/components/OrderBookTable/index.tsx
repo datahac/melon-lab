@@ -15,7 +15,7 @@ const OrderBookTable = ({ style, entries, onClickOrder, canTrade }) => {
 
   return (
     <div className={orderBookTableClassNames}>
-      <style jsx>{styles}</style>
+      <style jsx={true}>{styles}</style>
       <div className="orderbook-table__head">
         <div className="orderbook-table__head-row">
           <div className="orderbook-table__head-cell">
@@ -48,7 +48,7 @@ const OrderBookTable = ({ style, entries, onClickOrder, canTrade }) => {
             <div
               className="orderbook-table__body-row"
               key={order.id}
-              onClick={() => onClickOrder && onClickOrder(index)}
+              onClick={() => onClickOrder && onClickOrder(order.id)}
               style={{
                 cursor: canTrade ? 'pointer' : 'auto',
               }}

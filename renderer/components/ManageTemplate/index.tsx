@@ -1,6 +1,8 @@
 import React from 'react';
 import Composer from 'react-composer';
 import * as R from 'ramda';
+import * as Tm from '@melonproject/token-math';
+
 import { AccountConsumer } from '+/components/AccountContext';
 import { BalanceConsumer } from '+/components/BalanceContext';
 import { NetworkConsumer } from '+/components/NetworkContext';
@@ -16,6 +18,25 @@ import FundQuery from './data/fund';
 import HoldingsQuery from './data/holdings';
 import isSameAddress from '~/shared/utils/isSameAddress';
 import OpenOrdersContainer from '../OpenOrders';
+
+// A bid-order on the orderbook resolves to a buy from the fund
+const bidAskSellBuyMap = {
+  BID: 'Sell',
+  ASK: 'Buy',
+};
+
+export interface SetOrder {
+  // Exchange-aggregator ID
+  id: string;
+  exchange: string;
+  trade: Tm.PriceInterface;
+  metadata: {
+    // Oasis dex id
+    id: string;
+  };
+  // BID/ASK
+  type: string;
+}
 
 const Container = ({ address, children }) => {
   return (
@@ -41,17 +62,45 @@ const Container = ({ address, children }) => {
 export default class ManageTemplateContainer extends React.Component {
   state = {
     order: {
-      type: 'Buy',
-      strategy: 'Market',
+      // Order ID is set when clicking on order in orderbook
+      id: null,
+      exchange: 'OASIS_DEX',
       price: null,
       quantity: null,
+      strategy: 'Market',
       total: null,
-      exchange: 'OASIS_DEX',
+      type: 'Buy',
     },
   };
 
   render() {
     const { address, quoteAsset, baseAsset } = this.props;
+
+    const setOrder = ({ exchange, trade, metadata: { id }, type }) => {
+      if (exchange === 'OASIS_DEX') {
+        console.log({
+          id,
+          exchange: 'OASIS_DEX',
+          price: trade,
+          quantity: trade.base,
+          strategy: 'Market',
+          total: trade.quote,
+          type: bidAskSellBuyMap[type],
+        });
+
+        this.setState({
+          order: {
+            id,
+            exchange: 'OASIS_DEX',
+            price: trade,
+            quantity: trade.base,
+            strategy: 'Market',
+            total: trade.quote,
+            type: bidAskSellBuyMap[type],
+          },
+        });
+      }
+    };
 
     return (
       <Container address={address}>
@@ -122,6 +171,8 @@ export default class ManageTemplateContainer extends React.Component {
               OrderBookProps={{
                 quoteAsset,
                 baseAsset,
+                isManager,
+                setOrder,
               }}
               OpenOrders={OpenOrdersContainer}
               OpenOrdersProps={{
