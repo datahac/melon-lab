@@ -6,8 +6,11 @@ import {
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { onError } from 'apollo-link-error';
-import { createIpcLink } from 'graphql-transport-electron';
+import { IpcRenderer } from 'electron';
 import introspection from '~/introspection';
+
+const electron = !!JSON.parse(process.env.ELECTRON || 'true');
+const development = process.env.NODE_ENV === 'development';
 
 const createErrorLink = () => {
   return onError(({ graphQLErrors, networkError }) => {
@@ -40,15 +43,37 @@ const createErrorLink = () => {
 };
 
 export default withApollo(() => {
-  const ipc = global.ipcRenderer;
-  const ipcLink = ipc
-    ? createIpcLink({ ipc })
-    : new ApolloLink(() => {
-        return null;
-      });
+  const dataLink = (() => {
+    if (development && !electron) {
+      if (!!process.env.browser) {
+        const { WebSocketLink } = require('apollo-link-ws');
+        return new WebSocketLink({
+          uri: 'ws://localhost:3030',
+          options: {
+            reconnect: true,
+          },
+        });
+      }
+
+      const { HttpLink } = require('apollo-link-http');
+      return new HttpLink({ uri: 'http://localhost:3030' });
+    }
+
+    if (electron) {
+      const ipc = (global as any).ipcRenderer as IpcRenderer;
+      if (typeof ipc !== 'undefined') {
+        const { createIpcLink } = require('graphql-transport-electron');
+        return createIpcLink({ ipc });
+      }
+    }
+
+    return new ApolloLink(() => {
+      return null;
+    });
+  })();
 
   const errorLink = createErrorLink();
-  const link = ApolloLink.from([errorLink, ipcLink]);
+  const link = ApolloLink.from([errorLink, dataLink]);
   const cache = new InMemoryCache({
     addTypename: true,
     fragmentMatcher: new IntrospectionFragmentMatcher({

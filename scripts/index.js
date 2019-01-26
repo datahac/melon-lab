@@ -49,10 +49,23 @@ commander
   });
 
 commander
-  .command('dev')
-  .description('Runs the application in development mode.')
-  .action(async () => {
+  .command('dev [<component>]')
+  .description('Runs the given component (graphql/next/electron) in development mode.')
+  .action(async (component) => {
+    const mode = (() => {
+      switch (component) {
+        case 'graphql': return 'graphql';
+        case 'next': return 'next';
+        default: return 'electron';
+      }
+    })();
+
     defaultEnv('NODE_ENV', 'development');
+    defaultEnv('ELECTRON', `${mode === 'electron'}`);
+
+    if (mode === 'next') {
+      return exec('next dev renderer', { stdio: 'inherit' });
+    }
 
     const config = require('../main/webpack.config');
     const paths = Object
@@ -61,7 +74,7 @@ commander
 
     try {
       await new Promise((resolve, reject) => {
-        webpack(config).watch({}, R.once((error, stats) => {
+        webpack(config).watch({}, R.once((error) => {
           if (error) {
             reject(error);
           }
@@ -71,11 +84,20 @@ commander
         }));
       });
 
-      nodemon({
-        script: paths[0],
-        watch: paths,
-        exec: 'electron',
-      }).on('quit', process.exit);
+      await new Promise((resolve, reject) => {
+        nodemon({
+          script: paths[0],
+          watch: paths,
+          exec: mode === 'electron' ? 'electron' : 'node',
+        })
+        .on('quit', process.exit)
+        .on('start', () => {
+          resolve();
+        })
+        .on('crash', () => {
+          reject(new Error('Nodemon has crashed.'));
+        })
+      });
     }
     catch (error) {
       console.error(error);

@@ -1,9 +1,12 @@
 import { constructEnvironment } from '@melonproject/protocol';
 import { withDeployment } from '@melonproject/protocol/lib/utils/environment/withDeployment';
-import { Tracks } from '@melonproject/protocol/lib/utils/environment/Environment';
+import {
+  Tracks,
+  CurriedLogger,
+} from '@melonproject/protocol/lib/utils/environment/Environment';
 import Wallet from 'ethers-wallet';
 
-export const getEnvironment = logger => {
+export const getEnvironment = (logger?: CurriedLogger) => {
   const environment = constructEnvironment({
     logger,
     endpoint: process.env.ENDPOINT,

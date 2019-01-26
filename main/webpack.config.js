@@ -1,18 +1,21 @@
 const path = require('path');
 const find = require('find-up');
-const webpack = require('webpack');
 const externals = require('webpack-node-externals');
 const Dotenv = require('dotenv-webpack');
 const FriendlyErrors = require('friendly-errors-webpack-plugin');
 
+const electron = !!JSON.parse(process.env.ELECTRON || 'true');
+
 module.exports = {
   mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
   stats: 'errors-only',
-  target: 'electron-main',
+  target: electron ? 'electron-main' : 'node',
   context: path.resolve(__dirname),
-  entry: {
+  entry: electron ? {
     index: './index.ts',
     preload: './preload.ts',
+  } : {
+    server: './server.ts',
   },
   output: {
     path: path.resolve(__dirname, '..', 'build', 'main'),
@@ -58,8 +61,8 @@ module.exports = {
     minimize: false,
     noEmitOnErrors: true,
   },
-  node: {
+  node: electron ? {
     __dirname: false,
     __filename: false
-  },
+  } : {},
 };

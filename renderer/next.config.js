@@ -4,13 +4,14 @@ const Dotenv = require('dotenv-webpack');
 
 // The path to the graphql schema.
 const schema = path.resolve(__dirname, '..', 'main', 'graphql', 'schema.gql');
+const electron = !!JSON.parse(process.env.ELECTRON || 'true');
 
 module.exports = require('@zeit/next-typescript')({
   exportPathMap: () => ({
     '/': { page: '/' },
   }),
   webpack: (config, options) => {
-    config.target = 'electron-renderer';
+    config.target = electron ? 'electron-renderer' : 'web';
     config.devtool = false;
 
     config.resolve.alias = Object.assign({}, config.resolve.alias || {}, {
@@ -34,12 +35,14 @@ module.exports = require('@zeit/next-typescript')({
     config.module.exprContextCritical = false;
     config.module.rules.push({
       test: /\.(graphql|gql)$/,
+      // Only target files from the renderer.
       include: path.resolve(__dirname),
       loader: 'graphql-tag/loader',
     });
 
     config.module.rules.push({
       test: /\.(graphql|gql)$/,
+      // Only target the graphql schema.
       include: schema,
       loader: require.resolve('./introspect.js'),
     });

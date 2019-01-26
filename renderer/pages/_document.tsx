@@ -2,10 +2,11 @@ import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
 import flush from 'styled-jsx/server';
 
-const csp =
-  process.env.NODE_ENV === 'development'
+const csp = !!process.env.browser
+  ? process.env.NODE_ENV === 'development'
     ? `default-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src data: http://localhost:8000;`
-    : `default-src 'self' 'unsafe-inline'; font-src data: file:;`;
+    : `default-src 'self' 'unsafe-inline'; font-src data: file:;`
+  : null;
 
 export default class MyDocument extends Document {
   static getInitialProps(context) {
@@ -24,7 +25,9 @@ export default class MyDocument extends Document {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
-          <meta httpEquiv="Content-Security-Policy" content={csp} />
+          {csp ? (
+            <meta httpEquiv="Content-Security-Policy" content={csp} />
+          ) : null}
           <meta name="theme-color" content="#000000" />
           <link rel="shortcut icon" href="/static/images/favicon.png" />
         </Head>
