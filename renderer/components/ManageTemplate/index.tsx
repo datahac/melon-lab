@@ -15,6 +15,7 @@ import OrderBook from '+/components/OrderBook';
 import FundQuery from './data/fund';
 import HoldingsQuery from './data/holdings';
 import isSameAddress from '~/shared/utils/isSameAddress';
+import OpenOrdersContainer from '../OpenOrders';
 
 const Container = ({ address, children }) => {
   return (
@@ -122,12 +123,13 @@ export default class ManageTemplateContainer extends React.Component {
                 quoteAsset,
                 baseAsset,
               }}
-              OpenOrders={() => null}
-              OpenOrdersProps={
-                {
-                  // TODO: Re-add this.
-                }
-              }
+              OpenOrders={OpenOrdersContainer}
+              OpenOrdersProps={{
+                address,
+                isManager,
+                canInteract: capabibility && capabibility.canInteract,
+                // TODO: Re-add this.
+              }}
               RecentTrades={() => null}
               RecentTradesProps={
                 {

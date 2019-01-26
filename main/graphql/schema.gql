@@ -129,6 +129,7 @@ type OasisDexOrderMetadata {
   taker: String
   isActive: Boolean!
   exchangeContractAddress: String
+  timestamp: String!
 }
 
 type Price {

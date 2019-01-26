@@ -178,8 +178,10 @@ export default {
           volume,
           price,
           exchange,
-          metadata: {
+          timestamp: order.timestamp,
+          original: {
             id: order.id,
+            timestamp: order.timestamp,
           },
         };
       });

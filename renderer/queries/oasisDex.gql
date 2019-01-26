@@ -117,3 +117,44 @@ mutation executeTakeOasisDexOrderMutation(
     exchange
   }
 }
+
+mutation estimateCancelOasisDexOrderMutation(
+  $id: String!
+  $buyToken: String!
+  $sellToken: String!
+) {
+  estimate: estimateCancelOrder(
+    id: $id
+    buyToken: $buyToken
+    sellToken: $sellToken
+    exchange: OASIS_DEX
+  ) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation executeCancelOasisDexOrderMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+) {
+  execute: executeCancelOrder(
+    exchange: OASIS_DEX
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}

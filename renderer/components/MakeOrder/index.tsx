@@ -1,12 +1,11 @@
 import ModalTransaction from '+/components/ModalTransaction';
-import { withRouter } from 'next/router';
 import React from 'react';
 import {
   estimateMakeOrderMutation,
   executeMakeOrderMutation,
 } from '~/queries/oasisDex.gql';
 
-export default withRouter(props => (
+export default props => (
   <ModalTransaction
     text="The following method on the Melon Smart Contracts will be executed: makeOrder"
     open={!!props.values && props.values.strategy === 'Limit'}
@@ -47,4 +46,4 @@ export default withRouter(props => (
       props.setOrderFormValues(null);
     }}
   />
-));
+);

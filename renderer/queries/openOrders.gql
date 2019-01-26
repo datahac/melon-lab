@@ -17,5 +17,10 @@ query openOrdersQuery($fundAddress: String!) {
     }
     type
     exchange
+    ... on OasisDexOrder {
+      metadata {
+        timestamp
+      }
+    }
   }
 }

@@ -27,14 +27,14 @@ export interface Order {
 
 export interface OpenOrdersProps {
   isManager?: boolean;
-  isReadyToTrade?: boolean;
+  canInteract?: boolean;
   onClick: (id, buySymbol, sellSymbol) => void;
   orders?: Order[];
 }
 
 export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
   isManager,
-  isReadyToTrade,
+  canInteract,
   onClick,
   orders = [],
 }) => {
@@ -51,7 +51,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
 
   return (
     <div className="open-orders">
-      <style jsx>{styles}</style>
+      <style jsx={true}>{styles}</style>
       <div className="open-orders__table-wrap">
         {orders.length > 0 ? (
           <Table>
@@ -75,7 +75,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                     <Row key={order.id} size={isManager && 'small'}>
                       <CellBody noPadding={false}>
                         {format(
-                          parseInt(order.timestamp),
+                          parseInt(order.timestamp) * 1000,
                           'DD. MMM YYYY HH:mm',
                         )}
                       </CellBody>
@@ -109,7 +109,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                                 order.sellSymbol,
                               )
                             }
-                            disabled={!isReadyToTrade}
+                            disabled={!canInteract}
                           >
                             Cancel
                           </Button>
