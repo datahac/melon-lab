@@ -78,16 +78,6 @@ export default class ManageTemplateContainer extends React.Component {
 
     const setOrder = ({ exchange, trade, metadata: { id }, type }) => {
       if (exchange === 'OASIS_DEX') {
-        console.log({
-          id,
-          exchange: 'OASIS_DEX',
-          price: trade,
-          quantity: trade.base,
-          strategy: 'Market',
-          total: trade.quote,
-          type: bidAskSellBuyMap[type],
-        });
-
         this.setState({
           order: {
             id,
