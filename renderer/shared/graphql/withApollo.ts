@@ -45,7 +45,7 @@ const createErrorLink = () => {
 export default withApollo(() => {
   const dataLink = (() => {
     if (development && !electron) {
-      if (!!process.env.browser) {
+      if (!!process.browser) {
         const { WebSocketLink } = require('apollo-link-ws');
         return new WebSocketLink({
           uri: 'ws://localhost:3030',

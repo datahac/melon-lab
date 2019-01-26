@@ -13,7 +13,7 @@ export interface WalletOverviewProps {
   loading?: boolean;
   isComplete?: boolean;
   balances?: {
-    eth?: string;
+    eth?: Tm.QuantityInterface;
   };
 }
 
@@ -54,9 +54,9 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
 
             {associatedFund && !isComplete && (
               <Fragment>
-                {balances && (!balances.eth || Tm.isZero(balances.eth)) ? (
+                {balances && !balances.eth ? (
                   <InsufficientFunds
-                    eth={balances.eth}
+                    eth={balances.eth ? Tm.toFixed(balances.eth) : '0.000000'}
                     address={currentAddress}
                   />
                 ) : (
@@ -84,9 +84,9 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
 
             {!associatedFund && (
               <Fragment>
-                {balances && (!balances.eth || Tm.isZero(balances.eth)) ? (
+                {balances && !balances.eth ? (
                   <InsufficientFunds
-                    eth={balances.eth}
+                    eth={balances.eth ? Tm.toFixed(balances.eth) : '0.000000'}
                     address={currentAddress}
                   />
                 ) : (

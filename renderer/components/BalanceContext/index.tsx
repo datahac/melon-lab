@@ -6,6 +6,7 @@ import { AccountConsumer } from '+/components/AccountContext';
 
 const defaults = {
   eth: null,
+  weth: null,
 };
 
 export const BalanceContext = React.createContext(defaults);
@@ -20,7 +21,7 @@ export const balanceQuery = gql`
         address
       }
     }
-    mln: balance(address: $account, symbol: "MLN") {
+    weth: balance(address: $account, symbol: "WETH") {
       quantity
       token {
         decimals
@@ -75,6 +76,7 @@ export class BalanceProvider extends React.PureComponent {
               ssr={false}
               errorPolicy="all"
               children={render}
+              fetchPolicy="no-cache"
             />
           ),
         ]}
@@ -87,6 +89,7 @@ export class BalanceProvider extends React.PureComponent {
                 variables: { account, symbol },
                 updateQuery: (previous, { subscriptionData: result }) => {
                   return {
+                    ...defaults,
                     ...previous,
                     [field]: result.data.balance,
                   };
@@ -94,7 +97,10 @@ export class BalanceProvider extends React.PureComponent {
               });
             };
 
-            const subscriptions = [subscribeToToken('ETH', 'eth')];
+            const subscriptions = [
+              subscribeToToken('ETH', 'eth'),
+              subscribeToToken('WETH', 'weth'),
+            ];
 
             return () => {
               subscriptions.forEach(unsubscribe => {
