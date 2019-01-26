@@ -36,5 +36,9 @@ import { getEnvironment, getWallet } from './graphql/environment';
   });
 
   apollo.installSubscriptionHandlers(server);
-  server.listen(3030);
+
+  server.listen(3030, () => {
+    // tslint:disable-next-line:no-console
+    console.log(`Server is running on http://localhost:3030`);
+  });
 })();

@@ -64,7 +64,12 @@ commander
     defaultEnv('ELECTRON', `${mode === 'electron'}`);
 
     if (mode === 'next') {
-      return exec('next dev renderer', { stdio: 'inherit' });
+      try {
+        return exec('next dev renderer', { stdio: 'inherit' });
+      }
+      catch (error) {
+        process.exit(0);
+      }
     }
 
     const config = require('../main/webpack.config');
@@ -100,8 +105,7 @@ commander
       });
     }
     catch (error) {
-      console.error(error);
-      process.exit(1);
+      process.exit(0);
     }
   });
 
