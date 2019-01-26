@@ -41,12 +41,10 @@ export default class OpenOrdersContainer extends React.Component {
                 {...this.props}
                 orders={orders}
                 loading={props.loading}
-                onClick={(orderId, makerAssetSymbol, takerAssetSymbol) => {
+                onClick={orderId => {
                   this.setState({
                     selectedOrder: {
                       id: orderId,
-                      buyToken: makerAssetSymbol,
-                      sellToken: takerAssetSymbol,
                     },
                   });
                 }}

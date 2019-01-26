@@ -785,55 +785,53 @@ export default {
 
       return res;
     },
-    estimateCancelOrder: async (
+    estimateCancelOasisDexOrder: async (
       _,
-      { from, exchange, id, buyToken, sellToken },
+      { from, id },
       { environment, loaders },
     ) => {
       const fund = await loaders.fundAddressFromManager.load(from);
       const { tradingAddress } = await loaders.fundRoutes.load(fund);
       const env = withDifferentAccount(environment, new Tm.Address(from));
+      const oasisDex = R.path(
+        ['deployment', 'thirdPartyContracts', 'exchanges', 'matchingMarket'],
+        env,
+      );
 
-      if (exchange === 'OASIS_DEX') {
-        const makerAsset = new Tm.Address(
-          getTokenBySymbol(env, sellToken).address || '',
-        );
-        const takerAsset = new Tm.Address(
-          getTokenBySymbol(env, buyToken).address || '',
-        );
+      const order = await getOasisDexOrder(env, oasisDex, { id });
 
-        const result = await cancelOasisDexOrder.prepare(env, tradingAddress, {
-          id,
-          maker: tradingAddress,
-          makerAsset,
-          takerAsset,
-        });
+      // const makerAsset = new Tm.Address(
+      //   getTokenBySymbol(env, sellToken).address || '',
+      // );
+      // const takerAsset = new Tm.Address(
+      //   getTokenBySymbol(env, buyToken).address || '',
+      // );
 
-        return result && result.rawTransaction;
-      }
+      const result = await cancelOasisDexOrder.prepare(env, tradingAddress, {
+        id,
+        maker: tradingAddress,
+        makerAsset: order.sell.token.address,
+        takerAsset: order.buy.token.address,
+      });
 
-      throw new Error(`Cancel order not implemented for ${exchange}`);
+      return result && result.rawTransaction;
     },
-    executeCancelOrder: async (
+    executeCancelOasisDexOrder: async (
       _,
-      { from, signed, exchange },
+      { from, signed },
       { environment, loaders },
     ) => {
       const fund = await loaders.fundAddressFromManager.load(from);
       const { tradingAddress } = await loaders.fundRoutes.load(fund);
       const env = withDifferentAccount(environment, new Tm.Address(from));
 
-      if (exchange === 'OASIS_DEX') {
-        const result = await cancelOasisDexOrder.send(
-          env,
-          tradingAddress,
-          signed.rawTransaction,
-        );
+      const result = await cancelOasisDexOrder.send(
+        env,
+        tradingAddress,
+        signed.rawTransaction,
+      );
 
-        return !!result;
-      }
-
-      throw new Error(`Cancel order not implemented for ${exchange}`);
+      return !!result;
     },
     create0xOrder: async (
       _,

@@ -501,24 +501,11 @@ type Mutation {
     @account
     @sign
 
-  """
-  Estimates the number of gas units required for the "cancel order" transaction.
-  """
-  estimateCancelOrder(
-    exchange: ExchangeEnum!
-    id: String!
-    buyToken: String!
-    sellToken: String!
-  ): UnsignedTransaction @account
+  estimateCancelOasisDexOrder(id: String!): UnsignedTransaction @account
 
-  """
-  Executes the "cancel order" transaction with the given gas price per unit.
-  """
-  executeCancelOrder(
-    "Unsigned transaction data."
-    unsigned: UnsignedTransactionInput!
-    exchange: ExchangeEnum!
-  ): Boolean @account @sign
+  executeCancelOasisDexOrder(unsigned: UnsignedTransactionInput!): Boolean
+    @account
+    @sign
 
   estimateTakeKyber(
     buyToken: String!

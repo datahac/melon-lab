@@ -1,20 +1,20 @@
 import ModalTransaction from '../ModalTransaction';
 
 import {
-  estimateCancelOasisDexOrderMutation,
-  executeCancelOasisDexOrderMutation,
-} from '~/queries/oasisDex.gql';
+  EstimateCancelOasisDexOrderMutation,
+  ExecuteCancelOasisDexOrderMutation,
+} from '~/queries/cancelOasisDexOrder.gql';
 
 export default props => (
   <ModalTransaction
     text="The following method on the Melon Smart Contracts will be executed: makeOrder"
     open={!!props.values}
     estimate={{
-      mutation: estimateCancelOasisDexOrderMutation,
+      mutation: EstimateCancelOasisDexOrderMutation,
       variables: () => props.values,
     }}
     execute={{
-      mutation: executeCancelOasisDexOrderMutation,
+      mutation: ExecuteCancelOasisDexOrderMutation,
       variables: (_, transaction) => ({
         ...transaction,
       }),
