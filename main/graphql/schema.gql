@@ -183,6 +183,7 @@ type Fund {
   denominationAsset: Token
   nativeAsset: Token
   holdings: [Holding]
+  openOrders: [Order]
   sharePrice: Price
   totalSupply: Quantity
   personalStake(investor: String): Quantity
@@ -331,6 +332,7 @@ type Query {
   fund(address: String!): Fund
   rankings: [Ranking]
   orders(exchange: ExchangeEnum!, base: String!, quote: String!): [Order]
+  openOrders(fundAddress: String): [Order]
 
   "Loads the current routes for fund creation for a fund manager address."
   routes("The address of the fund manager." manager: String): Routes

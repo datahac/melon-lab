@@ -25,6 +25,7 @@ import {
   FunctionSignatures,
   getExpectedRate,
   getOasisDexOrder,
+  getOpenOrders,
   getTokenBySymbol,
   getWrapperLock,
   makeOasisDexOrder,
@@ -138,6 +139,33 @@ export default {
       });
 
       return rate;
+    },
+    openOrders: async (_, { fundAddress }, { environment, loaders }) => {
+      const {
+        tradingAddress,
+        accountingAddress,
+      } = await loaders.fundRoutes.load(fundAddress);
+      const openOrders = await getOpenOrders(environment, tradingAddress);
+      const denominationAsset = await loaders.fundDenominationAsset.load(
+        accountingAddress,
+      );
+
+      const result = openOrders.map(order => {
+        return {
+          id: openOrders.id,
+          trade: {},
+        };
+      });
+
+      try {
+        console.log('POST CALL');
+
+        console.log(JSON.stringify({ openOrders }, null, 2));
+
+        return openOrders;
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   Ranking: {

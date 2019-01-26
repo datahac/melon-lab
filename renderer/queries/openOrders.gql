@@ -1,0 +1,21 @@
+query openOrdersQuery($fundAddress: String!) {
+  openOrders(fundAddress: $fundAddress) {
+    id
+    price
+    volume
+    trade {
+      base {
+        token {
+          symbol
+        }
+      }
+      quote {
+        token {
+          symbol
+        }
+      }
+    }
+    type
+    exchange
+  }
+}
