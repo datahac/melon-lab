@@ -134,7 +134,8 @@
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
     "webpack-node-externals": "^1.7.2",
-    "websocket": "^1.0.28"
+    "websocket": "^1.0.28",
+    "winston": "^3.2.0"
   },
   "resolutions": {
     "styled-jsx": "^3.2.0"
