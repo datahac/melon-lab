@@ -41,6 +41,7 @@ import sameBlock from './utils/sameBlock';
 import toAsyncIterator from './utils/toAsyncIterator';
 import { estimateTakeKyber } from './mutators/estimateTakeKyber';
 import { executeTakeKyber } from './mutators/executeTakeKyber';
+import { getToken } from '@melonproject/protocol/lib/contracts/dependencies/token/calls/getToken';
 
 const stringifyObject = R.mapObjIndexed((value, key) => `${value}`);
 
@@ -455,15 +456,19 @@ export default {
       { environment, loaders },
     ) => {
       const { tokens } = environment.deployment.thirdPartyContracts;
-      const { participationAddress } = await loaders.fundRoutes.load(
-        fundAddress,
-      );
+      const {
+        participationAddress,
+        sharesAddress,
+      } = await loaders.fundRoutes.load(fundAddress);
       const nativeToken = tokens.find(token => {
         return token.symbol === 'WETH';
       });
 
+      const fundToken = await getToken(environment, sharesAddress);
+
       const params = {
         investmentAmount: Tm.createQuantity(nativeToken, investmentAmount),
+        requestedShares: Tm.createQuantity(fundToken, investmentAmount),
       };
 
       const env = withDifferentAccount(environment, new Tm.Address(from));
