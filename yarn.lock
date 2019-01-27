@@ -1652,7 +1652,7 @@
   dependencies:
     events "^3.0.0"
 
-"@melonproject/exchange-aggregator@^0.1.7":
+"@melonproject/exchange-aggregator@0.1.7":
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.1.7.tgz#ac3b88a3e9a1749ae26b0e537507234576230dce"
   integrity sha512-Y5Z60inTFqKxKrgX+5O/u+v+VVoHpzYB6blMOkR2X/GZpj27lgEqt5gmJw4AUb+Cw0VIdanWVmd4efnZIlGEvA==
@@ -1672,10 +1672,10 @@
   dependencies:
     source-map-support "^0.5.3"
 
-"@melonproject/protocol@^0.9.0-alpha.25":
-  version "0.9.7"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.7.tgz#33aebfefcc360c6158ae8eae45b8f21c8a28f208"
-  integrity sha512-zj77046Tyq6cuS8PAade+7n/v1WyV5C2xzKf4R85yo8zzTg2rICk/zzh8opf+NNpL6db3cuEHPZvIYMVfbYh7g==
+"@melonproject/protocol@0.9.18":
+  version "0.9.18"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.18.tgz#63379c330903d004f2228bfdbf4bfc5236b02ff0"
+  integrity sha512-Y5Z/QSi+vTPJukLEyb4tar+MFEZVeUJs+nYxPAYgM1qOweE5nbrDdxHTzsY6ael+M064AS+hFmCPPbilwI0Mfw==
   dependencies:
     "@0x/contract-wrappers" "^4.1.1"
     "@0x/order-utils" "^3.0.2"
@@ -1694,10 +1694,10 @@
     yup "^0.26.6"
     zen-observable-ts "^0.8.10"
 
-"@melonproject/protocol@^0.9.7":
-  version "0.9.14"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.14.tgz#dadbffff7778e60158dc8f86c24960c3d3c51b62"
-  integrity sha512-8ILvjVi9/xpqhu4UbSM6BpxwO6sR7kk3c+1lNcUgeXiIHDGLhGwssZvI2SlHl3opSyqvaASrMlcBxbRL02LrDg==
+"@melonproject/protocol@^0.9.0-alpha.25":
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.7.tgz#33aebfefcc360c6158ae8eae45b8f21c8a28f208"
+  integrity sha512-zj77046Tyq6cuS8PAade+7n/v1WyV5C2xzKf4R85yo8zzTg2rICk/zzh8opf+NNpL6db3cuEHPZvIYMVfbYh7g==
   dependencies:
     "@0x/contract-wrappers" "^4.1.1"
     "@0x/order-utils" "^3.0.2"
