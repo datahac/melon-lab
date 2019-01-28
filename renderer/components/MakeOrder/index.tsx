@@ -11,7 +11,7 @@ export default props => (
     open={!!props.values && props.values.strategy === 'Limit'}
     estimate={{
       mutation: estimateMakeOrderMutation,
-      variables: () => ({
+      variables: props.values && {
         exchange: props.values.exchange,
         buyToken:
           props.values.type === 'Buy'
@@ -29,14 +29,13 @@ export default props => (
           props.values.type === 'Buy'
             ? props.values.total.quantity.toString()
             : props.values.quantity.quantity.toString(),
-      }),
+      },
     }}
     execute={{
       mutation: executeMakeOrderMutation,
-      variables: (_, transaction) => ({
-        ...transaction,
+      variables: props.values && {
         exchange: props.values.exchange,
-      }),
+      },
       refetchQueries: () => ['OrdersQuery', 'OpenOrdersQuery'],
       onCompleted: () => {
         props.resetForm();

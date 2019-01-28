@@ -12,17 +12,18 @@ export default props => (
     open={!!props.values && props.values.strategy === 'Market'}
     estimate={{
       mutation: estimateTakeOasisDexOrderMutation,
-      variables: () => ({
-        id: props.values.id,
-        fillQuantity:
-          props.values.type === 'Buy'
-            ? props.values.total.quantity.toString()
-            : props.values.quantity.quantity.toString(),
-      }),
+      variables: !!props.values
+        ? {
+            id: props.values.id,
+            fillQuantity:
+              props.values.type === 'Buy'
+                ? props.values.total.quantity.toString()
+                : props.values.quantity.quantity.toString(),
+          }
+        : {},
     }}
     execute={{
       mutation: executeTakeOasisDexOrderMutation,
-      variables: (_, transaction) => transaction,
       refetchQueries: () => ['HoldingsQuery', 'OrdersQuery', 'OpenOrdersQuery'],
       onCompleted: () => {
         props.resetForm();

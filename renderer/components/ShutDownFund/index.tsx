@@ -45,16 +45,15 @@ export default props => (
     open={props.shutDown}
     estimate={{
       mutation: estimateShutDownFundMutation,
-      variables: () => ({
+      variables: {
         fundAddress: props.fundAddress,
-      }),
+      },
     }}
     execute={{
       mutation: executeShutDownFundMutation,
-      variables: (_, transaction) => ({
-        ...transaction,
+      variables: {
         fundAddress: props.fundAddress,
-      }),
+      },
       update: cache => {
         props.update(cache, {
           fund: {

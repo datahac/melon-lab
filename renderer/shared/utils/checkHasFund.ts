@@ -13,8 +13,8 @@ export default apolloClient =>
     .then(async ({ data }) => {
       if (data && !!data.associatedFund) {
         const fundData = await apolloClient.query({
-          variables: {
-            address: data && data.associatedFund,
+          variables: data && {
+            address: data.associatedFund,
           },
           query: gql`
             query FundQuery($address: String!) {

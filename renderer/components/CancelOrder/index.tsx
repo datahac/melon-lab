@@ -7,17 +7,14 @@ import {
 
 export default props => (
   <ModalTransaction
-    text="The following method on the Melon Smart Contracts will be executed: makeOrder"
+    text="The following method on the Melon Smart Contracts will be executed: cancelOrder"
     open={!!props.values}
     estimate={{
       mutation: EstimateCancelOasisDexOrderMutation,
-      variables: () => props.values,
+      variables: props.values,
     }}
     execute={{
       mutation: ExecuteCancelOasisDexOrderMutation,
-      variables: (_, transaction) => ({
-        ...transaction,
-      }),
       refetchQueries: () => ['OrdersQuery', 'OpenOrdersQuery'],
       onCompleted: () => {
         props.unset();

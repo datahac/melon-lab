@@ -515,7 +515,6 @@ export default {
       };
 
       const env = withDifferentAccount(environment, new Tm.Address(from));
-
       const result = await approveTransfer.prepare(env, params);
       return result && result.rawTransaction;
     },
@@ -813,8 +812,8 @@ export default {
       // );
 
       const result = await cancelOasisDexOrder.prepare(env, tradingAddress, {
-        id,
-        maker: tradingAddress,
+        id: id.toString(),
+        maker: tradingAddress.toString(),
         makerAsset: order.sell.token.address,
         takerAsset: order.buy.token.address,
       });
@@ -1026,10 +1025,6 @@ export default {
             },
             {
               method: FunctionSignatures.makeOrder,
-              policy: current.address,
-            },
-            {
-              method: FunctionSignatures.cancelOrder,
               policy: current.address,
             },
             ...carry,

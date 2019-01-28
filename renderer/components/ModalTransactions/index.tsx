@@ -29,8 +29,13 @@ const WithFormModal = compose(
     }
 
     componentDidUpdate(prevProps) {
-      if (process.browser && this.props.open && !prevProps.open) {
-        this.props.estimate();
+      if (process.browser && this.props.open) {
+        if (
+          !prevProps.open ||
+          !R.equals(this.props.current, prevProps.current)
+        ) {
+          this.props.estimate();
+        }
       }
     }
 
@@ -74,83 +79,65 @@ const WithFormModal = compose(
 export default class ModalTransactions extends React.Component {
   render() {
     const estimations = this.props.estimations.filter(
-      estimateMutation => !estimateMutation.isComplete,
+      mutation => !mutation.isComplete,
     );
 
-    const executions = this.props.executions.filter(
-      (executeMutation, index) =>
-        !this.props.estimations[index].isComplete && executeMutation,
-    );
+    const offset = this.props.estimations.length - estimations.length;
+    const estimation = R.head(estimations);
+    const execution = R.head(this.props.executions.slice(offset, offset + 1));
 
     return (
-      <Composer
-        components={R.flatten(R.zip(estimations, executions)).map(mutation => {
-          return ({ render }) => (
-            <Mutation
-              {...R.omit(['variables', 'name', 'isComplete'], mutation)}
-            >
-              {(a, b) => render([a, b])}
-            </Mutation>
-          );
-        })}
-      >
-        {results => {
-          const estimate = !R.isEmpty(results) && results[0][0];
-          const estimateProps = !R.isEmpty(results) && results[0][1];
-          const execute = !R.isEmpty(results) && results[1][0];
-          const executeProps = !R.isEmpty(results) && results[1][1];
-          const transaction = R.path(['data', 'estimate'], estimateProps);
+      (estimation && execution && (
+        <Composer
+          components={[
+            ({ render }) => (
+              <Mutation {...R.omit(['name', 'isComplete'], estimation)}>
+                {(a, b) => render([a, b])}
+              </Mutation>
+            ),
+            ({ results: [[estimate, estimateProps]], render }) => (
+              <Mutation
+                {...execution}
+                variables={{
+                  ...R.path(['data', 'estimate'], estimateProps),
+                  ...execution.variables,
+                }}
+              >
+                {(a, b) => render([a, b])}
+              </Mutation>
+            ),
+          ]}
+        >
+          {([[estimate, estimateProps], [execute, executeProps]]) => {
+            const transaction = R.path(['data', 'estimate'], estimateProps);
+            const price = R.prop('gasPrice', transaction);
+            const fees = [
+              {
+                // TODO: Does this still have to be a list?
+                gasLimit: R.prop('gas', transaction),
+              },
+            ];
 
-          const doEstimate = () => {
-            const variables = R.pathOr(
-              () => undefined,
-              ['variables'],
-              estimations[0],
-            )(estimations[0]);
-
-            estimate({
-              variables,
-            });
-          };
-
-          const doExecute = gasPrice => {
-            const variables = R.pathOr(
-              (_, transaction) => transaction,
-              ['variables'],
-              executions[0],
-            )(executions[0], {
-              ...transaction,
-              gasPrice,
-            });
-
-            execute({
-              variables,
-            });
-          };
-
-          const fees = [
-            {
-              gasLimit: R.prop('gas', transaction),
-            },
-          ];
-
-          return (
-            <WithFormModal
-              handleCancel={this.props.handleCancel}
-              error={estimateProps.error || executeProps.errors}
-              loading={estimateProps.loading || executeProps.loading}
-              gasPrice={R.path(['data', 'estimate', 'gasPrice'], estimateProps)}
-              text={this.props.text}
-              open={this.props.open}
-              fees={fees}
-              estimate={doEstimate}
-              execute={doExecute}
-              estimations={this.props.estimations}
-              step={!R.isEmpty(estimations) && estimations[0].name}
-            />
-          );
-        }}
-      </Composer>
+            return (
+              <WithFormModal
+                handleCancel={this.props.handleCancel}
+                error={estimateProps.error || executeProps.errors}
+                loading={estimateProps.loading || executeProps.loading}
+                gasPrice={price}
+                text={this.props.text}
+                open={this.props.open}
+                fees={fees}
+                estimate={estimate}
+                execute={execute}
+                estimations={this.props.estimations}
+                current={estimation}
+                step={!R.isEmpty(estimations) && estimations[0].name}
+              />
+            );
+          }}
+        </Composer>
+      )) ||
+      null
     );
   }
 }

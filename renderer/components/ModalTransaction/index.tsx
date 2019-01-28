@@ -28,8 +28,13 @@ const WithFormModal = compose(
     }
 
     componentDidUpdate(prevProps) {
-      if (process.browser && this.props.open && !prevProps.open) {
-        this.props.estimate();
+      if (process.browser && this.props.open) {
+        if (
+          !prevProps.open ||
+          !R.equals(prevProps.current, this.props.current)
+        ) {
+          this.props.estimate();
+        }
       }
     }
 
@@ -71,12 +76,18 @@ export default class ModalTransaction extends React.Component {
       <Composer
         components={[
           ({ render }) => (
-            <Mutation {...R.omit(['variables'], this.props.estimate)}>
+            <Mutation {...this.props.estimate}>
               {(a, b) => render([a, b])}
             </Mutation>
           ),
-          ({ render }) => (
-            <Mutation {...R.omit(['variables'], this.props.execute)}>
+          ({ results: [[estimate, estimateProps]], render }) => (
+            <Mutation
+              {...this.props.execute}
+              variables={{
+                ...R.path(['data', 'estimate'], estimateProps),
+                ...this.props.execute.variables,
+              }}
+            >
               {(a, b) => render([a, b])}
             </Mutation>
           ),
@@ -84,34 +95,7 @@ export default class ModalTransaction extends React.Component {
       >
         {([[estimate, estimateProps], [execute, executeProps]]) => {
           const transaction = R.path(['data', 'estimate'], estimateProps);
-
-          const doEstimate = () => {
-            const variables = R.pathOr(
-              () => undefined,
-              ['estimate', 'variables'],
-              this.props,
-            )(this.props);
-
-            estimate({
-              variables,
-            });
-          };
-
-          const doExecute = gasPrice => {
-            const variables = R.pathOr(
-              (props, transaction) => transaction,
-              ['execute', 'variables'],
-              this.props,
-            )(this.props, {
-              ...transaction,
-              gasPrice,
-            });
-
-            execute({
-              variables,
-            });
-          };
-
+          const price = R.prop('gasPrice', transaction);
           const fees = [
             {
               // TODO: Does this still have to be a list?
@@ -124,12 +108,13 @@ export default class ModalTransaction extends React.Component {
               handleCancel={this.props.handleCancel}
               error={estimateProps.error || executeProps.error}
               loading={estimateProps.loading || executeProps.loading}
-              gasPrice={R.path(['data', 'estimate', 'gasPrice'], estimateProps)}
+              gasPrice={price}
               text={this.props.text}
               open={this.props.open}
               fees={fees}
-              estimate={doEstimate}
-              execute={doExecute}
+              current={this.props.estimate}
+              estimate={estimate}
+              execute={execute}
             />
           );
         }}

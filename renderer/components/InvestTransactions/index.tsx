@@ -21,59 +21,56 @@ export default withRouter(props => (
     estimations={[
       {
         mutation: estimateApproveTransferMutation,
-        variables: () => ({
+        variables: props.values && {
           fundAddress: props.fundAddress,
           investmentAmount: props.values.total.quantity.toString(),
-        }),
+        },
         isComplete: props.step > 1,
         name: 'approveTransfer',
       },
       {
         mutation: estimateRequestInvestmentMutation,
-        variables: () => ({
+        variables: props.values && {
           fundAddress: props.fundAddress,
           investmentAmount: props.values.total.quantity.toString(),
-        }),
+        },
         isComplete: props.step > 2,
         name: 'requestInvestment',
       },
       {
         mutation: estimateExecuteRequestMutation,
-        variables: () => ({
+        variables: {
           fundAddress: props.fundAddress,
-        }),
+        },
         name: 'executeRequest',
       },
     ]}
     executions={[
       {
         mutation: executeApproveTransferMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
+        variables: props.values && {
           fundAddress: props.fundAddress,
           investmentAmount: props.values.total.quantity.toString(),
-        }),
-        update: (cache, result) => {
+        },
+        update: () => {
           props.setStep(2);
         },
       },
       {
         mutation: executeRequestInvestmentMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
+        variables: {
           fundAddress: props.fundAddress,
-        }),
-        update: (cache, result) => {
+        },
+        update: () => {
           props.setStep(3);
         },
       },
       {
         mutation: executeExecuteRequestMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
+        variables: {
           fundAddress: props.fundAddress,
-        }),
-        update: cache => {
+        },
+        update: () => {
           props.setStep(null);
           // onCompleted is not working because of render
           props.router.push({

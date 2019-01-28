@@ -19,68 +19,68 @@ export default withRouter(props => (
     estimations={[
       {
         mutation: estimateFundSetupBeginMutation,
-        variables: () => ({
+        variables: props.values && {
           name: R.path(['values', 'name'], props),
           exchanges: R.path(['values', 'exchanges'], props),
           performanceFee: R.path(['values', 'fees', 'performanceFee'], props),
           managementFee: R.path(['values', 'fees', 'managementFee'], props),
-        }),
+        },
         isComplete: !!props.fund,
         name: 'setupBegin',
       },
       {
         mutation: estimateFundSetupStepMutation,
-        variables: () => ({
+        variables: {
           step: 'CREATE_ACCOUNTING',
-        }),
+        },
         isComplete: R.pathOr(false, ['routes', 'accountingAddress'], props),
         name: 'createAccounting',
       },
       {
         mutation: estimateFundSetupStepMutation,
-        variables: () => ({
+        variables: {
           step: 'CREATE_FEE_MANAGER',
-        }),
+        },
         isComplete: R.pathOr(false, ['routes', 'feeManagerAddress'], props),
         name: 'createFeeManager',
       },
       {
         mutation: estimateFundSetupStepMutation,
-        variables: () => ({
+        variables: {
           step: 'CREATE_PARTICIPATION',
-        }),
+        },
         isComplete: R.pathOr(false, ['routes', 'participationAddress'], props),
         name: 'createParticipation',
       },
       {
         mutation: estimateFundSetupStepMutation,
-        variables: () => ({
+        variables: {
           step: 'CREATE_POLICY_MANAGER',
-        }),
+        },
         isComplete: R.pathOr(false, ['routes', 'policyManagerAddress'], props),
         name: 'createPolicyManager',
       },
       {
         mutation: estimateFundSetupStepMutation,
-        variables: () => ({
+        variables: {
           step: 'CREATE_SHARES',
-        }),
+        },
         isComplete: R.pathOr(false, ['routes', 'sharesAddress'], props),
         name: 'createShares',
       },
       {
         mutation: estimateFundSetupStepMutation,
-        variables: () => ({
+        variables: {
           step: 'CREATE_TRADING',
-        }),
+        },
         isComplete: R.pathOr(false, ['routes', 'tradingAddress'], props),
         name: 'createTrading',
       },
       {
         mutation: estimateFundSetupStepMutation,
-        variables: () => ({
+        variables: {
           step: 'CREATE_VAULT',
-        }),
+        },
         isComplete: R.pathOr(false, ['routes', 'vaultAddress'], props),
         name: 'createVault',
       },
@@ -96,9 +96,6 @@ export default withRouter(props => (
     executions={[
       {
         mutation: executeFundSetupBeginMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
-        }),
         update: (cache, result) => {
           props.update(cache, {
             fund: R.path(['data', 'execute'], result),
@@ -107,10 +104,9 @@ export default withRouter(props => (
       },
       {
         mutation: executeFundSetupStepMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
+        variables: {
           step: 'CREATE_ACCOUNTING',
-        }),
+        },
         update: (cache, result) => {
           props.update(cache, {
             routes: {
@@ -121,10 +117,9 @@ export default withRouter(props => (
       },
       {
         mutation: executeFundSetupStepMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
+        variables: {
           step: 'CREATE_FEE_MANAGER',
-        }),
+        },
         update: (cache, result) => {
           props.update(cache, {
             routes: {
@@ -135,10 +130,9 @@ export default withRouter(props => (
       },
       {
         mutation: executeFundSetupStepMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
+        variables: {
           step: 'CREATE_PARTICIPATION',
-        }),
+        },
         update: (cache, result) => {
           props.update(cache, {
             routes: {
@@ -149,10 +143,9 @@ export default withRouter(props => (
       },
       {
         mutation: executeFundSetupStepMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
+        variables: {
           step: 'CREATE_POLICY_MANAGER',
-        }),
+        },
         update: (cache, result) => {
           props.update(cache, {
             routes: {
@@ -163,10 +156,9 @@ export default withRouter(props => (
       },
       {
         mutation: executeFundSetupStepMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
+        variables: {
           step: 'CREATE_SHARES',
-        }),
+        },
         update: (cache, result) => {
           props.update(cache, {
             routes: {
@@ -177,10 +169,9 @@ export default withRouter(props => (
       },
       {
         mutation: executeFundSetupStepMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
+        variables: {
           step: 'CREATE_TRADING',
-        }),
+        },
         update: (cache, result) => {
           props.update(cache, {
             routes: {
@@ -191,10 +182,9 @@ export default withRouter(props => (
       },
       {
         mutation: executeFundSetupStepMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
+        variables: {
           step: 'CREATE_VAULT',
-        }),
+        },
         update: (cache, result) => {
           props.update(cache, {
             routes: {

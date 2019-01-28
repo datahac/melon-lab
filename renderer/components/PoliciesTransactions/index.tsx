@@ -126,29 +126,29 @@ export default withRouter(props => {
   const policiesToEstimations = {
     maxConcentration: {
       mutation: estimateDeployMaxConcentrationMutation,
-      variables: () => ({
+      variables: policiesValues && {
         percent: policiesValues.maxConcentration,
-      }),
+      },
     },
     priceTolerance: {
       mutation: estimateDeployPriceToleranceMutation,
-      variables: () => ({
+      variables: policiesValues && {
         percent: policiesValues.priceTolerance,
-      }),
+      },
     },
     maxPositions: {
       mutation: estimateDeployMaxPositionsMutation,
-      variables: () => ({
+      variables: policiesValues && {
         positions: policiesValues.maxPositions,
-      }),
+      },
     },
     userWhitelist: {
       mutation: estimateDeployUserWhitelistMutation,
-      variables: () => ({
-        addresses: policiesValues.userWhitelist
-          .replace(/\n\s*$/, '')
-          .split('\n'),
-      }),
+      variables: policiesValues && {
+        addresses:
+          policiesValues.userWhitelist &&
+          policiesValues.userWhitelist.replace(/\n\s*$/, '').split('\n'),
+      },
     },
   };
 
@@ -165,9 +165,6 @@ export default withRouter(props => {
     selectedPolicies.map(policy => {
       return {
         mutation: executeDeployMutation,
-        variables: (_, transaction) => ({
-          ...transaction,
-        }),
         update: (_, result) => {
           const data = {
             address: result.data.execute,
@@ -187,9 +184,9 @@ export default withRouter(props => {
         ...policiesEstimations,
         {
           mutation: estimateRegisterPoliciesMutation,
-          variables: () => ({
+          variables: {
             policies: registerPolicies.map(({ name, ...item }) => item),
-          }),
+          },
           isComplete: false,
           name: 'registerPolicies',
         },
@@ -198,9 +195,6 @@ export default withRouter(props => {
         ...policiesExecutions,
         {
           mutation: executeRegisterPoliciesMutation,
-          variables: (_, transaction) => ({
-            ...transaction,
-          }),
           update: () => {
             setIsActive(false);
             props.router.push({

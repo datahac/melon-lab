@@ -13,7 +13,7 @@ const withForm = withFormik({
     }),
   enableReinitialize: true,
   handleSubmit: (values, form) => {
-    form.props.execute(values.gasPrice);
+    form.props.execute({ variables: values });
   },
 });
 
