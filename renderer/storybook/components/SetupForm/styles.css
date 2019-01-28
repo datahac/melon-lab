@@ -18,3 +18,9 @@
 .setup-form__selected-exchange:not(:last-child)::after {
   content: ', ';
 }
+
+.setup__list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}

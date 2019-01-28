@@ -1,4 +1,4 @@
-import React, { StatelessComponent } from 'react';
+import React, { StatelessComponent, Fragment } from 'react';
 import { CellBody, CellHead, Row, Table, TableBody } from '~/blocks/Table';
 import availablePolicies from '~/shared/utils/availablePolicies';
 import availableExchangeContracts from '~/shared/utils/availableExchangeContracts';
@@ -32,28 +32,39 @@ export const StepTerms: StatelessComponent<StepTermsProps> = ({ values }) => (
           </CellBody>
         </Row>
         <Row>
-          <CellHead>Fees</CellHead>
-          <CellBody>
-            <div>
-              Management Fee: {values.fees && values.fees.managementFee}%
-            </div>
-            <div>
-              Performance Fee: {values.fees && values.fees.performanceFee}%
-            </div>
-          </CellBody>
+          <CellHead>Management Fee</CellHead>
+          <CellBody>{values.fees && values.fees.managementFee}%</CellBody>
+        </Row>
+        <Row>
+          <CellHead>Performance Fee</CellHead>
+          <CellBody>{values.fees && values.fees.performanceFee}%</CellBody>
         </Row>
         {!R.isEmpty(values.policies) && (
-          <Row>
-            <CellHead>Policies</CellHead>
-            <CellBody>
-              {Object.keys(values.policies).map((keyName, i) => (
-                <div key={i}>
-                  {availablePolicies[keyName].name}: {values.policies[keyName]}
-                  {availablePolicies[keyName].unit}
-                </div>
-              ))}
-            </CellBody>
-          </Row>
+          <Fragment>
+            {Object.keys(values.policies).map((keyName, i) => (
+              <Row key={i}>
+                <CellHead>{availablePolicies[keyName].name}: </CellHead>
+
+                <CellBody>
+                  {values.policies[keyName].toString().includes('\n') ? (
+                    <ul className="setup__list">
+                      {values.policies[keyName].split('\n').map(item => (
+                        <li className="setup__list-item" key={item}>
+                          {item}
+                          {availablePolicies[keyName].unit}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <Fragment>
+                      {values.policies[keyName]}
+                      {availablePolicies[keyName].unit}
+                    </Fragment>
+                  )}
+                </CellBody>
+              </Row>
+            ))}
+          </Fragment>
         )}
       </TableBody>
     </Table>

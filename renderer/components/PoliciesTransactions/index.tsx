@@ -4,6 +4,19 @@ import { withRouter } from 'next/router';
 import * as R from 'ramda';
 import React, { useState } from 'react';
 
+const estimateDeployUserWhitelistMutation = gql`
+  mutation EstimateDeployPriceTolerance($addresses: [String]) {
+    estimate: estimateDeployUserWhitelist(addresses: $addresses) @account {
+      data
+      from
+      gas
+      gasPrice
+      to
+      value
+    }
+  }
+`;
+
 const estimateDeployPriceToleranceMutation = gql`
   mutation EstimateDeployPriceTolerance($percent: Int!) {
     estimate: estimateDeployPriceTolerance(percent: $percent) @account {
@@ -127,6 +140,14 @@ export default withRouter(props => {
       mutation: estimateDeployMaxPositionsMutation,
       variables: () => ({
         positions: policiesValues.maxPositions,
+      }),
+    },
+    userWhitelist: {
+      mutation: estimateDeployUserWhitelistMutation,
+      variables: () => ({
+        addresses: policiesValues.userWhitelist
+          .replace(/\n\s*$/, '')
+          .split('\n'),
       }),
     },
   };

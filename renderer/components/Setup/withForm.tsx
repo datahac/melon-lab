@@ -98,7 +98,7 @@ const withFormHandlers = withHandlers({
     } else {
       props.setFieldValue('policies', {
         ...props.values.policies,
-        [value]: 0,
+        [value]: '',
       });
     }
   },
