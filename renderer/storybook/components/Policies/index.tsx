@@ -37,7 +37,7 @@ export const Policies: StatelessComponent<PoliciesProps> = ({
   return (
     <div className="policies">
       <style jsx>{styles}</style>
-      <h4>Active policies</h4>
+      <h4>Active policies ({activePolicies.length})</h4>
       {activePolicies.length > 0 ? (
         <div className="policies__items">
           {activePolicies.map(item => {
@@ -83,7 +83,8 @@ export const Policies: StatelessComponent<PoliciesProps> = ({
       {inactivePolicies.length > 0 && (
         <Fragment>
           <hr />
-          <h4>Available policies</h4>
+          <h4>Available policies ({inactivePolicies.length})</h4>
+          <p>Please select policies</p>
           <div className="policies__items">
             {inactivePolicies.length > 0 &&
               inactivePolicies.map(item => (
