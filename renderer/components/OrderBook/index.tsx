@@ -77,8 +77,8 @@ const AggregatedOrders = ({ baseAsset, quoteAsset, exchanges, children }) => (
 
       const asks = orders
         .filter(isAskOrder)
-        // HACK!! TODO: Move this to exchange-aggregator!
-        .sort((a, b) => -sortOrders(a, b))
+        .sort(sortOrders)
+        .reverse()
         .reduce(reduceOrderVolumes, []);
 
       const bids = orders
