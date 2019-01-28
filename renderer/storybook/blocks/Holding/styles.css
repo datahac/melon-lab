@@ -21,6 +21,8 @@
 .holding__balance {
   font-size: var(--font-size-s);
   color: var(--color-grey);
+  flex: 0 0 25%;
+  text-align: right;
 }
 
 .holding__price {
@@ -37,9 +39,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.holding__name {
   margin-top: var(--space-xxs);
   display: block;
   font-size: var(--font-size-s);
