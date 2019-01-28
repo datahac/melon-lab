@@ -20,6 +20,14 @@ export default props => {
             props.values.type === 'Buy'
               ? props.values.total.quantity.toString()
               : props.values.quantity.quantity.toString(),
+          buyToken:
+            props.values.type === 'Buy'
+              ? props.values.total.token.symbol
+              : props.values.quantitiy.token.symbol,
+          sellToken:
+            props.values.type === 'Buy'
+              ? props.values.quantity.token.symbol
+              : props.values.total.token.symbol,
         }),
       }}
       execute={{
