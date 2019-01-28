@@ -339,6 +339,8 @@ type Query {
   routes("The address of the fund manager." manager: String): Routes
 
   kyberPrice(symbol: String!, quantity: String!, type: TradeTypeEnum!): Price
+
+  availableTokens: [Token]
 }
 
 type Mutation {
