@@ -51,6 +51,7 @@ const WrappedOrderForm = withForm(props => {
         values={props.orderFormValues}
         setOrderFormValues={props.setOrderFormValues}
         resetForm={props.resetForm}
+        setOrder={props.setOrder}
       />
       <OrderForm
         {...props}

@@ -15,7 +15,8 @@ export default props => {
         mutation: EstimateTakeOrderMutation,
         variables: () => ({
           id: props.values.id,
-          fillQuantity:
+          exchange: props.values.exchange,
+          buyQuantity:
             props.values.type === 'Buy'
               ? props.values.total.quantity.toString()
               : props.values.quantity.quantity.toString(),
@@ -23,7 +24,10 @@ export default props => {
       }}
       execute={{
         mutation: ExecuteTakeOrderMutation,
-        variables: (_, transaction) => transaction,
+        variables: (_, transaction) => ({
+          ...transaction,
+          exchange: props.values.exchange,
+        }),
         refetchQueries: () => [
           'HoldingsQuery',
           'OrdersQuery',
@@ -32,6 +36,7 @@ export default props => {
         onCompleted: () => {
           props.resetForm();
           props.setOrderFormValues(null);
+          props.setOrder({ exchange: props.exchange });
         },
       }}
       handleCancel={() => {
