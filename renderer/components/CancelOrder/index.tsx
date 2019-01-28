@@ -18,9 +18,9 @@ export default props => (
       variables: (_, transaction) => ({
         ...transaction,
       }),
+      refetchQueries: () => ['OrdersQuery', 'OpenOrdersQuery'],
       onCompleted: () => {
         props.unset();
-        props.refresh();
       },
     }}
     handleCancel={() => {

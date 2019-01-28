@@ -51,7 +51,6 @@ export default class OpenOrdersContainer extends React.Component {
               />
               <CancelOrder
                 values={this.state.selectedOrder}
-                refresh={() => props.refetch(props.variable)}
                 unset={() => this.setState({ selectedOrder: null })}
               />
             </React.Fragment>

@@ -1,4 +1,4 @@
-query openOrdersQuery($fundAddress: String!) {
+query OpenOrdersQuery($fundAddress: String!) {
   openOrders(fundAddress: $fundAddress) {
     id
     price

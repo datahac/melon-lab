@@ -52,7 +52,7 @@ import {
 } from '~/queries/oasisDex.gql';
 
 import * as fundQuery from '~/queries/fund.gql';
-import * as openOrdersQuery from '~/queries/openOrders.gql';
+import * as OpenOrdersQuery from '~/queries/openOrders.gql';
 
 jest.setTimeout(1200000);
 
@@ -359,7 +359,7 @@ describe('Setup fund and trade on Oasis Dex', () => {
     // }
     expect(postOrders.length >= preOrders.length).toBe(true);
 
-    const openOrders = await execute(schema, openOrdersQuery, null, context(), {
+    const openOrders = await execute(schema, OpenOrdersQuery, null, context(), {
       fundAddress,
     });
 

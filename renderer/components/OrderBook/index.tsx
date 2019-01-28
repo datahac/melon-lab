@@ -48,7 +48,6 @@ const query = gql`
 const OrdersQuery = ({ exchange, baseAsset, quoteAsset, children }) => (
   <Query
     ssr={false}
-    errorPolicy="all"
     query={query}
     variables={{
       exchange,
