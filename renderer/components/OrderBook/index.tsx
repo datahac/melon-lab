@@ -55,7 +55,6 @@ const OrdersQuery = ({ exchange, baseAsset, quoteAsset, children }) => (
       base: baseAsset,
       quote: quoteAsset,
     }}
-    fetchPolicy="no-cache"
   >
     {children}
   </Query>

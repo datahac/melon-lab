@@ -76,7 +76,6 @@ export class BalanceProvider extends React.PureComponent {
               ssr={false}
               errorPolicy="all"
               children={render}
-              fetchPolicy="no-cache"
             />
           ),
         ]}

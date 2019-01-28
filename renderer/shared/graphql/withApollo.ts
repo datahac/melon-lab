@@ -84,7 +84,19 @@ export default withApollo(() => {
   const client = new ApolloClient({
     link,
     cache,
-    ssrMode: !process.browser,
+    defaultOptions: {
+      watchQuery: {
+        errorPolicy: 'all',
+        fetchPolicy: 'network-only',
+      },
+      query: {
+        errorPolicy: 'all',
+        fetchPolicy: 'network-only',
+      },
+      mutate: {
+        errorPolicy: 'all',
+      },
+    },
   });
 
   return client;
