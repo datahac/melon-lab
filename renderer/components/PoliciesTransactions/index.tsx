@@ -172,7 +172,7 @@ export default withRouter(props => {
       mutation: estimateDeployUserWhitelistMutation,
       variables: () => ({
         addresses: policiesValues.userWhitelist
-          .replace(/\n\s*$/, '')
+          .replace(/^\s+|\s+$/g, '')
           .split('\n'),
       }),
     },
@@ -180,7 +180,7 @@ export default withRouter(props => {
       mutation: estimateDeployAssetWhitelistMutation,
       variables: () => ({
         symbols: policiesValues.assetWhitelist
-          .replace(/\n\s*$/, '')
+          .replace(/^\s+|\s+$/g, '')
           .split('\n'),
       }),
     },
@@ -188,7 +188,7 @@ export default withRouter(props => {
       mutation: estimateDeployAssetBlacklistMutation,
       variables: () => ({
         symbols: policiesValues.assetBlacklist
-          .replace(/\n\s*$/, '')
+          .replace(/^\s+|\s+$/g, '')
           .split('\n'),
       }),
     },
