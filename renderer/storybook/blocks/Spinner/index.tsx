@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
-import Icon from '~/blocks/Icon';
+import Logos from '~/design/Logos';
 
 import styles from './styles.css';
 
@@ -23,7 +23,7 @@ const Spinner: StatelessComponent<SpinnerProps> = ({
     <div className={spinnerClassNames}>
       <style jsx>{styles}</style>
       <div className="spinner__wrapper">
-        {icon && <Icon iconClass="spinner__icon" name="logos_without-border" />}
+        {icon && <Logos logoClass="spinner__icon" name="without-border" />}
         <div className="spinner__loader" />
       </div>
       {text && <div className="spinner__text">{text}</div>}

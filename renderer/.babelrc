@@ -6,5 +6,6 @@
       }
     }],
     "@zeit/next-typescript/babel"
-  ]
+  ],
+  "plugins": [ "inline-react-svg" ]
 }

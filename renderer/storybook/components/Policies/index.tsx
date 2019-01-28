@@ -1,5 +1,5 @@
 import React, { StatelessComponent, Fragment } from 'react';
-import Icon from '~/blocks/Icon';
+import Icons from '~/design/Icons';
 import Button from '~/blocks/Button';
 import * as R from 'ramda';
 
@@ -94,7 +94,7 @@ export const Policies: StatelessComponent<PoliciesProps> = ({
                   >
                     {availablePolicies[item].name}
                     <span className="policies__item-add">
-                      <Icon name="icons_plus" height="16px" width="14px" />
+                      <Icons name="plus" height="16px" width="14px" />
                     </span>
                   </div>
                 </div>

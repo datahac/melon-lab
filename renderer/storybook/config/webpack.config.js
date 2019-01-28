@@ -37,11 +37,6 @@ module.exports = config => {
     loader: 'babel-loader',
   });
 
-  config.module.rules.push({
-    test: /\.svg$/,
-    loader: 'svg-sprite-loader',
-  });
-
   config.devServer = Object.assign({}, config.devServer || {}, {
     stats: 'errors-only',
   });

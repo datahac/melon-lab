@@ -35,7 +35,7 @@ export default class WalletOverviewPage extends React.Component {
           );
 
           return (
-            <WalletTemplate title="Your Wallet" icon="icons_wallet" text={text}>
+            <WalletTemplate title="Your Wallet" icon="wallet" text={text}>
               <WalletOverview />
             </WalletTemplate>
           );

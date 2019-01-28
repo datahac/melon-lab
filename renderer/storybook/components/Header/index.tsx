@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { StatelessComponent, Fragment } from 'react';
-import Icon from '~/blocks/Icon';
+import Logos from '~/design/Logos';
 import Link from '~/link';
 import * as Tm from '@melonproject/token-math';
 
@@ -128,10 +128,10 @@ export const Header: StatelessComponent<HeaderProps> = ({
         <Link href="/">
           <a href="/">
             <span className="header__logo-default">
-              <Icon width="115px" height="30px" name="logos_with-text" />
+              <Logos width={115} height={30} name="with-text" />
             </span>
             <span className="header__logo-small">
-              <Icon width="30px" height="30px" name="logos_default" />
+              <Logos width={30} height={30} name="default" />
             </span>
           </a>
         </Link>

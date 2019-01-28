@@ -4,7 +4,7 @@ import Headline from './index';
 
 const data = {
   title: 'Your Wallet',
-  icon: 'icons_wallet',
+  icon: 'wallet',
   text: 'Hello World',
 };
 

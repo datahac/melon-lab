@@ -3,7 +3,7 @@ import React, { StatelessComponent } from 'react';
 import format from 'date-fns/format';
 import displayPrice from '~/shared/utils/displayPrice';
 import Link from '~/blocks/Link';
-import Icon from '~/blocks/Icon';
+import Icons from '~/design/Icons';
 import * as Tm from '@melonproject/token-math';
 
 import styles from './styles.css';
@@ -57,7 +57,7 @@ const Card: StatelessComponent<CardProps> = ({
           </div>
           <div className="card__report" onClick={handleReportClick}>
             <Link target="_blank" href={reportUrl} title="Show Report">
-              <Icon width="16px" height="20px" name="icons_report" />
+              <Icons width="16px" height="20px" name="report" />
             </Link>
           </div>
         </div>

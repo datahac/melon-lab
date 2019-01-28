@@ -4,7 +4,7 @@ import FundHeadline from './index';
 
 const data = {
   title: 'Your Wallet',
-  icon: 'icons_wallet',
+  icon: 'wallet',
   text: 'Hello World',
   gav: {
     quantity: '10000',

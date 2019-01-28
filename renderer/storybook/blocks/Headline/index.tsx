@@ -1,5 +1,5 @@
 import React, { StatelessComponent } from 'react';
-import Icon from '~/blocks/Icon';
+import Icons from '~/design/Icons';
 
 import styles from './styles.css';
 
@@ -15,7 +15,7 @@ const Headline: StatelessComponent<HeadlineProps> = ({ title, icon, text }) => (
     {icon && (
       <div className="headline__icon-wrapper">
         <div className="headline__icon">
-          <Icon width="30px" height="30px" name={icon} />
+          <Icons width="30px" height="30px" name={icon} />
         </div>
       </div>
     )}

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
-import Icon from '~/blocks/Icon';
+import Icons from '~/design/Icons';
 
 import styles from './styles.css';
 
@@ -46,7 +46,7 @@ const Button: StatelessComponent<ButtonProps> = ({
       <style jsx>{styles}</style>
       {icon && (
         <span className="button__icon">
-          <Icon height="16px" width="16px" name={icon} />
+          <Icons height="16px" width="16px" name={icon} />
         </span>
       )}
 

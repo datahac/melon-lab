@@ -18,7 +18,7 @@ export default class WalletIndexPage extends React.Component {
     return (
       <WalletTemplate
         title="Setup your Wallet"
-        icon="icons_wallet"
+        icon="wallet"
         text="Before you can setup your fund, you need to import, restore or create a wallet."
       >
         <Wallet />
