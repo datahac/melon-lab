@@ -140,7 +140,7 @@ export default {
       const makerAsset =
         type === 'BUY' ? weth : getTokenBySymbol(environment, symbol);
       const takerAsset =
-        type === 'SELL' ? getTokenBySymbol(environment, symbol) : weth;
+        type === 'SELL' ? weth : getTokenBySymbol(environment, symbol);
 
       const fillTakerQuantity = Tm.createQuantity(takerAsset, quantity);
       const rate = await getExpectedRate(environment, kyberNetworkProxy, {
