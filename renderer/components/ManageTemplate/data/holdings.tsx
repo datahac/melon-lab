@@ -46,7 +46,6 @@ const HoldingsQuery = ({ address, children }) => (
       address: address,
     }}
     ssr={false}
-    errorPolicy="all"
   >
     {children}
   </Query>

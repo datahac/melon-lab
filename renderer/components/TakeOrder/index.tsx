@@ -23,6 +23,7 @@ export default props => (
     execute={{
       mutation: executeTakeOasisDexOrderMutation,
       variables: (_, transaction) => transaction,
+      refetchQueries: () => ['HoldingsQuery', 'OrdersQuery', 'OpenOrdersQuery'],
       onCompleted: () => {
         props.resetForm();
         props.setOrderFormValues(null);
