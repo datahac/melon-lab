@@ -46,10 +46,13 @@ import {
 
 import {
   estimateMakeOrderMutation,
-  estimateTakeOasisDexOrderMutation,
   executeMakeOrderMutation,
-  executeTakeOasisDexOrderMutation,
 } from '~/queries/oasisDex.gql';
+
+import {
+  EstimateTakeOrderMutation,
+  ExecuteTakeOrderMutation,
+} from '~/queries/takeOrder.gql';
 
 import * as fundQuery from '~/queries/fund.gql';
 import * as OpenOrdersQuery from '~/queries/openOrders.gql';
@@ -399,12 +402,13 @@ describe('Setup fund and trade on Oasis Dex', () => {
 
     const estimateTakeOrder = await execute(
       schema,
-      estimateTakeOasisDexOrderMutation,
+      EstimateTakeOrderMutation,
       null,
       context(),
       {
         id: `${orderToTake.id}`,
-        fillQuantity: buy.quantity.toString(),
+        exchange: 'OASIS_DEX',
+        buyQuantity: buy.quantity.toString(),
       },
     );
 
@@ -413,7 +417,7 @@ describe('Setup fund and trade on Oasis Dex', () => {
 
     const executeTakeOrder = await execute(
       schema,
-      executeTakeOasisDexOrderMutation,
+      ExecuteTakeOrderMutation,
       null,
       context(),
       {
