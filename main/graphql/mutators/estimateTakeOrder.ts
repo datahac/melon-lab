@@ -9,6 +9,7 @@ import {
   getExpectedRate,
   getOasisDexOrder,
   takeOasisDexOrder,
+  take0xOrder,
 } from '@melonproject/protocol';
 
 const estimateTakeOrder = async (
@@ -21,7 +22,12 @@ const estimateTakeOrder = async (
     new Tm.Address(from),
   );
   const fund = await loaders.fundAddressFromManager.load(from);
-  const { tradingAddress } = await loaders.fundRoutes.load(fund);
+  const { tradingAddress, accountingAddress } = await loaders.fundRoutes.load(
+    fund,
+  );
+  const denominationAsset = await loaders.fundDenominationAsset.load(
+    accountingAddress,
+  );
 
   if (exchange === 'OASIS_DEX') {
     const oasisDex = R.path(
@@ -71,6 +77,33 @@ const estimateTakeOrder = async (
     const result = await takeOrderOnKyber.prepare(env, tradingAddress, {
       makerQuantity: Tm.createQuantity(sell.token, 0),
       takerQuantity: buy,
+    });
+
+    return result && result.rawTransaction;
+  }
+
+  if (exchange === 'RADAR_RELAY') {
+    const quote = denominationAsset.symbol === sellToken ? sellToken : buyToken;
+    const base = denominationAsset.symbol === sellToken ? buyToken : sellToken;
+    const orders = await loaders.exchangeOrders.load({
+      quote,
+      base,
+      exchange: 'RADAR_RELAY',
+    });
+
+    const orderToTake = orders.find(order => order.id === id);
+    const offeredPrice = orderToTake.trade;
+
+    const makerQuantity = Tm.createQuantity(
+      getTokenBySymbol(environment, buyToken),
+      buyQuantity,
+    );
+
+    const takerQuantity = Tm.valueIn(offeredPrice, makerQuantity);
+
+    const result = await take0xOrder.prepare(env, tradingAddress, {
+      takerQuantity,
+      signedOrder: orderToTake.original.signedOrder,
     });
 
     return result && result.rawTransaction;

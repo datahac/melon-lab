@@ -54,8 +54,6 @@ export default R.curryN(
       }
     })().catch(() => []);
 
-    console.log(JSON.stringify(result, null, 2));
-
     return result;
   },
 );

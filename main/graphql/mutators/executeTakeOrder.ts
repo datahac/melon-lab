@@ -4,6 +4,7 @@ import {
   takeOrderOnKyber,
   TakeOrderOnKyberResult,
   takeOasisDexOrder,
+  take0xOrder,
 } from '@melonproject/protocol';
 
 const executeTakeOrder = async (
@@ -74,6 +75,35 @@ const executeTakeOrder = async (
       volume,
       price: Tm.toFixed(trade),
       exchange: 'KYBER_NETWORK',
+    };
+
+    return res;
+  }
+
+  if (exchange === 'RADAR_RELAY') {
+    const result = await take0xOrder.send(
+      env,
+      tradingAddress,
+      signed.rawTransaction,
+    );
+
+    const type = Tm.isEqual(denominationAsset, result.takerFilledAmount.token)
+      ? 'BUY'
+      : 'SELL';
+
+    const trade =
+      type === 'BUY'
+        ? Tm.createPrice(result.makerFilledAmount, result.takerFilledAmount)
+        : Tm.createPrice(result.takerFilledAmount, result.makerFilledAmount);
+
+    const volume = Tm.toFixed(trade.quote);
+
+    const res = {
+      type,
+      trade,
+      volume,
+      price: Tm.toFixed(trade),
+      exchange: 'RADAR_RELAY',
     };
 
     return res;

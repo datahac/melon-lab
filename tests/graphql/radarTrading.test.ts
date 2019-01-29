@@ -80,7 +80,12 @@ describe('Trade on radar relay', () => {
     expect(radarOrders.errors).toBeUndefined();
     expect(radarOrders.data).toBeTruthy();
 
-    expect(R.path(['data', 'orders'], radarOrders)).toHaveLength(2);
+    const orders = R.path(['data', 'orders'], radarOrders);
+
+    expect(orders.length).toBeGreaterThan(0);
+
+    // We need an BID order to take because fund has only WETH
+    const bidOrderToTake = orders.find(o => o.type === 'BID');
 
     const estimateRadarTake = await execute(
       schema,
@@ -88,10 +93,11 @@ describe('Trade on radar relay', () => {
       null,
       context(),
       {
+        id: bidOrderToTake.id,
         exchange: 'RADAR_RELAY',
-        buyToken: 'WETH',
-        buyQuantity: Tm.appendDecimals(weth, 1).toString(),
-        sellToken: 'MLN',
+        buyToken: 'MLN',
+        buyQuantity: bidOrderToTake.metadata.makerAssetAmount,
+        sellToken: 'WETH',
       },
     );
 
