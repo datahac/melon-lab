@@ -1,5 +1,4 @@
 import React from 'react';
-import { withPropsOnChange } from 'recompose';
 import OpenOrders from '~/components/OpenOrders';
 import { OpenOrdersQuery } from './data/openOrders';
 import * as R from 'ramda';
