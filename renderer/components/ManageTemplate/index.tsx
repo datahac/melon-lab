@@ -93,8 +93,8 @@ export default class ManageTemplateContainer extends React.Component {
         this.setState({
           order: {
             exchange,
-            strategy,
-            type,
+            strategy: 'Market',
+            type: bidAskSellBuyMap[type],
             id: null,
             price: null,
             total: null,
