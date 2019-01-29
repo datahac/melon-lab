@@ -149,13 +149,6 @@ export default withRouter(props => {
     R.toPairs,
   )(policiesValues);
 
-  console.log(
-    R.path(['assetBlacklist'], policiesValues) &&
-      policiesValues.assetBlacklist.reduce((carry, current) => {
-        return carry.concat([current.value]);
-      }, []),
-  );
-
   const policiesToEstimations = {
     maxConcentration: {
       mutation: estimateDeployMaxConcentrationMutation,
