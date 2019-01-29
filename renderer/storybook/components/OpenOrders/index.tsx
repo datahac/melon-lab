@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, { StatelessComponent } from 'react';
 import Button from '~/blocks/Button';
 import {
@@ -9,18 +8,15 @@ import {
   TableBody,
   TableHead,
 } from '~/blocks/Table';
-import format from 'date-fns/format';
 import displayQuantity from '~/shared/utils/displayQuantity';
 
 import styles from './styles.css';
 
 export interface Order {
-  buyHowMuch: string;
   buySymbol: string;
   id: number;
   price: string;
-  sellHowMuch: string;
-  sellSymbol: string;
+  quantity: string;
   timestamp: string;
   type: string;
 }
@@ -38,17 +34,6 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
   onClick,
   orders = [],
 }) => {
-  const typeCellClassNames = (type: string) =>
-    classNames(
-      'open-orders__cell',
-      {
-        'open-orders__cell--red': type === 'sell',
-      },
-      {
-        'open-orders__cell--green': type === 'buy',
-      },
-    );
-
   return (
     <div className="open-orders">
       <style jsx={true}>{styles}</style>
@@ -57,45 +42,30 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
           <Table>
             <TableHead>
               <Row isHead={true} size={isManager && 'small'}>
-                <CellHead noPadding={false}>Time</CellHead>
-                <CellHead>Id</CellHead>
-                <CellHead>Type</CellHead>
-                <CellHead>Buy</CellHead>
+                <CellHead noPadding={false}>Buy</CellHead>
                 <CellHead>Sell</CellHead>
                 <CellHead>Price</CellHead>
-                <CellHead>Buy Quantity</CellHead>
-                <CellHead noPadding={false}>Sell Quantity</CellHead>
+                <CellHead noPadding={false}>Quantity</CellHead>
                 {isManager && <CellHead noPadding={false} />}
               </Row>
             </TableHead>
             <TableBody>
               {orders &&
                 orders.map(order => {
+                  const buy =
+                    order.type === 'ASK' ? order.trade.quote : order.trade.base;
+                  const sell =
+                    order.type === 'ASK' ? order.trade.base : order.trade.quote;
+
                   return (
                     <Row key={order.id} size={isManager && 'small'}>
-                      <CellBody noPadding={false}>
-                        {format(
-                          parseInt(order.timestamp) * 1000,
-                          'DD. MMM YYYY HH:mm',
-                        )}
-                      </CellBody>
-                      <CellBody>{order.id}</CellBody>
-                      <CellBody>
-                        <span className={typeCellClassNames(order.type)}>
-                          {order.type}
-                        </span>
-                      </CellBody>
-                      <CellBody>{order.sellSymbol}</CellBody>
-                      <CellBody>{order.buySymbol}</CellBody>
+                      <CellBody noPadding={false}>{sell.token.symbol}</CellBody>
+                      <CellBody>{buy.token.symbol}</CellBody>
                       <CellBody>
                         {order.price && displayQuantity(order.price)}
                       </CellBody>
                       <CellBody>
-                        {order.sellHowMuch &&
-                          displayQuantity(order.sellHowMuch)}
-                      </CellBody>
-                      <CellBody noPadding={false}>
-                        {order.buyHowMuch && displayQuantity(order.buyHowMuch)}
+                        {order.volume && displayQuantity(order.volume)}
                       </CellBody>
                       {isManager && (
                         <CellBody noPadding={false}>
