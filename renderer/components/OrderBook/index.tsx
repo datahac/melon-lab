@@ -3,7 +3,6 @@ import * as R from 'ramda';
 import OrderBook from '~/components/OrderBook';
 import Composer from 'react-composer';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import {
   isBidOrder,
   isAskOrder,

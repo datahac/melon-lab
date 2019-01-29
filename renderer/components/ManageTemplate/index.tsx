@@ -21,8 +21,8 @@ import OpenOrdersContainer from '../OpenOrders';
 
 // A bid-order on the orderbook resolves to a buy from the fund
 const bidAskSellBuyMap = {
-  BID: 'Sell',
-  ASK: 'Buy',
+  BID: 'Buy',
+  ASK: 'Sell',
 };
 
 export interface SetOrder {
@@ -77,7 +77,9 @@ export default class ManageTemplateContainer extends React.Component {
   render() {
     const { address, quoteAsset, baseAsset } = this.props;
 
-    const setOrder = ({ exchange, trade, metadata, type, strategy }) => {
+    const setOrder = order => {
+      const { exchange, trade, metadata, type, strategy } = order;
+
       if (exchange === 'OASIS_DEX') {
         this.setState({
           order: {
@@ -93,6 +95,7 @@ export default class ManageTemplateContainer extends React.Component {
       } else if (exchange === 'RADAR_RELAY') {
         this.setState({
           order: {
+            id: order.id,
             exchange: 'RADAR_RELAY',
             price: trade,
             quantity: trade && trade.base,
