@@ -17,7 +17,6 @@ export default class OpenOrdersContainer extends React.Component {
               canInteract={this.props.canInteract}
               isManager={this.props.isManager}
               orders={R.pathOr([], ['data', 'openOrders'], props)}
-              loading={props.loading}
               onClick={orderId => {
                 this.setState({
                   selectedOrder: {
