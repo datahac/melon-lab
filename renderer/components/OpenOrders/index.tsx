@@ -16,7 +16,6 @@ export default class OpenOrdersContainer extends React.Component {
       <OpenOrdersQuery fundAddress={this.props.address}>
         {queryProps => (
           <React.Fragment>
-            {JSON.stringify(this.state.selectedOrder)}
             <OpenOrders
               canInteract={this.props.canInteract}
               isManager={this.props.isManager}
