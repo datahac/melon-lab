@@ -4,8 +4,34 @@ import { withRouter } from 'next/router';
 import * as R from 'ramda';
 import React, { useState } from 'react';
 
+const estimateDeployAssetWhitelistMutation = gql`
+  mutation EstimateDeployAssetWhitelist($symbols: [String]) {
+    estimate: estimateDeployAssetWhitelist(symbols: $symbols) @account {
+      data
+      from
+      gas
+      gasPrice
+      to
+      value
+    }
+  }
+`;
+
+const estimateDeployAssetBlacklistMutation = gql`
+  mutation EstimateDeployAssetBlacklist($symbols: [String]) {
+    estimate: estimateDeployAssetBlacklist(symbols: $symbols) @account {
+      data
+      from
+      gas
+      gasPrice
+      to
+      value
+    }
+  }
+`;
+
 const estimateDeployUserWhitelistMutation = gql`
-  mutation EstimateDeployPriceTolerance($addresses: [String]) {
+  mutation EstimateDeployUserWhitelist($addresses: [String]) {
     estimate: estimateDeployUserWhitelist(addresses: $addresses) @account {
       data
       from
@@ -145,9 +171,25 @@ export default withRouter(props => {
     userWhitelist: {
       mutation: estimateDeployUserWhitelistMutation,
       variables: policiesValues && {
-        addresses:
-          policiesValues.userWhitelist &&
-          policiesValues.userWhitelist.replace(/\n\s*$/, '').split('\n'),
+        addresses: policiesValues.userWhitelist
+          .replace(/^\s+|\s+$/g, '')
+          .split('\n'),
+      },
+    },
+    assetWhitelist: {
+      mutation: estimateDeployAssetWhitelistMutation,
+      variables: policiesValues && {
+        symbols: policiesValues.assetWhitelist
+          .replace(/^\s+|\s+$/g, '')
+          .split('\n'),
+      },
+    },
+    assetBlacklist: {
+      mutation: estimateDeployAssetBlacklistMutation,
+      variables: policiesValues && {
+        symbols: policiesValues.assetBlacklist
+          .replace(/^\s+|\s+$/g, '')
+          .split('\n'),
       },
     },
   };
@@ -168,7 +210,7 @@ export default withRouter(props => {
         update: (_, result) => {
           const data = {
             address: result.data.execute,
-            type: 'TRADE',
+            type: policy.name === 'userWhitelist' ? 'INVEST' : 'TRADE',
             name: policy.name,
           };
           setRegisterPolicies([...registerPolicies, data]);

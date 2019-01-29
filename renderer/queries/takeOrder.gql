@@ -1,9 +1,13 @@
-mutation estimateTakeKyberMutation(
-  $buyToken: String!
-  $buyQuantity: String!
-  $sellToken: String!
+mutation EstimateTakeOrderMutation(
+  $id: String
+  $exchange: ExchangeEnum!
+  $buyToken: String
+  $buyQuantity: String
+  $sellToken: String
 ) {
-  estimate: estimateTakeKyber(
+  estimate: estimateTakeOrder(
+    id: $id
+    exchange: $exchange
     buyToken: $buyToken
     buyQuantity: $buyQuantity
     sellToken: $sellToken
@@ -17,15 +21,16 @@ mutation estimateTakeKyberMutation(
   }
 }
 
-mutation executeTakeKyberMutation(
+mutation ExecuteTakeOrderMutation(
   $data: String!
   $from: String!
   $gas: String!
   $gasPrice: String!
   $to: String!
   $value: String!
+  $exchange: ExchangeEnum!
 ) {
-  execute: executeTakeKyber(
+  execute: executeTakeOrder(
     unsigned: {
       data: $data
       from: $from
@@ -34,6 +39,7 @@ mutation executeTakeKyberMutation(
       to: $to
       value: $value
     }
+    exchange: $exchange
   ) @sign @account {
     id
     trade {

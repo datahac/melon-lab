@@ -19,7 +19,6 @@ import {
   createTrading,
   createVault,
   deployContract,
-  Environment,
   Exchanges,
   executeRequest,
   FunctionSignatures,
@@ -32,15 +31,14 @@ import {
   register,
   requestInvestment,
   shutDownFund,
-  takeOasisDexOrder,
   triggerRewardAllFees,
   withDifferentAccount,
 } from '@melonproject/protocol';
 
 import sameBlock from './utils/sameBlock';
 import toAsyncIterator from './utils/toAsyncIterator';
-import { estimateTakeKyber } from './mutators/estimateTakeKyber';
-import { executeTakeKyber } from './mutators/executeTakeKyber';
+import { estimateTakeOrder } from './mutators/estimateTakeOrder';
+import { executeTakeOrder } from './mutators/executeTakeOrder';
 import { getToken } from '@melonproject/protocol/lib/contracts/dependencies/token/calls/getToken';
 
 const stringifyObject = R.mapObjIndexed((value, key) => `${value}`);
@@ -92,6 +90,9 @@ export default {
     rankings: (_, __, { loaders }) => {
       return loaders.fundRanking();
     },
+    availableTokens: (_, __, { loaders }) => {
+      return loaders.availableTokens();
+    },
     orders: (_, { exchange, base, quote }, { loaders }) => {
       return loaders.exchangeOrders.load({ exchange, base, quote });
     },
@@ -137,7 +138,7 @@ export default {
       const makerAsset =
         type === 'BUY' ? weth : getTokenBySymbol(environment, symbol);
       const takerAsset =
-        type === 'SELL' ? getTokenBySymbol(environment, symbol) : weth;
+        type === 'SELL' ? weth : getTokenBySymbol(environment, symbol);
 
       const fillTakerQuantity = Tm.createQuantity(takerAsset, quantity);
       const rate = await getExpectedRate(environment, kyberNetworkProxy, {
@@ -714,81 +715,8 @@ export default {
 
       throw new Error(`Make order not implemented for ${exchange}`);
     },
-    estimateTakeOasisDexOrder: async (
-      _,
-      { from, id, fillQuantity },
-      { environment, loaders },
-    ) => {
-      const env: Environment = withDifferentAccount(
-        environment,
-        new Tm.Address(from),
-      );
-      const fund = await loaders.fundAddressFromManager.load(from);
-      const { tradingAddress } = await loaders.fundRoutes.load(fund);
-      const oasisDex = R.path(
-        ['deployment', 'thirdPartyContracts', 'exchanges', 'matchingMarket'],
-        env,
-      );
-
-      const order = await getOasisDexOrder(env, oasisDex, { id });
-
-      const fillTakerQuantity = fillQuantity
-        ? Tm.createQuantity(order.buy.token, fillQuantity)
-        : order.buy;
-
-      const result = await takeOasisDexOrder.prepare(env, tradingAddress, {
-        id,
-        fillTakerQuantity,
-        makerQuantity: order.sell,
-        takerQuantity: order.buy,
-        maker: order.owner,
-      });
-
-      return result && result.rawTransaction;
-    },
-    executeTakeOasisDexOrder: async (
-      _,
-      { from, signed },
-      { environment, loaders },
-    ) => {
-      const fund = await loaders.fundAddressFromManager.load(from);
-      const {
-        tradingAddress,
-        accountingAddress,
-      } = await loaders.fundRoutes.load(fund);
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const denominationAsset = await loaders.fundDenominationAsset.load(
-        accountingAddress,
-      );
-
-      const result = await takeOasisDexOrder.send(
-        env,
-        tradingAddress,
-        signed.rawTransaction,
-      );
-
-      const type = Tm.isEqual(denominationAsset, result.sell.token)
-        ? 'BUY'
-        : 'SELL';
-
-      const trade =
-        type === 'BUY'
-          ? Tm.createPrice(result.buy, result.sell)
-          : Tm.createPrice(result.sell, result.buy);
-
-      const volume = Tm.toFixed(trade.quote);
-
-      const res = {
-        type,
-        trade,
-        volume,
-        id: result.id,
-        price: Tm.toFixed(trade),
-        exchange: 'OASIS_DEX',
-      };
-
-      return res;
-    },
+    estimateTakeOrder,
+    executeTakeOrder,
     estimateCancelOasisDexOrder: async (
       _,
       { from, id },
@@ -898,8 +826,6 @@ export default {
       return stringifyObject(order);
     },
     // tslint:disable:object-shorthand-properties-first
-    estimateTakeKyber,
-    executeTakeKyber,
     estimateDeployUserWhitelist: async (
       _,
       { from, addresses },

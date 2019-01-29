@@ -13,6 +13,7 @@ import * as R from 'ramda';
 import styles from './styles.css';
 
 interface FormValues {
+  id: string;
   exchange: string;
   type: string;
   strategy: string;
@@ -27,15 +28,18 @@ export interface FormErrors {
   price?: string;
 }
 
+export interface ExchangeProp {
+  name: string;
+  label: string;
+}
+
 export interface OrderFormProps {
   baseAsset?: string;
   priceFeedUp?: boolean;
   decimals?: number;
   errors: any;
-  exchanges: Array<{
-    name: string;
-    label: string;
-  }>;
+  limitExchanges: ExchangeProp[];
+  marketExchanges: ExchangeProp[];
   handleBlur?: () => void;
   handleSubmit?: () => void;
   baseToken: Tm.QuantityInterface;
@@ -57,7 +61,8 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
   priceFeedUp,
   decimals = 6,
   errors,
-  exchanges,
+  limitExchanges,
+  marketExchanges,
   handleBlur,
   handleSubmit,
   isCompetition,
@@ -73,6 +78,8 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
   quoteToken,
 }) => {
   const isMarket = values.strategy === 'Market' ? true : false;
+  // const isOrderSelected = !!values.id;
+  const isKyber = values.exchange === 'KYBER_NETWORK';
   const numberPlaceholder = (0).toFixed(decimals);
 
   return (
@@ -118,7 +125,10 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             name="type"
             value={values.type}
             isChecked={values.type === 'Sell' ? true : false}
-            disabled={isMarket || !priceFeedUp || !isManager}
+            disabled={
+              // isOrderSelected ||
+              (isMarket && !isKyber) || !priceFeedUp || !isManager
+            }
           />
         </div>
         <div className="order-form__order-info">
@@ -130,18 +140,16 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             bid={bid}
           />
         </div>
-        {!isMarket && (
-          <div className="order-form__dropdown">
-            <Dropdown
-              name="exchange"
-              value={values.exchange}
-              options={exchanges}
-              label="Exchange"
-              onChange={onChange}
-              disabled={isMarket || !priceFeedUp}
-            />
-          </div>
-        )}
+        <div className="order-form__dropdown">
+          <Dropdown
+            name="exchange"
+            value={values.exchange}
+            options={isMarket ? marketExchanges : limitExchanges}
+            label="Exchange"
+            onChange={onChange}
+            disabled={!priceFeedUp || !isManager}
+          />
+        </div>
         <div className="order-form__input">
           <Input
             value={values.price && Tm.toFixed(values.price, decimals)}
@@ -171,7 +179,11 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             required={true}
             formatNumber={true}
             error={touched.quantity && errors.quantity}
-            disabled={(isMarket && !values.price) || !priceFeedUp || !isManager}
+            disabled={
+              (isMarket && !isKyber && !values.price) ||
+              !priceFeedUp ||
+              !isManager
+            }
           />
         </div>
         <div className="order-form__input">
@@ -187,7 +199,11 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             required={true}
             formatNumber={true}
             error={touched.total && errors.total}
-            disabled={(isMarket && !values.price) || !priceFeedUp || !isManager}
+            disabled={
+              (isMarket && !isKyber && !values.price) ||
+              !priceFeedUp ||
+              !isManager
+            }
           />
         </div>
         <Button

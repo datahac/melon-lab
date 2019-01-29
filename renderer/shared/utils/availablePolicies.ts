@@ -34,7 +34,23 @@ const availablePolicies = {
     desc: 'Whitelisted ethereum addresses (one per line)',
     Component: Textarea,
     limitations: {
-      placeholder: '0x0000...',
+      placeholder: '0x0000...\n0x0000...',
+    },
+  },
+  assetWhitelist: {
+    name: 'Asset whitelist',
+    desc: 'Whitelisted assets (one per line)',
+    Component: Textarea,
+    limitations: {
+      placeholder: 'MLN\nETH',
+    },
+  },
+  assetBlacklist: {
+    name: 'Asset blacklist',
+    desc: 'Whitelisted assets (one per line)',
+    Component: Textarea,
+    limitations: {
+      placeholder: 'XRP\nEOS',
     },
   },
 };

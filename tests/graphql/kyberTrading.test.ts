@@ -21,9 +21,9 @@ import { createContext } from '~/graphql/context';
 import { schema } from '~/graphql/schema';
 
 import {
-  estimateTakeKyberMutation,
-  executeTakeKyberMutation,
-} from '~/queries/kyberTrade.gql';
+  EstimateTakeOrderMutation,
+  ExecuteTakeOrderMutation,
+} from '~/queries/takeOrder.gql';
 
 // jest.setTimeout(90 * 1000);
 jest.setTimeout(1200000);
@@ -68,10 +68,11 @@ describe('Take orders from kyber', () => {
   it('Kyber take', async () => {
     const estimateKyberTake = await execute(
       schema,
-      estimateTakeKyberMutation,
+      EstimateTakeOrderMutation,
       null,
       context(),
       {
+        exchange: 'KYBER_NETWORK',
         buyToken: 'WETH',
         buyQuantity: Tm.appendDecimals(weth, 1).toString(),
         sellToken: 'MLN',
@@ -83,10 +84,11 @@ describe('Take orders from kyber', () => {
 
     const executeKyberTake = await execute(
       schema,
-      executeTakeKyberMutation,
+      ExecuteTakeOrderMutation,
       null,
       context(),
       {
+        exchange: 'KYBER_NETWORK',
         ...R.path(['data', 'estimate'], estimateKyberTake),
       },
     );

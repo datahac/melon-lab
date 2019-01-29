@@ -47,7 +47,7 @@ const OrderBookTable = ({ style, entries, onClickOrder, canTrade }) => {
           return (
             <div
               className="orderbook-table__body-row"
-              key={order.id}
+              key={`${order.id}-${index}`}
               onClick={() => onClickOrder && onClickOrder(order.id)}
               style={{
                 cursor: canTrade ? 'pointer' : 'auto',

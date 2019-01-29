@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react';
 import * as R from 'ramda';
 import Composer from 'react-composer';
+import { Query } from 'react-apollo';
+import * as Tm from '@melonproject/token-math';
+
 import OrderForm from '~/components/OrderForm';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
@@ -10,10 +13,23 @@ import withForm from './withForm';
 import isSameAddress from '~/shared/utils/isSameAddress';
 import availableExchanges from '~/shared/utils/availableExchanges';
 
+import * as kyberPriceQuery from '~/queries/kyberPrice.gql';
+
 const WrappedOrderForm = withForm(props => {
-  const exchanges = Object.keys(
-    R.omit(['KYBER_NETWORK'], availableExchanges),
+  const limitExchanges = Object.keys(
+    R.omit(['KYBER_NETWORK', 'ETHFINEX'], availableExchanges),
   ).reduce(
+    (carry, current) =>
+      carry.concat([
+        {
+          name: availableExchanges[current],
+          value: current,
+        },
+      ]),
+    [],
+  );
+
+  const marketExchanges = Object.keys(availableExchanges).reduce(
     (carry, current) =>
       carry.concat([
         {
@@ -31,17 +47,18 @@ const WrappedOrderForm = withForm(props => {
         setOrderFormValues={props.setOrderFormValues}
         resetForm={props.resetForm}
       />
-
       <TakeOrder
         values={props.orderFormValues}
         setOrderFormValues={props.setOrderFormValues}
         resetForm={props.resetForm}
+        setOrder={props.setOrder}
       />
-
       <OrderForm
         {...props}
         setOrderFormValues={props.setOrderFormValues}
-        exchanges={exchanges}
+        limitExchanges={limitExchanges}
+        marketExchanges={marketExchanges}
+        // kyberPrice={result.data.kyberPrice}
       />
     </Fragment>
   );
@@ -50,6 +67,16 @@ const WrappedOrderForm = withForm(props => {
 export default class OrderFormContainer extends React.PureComponent {
   state = {
     values: null,
+    kyberQuery: null,
+  };
+
+  setKyberQuery = query => {
+    if (query) {
+      const { type, quantity, symbol } = query;
+      this.setState({ kyberQuery: { type, quantity, symbol } });
+    } else {
+      this.setState({ kyberQuery: null });
+    }
   };
 
   setOrderFormValues = values => {
@@ -78,33 +105,54 @@ export default class OrderFormContainer extends React.PureComponent {
 
   render() {
     return (
-      <Composer components={[<NetworkConsumer />, <FundManagerConsumer />]}>
-        {([network, managerProps]) => {
+      <Composer
+        components={[
+          <NetworkConsumer />,
+          <FundManagerConsumer />,
+          <Query
+            query={kyberPriceQuery}
+            variables={this.state.kyberQuery}
+            skip={!this.state.kyberQuery}
+          />,
+        ]}
+      >
+        {([network, managerProps, result]) => {
           const {
             address,
             quoteAsset,
             baseAsset,
             holdings,
             formValues,
+            setOrder,
           } = this.props;
+
+          const kyberPrice = result.data && result.data.kyberPrice;
+
+          const formValuesWithKyberPrice = kyberPrice
+            ? {
+                ...formValues,
+                price: kyberPrice,
+              }
+            : formValues;
 
           const isManager =
             !!managerProps.fund && isSameAddress(managerProps.fund, address);
 
           return (
-            <Fragment>
-              <WrappedOrderForm
-                setOrderFormValues={this.setOrderFormValues}
-                baseToken={this.getTokenBalance(baseAsset)}
-                quoteToken={this.getTokenBalance(quoteAsset)}
-                isCompetition={false}
-                isManager={isManager}
-                holdings={holdings}
-                formValues={formValues}
-                priceFeedUp={network && network.priceFeedUp}
-                orderFormValues={this.state.values}
-              />
-            </Fragment>
+            <WrappedOrderForm
+              setOrderFormValues={this.setOrderFormValues}
+              baseToken={this.getTokenBalance(baseAsset)}
+              quoteToken={this.getTokenBalance(quoteAsset)}
+              isCompetition={false}
+              isManager={isManager}
+              holdings={holdings}
+              formValues={formValuesWithKyberPrice}
+              priceFeedUp={network && network.priceFeedUp}
+              orderFormValues={this.state.values}
+              kyberPrice={kyberPrice}
+              setKyberQuery={this.setKyberQuery}
+              setOrder={setOrder}
+            />
           );
         }}
       </Composer>

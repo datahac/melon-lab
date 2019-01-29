@@ -339,6 +339,8 @@ type Query {
   routes("The address of the fund manager." manager: String): Routes
 
   kyberPrice(symbol: String!, quantity: String!, type: TradeTypeEnum!): Price
+
+  availableTokens: [Token]
 }
 
 type Mutation {
@@ -470,10 +472,6 @@ type Mutation {
     fundAddress: String!
   ): Quantity @account @sign
 
-  """
-  Estimates the number of gas units required for the "make order" transaction.
-  """
-  # TODO: Rename to estimateOasisDexOrder and remove exchange enum
   estimateMakeOrder(
     exchange: ExchangeEnum!
     buyToken: String!
@@ -482,38 +480,30 @@ type Mutation {
     sellQuantity: String!
   ): UnsignedTransaction @account
 
-  """
-  Executes the "make order" transaction with the given gas price per unit.
-  """
-  # TODO: Rename to executeOasisDexOrder
   executeMakeOrder(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     exchange: ExchangeEnum!
   ): OasisDexOrder @account @sign
 
-  estimateTakeOasisDexOrder(
-    id: String!
-    fillQuantity: String
+  estimateTakeOrder(
+    id: String
+    exchange: ExchangeEnum!
+    buyToken: String
+    buyQuantity: String
+    sellToken: String
   ): UnsignedTransaction @account
 
-  executeTakeOasisDexOrder(unsigned: UnsignedTransactionInput!): Trade
-    @account
-    @sign
+  executeTakeOrder(
+    unsigned: UnsignedTransactionInput!
+    exchange: ExchangeEnum!
+  ): Trade @account @sign
 
   estimateCancelOasisDexOrder(id: String!): UnsignedTransaction @account
 
   executeCancelOasisDexOrder(unsigned: UnsignedTransactionInput!): Boolean
     @account
     @sign
-
-  estimateTakeKyber(
-    buyToken: String!
-    buyQuantity: String!
-    sellToken: String!
-  ): UnsignedTransaction @account
-
-  executeTakeKyber(unsigned: UnsignedTransactionInput): Trade @account @sign
 
   create0xOrder(
     buyToken: String!

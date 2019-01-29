@@ -76,17 +76,28 @@ export default class ManageTemplateContainer extends React.Component {
   render() {
     const { address, quoteAsset, baseAsset } = this.props;
 
-    const setOrder = ({ exchange, trade, metadata: { id }, type }) => {
+    const setOrder = ({ exchange, trade, metadata, type, strategy }) => {
       if (exchange === 'OASIS_DEX') {
         this.setState({
           order: {
-            id,
+            id: metadata && metadata.id,
             exchange: 'OASIS_DEX',
             price: trade,
-            quantity: trade.base,
+            quantity: trade && trade.base,
             strategy: 'Market',
-            total: trade.quote,
+            total: trade && trade.quote,
             type: bidAskSellBuyMap[type],
+          },
+        });
+      } else {
+        this.setState({
+          order: {
+            exchange,
+            strategy,
+            type,
+            id: null,
+            price: null,
+            total: null,
           },
         });
       }
@@ -154,6 +165,7 @@ export default class ManageTemplateContainer extends React.Component {
                 address,
                 quoteAsset,
                 baseAsset,
+                setOrder,
                 holdings: holdingsData,
                 formValues: this.state.order,
               }}

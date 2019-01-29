@@ -7,6 +7,7 @@ export interface TextareaProps {
   cols?: number;
   name?: string;
   value?: string;
+  placeholder?: string;
   onBlur?: () => void;
   onChange?: () => void;
 }
@@ -18,6 +19,7 @@ const Textarea: StatelessComponent<TextareaProps> = ({
   value,
   onBlur,
   onChange,
+  placeholder,
 }) => (
   <Fragment>
     <style jsx>{styles}</style>
@@ -29,6 +31,7 @@ const Textarea: StatelessComponent<TextareaProps> = ({
       onBlur={onBlur}
       onChange={onChange}
       value={value}
+      placeholder={placeholder}
     />
   </Fragment>
 );

@@ -278,6 +278,10 @@ export default (environment, streams) => {
     return resolveNetwork(await environment.eth.net.getId());
   });
 
+  const availableTokens = memoizeOne(() => {
+    return environment.deployment.thirdPartyContracts.tokens;
+  });
+
   return {
     assetPrice,
     currentBlock,
@@ -311,5 +315,6 @@ export default (environment, streams) => {
     fundIsComplete,
     routes,
     exchangeOrders,
+    availableTokens,
   };
 };
