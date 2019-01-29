@@ -6,19 +6,23 @@ import styles from './styles.css';
 
 export interface MultiDropdownProps {
   onChange: (values) => void;
+  onBlur?: () => void;
   options: Array<{
     value: string;
     label: string;
   }>;
   value?: string;
   name?: string;
+  error?: string;
 }
 
 const MultiDropdown: StatelessComponent<MultiDropdownProps> = ({
   onChange,
+  onBlur,
   options,
   value,
   name,
+  error,
 }) => {
   const customStyles = {
     container: provided => ({
@@ -67,7 +71,7 @@ const MultiDropdown: StatelessComponent<MultiDropdownProps> = ({
   };
 
   return (
-    <div className="dropdown">
+    <div className="multi-dropdown">
       <style jsx>{styles}</style>
       <Select
         styles={customStyles}
@@ -76,7 +80,9 @@ const MultiDropdown: StatelessComponent<MultiDropdownProps> = ({
         value={value}
         isMulti
         name={name}
+        onBlur={onBlur}
       />
+      {error && <div className="multi-dropdown__error">{error}</div>}
     </div>
   );
 };

@@ -8,3 +8,11 @@
   -webkit-appearance: none;
   border-radius: 0;
 }
+
+.textarea__error {
+  display: none;
+  font-size: var(--font-size-s);
+  color: var(--color-white);
+  padding: var(--space-xs);
+  line-height: 1;
+}

@@ -118,7 +118,14 @@ class Setup extends React.Component {
       {
         key: 'risk-profile',
         name: 'Risk Profile',
-        validateFields: ['policies.priceTolerance'],
+        validateFields: [
+          'policies.priceTolerance',
+          'policies.maxPositions',
+          'policies.maxConcentration',
+          'policies.assetWhitelist',
+          'policies.assetWhitelist',
+          'policies.assetWhitelist',
+        ],
       },
       {
         key: 'terms-conditions',

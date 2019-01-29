@@ -1,8 +1,21 @@
 import Input from '~/blocks/Input';
 import Textarea from '~/blocks/Textarea';
 import MultiDropdown from '~/blocks/MultiDropdown';
+import * as Tm from '@melonproject/token-math';
 
-const availablePolicies = tokens => ({
+interface AvailablePolicies {
+  [key]: {
+    name: string;
+    desc?: string;
+    unit?: string;
+    Component: any;
+    ComponentProps?: any;
+  };
+}
+
+const availablePolicies = (
+  tokens?: Tm.QuantityInterface[],
+): AvailablePolicies => ({
   priceTolerance: {
     name: 'Price tolerance',
     desc: 'The higher the tolerance, the greater the risk',

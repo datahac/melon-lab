@@ -42,6 +42,8 @@ export const Policies: StatelessComponent<PoliciesProps> = ({
         <div className="policies__items">
           {activePolicies.map(item => {
             const policy = availablePolicies[item];
+            const isTouched = touched.policies && touched.policies[item];
+
             return (
               <div className="policies__item" key={item}>
                 <div className="policies__item-wrap policies__item-wrap--active">
@@ -54,10 +56,7 @@ export const Policies: StatelessComponent<PoliciesProps> = ({
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={
-                      !!touched.policies &&
-                      !!touched.policies[item] &&
-                      !!errors.policies &&
-                      errors.policies[item]
+                      isTouched && !!errors.policies && errors.policies[item]
                     }
                     centerText
                   />
