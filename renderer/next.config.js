@@ -12,7 +12,6 @@ module.exports = require('@zeit/next-typescript')({
   }),
   webpack: (config, options) => {
     config.target = electron ? 'electron-renderer' : 'web';
-    config.devtool = false;
 
     config.resolve.alias = Object.assign({}, config.resolve.alias || {}, {
       // Override the mock link component used in storybook.
