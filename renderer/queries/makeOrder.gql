@@ -1,4 +1,4 @@
-mutation estimateMakeOrderMutation(
+mutation EstimateMakeOrderMutation(
   $exchange: ExchangeEnum!
   $buyToken: String!
   $buyQuantity: String!
@@ -21,7 +21,7 @@ mutation estimateMakeOrderMutation(
   }
 }
 
-mutation executeMakeOrderMutation(
+mutation ExecuteMakeOrderMutation(
   $data: String!
   $from: String!
   $gas: String!

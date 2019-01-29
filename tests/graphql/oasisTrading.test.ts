@@ -45,9 +45,9 @@ import {
 } from '~/queries/invest.gql';
 
 import {
-  estimateMakeOrderMutation,
-  executeMakeOrderMutation,
-} from '~/queries/oasisDex.gql';
+  EstimateMakeOrderMutation,
+  ExecuteMakeOrderMutation,
+} from '~/queries/makeOrder.gql';
 
 import {
   EstimateTakeOrderMutation,
@@ -312,7 +312,7 @@ describe('Setup fund and trade on Oasis Dex', () => {
 
     const estimateMakeOrder = await execute(
       schema,
-      estimateMakeOrderMutation,
+      EstimateMakeOrderMutation,
       null,
       context(),
       {
@@ -329,7 +329,7 @@ describe('Setup fund and trade on Oasis Dex', () => {
 
     const result = await execute(
       schema,
-      executeMakeOrderMutation,
+      ExecuteMakeOrderMutation,
       null,
       context(),
       {

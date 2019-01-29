@@ -27,6 +27,11 @@ import {
   ExecuteTakeOrderMutation,
 } from '~/queries/takeOrder.gql';
 
+import {
+  EstimateMakeOrderMutation,
+  ExecuteMakeOrderMutation,
+} from '~/queries/makeOrder.gql';
+
 // import {
 //   SignOrder
 // } from '~/queries/'
@@ -127,5 +132,41 @@ describe('Trade on radar relay', () => {
         'exchange',
       ]),
     );
+  });
+
+  it('Radar make', async () => {
+    const buy = Tm.createQuantity(mln, 7.5);
+    const sell = Tm.createQuantity(weth, 0.5);
+
+    const estimateMakeOrder = await execute(
+      schema,
+      EstimateMakeOrderMutation,
+      null,
+      context(),
+      {
+        exchange: 'RADAR_RELAY',
+        buyToken: buy.token.symbol,
+        buyQuantity: buy.quantity.toString(),
+        sellToken: sell.token.symbol,
+        sellQuantity: sell.quantity.toString(),
+      },
+    );
+
+    expect(estimateMakeOrder.errors).toBeUndefined();
+    expect(estimateMakeOrder.data).toBeTruthy();
+
+    const result = await execute(
+      schema,
+      ExecuteMakeOrderMutation,
+      null,
+      context(),
+      {
+        exchange: 'RADAR_RELAY',
+        ...R.path(['data', 'estimate'], estimateMakeOrder),
+      },
+    );
+
+    expect(result.errors).toBeUndefined();
+    expect(result.data).toBeTruthy();
   });
 });

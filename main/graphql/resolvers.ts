@@ -27,7 +27,6 @@ import {
   getOpenOrders,
   getTokenBySymbol,
   getWrapperLock,
-  makeOasisDexOrder,
   register,
   requestInvestment,
   shutDownFund,
@@ -39,6 +38,8 @@ import sameBlock from './utils/sameBlock';
 import toAsyncIterator from './utils/toAsyncIterator';
 import { estimateTakeOrder } from './mutators/estimateTakeOrder';
 import { executeTakeOrder } from './mutators/executeTakeOrder';
+import { estimateMakeOrder } from './mutators/estimateMakeOrder';
+import { executeMakeOrder } from './mutators/executeMakeOrder';
 import { getToken } from '@melonproject/protocol/lib/contracts/dependencies/token/calls/getToken';
 
 const stringifyObject = R.mapObjIndexed((value, key) => `${value}`);
@@ -635,86 +636,8 @@ export default {
 
       return !!result;
     },
-    estimateMakeOrder: async (
-      _,
-      { from, exchange, buyToken, buyQuantity, sellToken, sellQuantity },
-      { environment, loaders },
-    ) => {
-      const fund = await loaders.fundAddressFromManager.load(from);
-      const { tradingAddress } = await loaders.fundRoutes.load(fund);
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      if (exchange === 'OASIS_DEX') {
-        const makerQuantity = Tm.createQuantity(
-          getTokenBySymbol(environment, sellToken),
-          sellQuantity,
-        );
-        const takerQuantity = Tm.createQuantity(
-          getTokenBySymbol(environment, buyToken),
-          buyQuantity,
-        );
-
-        const result = await makeOasisDexOrder.prepare(env, tradingAddress, {
-          makerQuantity,
-          takerQuantity,
-        });
-
-        return result && result.rawTransaction;
-      }
-
-      throw new Error(`Make order not implemented for ${exchange}`);
-    },
-    executeMakeOrder: async (
-      _,
-      { from, signed, exchange },
-      { environment, loaders },
-    ) => {
-      const fund = await loaders.fundAddressFromManager.load(from);
-      const {
-        tradingAddress,
-        accountingAddress,
-      } = await loaders.fundRoutes.load(fund);
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const denominationAsset = await loaders.fundDenominationAsset.load(
-        accountingAddress,
-      );
-
-      if (exchange === 'OASIS_DEX') {
-        const result = await makeOasisDexOrder.send(
-          env,
-          tradingAddress,
-          signed.rawTransaction,
-        );
-
-        const type = Tm.isEqual(denominationAsset, result.sell.token)
-          ? 'BID'
-          : 'ASK';
-
-        const trade =
-          type === 'BID'
-            ? Tm.createPrice(result.buy, result.sell)
-            : Tm.createPrice(result.sell, result.buy);
-
-        const volume = Tm.toFixed(trade.quote);
-
-        const order = {
-          type,
-          trade,
-          volume,
-          exchange,
-          id: result.id,
-          price: Tm.toFixed(trade),
-          metadata: {
-            id: result.id,
-            isActive: !result.matched,
-          },
-        };
-
-        return order;
-      }
-
-      throw new Error(`Make order not implemented for ${exchange}`);
-    },
+    estimateMakeOrder,
+    executeMakeOrder,
     estimateTakeOrder,
     executeTakeOrder,
     estimateCancelOasisDexOrder: async (
