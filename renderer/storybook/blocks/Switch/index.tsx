@@ -1,4 +1,4 @@
-import React, { StatelessComponent } from 'react';
+import React, { StatelessComponent, Fragment } from 'react';
 
 import styles from './styles.css';
 
@@ -41,20 +41,26 @@ const Switch: StatelessComponent<SwitchProps> = ({
           defaultChecked={isChecked}
           disabled={disabled}
         />
-        <span
-          data-label-left={labels[0]}
-          data-label-right={labels[1]}
-          className="switch__label"
-        >
-          {options[0]}
-        </span>
-        <span
-          data-label-left={labels[0]}
-          data-label-right={labels[1]}
-          className="switch__label"
-        >
-          {options[1]}
-        </span>
+        {isChecked ? (
+          <Fragment>
+            <span className="switch__label">
+              {labels[1]} {options[0]}
+            </span>
+            <span className="switch__label">
+              {labels[0]} {options[1]}
+            </span>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <span className="switch__label">
+              {labels[0]} {options[0]}
+            </span>
+            <span className="switch__label">
+              {labels[1]} {options[1]}
+            </span>
+          </Fragment>
+        )}
+
         <div className="switch__icon" />
       </label>
     </div>

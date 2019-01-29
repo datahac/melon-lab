@@ -72,26 +72,10 @@
   font-weight: var(--font-weight-bold);
 }
 
-.switch__input + .switch__label::before {
-  content: attr(data-label-left) ' ';
-}
-
 .switch__input + .switch__label ~ .switch__label {
   order: 4;
   text-align: left;
   color: var(--color-grey);
-}
-
-.switch__input + .switch__label ~ .switch__label::before {
-  content: attr(data-label-right) ' ';
-}
-
-.switch__input:checked + .switch__label::before {
-  content: attr(data-label-right) ' ';
-}
-
-.switch__input:checked + .switch__label ~ .switch__label::before {
-  content: attr(data-label-left) ' ';
 }
 
 .switch__input:checked ~ .switch__icon {
