@@ -14,21 +14,18 @@ export default class OpenOrdersContainer extends React.Component {
   render() {
     return (
       <OpenOrdersQuery fundAddress={this.props.address}>
-        {props => (
+        {queryProps => (
           <React.Fragment>
+            {JSON.stringify(this.state.selectedOrder)}
             <OpenOrders
               canInteract={this.props.canInteract}
               isManager={this.props.isManager}
-              orders={R.pathOr([], ['data', 'openOrders'], props)}
-              onClick={orderId =>
-                this.setSelectedOrder({
-                  id: orderId,
-                })
-              }
+              orders={R.pathOr([], ['data', 'openOrders'], queryProps)}
+              onClick={this.setSelectedOrder}
             />
             <CancelOrder
               values={this.state.selectedOrder}
-              unset={() => this.setSelectedOrder(null)}
+              setSelectedOrder={this.setSelectedOrder}
             />
           </React.Fragment>
         )}

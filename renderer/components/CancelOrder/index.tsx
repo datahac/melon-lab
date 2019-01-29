@@ -11,17 +11,19 @@ export default props => (
     open={!!props.values}
     estimate={{
       mutation: EstimateCancelOasisDexOrderMutation,
-      variables: props.values,
+      variables: {
+        id: props.values,
+      },
     }}
     execute={{
       mutation: ExecuteCancelOasisDexOrderMutation,
       refetchQueries: () => ['OrdersQuery', 'OpenOrdersQuery'],
       onCompleted: () => {
-        props.unset();
+        props.setSelectedOrder(null);
       },
     }}
     handleCancel={() => {
-      props.unset();
+      props.setSelectedOrder(null);
     }}
   />
 );

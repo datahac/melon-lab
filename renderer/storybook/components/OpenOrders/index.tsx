@@ -24,7 +24,7 @@ export interface Order {
 export interface OpenOrdersProps {
   isManager?: boolean;
   canInteract?: boolean;
-  onClick: (id, buySymbol, sellSymbol) => void;
+  onClick: (id) => void;
   orders?: Order[];
 }
 
@@ -73,13 +73,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                             icon="cross"
                             size="small"
                             style="clear"
-                            onClick={() =>
-                              onClick(
-                                order.id,
-                                order.buySymbol,
-                                order.sellSymbol,
-                              )
-                            }
+                            onClick={() => onClick(order.id)}
                             disabled={!canInteract}
                           />
                         </CellBody>
