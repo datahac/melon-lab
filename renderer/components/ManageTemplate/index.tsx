@@ -70,6 +70,7 @@ export default class ManageTemplateContainer extends React.Component {
       strategy: 'Market',
       total: null,
       type: 'Buy',
+      signedOrder: null,
     },
   };
 
@@ -87,6 +88,18 @@ export default class ManageTemplateContainer extends React.Component {
             strategy: 'Market',
             total: trade && trade.quote,
             type: bidAskSellBuyMap[type],
+          },
+        });
+      } else if (exchange === 'RADAR_RELAY') {
+        this.setState({
+          order: {
+            exchange: 'RADAR_RELAY',
+            price: trade,
+            quantity: trade && trade.base,
+            strategy: 'Market',
+            total: trade && trade.quote,
+            type: bidAskSellBuyMap[type],
+            signedOrder: metadata,
           },
         });
       } else {

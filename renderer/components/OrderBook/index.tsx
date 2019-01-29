@@ -12,38 +12,7 @@ import {
 } from '@melonproject/exchange-aggregator';
 import availableExchanges from '~/shared/utils/availableExchanges';
 
-const query = gql`
-  query OrdersQuery($base: String!, $quote: String!, $exchange: ExchangeEnum!) {
-    orders(base: $base, quote: $quote, exchange: $exchange) {
-      id
-      trade {
-        base {
-          quantity
-          token {
-            symbol
-            decimals
-            address
-          }
-        }
-        quote {
-          quantity
-          token {
-            symbol
-            decimals
-            address
-          }
-        }
-      }
-      type
-      exchange
-      ... on OasisDexOrder {
-        metadata {
-          id
-        }
-      }
-    }
-  }
-`;
+import { OrdersQuery as query } from '~/queries/orderbook.gql';
 
 const OrdersQuery = ({ exchange, baseAsset, quoteAsset, children }) => (
   <Query

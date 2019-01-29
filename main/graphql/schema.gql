@@ -67,7 +67,7 @@ type ZeroExOrder implements Order {
   volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
-  metadata: ZeroExOrder
+  metadata: ZeroExOrderMetadata
 }
 
 type OasisDexOrder implements Order {

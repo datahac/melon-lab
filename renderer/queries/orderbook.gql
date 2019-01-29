@@ -1,0 +1,48 @@
+query OrdersQuery($base: String!, $quote: String!, $exchange: ExchangeEnum!) {
+  orders(base: $base, quote: $quote, exchange: $exchange) {
+    id
+    trade {
+      base {
+        quantity
+        token {
+          symbol
+          decimals
+          address
+        }
+      }
+      quote {
+        quantity
+        token {
+          symbol
+          decimals
+          address
+        }
+      }
+    }
+    type
+    exchange
+    ... on OasisDexOrder {
+      metadata {
+        id
+      }
+    }
+    ... on ZeroExOrder {
+      metadata {
+        exchangeAddress
+        senderAddress
+        makerAddress
+        takerAddress
+        makerAssetData
+        takerAssetData
+        feeRecipientAddress
+        makerAssetAmount
+        takerAssetAmount
+        makerFee
+        takerFee
+        expirationTimeSeconds
+        signature
+        salt
+      }
+    }
+  }
+}

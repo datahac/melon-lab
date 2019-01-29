@@ -4,8 +4,11 @@ import {
   Exchange,
   Network,
 } from '@melonproject/exchange-aggregator';
-import { Environment } from '@melonproject/protocol/lib/utils/environment/Environment';
-import { getTokenBySymbol } from '@melonproject/protocol/lib/utils/environment/getTokenBySymbol';
+import {
+  Environment,
+  getTokenBySymbol,
+  getChainName,
+} from '@melonproject/protocol';
 
 export default R.curryN(
   4,
@@ -15,15 +18,17 @@ export default R.curryN(
     base: string,
     quote: string,
   ) => {
+    const chain = await getChainName(environment);
+
     const options = {
-      network: Network.MAINNET,
+      network: Network[chain.toUpperCase()],
       pair: {
         base: getTokenBySymbol(environment, base),
         quote: getTokenBySymbol(environment, quote),
       },
     };
 
-    const result = (() => {
+    const result = await (() => {
       switch (exchange) {
         case 'OASIS_DEX':
           return exchanges.oasisdex.fetch({
@@ -39,8 +44,10 @@ export default R.curryN(
         default:
           throw new Error('Invalid exchange.');
       }
-    })();
+    })().catch(() => []);
 
-    return result.catch(() => []);
+    console.log(JSON.stringify(result, null, 2));
+
+    return result;
   },
 );
