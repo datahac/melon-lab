@@ -47,7 +47,7 @@ export const Policies: StatelessComponent<PoliciesProps> = ({
                 <div className="policies__item-wrap policies__item-wrap--active">
                   <div className="policies__item-name">{policy.name}</div>
                   <policy.Component
-                    {...policy.limitations}
+                    {...policy.ComponentProps}
                     value={values.policies[item] && values.policies[item]}
                     name={`policies.${item}`}
                     type="number"

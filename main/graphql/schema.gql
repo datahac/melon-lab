@@ -340,7 +340,7 @@ type Query {
 
   kyberPrice(symbol: String!, quantity: String!, type: TradeTypeEnum!): Price
 
-  availableTokens: [Token]
+  tokens: [Token]
 }
 
 type Mutation {

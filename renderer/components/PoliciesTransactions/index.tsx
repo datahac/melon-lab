@@ -178,19 +178,19 @@ export default withRouter(props => {
     },
     assetWhitelist: {
       mutation: estimateDeployAssetWhitelistMutation,
-      variables: policiesValues && {
-        symbols: policiesValues.assetWhitelist
-          .replace(/^\s+|\s+$/g, '')
-          .split('\n'),
-      },
+      variables: () => ({
+        symbols: policiesValues.assetWhitelist.reduce((carry, current) => {
+          return carry.concat([current.value]);
+        }, []),
+      }),
     },
     assetBlacklist: {
       mutation: estimateDeployAssetBlacklistMutation,
-      variables: policiesValues && {
-        symbols: policiesValues.assetBlacklist
-          .replace(/^\s+|\s+$/g, '')
-          .split('\n'),
-      },
+      variables: () => ({
+        symbols: policiesValues.assetBlacklist.reduce((carry, current) => {
+          return carry.concat([current.value]);
+        }, []),
+      }),
     },
   };
 

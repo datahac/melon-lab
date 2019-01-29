@@ -278,7 +278,7 @@ export default (environment, streams) => {
     return resolveNetwork(await environment.eth.net.getId());
   });
 
-  const availableTokens = memoizeOne(() => {
+  const tokens = memoizeOne(() => {
     return environment.deployment.thirdPartyContracts.tokens;
   });
 
@@ -315,6 +315,6 @@ export default (environment, streams) => {
     fundIsComplete,
     routes,
     exchangeOrders,
-    availableTokens,
+    tokens,
   };
 };

@@ -20,60 +20,84 @@ import withForm from './withForm';
 import SetupTransactions from '+/components/SetupTransactions';
 import PoliciesTransactions from '+/components/PoliciesTransactions';
 import * as R from 'ramda';
+import availablePolicies from '~/shared/utils/availablePolicies';
+import availableExchangeContracts from '~/shared/utils/availableExchangeContracts';
+import { TokensQuery } from './data/tokens';
 
-const SetupFormContainer = withForm(props => (
-  <SetupForm
-    handleSubmit={
-      props.steps.length - 1 === props.page
-        ? props.handleSubmit
-        : props.onClickNext
-    }
-  >
-    <Wizard page={props.page} steps={props.steps} loading={props.loading}>
-      <WizardPage
-        onClickNext={props.onClickNext}
-        FirstAction={Link}
-        FirstActionProps={{
-          children: 'Cancel',
-          style: 'secondary',
-          size: 'medium',
-          href: {
-            pathname: '/wallet',
-          },
-        }}
-      >
-        <StepFund {...props} />
-      </WizardPage>
-      <WizardPage
-        onClickNext={props.onClickNext}
-        onClickPrev={props.onClickPrev}
-      >
-        <StepFeeStructure {...props} />
-      </WizardPage>
-      <WizardPage
-        onClickNext={props.onClickNext}
-        onClickPrev={props.onClickPrev}
-      >
-        <StepRiskProfile {...props} onActivatePolicy={props.onActivatePolicy} />
-      </WizardPage>
-      <WizardPage
-        onClickNext={props.onClickNext}
-        onClickPrev={props.onClickPrev}
-      >
-        <StepTerms {...props} />
-      </WizardPage>
-      <WizardPage
-        onClickPrev={props.onClickPrev}
-        LastActionProps={{
-          children: 'Create Fund',
-          onClick: () => props.submitForm(),
-        }}
-      >
-        <StepOverview {...props} />
-      </WizardPage>
-    </Wizard>
-  </SetupForm>
-));
+const SetupFormContainer = withForm(props => {
+  const tokens =
+    props.tokens &&
+    props.tokens.reduce((carry, current) => {
+      return carry.concat([
+        {
+          value: current.symbol,
+          label: current.symbol,
+        },
+      ]);
+    }, []);
+
+  return (
+    <SetupForm
+      handleSubmit={
+        props.steps.length - 1 === props.page
+          ? props.handleSubmit
+          : props.onClickNext
+      }
+    >
+      <Wizard page={props.page} steps={props.steps} loading={props.loading}>
+        <WizardPage
+          onClickNext={props.onClickNext}
+          FirstAction={Link}
+          FirstActionProps={{
+            children: 'Cancel',
+            style: 'secondary',
+            size: 'medium',
+            href: {
+              pathname: '/wallet',
+            },
+          }}
+        >
+          <StepFund {...props} />
+        </WizardPage>
+        <WizardPage
+          onClickNext={props.onClickNext}
+          onClickPrev={props.onClickPrev}
+        >
+          <StepFeeStructure {...props} />
+        </WizardPage>
+        <WizardPage
+          onClickNext={props.onClickNext}
+          onClickPrev={props.onClickPrev}
+        >
+          <StepRiskProfile
+            {...props}
+            onActivatePolicy={props.onActivatePolicy}
+            availablePolicies={availablePolicies(tokens)}
+          />
+        </WizardPage>
+        <WizardPage
+          onClickNext={props.onClickNext}
+          onClickPrev={props.onClickPrev}
+        >
+          <StepTerms {...props} />
+        </WizardPage>
+        <WizardPage
+          onClickPrev={props.onClickPrev}
+          LastActionProps={{
+            children: 'Create Fund',
+            onClick: () => props.submitForm(),
+          }}
+        >
+          <StepOverview
+            {...props}
+            availableExchangeContracts={availableExchangeContracts}
+            availablePolicies={availablePolicies()}
+          />
+        </WizardPage>
+      </Wizard>
+    </SetupForm>
+  );
+});
 
 class Setup extends React.Component {
   state = {
@@ -163,19 +187,24 @@ class Setup extends React.Component {
             />
 
             {(!!this.state.values || !manager.fund) && (
-              <SetupFormContainer
-                {...this.props}
-                account={account}
-                configuration={configuration}
-                page={this.state.page}
-                setPage={this.setPage}
-                steps={this.state.steps}
-                setShowModal={this.setShowModal}
-                setFundValues={this.setFundValues}
-                showModal={this.state.showModal}
-                validateOnBlur={true}
-                validateOnChange={false}
-              />
+              <TokensQuery>
+                {queryProps => (
+                  <SetupFormContainer
+                    {...this.props}
+                    account={account}
+                    configuration={configuration}
+                    page={this.state.page}
+                    setPage={this.setPage}
+                    steps={this.state.steps}
+                    setShowModal={this.setShowModal}
+                    setFundValues={this.setFundValues}
+                    showModal={this.state.showModal}
+                    validateOnBlur={true}
+                    validateOnChange={false}
+                    tokens={R.path(['data', 'tokens'], queryProps)}
+                  />
+                )}
+              </TokensQuery>
             )}
           </Fragment>
         )}

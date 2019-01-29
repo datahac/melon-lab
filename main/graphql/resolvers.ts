@@ -90,8 +90,8 @@ export default {
     rankings: (_, __, { loaders }) => {
       return loaders.fundRanking();
     },
-    availableTokens: (_, __, { loaders }) => {
-      return loaders.availableTokens();
+    tokens: (_, __, { loaders }) => {
+      return loaders.tokens();
     },
     orders: (_, { exchange, base, quote }, { loaders }) => {
       return loaders.exchangeOrders.load({ exchange, base, quote });
