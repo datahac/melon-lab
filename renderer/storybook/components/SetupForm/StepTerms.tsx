@@ -22,22 +22,20 @@ export const StepTerms: StatelessComponent<StepTermsProps> = ({
   handleChange,
   touched,
   values,
-}) => {
-  return (
-    <div className="setup__step">
-      <style jsx>{styles}</style>
-      <h3>Terms and Conditions</h3>
-      <TermsConditions />
-      <Checkbox
-        onInputChange={handleChange}
-        defaultChecked={values.terms}
-        required={true}
-        name="terms"
-        text="I accept the terms and conditions"
-        error={touched.terms && errors.terms}
-      />
-    </div>
-  );
-};
+}) => (
+  <div className="setup__step">
+    <style jsx>{styles}</style>
+    <h3>Terms and Conditions</h3>
+    <TermsConditions />
+    <Checkbox
+      onInputChange={handleChange}
+      defaultChecked={values.terms}
+      name="terms"
+      text="I accept the terms and conditions"
+      error={touched.terms && errors.terms}
+      required={true}
+    />
+  </div>
+);
 
 export default StepTerms;

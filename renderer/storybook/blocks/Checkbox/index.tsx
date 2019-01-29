@@ -9,12 +9,13 @@ export interface CheckboxProps {
   name: string;
   onInputChange?: () => void;
   text: string;
-  value: string;
+  value?: string;
   style?: 'default' | 'boxed';
-  Additional;
-  AdditionalProps;
+  Additional?: any;
+  AdditionalProps?: any;
   roundedCorners?: boolean;
-  error;
+  error?: string;
+  required?: boolean;
 }
 
 const Checkbox: StatelessComponent<CheckboxProps> = ({
@@ -29,6 +30,7 @@ const Checkbox: StatelessComponent<CheckboxProps> = ({
   style,
   roundedCorners,
   error,
+  required,
 }) => {
   const checkboxClassNames = classNames('checkbox__label', {
     [`checkbox__label--${style}`]: style,
@@ -48,6 +50,7 @@ const Checkbox: StatelessComponent<CheckboxProps> = ({
           defaultChecked={defaultChecked}
           disabled={disabled}
           onChange={onInputChange}
+          required={required}
         />
         <span className="checkbox__checkmark" />
 

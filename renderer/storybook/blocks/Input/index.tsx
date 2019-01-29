@@ -24,6 +24,7 @@ export interface InputProps {
   min?: number;
   max?: number;
   centerText?: boolean;
+  required?: boolean;
 }
 
 const Input: StatelessComponent<InputProps> = ({
@@ -46,6 +47,7 @@ const Input: StatelessComponent<InputProps> = ({
   min,
   max,
   centerText,
+  required,
 }) => {
   const inputClassNames = classNames('input', {
     'input--inside-label': insideLabel,
@@ -75,6 +77,7 @@ const Input: StatelessComponent<InputProps> = ({
           type="text"
           min={min}
           max={max}
+          required={required}
         />
       ) : (
         <input
@@ -92,6 +95,7 @@ const Input: StatelessComponent<InputProps> = ({
           onBlur={onBlur}
           min={min}
           max={max}
+          required={required}
         />
       )}
       {error && <div className="input__error">{error}</div>}
