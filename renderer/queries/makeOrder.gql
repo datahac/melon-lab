@@ -18,6 +18,9 @@ mutation EstimateMakeOrderMutation(
     gasPrice
     to
     value
+    ... on UnsignedTransactionWithOrder {
+      signedOrder
+    }
   }
 }
 
@@ -29,9 +32,11 @@ mutation ExecuteMakeOrderMutation(
   $to: String!
   $value: String!
   $exchange: ExchangeEnum!
+  $signedOrder: String
 ) {
   execute: executeMakeOrder(
     exchange: $exchange
+    signedOrder: $signedOrder
     unsigned: {
       data: $data
       from: $from
@@ -40,27 +45,5 @@ mutation ExecuteMakeOrderMutation(
       to: $to
       value: $value
     }
-  ) @sign @account {
-    id
-    trade {
-      base {
-        token {
-          symbol
-        }
-      }
-      quote {
-        token {
-          symbol
-        }
-      }
-    }
-    price
-    volume
-    type
-    exchange
-    metadata {
-      id
-      isActive
-    }
-  }
+  ) @sign @account
 }

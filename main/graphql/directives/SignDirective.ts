@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import Accounts from 'web3-eth-accounts';
 import { SchemaDirectiveVisitor } from 'graphql-tools';
 import { GraphQLField } from 'graphql';
@@ -17,13 +18,14 @@ export class SignDirective extends SchemaDirectiveVisitor {
         const accounts = new Accounts(environment.eth.currentProvider);
         const unsigned = args[this.args.source];
         const signed = await accounts.signTransaction(
-          unsigned,
+          R.pick(['data', 'from', 'gas', 'gasPrice', 'to', 'value'], unsigned),
           wallet && wallet.privateKey,
         );
 
         const newArgs = {
           ...args,
           [this.args.target]: signed,
+          signedOrder: unsigned.signedOrder,
         };
 
         return field.resolve(parent, newArgs, context, info);

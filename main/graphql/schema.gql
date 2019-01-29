@@ -269,13 +269,32 @@ type Deployment {
   tokens: [Token]
 }
 
-type UnsignedTransaction {
+interface UnsignedTransactionBase {
   data: String
   from: String
   gas: String
   gasPrice: String
   to: String
   value: String
+}
+
+type UnsignedTransaction implements UnsignedTransactionBase {
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
+}
+
+type UnsignedTransactionWithOrder implements UnsignedTransactionBase {
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
+  signedOrder: String
 }
 
 input UnsignedTransactionInput {
@@ -478,13 +497,14 @@ type Mutation {
     buyQuantity: String!
     sellToken: String!
     sellQuantity: String!
-  ): UnsignedTransaction @account
+  ): UnsignedTransactionWithOrder @account
 
   executeMakeOrder(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     exchange: ExchangeEnum!
-  ): OasisDexOrder @account @sign
+    signedOrder: String
+  ): Boolean @account @sign
 
   estimateTakeOrder(
     id: String
