@@ -5,10 +5,13 @@ import {
   Network,
 } from '@melonproject/exchange-aggregator';
 import {
+  Exchanges,
   Environment,
   getTokenBySymbol,
   getChainName,
 } from '@melonproject/protocol';
+
+import { getTestOrders } from './getTestOrders';
 
 export default R.curryN(
   4,
@@ -19,6 +22,9 @@ export default R.curryN(
     quote: string,
   ) => {
     const chain = await getChainName(environment);
+    const testingRelayers = ['development', 'test'].includes(
+      process.env.NODE_ENV,
+    );
 
     const options = {
       network: Network[chain.toUpperCase()],
@@ -36,7 +42,9 @@ export default R.curryN(
             environment,
           });
         case 'RADAR_RELAY':
-          return exchanges.radarrelay.fetch(options);
+          return testingRelayers
+            ? getTestOrders(base, quote, Exchanges.ZeroEx)
+            : exchanges.radarrelay.fetch(options);
         case 'KYBER_NETWORK':
           return exchanges.kyber.fetch(options);
         case 'ETHFINEX':
