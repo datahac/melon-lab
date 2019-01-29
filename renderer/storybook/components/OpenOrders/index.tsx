@@ -70,8 +70,9 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                       {isManager && (
                         <CellBody noPadding={false}>
                           <Button
+                            icon="cross"
                             size="small"
-                            style="secondary"
+                            style="clear"
                             onClick={() =>
                               onClick(
                                 order.id,
@@ -80,9 +81,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                               )
                             }
                             disabled={!canInteract}
-                          >
-                            Cancel
-                          </Button>
+                          />
                         </CellBody>
                       )}
                     </Row>

@@ -59,4 +59,11 @@ storiesOf('Blocks|Button', module)
         Success button
       </Button>
     );
+  })
+  .add('With icon', () => {
+    return (
+      <Button {...data} icon="cross">
+        Danger button
+      </Button>
+    );
   });

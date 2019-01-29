@@ -1,20 +1,12 @@
 import React, { StatelessComponent, Fragment } from 'react';
 
 const dimensions = {
-  twitter: {
-    height: 1200,
-    width: 1200,
-  },
   wallet: {
     height: 1200,
     width: 1080,
   },
   report: {
     height: 920,
-    width: 1200,
-  },
-  plus: {
-    height: 1200,
     width: 1200,
   },
 };
@@ -34,8 +26,8 @@ export const Icons: StatelessComponent<IconsProps> = ({
     <svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={`0 0 ${dimensions[name] ? dimensions[name].height : 0} ${
-        dimensions[name] ? dimensions[name].width : 0
+      viewBox={`0 0 ${dimensions[name] ? dimensions[name].height : 1200} ${
+        dimensions[name] ? dimensions[name].width : 1200
       }`}
       height={height}
       width={width}
@@ -99,6 +91,19 @@ export const Icons: StatelessComponent<IconsProps> = ({
             />
             <path d="M829.525 632.563H370.3c-18.375 0-33.3-14.85-33.3-33.263 0-18.375 14.887-33.3 33.3-33.3h459.225c18.375 0 33.263 14.925 33.263 33.3 0 18.413-14.85 33.263-33.263 33.263z" />
             <path d="M599.3 862.788c-18.375 0-33.3-14.888-33.3-33.263V370.3c0-18.375 14.925-33.3 33.3-33.3 18.375 0 33.263 14.925 33.263 33.3v459.225c0 18.413-14.85 33.263-33.263 33.263z" />
+          </g>
+        </Fragment>
+      )}
+
+      {name === 'cross' && (
+        <Fragment>
+          <g fill="#010002" fill-rule="evenodd">
+            <path
+              d="M600 1200C269.148 1200 0 930.822 0 599.98 0 269.14 269.148 0 600 0s600 269.14 600 599.98c.039 330.842-269.148 600.02-600 600.02zm0-1131.46c-293.065 0-531.457 238.424-531.457 531.44 0 293.017 238.392 531.402 531.457 531.402 293.026 0 531.419-238.385 531.419-531.401 0-293.017-238.393-531.44-531.419-531.44v-.001z"
+              fill-rule="nonzero"
+            />
+            <path d="M461.08 785.163c-12.993 12.993-34.047 13.046-47.067.026-12.993-12.993-13.02-34.074 0-47.094l324.721-324.72c12.993-12.994 34.074-12.968 47.067.025 13.02 13.02 13.02 34.021 0 47.041l-324.72 324.722z" />
+            <path d="M785.189 785.775c-12.993 12.993-34.074 13.02-47.067.026L413.4 461.081c-12.993-12.994-12.993-34.101 0-47.094 12.994-12.993 34.075-12.967 47.068.026l324.72 324.721c13.02 13.02 13.02 34.021 0 47.041z" />
           </g>
         </Fragment>
       )}

@@ -87,6 +87,7 @@
   text-transform: none;
   line-height: initial;
   text-align: left;
+  display: inline-block;
 }
 
 .button--clear:hover:enabled {
