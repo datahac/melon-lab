@@ -109,11 +109,15 @@ export default class OrderFormContainer extends React.PureComponent {
         components={[
           <NetworkConsumer />,
           <FundManagerConsumer />,
-          <Query
-            query={kyberPriceQuery}
-            variables={this.state.kyberQuery}
-            skip={!this.state.kyberQuery}
-          />,
+          ({ render }) => (
+            <Query
+              query={kyberPriceQuery}
+              variables={this.state.kyberQuery}
+              skip={!this.state.kyberQuery}
+            >
+              {render}
+            </Query>
+          ),
         ]}
       >
         {([network, managerProps, result]) => {
