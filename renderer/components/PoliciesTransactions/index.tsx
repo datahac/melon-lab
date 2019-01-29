@@ -152,25 +152,25 @@ export default withRouter(props => {
   const policiesToEstimations = {
     maxConcentration: {
       mutation: estimateDeployMaxConcentrationMutation,
-      variables: policiesValues && {
+      variables: R.path('maxConcentration', policiesValues) && {
         percent: policiesValues.maxConcentration,
       },
     },
     priceTolerance: {
       mutation: estimateDeployPriceToleranceMutation,
-      variables: policiesValues && {
+      variables: R.path('priceTolerance', policiesValues) && {
         percent: policiesValues.priceTolerance,
       },
     },
     maxPositions: {
       mutation: estimateDeployMaxPositionsMutation,
-      variables: policiesValues && {
+      variables: R.path('maxPositions', policiesValues) && {
         positions: policiesValues.maxPositions,
       },
     },
     userWhitelist: {
       mutation: estimateDeployUserWhitelistMutation,
-      variables: policiesValues && {
+      variables: R.path('userWhitelist', policiesValues) && {
         addresses: policiesValues.userWhitelist
           .replace(/^\s+|\s+$/g, '')
           .split('\n'),
@@ -178,19 +178,21 @@ export default withRouter(props => {
     },
     assetWhitelist: {
       mutation: estimateDeployAssetWhitelistMutation,
-      variables: () => ({
-        symbols: policiesValues.assetWhitelist.reduce((carry, current) => {
-          return carry.concat([current.value]);
-        }, []),
-      }),
+      variables: () =>
+        R.path('assetWhitelist', policiesValues) && {
+          symbols: policiesValues.assetWhitelist.reduce((carry, current) => {
+            return carry.concat([current.value]);
+          }, []),
+        },
     },
     assetBlacklist: {
       mutation: estimateDeployAssetBlacklistMutation,
-      variables: () => ({
-        symbols: policiesValues.assetBlacklist.reduce((carry, current) => {
-          return carry.concat([current.value]);
-        }, []),
-      }),
+      variables: () =>
+        R.path('assetBlacklist', policiesValues) && {
+          symbols: policiesValues.assetBlacklist.reduce((carry, current) => {
+            return carry.concat([current.value]);
+          }, []),
+        },
     },
   };
 
