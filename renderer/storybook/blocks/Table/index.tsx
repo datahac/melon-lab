@@ -13,6 +13,8 @@ export interface CellProps {
   onClick?: (e, headFor) => void;
   sorted?: string;
   textAlign?: string;
+  width?: number;
+  noPadding: boolean;
 }
 
 export interface RowProps {
@@ -69,6 +71,7 @@ const CellBody: StatelessComponent<CellProps> = ({
   children,
   colSpan,
   textAlign,
+  width,
   noPadding = true,
 }) => {
   const cellBodyClassNames = classNames('table__cell', {
@@ -80,7 +83,7 @@ const CellBody: StatelessComponent<CellProps> = ({
   return (
     <Fragment>
       <style jsx>{styles}</style>
-      <td colSpan={colSpan} className={cellBodyClassNames}>
+      <td colSpan={colSpan} className={cellBodyClassNames} width={width}>
         {children}
       </td>
     </Fragment>

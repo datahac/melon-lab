@@ -58,7 +58,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                     order.type === 'ASK' ? order.trade.base : order.trade.quote;
 
                   return (
-                    <Row key={order.id} size={isManager && 'small'}>
+                    <Row key={order.id} size="medium">
                       <CellBody noPadding={false}>{sell.token.symbol}</CellBody>
                       <CellBody>{buy.token.symbol}</CellBody>
                       <CellBody>
@@ -68,7 +68,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                         {order.volume && displayQuantity(order.volume)}
                       </CellBody>
                       {isManager && (
-                        <CellBody noPadding={false}>
+                        <CellBody noPadding={false} width={50}>
                           <Button
                             icon="cross"
                             size="small"

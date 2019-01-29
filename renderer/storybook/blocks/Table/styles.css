@@ -20,6 +20,12 @@
   padding-bottom: var(--space-xxs);
 }
 
+.table__row--medium :global(td),
+.table__row--medium :global(th) {
+  padding-top: var(--space-xs);
+  padding-bottom: var(--space-xs);
+}
+
 .table__row--large :global(td),
 .table__row--large :global(th) {
   padding-top: var(--space-s);
