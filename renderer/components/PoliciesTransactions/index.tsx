@@ -149,50 +149,59 @@ export default withRouter(props => {
     R.toPairs,
   )(policiesValues);
 
+  console.log(
+    R.path(['assetBlacklist'], policiesValues) &&
+      policiesValues.assetBlacklist.reduce((carry, current) => {
+        return carry.concat([current.value]);
+      }, []),
+  );
+
   const policiesToEstimations = {
     maxConcentration: {
       mutation: estimateDeployMaxConcentrationMutation,
-      variables: R.path('maxConcentration', policiesValues) && {
-        percent: policiesValues.maxConcentration,
+      variables: {
+        percent: R.path(['maxConcentration'], policiesValues),
       },
     },
     priceTolerance: {
       mutation: estimateDeployPriceToleranceMutation,
-      variables: R.path('priceTolerance', policiesValues) && {
-        percent: policiesValues.priceTolerance,
+      variables: {
+        percent: R.path(['priceTolerance'], policiesValues),
       },
     },
     maxPositions: {
       mutation: estimateDeployMaxPositionsMutation,
-      variables: R.path('maxPositions', policiesValues) && {
-        positions: policiesValues.maxPositions,
+      variables: {
+        positions: R.path(['maxPositions'], policiesValues),
       },
     },
     userWhitelist: {
       mutation: estimateDeployUserWhitelistMutation,
-      variables: R.path('userWhitelist', policiesValues) && {
-        addresses: policiesValues.userWhitelist
-          .replace(/^\s+|\s+$/g, '')
-          .split('\n'),
+      variables: {
+        addresses:
+          R.path(['userWhitelist'], policiesValues) &&
+          policiesValues.userWhitelist.replace(/^\s+|\s+$/g, '').split('\n'),
       },
     },
     assetWhitelist: {
       mutation: estimateDeployAssetWhitelistMutation,
-      variables: () =>
-        R.path('assetWhitelist', policiesValues) && {
-          symbols: policiesValues.assetWhitelist.reduce((carry, current) => {
+      variables: {
+        symbols:
+          R.path(['assetWhitelist'], policiesValues) &&
+          policiesValues.assetWhitelist.reduce((carry, current) => {
             return carry.concat([current.value]);
           }, []),
-        },
+      },
     },
     assetBlacklist: {
       mutation: estimateDeployAssetBlacklistMutation,
-      variables: () =>
-        R.path('assetBlacklist', policiesValues) && {
-          symbols: policiesValues.assetBlacklist.reduce((carry, current) => {
+      variables: {
+        symbols:
+          R.path(['assetBlacklist'], policiesValues) &&
+          policiesValues.assetBlacklist.reduce((carry, current) => {
             return carry.concat([current.value]);
           }, []),
-        },
+      },
     },
   };
 
