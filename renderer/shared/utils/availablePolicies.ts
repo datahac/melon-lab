@@ -20,6 +20,7 @@ const availablePolicies = (
     name: 'Price tolerance',
     desc: 'The higher the tolerance, the greater the risk',
     unit: '%',
+    defaultValue: '',
     Component: Input,
     ComponentProps: {
       placeholder: 0,
@@ -29,6 +30,7 @@ const availablePolicies = (
     name: 'Max position',
     desc: 'The higher the tolerance, the greater the risk',
     unit: '%',
+    defaultValue: '',
     Component: Input,
     ComponentProps: {
       placeholder: 0,
@@ -38,6 +40,7 @@ const availablePolicies = (
     name: 'Max concentration',
     desc: 'High Diversification <-> High Concentration',
     unit: '%',
+    defaultValue: '',
     Component: Input,
     ComponentProps: {
       placeholder: 0,
@@ -46,6 +49,7 @@ const availablePolicies = (
   userWhitelist: {
     name: 'User whitelist',
     desc: 'Whitelisted ethereum addresses (one per line)',
+    defaultValue: '',
     Component: Textarea,
     ComponentProps: {
       placeholder: '0x0000...\n0x0000...',
@@ -54,6 +58,7 @@ const availablePolicies = (
   assetWhitelist: {
     name: 'Asset whitelist',
     desc: 'Whitelisted assets (one per line)',
+    defaultValue: [],
     Component: MultiDropdown,
     ComponentProps: {
       placeholder: 'MLN\nETH',
@@ -63,6 +68,7 @@ const availablePolicies = (
   assetBlacklist: {
     name: 'Asset blacklist',
     desc: 'Whitelisted assets (one per line)',
+    defaultValue: [],
     Component: MultiDropdown,
     ComponentProps: {
       placeholder: 'XRP\nEOS',

@@ -2,6 +2,7 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { withHandlers, compose } from 'recompose';
 import gql from 'graphql-tag';
+import availablePolicies from '~/shared/utils/availablePolicies';
 
 const uniqueFundQuery = gql`
   query UniqueFundQuery($name: String!) {
@@ -98,7 +99,7 @@ const withFormHandlers = withHandlers({
     } else {
       props.setFieldValue('policies', {
         ...props.values.policies,
-        [value]: '',
+        [value]: availablePolicies()[value].defaultValue,
       });
     }
   },
@@ -136,8 +137,6 @@ const withFormHandlers = withHandlers({
         return props.setPage(props.page + 1);
       });
     }
-
-    return props.setPage(props.page + 1);
   },
   onClickPrev: props => e => {
     e.preventDefault();
