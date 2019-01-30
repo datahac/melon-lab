@@ -190,7 +190,12 @@ export default {
         };
       });
 
-      return result;
+      // TODO: Remove thiss
+      const withoutEthfinex = result.filter(
+        order => order.exchange !== 'ETHFINEX',
+      );
+
+      return withoutEthfinex;
     },
   },
   Ranking: {

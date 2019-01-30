@@ -36,7 +36,7 @@ const estimateCancelOrder = async (
   }
 
   if (exchange === 'RADAR_RELAY') {
-    const result = await cancel0xOrder.prepare(environment, tradingAddress, {
+    const result = await cancel0xOrder.prepare(env, tradingAddress, {
       orderHashHex: id,
     });
     return result && result.rawTransaction;

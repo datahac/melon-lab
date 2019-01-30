@@ -73,7 +73,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                             icon="cross"
                             size="small"
                             style="clear"
-                            onClick={() => onClick(order.id)}
+                            onClick={() => onClick(order)}
                             disabled={!canInteract}
                           />
                         </CellBody>
