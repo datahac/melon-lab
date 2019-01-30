@@ -54,6 +54,11 @@ import {
   ExecuteTakeOrderMutation,
 } from '~/queries/takeOrder.gql';
 
+import {
+  EstimateCancelOrderMutation,
+  ExecuteCancelOrderMutation,
+} from '~/queries/cancelOrder.gql';
+
 import * as fundQuery from '~/queries/fund.gql';
 import * as OpenOrdersQuery from '~/queries/openOrders.gql';
 
@@ -368,6 +373,52 @@ describe('Setup fund and trade on Oasis Dex', () => {
 
     expect(openOrders.errors).toBeUndefined();
     expect(openOrders.data).toBeTruthy();
+  });
+
+  it('Cancel oasisdex order', async () => {
+    const openOrders = await execute(schema, OpenOrdersQuery, null, context(), {
+      fundAddress,
+    });
+
+    expect(openOrders.errors).toBeUndefined();
+    expect(openOrders.data).toBeTruthy();
+
+    const orderToCancel = R.pathOr([], ['data', 'openOrders'], openOrders).find(
+      order =>
+        order.type === 'BID' &&
+        order.trade.quote.token.symbol === 'WETH' &&
+        order.exchange === 'OASIS_DEX',
+    );
+
+    expect(orderToCancel).toBeTruthy();
+
+    const estimateCancelOrder = await execute(
+      schema,
+      EstimateCancelOrderMutation,
+      null,
+      context(),
+      {
+        id: orderToCancel.id,
+        exchange: 'OASIS_DEX',
+      },
+    );
+
+    expect(estimateCancelOrder.errors).toBeUndefined();
+    expect(estimateCancelOrder.data).toBeTruthy();
+
+    const executeCancelOrder = await execute(
+      schema,
+      ExecuteCancelOrderMutation,
+      null,
+      context(),
+      {
+        exchange: 'OASIS_DEX',
+        ...R.path(['data', 'estimate'], estimateCancelOrder),
+      },
+    );
+
+    expect(executeCancelOrder.errors).toBeUndefined();
+    expect(executeCancelOrder.data).toBeTruthy();
   });
 
   it('Oasis take order', async () => {
