@@ -34,22 +34,17 @@ const executeMakeOrder = async (
     );
 
     const chain = await getChainName(env);
+    const parsedOrder = JSON.parse(signedOrder);
 
     if (chain === 'kovan') {
       await axios.post(
         'https://api.kovan.radarrelay.com/v2/orders',
-        JSON.parse(signedOrder),
+        parsedOrder,
       );
     } else if (chain === 'mainnet') {
-      await axios.post(
-        'https://api.radarrelay.com/v2/orders',
-        JSON.parse(signedOrder),
-      );
+      await axios.post('https://api.radarrelay.com/v2/orders', parsedOrder);
     } else {
-      console.log(
-        'POST https://api.radarrelay.com/v2/orders',
-        JSON.parse(signedOrder),
-      );
+      console.log('POST https://api.radarrelay.com/v2/orders', parsedOrder);
     }
 
     return result;

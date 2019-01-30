@@ -2,7 +2,7 @@ import ModalTransaction from '../ModalTransaction';
 
 import {
   EstimateCancelOrderMutation,
-  ExecuteCancelOasisDexOrderMutation,
+  ExecuteCancelOrderMutation,
 } from '~/queries/cancelOrder.gql';
 
 export default props => (
@@ -11,12 +11,16 @@ export default props => (
     open={!!props.values}
     estimate={{
       mutation: EstimateCancelOrderMutation,
+      exchange: 'OASIS_DEX',
       variables: {
         id: props.values,
       },
     }}
     execute={{
-      mutation: ExecuteCancelOasisDexOrderMutation,
+      mutation: ExecuteCancelOrderMutation,
+      variables: props.values && {
+        exchange: props.values.exchange,
+      },
       refetchQueries: () => ['OrdersQuery', 'OpenOrdersQuery'],
       onCompleted: () => {
         props.setSelectedOrder(null);

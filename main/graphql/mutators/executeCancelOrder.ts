@@ -2,6 +2,7 @@ import * as Tm from '@melonproject/token-math';
 import {
   withDifferentAccount,
   cancelOasisDexOrder,
+  cancel0xOrder,
 } from '@melonproject/protocol';
 
 const executeCancelOrder = async (
@@ -23,7 +24,17 @@ const executeCancelOrder = async (
     return !!result;
   }
 
-  throw new Error(`Make order not implemented for ${exchange}`);
+  if (exchange === 'RADAR_RELAY') {
+    const result = await cancel0xOrder.send(
+      env,
+      tradingAddress,
+      signed.rawTransaction,
+    );
+
+    return !!result;
+  }
+
+  throw new Error(`Cancel order not implemented for ${exchange}`);
 };
 
 export { executeCancelOrder };

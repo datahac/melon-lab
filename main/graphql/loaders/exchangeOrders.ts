@@ -13,6 +13,11 @@ import {
 
 import { getTestOrders } from './getTestOrders';
 
+// HACK: We need to cache the open orders here (Signed Orders) to
+const offChainOrders = new Map();
+export const getOffChainOrder = id => offChainOrders.get(id);
+export const addOffChainOrder = order => offChainOrders.set(order.id, order);
+
 export default R.curryN(
   4,
   async (

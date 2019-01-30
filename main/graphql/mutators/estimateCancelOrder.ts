@@ -1,9 +1,11 @@
 import * as R from 'ramda';
 
+import * as Tm from '@melonproject/token-math';
 import {
   getOasisDexOrder,
   withDifferentAccount,
   cancelOasisDexOrder,
+  cancel0xOrder,
 } from '@melonproject/protocol';
 
 const estimateCancelOrder = async (
@@ -23,13 +25,6 @@ const estimateCancelOrder = async (
 
     const order = await getOasisDexOrder(env, oasisDex, { id });
 
-    // const makerAsset = new Tm.Address(
-    //   getTokenBySymbol(env, sellToken).address || '',
-    // );
-    // const takerAsset = new Tm.Address(
-    //   getTokenBySymbol(env, buyToken).address || '',
-    // );
-
     const result = await cancelOasisDexOrder.prepare(env, tradingAddress, {
       id: id.toString(),
       maker: tradingAddress.toString(),
@@ -40,7 +35,14 @@ const estimateCancelOrder = async (
     return result && result.rawTransaction;
   }
 
-  throw new Error(`Make order not implemented for ${exchange}`);
+  if (exchange === 'RADAR_RELAY') {
+    const result = await cancel0xOrder.prepare(environment, tradingAddress, {
+      orderHashHex: id,
+    });
+    return result && result.rawTransaction;
+  }
+
+  throw new Error(`Cancel order not implemented for ${exchange}`);
 };
 
 export { estimateCancelOrder };

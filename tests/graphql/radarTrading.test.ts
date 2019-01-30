@@ -32,6 +32,13 @@ import {
   ExecuteMakeOrderMutation,
 } from '~/queries/makeOrder.gql';
 
+import {
+  EstimateCancelOrderMutation,
+  ExecuteCancelOrderMutation,
+} from '~/queries/cancelOrder.gql';
+
+import * as OpenOrdersQuery from '~/queries/openOrders.gql';
+
 // import {
 //   SignOrder
 // } from '~/queries/'
@@ -156,7 +163,7 @@ describe('Trade on radar relay', () => {
     expect(estimateMakeOrder.errors).toBeUndefined();
     expect(estimateMakeOrder.data).toBeTruthy();
 
-    const result = await execute(
+    const executeMakeOrder = await execute(
       schema,
       ExecuteMakeOrderMutation,
       null,
@@ -167,7 +174,53 @@ describe('Trade on radar relay', () => {
       },
     );
 
-    expect(result.errors).toBeUndefined();
-    expect(result.data).toBeTruthy();
+    expect(executeMakeOrder.errors).toBeUndefined();
+    expect(executeMakeOrder.data).toBeTruthy();
+  });
+
+  it('Radar cancel', async () => {
+    const openOrders = await execute(schema, OpenOrdersQuery, null, context(), {
+      fundAddress: routes.hubAddress,
+    });
+
+    expect(openOrders.errors).toBeUndefined();
+    expect(openOrders.data).toBeTruthy();
+
+    const orderToCancel = R.pathOr([], ['data', 'openOrders'], openOrders).find(
+      order =>
+        order.type === 'BID' &&
+        order.trade.quote.token.symbol === 'WETH' &&
+        order.exchange === 'RADAR_RELAY',
+    );
+
+    expect(orderToCancel).toBeTruthy();
+
+    const estimateCancelOrder = await execute(
+      schema,
+      EstimateCancelOrderMutation,
+      null,
+      context(),
+      {
+        id: orderToCancel.id,
+        exchange: 'RADAR_RELAY',
+      },
+    );
+
+    expect(estimateCancelOrder.errors).toBeUndefined();
+    expect(estimateCancelOrder.data).toBeTruthy();
+
+    const executeCancelOrder = await execute(
+      schema,
+      ExecuteCancelOrderMutation,
+      null,
+      context(),
+      {
+        exchange: 'RADAR_RELAY',
+        ...R.path(['data', 'estimate'], estimateCancelOrder),
+      },
+    );
+
+    expect(executeCancelOrder.errors).toBeUndefined();
+    expect(executeCancelOrder.data).toBeTruthy();
   });
 });

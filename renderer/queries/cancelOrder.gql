@@ -9,7 +9,7 @@ mutation EstimateCancelOrderMutation($id: String!, $exchange: ExchangeEnum!) {
   }
 }
 
-mutation ExecuteCancelOasisDexOrderMutation(
+mutation ExecuteCancelOrderMutation(
   $data: String!
   $from: String!
   $gas: String!
