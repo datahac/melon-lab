@@ -30,8 +30,8 @@ export default props => {
               : props.values.quantity.token.symbol,
           sellQuantity:
             props.values.type === 'Buy'
-             ? props.values.total.quantity.toString()
-             : props.values.quantity.quantity.toString()
+              ? props.values.total.quantity.toString()
+              : props.values.quantity.quantity.toString(),
         },
       }}
       execute={{

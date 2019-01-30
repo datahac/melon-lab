@@ -408,7 +408,8 @@ describe('Setup fund and trade on Oasis Dex', () => {
       {
         id: `${orderToTake.id}`,
         exchange: 'OASIS_DEX',
-        buyQuantity: buy.quantity.toString(),
+        // buyQuantity: buy.quantity.toString(),
+        sellQuantity: buy.quantity.toString(),
       },
     );
 
