@@ -48,7 +48,7 @@ export const StepTerms: StatelessComponent<StepTermsProps> = ({
             <Fragment>
               {Object.keys(values.policies).map((keyName, i) => (
                 <Row key={`${keyName}-${i}`}>
-                  <CellHead>{availablePolicies[keyName].name}: </CellHead>
+                  <CellHead>{availablePolicies[keyName].name}</CellHead>
 
                   <CellBody>
                     {(keyName === 'assetWhitelist' ||
