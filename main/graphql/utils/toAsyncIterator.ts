@@ -13,30 +13,38 @@ function toAsyncIterator(observable$: Rx.Observable<any>) {
     return x;
   };
 
-  let promise = promiseCapability();
-  const subscription = observable$.subscribe(
-    value => {
-      promise.resolve({ value, done: false });
-      promise = promiseCapability();
-    },
-    error => {
-      promise.reject(error);
-    },
-    () => {
-      promise.resolve({ value: undefined, done: true });
-    },
-  );
+  let subscription;
+  let promise;
 
   return {
     next() {
+      if (typeof promise === 'undefined') {
+        promise = promiseCapability();
+      }
+
+      if (typeof subscription === 'undefined') {
+        subscription = observable$.subscribe(
+          value => {
+            promise.resolve({ value, done: false });
+            promise = promiseCapability();
+          },
+          error => {
+            promise.reject(error);
+          },
+          () => {
+            promise.resolve({ value: undefined, done: true });
+          },
+        );
+      }
+
       return promise.promise;
     },
     return() {
-      subscription.unsubscribe();
+      subscription && subscription.unsubscribe();
       return Promise.resolve({ value: undefined, done: true });
     },
     throw(error) {
-      subscription.unsubscribe();
+      subscription && subscription.unsubscribe();
       return Promise.reject(error);
     },
     [$$asyncIterator]() {

@@ -41,19 +41,43 @@ enum PolicyTypeEnum {
   INVEST
 }
 
+enum OrderEventTypeEnum {
+  SET
+  REMOVE
+}
+
+interface OrderEvent {
+  id: String!
+  exchange: ExchangeEnum!
+  event: OrderEventTypeEnum!
+}
+
+type SetOrderEvent implements OrderEvent {
+  id: String!
+  exchange: ExchangeEnum!
+  order: Order!
+  event: OrderEventTypeEnum!
+}
+
+type RemoveOrderEvent implements OrderEvent {
+  id: String!
+  exchange: ExchangeEnum!
+  event: OrderEventTypeEnum!
+}
+
 interface Order {
-  id: String
+  id: String!
   trade: Price!
-  price: String
+  price: String!
   volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
 }
 
 type EthfinexOrder implements Order {
-  id: String
+  id: String!
   trade: Price!
-  price: String
+  price: String!
   volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
@@ -61,9 +85,9 @@ type EthfinexOrder implements Order {
 }
 
 type ZeroExOrder implements Order {
-  id: String
+  id: String!
   trade: Price!
-  price: String
+  price: String!
   volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
@@ -71,9 +95,9 @@ type ZeroExOrder implements Order {
 }
 
 type OasisDexOrder implements Order {
-  id: String
+  id: String!
   trade: Price!
-  price: String
+  price: String!
   volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
@@ -81,9 +105,9 @@ type OasisDexOrder implements Order {
 }
 
 type KyberNetworkOrder implements Order {
-  id: String
+  id: String!
   trade: Price!
-  price: String
+  price: String!
   volume: String!
   type: OrderTypeEnum!
   exchange: ExchangeEnum!
@@ -615,6 +639,7 @@ type Mutation {
 }
 
 type Subscription {
+  orders(exchange: ExchangeEnum!, base: String!, quote: String!): [OrderEvent]
   currentBlock: String
   nodeSynced: Boolean
   priceFeedUp: Boolean

@@ -1,36 +1,42 @@
 import React, { useState } from 'react';
+import { useEventCallback } from "rxjs-hooks";
+import { scan, map, combineLatest, filter } from "rxjs/operators";
 import * as R from 'ramda';
 import OrderBook from '~/components/OrderBook';
 import Composer from 'react-composer';
-import { Query } from 'react-apollo';
+import { Subscription } from 'react-apollo';
 import {
   isBidOrder,
   isAskOrder,
   sortOrders,
   reduceOrderVolumes,
+  reduceOrderEvents,
 } from '@melonproject/exchange-aggregator';
 import availableExchanges from '~/shared/utils/availableExchanges';
+import { OrdersSubscription as query } from '~/queries/OrdersSubscription.gql';
 
-import { OrdersQuery as query } from '~/queries/orderbook.gql';
-
-const OrdersQuery = ({ exchange, baseAsset, quoteAsset, children }) => (
-  <Query
+const OrdersSubscription = ({ eventCallback, exchange, baseAsset, quoteAsset, children }) => (
+  <Subscription
     ssr={false}
-    query={query}
+    subscription={query}
     variables={{
       exchange,
       base: baseAsset,
       quote: quoteAsset,
     }}
+    onSubscriptionData={({ subscriptionData: { data } }) => {
+      eventCallback(data.orders);
+    }}
   >
     {children}
-  </Query>
+  </Subscription>
 );
 
-const AggregatedOrders = ({ baseAsset, quoteAsset, exchanges, children }) => (
+const AggregatedOrders = ({ eventCallback, baseAsset, quoteAsset, exchanges, children }) => (
   <Composer
     components={exchanges.map(exchange => (
-      <OrdersQuery
+      <OrdersSubscription
+        eventCallback={eventCallback}
         exchange={exchange}
         quoteAsset={quoteAsset}
         baseAsset={baseAsset}
@@ -39,70 +45,77 @@ const AggregatedOrders = ({ baseAsset, quoteAsset, exchanges, children }) => (
   >
     {orderResponses => {
       const loading = !!orderResponses.find(R.propEq('loading', true));
-      const orders = [].concat(
-        ...orderResponses.map(R.pathOr([], ['data', 'orders'])),
-      );
-
-      const asks = orders
-        .filter(isAskOrder)
-        .sort(sortOrders)
-        .reverse()
-        .reduce(reduceOrderVolumes, []);
-
-      const bids = orders
-        .filter(isBidOrder)
-        .sort(sortOrders)
-        .reduce(reduceOrderVolumes, []);
-
-      return children({
-        asks,
-        bids,
-        loading,
-      });
+      return children({ loading });
     }}
   </Composer>
 );
 
-export default ({ baseAsset, quoteAsset, isManager, setOrder }) => {
-  const [selectedExchanges, setExchanges] = useState(
-    Object.keys(availableExchanges),
-  );
+const useExchangeSelector = (availableExchangesKeys) => {
+  const [current, set] = useState(availableExchangesKeys);
 
-  const updateExchanges = e => {
-    const value = e.target.value;
-    const tempExchanges = selectedExchanges;
+  const setFromEvent = event => {
+    const value = event.target.value;
 
     if (value === 'ALL') {
-      if (
-        selectedExchanges.length ===
-        Object.keys(availableExchanges).map(([key]) => key).length
-      ) {
-        return setExchanges([]);
-      }
-      return setExchanges(Object.keys(availableExchanges));
-    }
-    if (!selectedExchanges.includes(value)) {
-      tempExchanges.push(value);
-    } else {
-      const index = selectedExchanges.indexOf(value);
-      tempExchanges.splice(index, 1);
+      const unselect = current.length === availableExchangesKeys.length;
+      return set(unselect ? [] : availableExchangesKeys);
     }
 
-    return setExchanges(tempExchanges);
+    if (!current.includes(value)) {
+      return set([...current, value]);
+    }
+
+    const index = current.indexOf(value);
+    return set([].concat(current.slice(0, index), current.slice(index + 1)));
   };
+
+  return [current, setFromEvent];
+};
+
+export default ({ baseAsset, quoteAsset, isManager, setOrder }) => {
+  const allExchanges = Object.entries(availableExchanges);
+  const allExchangesKeys = Object.keys(availableExchanges);
+  const [selectedExchanges, updateExchanges] = useExchangeSelector(allExchangesKeys);
+
+  const [eventCallback, [asks, bids]] = useEventCallback(
+    (events$, inputs$, _) => (events$ as any).pipe(
+      scan((carry, events) => events.reduce(reduceOrderEvents, carry), []),
+      combineLatest(inputs$, (orders, [exchanges]) => {
+        const filter = R.compose(R.includes(R.__, exchanges), R.prop('exchange'));
+        return orders.filter(filter);
+      }),
+      map(orders => {
+        const asks = orders
+          .filter(isAskOrder)
+          .sort(sortOrders)
+          .reverse()
+          .reduce(reduceOrderVolumes, []);
+
+        const bids = orders
+          .filter(isBidOrder)
+          .sort(sortOrders)
+          .reduce(reduceOrderVolumes, []);
+
+        return [asks, bids];
+      }),
+    ),
+    [[], []],
+    [selectedExchanges]
+  );
 
   return (
     <AggregatedOrders
-      exchanges={selectedExchanges}
       quoteAsset={quoteAsset}
       baseAsset={baseAsset}
+      exchanges={selectedExchanges}
+      eventCallback={eventCallback}
     >
-      {({ asks, bids, loading }) => (
+      {({ loading }) => (
         <OrderBook
           loading={loading}
           bids={bids}
           asks={asks}
-          availableExchanges={Object.entries(availableExchanges)}
+          availableExchanges={allExchanges}
           setExchange={updateExchanges}
           selectedExchanges={selectedExchanges}
           isManager={isManager}

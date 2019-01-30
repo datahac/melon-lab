@@ -61,7 +61,6 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
                 selectedExchanges.length ===
                 availableExchanges.map(([key]) => key).length
               }
-              disabled={loading}
             />
           </div>
           {availableExchanges.map(([key, value]) => (
@@ -72,41 +71,40 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
                 value={key}
                 text={value}
                 defaultChecked={selectedExchanges.indexOf(key) !== -1}
-                disabled={loading}
               />
             </div>
           ))}
         </div>
       )}
 
-      {loading ? (
+      {loading && bids.length === 0 && asks.length === 0 && (
         <div className="orderbook__loading">
           <Spinner icon={true} />
         </div>
-      ) : (
+      )}
+
+      {!loading && bids.length === 0 && asks.length === 0 && (
+        <Notification isWarning={true}>
+          No orders on the orderbook for this trading pair
+        </Notification>
+      )}
+
+      {(bids.length !== 0 || asks.length !== 0) && (
         <Fragment>
-          {bids.length === 0 && asks.length === 0 ? (
-            <Notification isWarning={true}>
-              No orders on the orderbook for this trading pair
-            </Notification>
-          ) : (
-            <Fragment>
-              <div className="orderbook__tables">
-                <OrderBookTable
-                  style="buy"
-                  entries={bids}
-                  onClickOrder={isManager && setSellOrder}
-                  canTrade={isManager}
-                />
-                <OrderBookTable
-                  style="sell"
-                  entries={asks}
-                  onClickOrder={isManager && setBuyOrder}
-                  canTrade={isManager}
-                />
-              </div>
-            </Fragment>
-          )}
+          <div className="orderbook__tables">
+            <OrderBookTable
+              style="buy"
+              entries={bids}
+              onClickOrder={isManager && setSellOrder}
+              canTrade={isManager}
+            />
+            <OrderBookTable
+              style="sell"
+              entries={asks}
+              onClickOrder={isManager && setBuyOrder}
+              canTrade={isManager}
+            />
+          </div>
         </Fragment>
       )}
     </div>

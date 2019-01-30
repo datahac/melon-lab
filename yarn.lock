@@ -14932,6 +14932,13 @@ rustbn.js@~0.2.0:
   resolved "https://registry.yarnpkg.com/rustbn.js/-/rustbn.js-0.2.0.tgz#8082cb886e707155fd1cb6f23bd591ab8d55d0ca"
   integrity sha512-4VlvkRUuCJvr2J6Y0ImW7NvTCriMi7ErOAqWk1y69vAdoNIzCF3yPmgeNzx+RQTLEDFq5sHfscn1MwHxP9hNfA==
 
+rxjs-hooks@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/rxjs-hooks/-/rxjs-hooks-0.3.2.tgz#f77c9c8417084ac6c7f6f5092618654db5c4a68e"
+  integrity sha512-aoRHCnCV4voKvxT0Udq2i/NM6aY8JWE3olktDFTAlu6yg+jjjESMxFGnOzEgJARLF6Xdry74SBjbeWzMIvfImg==
+  dependencies:
+    tslib "^1.9.3"
+
 rxjs@^5.1.1:
   version "5.5.12"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.12.tgz#6fa61b8a77c3d793dbaf270bee2f43f652d741cc"

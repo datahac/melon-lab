@@ -1,8 +1,14 @@
 import { GraphQLDateTime as DateTime } from 'graphql-iso-date';
 import * as keytar from 'keytar';
 import * as R from 'ramda';
-import { distinctUntilChanged, map, pluck } from 'rxjs/operators';
-
+import * as Rx from 'rxjs';
+import {
+  distinctUntilChanged,
+  map,
+  pluck,
+  buffer,
+  filter,
+} from 'rxjs/operators';
 import * as Tm from '@melonproject/token-math';
 import {
   approve as approveTransfer,
@@ -281,6 +287,18 @@ export default {
     },
     holdings: async (parent, _, { loaders }) => {
       return loaders.fundHoldings.load(parent);
+    },
+  },
+  OrderEvent: {
+    __resolveType: parent => {
+      switch (parent.event) {
+        case 'SET':
+          return 'SetOrderEvent';
+        case 'REMOVE':
+          return 'RemoveOrderEvent';
+        default:
+          throw new Error('Invalid order event type.');
+      }
     },
   },
   Order: {
@@ -927,6 +945,27 @@ export default {
     },
   },
   Subscription: {
+    orders: {
+      resolve: value => value,
+      subscribe: async (_, { exchange, base, quote }, { loaders }) => {
+        const observable$ = await loaders.exchangeOrdersObservable.load({
+          exchange,
+          base,
+          quote,
+        });
+
+        // At the beginning, wait for 100ms after the first message, then
+        // continuously buffer for 100ms intervals.
+        //
+        // TODO: Make the throttling depend on the actual input stream.
+        const stream$ = observable$.pipe(
+          buffer(Rx.timer(200, 1000)),
+          filter(events => !!events.length),
+        );
+
+        return toAsyncIterator(stream$);
+      },
+    },
     balance: {
       resolve: value => value,
       subscribe: async (_, { symbol, address }, { loaders }) => {

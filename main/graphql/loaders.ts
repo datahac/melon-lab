@@ -1,9 +1,10 @@
 import DataLoader from 'dataloader';
 import memoizeOne from 'memoize-one';
 import * as R from 'ramda';
-import { map, pluck } from 'rxjs/operators';
+import { map, pluck, share } from 'rxjs/operators';
 import getAssetPrice from './loaders/assetPrice';
 import getExchangeOrders from './loaders/exchangeOrders';
+import getExchangeOrdersObservable from './loaders/exchangeOrdersObservable';
 import getFundAddressFromManager from './loaders/fund/fundAddressFromManager';
 import getFundCalculations from './loaders/fund/fundCalculations';
 import getFundDenominationAsset from './loaders/fund/fundDenominationAsset';
@@ -214,7 +215,11 @@ export default (environment, streams) => {
   const symbolBalanceObservable = new DataLoader(
     async pairs => {
       const fn = getSymbolBalanceObservable(environment, streams);
-      const result = pairs.map(pair => fn(pair.symbol, pair.address));
+      const result = pairs.map(pair => {
+        const stream$ = fn(pair.symbol, pair.address);
+        return stream$.pipe(share());
+      });
+
       return Promise.all(result || []);
     },
     {
@@ -244,6 +249,21 @@ export default (environment, streams) => {
     {
       cacheKeyFn: options =>
         `${options.exchange}:${options.base}:${options.quote}`,
+    },
+  );
+
+  const exchangeOrdersObservable = new DataLoader(
+    async pairs => {
+      const fn = getExchangeOrdersObservable(environment);
+      const result = pairs.map(async pair => {
+        const stream$ = await fn(pair.exchange, pair.base, pair.quote);
+        return stream$.pipe(share());
+      });
+
+      return Promise.all(result || []);
+    },
+    {
+      cacheKeyFn: pair => `${pair.exchange}:${pair.base}:${pair.quote}`,
     },
   );
 
@@ -315,6 +335,7 @@ export default (environment, streams) => {
     fundIsComplete,
     routes,
     exchangeOrders,
+    exchangeOrdersObservable,
     tokens,
   };
 };

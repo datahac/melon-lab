@@ -1,0 +1,65 @@
+fragment QuantityFragment on Quantity {
+  quantity
+  token {
+    symbol
+    decimals
+    address
+  }
+}
+
+fragment OasisDexOrderFragment on OasisDexOrder {
+  metadata {
+    id
+  }
+}
+
+fragment ZeroExOrderFragment on ZeroExOrder {
+  metadata {
+    exchangeAddress
+    senderAddress
+    makerAddress
+    takerAddress
+    makerAssetData
+    takerAssetData
+    feeRecipientAddress
+    makerAssetAmount
+    takerAssetAmount
+    makerFee
+    takerFee
+    expirationTimeSeconds
+    signature
+    salt
+  }
+}
+
+subscription OrdersSubscription($base: String!, $quote: String!, $exchange: ExchangeEnum!) {
+  orders(base: $base, quote: $quote, exchange: $exchange) {
+    exchange
+    id
+    event
+
+    ... on SetOrderEvent {
+      order {
+        id
+        type
+        exchange
+        trade {
+          base {
+            ...QuantityFragment
+          }
+          quote {
+            ...QuantityFragment
+          }
+        }
+
+        ... on OasisDexOrder {
+          ...OasisDexOrderFragment
+        }
+
+        ... on ZeroExOrder {
+          ...ZeroExOrderFragment
+        }
+      }
+    }
+  }
+}
