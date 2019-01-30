@@ -38,13 +38,13 @@ const getTestOrders = async (base, quote, exchange: Exchanges) => {
   );
 
   const bidTrade = {
-    makerQuantity: Tm.createQuantity(baseToken, 1),
-    takerQuantity: Tm.createQuantity(quoteToken, 0.5),
+    makerQuantity: Tm.createQuantity(quoteToken, 0.053),
+    takerQuantity: Tm.createQuantity(baseToken, 1),
   };
 
   const askTrade = {
-    makerQuantity: Tm.createQuantity(quoteToken, 0.55),
-    takerQuantity: Tm.createQuantity(baseToken, 1),
+    makerQuantity: Tm.createQuantity(baseToken, 1),
+    takerQuantity: Tm.createQuantity(quoteToken, 0.057),
   };
 
   const bid = await createOrder(maker, exchangeAddress, bidTrade);
@@ -62,8 +62,8 @@ const getTestOrders = async (base, quote, exchange: Exchanges) => {
       exchange: exchangeMap[exchange],
       type: 'BID',
       trade: {
-        base: bidTrade.makerQuantity,
-        quote: bidTrade.takerQuantity,
+        base: bidTrade.takerQuantity,
+        quote: bidTrade.makerQuantity,
       },
       original: {
         signedOrder: stringifyStruct(signedBid),
@@ -74,8 +74,8 @@ const getTestOrders = async (base, quote, exchange: Exchanges) => {
       exchange: exchangeMap[exchange],
       type: 'ASK',
       trade: {
-        base: askTrade.takerQuantity,
-        quote: askTrade.makerQuantity,
+        base: askTrade.makerQuantity,
+        quote: askTrade.takerQuantity,
       },
       original: {
         signedOrder: stringifyStruct(signedAsk),

@@ -82,11 +82,11 @@ const withFormHandlers = withHandlers({
         values,
       ).toString(),
     ) => {
-      setKyberQuery({
-        quantity,
-        symbol: props.baseToken.token.symbol,
-        type: values.type && values.type.toUpperCase(),
-      });
+      // setKyberQuery({
+      //   quantity,
+      //   symbol: props.baseToken.token.symbol,
+      //   type: values.type && values.type.toUpperCase(),
+      // });
     };
 
     // Disable kyber price query as soon as it is unselected

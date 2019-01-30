@@ -4,6 +4,7 @@ mutation EstimateTakeOrderMutation(
   $buyToken: String
   $buyQuantity: String
   $sellToken: String
+  $sellQuantity: String
 ) {
   estimate: estimateTakeOrder(
     id: $id
@@ -11,6 +12,7 @@ mutation EstimateTakeOrderMutation(
     buyToken: $buyToken
     buyQuantity: $buyQuantity
     sellToken: $sellToken
+    sellQuantity: $sellQuantity
   ) @account {
     data
     from

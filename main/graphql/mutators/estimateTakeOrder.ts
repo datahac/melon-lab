@@ -14,7 +14,7 @@ import {
 
 const estimateTakeOrder = async (
   _,
-  { from, id, exchange, buyToken, buyQuantity, sellToken },
+  { from, id, exchange, buyToken, buyQuantity, sellToken, sellQuantity },
   { environment, loaders },
 ) => {
   const env: Environment = withDifferentAccount(
@@ -37,9 +37,7 @@ const estimateTakeOrder = async (
 
     const order = await getOasisDexOrder(env, oasisDex, { id });
 
-    const fillTakerQuantity = buyQuantity
-      ? Tm.createQuantity(order.buy.token, buyQuantity)
-      : order.buy;
+    const fillTakerQuantity = Tm.createQuantity(order.buy.token, sellQuantity);
 
     const result = await takeOasisDexOrder.prepare(env, tradingAddress, {
       id,
@@ -92,14 +90,9 @@ const estimateTakeOrder = async (
     });
 
     const orderToTake = orders.find(order => order.id === id);
-    const offeredPrice = orderToTake.trade;
 
-    const makerQuantity = Tm.createQuantity(
-      getTokenBySymbol(environment, buyToken),
-      buyQuantity,
-    );
-
-    const takerQuantity = Tm.valueIn(offeredPrice, makerQuantity);
+    const takerToken = getTokenBySymbol(env, sellToken);
+    const takerQuantity = Tm.createQuantity(takerToken, sellQuantity);
 
     const result = await take0xOrder.prepare(env, tradingAddress, {
       takerQuantity,

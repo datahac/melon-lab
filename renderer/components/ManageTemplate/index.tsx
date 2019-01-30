@@ -19,10 +19,10 @@ import HoldingsQuery from './data/holdings';
 import isSameAddress from '~/shared/utils/isSameAddress';
 import OpenOrdersContainer from '../OpenOrders';
 
-// A bid-order on the orderbook resolves to a buy from the fund
+// A bid-order on the orderbook resolves to a sell from the fund (The order maker wants to buy something, so we sell em)
 const bidAskSellBuyMap = {
-  BID: 'Buy',
-  ASK: 'Sell',
+  BID: 'Sell',
+  ASK: 'Buy',
 };
 
 export interface SetOrder {
@@ -78,7 +78,7 @@ export default class ManageTemplateContainer extends React.Component {
     const { address, quoteAsset, baseAsset } = this.props;
 
     const setOrder = order => {
-      const { exchange, trade, metadata, type, strategy } = order;
+      const { exchange, trade, metadata, type } = order;
 
       if (exchange === 'OASIS_DEX') {
         this.setState({
