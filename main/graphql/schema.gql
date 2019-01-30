@@ -293,41 +293,41 @@ type Deployment {
   tokens: [Token]
 }
 
-interface UnsignedTransactionBase {
-  data: String
-  from: String
-  gas: String
-  gasPrice: String
-  to: String
-  value: String
+interface UnsignedTransaction {
+  data: String!
+  from: String!
+  gas: String!
+  gasPrice: String!
+  to: String!
+  value: String!
 }
 
-type UnsignedTransaction implements UnsignedTransactionBase {
-  data: String
-  from: String
-  gas: String
-  gasPrice: String
-  to: String
-  value: String
+type UnsignedPlainTransaction implements UnsignedTransaction {
+  data: String!
+  from: String!
+  gas: String!
+  gasPrice: String!
+  to: String!
+  value: String!
 }
 
-type UnsignedTransactionWithOrder implements UnsignedTransactionBase {
-  data: String
-  from: String
-  gas: String
-  gasPrice: String
-  to: String
-  value: String
+type UnsignedOrderTransaction implements UnsignedTransaction {
+  data: String!
+  from: String!
+  gas: String!
+  gasPrice: String!
+  to: String!
+  value: String!
   signedOrder: String
 }
 
 input UnsignedTransactionInput {
-  data: String
-  from: String
-  gas: String
-  gasPrice: String
-  to: String
-  value: String
+  data: String!
+  from: String!
+  gas: String!
+  gasPrice: String!
+  to: String!
+  value: String!
 }
 
 input PolicyInput {
@@ -396,7 +396,7 @@ type Mutation {
     exchanges: [String]!
     performanceFee: Float!
     managementFee: Float!
-  ): UnsignedTransaction @account
+  ): UnsignedPlainTransaction @account
 
   """
   Executes the "beginSetup" transaction with the given gas price per unit.
@@ -412,7 +412,7 @@ type Mutation {
   estimateFundSetupStep(
     "The step in the fund factory process."
     step: FundSetupStepEnum!
-  ): UnsignedTransaction @account
+  ): UnsignedPlainTransaction @account
 
   """
   Executes a fund setup step transaction with the given gas price per unit.
@@ -427,7 +427,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "completeSetup" transaction.
   """
-  estimateFundSetupComplete: UnsignedTransaction @account
+  estimateFundSetupComplete: UnsignedPlainTransaction @account
 
   """
   Executes the "completeSetup" transaction with the given gas price per unit.
@@ -443,7 +443,7 @@ type Mutation {
   estimateRequestInvestment(
     fundAddress: String!
     investmentAmount: String!
-  ): UnsignedTransaction @account
+  ): UnsignedPlainTransaction @account
 
   """
   Executes the "request investment" transaction with the given gas price per unit.
@@ -457,7 +457,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "execute request" transaction.
   """
-  estimateExecuteRequest(fundAddress: String!): UnsignedTransaction @account
+  estimateExecuteRequest(fundAddress: String!): UnsignedPlainTransaction @account
 
   """
   Executes the "execute request" transaction with the given gas price per unit.
@@ -474,7 +474,7 @@ type Mutation {
   estimateApproveTransfer(
     fundAddress: String!
     investmentAmount: String!
-  ): UnsignedTransaction @account
+  ): UnsignedPlainTransaction @account
 
   """
   Executes the "execute request" transaction with the given gas price per unit.
@@ -488,7 +488,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "approve transfer" transaction.
   """
-  estimateShutDownFund(fundAddress: String!): UnsignedTransaction @account
+  estimateShutDownFund(fundAddress: String!): UnsignedPlainTransaction @account
 
   """
   Executes the "approve transfer" transaction with the given gas price per unit.
@@ -521,7 +521,7 @@ type Mutation {
     buyQuantity: String!
     sellToken: String!
     sellQuantity: String!
-  ): UnsignedTransactionWithOrder @account
+  ): UnsignedOrderTransaction @account
 
   executeMakeOrder(
     "Unsigned transaction data."
@@ -537,7 +537,7 @@ type Mutation {
     buyQuantity: String
     sellToken: String
     sellQuantity: String
-  ): UnsignedTransaction @account
+  ): UnsignedPlainTransaction @account
 
   executeTakeOrder(
     unsigned: UnsignedTransactionInput!
@@ -547,7 +547,7 @@ type Mutation {
   estimateCancelOrder(
     id: String!
     exchange: ExchangeEnum!
-  ): UnsignedTransaction @account
+  ): UnsignedPlainTransaction @account
 
   executeCancelOrder(
     unsigned: UnsignedTransactionInput!
@@ -569,12 +569,12 @@ type Mutation {
   ): ZeroExOrderMetadata
 
   # Policies
-  estimateDeployUserWhitelist(addresses: [String]): UnsignedTransaction @account
-  estimateDeployAssetBlacklist(symbols: [String]): UnsignedTransaction @account
-  estimateDeployAssetWhitelist(symbols: [String]): UnsignedTransaction @account
-  estimateDeployMaxConcentration(percent: Float): UnsignedTransaction @account
-  estimateDeployMaxPositions(positions: Int): UnsignedTransaction @account
-  estimateDeployPriceTolerance(percent: Int): UnsignedTransaction @account
+  estimateDeployUserWhitelist(addresses: [String]): UnsignedPlainTransaction @account
+  estimateDeployAssetBlacklist(symbols: [String]): UnsignedPlainTransaction @account
+  estimateDeployAssetWhitelist(symbols: [String]): UnsignedPlainTransaction @account
+  estimateDeployMaxConcentration(percent: Float): UnsignedPlainTransaction @account
+  estimateDeployMaxPositions(positions: Int): UnsignedPlainTransaction @account
+  estimateDeployPriceTolerance(percent: Int): UnsignedPlainTransaction @account
   executeDeploy(unsigned: UnsignedTransactionInput): String @account @sign
 
   estimateRegisterPolicies(policies: [PolicyInput]!): UnsignedTransaction

@@ -1671,12 +1671,12 @@
   dependencies:
     events "^3.0.0"
 
-"@melonproject/exchange-aggregator@^0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.1.9.tgz#fa88af36511f007643a2c36b93171b4f3fa7dab4"
-  integrity sha512-DzCtgTVc0nCgJ6NACUYneWXEKATW9cAng1bWYRqj7HIzmKMGIsXY3nlJsxGtHYbrRwBB6UtgO6ES6tKf3otqCw==
+"@melonproject/exchange-aggregator@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.1.10.tgz#716e5f2d74c9a81e46868e8fe18c551d4bffe077"
+  integrity sha512-KJkRyqZkip9CSED0ie910yA0vVfq39tHhfpglJNF4ZlIvg1D2lD7h5noolEVTv9VF22h0QAZXZ2jcktoiyu3Gw==
   dependencies:
-    "@melonproject/protocol" "^0.9.0-alpha.25"
+    "@melonproject/protocol" "^0.9.23"
     "@melonproject/token-math" "^0.1.5"
     "@radarrelay/types" "^1.2.1"
     axios "^0.18.0"
@@ -1690,28 +1690,6 @@
   integrity sha512-vjBDGXF2OA+gBSZ1AOIxUpzTYl+9Pl1ME1ERGbLx/3r0F1F5yhZJ+9vrQd4jxdNZlQzLt5XXFYY+H9TXH8HlQQ==
   dependencies:
     source-map-support "^0.5.3"
-
-"@melonproject/protocol@^0.9.0-alpha.25":
-  version "0.9.7"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.7.tgz#33aebfefcc360c6158ae8eae45b8f21c8a28f208"
-  integrity sha512-zj77046Tyq6cuS8PAade+7n/v1WyV5C2xzKf4R85yo8zzTg2rICk/zzh8opf+NNpL6db3cuEHPZvIYMVfbYh7g==
-  dependencies:
-    "@0x/contract-wrappers" "^4.1.1"
-    "@0x/order-utils" "^3.0.2"
-    "@melonproject/ganache-cli" "^6.1.9"
-    "@melonproject/token-math" "0.1.5"
-    ava "0.25.0"
-    commander "^2.19.0"
-    ethereum-types "^1.1.4"
-    ramda "^0.25.0"
-    request-promise "^4.2.2"
-    solc "^0.4.25"
-    web3-eth "1.0.0-beta.37"
-    web3-eth-abi "1.0.0-beta.37"
-    web3-eth-accounts "^1.0.0-beta.37"
-    web3-utils "1.0.0-beta.37"
-    yup "^0.26.6"
-    zen-observable-ts "^0.8.10"
 
 "@melonproject/protocol@^0.9.23":
   version "0.9.23"

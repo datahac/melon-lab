@@ -8,6 +8,10 @@ import {
   pluck,
   buffer,
   filter,
+  delay,
+  takeUntil,
+  take,
+  merge,
 } from 'rxjs/operators';
 import * as Tm from '@melonproject/token-math';
 import {
@@ -287,6 +291,15 @@ export default {
     },
     holdings: async (parent, _, { loaders }) => {
       return loaders.fundHoldings.load(parent);
+    },
+  },
+  UnsignedTransaction: {
+    __resolveType: parent => {
+      if (parent.hasOwnProperty('signedOrder')) {
+        return 'UnsignedOrderTransaction';
+      }
+
+      return 'UnsignedPlainTransaction';
     },
   },
   OrderEvent: {
@@ -954,6 +967,12 @@ export default {
           quote,
         });
 
+        // Default
+        const default$ = Rx.of(null).pipe(
+          delay(1000),
+          takeUntil(observable$.pipe(take(1))),
+        );
+
         // At the beginning, wait for 100ms after the first message, then
         // continuously buffer for 100ms intervals.
         //
@@ -961,6 +980,7 @@ export default {
         const stream$ = observable$.pipe(
           buffer(Rx.timer(200, 1000)),
           filter(events => !!events.length),
+          merge(default$),
         );
 
         return toAsyncIterator(stream$);
