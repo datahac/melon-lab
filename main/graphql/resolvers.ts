@@ -160,6 +160,8 @@ export default {
         accountingAddress,
       );
 
+      console.log(openOrders);
+
       const result = openOrders.map(order => {
         const type = Tm.isEqual(denominationAsset, order.makerQuantity.token)
           ? 'BID'

@@ -63,17 +63,17 @@ const withFormHandlers = withHandlers({
     // console.log(props, baseToken);
 
     // Reset form on exchange change
-    if (name === 'exchange') {
-      setFieldValue('total', Tm.createQuantity(quoteToken.token, 0));
-      setFieldValue('quantity', Tm.createQuantity(baseToken.token, 0));
-      setFieldTouched('total', false);
-      setFieldTouched('quantity', false);
-      setOrder({
-        exchange: value,
-        strategy: values.strategy,
-        type: values.type,
-      });
-    }
+    // if (name === 'exchange') {
+    //   setFieldValue('total', Tm.createQuantity(quoteToken.token, 0));
+    //   setFieldValue('quantity', Tm.createQuantity(baseToken.token, 0));
+    //   setFieldTouched('total', false);
+    //   setFieldTouched('quantity', false);
+    //   setOrder({
+    //     exchange: value,
+    //     strategy: values.strategy,
+    //     type: values.type,
+    //   });
+    // }
 
     const updateKyberQuery = (
       quantity = R.pathOr(

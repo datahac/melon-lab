@@ -89,8 +89,8 @@ describe('Trade on radar relay', () => {
 
     expect(orders.length).toBeGreaterThan(0);
 
-    // We need an BID order to take because fund has only WETH
-    const bidOrderToTake = orders.find(o => o.type === 'BID');
+    // We need an ASK order to take because fund has only WETH
+    const bidOrderToTake = orders.find(o => o.type === 'ASK');
 
     const estimateRadarTake = await execute(
       schema,
@@ -103,6 +103,7 @@ describe('Trade on radar relay', () => {
         buyToken: 'MLN',
         buyQuantity: bidOrderToTake.metadata.makerAssetAmount,
         sellToken: 'WETH',
+        sellQuantity: bidOrderToTake.metadata.takerAssetAmount,
       },
     );
 
