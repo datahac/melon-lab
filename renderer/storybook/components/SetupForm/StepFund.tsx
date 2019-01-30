@@ -47,7 +47,8 @@ export const StepName: StatelessComponent<StepNameProps> = ({
       <h4>Exchanges</h4>
       <Selector
         errors={touched.exchanges && errors.exchanges}
-        onChange={onChangeExchanges}
+        handleOnBlur={handleBlur}
+        handleOnChange={onChangeExchanges}
         availableItems={availableExchangeContracts}
         selectedItems={values.exchanges}
       />

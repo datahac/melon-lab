@@ -48,7 +48,7 @@ const withForm = withFormik({
             return false;
           },
         ),
-      exchanges: Yup.array().required('Exchanges are required.'),
+      exchanges: Yup.array().min(1, 'Min one exchange is required.'),
       terms: Yup.boolean().test(
         'is-checked',
         'Must Accept Terms and Conditions',

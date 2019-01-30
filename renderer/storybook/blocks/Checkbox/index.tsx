@@ -7,7 +7,8 @@ export interface CheckboxProps {
   defaultChecked?: boolean;
   disabled?: boolean;
   name: string;
-  onInputChange?: () => void;
+  handleOnChange?: () => void;
+  handleOnBlur?: () => void;
   text: string;
   value?: string;
   style?: 'default' | 'boxed';
@@ -22,7 +23,7 @@ const Checkbox: StatelessComponent<CheckboxProps> = ({
   defaultChecked,
   disabled,
   name,
-  onInputChange,
+  handleOnChange,
   text,
   value,
   Additional,
@@ -31,6 +32,7 @@ const Checkbox: StatelessComponent<CheckboxProps> = ({
   roundedCorners,
   error,
   required,
+  handleOnBlur,
 }) => {
   const checkboxClassNames = classNames('checkbox__label', {
     [`checkbox__label--${style}`]: style,
@@ -49,8 +51,9 @@ const Checkbox: StatelessComponent<CheckboxProps> = ({
           value={value}
           defaultChecked={defaultChecked}
           disabled={disabled}
-          onChange={onInputChange}
+          onChange={handleOnChange}
           required={required}
+          onBlur={handleOnBlur}
         />
         <span className="checkbox__checkmark" />
 

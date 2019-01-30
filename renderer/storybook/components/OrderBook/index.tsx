@@ -53,7 +53,7 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
           <div className="orderbook__exchange-label">Exchanges:</div>
           <div className="orderbook__exchange">
             <Checkbox
-              onInputChange={setExchange}
+              handleOnChange={setExchange}
               name="exchanges"
               value="ALL"
               text="All"
@@ -67,7 +67,7 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
           {availableExchanges.map(([key, value]) => (
             <div className="orderbook__exchange" key={key}>
               <Checkbox
-                onInputChange={setExchange}
+                handleOnChange={setExchange}
                 name="exchanges"
                 value={key}
                 text={value}

@@ -6,7 +6,7 @@ export interface RadioButtonProps {
   defaultChecked?: boolean;
   disabled?: boolean;
   name: string;
-  onInputChange?: () => void;
+  handleOnChange?: () => void;
   text: string;
   value: string;
 }
@@ -15,7 +15,7 @@ const RadioButton: StatelessComponent<RadioButtonProps> = ({
   defaultChecked,
   disabled,
   name,
-  onInputChange,
+  handleOnChange,
   text,
   value,
 }) => (
@@ -28,7 +28,7 @@ const RadioButton: StatelessComponent<RadioButtonProps> = ({
       value={value}
       defaultChecked={defaultChecked}
       disabled={disabled}
-      onChange={onInputChange}
+      onChange={handleOnChange}
     />
     <span className="radio-button__checkmark" />
     <span className="radio-button__text">{text}</span>

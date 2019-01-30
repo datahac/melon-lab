@@ -9,15 +9,17 @@ export interface SelectorProps {
     text: string;
   }>;
   selectedItems?: Array<string>;
-  onChange: () => void;
+  handleOnChange: () => void;
+  handleOnBlur?: () => void;
   errors;
 }
 
 export const Selector: StatelessComponent<SelectorProps> = ({
   availableItems = [],
   selectedItems = [],
-  onChange,
+  handleOnChange,
   errors,
+  handleOnBlur,
 }) => {
   return (
     <div className="selector">
@@ -33,7 +35,8 @@ export const Selector: StatelessComponent<SelectorProps> = ({
                 name="blabla"
                 text={item.text}
                 value={item.value}
-                onInputChange={onChange}
+                handleOnChange={handleOnChange}
+                handleOnBlur={handleOnBlur}
                 defaultChecked={selectedItems.indexOf(item.value) !== -1}
               />
             </div>

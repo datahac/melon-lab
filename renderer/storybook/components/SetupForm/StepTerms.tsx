@@ -28,7 +28,7 @@ export const StepTerms: StatelessComponent<StepTermsProps> = ({
     <h3>Terms and Conditions</h3>
     <TermsConditions />
     <Checkbox
-      onInputChange={handleChange}
+      handleOnChange={handleChange}
       defaultChecked={values.terms}
       name="terms"
       text="I accept the terms and conditions"
