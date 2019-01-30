@@ -8,7 +8,7 @@ import {
 import {
   Environment,
   getTokenBySymbol,
-  // getChainName,
+  getChainName,
 } from '@melonproject/protocol';
 
 export default R.curryN(
@@ -19,10 +19,9 @@ export default R.curryN(
     base: string,
     quote: string,
   ) => {
-    // const chain = await getChainName(environment);
+    const chain = await getChainName(environment);
     const options = {
-      // network: Network[chain.toUpperCase()] as Network,
-      network: Network.MAINNET,
+      network: Network[chain.toUpperCase()] as Network,
       pair: {
         base: getTokenBySymbol(environment, base),
         quote: getTokenBySymbol(environment, quote),
