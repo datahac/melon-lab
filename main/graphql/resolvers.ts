@@ -7,7 +7,6 @@ import * as Tm from '@melonproject/token-math';
 import {
   approve as approveTransfer,
   beginSetup,
-  cancelOasisDexOrder,
   completeSetup,
   Contracts,
   createAccounting,
@@ -23,7 +22,6 @@ import {
   executeRequest,
   FunctionSignatures,
   getExpectedRate,
-  getOasisDexOrder,
   getOpenOrders,
   getTokenBySymbol,
   getWrapperLock,
@@ -40,6 +38,9 @@ import { estimateTakeOrder } from './mutators/estimateTakeOrder';
 import { executeTakeOrder } from './mutators/executeTakeOrder';
 import { estimateMakeOrder } from './mutators/estimateMakeOrder';
 import { executeMakeOrder } from './mutators/executeMakeOrder';
+import { estimateCancelOrder } from './mutators/estimateCancelOrder';
+import { executeCancelOrder } from './mutators/executeCancelOrder';
+
 import { getToken } from '@melonproject/protocol/lib/contracts/dependencies/token/calls/getToken';
 
 const stringifyObject = R.mapObjIndexed((value, key) => `${value}`);
@@ -159,8 +160,6 @@ export default {
       const denominationAsset = await loaders.fundDenominationAsset.load(
         accountingAddress,
       );
-
-      console.log(openOrders);
 
       const result = openOrders.map(order => {
         const type = Tm.isEqual(denominationAsset, order.makerQuantity.token)
@@ -642,54 +641,8 @@ export default {
     executeMakeOrder,
     estimateTakeOrder,
     executeTakeOrder,
-    estimateCancelOasisDexOrder: async (
-      _,
-      { from, id },
-      { environment, loaders },
-    ) => {
-      const fund = await loaders.fundAddressFromManager.load(from);
-      const { tradingAddress } = await loaders.fundRoutes.load(fund);
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const oasisDex = R.path(
-        ['deployment', 'thirdPartyContracts', 'exchanges', 'matchingMarket'],
-        env,
-      );
-
-      const order = await getOasisDexOrder(env, oasisDex, { id });
-
-      // const makerAsset = new Tm.Address(
-      //   getTokenBySymbol(env, sellToken).address || '',
-      // );
-      // const takerAsset = new Tm.Address(
-      //   getTokenBySymbol(env, buyToken).address || '',
-      // );
-
-      const result = await cancelOasisDexOrder.prepare(env, tradingAddress, {
-        id: id.toString(),
-        maker: tradingAddress.toString(),
-        makerAsset: order.sell.token.address,
-        takerAsset: order.buy.token.address,
-      });
-
-      return result && result.rawTransaction;
-    },
-    executeCancelOasisDexOrder: async (
-      _,
-      { from, signed },
-      { environment, loaders },
-    ) => {
-      const fund = await loaders.fundAddressFromManager.load(from);
-      const { tradingAddress } = await loaders.fundRoutes.load(fund);
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await cancelOasisDexOrder.send(
-        env,
-        tradingAddress,
-        signed.rawTransaction,
-      );
-
-      return !!result;
-    },
+    estimateCancelOrder,
+    executeCancelOrder,
     create0xOrder: async (
       _,
       { from, buyToken, buyQuantity, sellToken, sellQuantity },

@@ -1,5 +1,5 @@
-mutation EstimateCancelOasisDexOrderMutation($id: String!) {
-  estimate: estimateCancelOasisDexOrder(id: $id) @account {
+mutation EstimateCancelOrderMutation($id: String!, $exchange: ExchangeEnum!) {
+  estimate: estimateCancelOrder(id: $id, exchange: $exchange) @account {
     data
     from
     gas
@@ -16,8 +16,9 @@ mutation ExecuteCancelOasisDexOrderMutation(
   $gasPrice: String!
   $to: String!
   $value: String!
+  $exchange: ExchangeEnum!
 ) {
-  execute: executeCancelOasisDexOrder(
+  execute: executeCancelOrder(
     unsigned: {
       data: $data
       from: $from
@@ -26,5 +27,6 @@ mutation ExecuteCancelOasisDexOrderMutation(
       to: $to
       value: $value
     }
+    exchange: $exchange
   ) @sign @account
 }

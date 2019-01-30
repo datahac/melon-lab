@@ -520,11 +520,15 @@ type Mutation {
     exchange: ExchangeEnum!
   ): Trade @account @sign
 
-  estimateCancelOasisDexOrder(id: String!): UnsignedTransaction @account
+  estimateCancelOrder(
+    id: String!
+    exchange: ExchangeEnum!
+  ): UnsignedTransaction @account
 
-  executeCancelOasisDexOrder(unsigned: UnsignedTransactionInput!): Boolean
-    @account
-    @sign
+  executeCancelOrder(
+    unsigned: UnsignedTransactionInput!
+    exchange: ExchangeEnum!
+  ): Boolean @account @sign
 
   create0xOrder(
     buyToken: String!
