@@ -294,40 +294,40 @@ type Deployment {
 }
 
 interface UnsignedTransaction {
-  data: String!
-  from: String!
-  gas: String!
-  gasPrice: String!
-  to: String!
-  value: String!
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
 }
 
 type UnsignedPlainTransaction implements UnsignedTransaction {
-  data: String!
-  from: String!
-  gas: String!
-  gasPrice: String!
-  to: String!
-  value: String!
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
 }
 
 type UnsignedOrderTransaction implements UnsignedTransaction {
-  data: String!
-  from: String!
-  gas: String!
-  gasPrice: String!
-  to: String!
-  value: String!
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
   signedOrder: String
 }
 
 input UnsignedTransactionInput {
-  data: String!
-  from: String!
-  gas: String!
-  gasPrice: String!
-  to: String!
-  value: String!
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
 }
 
 input PolicyInput {
