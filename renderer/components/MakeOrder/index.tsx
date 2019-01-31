@@ -38,7 +38,16 @@ export default props => (
       },
       refetchQueries: () => ['OrdersQuery', 'OpenOrdersQuery'],
       onCompleted: () => {
-        props.resetForm();
+        props.resetForm({
+          price: '',
+          quantity: '',
+          total: '',
+          exchange: props.values.exchange,
+          id: null,
+          signedOrder: null,
+          strategy: props.values.strategy,
+          type: props.values.type,
+        });
         props.setOrderFormValues(null);
       },
     }}
