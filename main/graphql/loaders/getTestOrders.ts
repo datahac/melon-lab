@@ -11,7 +11,6 @@ import {
   approveOrder,
 } from '@melonproject/protocol';
 import { getEnvironment, getWallet } from '../environment';
-import { testLogger } from '@melonproject/protocol/lib/tests/utils/testLogger';
 
 const exchangeMap = {
   [Exchanges.ZeroEx]: 'RADAR_RELAY',
@@ -25,7 +24,7 @@ const getTestOrders = async (base, quote, exchange: Exchanges) => {
     return testOrders[`${base}:${quote}:${exchange}`];
   }
 
-  const environment = await getEnvironment(testLogger);
+  const environment = await getEnvironment();
   const wallet = await getWallet();
   const maker = await withPrivateKeySigner(environment, wallet.privateKey);
 
