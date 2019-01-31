@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react';
 import * as R from 'ramda';
 import Composer from 'react-composer';
-import { Query } from 'react-apollo';
-import * as Tm from '@melonproject/token-math';
-
+import { withApollo } from 'react-apollo';
+import { compose } from 'recompose';
 import OrderForm from '~/components/OrderForm';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
@@ -12,8 +11,6 @@ import TakeOrder from '+/components/TakeOrder';
 import withForm from './withForm';
 import isSameAddress from '~/shared/utils/isSameAddress';
 import availableExchanges from '~/shared/utils/availableExchanges';
-
-import * as kyberPriceQuery from '~/queries/kyberPrice.gql';
 
 const WrappedOrderForm = withForm(props => {
   const limitExchanges = Object.keys(
@@ -64,7 +61,7 @@ const WrappedOrderForm = withForm(props => {
   );
 });
 
-export default class OrderFormContainer extends React.PureComponent {
+class OrderFormContainer extends React.PureComponent {
   state = {
     values: null,
     kyberQuery: null,
@@ -105,55 +102,32 @@ export default class OrderFormContainer extends React.PureComponent {
 
   render() {
     return (
-      <Composer
-        components={[
-          <NetworkConsumer />,
-          <FundManagerConsumer />,
-          ({ render }) => (
-            <Query
-              query={kyberPriceQuery}
-              variables={this.state.kyberQuery}
-              skip={!this.state.kyberQuery}
-            >
-              {render}
-            </Query>
-          ),
-        ]}
-      >
-        {([network, managerProps, result]) => {
+      <Composer components={[<NetworkConsumer />, <FundManagerConsumer />]}>
+        {([network, managerProps]) => {
           const {
             address,
             quoteAsset,
             baseAsset,
             holdings,
-            formValues,
             setOrder,
+            formValues,
           } = this.props;
-
-          const kyberPrice = result.data && result.data.kyberPrice;
-
-          const formValuesWithKyberPrice = kyberPrice
-            ? {
-                ...formValues,
-                price: kyberPrice,
-              }
-            : formValues;
 
           const isManager =
             !!managerProps.fund && isSameAddress(managerProps.fund, address);
 
           return (
             <WrappedOrderForm
+              {...this.props}
               setOrderFormValues={this.setOrderFormValues}
               baseToken={this.getTokenBalance(baseAsset)}
               quoteToken={this.getTokenBalance(quoteAsset)}
               isCompetition={false}
               isManager={isManager}
               holdings={holdings}
-              formValues={formValuesWithKyberPrice}
+              formValues={formValues}
               priceFeedUp={network && network.priceFeedUp}
               orderFormValues={this.state.values}
-              kyberPrice={kyberPrice}
               setKyberQuery={this.setKyberQuery}
               setOrder={setOrder}
             />
@@ -163,3 +137,5 @@ export default class OrderFormContainer extends React.PureComponent {
     );
   }
 }
+
+export default compose(withApollo)(OrderFormContainer);

@@ -2,12 +2,13 @@ import * as R from 'ramda';
 import * as Tm from '@melonproject/token-math';
 import { withFormik } from 'formik';
 import { withHandlers, compose } from 'recompose';
-import { FormErros } from '~/components/OrderForm';
+import { FormErrors } from '~/components/OrderForm';
+import * as kyberPriceQuery from '~/queries/kyberPrice.gql';
 
 const withForm = withFormik({
   mapPropsToValues: props => props.formValues,
   validate: (values, props) => {
-    const errors: FormErros = {};
+    const errors: FormErrors = {};
 
     if (!values.price) {
       errors.price = 'Required';
@@ -44,56 +45,49 @@ const withForm = withFormik({
 });
 
 const withFormHandlers = withHandlers({
-  onChange: props => event => {
-    const {
-      setFieldValue,
-      baseToken,
-      quoteToken,
-      values,
-      setFieldTouched,
-      setKyberQuery,
-      setOrder,
-    } = props;
+  onChange: props => async event => {
+    const { resetForm, setFieldValue, baseToken, quoteToken, values } = props;
     const { name, value } = event.target;
 
-    if (name === 'type' || name === 'strategy' || name === 'exchange') {
-      setFieldValue(name, value);
-    }
-
-    // console.log(props, baseToken);
-
-    // Reset form on exchange change
-    // if (name === 'exchange') {
-    //   setFieldValue('total', Tm.createQuantity(quoteToken.token, 0));
-    //   setFieldValue('quantity', Tm.createQuantity(baseToken.token, 0));
-    //   setFieldTouched('total', false);
-    //   setFieldTouched('quantity', false);
-    //   setOrder({
-    //     exchange: value,
-    //     strategy: values.strategy,
-    //     type: values.type,
-    //   });
-    // }
-
-    const updateKyberQuery = (
+    const updateKyberPrice = (
       quantity = R.pathOr(
         '1000000000000000000',
         ['quantity', 'quantity'],
         values,
       ).toString(),
     ) => {
-      // setKyberQuery({
-      //   quantity,
-      //   symbol: props.baseToken.token.symbol,
-      //   type: values.type && values.type.toUpperCase(),
-      // });
+      return props.client.query({
+        query: kyberPriceQuery,
+        variables: {
+          quantity,
+          symbol: props.baseToken.token.symbol,
+          type: values.type && values.type.toUpperCase(),
+        },
+      });
     };
 
-    // Disable kyber price query as soon as it is unselected
-    if (name === 'exchange' && value !== 'KYBER_NETWORK') {
-      props.setKyberQuery(null);
-    } else {
-      updateKyberQuery();
+    if (name === 'type' || name === 'strategy' || name === 'exchange') {
+      setFieldValue(name, value);
+    }
+
+    // Reset form on exchange change
+    if (name === 'exchange') {
+      resetForm({
+        price: '',
+        quantity: '',
+        total: '',
+        exchange: value,
+        id: null,
+        signedOrder: null,
+        strategy: values.strategy,
+        type: 'Buy',
+      });
+    }
+
+    // Set kyber price
+    if (name === 'exchange' && value === 'KYBER_NETWORK') {
+      const { data } = await updateKyberPrice();
+      !!data && setFieldValue('price', data.kyberPrice);
     }
 
     if (name === 'price') {
@@ -113,8 +107,6 @@ const withFormHandlers = withHandlers({
       const quantity = Tm.createQuantity(baseToken.token, value || 0);
       setFieldValue('quantity', quantity);
 
-      updateKyberQuery(quantity.quantity.toString());
-
       if (values.price) {
         const total = Tm.valueIn(values.price, quantity);
         setFieldValue('total', total);
@@ -127,10 +119,7 @@ const withFormHandlers = withHandlers({
 
       if (values.price) {
         const quantity = Tm.valueIn(values.price, total);
-        updateKyberQuery(quantity.quantity.toString());
         setFieldValue('quantity', quantity);
-      } else {
-        updateKyberQuery();
       }
     }
   },
