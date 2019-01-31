@@ -73,8 +73,8 @@ const estimateTakeOrder = async (
     const sell = Tm.valueIn(rate, buy);
 
     const result = await takeOrderOnKyber.prepare(env, tradingAddress, {
-      makerQuantity: Tm.createQuantity(sell.token, 0),
-      takerQuantity: buy,
+      makerQuantity: Tm.createQuantity(buy.token, 0),
+      takerQuantity: sell,
     });
 
     return result && result.rawTransaction;
