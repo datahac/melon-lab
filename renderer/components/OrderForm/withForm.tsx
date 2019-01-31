@@ -80,7 +80,7 @@ const withFormHandlers = withHandlers({
         id: null,
         signedOrder: null,
         strategy: values.strategy,
-        type: 'Buy',
+        type: values.type,
       });
     }
 
