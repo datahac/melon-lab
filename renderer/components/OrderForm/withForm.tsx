@@ -1,9 +1,7 @@
-import * as R from 'ramda';
 import * as Tm from '@melonproject/token-math';
 import { withFormik } from 'formik';
 import { withHandlers, compose } from 'recompose';
 import { FormErrors } from '~/components/OrderForm';
-import * as kyberPriceQuery from '~/queries/kyberPrice.gql';
 
 const withForm = withFormik({
   mapPropsToValues: props => props.formValues,
@@ -49,27 +47,6 @@ const withFormHandlers = withHandlers({
     const { resetForm, setFieldValue, baseToken, quoteToken, values } = props;
     const { name, value } = event.target;
 
-    const updateKyberPrice = (
-      quantity = R.pathOr(
-        '1000000000000000000',
-        ['quantity', 'quantity'],
-        values,
-      ).toString(),
-    ) => {
-      return props.client.query({
-        query: kyberPriceQuery,
-        variables: {
-          quantity,
-          symbol: props.baseToken.token.symbol,
-          type: values.type && values.type.toUpperCase(),
-        },
-      });
-    };
-
-    if (name === 'type' || name === 'strategy') {
-      setFieldValue(name, value);
-    }
-
     // Reset form on exchange change
     if (name === 'exchange') {
       resetForm({
@@ -84,10 +61,8 @@ const withFormHandlers = withHandlers({
       });
     }
 
-    // Set kyber price
-    if (name === 'exchange' && value === 'KYBER_NETWORK') {
-      const { data } = await updateKyberPrice();
-      !!data && setFieldValue('price', data.kyberPrice);
+    if (name === 'type' || name === 'strategy') {
+      setFieldValue(name, value);
     }
 
     if (name === 'price') {

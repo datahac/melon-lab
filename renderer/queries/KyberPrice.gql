@@ -1,4 +1,4 @@
-query kyberPriceQuery(
+query KyberPriceQuery(
   $symbol: String!
   $quantity: String!
   $type: TradeTypeEnum!
