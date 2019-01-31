@@ -271,6 +271,7 @@ export default ({ address, quoteAsset, baseAsset }) => {
         const totalFunds = R.pathOr(0, ['data', 'totalFunds'])(fundProps);
         const isManager =
           !!managerProps.fund && isSameAddress(managerProps.fund, address);
+
         return (
           <Template
             HeaderProps={{
@@ -318,6 +319,8 @@ export default ({ address, quoteAsset, baseAsset }) => {
               holdings: holdingsData,
               formValues: selectedOrder,
               key: baseAsset,
+              bid: R.path(['trade'], R.head(bids)),
+              ask: R.path(['trade'], R.head(asks)),
             }}
             OrderBook={OrderBook}
             OrderBookProps={{

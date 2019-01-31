@@ -147,6 +147,8 @@ const OrderFormContainer: React.PureComponent<{}, {}> = props => {
             orderFormValues={submittedValues}
             setOrderFormValues={setSubmittedValues}
             setOrder={props.setOrder}
+            bid={props.bid}
+            ask={props.ask}
           />
         );
       }}

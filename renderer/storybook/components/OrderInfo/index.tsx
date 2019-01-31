@@ -33,19 +33,11 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
         <span className="order-info__price-desc">Last Price</span>
       </div>
       <div className="order-info__bid">
-        {bid && Tm.isQuantity(bid) ? (
-          <Fragment>{Tm.toFixed(bid)}</Fragment>
-        ) : (
-          <span>N/A</span>
-        )}
+        {bid ? <Fragment>{Tm.toFixed(bid)}</Fragment> : <span>N/A</span>}
         <span className="order-info__price-desc">Bid</span>
       </div>
       <div className="order-info__ask">
-        {bid && Tm.isQuantity(ask) ? (
-          <Fragment>{Tm.toFixed(ask)}</Fragment>
-        ) : (
-          <span>N/A</span>
-        )}
+        {ask ? <Fragment>{Tm.toFixed(ask)}</Fragment> : <span>N/A</span>}
         <span className="order-info__price-desc">Ask</span>
       </div>
     </div>
