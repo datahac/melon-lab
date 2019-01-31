@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.2.0",
-    "@melonproject/exchange-aggregator": "^0.1.10",
+    "@melonproject/exchange-aggregator": "^0.1.12",
     "@melonproject/protocol": "^0.9.23",
     "@melonproject/token-math": "0.1.5",
     "apollo-cache-inmemory": "^1.3.12",

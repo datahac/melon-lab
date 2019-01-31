@@ -12,6 +12,8 @@ import {
 } from '@melonproject/protocol';
 
 import { getTestOrders } from './getTestOrders';
+import { Kyber } from '@melonproject/exchange-aggregator/lib/exchanges/kyber/types';
+import { OasisDex } from '@melonproject/exchange-aggregator/lib/exchanges/oasisdex/types';
 
 // HACK: We need to cache the open orders here (Signed Orders) to
 const offChainOrders = new Map();
@@ -45,13 +47,16 @@ export default R.curryN(
           return exchanges.oasisdex.fetch({
             ...options,
             environment,
-          });
+          } as OasisDex.FetchOptions);
         case 'RADAR_RELAY':
           return testingRelayers
             ? getTestOrders(base, quote, Exchanges.ZeroEx)
             : exchanges.radarrelay.fetch(options);
         case 'KYBER_NETWORK':
-          return exchanges.kyber.fetch(options);
+          return exchanges.kyber.fetch({
+            ...options,
+            environment,
+          } as Kyber.FetchOptions);
         case 'ETHFINEX':
           return exchanges.ethfinex.fetch(options);
         default:

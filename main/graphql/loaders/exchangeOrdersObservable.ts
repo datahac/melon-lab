@@ -10,6 +10,8 @@ import {
   getTokenBySymbol,
   getChainName,
 } from '@melonproject/protocol';
+import { OasisDex } from '@melonproject/exchange-aggregator/lib/exchanges/oasisdex/types';
+import { Kyber } from '@melonproject/exchange-aggregator/lib/exchanges/kyber/types';
 
 export default R.curryN(
   4,
@@ -33,11 +35,14 @@ export default R.curryN(
         return exchanges.oasisdex.watch({
           ...options,
           environment,
-        });
+        } as OasisDex.WatchOptions);
       case 'RADAR_RELAY':
         return exchanges.radarrelay.watch(options);
       case 'KYBER_NETWORK':
-        return exchanges.kyber.watch(options);
+        return exchanges.kyber.watch({
+          ...options,
+          environment,
+        } as Kyber.WatchOptions);
       case 'ETHFINEX':
         return exchanges.ethfinex.watch(options);
       default:
