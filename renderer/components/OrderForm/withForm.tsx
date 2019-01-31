@@ -7,6 +7,7 @@ import * as kyberPriceQuery from '~/queries/kyberPrice.gql';
 
 const withForm = withFormik({
   mapPropsToValues: props => props.formValues,
+  enableReinitialize: true,
   validate: (values, props) => {
     const errors: FormErrors = {};
 
@@ -40,7 +41,6 @@ const withForm = withFormik({
 
     return errors;
   },
-  enableReinitialize: true,
   handleSubmit: (values, form) => form.props.setOrderFormValues(values),
 });
 
@@ -66,7 +66,7 @@ const withFormHandlers = withHandlers({
       });
     };
 
-    if (name === 'type' || name === 'strategy' || name === 'exchange') {
+    if (name === 'type' || name === 'strategy') {
       setFieldValue(name, value);
     }
 

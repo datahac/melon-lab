@@ -184,6 +184,7 @@ export default class ManageTemplateContainer extends React.Component {
                 setOrder,
                 holdings: holdingsData,
                 formValues: this.state.order,
+                key: baseAsset,
               }}
               OrderBook={OrderBook}
               OrderBookProps={{

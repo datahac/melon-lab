@@ -55,7 +55,6 @@ const WrappedOrderForm = withForm(props => {
         setOrderFormValues={props.setOrderFormValues}
         limitExchanges={limitExchanges}
         marketExchanges={marketExchanges}
-        // kyberPrice={result.data.kyberPrice}
       />
     </Fragment>
   );
@@ -111,6 +110,7 @@ class OrderFormContainer extends React.PureComponent {
             holdings,
             setOrder,
             formValues,
+            client,
           } = this.props;
 
           const isManager =
@@ -118,7 +118,7 @@ class OrderFormContainer extends React.PureComponent {
 
           return (
             <WrappedOrderForm
-              {...this.props}
+              client={client}
               setOrderFormValues={this.setOrderFormValues}
               baseToken={this.getTokenBalance(baseAsset)}
               quoteToken={this.getTokenBalance(quoteAsset)}
