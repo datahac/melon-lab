@@ -1,7 +1,7 @@
 import React, { StatelessComponent, Fragment } from 'react';
 import Button from '~/blocks/Button';
 import Spinner from '~/blocks/Spinner';
-import Link from '~/link';
+import Link from '~/blocks/Link';
 import format from 'date-fns/format';
 import * as Tm from '@melonproject/token-math';
 
@@ -57,17 +57,6 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
           Performance Reward: {performanceReward}%
         </div> */}
         <div className="factsheet__item">
-          <Link
-            href={{
-              pathname: '/invest',
-              query: {
-                address: fundAddress,
-              },
-            }}
-          >
-            <a>Invest into this fund</a>
-          </Link>
-          <br />
           <a
             href="https://ipfs.io/ipfs/Qmc9JRw4zarrs6gJwu6tC58UAgeEujNg9VMWcH8MUEd5TW/"
             target="_blank"
@@ -82,13 +71,28 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
             </a>
           </Link>
         </div>
-        {!isShutdown && !isCompetition && isManager && (
-          <div className="factsheet__item">
-            <Button onClick={handleShutDown} style="danger" size="small">
-              Irreversibly shut down fund
-            </Button>
-          </div>
-        )}
+        <div className="factsheet__item">
+          <Link
+            href={{
+              pathname: '/invest',
+              query: {
+                address: fundAddress,
+              },
+            }}
+            style="primary"
+            size="small"
+          >
+            <a>Invest</a>
+          </Link>
+          {!isShutdown && !isCompetition && isManager && (
+            <Fragment>
+              <hr />
+              <Button onClick={handleShutDown} style="danger" size="small">
+                Irreversibly shut down fund
+              </Button>
+            </Fragment>
+          )}
+        </div>
       </Fragment>
     )}
   </div>
