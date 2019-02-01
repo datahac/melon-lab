@@ -36,7 +36,11 @@ electron.app.on('ready', async () => {
   main.webContents.on('new-window', handleRedirect(main));
 
   await prepareServer();
-  await prepareRenderer('./renderer');
+  await prepareRenderer({
+    development: './renderer',
+    production: './',
+  });
+
   await prepareDevelopment(main);
   main.loadURL(url);
 });
@@ -51,7 +55,7 @@ const appUrl = () => {
   }
 
   return format({
-    pathname: resolve('renderer/index.html'),
+    pathname: resolve('out/index.html'),
     protocol: 'file:',
     slashes: true,
   });

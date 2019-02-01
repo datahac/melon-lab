@@ -4,15 +4,12 @@ const Dotenv = require('dotenv-webpack');
 
 // The path to the graphql schema.
 const schema = path.resolve(__dirname, '..', 'main', 'graphql', 'schema.gql');
-const electron = !!JSON.parse(process.env.ELECTRON || 'true');
 
 module.exports = require('@zeit/next-typescript')({
   exportPathMap: () => ({
     '/': { page: '/' },
   }),
   webpack: (config, options) => {
-    config.target = electron ? 'electron-renderer' : 'web';
-
     config.resolve.alias = Object.assign({}, config.resolve.alias || {}, {
       // Override the mock link component used in storybook.
       '~/link': 'next/link',

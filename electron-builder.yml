@@ -10,11 +10,11 @@ files:
   - from: build/main
     to: main
   - from: build/renderer
-    to: renderer
+    to: out
 
 directories:
   output: build/package
-  buildResources: renderer/static
+  buildResources: out/static
 
 linux:
   category: Finance
