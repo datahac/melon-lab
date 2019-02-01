@@ -200,7 +200,7 @@ const Container = ({
 };
 
 export default ({ address, quoteAsset, baseAsset }) => {
-  const [selectedOrder, updateOrder] = useOrderSelector({
+  const [selectedOrder, setOrder] = useOrderSelector({
     // Order ID is set when clicking on order in orderbook
     id: null,
     exchange: 'OASIS_DEX',
@@ -321,7 +321,6 @@ export default ({ address, quoteAsset, baseAsset }) => {
               address,
               quoteAsset,
               baseAsset,
-              setOrder: updateOrder,
               holdings: holdingsData,
               formValues: selectedOrder,
               key: baseAsset,
@@ -333,7 +332,7 @@ export default ({ address, quoteAsset, baseAsset }) => {
               quoteAsset,
               baseAsset,
               isManager,
-              setOrder: updateOrder,
+              setOrder,
               allExchanges,
               updateExchanges,
               selectedExchanges,

@@ -95,7 +95,6 @@ const WrappedOrderForm = withApollo(
           values={props.orderFormValues}
           setOrderFormValues={props.setOrderFormValues}
           resetForm={props.resetForm}
-          setOrder={props.setOrder}
         />
         <OrderForm
           {...props}
@@ -146,7 +145,6 @@ const OrderFormContainer: React.PureComponent<{}, {}> = props => {
             priceFeedUp={network && network.priceFeedUp}
             orderFormValues={submittedValues}
             setOrderFormValues={setSubmittedValues}
-            setOrder={props.setOrder}
             bid={props.bid}
             ask={props.ask}
           />
