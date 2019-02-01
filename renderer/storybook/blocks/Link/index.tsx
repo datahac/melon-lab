@@ -8,10 +8,14 @@ export interface LinkProps {
   size?: 'small' | 'medium' | 'large';
   style?: 'primary' | 'secondary' | 'clear';
   type?: 'warning' | 'danger' | 'success';
-  href?: string;
+  href?: {
+    pathname?: string;
+    query?: any;
+  };
   target?: string;
   onClick?: () => void;
   title?: string;
+  rel?: string;
 }
 
 const Link: StatelessComponent<LinkProps> = ({
@@ -23,6 +27,7 @@ const Link: StatelessComponent<LinkProps> = ({
   onClick,
   title,
   type,
+  rel,
 }) => {
   const linkClassNames = classNames('link', {
     [`link--${size}`]: size,
@@ -38,6 +43,7 @@ const Link: StatelessComponent<LinkProps> = ({
         href={href}
         target={target}
         className={linkClassNames}
+        rel={rel}
       >
         <style jsx>{styles}</style>
         {children}

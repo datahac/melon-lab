@@ -65,25 +65,29 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
             Contact Investors/Managers
           </a>
           <br />
-          <Link href={reportUrl}>
-            <a target="_blank" rel="noopener noreferrer">
-              Generate fund report
-            </a>
+          <Link
+            href={{ pathname: reportUrl }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Generate fund report
           </Link>
         </div>
         <div className="factsheet__item">
-          <Link
-            href={{
-              pathname: '/invest',
-              query: {
-                address: fundAddress,
-              },
-            }}
-            style="primary"
-            size="small"
-          >
-            <a>Invest</a>
-          </Link>
+          {fundAddress && (
+            <Link
+              href={{
+                pathname: '/invest',
+                query: {
+                  address: fundAddress,
+                },
+              }}
+              style="primary"
+              size="small"
+            >
+              Invest
+            </Link>
+          )}
           {!isShutdown && !isCompetition && isManager && (
             <Fragment>
               <hr />
