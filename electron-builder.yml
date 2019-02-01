@@ -2,7 +2,7 @@ copyright: Melonport AG
 appId: com.melonproject.app
 productName: Melon Manager Interface
 artifactName: melon-manager-interface-${version}-${os}.${ext}
-asar: false
+asar: true # Set to false to speed up build
 extends: null
 
 files:
@@ -23,7 +23,7 @@ linux:
     - AppImage
 
 mac:
-  identity: null # TODO: Remove this for production
+  #  identity: null # Uncomment this line to disable mac signing to speed up build
   category: public.app-category.finance
   target:
     - dmg
