@@ -1,4 +1,6 @@
+import axios from 'axios';
 import * as R from 'ramda';
+
 import * as Tm from '@melonproject/token-math';
 import {
   withDifferentAccount,
@@ -13,14 +15,21 @@ import {
 } from '@melonproject/protocol';
 import { getWallet } from '../environment';
 
+const DAY_IN_SECONDS = 24 * 60 * 60;
+
 const estimateMakeOrder = async (
   _,
   { from, exchange, buyToken, buyQuantity, sellToken, sellQuantity },
   { environment, loaders },
 ) => {
   const fund = await loaders.fundAddressFromManager.load(from);
-  const { tradingAddress } = await loaders.fundRoutes.load(fund);
+  const { tradingAddress, accountingAddress } = await loaders.fundRoutes.load(
+    fund,
+  );
   const env = withDifferentAccount(environment, new Tm.Address(from));
+  const denominationAsset = await loaders.fundDenominationAsset.load(
+    accountingAddress,
+  );
 
   // TODO: Refactor this into a directive
   const wallet = await getWallet();
@@ -50,24 +59,60 @@ const estimateMakeOrder = async (
       env,
     );
 
-    const order = await createOrder(env, zeroExAddress, {
-      makerQuantity,
-      takerQuantity,
-      makerAddress: tradingAddress,
-    });
+    const type = Tm.isEqual(makerQuantity.token, denominationAsset)
+      ? 'buy'
+      : 'sell';
 
-    const signedOrder = await signOrder(withSigner, order);
+    const quantity = type === 'buy' ? takerQuantity : makerQuantity;
+    const total = type === 'buy' ? makerQuantity : takerQuantity;
+    const price = Tm.normalize(Tm.createPrice(quantity, total));
 
-    const result = await make0xOrder.prepare(env, tradingAddress, {
-      signedOrder,
-    });
+    try {
+      const options = {
+        type,
+        quantity: quantity.quantity.toString(),
+        price: Tm.toFixed(price.quote, price.quote.token.decimals),
+        expiration: (Math.round(Date.now() / 1000) + DAY_IN_SECONDS).toString(),
+      };
 
-    return (
-      result && {
-        ...result.rawTransaction,
-        signedOrder: JSON.stringify(stringifyStruct(signedOrder)),
-      }
-    );
+      const response = await axios.post(
+        'https://api.kovan.radarrelay.com/v2/markets/mlnt-weth/order/limit',
+        options,
+      );
+
+      const unsignedOrder = {
+        ...R.omit(
+          ['makerAddress', 'signature', 'makerAssetAmount', 'takerAssetAmount'],
+          response.data,
+        ),
+        makerAddress: tradingAddress.toLowerCase(),
+        makerAssetAmount: makerQuantity.quantity.toString(),
+        takerAssetAmount: takerQuantity.quantity.toString(),
+      };
+
+      const orderFromProtocol = await createOrder(env, zeroExAddress, {
+        makerQuantity,
+        takerQuantity,
+        makerAddress: tradingAddress,
+        feeRecipientAddress: unsignedOrder.feeRecipientAddress,
+      });
+
+      const signedOrder = await signOrder(withSigner, orderFromProtocol);
+
+      const result = await make0xOrder.prepare(env, tradingAddress, {
+        signedOrder,
+      });
+
+      return (
+        result && {
+          ...result.rawTransaction,
+          signedOrder: JSON.stringify(stringifyStruct(signedOrder)),
+        }
+      );
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
   }
 
   throw new Error(`Make order not implemented for ${exchange}`);

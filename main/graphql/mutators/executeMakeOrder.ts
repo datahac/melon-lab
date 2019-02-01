@@ -27,27 +27,35 @@ const executeMakeOrder = async (
   }
 
   if (exchange === 'RADAR_RELAY') {
-    const result = await make0xOrder.send(
-      env,
-      tradingAddress,
-      signed.rawTransaction,
-    );
-
-    const chain = await getChainName(env);
     const parsedOrder = JSON.parse(signedOrder);
+    const chain = await getChainName(env);
 
-    if (chain === 'kovan') {
-      await axios.post(
-        'https://api.kovan.radarrelay.com/v2/orders',
-        parsedOrder,
+    try {
+      const result = await make0xOrder.send(
+        env,
+        tradingAddress,
+        signed.rawTransaction,
+        {
+          signedOrder: parsedOrder,
+        },
       );
-    } else if (chain === 'mainnet') {
-      await axios.post('https://api.radarrelay.com/v2/orders', parsedOrder);
-    } else {
-      console.log('POST https://api.radarrelay.com/v2/orders', parsedOrder);
-    }
 
-    return result;
+      if (chain === 'kovan') {
+        await axios.post(
+          'https://api.kovan.radarrelay.com/v2/orders',
+          parsedOrder,
+        );
+      } else if (chain === 'mainnet') {
+        await axios.post('https://api.radarrelay.com/v2/orders', parsedOrder);
+      } else {
+        console.log('POST https://api.radarrelay.com/v2/orders', parsedOrder);
+      }
+
+      return !!result;
+    } catch (error) {
+      console.error(chain, exchange, parsedOrder, error);
+      throw error;
+    }
   }
 
   throw new Error(`Make order not implemented for ${exchange}`);
