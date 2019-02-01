@@ -14,6 +14,7 @@ export interface WalletOverviewProps {
   isComplete?: boolean;
   balances?: {
     eth?: Tm.QuantityInterface;
+    weth?: Tm.QuantityInterface;
   };
 }
 
@@ -40,6 +41,13 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
                 <br />
                 <span className="wallet-overview__balance-value">
                   {balances && balances.eth && Tm.toFixed(balances.eth)}
+                </span>
+              </div>
+              <div className="wallet-overview__balance">
+                WETH:
+                <br />
+                <span className="wallet-overview__balance-value">
+                  {balances && balances.weth && Tm.toFixed(balances.weth)}
                 </span>
               </div>
             </div>
