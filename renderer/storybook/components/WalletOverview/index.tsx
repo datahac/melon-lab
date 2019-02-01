@@ -26,7 +26,7 @@ export const WalletOverview: StatelessComponent<WalletOverviewProps> = ({
   isComplete,
 }) => (
   <div className="wallet-overview">
-    <style jsx={true}>{styles}</style>
+    <style jsx>{styles}</style>
     {loading ? (
       <Spinner icon={true} size="small" />
     ) : (

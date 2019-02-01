@@ -47,7 +47,7 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
 
   return (
     <div className="orderbook">
-      <style jsx={true}>{styles}</style>
+      <style jsx>{styles}</style>
       {availableExchanges && (
         <div className="orderbook__exchanges">
           <div className="orderbook__exchange-label">Exchanges:</div>

@@ -20,7 +20,7 @@ const OrderInfo: StatelessComponent<OrderInfoProps> = ({
   quoteToken,
 }) => (
   <div className="order-info">
-    <style jsx={true}>{styles}</style>
+    <style jsx>{styles}</style>
     <div className="order-info__prices">
       <div className="order-info__last-price">
         {lastPrice ? (

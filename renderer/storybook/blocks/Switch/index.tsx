@@ -30,7 +30,7 @@ const Switch: StatelessComponent<SwitchProps> = ({
 
   return (
     <div className="switch">
-      <style jsx={true}>{styles}</style>
+      <style jsx>{styles}</style>
       <label className="switch__wrapper">
         <input
           name={name}

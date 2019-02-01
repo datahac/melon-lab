@@ -15,7 +15,7 @@ const OrderBookTable = ({ style, entries, onClickOrder, canTrade }) => {
 
   return (
     <div className={orderBookTableClassNames}>
-      <style jsx={true}>{styles}</style>
+      <style jsx>{styles}</style>
       <div className="orderbook-table__head">
         <div className="orderbook-table__head-row">
           <div className="orderbook-table__head-cell">

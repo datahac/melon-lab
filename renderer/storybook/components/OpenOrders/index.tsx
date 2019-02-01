@@ -36,7 +36,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
 }) => {
   return (
     <div className="open-orders">
-      <style jsx={true}>{styles}</style>
+      <style jsx>{styles}</style>
       <div className="open-orders__table-wrap">
         {orders.length > 0 ? (
           <Table>
