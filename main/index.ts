@@ -1,5 +1,5 @@
 import path from 'path';
-import electron from 'electron';
+import electron, { MenuItemConstructorOptions } from 'electron';
 import prepareRenderer from 'electron-next';
 import { format } from 'url';
 import { resolve } from 'app-root-path';
@@ -7,19 +7,6 @@ import { prepareServer } from './graphql';
 import { prepareDevelopment } from './utils/development';
 
 import isDev from 'electron-is-dev';
-
-console.log(
-  JSON.stringify(
-    {
-      isDev,
-      app: Object.keys(electron.app),
-      env: process.env,
-      isPackaged: (electron.app as any).isPackaged,
-    },
-    null,
-    2,
-  ),
-);
 
 electron.app.on('ready', async () => {
   const url = appUrl();
@@ -40,6 +27,8 @@ electron.app.on('ready', async () => {
     development: './renderer',
     production: './',
   });
+
+  createMenu();
 
   await prepareDevelopment(main);
   main.loadURL(url);
@@ -66,4 +55,69 @@ const handleRedirect = window => (event, url) => {
     event.preventDefault();
     electron.shell.openExternal(url);
   }
+};
+
+const createMenu = () => {
+  const application: MenuItemConstructorOptions = {
+    label: 'Application',
+    submenu: [
+      {
+        label: 'About Application',
+        role: 'about',
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Quit',
+        accelerator: 'Command+Q',
+        click: () => {
+          electron.app.quit();
+        },
+      },
+    ],
+  };
+
+  const edit: MenuItemConstructorOptions = {
+    label: 'Edit',
+    submenu: [
+      {
+        label: 'Undo',
+        accelerator: 'CmdOrCtrl+Z',
+        role: 'undo',
+      },
+      {
+        label: 'Redo',
+        accelerator: 'Shift+CmdOrCtrl+Z',
+        role: 'redo',
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: 'Cut',
+        accelerator: 'CmdOrCtrl+X',
+        role: 'cut',
+      },
+      {
+        label: 'Copy',
+        accelerator: 'CmdOrCtrl+C',
+        role: 'copy',
+      },
+      {
+        label: 'Paste',
+        accelerator: 'CmdOrCtrl+V',
+        role: 'paste',
+      },
+      {
+        label: 'Select All',
+        accelerator: 'CmdOrCtrl+A',
+        role: 'selectAll',
+      },
+    ],
+  };
+
+  const template = [application, edit];
+
+  electron.Menu.setApplicationMenu(electron.Menu.buildFromTemplate(template));
 };
