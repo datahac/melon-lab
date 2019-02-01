@@ -73,6 +73,51 @@ const useExchangeSelector = availableExchangesKeys => {
   return [current, setFromEvent];
 };
 
+const useOrderSelector = order => {
+  const [current, set] = useState(order);
+
+  const setFromValue = order => {
+    const { exchange, trade, metadata, type } = order;
+
+    if (exchange === 'OASIS_DEX') {
+      set({
+        id: metadata && metadata.id,
+        exchange: 'OASIS_DEX',
+        price: trade,
+        quantity: trade && trade.base,
+        strategy: 'Market',
+        total: trade && trade.quote,
+        type: bidAskSellBuyMap[type],
+        signedOrder: null,
+      });
+    } else if (exchange === 'RADAR_RELAY') {
+      set({
+        id: order.id,
+        exchange: 'RADAR_RELAY',
+        price: trade,
+        quantity: trade && trade.base,
+        strategy: 'Market',
+        total: trade && trade.quote,
+        type: bidAskSellBuyMap[type],
+        signedOrder: metadata,
+      });
+    } else {
+      set({
+        exchange,
+        strategy: 'Market',
+        type: bidAskSellBuyMap[type],
+        id: null,
+        price: null,
+        total: null,
+        signedOrder: null,
+        quantity: null,
+      });
+    }
+  };
+
+  return [current, setFromValue];
+};
+
 const OrdersSubscription = ({
   eventCallback,
   exchange,
@@ -155,7 +200,7 @@ const Container = ({
 };
 
 export default ({ address, quoteAsset, baseAsset }) => {
-  const [selectedOrder, setSelectedOrder] = useState({
+  const [selectedOrder, updateOrder] = useOrderSelector({
     // Order ID is set when clicking on order in orderbook
     id: null,
     exchange: 'OASIS_DEX',
@@ -205,45 +250,6 @@ export default ({ address, quoteAsset, baseAsset }) => {
     [[], []],
     [selectedExchanges],
   );
-
-  const setOrder = order => {
-    const { exchange, trade, metadata, type } = order;
-
-    if (exchange === 'OASIS_DEX') {
-      setSelectedOrder({
-        id: metadata && metadata.id,
-        exchange: 'OASIS_DEX',
-        price: trade,
-        quantity: trade && trade.base,
-        strategy: 'Market',
-        total: trade && trade.quote,
-        type: bidAskSellBuyMap[type],
-        signedOrder: null,
-      });
-    } else if (exchange === 'RADAR_RELAY') {
-      setSelectedOrder({
-        id: order.id,
-        exchange: 'RADAR_RELAY',
-        price: trade,
-        quantity: trade && trade.base,
-        strategy: 'Market',
-        total: trade && trade.quote,
-        type: bidAskSellBuyMap[type],
-        signedOrder: metadata,
-      });
-    } else {
-      setSelectedOrder({
-        exchange,
-        strategy: 'Market',
-        type: bidAskSellBuyMap[type],
-        id: null,
-        price: null,
-        total: null,
-        signedOrder: null,
-        quantity: null,
-      });
-    }
-  };
 
   return (
     <Container
@@ -315,7 +321,7 @@ export default ({ address, quoteAsset, baseAsset }) => {
               address,
               quoteAsset,
               baseAsset,
-              setOrder,
+              setOrder: updateOrder,
               holdings: holdingsData,
               formValues: selectedOrder,
               key: baseAsset,
@@ -327,7 +333,7 @@ export default ({ address, quoteAsset, baseAsset }) => {
               quoteAsset,
               baseAsset,
               isManager,
-              setOrder,
+              setOrder: updateOrder,
               allExchanges,
               updateExchanges,
               selectedExchanges,
