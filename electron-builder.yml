@@ -1,9 +1,8 @@
-
 copyright: Melonport AG
 appId: com.melonproject.app
 productName: Melon Manager Interface
 artifactName: melon-manager-interface-${version}-${os}.${ext}
-asar: true
+asar: false
 extends: null
 
 files:
@@ -24,6 +23,7 @@ linux:
     - AppImage
 
 mac:
+  identity: null # TODO: Remove this for production
   category: public.app-category.finance
   target:
     - dmg
