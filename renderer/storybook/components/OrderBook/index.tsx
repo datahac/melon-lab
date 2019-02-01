@@ -57,9 +57,9 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
               name="exchanges"
               value="ALL"
               text="All"
+              key={selectedExchanges}
               defaultChecked={
-                selectedExchanges.length ===
-                availableExchanges.map(([key]) => key).length
+                selectedExchanges.length === availableExchanges.length
               }
             />
           </div>
@@ -70,6 +70,7 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
                 name="exchanges"
                 value={key}
                 text={value}
+                key={selectedExchanges}
                 defaultChecked={selectedExchanges.indexOf(key) !== -1}
               />
             </div>

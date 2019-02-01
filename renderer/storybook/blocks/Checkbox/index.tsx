@@ -7,8 +7,8 @@ export interface CheckboxProps {
   defaultChecked?: boolean;
   disabled?: boolean;
   name: string;
-  handleOnChange?: () => void;
-  handleOnBlur?: () => void;
+  handleOnChange?: (e) => void;
+  handleOnBlur?: (e) => void;
   text: string;
   value?: string;
   style?: 'default' | 'boxed';
