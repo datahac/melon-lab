@@ -31,10 +31,6 @@ const estimateMakeOrder = async (
     accountingAddress,
   );
 
-  // TODO: Refactor this into a directive
-  const wallet = await getWallet();
-  const withSigner = await withPrivateKeySigner(environment, wallet.privateKey);
-
   const makerQuantity = Tm.createQuantity(
     getTokenBySymbol(environment, sellToken),
     sellQuantity,
@@ -68,6 +64,13 @@ const estimateMakeOrder = async (
     const price = Tm.normalize(Tm.createPrice(quantity, total));
 
     try {
+      // TODO: Refactor this into a directive
+      const wallet = loaders.getWallet();
+      const withSigner = await withPrivateKeySigner(
+        environment,
+        wallet.privateKey,
+      );
+
       const options = {
         type,
         quantity: quantity.quantity.toString(),

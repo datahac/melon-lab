@@ -6,8 +6,6 @@ import { resolve } from 'app-root-path';
 import { prepareServer } from './graphql';
 import { prepareDevelopment } from './utils/development';
 
-import isDev from 'electron-is-dev';
-
 electron.app.on('ready', async () => {
   const url = appUrl();
   const main = new electron.BrowserWindow({
