@@ -27,22 +27,8 @@ const OrderBookTable = ({ style, entries, onClickOrder, canTrade }) => {
       </div>
       <div className="orderbook-table__body">
         {entries.map((order, index) => {
-          const prev = entries[index - 1]
-            ? parseInt(entries[index - 1].cummulative.quantity, 10)
-            : 0;
           const cur = parseInt(order.cummulative.quantity, 10);
-          const difference = Math.max(
-            0,
-            Math.min(((prev - cur) / total) * 100),
-          );
-          const previous = Math.max(0, Math.min((prev / total) * 100));
           const current = Math.max(0, Math.min(100, (cur / total) * 100));
-
-          const leftSpaceBorder =
-            style === 'sell'
-              ? `calc(${current}% - ${difference}% ${previous > 0.5 &&
-                  '- 1px'})`
-              : `calc(100% - ${current}% ${previous > 0.5 && '+ 1px'})`;
 
           return (
             <div
@@ -63,12 +49,7 @@ const OrderBookTable = ({ style, entries, onClickOrder, canTrade }) => {
                 {Tm.toFixed(order.cummulative, 4)}
               </div>
 
-              <VolumeBar
-                style={style}
-                widthBar={`${current}%`}
-                widthBorder={`${difference}%`}
-                leftSpaceBorder={leftSpaceBorder}
-              />
+              <VolumeBar style={style} widthBar={`${current}%`} />
             </div>
           );
         })}

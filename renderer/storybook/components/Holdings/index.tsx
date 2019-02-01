@@ -31,7 +31,7 @@ export const Holdings: StatelessComponent<HoldingsProps> = ({
     <style jsx>{styles}</style>
     {loading ? (
       <div className="holdings__loading">
-        <Spinner icon />
+        <Spinner icon size="small" />
       </div>
     ) : (
       <div className="holdings__table-wrap">

@@ -16,29 +16,9 @@
 .volume-bar__item--sell {
   left: 0;
   background-color: color-mod(var(--color-loss) a(20%));
-  border-right: 1px solid color-mod(var(--color-loss) a(25%));
 }
 
 .volume-bar__item--buy {
   right: 0;
   background-color: color-mod(var(--color-profit) a(20%));
-  border-left: 1px solid color-mod(var(--color-profit) a(25%));
-}
-
-.volume-bar__item--sell ~ .volume-bar__border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 1px;
-  z-index: -1;
-  background-color: color-mod(var(--color-loss) a(25%));
-}
-
-.volume-bar__item--buy ~ .volume-bar__border {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 1px;
-  z-index: -1;
-  background-color: color-mod(var(--color-profit) a(25%));
 }

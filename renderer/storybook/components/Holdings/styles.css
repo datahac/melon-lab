@@ -8,8 +8,8 @@
 }
 
 .holdings__loading {
-  margin: 0 auto;
-  width: 100px;
+  margin: var(--space-m) auto;
+  width: 50px;
 }
 
 .holdings :global(.holding) {

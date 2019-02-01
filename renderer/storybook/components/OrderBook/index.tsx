@@ -80,12 +80,12 @@ export const OrderBook: StatelessComponent<OrderBookProps> = ({
 
       {loading && bids.length === 0 && asks.length === 0 && (
         <div className="orderbook__loading">
-          <Spinner icon={true} />
+          <Spinner icon size="small" />
         </div>
       )}
 
       {!loading && bids.length === 0 && asks.length === 0 && (
-        <Notification isWarning={true}>
+        <Notification isWarning>
           No orders on the orderbook for this trading pair
         </Notification>
       )}

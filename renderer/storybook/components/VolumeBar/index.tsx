@@ -3,7 +3,7 @@ import React from 'react';
 
 import styles from './styles.css';
 
-const VolumeBar = ({ widthBar, leftSpaceBorder, widthBorder, style }) => {
+const VolumeBar = ({ widthBar, style }) => {
   const volumeBarClassNames = classNames('volume-bar__item', {
     [`volume-bar__item--${style}`]: style,
   });
@@ -15,13 +15,6 @@ const VolumeBar = ({ widthBar, leftSpaceBorder, widthBorder, style }) => {
         className={volumeBarClassNames}
         style={{
           width: widthBar,
-        }}
-      />
-      <span
-        className="volume-bar__border"
-        style={{
-          left: leftSpaceBorder,
-          width: widthBorder,
         }}
       />
     </div>

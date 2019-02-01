@@ -1,6 +1,6 @@
 .orderbook__loading {
   margin: var(--space-m) auto;
-  width: 100px;
+  width: 50px;
 }
 
 .orderbook__tables {
