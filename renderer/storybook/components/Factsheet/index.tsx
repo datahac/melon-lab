@@ -38,10 +38,10 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
   fundAddress,
 }) => (
   <div className="factsheet">
-    <style jsx>{styles}</style>
+    <style jsx={true}>{styles}</style>
     {loading ? (
       <div className="factsheet__spinner">
-        <Spinner icon size="small" />
+        <Spinner icon={true} size="small" />
       </div>
     ) : (
       <Fragment>
@@ -75,18 +75,33 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
         </div>
         <div className="factsheet__item">
           {fundAddress && (
-            <Link
-              href={{
-                pathname: '/invest',
-                query: {
-                  address: fundAddress,
-                },
-              }}
-              style="primary"
-              size="small"
-            >
-              Invest
-            </Link>
+            <Fragment>
+              <Link
+                href={{
+                  pathname: '/invest',
+                  query: {
+                    address: fundAddress,
+                  },
+                }}
+                style="primary"
+                size="small"
+              >
+                Invest
+              </Link>
+              <hr />
+              <Link
+                href={{
+                  pathname: '/redeem',
+                  query: {
+                    address: fundAddress,
+                  },
+                }}
+                style="primary"
+                size="small"
+              >
+                Redeem
+              </Link>
+            </Fragment>
           )}
           {!isShutdown && !isCompetition && isManager && (
             <Fragment>
