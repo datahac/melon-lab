@@ -1,0 +1,25 @@
+.redeem-form__input {
+  margin: 0 0 var(--space-m) 0;
+}
+
+.redeem-form__toggles {
+  width: 100%;
+  display: flex;
+  padding: var(--space-m) 0;
+}
+
+.redeem-form__toggle {
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.redeem-form__spinner {
+  margin: 0 auto;
+}
+
+.redeem-form__current-price {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 0 var(--space-xs) var(--space-xs) 0;
+  color: var(--color-grey);
+}
