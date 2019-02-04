@@ -1,6 +1,6 @@
 import { take, timeout } from 'rxjs/operators';
 
-const takeLast = (stream$, wait = 5000) =>
+const takeLast = (stream$, wait = 30 * 1000) =>
   new Promise((resolve, reject) => {
     stream$
       .pipe(

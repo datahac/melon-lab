@@ -15,7 +15,7 @@ const requestHasRecentPrice = environment => {
     const token = await getQuoteToken(environment, address);
     return hasValidPrice(environment, address, token);
   }).pipe(
-    timeout(2000),
+    timeout(30 * 1000),
     retryWhen(errors => errors.pipe(delay(1000))),
   );
 };

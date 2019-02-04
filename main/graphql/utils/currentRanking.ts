@@ -13,7 +13,7 @@ const requestRanking = (environment, rankingAddress, versionAddress) => {
   return Rx.from(
     getFundDetails(environment, rankingAddress, versionAddress),
   ).pipe(
-    timeout(3000),
+    timeout(30 * 1000),
     retryWhen(errors => errors.pipe(delay(1000))),
   );
 };
