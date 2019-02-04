@@ -1,5 +1,4 @@
 import React, { StatelessComponent, Fragment } from 'react';
-import Icons from '~/design/Icons';
 import Spinner from '~/blocks/Spinner';
 import displayQuantity from '~/shared/utils/displayQuantity';
 import displayPrice from '~/shared/utils/displayPrice';
