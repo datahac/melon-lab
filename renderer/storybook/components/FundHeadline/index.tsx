@@ -53,8 +53,8 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
 
     const url =
       track === 'live'
-        ? `https://olympiad.melon.fund/#${address}`
-        : `https://melon.fund/#${address}`;
+        ? `https://olympiad.melon.fund/${address}`
+        : `https://melon.fund/${address}`;
     const hashtags = 'TechnologyRegulatedFunds,Melon,MelonFund';
     const via = 'melonport';
     const related = 'melonport';
@@ -65,6 +65,11 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
       hashtags,
     )}&via=${encodeURIComponent(via)}&related=${encodeURIComponent(related)}`;
   };
+
+  const fundUrl =
+    track === 'live'
+      ? `https://etherscan.io/address/${address}`
+      : `https://kovan.etherscan.io/address/${address}`;
 
   return (
     <div className="fund-headline">
@@ -77,17 +82,23 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
         <Fragment>
           <div className="fund-headline__headline">
             <h1 className="fund-headline__title">
-              {name}{' '}
+              <span className="fund-headline__name">{name}</span>
               <span className="fund-headline__twitter">
                 <a
                   href={buildTwitterUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="fund-headline__twitter-link"
                 >
                   <Icons width="14px" height="14px" name="twitter" />
                 </a>
               </span>
             </h1>
+            <div className="fund-headline__address">
+              <a href={fundUrl} target="_blank" rel="noopener noreferrer">
+                {address}
+              </a>
+            </div>
           </div>
           <div className="fund-headline__item">
             <div className="fund-headline__item-title">Share price</div>
