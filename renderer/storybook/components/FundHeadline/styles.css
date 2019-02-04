@@ -12,8 +12,9 @@
 
 .fund-headline__title {
   margin: 0;
-  display: flex;
-  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .fund-headline__title::after {
@@ -36,39 +37,12 @@
   }
 }
 
-.fund-headline__twitter :global(.icon) {
-  vertical-align: middle;
-}
-
 .fund-headline__spinner {
   margin: 0 auto;
 }
 
-.fund-headline__twitter {
-  margin-left: var(--space-xs);
-  padding-left: var(--space-xs);
-  position: relative;
-}
-
-.fund-headline__twitter::before {
-  content: '';
-  left: 0px;
-  border-left: 1px solid var(--color-border);
-  position: absolute;
-  top: 6px;
-  height: 13px;
-}
-
-.fund-headline__twitter-link {
-  vertical-align: text-bottom;
-  line-height: 1;
-}
-
-.fund-headline__name {
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.fund-headline__headline {
+  max-width: 35%;
 }
 
 .fund-headline__address {
