@@ -5,7 +5,7 @@ const availableExchangeContracts = [
   },
   {
     value: 'ZERO_EX_EXCHANGE',
-    text: 'Radar Relay',
+    text: '0x',
   },
   {
     value: 'KYBER_NETWORK',
