@@ -8,6 +8,7 @@ import {
   Exchanges,
   getActiveOasisDexOrders,
   getFundDetails,
+  getFundToken,
   getTokenBySymbol,
   makeOrderFromAccountOasisDex,
   randomString,
@@ -44,6 +45,11 @@ import {
   executeRequestInvestmentMutation,
 } from '~/queries/invest.gql';
 
+import {
+  EstimateRedeemMutation,
+  ExecuteRedeemMutation,
+} from '~/queries/redeem.gql';
+
 import * as fundQuery from '~/queries/fund.gql';
 
 jest.setTimeout(1200000);
@@ -52,6 +58,7 @@ describe('Setup fund and trade on Oasis Dex', () => {
   let environment: Environment;
   let master: Environment;
   let context;
+  let investorContext;
   let fundAddress;
   let matchingMarket: Tm.Address;
   let matchingMarketAccessor: Tm.Address;
@@ -283,5 +290,36 @@ describe('Setup fund and trade on Oasis Dex', () => {
     );
 
     expect(Tm.isEqual(wethHolding.balance, investment));
+  });
+
+  it('Redeem', async () => {
+    const fundToken = await getFundToken(environment, fundAddress);
+
+    const redemption = Tm.createQuantity(fundToken, 0.5);
+
+    const estimateRedeem = await execute(
+      schema,
+      EstimateRedeemMutation,
+      null,
+      context(),
+      { fundAddress, sharesQuantity: redemption.quantity.toString() },
+    );
+
+    expect(estimateRedeem.errors).toBeUndefined();
+    expect(estimateRedeem.data).toBeTruthy();
+
+    const executeRedeem = await execute(
+      schema,
+      ExecuteRedeemMutation,
+      null,
+      context(),
+      {
+        fundAddress,
+        ...R.path(['data', 'estimate'], estimateRedeem),
+      },
+    );
+
+    expect(executeRedeem.errors).toBeUndefined();
+    // expect(executeRedeem.data).toBeTruthy();
   });
 });

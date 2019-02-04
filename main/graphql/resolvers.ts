@@ -50,6 +50,8 @@ import { estimateMakeOrder } from './mutators/estimateMakeOrder';
 import { executeMakeOrder } from './mutators/executeMakeOrder';
 import { estimateCancelOrder } from './mutators/estimateCancelOrder';
 import { executeCancelOrder } from './mutators/executeCancelOrder';
+import { estimateRedeem } from './mutators/estimateRedeem';
+import { executeRedeem } from './mutators/executeRedeem';
 
 import { getToken } from '@melonproject/protocol/lib/contracts/dependencies/token/calls/getToken';
 
@@ -676,6 +678,8 @@ export default {
 
       return !!result;
     },
+    estimateRedeem,
+    executeRedeem,
     estimateMakeOrder,
     executeMakeOrder,
     estimateTakeOrder,

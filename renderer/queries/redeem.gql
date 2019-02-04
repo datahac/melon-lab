@@ -1,0 +1,38 @@
+mutation EstimateRedeemMutation(
+  $sharesQuantity: String!
+  $fundAddress: String!
+) {
+  estimate: estimateRedeem(
+    sharesQuantity: $sharesQuantity
+    fundAddress: $fundAddress
+  ) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation ExecuteRedeemMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+  $fundAddress: String!
+) {
+  execute: executeRedeem(
+    fundAddress: $fundAddress
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}

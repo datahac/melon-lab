@@ -489,6 +489,26 @@ type Mutation {
   ): UnsignedPlainTransaction @account
 
   """
+  Executes the "approve transfer" transaction with the given gas price per unit.
+  """
+  executeApproveTransfer(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+    investmentAmount: String!
+  ): Boolean @account @sign
+
+  estimateRedeem(
+    fundAddress: String!
+    sharesQuantity: String!
+  ): UnsignedPlainTransaction @account
+
+  executeRedeem(
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean @account @sign
+
+  """
   Executes the "execute request" transaction with the given gas price per unit.
   """
   executeShutDownFund(
@@ -501,16 +521,6 @@ type Mutation {
   Estimates the number of gas units required for the "approve transfer" transaction.
   """
   estimateShutDownFund(fundAddress: String!): UnsignedPlainTransaction @account
-
-  """
-  Executes the "approve transfer" transaction with the given gas price per unit.
-  """
-  executeApproveTransfer(
-    "Unsigned transaction data."
-    unsigned: UnsignedTransactionInput!
-    fundAddress: String!
-    investmentAmount: String!
-  ): Boolean @account @sign
 
   """
   Estimates the number of gas units required for the "trigger reward all fees" transaction.
