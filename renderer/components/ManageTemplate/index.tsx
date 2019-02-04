@@ -30,7 +30,15 @@ import {
 } from '@melonproject/exchange-aggregator';
 import availableExchanges from '~/shared/utils/availableExchanges';
 import { useEventCallback } from 'rxjs-hooks';
-import { scan, map, combineLatest, switchMap, startWith, distinctUntilChanged, tap } from 'rxjs/operators';
+import {
+  scan,
+  map,
+  combineLatest,
+  switchMap,
+  startWith,
+  distinctUntilChanged,
+  tap,
+} from 'rxjs/operators';
 
 // A bid-order on the orderbook resolves to a sell from the fund (The order maker wants to buy something, so we sell em)
 const bidAskSellBuyMap = {
@@ -226,35 +234,38 @@ export default ({ address, quoteAsset, baseAsset }) => {
       );
 
       const stream$ = pair$.pipe(
-        switchMap(() => (events$ as any).pipe(
-          scan(
-            (carry, events) => (events || []).reduce(reduceOrderEvents, carry),
-            [],
+        switchMap(() =>
+          (events$ as any).pipe(
+            scan(
+              (carry, events) =>
+                (events || []).reduce(reduceOrderEvents, carry),
+              [],
+            ),
+            combineLatest(inputs$, (orders, [exchanges]) => {
+              const filter = R.compose(
+                R.includes(R.__, exchanges),
+                R.prop('exchange'),
+              );
+
+              return orders.filter(filter);
+            }),
+            map(orders => {
+              const asks = orders
+                .filter(isAskOrder)
+                .sort(sortOrders)
+                .reverse()
+                .reduce(reduceOrderVolumes, []);
+
+              const bids = orders
+                .filter(isBidOrder)
+                .sort(sortOrders)
+                .reduce(reduceOrderVolumes, []);
+
+              return [asks, bids];
+            }),
+            startWith([[], []]),
           ),
-          combineLatest(inputs$, (orders, [exchanges]) => {
-            const filter = R.compose(
-              R.includes(R.__, exchanges),
-              R.prop('exchange'),
-            );
-
-            return orders.filter(filter);
-          }),
-          map(orders => {
-            const asks = orders
-              .filter(isAskOrder)
-              .sort(sortOrders)
-              .reverse()
-              .reduce(reduceOrderVolumes, []);
-
-            const bids = orders
-              .filter(isBidOrder)
-              .sort(sortOrders)
-              .reduce(reduceOrderVolumes, []);
-
-            return [asks, bids];
-          }),
-          startWith([[], []]),
-        )),
+        ),
       );
 
       return stream$;
