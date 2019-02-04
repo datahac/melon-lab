@@ -31,7 +31,6 @@ jest.setTimeout(1200000);
 describe('Take orders from kyber', () => {
   let environment: Environment;
   let context;
-  let routes;
   let weth: Tm.TokenInterface;
   let mln: Tm.TokenInterface;
 
