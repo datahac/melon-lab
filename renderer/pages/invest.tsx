@@ -10,10 +10,9 @@ export default class InvestPage extends React.Component {
   static async getInitialProps(context) {
     const parameters = (context.req && context.req.query) || context.query;
     const isLoggedIn = await checkIsLoggedIn(context.apolloClient);
-    const isValidFund = await checkValidFund(
-      context.apolloClient,
-      parameters.address,
-    );
+    const isValidFund =
+      parameters.address &&
+      (await checkValidFund(context.apolloClient, parameters.address));
 
     if (!isLoggedIn) {
       return { statusCode: 403 };
