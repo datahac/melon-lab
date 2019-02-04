@@ -11,7 +11,7 @@ import getFundDenominationAsset from './loaders/fund/fundDenominationAsset';
 import getFundHoldings from './loaders/fund/fundHoldings';
 import getFundInception from './loaders/fund/fundInception';
 import getFundIsComplete from './loaders/fund/fundIsComplete';
-import getFundHasActiveRequest from './loaders/fund/fundHasActiveRequest';
+import getHasActiveRequest from './loaders/hasActiveRequest';
 import getFundIsShutdown from './loaders/fund/fundIsShutdown';
 import getFundName from './loaders/fund/fundName';
 import getFundNativeAsset from './loaders/fund/fundNativeAsset';
@@ -202,8 +202,8 @@ export default (environment, streams) => {
     return takeLast(streams.ranking$);
   });
 
-  const fundHasActiveRequest = new DataLoader(async addresses => {
-    const fn = getFundHasActiveRequest(environment);
+  const hasActiveRequest = new DataLoader(async addresses => {
+    const fn = getHasActiveRequest(environment);
     return Promise.all(addresses.map(fn) || []);
   });
 
@@ -311,7 +311,7 @@ export default (environment, streams) => {
   return {
     assetPrice,
     currentBlock,
-    fundHasActiveRequest,
+    hasActiveRequest,
     fundAddressFromManager,
     fundByName,
     fundCalculations,

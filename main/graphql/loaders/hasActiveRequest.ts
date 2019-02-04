@@ -1,11 +1,12 @@
 import * as R from 'ramda';
 import { getRoutes, hasValidRequest, getRequest } from '@melonproject/protocol';
 
-async function fundHasActiveRequest(environment, { fundAddress, userAddress }) {
+async function hasActiveRequest(environment, { fundAddress, userAddress }) {
   const { participationAddress } = await getRoutes(environment, fundAddress);
   const request = await getRequest(environment, participationAddress, {
     of: userAddress,
   });
+  if (!request) return null;
   const isValid = await hasValidRequest(environment, participationAddress, {
     investor: userAddress,
   });
@@ -16,4 +17,4 @@ async function fundHasActiveRequest(environment, { fundAddress, userAddress }) {
   };
 }
 
-export default R.curryN(2, fundHasActiveRequest);
+export default R.curryN(2, hasActiveRequest);

@@ -14,11 +14,12 @@ import {
   executeRequestInvestmentMutation,
 } from '~/queries/invest.gql';
 
-export default withRouter(props => (
-  <ModalTransactions
-    text={`The following method on the Melon Smart Contracts will be executed:`}
-    open={!!props.values && !!props.step}
-    estimations={[
+export default withRouter(props => {
+  const estimations: any[] = [];
+  const executions: any[] = [];
+
+  if (props.isInitialRequest || !props.isWaiting) {
+    estimations.push(
       {
         mutation: estimateApproveTransferMutation,
         variables: props.values && {
@@ -37,15 +38,8 @@ export default withRouter(props => (
         isComplete: props.step > 2,
         name: 'requestInvestment',
       },
-      {
-        mutation: estimateExecuteRequestMutation,
-        variables: {
-          fundAddress: props.fundAddress,
-        },
-        name: 'executeRequest',
-      },
-    ]}
-    executions={[
+    );
+    executions.push(
       {
         mutation: executeApproveTransferMutation,
         variables: props.values && {
@@ -61,31 +55,52 @@ export default withRouter(props => (
         variables: {
           fundAddress: props.fundAddress,
         },
+        refetchQueries: () => ['FundQuery', 'RequestQuery'],
         update: () => {
           props.setStep(3);
         },
       },
-      {
-        mutation: executeExecuteRequestMutation,
-        variables: {
-          fundAddress: props.fundAddress,
-        },
-        update: () => {
-          props.setStep(null);
-          // onCompleted is not working because of render
-          props.router.push({
-            pathname: '/manage',
-            query: {
-              address: props.fundAddress,
-            },
-          });
-        },
+    );
+  }
+
+  if (props.isInitialRequest || props.isReadyToExecute) {
+    estimations.push({
+      mutation: estimateExecuteRequestMutation,
+      variables: {
+        fundAddress: props.fundAddress,
       },
-    ]}
-    handleCancel={() => {
-      props.router.push({
-        pathname: '/wallet',
-      });
-    }}
-  />
-));
+      name: 'executeRequest',
+    });
+    executions.push({
+      mutation: executeExecuteRequestMutation,
+      variables: {
+        fundAddress: props.fundAddress,
+      },
+      update: () => {
+        props.setStep(null);
+        props.setInvestValues(null);
+        // onCompleted is not working because of render
+        props.router.push({
+          pathname: '/manage',
+          query: {
+            address: props.fundAddress,
+          },
+        });
+      },
+    });
+  }
+
+  return (
+    <ModalTransactions
+      text={`The following method on the Melon Smart Contracts will be executed:`}
+      open={!!props.values || !!props.step}
+      estimations={estimations}
+      executions={executions}
+      handleCancel={() => {
+        props.router.push({
+          pathname: '/wallet',
+        });
+      }}
+    />
+  );
+});

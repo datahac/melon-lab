@@ -352,11 +352,11 @@ input SignZeroExOrderInput {
 }
 
 type InvestRequest {
-  invest: Quantity
-  shares: Quantity
+  invest: Quantity!
+  shares: Quantity!
 
   "If waiting time 0 then ready to execute"
-  waitingTime: Int!
+  waitingTime: String!
 }
 
 type Query {
@@ -394,7 +394,7 @@ type Query {
   tokens: [Token]
 
   "Check if fund has active invest request"
-  hasActiveInvestRequest(fundAddress: String!, userAddress: String!): InvestRequest
+  hasActiveRequest(fundAddress: String!, userAddress: String!): InvestRequest
 }
 
 type Mutation {

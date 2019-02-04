@@ -134,8 +134,8 @@ export default {
     routes: (_, { manager }, { loaders }) => {
       return loaders.routes.load(manager);
     },
-    hasActiveInvestRequest: (_, { fundAddress, userAddress }, { loaders }) => {
-      return loaders.fundHasActiveRequest.load({ fundAddress, userAddress });
+    hasActiveRequest: (_, { fundAddress, userAddress }, { loaders }) => {
+      return loaders.hasActiveRequest.load({ fundAddress, userAddress });
     },
     kyberPrice: async (_, { symbol, quantity, type }, { environment }) => {
       const kyberNetworkProxy = R.path(

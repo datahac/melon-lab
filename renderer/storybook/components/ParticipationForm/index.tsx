@@ -30,10 +30,12 @@ export interface ParticipationFormProps {
   handleBlur?: () => void;
   handleSubmit?: () => void;
   handleChange?: () => void;
+  executeRequest?: () => void;
   loading?: boolean;
-  noFund?: boolean;
   address?: string;
   sharePrice?: Tm.PriceInterface;
+  isWaiting?: boolean;
+  readyToExecute?: boolean;
 }
 
 const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
@@ -45,9 +47,11 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   touched,
   values,
   loading,
-  noFund,
   address,
   sharePrice,
+  isWaiting,
+  readyToExecute,
+  executeRequest,
 }) => {
   const numberPlaceholder = (0).toFixed(decimals);
   return (
@@ -59,11 +63,17 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
         </div>
       ) : (
         <div className="participation-form">
-          {noFund ? (
-            <Notification isError>
-              No fund with address {address} found.
+          {isWaiting && (
+            <Notification isWarning>
+              There is already a request for this fund {address}. Please wait!
             </Notification>
-          ) : (
+          )}
+
+          {readyToExecute && (
+            <Button onClick={executeRequest}>Execute Request</Button>
+          )}
+
+          {!isWaiting && !readyToExecute && (
             <Fragment>
               <Form onSubmit={handleSubmit}>
                 <div className="participation-form__input">
