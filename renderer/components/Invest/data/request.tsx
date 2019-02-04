@@ -21,6 +21,7 @@ const RequestQuery = ({ fundAddress, userAddress, children }) => (
     ssr={false}
     errorPolicy="all"
     variables={{ fundAddress, userAddress }}
+    skip={!userAddress}
   >
     {children}
   </Query>
