@@ -351,6 +351,14 @@ input SignZeroExOrderInput {
   salt: String!
 }
 
+type InvestRequest {
+  invest: Quantity
+  shares: Quantity
+
+  "If waiting time 0 then ready to execute"
+  waitingTime: Int!
+}
+
 type Query {
   defaultAccount: String
   allAccounts: [String]
@@ -384,6 +392,9 @@ type Query {
   kyberPrice(symbol: String!, quantity: String!, type: TradeTypeEnum!): Price
 
   tokens: [Token]
+
+  "Check if fund has active invest request"
+  hasActiveInvestRequest(fundAddress: String!, userAddress: String!): InvestRequest
 }
 
 type Mutation {
@@ -457,7 +468,8 @@ type Mutation {
   """
   Estimates the number of gas units required for the "execute request" transaction.
   """
-  estimateExecuteRequest(fundAddress: String!): UnsignedPlainTransaction @account
+  estimateExecuteRequest(fundAddress: String!): UnsignedPlainTransaction
+    @account
 
   """
   Executes the "execute request" transaction with the given gas price per unit.
@@ -569,10 +581,14 @@ type Mutation {
   ): ZeroExOrderMetadata
 
   # Policies
-  estimateDeployUserWhitelist(addresses: [String]): UnsignedPlainTransaction @account
-  estimateDeployAssetBlacklist(symbols: [String]): UnsignedPlainTransaction @account
-  estimateDeployAssetWhitelist(symbols: [String]): UnsignedPlainTransaction @account
-  estimateDeployMaxConcentration(percent: Float): UnsignedPlainTransaction @account
+  estimateDeployUserWhitelist(addresses: [String]): UnsignedPlainTransaction
+    @account
+  estimateDeployAssetBlacklist(symbols: [String]): UnsignedPlainTransaction
+    @account
+  estimateDeployAssetWhitelist(symbols: [String]): UnsignedPlainTransaction
+    @account
+  estimateDeployMaxConcentration(percent: Float): UnsignedPlainTransaction
+    @account
   estimateDeployMaxPositions(positions: Int): UnsignedPlainTransaction @account
   estimateDeployPriceTolerance(percent: Int): UnsignedPlainTransaction @account
   executeDeploy(unsigned: UnsignedTransactionInput): String @account @sign
