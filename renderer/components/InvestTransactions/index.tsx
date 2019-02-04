@@ -63,7 +63,7 @@ export default withRouter(props => {
     );
   }
 
-  if (props.isInitialRequest || props.isReadyToExecute) {
+  if (props.isInitialRequest || props.readyToExecute) {
     estimations.push({
       mutation: estimateExecuteRequestMutation,
       variables: {
