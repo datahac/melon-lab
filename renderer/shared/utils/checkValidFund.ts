@@ -10,7 +10,7 @@ export default (apolloClient, address) =>
       query: gql`
         query FundQuery($address: String!) {
           fund(address: $address) {
-            id
+            address
           }
         }
       `,
