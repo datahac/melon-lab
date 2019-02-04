@@ -4,12 +4,14 @@ import * as R from 'ramda';
 export default (apolloClient, address) =>
   apolloClient
     .query({
+      skip: !address,
       variables: {
         address,
       },
       query: gql`
-        query FundQuery($address: String!) {
+        query HasValidFundQuery($address: String!) {
           fund(address: $address) {
+            id
             address
           }
         }

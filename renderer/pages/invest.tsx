@@ -19,10 +19,9 @@ export default class InvestPage extends React.Component {
       return { statusCode: 403 };
     }
 
-    // TODO: Fix query
-    // if (!isValidFund) {
-    //   return { statusCode: 404 };
-    // }
+    if (!isValidFund) {
+      return { statusCode: 404 };
+    }
 
     return {
       address: parameters.address,
