@@ -27,9 +27,8 @@ const availablePolicies = (
     },
   },
   maxPositions: {
-    name: 'Max position',
+    name: 'Maximum number of positions',
     desc: 'The higher the tolerance, the greater the risk',
-    unit: '%',
     defaultValue: '',
     Component: Input,
     ComponentProps: {
