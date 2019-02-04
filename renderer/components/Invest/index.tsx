@@ -9,6 +9,7 @@ import { FundQuery } from './data/fund';
 import { RequestQuery } from './data/request';
 import * as R from 'ramda';
 import Composer from 'react-composer';
+import { AccountConsumer } from '+/components/AccountContext';
 
 const ParticipationFormContainer = withForm(props => (
   <Participation
@@ -41,14 +42,18 @@ class InvestContainer extends React.PureComponent {
     return (
       <Composer
         components={[
+          <AccountConsumer />,
           <FundQuery address={this.props.address} />,
-          <RequestQuery
-            fundAddress={this.props.address}
-            userAddress={'0xC0c82081f2Ad248391cd1483ae211d56c280887a'}
-          />,
+          ({ results: [account], render }) => (
+            <RequestQuery
+              fundAddress={this.props.address}
+              userAddress={account}
+              children={render}
+            />
+          ),
         ]}
       >
-        {([fundProps, requestProps]) => {
+        {([account, fundProps, requestProps]) => {
           const waitingTime = R.pathOr(
             '0',
             ['data', 'hasActiveRequest', 'waitingTime'],
