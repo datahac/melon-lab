@@ -3,7 +3,6 @@ import * as Tm from '@melonproject/token-math';
 import Button from '~/blocks/Button';
 import Form from '~/blocks/Form';
 import Input from '~/blocks/Input';
-import Toggle from '~/blocks/Toggle';
 import Spinner from '~/blocks/Spinner';
 import * as R from 'ramda';
 import Notification from '~/blocks/Notification';
@@ -25,7 +24,6 @@ export interface FormErrors {
 
 export interface ParticipationFormProps {
   decimals?: number;
-  setup: boolean;
   touched?: any;
   errors: FormErrors;
   values: FormValues;
@@ -35,20 +33,21 @@ export interface ParticipationFormProps {
   loading?: boolean;
   noFund?: boolean;
   address?: string;
+  sharePrice?: Tm.PriceInterface;
 }
 
 const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
-  decimals = 4,
+  decimals = 6,
   errors,
   handleBlur,
   handleSubmit,
   handleChange,
-  setup,
   touched,
   values,
   loading,
   noFund,
   address,
+  sharePrice,
 }) => {
   const numberPlaceholder = (0).toFixed(decimals);
   return (
@@ -67,29 +66,6 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
           ) : (
             <Fragment>
               <Form onSubmit={handleSubmit}>
-                {!setup && (
-                  <div className="participation-form__toggles">
-                    <div className="participation-form__toggle">
-                      <Toggle
-                        name="type"
-                        value="Invest"
-                        text="Invest"
-                        isChecked={values.type === 'Invest'}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="participation-form__toggle">
-                      <Toggle
-                        name="type"
-                        value="Slices"
-                        text="Slices"
-                        isChecked={values.type === 'Slices'}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                )}
-
                 <div className="participation-form__input">
                   <Input
                     value={
@@ -98,7 +74,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                     type="number"
                     label="Quantity (Shares)"
                     name="quantity"
-                    insideLabel="true"
+                    insideLabel
                     placeholder={numberPlaceholder}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -108,54 +84,50 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                     decimals={decimals}
                   />
                 </div>
+                <div className="participation-form__current-price">
+                  <span>
+                    Current share price: {sharePrice && Tm.toFixed(sharePrice)}
+                  </span>
+                </div>
 
-                {values.type !== 'Slices' && (
-                  <Fragment>
-                    <div className="participation-form__input">
-                      <Input
-                        value={
-                          values.price && Tm.toFixed(values.price, decimals)
-                        }
-                        type="number"
-                        label={`Price (${R.path(
-                          ['quote', 'token', 'symbol'],
-                          values.price,
-                        )})`}
-                        name="price"
-                        insideLabel="true"
-                        placeholder={numberPlaceholder}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        required={true}
-                        formatNumber={true}
-                        error={touched.price && errors.price}
-                        disabled={true}
-                        decimals={decimals}
-                      />
-                    </div>
-                    <div className="participation-form__input">
-                      <Input
-                        value={
-                          values.total && Tm.toFixed(values.total, decimals)
-                        }
-                        type="number"
-                        label={`Total (${R.path(
-                          ['token', 'symbol'],
-                          values.total,
-                        )})`}
-                        name="total"
-                        insideLabel="true"
-                        placeholder={numberPlaceholder}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        required={true}
-                        formatNumber={true}
-                        error={touched.total && errors.total}
-                        decimals={decimals}
-                      />
-                    </div>
-                  </Fragment>
-                )}
+                <div className="participation-form__input">
+                  <Input
+                    value={values.price && Tm.toFixed(values.price, decimals)}
+                    type="number"
+                    label={`Max price (${R.path(
+                      ['quote', 'token', 'symbol'],
+                      values.price,
+                    )})`}
+                    name="price"
+                    insideLabel
+                    placeholder={numberPlaceholder}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    required={true}
+                    formatNumber={true}
+                    error={touched.price && errors.price}
+                    decimals={decimals}
+                  />
+                </div>
+                <div className="participation-form__input">
+                  <Input
+                    value={values.total && Tm.toFixed(values.total, decimals)}
+                    type="number"
+                    label={`Total (${R.path(
+                      ['token', 'symbol'],
+                      values.total,
+                    )})`}
+                    name="total"
+                    insideLabel
+                    placeholder={numberPlaceholder}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    required={true}
+                    formatNumber={true}
+                    error={touched.total && errors.total}
+                    decimals={decimals}
+                  />
+                </div>
 
                 <div className="participation-form__input">
                   <Button type="submit">Submit request</Button>

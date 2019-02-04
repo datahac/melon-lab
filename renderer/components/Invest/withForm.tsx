@@ -10,21 +10,26 @@ const withForm = withFormik({
       props.sharePrice && Tm.createQuantity(props.sharePrice.quote.token, 0),
     quantity:
       props.sharePrice && Tm.createQuantity(props.sharePrice.base.token, 0),
-    type: 'Invest',
   }),
   validate: values => {
     let errors: FormErros = {};
 
     if (!values.quantity) {
       errors.quantity = 'Required';
-    } else if (Tm.isZero(values.quantity.quantity)) {
+    } else if (Tm.isZero(values.quantity)) {
       errors.quantity = 'Invalid quantity';
     }
 
     if (!values.total) {
       errors.total = 'Required';
-    } else if (Tm.isZero(values.total.quantity)) {
+    } else if (Tm.isZero(values.total)) {
       errors.total = 'Invalid quantity';
+    }
+
+    if (!values.price) {
+      errors.price = 'Required';
+    } else if (Tm.isZero(values.price.quote)) {
+      errors.price = 'Invalid price';
     }
 
     return errors;
@@ -40,7 +45,20 @@ const withFormHandlers = compose(
   withHandlers({
     handleChange: props => event => {
       const { name, value } = event.target;
-      const { values } = props;
+      const { values, sharePrice } = props;
+
+      if (name === 'price') {
+        const price = Tm.createPrice(
+          Tm.createQuantity(sharePrice.base.token, 1),
+          Tm.createQuantity(sharePrice.quote.token, value || 0),
+        );
+        props.setFieldValue('price', price);
+
+        if (values.quantity) {
+          const total = Tm.valueIn(price, values.quantity);
+          props.setFieldValue('total', total);
+        }
+      }
 
       if (name === 'quantity') {
         const quantity = Tm.createQuantity(

@@ -16,3 +16,10 @@
 .participation-form__spinner {
   margin: 0 auto;
 }
+
+.participation-form__current-price {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 0 var(--space-xs) var(--space-xs) 0;
+  color: var(--color-grey);
+}
