@@ -1671,10 +1671,10 @@
   dependencies:
     events "^3.0.0"
 
-"@melonproject/exchange-aggregator@0.1.13":
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.1.13.tgz#04f5991f2bcc150f24bdf6cfbcbee7488db86a1f"
-  integrity sha512-TdNmUlTNoFOc4kav9s31frqW/O6LS54ZXTY7RjAHfmRsKU/C0NSxwKnhTZMO78EpGAG1DN8MJAmM8UnqpPuGCw==
+"@melonproject/exchange-aggregator@^0.1.15":
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.1.15.tgz#1d6ecb632bd000a1c8ee96d45877342548cf3e25"
+  integrity sha512-vMK3NRPwIqSyl6XxSkorTouGVS9+UAaH2OApB5fwlt0tDi9o6iWxlaAXvrLWHNS2oJEvF5znePE/XEvxtX8//Q==
   dependencies:
     "@melonproject/protocol" "^0.9.24"
     "@melonproject/token-math" "^0.1.5"
@@ -1743,6 +1743,14 @@
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.1.5.tgz#ec8c31355162602f448dc19996e7350da3b4479c"
   integrity sha512-kJ9FkvGXW8DUEp76V8/Rz8ynsuvWEmjRxd5qb81GrYSJhdO8/cUbJBTX8Xk6ljCRJd0vmRwSxNQlNm/XdIF5KA==
+  dependencies:
+    jsbi "^2.0.5"
+    web3-utils "^1.0.0-beta.36"
+
+"@melonproject/token-math@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.1.6.tgz#3a8f42141eae4c4bc1cba9af62176faa99171ab0"
+  integrity sha512-WE80mFc91qR7vyE3rMAg1g4GItk7UaWQxZaWNls/PFkp1LfgHlIPViZCLKQQXDMh34ijYIDtz+XGi8fn7nE/Yw==
   dependencies:
     jsbi "^2.0.5"
     web3-utils "^1.0.0-beta.36"
