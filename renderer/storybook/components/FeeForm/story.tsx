@@ -5,32 +5,21 @@ import FeeForm from './index';
 
 const data = {
   values: {
-    gasPrice: '20.000',
+    gasPrice: 2000000000,
   },
   touched: {
     gasPrice: null,
   },
-  error: {
+  errors: {
     gasPrice: null,
   },
-  fees: [
-    {
-      description: 'Estimated max gas cost',
-      gasLimit: 30000,
-      gasPrice: '20',
-      gasTotal: '0.0006',
-    },
-    {
-      description: 'Estimated max gas cost',
-      gasLimit: 30000,
-      gasPrice: '20',
-      gasTotal: '0.0006',
-    },
-  ],
-  handleSubmit: action('onSubmit'),
+  gasLimit: 30000,
+  handleSubmit: action('handleSubmit'),
+  handleChange: action('handleChange'),
+  handleBlur: action('handleBlur'),
   onCancel: action('onCancel'),
 };
 
-storiesOf('Components|Fees Form', module).add('Default', () => {
+storiesOf('Components|Fee Form', module).add('Default', () => {
   return <FeeForm {...data} />;
 });

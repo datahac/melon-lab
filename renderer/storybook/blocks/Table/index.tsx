@@ -14,7 +14,7 @@ export interface CellProps {
   sorted?: string;
   textAlign?: string;
   width?: number;
-  noPadding: boolean;
+  noPadding?: boolean;
 }
 
 export interface RowProps {

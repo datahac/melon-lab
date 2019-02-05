@@ -15,9 +15,13 @@ interface FormValues {
   gasPrice: number;
 }
 
+interface FormErrors {
+  gasPrice: string;
+}
+
 export interface FeeFormProps {
   error?: Error;
-  errors?: any;
+  errors: FormErrors;
   handleBlur: () => void;
   handleChange: () => void;
   touched?: any;
@@ -49,10 +53,10 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
       {!error && (
         <div className="fee-form__input">
           <Input
-            value={values.gasPrice}
+            value={values.gasPrice.toString()}
             label="Gas price (WEI)"
             name="gasPrice"
-            insideLabel="true"
+            insideLabel
             onChange={handleChange}
             onBlur={handleBlur}
             required={true}
