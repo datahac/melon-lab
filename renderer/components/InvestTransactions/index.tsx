@@ -97,9 +97,7 @@ export default withRouter(props => {
       estimations={estimations}
       executions={executions}
       handleCancel={() => {
-        props.router.push({
-          pathname: '/wallet',
-        });
+        props.setInvestValues(null);
       }}
     />
   );
