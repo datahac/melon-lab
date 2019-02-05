@@ -10,6 +10,7 @@ import { Mutation } from 'react-apollo';
 import withForm from './withForm';
 import { compose } from 'recompose';
 import { withRouter } from 'next/router';
+import * as Tm from '@melonproject/token-math';
 
 const WithFormModal = compose(
   withForm,
@@ -40,6 +41,17 @@ const WithFormModal = compose(
     }
 
     render() {
+      const total =
+        this.props.gasLimit &&
+        this.props.values.gasPrice &&
+        Tm.createQuantity(
+          {
+            symbol: 'ETH',
+            decimals: 18,
+          },
+          (this.props.gasLimit * this.props.values.gasPrice).toString(),
+        );
+
       return (
         this.state.rendered && (
           <Modal
@@ -70,7 +82,12 @@ const WithFormModal = compose(
               activeTransaction={this.props.step}
             />
 
-            <FeeForm {...this.props} text={''} />
+            <FeeForm
+              {...this.props}
+              text={''}
+              total={total}
+              description={this.props.step}
+            />
           </Modal>
         )
       );
