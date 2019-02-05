@@ -95,62 +95,67 @@ const WithFormModal = compose(
   },
 );
 
-export default class ModalTransactions extends React.Component {
-  render() {
-    const estimations = this.props.estimations.filter(
-      mutation => !mutation.isComplete,
-    );
+const ModalTransactions = ({
+  executions,
+  estimations,
+  handleCancel,
+  text,
+  open,
+}) => {
+  const filteredEstimations = estimations.filter(
+    mutation => !mutation.isComplete,
+  );
 
-    const offset = this.props.estimations.length - estimations.length;
-    const estimation = R.head(estimations);
-    const execution = R.head(this.props.executions.slice(offset, offset + 1));
+  const offset = estimations.length - filteredEstimations.length;
+  const estimation = R.head(filteredEstimations);
+  const execution = R.head(executions.slice(offset, offset + 1));
 
-    return (
-      (estimation && execution && (
-        <Composer
-          components={[
-            ({ render }) => (
-              <Mutation {...R.omit(['name', 'isComplete'], estimation)}>
-                {(a, b) => render([a, b])}
-              </Mutation>
-            ),
-            ({ results: [[estimate, estimateProps]], render }) => (
-              <Mutation
-                {...execution}
-                variables={{
-                  ...R.path(['data', 'estimate'], estimateProps),
-                  ...execution.variables,
-                }}
-              >
-                {(a, b) => render([a, b])}
-              </Mutation>
-            ),
-          ]}
-        >
-          {([[estimate, estimateProps], [execute, executeProps]]) => {
-            return (
-              <WithFormModal
-                handleCancel={this.props.handleCancel}
-                error={estimateProps.error || executeProps.errors}
-                loading={estimateProps.loading || executeProps.loading}
-                text={this.props.text}
-                open={this.props.open}
-                estimate={estimate}
-                execute={execute}
-                estimations={this.props.estimations}
-                current={estimation}
-                step={!R.isEmpty(estimations) && estimations[0].name}
-                gasLimit={R.path(['data', 'estimate', 'gas'], estimateProps)}
-                gasPrice={R.path(
-                  ['data', 'estimate', 'gasPrice'],
-                  estimateProps,
-                )}
-              />
-            );
-          }}
-        </Composer>
-      )) ||
-      null
-    );
-  }
-}
+  return (
+    (estimation && execution && (
+      <Composer
+        components={[
+          ({ render }) => (
+            <Mutation {...R.omit(['name', 'isComplete'], estimation)}>
+              {(a, b) => render([a, b])}
+            </Mutation>
+          ),
+          ({ results: [[estimate, estimateProps]], render }) => (
+            <Mutation
+              {...execution}
+              variables={{
+                ...R.path(['data', 'estimate'], estimateProps),
+                ...execution.variables,
+              }}
+            >
+              {(a, b) => render([a, b])}
+            </Mutation>
+          ),
+        ]}
+      >
+        {([[estimate, estimateProps], [execute, executeProps]]) => {
+          return (
+            <WithFormModal
+              handleCancel={handleCancel}
+              error={estimateProps.error || executeProps.errors}
+              loading={estimateProps.loading || executeProps.loading}
+              text={text}
+              open={open}
+              estimate={estimate}
+              execute={execute}
+              estimations={estimations}
+              current={estimation}
+              step={
+                !R.isEmpty(filteredEstimations) && filteredEstimations[0].name
+              }
+              gasLimit={R.path(['data', 'estimate', 'gas'], estimateProps)}
+              gasPrice={R.path(['data', 'estimate', 'gasPrice'], estimateProps)}
+            />
+          );
+        }}
+      </Composer>
+    )) ||
+    null
+  );
+};
+
+export default ModalTransactions;

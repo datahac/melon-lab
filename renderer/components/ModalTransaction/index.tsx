@@ -82,46 +82,42 @@ const WithFormModal = compose(
   },
 );
 
-export default class ModalTransaction extends React.Component {
-  render() {
-    return (
-      <Composer
-        components={[
-          ({ render }) => (
-            <Mutation {...this.props.estimate}>
-              {(a, b) => render([a, b])}
-            </Mutation>
-          ),
-          ({ results: [[estimate, estimateProps]], render }) => (
-            <Mutation
-              {...this.props.execute}
-              variables={{
-                ...R.path(['data', 'estimate'], estimateProps),
-                ...this.props.execute.variables,
-              }}
-            >
-              {(a, b) => render([a, b])}
-            </Mutation>
-          ),
-        ]}
-      >
-        {([[estimate, estimateProps], [execute, executeProps]]) => {
-          return (
-            <WithFormModal
-              handleCancel={this.props.handleCancel}
-              error={estimateProps.error || executeProps.error}
-              loading={estimateProps.loading || executeProps.loading}
-              text={this.props.text}
-              open={this.props.open}
-              gasLimit={R.path(['data', 'estimate', 'gas'], estimateProps)}
-              gasPrice={R.path(['data', 'estimate', 'gasPrice'], estimateProps)}
-              current={this.props.estimate}
-              estimate={estimate}
-              execute={execute}
-            />
-          );
-        }}
-      </Composer>
-    );
-  }
-}
+const ModalTransaction = ({ execute, estimate, handleCancel, text, open }) => (
+  <Composer
+    components={[
+      ({ render }) => (
+        <Mutation {...estimate}>{(a, b) => render([a, b])}</Mutation>
+      ),
+      ({ results: [[estimate, estimateProps]], render }) => (
+        <Mutation
+          {...execute}
+          variables={{
+            ...R.path(['data', 'estimate'], estimateProps),
+            ...execute.variables,
+          }}
+        >
+          {(a, b) => render([a, b])}
+        </Mutation>
+      ),
+    ]}
+  >
+    {([[estimate, estimateProps], [execute, executeProps]]) => {
+      return (
+        <WithFormModal
+          handleCancel={handleCancel}
+          error={estimateProps.error || executeProps.error}
+          loading={estimateProps.loading || executeProps.loading}
+          text={text}
+          open={open}
+          gasLimit={R.path(['data', 'estimate', 'gas'], estimateProps)}
+          gasPrice={R.path(['data', 'estimate', 'gasPrice'], estimateProps)}
+          current={estimate}
+          estimate={estimate}
+          execute={execute}
+        />
+      );
+    }}
+  </Composer>
+);
+
+export default ModalTransaction;
