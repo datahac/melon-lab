@@ -128,24 +128,23 @@ export default class ModalTransactions extends React.Component {
           ]}
         >
           {([[estimate, estimateProps], [execute, executeProps]]) => {
-            const transaction = R.path(['data', 'estimate'], estimateProps);
-            const price = R.prop('gasPrice', transaction);
-            const gasLimit = R.prop('gas', transaction);
-
             return (
               <WithFormModal
                 handleCancel={this.props.handleCancel}
                 error={estimateProps.error || executeProps.errors}
                 loading={estimateProps.loading || executeProps.loading}
-                gasPrice={price}
                 text={this.props.text}
                 open={this.props.open}
-                gasLimit={gasLimit}
                 estimate={estimate}
                 execute={execute}
                 estimations={this.props.estimations}
                 current={estimation}
                 step={!R.isEmpty(estimations) && estimations[0].name}
+                gasLimit={R.path(['data', 'estimate', 'gas'], estimateProps)}
+                gasPrice={R.path(
+                  ['data', 'estimate', 'gasPrice'],
+                  estimateProps,
+                )}
               />
             );
           }}
