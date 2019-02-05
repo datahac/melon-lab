@@ -96,12 +96,7 @@ export default class ModalTransaction extends React.Component {
         {([[estimate, estimateProps], [execute, executeProps]]) => {
           const transaction = R.path(['data', 'estimate'], estimateProps);
           const price = R.prop('gasPrice', transaction);
-          const fees = [
-            {
-              // TODO: Does this still have to be a list?
-              gasLimit: R.prop('gas', transaction),
-            },
-          ];
+          const gasLimit = R.prop('gas', transaction);
 
           return (
             <WithFormModal
@@ -111,7 +106,7 @@ export default class ModalTransaction extends React.Component {
               gasPrice={price}
               text={this.props.text}
               open={this.props.open}
-              fees={fees}
+              gasLimit={gasLimit}
               current={this.props.estimate}
               estimate={estimate}
               execute={execute}

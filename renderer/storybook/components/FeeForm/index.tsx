@@ -18,32 +18,28 @@ interface FormValues {
 export interface FeeFormProps {
   error?: Error;
   errors?: any;
-  fees?: any;
   handleBlur: () => void;
   handleChange: () => void;
   touched?: any;
   values: FormValues;
   text?: string;
+  gasLimit: number;
 }
 
 export const FeeForm: StatelessComponent<FeeFormProps> = ({
   error,
   errors,
-  fees,
   handleBlur,
   handleChange,
   touched,
   values,
   text,
+  gasLimit,
 }) => {
   const calcEntryTotal = (gasLimit: number) => {
     return gasLimit && values.gasPrice && values.gasPrice * gasLimit;
   };
-
-  const mapped = fees.map(fee => fee.gasLimit * values.gasPrice);
-  const total = mapped.reduce((carry, current) => {
-    return carry + current;
-  }, 0);
+  const total = gasLimit * values.gasPrice;
 
   return (
     <div className="fee-form">
@@ -66,7 +62,7 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
         </div>
       )}
 
-      {!error && fees && (
+      {!error && gasLimit && (
         <div>
           <Table>
             <TableHead>
@@ -77,13 +73,11 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
               </Row>
             </TableHead>
             <TableBody>
-              {fees.map((entry, i: number) => (
-                <Row key={`fee-${i}`}>
-                  <CellBody>{entry.description}</CellBody>
-                  <CellBody>{entry.gasLimit}</CellBody>
-                  <CellBody>Ξ {calcEntryTotal(entry.gasLimit)}</CellBody>
-                </Row>
-              ))}
+              <Row>
+                <CellBody />
+                <CellBody>{gasLimit}</CellBody>
+                <CellBody>Ξ {calcEntryTotal(gasLimit)}</CellBody>
+              </Row>
 
               <Row>
                 <CellHead />
