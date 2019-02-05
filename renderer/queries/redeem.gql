@@ -1,4 +1,4 @@
-mutation EstimateRedeemMutation(
+mutation estimateRedeemMutation(
   $sharesQuantity: String!
   $fundAddress: String!
 ) {
@@ -15,7 +15,7 @@ mutation EstimateRedeemMutation(
   }
 }
 
-mutation ExecuteRedeemMutation(
+mutation executeRedeemMutation(
   $data: String!
   $from: String!
   $gas: String!

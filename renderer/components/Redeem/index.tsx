@@ -6,6 +6,7 @@ import { FundQuery } from './data/fund';
 import * as R from 'ramda';
 import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
+import RedeemTransactions from '+/components/RedeemTransactions';
 
 const RedeemFormContainer = withForm(props => <RedeemForm {...props} />);
 
@@ -36,6 +37,12 @@ class RedeemContainer extends React.PureComponent {
                 loading={R.path(['loading'], fundProps)}
                 setRedeemValues={this.setRedeemValues}
                 sharePrice={R.path(['data', 'fund', 'sharePrice'], fundProps)}
+              />
+
+              <RedeemTransactions
+                fundAddress={this.props.address}
+                values={this.state.values}
+                setRedeemValues={this.setRedeemValues}
               />
             </Fragment>
           );
