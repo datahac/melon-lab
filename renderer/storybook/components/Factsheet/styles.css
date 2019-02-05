@@ -48,3 +48,12 @@
   margin: var(--space-m) auto;
   width: 50px;
 }
+
+.factsheet__actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.factsheet__action {
+  flex: 0 0 48%;
+}

@@ -75,33 +75,36 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
         </div>
         <div className="factsheet__item">
           {fundAddress && (
-            <Fragment>
-              <Link
-                href={{
-                  pathname: '/invest',
-                  query: {
-                    address: fundAddress,
-                  },
-                }}
-                style="primary"
-                size="small"
-              >
-                Invest
-              </Link>
-              <hr />
-              <Link
-                href={{
-                  pathname: '/redeem',
-                  query: {
-                    address: fundAddress,
-                  },
-                }}
-                style="primary"
-                size="small"
-              >
-                Redeem
-              </Link>
-            </Fragment>
+            <div className="factsheet__actions">
+              <div className="factsheet__action">
+                <Link
+                  href={{
+                    pathname: '/invest',
+                    query: {
+                      address: fundAddress,
+                    },
+                  }}
+                  style="primary"
+                  size="small"
+                >
+                  Invest
+                </Link>
+              </div>
+              <div className="factsheet__action">
+                <Link
+                  href={{
+                    pathname: '/redeem',
+                    query: {
+                      address: fundAddress,
+                    },
+                  }}
+                  style="primary"
+                  size="small"
+                >
+                  Redeem
+                </Link>
+              </div>
+            </div>
           )}
           {!isShutdown && !isCompetition && isManager && (
             <Fragment>
