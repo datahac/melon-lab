@@ -69,9 +69,7 @@ const createMenu = () => {
       {
         label: 'Quit',
         accelerator: 'Command+Q',
-        click: () => {
-          electron.app.quit();
-        },
+        role: 'quit',
       },
     ],
   };

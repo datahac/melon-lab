@@ -15,11 +15,11 @@ if (!!process.browser) {
     throw new Error('Sorry, this app does not support window.eval().');
   };
 
-  if (process.env.NODE_ENV !== 'development') {
-    (global as any).onbeforeunload = () => {
-      return 'Your session will be terminated. Did you save your mnemonic and/or JSON wallet?';
-    };
-  }
+  // if (process.env.NODE_ENV !== 'development') {
+  //   (global as any).onbeforeunload = () => {
+  //     return 'Your session will be terminated. Did you save your mnemonic and/or JSON wallet?';
+  //   };
+  // }
 }
 
 class MyApp extends App {
