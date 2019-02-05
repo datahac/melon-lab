@@ -81,11 +81,12 @@ const estimateTakeOrder = async (
   }
 
   if (exchange === 'RADAR_RELAY') {
-    const quote = denominationAsset.symbol === sellToken ? sellToken : buyToken;
     const base = denominationAsset.symbol === sellToken ? buyToken : sellToken;
+    const quote = denominationAsset.symbol === sellToken ? sellToken : buyToken;
+
     const orders = await loaders.exchangeOrders.load({
-      quote,
       base,
+      quote,
       exchange: 'RADAR_RELAY',
     });
 

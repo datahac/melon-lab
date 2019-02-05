@@ -176,7 +176,7 @@
     jsonschema "^1.2.0"
     lodash.values "^4.3.0"
 
-"@0x/order-utils@^3.0.2", "@0x/order-utils@^3.0.4", "@0x/order-utils@^3.1.1", "@0x/order-utils@^3.1.2":
+"@0x/order-utils@^3.0.4", "@0x/order-utils@^3.1.1", "@0x/order-utils@^3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@0x/order-utils/-/order-utils-3.1.2.tgz#6b7b76927647ffc276e78a5114f4791dd2c97545"
   integrity sha512-smrA8HeZ3k/zSI4piKpF+V28cEUX06JWuSS1CfjeO6jOeQIesvP7Hy6m/g1ODEktleNUISmVmoz8QuN4uijYgw==
@@ -1691,13 +1691,13 @@
   dependencies:
     source-map-support "^0.5.3"
 
-"@melonproject/protocol@0.9.23":
-  version "0.9.23"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.23.tgz#1663754b8e37cd73f3952adc1759834dc4abc45e"
-  integrity sha512-WCPlV0bKc6+dr0H24nX1mX9jZ5EkY3n8VwJQhzjDUD4yceLdbYaTJOzj9GnvEiK+wGzOeX8ydwecUn62lV9AxA==
+"@melonproject/protocol@0.9.25":
+  version "0.9.25"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.25.tgz#52ab7f767fbcf6ba39bba4dde62d79848158f4b6"
+  integrity sha512-hrcPb4c6QRoN3EeMUsOdVr0VJ5rOTBeox8mV/H5b2O+TUJh7CoKRRMa6k9+gzEbYIQ3wLVAGSZIdjZPEQSs7MQ==
   dependencies:
     "@0x/contract-wrappers" "^4.1.1"
-    "@0x/order-utils" "^3.0.2"
+    "@0x/order-utils" "^3.0.4"
     "@melonproject/ganache-cli" "^6.1.9"
     "@melonproject/token-math" "0.1.5"
     ava "0.25.0"
