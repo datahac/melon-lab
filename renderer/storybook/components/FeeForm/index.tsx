@@ -53,7 +53,7 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
       {!error && (
         <div className="fee-form__input">
           <Input
-            value={values.gasPrice.toString()}
+            value={values.gasPrice}
             label="Gas price (WEI)"
             name="gasPrice"
             insideLabel
