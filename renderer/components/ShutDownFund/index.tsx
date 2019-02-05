@@ -62,9 +62,9 @@ export default props => (
         });
       },
       onCompleted: () => {
-        props.setShutDown();
+        props.setShutDown(false);
       },
     }}
-    handleCancel={() => props.setShutDown()}
+    handleCancel={props.setShutDown}
   />
 );

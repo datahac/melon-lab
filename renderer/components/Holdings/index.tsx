@@ -21,8 +21,15 @@ const sortHoldings = R.sortWith([
   R.ascend(R.prop('symbol')),
 ]);
 
-export default class HoldingsContainer extends React.PureComponent {
-  onClick(asset, address) {
+const HoldingsContainer = ({
+  nav,
+  loading,
+  address,
+  holdings,
+  baseAsset,
+  quoteAsset,
+}) => {
+  const onClick = (asset, address) => {
     Router.push({
       pathname: '/manage',
       query: {
@@ -31,26 +38,17 @@ export default class HoldingsContainer extends React.PureComponent {
         quote: 'WETH',
       },
     });
-  }
+  };
 
-  render() {
-    const {
-      nav,
-      loading,
-      address,
-      holdings,
-      baseAsset,
-      quoteAsset,
-    } = this.props;
+  return (
+    <Holdings
+      quoteAsset={quoteAsset}
+      baseAsset={baseAsset}
+      holdings={sortHoldings(holdings.map(mapHoldings(nav)))}
+      loading={loading}
+      onClick={asset => onClick(asset, address)}
+    />
+  );
+};
 
-    return (
-      <Holdings
-        quoteAsset={quoteAsset}
-        baseAsset={baseAsset}
-        holdings={sortHoldings(holdings.map(mapHoldings(nav)))}
-        loading={loading}
-        onClick={asset => this.onClick(asset, address)}
-      />
-    );
-  }
-}
+export default HoldingsContainer;

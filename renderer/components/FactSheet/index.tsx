@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import FactSheet from '~/components/Factsheet';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
@@ -6,55 +6,56 @@ import { SetupConsumer } from '+/components/SetupContext';
 import ShutDownFund from '+/components/ShutDownFund';
 import Composer from 'react-composer';
 
-export default class FactsheetContainer extends React.PureComponent {
-  state = {
-    shutDownModal: false,
+const useSetOpenModal = isOpen => {
+  const [current, set] = useState(isOpen);
+
+  const setFromEvent = () => {
+    set(!current);
   };
 
-  setShutDownModal = () => {
-    this.setState(prevState => ({
-      shutDownModal: !prevState.shutDownModal,
-    }));
-  };
+  return [current, setFromEvent];
+};
 
-  render() {
-    return (
-      <Composer
-        components={[
-          <FundManagerConsumer />,
-          <NetworkConsumer />,
-          <SetupConsumer />,
-        ]}
-      >
-        {([_, network, setup]) => {
-          const { address, fund, loading, isManager } = this.props;
-          const reportUrl =
-            address &&
-            `https://${
-              network.network === 'KOVAN' ? 'melon' : 'olympiad'
-            }-reporting.now.sh/report/${address}`;
+const FactsheetContainer = ({ address, fund, loading, isManager }) => {
+  const [shutDownModal, setShutDownModal] = useSetOpenModal(false);
 
-          return (
-            <Fragment>
-              <ShutDownFund
-                shutDown={this.state.shutDownModal}
-                setShutDown={this.setShutDownModal}
-                fundAddress={address}
-                update={setup.update}
-              />
-              <FactSheet
-                {...fund}
-                fundAddress={address}
-                isManager={isManager}
-                reportUrl={reportUrl}
-                loading={loading}
-                handleShutDown={this.setShutDownModal}
-                isShutdown={setup.isShutdown}
-              />
-            </Fragment>
-          );
-        }}
-      </Composer>
-    );
-  }
-}
+  return (
+    <Composer
+      components={[
+        <FundManagerConsumer />,
+        <NetworkConsumer />,
+        <SetupConsumer />,
+      ]}
+    >
+      {([_, network, setup]) => {
+        const reportUrl =
+          address &&
+          `https://${
+            network.network === 'KOVAN' ? 'melon' : 'olympiad'
+          }-reporting.now.sh/report/${address}`;
+
+        return (
+          <Fragment>
+            <ShutDownFund
+              shutDown={shutDownModal}
+              setShutDown={setShutDownModal}
+              fundAddress={address}
+              update={setup.update}
+            />
+            <FactSheet
+              {...fund}
+              fundAddress={address}
+              isManager={isManager}
+              reportUrl={reportUrl}
+              loading={loading}
+              handleShutDown={setShutDownModal}
+              isShutdown={setup.isShutdown}
+            />
+          </Fragment>
+        );
+      }}
+    </Composer>
+  );
+};
+
+export default FactsheetContainer;
