@@ -64,10 +64,12 @@ const WithFormModal = compose(
             }}
           >
             {this.props.text}
+
             <TransactionProgress
               transactions={this.props.estimations}
               activeTransaction={this.props.step}
             />
+
             <FeeForm {...this.props} text={''} />
           </Modal>
         )

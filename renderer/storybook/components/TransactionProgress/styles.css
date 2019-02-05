@@ -80,6 +80,6 @@
 }
 
 .transaction-progress__active-item {
-  margin-top: var(--space-xs);
+  margin: var(--space-xs) 0;
   font-weight: var(--font-weight-bold);
 }
