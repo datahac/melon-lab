@@ -1,10 +1,12 @@
 mutation estimateRequestInvestmentMutation(
   $investmentAmount: String!
   $fundAddress: String!
+  $maxPrice: String
 ) {
   estimate: estimateRequestInvestment(
     investmentAmount: $investmentAmount
     fundAddress: $fundAddress
+    maxPrice: $maxPrice
   ) @account {
     data
     from

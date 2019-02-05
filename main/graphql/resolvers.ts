@@ -52,8 +52,8 @@ import { estimateCancelOrder } from './mutators/estimateCancelOrder';
 import { executeCancelOrder } from './mutators/executeCancelOrder';
 import { estimateRedeem } from './mutators/estimateRedeem';
 import { executeRedeem } from './mutators/executeRedeem';
-
-import { getToken } from '@melonproject/protocol/lib/contracts/dependencies/token/calls/getToken';
+import { estimateRequestInvestment } from './mutators/estimateRequestInvestment';
+import { executeRequestInvestment } from './mutators/executeRequestInvestment';
 
 const stringifyObject = R.mapObjIndexed((value, key) => `${value}`);
 
@@ -494,56 +494,8 @@ export default {
 
       return completeSetup.send(env, version, transaction);
     },
-    estimateRequestInvestment: async (
-      _,
-      { from, fundAddress, investmentAmount },
-      { environment, loaders },
-    ) => {
-      const { tokens } = environment.deployment.thirdPartyContracts;
-      const {
-        participationAddress,
-        sharesAddress,
-      } = await loaders.fundRoutes.load(fundAddress);
-      const nativeToken = tokens.find(token => {
-        return token.symbol === 'WETH';
-      });
-
-      const fundToken = await getToken(environment, sharesAddress);
-
-      const params = {
-        investmentAmount: Tm.createQuantity(nativeToken, investmentAmount),
-        requestedShares: Tm.createQuantity(fundToken, investmentAmount),
-      };
-
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await requestInvestment.prepare(
-        env,
-        participationAddress,
-        params,
-      );
-
-      return result && result.rawTransaction;
-    },
-    executeRequestInvestment: async (
-      _,
-      { from, signed, fundAddress },
-      { environment, loaders },
-    ) => {
-      const { participationAddress } = await loaders.fundRoutes.load(
-        fundAddress,
-      );
-      const transaction = signed.rawTransaction;
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await requestInvestment.send(
-        env,
-        participationAddress,
-        transaction,
-      );
-
-      return !!result;
-    },
+    estimateRequestInvestment,
+    executeRequestInvestment,
     estimateApproveTransfer: async (
       _,
       { from, fundAddress, investmentAmount },

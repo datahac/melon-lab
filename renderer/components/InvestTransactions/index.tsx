@@ -34,6 +34,7 @@ export default withRouter(props => {
         variables: props.values && {
           fundAddress: props.fundAddress,
           investmentAmount: props.values.total.quantity.toString(),
+          maxPrice: props.values.price.quote.quantity.toString(),
         },
         isComplete: props.step > 2,
         name: 'requestInvestment',

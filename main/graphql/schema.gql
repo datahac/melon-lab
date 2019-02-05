@@ -454,6 +454,7 @@ type Mutation {
   estimateRequestInvestment(
     fundAddress: String!
     investmentAmount: String!
+    maxPrice: String
   ): UnsignedPlainTransaction @account
 
   """
