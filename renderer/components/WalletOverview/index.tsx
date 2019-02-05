@@ -8,32 +8,30 @@ import { BalanceConsumer } from '+/components/BalanceContext';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { SetupConsumer } from '+/components/SetupContext';
 
-export default class WalletOverviewContainer extends React.PureComponent {
-  render() {
-    return (
-      <Composer
-        components={[
-          <NetworkConsumer />,
-          <AccountConsumer />,
-          <BalanceConsumer />,
-          <FundManagerConsumer />,
-          <SetupConsumer />,
-          <WalletQuery />,
-        ]}
-      >
-        {([network, account, balances, manager, setup, walletProps]) => {
-          return (
-            <WalletOverview
-              associatedFund={manager.fund}
-              balances={balances}
-              loading={walletProps.loading}
-              currentAddress={account}
-              networkId={network.network}
-              isComplete={setup.isComplete}
-            />
-          );
-        }}
-      </Composer>
-    );
-  }
-}
+const WalletOverviewContainer = ({}) => (
+  <Composer
+    components={[
+      <NetworkConsumer />,
+      <AccountConsumer />,
+      <BalanceConsumer />,
+      <FundManagerConsumer />,
+      <SetupConsumer />,
+      <WalletQuery />,
+    ]}
+  >
+    {([network, account, balances, manager, setup, walletProps]) => {
+      return (
+        <WalletOverview
+          associatedFund={manager.fund}
+          balances={balances}
+          loading={walletProps.loading}
+          currentAddress={account}
+          networkId={network.network}
+          isComplete={setup.isComplete}
+        />
+      );
+    }}
+  </Composer>
+);
+
+export default WalletOverviewContainer;

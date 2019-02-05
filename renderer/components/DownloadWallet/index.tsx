@@ -9,44 +9,40 @@ import withForm from './withForm';
 
 const DownloadWalletForm = withForm(DownloadWallet);
 
-class DownloadWalletContainer extends React.PureComponent {
-  render() {
-    return (
-      <Composer
-        components={[
-          <AccountConsumer />,
-          ({ results: [account], render }) => (
-            <ExportWalletMutation
-              onCompleted={data => {
-                const wallet = data && data.exportWallet;
+const DownloadWalletContainer = ({ router }) => (
+  <Composer
+    components={[
+      <AccountConsumer />,
+      ({ results: [account], render }) => (
+        <ExportWalletMutation
+          onCompleted={data => {
+            const wallet = data && data.exportWallet;
 
-                downloadWallet(wallet, account).then(() => {
-                  this.props.router.push({
-                    pathname: '/wallet',
-                  });
-                });
-              }}
-            >
-              {(a, b) => render([a, b])}
-            </ExportWalletMutation>
-          ),
-        ]}
-      >
-        {([account, [exportWallet, exportProps]]) => (
-          <DownloadWalletForm
-            loading={exportProps.loading}
-            onSubmit={values => {
-              exportWallet({
-                variables: {
-                  password: values.password,
-                },
+            downloadWallet(wallet, account).then(() => {
+              router.push({
+                pathname: '/wallet',
               });
-            }}
-          />
-        )}
-      </Composer>
-    );
-  }
-}
+            });
+          }}
+        >
+          {(a, b) => render([a, b])}
+        </ExportWalletMutation>
+      ),
+    ]}
+  >
+    {([account, [exportWallet, exportProps]]) => (
+      <DownloadWalletForm
+        loading={exportProps.loading}
+        onSubmit={values => {
+          exportWallet({
+            variables: {
+              password: values.password,
+            },
+          });
+        }}
+      />
+    )}
+  </Composer>
+);
 
 export default withRouter(DownloadWalletContainer);

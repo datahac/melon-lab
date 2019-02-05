@@ -8,66 +8,60 @@ import { NetworkConsumer } from '+/components/NetworkContext';
 import { CapabilityConsumer } from '+/components/CapabilityContext';
 import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 
-class WalletTemplateContainer extends React.PureComponent {
-  render() {
-    return (
-      <Composer
-        components={[
-          <AccountConsumer />,
-          <BalanceConsumer />,
-          <NetworkConsumer />,
-          <CapabilityConsumer />,
-          <ConfigurationConsumer />,
-        ]}
-      >
-        {([account, balances, network, capabibility, configuration]) => {
-          const { router, title, text, icon, children } = this.props;
-
-          return (
-            <WalletTemplate
-              NavigationProps={
-                account && {
-                  activePath: router.pathname,
-                  navigationItems: [
-                    {
-                      name: 'Overview',
-                      href: '/wallet/overview',
-                    },
-                    {
-                      name: 'Settings',
-                      href: '/wallet/settings',
-                    },
-                  ],
-                }
-              }
-              HeaderProps={{
-                address: account,
-                ethBalance: balances && balances.eth,
-                canInvest: capabibility && capabibility.canInvest,
-                canInteract: capabibility && capabibility.canInteract,
-                canonicalPriceFeedAddress:
-                  configuration && configuration.melonContracts.priceSource,
-                network: network && network.network,
-                currentBlock: network && network.currentBlock,
-                blockOverdue: network && network.blockOverdue,
-                nodeSynced: network && network.nodeSynced,
-                priceFeedUp: network && network.priceFeedUp,
-              }}
-              HeadlineProps={
-                title && {
-                  title,
-                  text,
-                  icon,
-                }
-              }
-            >
-              {children}
-            </WalletTemplate>
-          );
-        }}
-      </Composer>
-    );
-  }
-}
+const WalletTemplateContainer = ({ router, title, text, icon, children }) => (
+  <Composer
+    components={[
+      <AccountConsumer />,
+      <BalanceConsumer />,
+      <NetworkConsumer />,
+      <CapabilityConsumer />,
+      <ConfigurationConsumer />,
+    ]}
+  >
+    {([account, balances, network, capabibility, configuration]) => {
+      return (
+        <WalletTemplate
+          NavigationProps={
+            account && {
+              activePath: router.pathname,
+              navigationItems: [
+                {
+                  name: 'Overview',
+                  href: '/wallet/overview',
+                },
+                {
+                  name: 'Settings',
+                  href: '/wallet/settings',
+                },
+              ],
+            }
+          }
+          HeaderProps={{
+            address: account,
+            ethBalance: balances && balances.eth,
+            canInvest: capabibility && capabibility.canInvest,
+            canInteract: capabibility && capabibility.canInteract,
+            canonicalPriceFeedAddress:
+              configuration && configuration.melonContracts.priceSource,
+            network: network && network.network,
+            currentBlock: network && network.currentBlock,
+            blockOverdue: network && network.blockOverdue,
+            nodeSynced: network && network.nodeSynced,
+            priceFeedUp: network && network.priceFeedUp,
+          }}
+          HeadlineProps={
+            title && {
+              title,
+              text,
+              icon,
+            }
+          }
+        >
+          {children}
+        </WalletTemplate>
+      );
+    }}
+  </Composer>
+);
 
 export default withRouter(WalletTemplateContainer);

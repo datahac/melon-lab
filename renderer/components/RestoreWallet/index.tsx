@@ -6,34 +6,30 @@ import withForm from './withForm';
 
 const RestoreWalletForm = withForm(RestoreWallet);
 
-class RestoreWalletContainer extends React.Component {
-  render() {
-    return (
-      <WalletMutation
-        onCompleted={() => {
-          this.props.router.push({
-            pathname: '/wallet/overview',
-          });
-        }}
-      >
-        {(restoreWallet, restoreWalletProps) => {
-          return (
-            <RestoreWalletForm
-              onSubmit={values => {
-                restoreWallet({
-                  variables: {
-                    mnemonic: values.mnemonic,
-                    password: values.password,
-                  },
-                });
-              }}
-              loading={restoreWalletProps.loading}
-            />
-          );
-        }}
-      </WalletMutation>
-    );
-  }
-}
+const RestoreWalletContainer = ({ router }) => (
+  <WalletMutation
+    onCompleted={() => {
+      router.push({
+        pathname: '/wallet/overview',
+      });
+    }}
+  >
+    {(restoreWallet, restoreWalletProps) => {
+      return (
+        <RestoreWalletForm
+          onSubmit={values => {
+            restoreWallet({
+              variables: {
+                mnemonic: values.mnemonic,
+                password: values.password,
+              },
+            });
+          }}
+          loading={restoreWalletProps.loading}
+        />
+      );
+    }}
+  </WalletMutation>
+);
 
 export default withRouter(RestoreWalletContainer);

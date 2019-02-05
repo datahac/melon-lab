@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ImportWallet from '~/components/ImportWallet';
 import Composer from 'react-composer';
 import { withRouter } from 'next/router';
@@ -7,67 +7,55 @@ import withForm from './withForm';
 
 const ImportWalletForm = withForm(ImportWallet);
 
-class ImportWalletContainer extends React.Component {
-  state = {
-    file: null,
-    error: null,
-  };
+const ImportWalletContainer = ({ router }) => {
+  const [file, setFile] = useState(null);
+  const [error, setError] = useState(null);
 
-  setFile = file => {
-    this.setState({ file });
-  };
-
-  setError = error => {
-    this.setError({ error });
-  };
-
-  onImportFile = file => {
+  const onImportFile = file => {
     const reader = new FileReader();
     reader.onloadend = () => {
       if (reader.result !== 'null') {
-        this.setFile(reader.result);
+        setFile(reader.result);
       }
     };
 
     reader.readAsBinaryString(file[0]);
   };
 
-  render() {
-    return (
-      <Composer
-        components={[
-          ({ render }) => (
-            <WalletMutation
-              onCompleted={() => {
-                this.props.router.push({
-                  pathname: '/wallet',
-                });
-              }}
-            >
-              {(a, b) => render([a, b])}
-            </WalletMutation>
-          ),
-        ]}
-      >
-        {([[importWallet, walletProps]]) => (
-          <ImportWalletForm
-            onImportFile={this.onImportFile}
-            file={this.state.file}
-            serverError={this.state.error}
-            onSubmit={values =>
-              importWallet({
-                variables: {
-                  file: this.state.file,
-                  password: values.password,
-                },
-              }).catch(this.setError)
-            }
-            loading={walletProps.loading}
-          />
-        )}
-      </Composer>
-    );
-  }
-}
+  return (
+    <Composer
+      components={[
+        ({ render }) => (
+          <WalletMutation
+            onCompleted={() => {
+              router.push({
+                pathname: '/wallet',
+              });
+            }}
+          >
+            {(a, b) => render([a, b])}
+          </WalletMutation>
+        ),
+      ]}
+    >
+      {([[importWallet, walletProps]]) => (
+        <ImportWalletForm
+          onImportFile={onImportFile}
+          file={file}
+          serverError={error}
+          onSubmit={values =>
+            importWallet({
+              variables: {
+                file,
+                password: values.password,
+              },
+            }).catch(setError)
+          }
+          loading={walletProps.loading}
+        />
+      )}
+    </Composer>
+  );
+};
 
 export default withRouter(ImportWalletContainer);
