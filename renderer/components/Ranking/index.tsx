@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as R from 'ramda';
 import Composer from 'react-composer';
 import { NetworkConsumer } from '+/components/NetworkContext';
@@ -75,57 +75,43 @@ const sortRankings = ordering => (a, b) => {
   return 0;
 };
 
-export default class RankingContainer extends React.PureComponent {
-  state = {
-    ordering: '+rank',
-    search: '',
-  };
+const RankingContainer = ({}) => {
+  const [ordering, setOrdering] = useState('+rank');
+  const [search, setSearch] = useState('');
 
-  setOrdering = ordering => {
-    this.setState({
-      ordering,
-    });
-  };
+  return (
+    <Composer
+      components={[
+        <NetworkConsumer />,
+        <FundManagerConsumer />,
+        <RankingQuery />,
+      ]}
+    >
+      {([network, managerProps, rankingProps]) => {
+        const funds =
+          (!rankingProps.loading &&
+            ((rankingProps.data && rankingProps.data.rankings) || [])
+              .slice()
+              .filter(filterRankings(search.toLocaleLowerCase()))
+              .map(mapRankings(network.network))
+              .sort(sortRankings(ordering))) ||
+          [];
 
-  setSearch = search => {
-    this.setState({
-      search,
-    });
-  };
+        return (
+          <Ranking
+            availableOrdering={availableOrdering}
+            associatedFund={managerProps.fund}
+            funds={funds}
+            loading={rankingProps.loading}
+            search={search}
+            ordering={ordering}
+            setSearch={search => setSearch(search)}
+            setOrdering={order => setOrdering(order)}
+          />
+        );
+      }}
+    </Composer>
+  );
+};
 
-  render() {
-    return (
-      <Composer
-        components={[
-          <NetworkConsumer />,
-          <FundManagerConsumer />,
-          <RankingQuery />,
-        ]}
-      >
-        {([network, managerProps, rankingProps]) => {
-          const funds =
-            (!rankingProps.loading &&
-              ((rankingProps.data && rankingProps.data.rankings) || [])
-                .slice()
-                .filter(filterRankings(this.state.search.toLocaleLowerCase()))
-                .map(mapRankings(network.network))
-                .sort(sortRankings(this.state.ordering))) ||
-            [];
-
-          return (
-            <Ranking
-              availableOrdering={availableOrdering}
-              associatedFund={managerProps.fund}
-              funds={funds}
-              loading={rankingProps.loading}
-              search={this.state.search}
-              ordering={this.state.ordering}
-              setSearch={search => this.setSearch(search)}
-              setOrdering={order => this.setOrdering(order)}
-            />
-          );
-        }}
-      </Composer>
-    );
-  }
-}
+export default RankingContainer;

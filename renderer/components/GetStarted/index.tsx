@@ -35,22 +35,20 @@ const getLink = (account, eth, fund) => {
   };
 };
 
-export default class GetStartedContainer extends React.PureComponent {
-  render() {
-    return (
-      <Composer
-        components={[
-          <AccountConsumer />,
-          <BalanceConsumer />,
-          <FundManagerConsumer />,
-        ]}
-      >
-        {([account, balance, managerProps]) => {
-          const link = getLink(account, balance.eth, managerProps.fund);
+const GetStartedContainer = ({ ...props }) => (
+  <Composer
+    components={[
+      <AccountConsumer />,
+      <BalanceConsumer />,
+      <FundManagerConsumer />,
+    ]}
+  >
+    {([account, balance, managerProps]) => {
+      const link = getLink(account, balance.eth, managerProps.fund);
 
-          return <GetStarted link={link} {...this.props} />;
-        }}
-      </Composer>
-    );
-  }
-}
+      return <GetStarted link={link} {...props} />;
+    }}
+  </Composer>
+);
+
+export default GetStartedContainer;
