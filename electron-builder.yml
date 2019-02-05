@@ -14,7 +14,7 @@ files:
 
 directories:
   output: build/package
-  buildResources: out/static
+  buildResources: renderer/static/images
 
 linux:
   category: Finance
