@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
@@ -47,56 +47,42 @@ const peerCountSubscription = gql`
   }
 `;
 
-class NetworkContextHandler extends React.Component {
-  state = {
-    blockOverdue: false,
-  };
+const NetworkContextHandler = ({ children, ...props }) => {
+  const [blockOverdue, setBlockOverdue] = useState(false);
+  let unsubscribe;
+  let timeout;
 
-  componentDidMount() {
-    this.unsubscribe = this.props.subscribe();
-  }
+  useEffect(() => {
+    unsubscribe = props.subscribe();
 
-  componentWillUnmount() {
-    this.unsubscribe && this.unsubscribe();
-  }
+    return () => {
+      unsubscribe && unsubscribe();
+    };
+  });
 
-  componentDidUpdate(prevProps) {
-    const currentBlock = this.props.currentBlock;
-    const previousBlock = prevProps.currentBlock;
-
-    if (currentBlock !== previousBlock) {
-      if (this.state.blockOverdue) {
-        this.setState({
-          blockOverdue: false,
-        });
-      }
-
-      this.timeout && clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => {
-        this.setState({
-          blockOverdue: true,
-        });
-      }, 60000);
+  useEffect(() => {
+    if (blockOverdue) {
+      setBlockOverdue(false);
     }
-  }
 
-  render() {
-    const state = this.state;
-    const { subscribe, ...props } = this.props;
+    timeout && clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      setBlockOverdue(true);
+    }, 60000);
+  }, [props.currentBlock]);
 
-    return (
-      <NetworkContext.Provider
-        value={{
-          ...defaults,
-          ...state,
-          ...props,
-        }}
-      >
-        {this.props.children}
-      </NetworkContext.Provider>
-    );
-  }
-}
+  return (
+    <NetworkContext.Provider
+      value={{
+        ...defaults,
+        blockOverdue,
+        ...props,
+      }}
+    >
+      {children}
+    </NetworkContext.Provider>
+  );
+};
 
 export const NetworkProvider = ({ children }) => (
   <Query query={networkQuery} ssr={false} errorPolicy="all">

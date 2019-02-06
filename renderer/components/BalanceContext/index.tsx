@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Composer from 'react-composer';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
@@ -45,22 +45,22 @@ const balanceSubscription = gql`
   }
 `;
 
-class SubscriptionHandler extends React.Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.account && !this.props.loading && prevProps.loading) {
-      this.unsubscribe && this.unsubscribe();
-      this.unsubscribe = this.props.subscribe();
+const SubscriptionHandler = ({ children, ...props }) => {
+  let unsubscribe;
+
+  useEffect(() => {
+    if (props.account && !props.loading) {
+      unsubscribe && unsubscribe();
+      unsubscribe = props.subscribe();
     }
-  }
+    // Specify how to clean up after this effect:
+    return function cleanup() {
+      unsubscribe && unsubscribe();
+    };
+  });
 
-  componentWillUnmount() {
-    this.unsubscribe && this.unsubscribe();
-  }
-
-  render() {
-    return React.Children.only(this.props.children);
-  }
-}
+  return React.Children.only(children);
+};
 
 export const BalanceProvider = ({ children }) => (
   <Composer
