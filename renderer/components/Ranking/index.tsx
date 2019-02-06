@@ -56,12 +56,11 @@ const sortRankings = ordering => (a, b) => {
     return Tm.greaterThan(b.rank, a.rank) ? 1 : -1;
   }
 
-  if (ordering === '+price') {
-    return Tm.greaterThan(a.sharePrice, b.sharePrice) ? 1 : -1;
-  }
-
-  if (ordering === '-price') {
-    return Tm.greaterThan(b.sharePrice, a.sharePrice) ? 1 : -1;
+  if (ordering === '+price' || ordering === '-price') {
+    const priceA = Tm.toAtomic(a.sharePrice);
+    const priceB = Tm.toAtomic(b.sharePrice);
+    const difference = parseFloat(Tm.subtract(priceB, priceA).toString());
+    return ordering === '-price' ? difference : -difference;
   }
 
   if (ordering === '+inception') {
