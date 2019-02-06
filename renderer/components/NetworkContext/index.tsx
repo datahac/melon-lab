@@ -98,48 +98,44 @@ class NetworkContextHandler extends React.Component {
   }
 }
 
-export class NetworkProvider extends React.PureComponent {
-  render() {
-    return (
-      <Query query={networkQuery} ssr={false} errorPolicy="all">
-        {props => {
-          const subscribe = () => {
-            const subscribeToField = (subscription, field) => {
-              return props.subscribeToMore({
-                document: subscription,
-                updateQuery: (previous, { subscriptionData: result }) => {
-                  return {
-                    ...defaults,
-                    ...previous,
-                    [field]: result && result.data && result.data[field],
-                  };
-                },
-              });
-            };
+export const NetworkProvider = ({ children }) => (
+  <Query query={networkQuery} ssr={false} errorPolicy="all">
+    {props => {
+      const subscribe = () => {
+        const subscribeToField = (subscription, field) => {
+          return props.subscribeToMore({
+            document: subscription,
+            updateQuery: (previous, { subscriptionData: result }) => {
+              return {
+                ...defaults,
+                ...previous,
+                [field]: result && result.data && result.data[field],
+              };
+            },
+          });
+        };
 
-            const subscriptions = [
-              subscribeToField(nodeSyncedSubscription, 'nodeSynced'),
-              subscribeToField(currentBlockSubscription, 'currentBlock'),
-              subscribeToField(peerCountSubscription, 'peerCount'),
-              subscribeToField(priceFeedUpSubscription, 'priceFeedUp'),
-            ];
+        const subscriptions = [
+          subscribeToField(nodeSyncedSubscription, 'nodeSynced'),
+          subscribeToField(currentBlockSubscription, 'currentBlock'),
+          subscribeToField(peerCountSubscription, 'peerCount'),
+          subscribeToField(priceFeedUpSubscription, 'priceFeedUp'),
+        ];
 
-            return () => {
-              subscriptions.forEach(unsubscribe => {
-                unsubscribe();
-              });
-            };
-          };
+        return () => {
+          subscriptions.forEach(unsubscribe => {
+            unsubscribe();
+          });
+        };
+      };
 
-          return (
-            <NetworkContextHandler subscribe={subscribe} {...props.data}>
-              {this.props.children}
-            </NetworkContextHandler>
-          );
-        }}
-      </Query>
-    );
-  }
-}
+      return (
+        <NetworkContextHandler subscribe={subscribe} {...props.data}>
+          {children}
+        </NetworkContextHandler>
+      );
+    }}
+  </Query>
+);
 
 export const NetworkConsumer = NetworkContext.Consumer;

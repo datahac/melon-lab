@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GenerateWallet from '~/components/GenerateWallet';
 import Composer from 'react-composer';
 import { withRouter } from 'next/router';
@@ -8,15 +8,13 @@ import withForm from './withForm';
 
 const GenerateWalletForm = withForm(GenerateWallet);
 
-class MnemonicHandler extends React.Component {
-  componentDidMount() {
-    this.props.generateMnemonic();
-  }
+const MnemonicHandler = ({ generateMnemonic, children }) => {
+  useEffect(() => {
+    generateMnemonic();
+  }, [generateMnemonic]);
 
-  render() {
-    return React.Children.only(this.props.children);
-  }
-}
+  return React.Children.only(children);
+};
 
 const GenerateWalletContainer = ({ router }) => {
   const [showForm, setShowForm] = useState(null);

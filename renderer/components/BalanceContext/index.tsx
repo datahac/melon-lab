@@ -62,72 +62,68 @@ class SubscriptionHandler extends React.Component {
   }
 }
 
-export class BalanceProvider extends React.PureComponent {
-  render() {
-    return (
-      <Composer
-        components={[
-          <AccountConsumer />,
-          ({ results: [account], render }) => (
-            <Query
-              query={balanceQuery}
-              variables={{ account }}
-              skip={!account}
-              ssr={false}
-              errorPolicy="all"
-              children={render}
-            />
-          ),
-        ]}
-      >
-        {([account, props]) => {
-          const subscribe = () => {
-            const subscribeToToken = (symbol, field) => {
-              return props.subscribeToMore({
-                document: balanceSubscription,
-                variables: { account, symbol },
-                updateQuery: (previous, { subscriptionData: result }) => {
-                  return {
-                    ...defaults,
-                    ...previous,
-                    [field]: result.data.balance,
-                  };
-                },
-              });
-            };
+export const BalanceProvider = ({ children }) => (
+  <Composer
+    components={[
+      <AccountConsumer />,
+      ({ results: [account], render }) => (
+        <Query
+          query={balanceQuery}
+          variables={{ account }}
+          skip={!account}
+          ssr={false}
+          errorPolicy="all"
+          children={render}
+        />
+      ),
+    ]}
+  >
+    {([account, props]) => {
+      const subscribe = () => {
+        const subscribeToToken = (symbol, field) => {
+          return props.subscribeToMore({
+            document: balanceSubscription,
+            variables: { account, symbol },
+            updateQuery: (previous, { subscriptionData: result }) => {
+              return {
+                ...defaults,
+                ...previous,
+                [field]: result.data.balance,
+              };
+            },
+          });
+        };
 
-            const subscriptions = [
-              subscribeToToken('ETH', 'eth'),
-              subscribeToToken('WETH', 'weth'),
-            ];
+        const subscriptions = [
+          subscribeToToken('ETH', 'eth'),
+          subscribeToToken('WETH', 'weth'),
+        ];
 
-            return () => {
-              subscriptions.forEach(unsubscribe => {
-                unsubscribe();
-              });
-            };
-          };
+        return () => {
+          subscriptions.forEach(unsubscribe => {
+            unsubscribe();
+          });
+        };
+      };
 
-          return (
-            <SubscriptionHandler
-              loading={props.loading}
-              subscribe={subscribe}
-              account={account}
-            >
-              <BalanceContext.Provider
-                value={{
-                  ...defaults,
-                  ...((account && props.data) || {}),
-                }}
-              >
-                {this.props.children}
-              </BalanceContext.Provider>
-            </SubscriptionHandler>
-          );
-        }}
-      </Composer>
-    );
-  }
-}
+      return (
+        <SubscriptionHandler
+          loading={props.loading}
+          subscribe={subscribe}
+          account={account}
+        >
+          <BalanceContext.Provider
+            value={{
+              ...defaults,
+              ...((account && props.data) || {}),
+            }}
+          >
+            {children}
+          </BalanceContext.Provider>
+        </SubscriptionHandler>
+      );
+    }}
+  </Composer>
+);
 
 export const BalanceConsumer = BalanceContext.Consumer;
