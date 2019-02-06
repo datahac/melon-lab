@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as R from 'ramda';
 import Modal from '~/blocks/Modal';
 import Button from '~/blocks/Button';
@@ -16,82 +16,83 @@ const WithFormModal = compose(
   withForm,
   withRouter,
 )(
-  class extends React.Component {
-    state = {
-      rendered: false,
-    };
+  ({
+    open,
+    loading,
+    text,
+    error,
+    estimate,
+    handleCancel,
+    handleSubmit,
+    estimations,
+    step,
+    gasLimit,
+    current,
+    values,
+    ...props
+  }) => {
+    const [rendered, setRendered] = useState(false);
 
-    componentDidMount() {
-      this.setState({ rendered: true });
+    useEffect(() => {
+      setRendered(true);
 
-      if (process.browser && this.props.open) {
-        this.props.estimate();
+      if (process.browser && open) {
+        estimate();
       }
-    }
+    }, [open, current]);
 
-    componentDidUpdate(prevProps) {
-      if (process.browser && this.props.open) {
-        if (
-          !prevProps.open ||
-          !R.equals(this.props.current, prevProps.current)
-        ) {
-          this.props.estimate();
-        }
-      }
-    }
-
-    render() {
-      const total =
-        this.props.gasLimit &&
-        this.props.values.gasPrice &&
-        Tm.createQuantity(
-          {
-            symbol: 'ETH',
-            decimals: 18,
-          },
-          (this.props.gasLimit * this.props.values.gasPrice).toString(),
-        );
-
-      return (
-        this.state.rendered && (
-          <Modal
-            title="Fees"
-            loading={this.props.loading}
-            isOpen={this.props.open}
-            PrimaryAction={Button}
-            PrimaryActionProps={{
-              children: 'Cancel',
-              style: 'secondary',
-              onClick: this.props.handleCancel,
-            }}
-            SecondaryAction={Button}
-            SecondaryActionProps={{
-              children: 'Confirm',
-              type: 'submit',
-              disabled: this.props.loading || this.props.error,
-            }}
-            ContentWrapper={Form}
-            ContentWrapperProps={{
-              onSubmit: this.props.handleSubmit,
-            }}
-          >
-            {this.props.text}
-
-            <TransactionProgress
-              transactions={this.props.estimations}
-              activeTransaction={this.props.step}
-            />
-
-            <FeeForm
-              {...this.props}
-              text={''}
-              total={total}
-              description={this.props.step}
-            />
-          </Modal>
-        )
+    const total =
+      gasLimit &&
+      values.gasPrice &&
+      Tm.createQuantity(
+        {
+          symbol: 'ETH',
+          decimals: 18,
+        },
+        (gasLimit * values.gasPrice).toString(),
       );
-    }
+
+    return (
+      rendered && (
+        <Modal
+          title="Fees"
+          loading={loading}
+          isOpen={open}
+          PrimaryAction={Button}
+          PrimaryActionProps={{
+            children: 'Cancel',
+            style: 'secondary',
+            onClick: handleCancel,
+          }}
+          SecondaryAction={Button}
+          SecondaryActionProps={{
+            children: 'Confirm',
+            type: 'submit',
+            disabled: loading || error,
+          }}
+          ContentWrapper={Form}
+          ContentWrapperProps={{
+            onSubmit: handleSubmit,
+          }}
+        >
+          {text}
+
+          <TransactionProgress
+            transactions={estimations}
+            activeTransaction={step}
+          />
+
+          <FeeForm
+            {...props}
+            gasLimit={gasLimit}
+            values={values}
+            text={''}
+            total={total}
+            description={step}
+          />
+        </Modal>
+      )
+    );
   },
 );
 
@@ -148,7 +149,11 @@ const ModalTransactions = ({
                 !R.isEmpty(filteredEstimations) && filteredEstimations[0].name
               }
               gasLimit={R.path(['data', 'estimate', 'gas'], estimateProps)}
-              gasPrice={R.path(['data', 'estimate', 'gasPrice'], estimateProps)}
+              gasPrice={R.pathOr(
+                0,
+                ['data', 'estimate', 'gasPrice'],
+                estimateProps,
+              )}
             />
           );
         }}
