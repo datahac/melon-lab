@@ -1769,10 +1769,10 @@
   dependencies:
     source-map-support "^0.5.3"
 
-"@melonproject/protocol@0.9.25":
-  version "0.9.25"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.25.tgz#52ab7f767fbcf6ba39bba4dde62d79848158f4b6"
-  integrity sha512-hrcPb4c6QRoN3EeMUsOdVr0VJ5rOTBeox8mV/H5b2O+TUJh7CoKRRMa6k9+gzEbYIQ3wLVAGSZIdjZPEQSs7MQ==
+"@melonproject/protocol@0.9.29":
+  version "0.9.29"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.29.tgz#2e72f2a74b11d3c8787285fde30200af871b4670"
+  integrity sha512-ZIHVIUwjmPSKrK2ie5Dd5F0TiXR7BndY2hWKkLGANSdJ/W/SBzMTLOEadU+/cA1qpSPhaKwY+aj/kFmZc4To9g==
   dependencies:
     "@0x/contract-wrappers" "^4.1.1"
     "@0x/order-utils" "^3.0.4"
