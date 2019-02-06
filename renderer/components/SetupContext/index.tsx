@@ -27,85 +27,80 @@ export const fundQuery = gql`
   }
 `;
 
-export class SetupProvider extends React.PureComponent {
-  render() {
-    return (
-      <Composer
-        components={[
-          <FundManagerConsumer />,
-          ({ results: [manager], render }) => (
-            <Query
-              query={fundQuery}
-              variables={{
-                address: manager.fund,
-              }}
-              skip={!manager.fund}
-              ssr={false}
-              errorPolicy="all"
-              children={render}
-            />
-          ),
-        ]}
-      >
-        {([manager, setup]) => {
-          const routesValues = R.without(
-            ['Routes'],
-            R.values(R.path(['routes'], manager)),
-          );
+export const SetupProvider = ({ children }) => (
+  <Composer
+    components={[
+      <FundManagerConsumer />,
+      ({ results: [manager], render }) => (
+        <Query
+          query={fundQuery}
+          variables={{
+            address: manager.fund,
+          }}
+          skip={!manager.fund}
+          ssr={false}
+          errorPolicy="all"
+          children={render}
+        />
+      ),
+    ]}
+  >
+    {([manager, setup]) => {
+      const routesValues = R.without(
+        ['Routes'],
+        R.values(R.path(['routes'], manager)),
+      );
 
-          const hasRoutes =
-            !R.isEmpty(routesValues) &&
-            routesValues.every(item => item !== null);
+      const hasRoutes =
+        !R.isEmpty(routesValues) && routesValues.every(item => item !== null);
 
-          const isComplete = R.path(['data', 'fund', 'isComplete'], setup);
+      const isComplete = R.path(['data', 'fund', 'isComplete'], setup);
 
-          const setupInProgress =
-            !R.isEmpty(routesValues) &&
-            (routesValues.every(item => item === null) ||
-              routesValues.some(item => item === null)) &&
-            !!manager.fund;
+      const setupInProgress =
+        !R.isEmpty(routesValues) &&
+        (routesValues.every(item => item === null) ||
+          routesValues.some(item => item === null)) &&
+        !!manager.fund;
 
-          const data = {
-            setupBegin: !manager.fund && !setupInProgress && !isComplete,
-            setupInProgress,
-            setupComplete: hasRoutes && !isComplete,
-            isComplete,
-          };
+      const data = {
+        setupBegin: !manager.fund && !setupInProgress && !isComplete,
+        setupInProgress,
+        setupComplete: hasRoutes && !isComplete,
+        isComplete,
+      };
 
-          const value = {
-            ...data,
-            update: (cache, values) => {
-              cache.writeQuery({
-                query: fundQuery,
-                variables: {
-                  address: manager.fund,
-                },
-                skip: !manager.fund,
-                data: {
-                  ...R.path(['data'], setup),
-                  fund: {
-                    ...R.path(['data', 'fund'], setup),
-                    ...values.fund,
-                  },
-                },
-              });
+      const value = {
+        ...data,
+        update: (cache, values) => {
+          cache.writeQuery({
+            query: fundQuery,
+            variables: {
+              address: manager.fund,
             },
-          };
+            skip: !manager.fund,
+            data: {
+              ...R.path(['data'], setup),
+              fund: {
+                ...R.path(['data', 'fund'], setup),
+                ...values.fund,
+              },
+            },
+          });
+        },
+      };
 
-          return (
-            <SetupContext.Provider
-              value={{
-                ...defaults,
-                ...value,
-              }}
-            >
-              {this.props.children}
-            </SetupContext.Provider>
-          );
-        }}
-      </Composer>
-    );
-  }
-}
+      return (
+        <SetupContext.Provider
+          value={{
+            ...defaults,
+            ...value,
+          }}
+        >
+          {children}
+        </SetupContext.Provider>
+      );
+    }}
+  </Composer>
+);
 
 export const SetupConsumer = SetupContext.Consumer;

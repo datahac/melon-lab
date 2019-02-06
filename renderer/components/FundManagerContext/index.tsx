@@ -29,61 +29,57 @@ export const fundManagerQuery = gql`
   }
 `;
 
-export class FundManagerProvider extends React.PureComponent {
-  render() {
-    return (
-      <Composer
-        components={[
-          <AccountConsumer />,
-          ({ results: [account], render }) => (
-            <Query
-              query={fundManagerQuery}
-              variables={{ account }}
-              skip={!account}
-              children={render}
-            />
-          ),
-        ]}
-      >
-        {([account, associatedFund]) => {
-          const data = account && {
-            ...associatedFund.data,
-          };
+export const FundManagerProvider = ({ children }) => (
+  <Composer
+    components={[
+      <AccountConsumer />,
+      ({ results: [account], render }) => (
+        <Query
+          query={fundManagerQuery}
+          variables={{ account }}
+          skip={!account}
+          children={render}
+        />
+      ),
+    ]}
+  >
+    {([account, associatedFund]) => {
+      const data = account && {
+        ...associatedFund.data,
+      };
 
-          const value = data && {
-            ...data,
-            update: (cache, values) => {
-              cache.writeQuery({
-                query: fundManagerQuery,
-                variables: {
-                  account,
-                },
-                data: {
-                  ...data,
-                  ...values,
-                  routes: {
-                    ...data.routes,
-                    ...values.routes,
-                  },
-                },
-              });
+      const value = data && {
+        ...data,
+        update: (cache, values) => {
+          cache.writeQuery({
+            query: fundManagerQuery,
+            variables: {
+              account,
             },
-          };
+            data: {
+              ...data,
+              ...values,
+              routes: {
+                ...data.routes,
+                ...values.routes,
+              },
+            },
+          });
+        },
+      };
 
-          return (
-            <FundManagerContext.Provider
-              value={{
-                ...defaults,
-                ...value,
-              }}
-            >
-              {this.props.children}
-            </FundManagerContext.Provider>
-          );
-        }}
-      </Composer>
-    );
-  }
-}
+      return (
+        <FundManagerContext.Provider
+          value={{
+            ...defaults,
+            ...value,
+          }}
+        >
+          {children}
+        </FundManagerContext.Provider>
+      );
+    }}
+  </Composer>
+);
 
 export const FundManagerConsumer = FundManagerContext.Consumer;

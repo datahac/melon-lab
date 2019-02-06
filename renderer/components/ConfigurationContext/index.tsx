@@ -20,23 +20,19 @@ export const configurationQuery = gql`
   }
 `;
 
-export class ConfigurationProvider extends React.PureComponent {
-  render() {
-    return (
-      <Query query={configurationQuery} ssr={false} errorPolicy="all">
-        {props => (
-          <ConfigurationContext.Provider
-            value={{
-              ...defaults,
-              ...props.data.contractDeployment,
-            }}
-          >
-            {this.props.children}
-          </ConfigurationContext.Provider>
-        )}
-      </Query>
-    );
-  }
-}
+export const ConfigurationProvider = ({ children }) => (
+  <Query query={configurationQuery} ssr={false} errorPolicy="all">
+    {props => (
+      <ConfigurationContext.Provider
+        value={{
+          ...defaults,
+          ...props.data.contractDeployment,
+        }}
+      >
+        {children}
+      </ConfigurationContext.Provider>
+    )}
+  </Query>
+);
 
 export const ConfigurationConsumer = ConfigurationContext.Consumer;

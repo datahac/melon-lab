@@ -10,46 +10,37 @@ export const CapabilityContext = React.createContext({
   canInteract: false,
 });
 
-export class CapabilityProvider extends React.PureComponent {
-  render() {
-    return (
-      <Composer
-        components={[
-          <AccountConsumer />,
-          <BalanceConsumer />,
-          <NetworkConsumer />,
-        ]}
-      >
-        {([account, balance, network]) => {
-          const ethBalance = balance && balance.eth;
-          const currentBlock = network && network.currentBlock;
-          const nodeSynced = network && network.nodeSynced;
+export const CapabilityProvider = ({ children }) => (
+  <Composer
+    components={[<AccountConsumer />, <BalanceConsumer />, <NetworkConsumer />]}
+  >
+    {([account, balance, network]) => {
+      const ethBalance = balance && balance.eth;
+      const currentBlock = network && network.currentBlock;
+      const nodeSynced = network && network.nodeSynced;
 
-          const hasAccount = !!account;
-          const hasEth =
-            hasAccount && ethBalance && !Tm.isZero(ethBalance.quantity);
-          const hasCurrentBlock = currentBlock && !Tm.isZero(currentBlock);
-          const isSynced = !!nodeSynced;
+      const hasAccount = !!account;
+      const hasEth =
+        hasAccount && ethBalance && !Tm.isZero(ethBalance.quantity);
+      const hasCurrentBlock = currentBlock && !Tm.isZero(currentBlock);
+      const isSynced = !!nodeSynced;
 
-          const canInteract =
-            isSynced && hasAccount && hasCurrentBlock && hasEth;
-          const canInvest = canInteract;
+      const canInteract = isSynced && hasAccount && hasCurrentBlock && hasEth;
+      const canInvest = canInteract;
 
-          return (
-            <CapabilityContext.Provider
-              value={{
-                // TODO: Remove this?
-                canInvest,
-                canInteract,
-              }}
-            >
-              {this.props.children}
-            </CapabilityContext.Provider>
-          );
-        }}
-      </Composer>
-    );
-  }
-}
+      return (
+        <CapabilityContext.Provider
+          value={{
+            // TODO: Remove this?
+            canInvest,
+            canInteract,
+          }}
+        >
+          {children}
+        </CapabilityContext.Provider>
+      );
+    }}
+  </Composer>
+);
 
 export const CapabilityConsumer = CapabilityContext.Consumer;

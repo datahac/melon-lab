@@ -10,20 +10,14 @@ export const accountQuery = gql`
   }
 `;
 
-export class AccountProvider extends React.PureComponent {
-  render() {
-    return (
-      <Query query={accountQuery} ssr={false} errorPolicy="all">
-        {props => (
-          <AccountContext.Provider
-            value={props.data && props.data.defaultAccount}
-          >
-            {this.props.children}
-          </AccountContext.Provider>
-        )}
-      </Query>
-    );
-  }
-}
+export const AccountProvider = ({ children }) => (
+  <Query query={accountQuery} ssr={false} errorPolicy="all">
+    {props => (
+      <AccountContext.Provider value={props.data && props.data.defaultAccount}>
+        {children}
+      </AccountContext.Provider>
+    )}
+  </Query>
+);
 
 export const AccountConsumer = AccountContext.Consumer;
