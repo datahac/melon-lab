@@ -15,7 +15,7 @@
 }
 
 .open-orders__no-items {
-  margin: var(--space-xs) var(--space-s);
+  margin: var(--space-xs) 0;
 }
 
 .open-orders__type--bid {
