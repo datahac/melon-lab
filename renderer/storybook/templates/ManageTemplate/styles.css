@@ -61,13 +61,13 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.fund-template__holdings-wrap :global(.holding:first-child) {
+  border: none;
+}
+
 .fund-template__holdings-wrap::-webkit-scrollbar {
   width: 5px;
   background-color: var(--color-border);
-}
-
-.fund-template__holdings-wrap :global(.holding:first-child) {
-  border: none;
 }
 
 .fund-template__holdings-wrap::-webkit-scrollbar-track,

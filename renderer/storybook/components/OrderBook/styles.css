@@ -1,7 +1,5 @@
 .orderbook {
   max-height: 494px;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
 }
 
 .orderbook__loading {
@@ -12,7 +10,9 @@
 .orderbook__tables {
   display: flex;
   width: 100%;
-  overflow-x: auto;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: 459px;
 }
 
 .orderbook__tables :global(.orderbook-table) {
@@ -32,4 +32,20 @@
 
 .orderbook__exchange {
   margin: 0 var(--space-m) var(--space-xs) 0;
+}
+
+.orderbook__tables::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: var(--color-border);
+}
+
+.orderbook__tables::-webkit-scrollbar-track,
+.orderbook__tables::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+}
+
+.orderbook__tables::-webkit-scrollbar-thumb {
+  background-color: var(--color-grey);
+  border-radius: 3px;
 }
