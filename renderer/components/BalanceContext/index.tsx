@@ -54,7 +54,7 @@ const SubscriptionHandler = ({ children, ...props }) => {
       unsubscribe = props.subscribe();
     }
     // Specify how to clean up after this effect:
-    return function cleanup() {
+    return () => {
       unsubscribe && unsubscribe();
     };
   });
