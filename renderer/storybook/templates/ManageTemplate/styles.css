@@ -98,6 +98,10 @@
   }
 }
 
+.fund-template__open-orders-wrap {
+  padding: 0 var(--space-m) var(--space-m) var(--space-m);
+}
+
 .fund-template__recent-trades {
   border-top: 1px solid var(--color-border);
 

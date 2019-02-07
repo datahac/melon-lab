@@ -81,7 +81,9 @@ const ManageTemplate = ({
             <div className="fund-template__orders">
               <div className="fund-template__open-orders">
                 <h3 className="fund-template__subtitle">Open orders</h3>
-                <OpenOrders {...OpenOrdersProps} />
+                <div className="fund-template__open-orders-wrap">
+                  <OpenOrders {...OpenOrdersProps} />
+                </div>
               </div>
               <div className="fund-template__recent-trades">
                 <h3 className="fund-template__subtitle">Recent trades</h3>

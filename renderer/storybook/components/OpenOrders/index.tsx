@@ -43,10 +43,10 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
           <Table>
             <TableHead>
               <Row isHead={true} size={isManager && 'small'}>
-                <CellHead noPadding={false}>Asset</CellHead>
+                <CellHead>Asset</CellHead>
                 <CellHead>Type</CellHead>
                 <CellHead>Price</CellHead>
-                <CellHead noPadding={false}>Quantity</CellHead>
+                <CellHead>Quantity</CellHead>
                 {isManager && <CellHead noPadding={false} />}
               </Row>
             </TableHead>
@@ -60,9 +60,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
 
                   return (
                     <Row key={order.id} size="small">
-                      <CellBody noPadding={false}>
-                        {order.trade.base.token.symbol}
-                      </CellBody>
+                      <CellBody>{order.trade.base.token.symbol}</CellBody>
                       <CellBody>
                         <span className={orderTypeClassName(order.type)}>
                           {order.type === 'BID' ? 'Buy' : 'Sell'}
@@ -75,7 +73,7 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
                         {order.volume && displayQuantity(order.volume)}
                       </CellBody>
                       {isManager && (
-                        <CellBody noPadding={false} width={50}>
+                        <CellBody width={50}>
                           <Button
                             icon="cross"
                             size="small"
