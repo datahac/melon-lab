@@ -21,6 +21,7 @@ export interface FactsheetProps {
   isManager?: boolean;
   isShutdown?: boolean;
   fundAddress: string;
+  account?: string;
 }
 
 const Factsheet: StatelessComponent<FactsheetProps> = ({
@@ -36,6 +37,7 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
   isManager,
   isShutdown,
   fundAddress,
+  account,
 }) => (
   <div className="factsheet">
     <style jsx>{styles}</style>
@@ -73,40 +75,42 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
             Generate fund report
           </Link>
         </div>
-        <div className="factsheet__item">
-          {fundAddress && (
-            <div className="factsheet__actions">
-              <div className="factsheet__action">
-                <Link
-                  href={{
-                    pathname: '/invest',
-                    query: {
-                      address: fundAddress,
-                    },
-                  }}
-                  style="primary"
-                  size="small"
-                >
-                  Invest
-                </Link>
+        {account && (
+          <div className="factsheet__item">
+            {fundAddress && (
+              <div className="factsheet__actions">
+                <div className="factsheet__action">
+                  <Link
+                    href={{
+                      pathname: '/invest',
+                      query: {
+                        address: fundAddress,
+                      },
+                    }}
+                    style="primary"
+                    size="small"
+                  >
+                    Invest
+                  </Link>
+                </div>
+                <div className="factsheet__action">
+                  <Link
+                    href={{
+                      pathname: '/redeem',
+                      query: {
+                        address: fundAddress,
+                      },
+                    }}
+                    style="primary"
+                    size="small"
+                  >
+                    Redeem
+                  </Link>
+                </div>
               </div>
-              <div className="factsheet__action">
-                <Link
-                  href={{
-                    pathname: '/redeem',
-                    query: {
-                      address: fundAddress,
-                    },
-                  }}
-                  style="primary"
-                  size="small"
-                >
-                  Redeem
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
         {!isShutdown && !isCompetition && isManager && (
           <div className="factsheet__item">
             <Fragment>

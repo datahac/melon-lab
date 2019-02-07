@@ -1,4 +1,4 @@
-.fund-template__order {
+.manage-template__order {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -9,11 +9,11 @@
   }
 }
 
-.fund-template__info {
+.manage-template__info {
   border-top: 1px solid var(--color-border);
 }
 
-.fund-template__order-book {
+.manage-template__order-book {
   flex: 1 0 100%;
   overflow: hidden;
   min-width: 300px;
@@ -27,7 +27,7 @@
   }
 }
 
-.fund-template__order-form {
+.manage-template__order-form {
   background-color: var(--color-white);
   flex: 1 0 25%;
   min-width: 256px;
@@ -38,11 +38,11 @@
   }
 }
 
-.fund-template__order-form-wrap {
+.manage-template__order-form-wrap {
   margin: 0 var(--space-s) var(--space-s);
 }
 
-.fund-template__holdings {
+.manage-template__holdings {
   background-color: var(--color-white);
   flex: 1 0 25%;
   min-width: 250px;
@@ -54,33 +54,33 @@
   }
 }
 
-.fund-template__holdings-wrap {
+.manage-template__holdings-wrap {
   border-top: 1px solid var(--color-border);
   max-height: 494px;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
 
-.fund-template__holdings-wrap :global(.holding:first-child) {
+.manage-template__holdings-wrap :global(.holding:first-child) {
   border: none;
 }
 
-.fund-template__holdings-wrap::-webkit-scrollbar {
+.manage-template__holdings-wrap::-webkit-scrollbar {
   width: 5px;
   background-color: var(--color-border);
 }
 
-.fund-template__holdings-wrap::-webkit-scrollbar-track,
-.fund-template__holdings-wrap::-webkit-scrollbar-track-piece {
+.manage-template__holdings-wrap::-webkit-scrollbar-track,
+.manage-template__holdings-wrap::-webkit-scrollbar-track-piece {
   background-color: transparent;
 }
 
-.fund-template__holdings-wrap::-webkit-scrollbar-thumb {
+.manage-template__holdings-wrap::-webkit-scrollbar-thumb {
   background-color: var(--color-grey);
   border-radius: 3px;
 }
 
-.fund-template__orders {
+.manage-template__orders {
   background-color: var(--color-white);
   border-top: 1px solid var(--color-border);
 
@@ -91,18 +91,18 @@
   }
 }
 
-.fund-template__open-orders {
+.manage-template__open-orders {
   @media (--viewport-l) {
     flex: 0 0 50%;
     order: 2;
   }
 }
 
-.fund-template__open-orders-wrap {
+.manage-template__open-orders-wrap {
   padding: 0 var(--space-s) var(--space-s) var(--space-s);
 }
 
-.fund-template__recent-trades {
+.manage-template__recent-trades {
   border-top: 1px solid var(--color-border);
 
   @media (--viewport-l) {
@@ -113,14 +113,14 @@
   }
 }
 
-.fund-template__header {
+.manage-template__header {
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 2;
 }
 
-.fund-template__content {
+.manage-template__content {
   display: flex;
   flex-direction: column;
 
@@ -129,22 +129,22 @@
   }
 }
 
-.fund-template__content-wrap {
+.manage-template__content-wrap {
   padding: 50px 0 0;
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 33px);
 }
 
-.fund-template__title {
+.manage-template__title {
   background-color: var(--color-secondary);
   padding: var(--space-s) var(--space-m) var(--space-s);
 }
 
-.fund-template__subtitle {
+.manage-template__subtitle {
   margin: var(--space-s);
 }
 
-.fund-template__subtitle::after {
+.manage-template__subtitle::after {
   border: none;
 }

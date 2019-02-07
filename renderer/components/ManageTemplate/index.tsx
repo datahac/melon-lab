@@ -329,6 +329,7 @@ export default ({ address, quoteAsset, baseAsset }) => {
               address,
               loading: fundProps.loading,
               isManager,
+              account,
             }}
             Holdings={Holdings}
             HoldingsProps={{

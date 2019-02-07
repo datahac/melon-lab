@@ -30,15 +30,15 @@ const ManageTemplate = ({
 
   return (
     <Layout>
-      <div className="fund-template">
+      <div className="manage-template">
         <style jsx>{styles}</style>
         {HeaderProps && (
-          <div className="fund-template__header">
+          <div className="manage-template__header">
             <Header {...HeaderProps} />
           </div>
         )}
 
-        <div className="fund-template__content-wrap">
+        <div className="manage-template__content-wrap">
           {FundHeadlineProps && (
             <Fragment>
               {message && (
@@ -46,54 +46,54 @@ const ManageTemplate = ({
                   <Notification isError>{message}</Notification>
                 </div>
               )}
-              <div className="fund-template__title">
+              <div className="manage-template__title">
                 <FundHeadline {...FundHeadlineProps} />
               </div>
             </Fragment>
           )}
-          <div className="fund-template__content">
-            <div className="fund-template__info">
-              <div className="fund-template__info-item">
+          <div className="manage-template__content">
+            <div className="manage-template__info">
+              <div className="manage-template__info-item">
                 <FactSheet {...FactSheetProps} />
               </div>
             </div>
-            <div className="fund-template__order">
-              <div className="fund-template__holdings">
-                <h3 className="fund-template__subtitle">Holdings</h3>
-                <div className="fund-template__holdings-wrap">
+            <div className="manage-template__order">
+              <div className="manage-template__holdings">
+                <h3 className="manage-template__subtitle">Holdings</h3>
+                <div className="manage-template__holdings-wrap">
                   <Holdings {...HoldingsProps} />
                 </div>
               </div>
-              <div className="fund-template__order-book" id="orderbook">
-                <h3 className="fund-template__subtitle">
+              <div className="manage-template__order-book" id="orderbook">
+                <h3 className="manage-template__subtitle">
                   Orderbook for {OrderBookProps.baseAsset}/
                   {OrderBookProps.quoteAsset}
                 </h3>
                 <OrderBook {...OrderBookProps} />
               </div>
-              <div className="fund-template__order-form" id="trade">
-                <h3 className="fund-template__subtitle">Trade</h3>
-                <div className="fund-template__order-form-wrap">
+              <div className="manage-template__order-form" id="trade">
+                <h3 className="manage-template__subtitle">Trade</h3>
+                <div className="manage-template__order-form-wrap">
                   <OrderForm {...OrderFormProps} />
                 </div>
               </div>
             </div>
-            <div className="fund-template__orders">
-              <div className="fund-template__open-orders">
-                <h3 className="fund-template__subtitle">Open orders</h3>
-                <div className="fund-template__open-orders-wrap">
+            <div className="manage-template__orders">
+              <div className="manage-template__open-orders">
+                <h3 className="manage-template__subtitle">Open orders</h3>
+                <div className="manage-template__open-orders-wrap">
                   <OpenOrders {...OpenOrdersProps} />
                 </div>
               </div>
-              <div className="fund-template__recent-trades">
-                <h3 className="fund-template__subtitle">Recent trades</h3>
+              <div className="manage-template__recent-trades">
+                <h3 className="manage-template__subtitle">Recent trades</h3>
                 <RecentTrades {...RecentTradesProps} />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="fund-template__footer">
+        <div className="manage-template__footer">
           <Footer />
         </div>
       </div>

@@ -16,7 +16,7 @@ const useSetOpenModal = isOpen => {
   return [current, setFromEvent];
 };
 
-const FactsheetContainer = ({ address, fund, loading, isManager }) => {
+const FactsheetContainer = ({ address, fund, loading, isManager, account }) => {
   const [shutDownModal, setShutDownModal] = useSetOpenModal(false);
 
   return (
@@ -44,6 +44,7 @@ const FactsheetContainer = ({ address, fund, loading, isManager }) => {
             />
             <FactSheet
               {...fund}
+              account={account}
               fundAddress={address}
               isManager={isManager}
               reportUrl={reportUrl}
