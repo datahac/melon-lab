@@ -47,6 +47,7 @@ export const Ranking: StatelessComponent<RankingProps> = ({
           </div>
           <div className="ranking__sort">
             <Dropdown
+              name="sort"
               options={availableOrdering}
               label="Sort by"
               value={ordering}

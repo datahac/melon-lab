@@ -1,9 +1,0 @@
-.contribution-form {
-  max-width: 400px;
-  margin: 0 auto var(--space-xl) auto;
-}
-
-.contribution-form__input,
-.contribution-form__notification {
-  margin: 0 0 var(--space-m) 0;
-}
