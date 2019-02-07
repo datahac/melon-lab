@@ -99,6 +99,7 @@ export default withRouter(props => {
       executions={executions}
       handleCancel={() => {
         props.setInvestValues(null);
+        props.setStep(null);
       }}
     />
   );

@@ -9,6 +9,7 @@ import { RequestQuery } from './data/request';
 import * as R from 'ramda';
 import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
+import { BalanceConsumer } from '+/components/BalanceContext';
 
 const ParticipationFormContainer = withForm(props => (
   <Participation
@@ -26,6 +27,7 @@ const InvestContainer = ({ address, ...props }) => {
     <Composer
       components={[
         <AccountConsumer />,
+        <BalanceConsumer />,
         <FundQuery address={address} />,
         ({ results: [account], render }) => (
           <RequestQuery
@@ -36,7 +38,7 @@ const InvestContainer = ({ address, ...props }) => {
         ),
       ]}
     >
-      {([account, fundProps, requestProps]) => {
+      {([account, balance, fundProps, requestProps]) => {
         const waitingTime = R.pathOr(
           '0',
           ['data', 'hasActiveRequest', 'waitingTime'],
@@ -52,11 +54,13 @@ const InvestContainer = ({ address, ...props }) => {
         const isInitialRequest = Tm.isZero(
           R.pathOr('0', ['data', 'fund', 'totalSupply', 'quantity'], fundProps),
         );
+        const wethBalance = balance && balance.weth;
 
         return (
           <Fragment>
             <ParticipationFormContainer
               {...props}
+              wethBalance={wethBalance}
               setInvestValues={setInvestValues}
               loading={R.path(['loading'], fundProps)}
               sharePrice={R.path(['data', 'fund', 'sharePrice'], fundProps)}

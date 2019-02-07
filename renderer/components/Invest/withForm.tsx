@@ -11,7 +11,7 @@ const withForm = withFormik({
     quantity:
       props.sharePrice && Tm.createQuantity(props.sharePrice.base.token, 0),
   }),
-  validate: values => {
+  validate: (values, props) => {
     let errors: FormErros = {};
 
     if (!values.quantity) {
@@ -20,16 +20,24 @@ const withForm = withFormik({
       errors.quantity = 'Invalid quantity';
     }
 
-    if (!values.total) {
-      errors.total = 'Required';
-    } else if (Tm.isZero(values.total)) {
-      errors.total = 'Invalid quantity';
-    }
-
     if (!values.price) {
       errors.price = 'Required';
     } else if (Tm.isZero(values.price.quote)) {
       errors.price = 'Invalid price';
+    } else if (!Tm.isEqual(values.price.quote, props.sharePrice.quote)) {
+      if (!Tm.greaterThan(values.price.quote, props.sharePrice.quote)) {
+        errors.price = 'Price is too low';
+      }
+    }
+
+    if (!values.total) {
+      errors.total = 'Required';
+    } else if (Tm.isZero(values.total)) {
+      errors.total = 'Invalid quantity';
+    } else if (
+      Tm.greaterThan(values.total.quantity, props.wethBalance.quantity)
+    ) {
+      errors.total = 'Insufficient balance';
     }
 
     return errors;
