@@ -36,6 +36,7 @@ export interface ParticipationFormProps {
   sharePrice?: Tm.PriceInterface;
   isWaiting?: boolean;
   readyToExecute?: boolean;
+  isInitialRequest?: boolean;
 }
 
 const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
@@ -52,6 +53,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   isWaiting,
   readyToExecute,
   executeRequest,
+  isInitialRequest,
 }) => {
   const numberPlaceholder = (0).toFixed(decimals);
   return (
@@ -117,6 +119,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                     formatNumber={true}
                     error={touched.price && errors.price}
                     decimals={decimals}
+                    disabled={isInitialRequest}
                   />
                 </div>
                 <div className="participation-form__input">

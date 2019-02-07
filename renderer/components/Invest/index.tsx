@@ -63,6 +63,7 @@ const InvestContainer = ({ address, ...props }) => {
               setStep={setStep}
               isWaiting={isWaiting}
               readyToExecute={readyToExecute}
+              isInitialRequest={isInitialRequest}
               executeRequest={() => setStep(3)}
             />
 

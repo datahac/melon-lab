@@ -163,7 +163,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             onBlur={handleBlur}
             required={true}
             formatNumber={true}
-            error={touched.price && errors.price}
+            error={(touched.price || !!values.price) && errors.price}
           />
         </div>
         <div className="order-form__input">
@@ -178,7 +178,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             onBlur={handleBlur}
             required={true}
             formatNumber={true}
-            error={touched.quantity && errors.quantity}
+            error={(touched.quantity || !!values.quantity) && errors.quantity}
             disabled={
               (isMarket && !isKyber && !values.price) ||
               !priceFeedUp ||
@@ -198,7 +198,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             onBlur={handleBlur}
             required={true}
             formatNumber={true}
-            error={touched.total && errors.total}
+            error={(touched.total || !!values.total) && errors.total}
             disabled={
               (isMarket && !isKyber && !values.price) ||
               !priceFeedUp ||

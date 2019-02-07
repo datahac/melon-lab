@@ -50,10 +50,6 @@
   margin: 0;
 }
 
-.input--has-error {
-  background-color: var(--color-loss);
-}
-
 .input--has-error :global(.input__error) {
   display: block;
 }
@@ -63,11 +59,16 @@
 }
 
 .input__error {
+  position: absolute;
+  left: 4px;
+  top: -4px;
   display: none;
   font-size: var(--font-size-s);
-  color: var(--color-white);
-  padding: var(--space-xs);
+  color: var(--color-loss);
+  padding: 0 var(--space-xxs);
+  background-color: var(--color-white);
   line-height: 1;
+  font-weight: var(--font-weight-bold);
 }
 
 .input--center-text :global(.input__field) {
