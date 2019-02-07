@@ -52,8 +52,10 @@
 .factsheet__actions {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .factsheet__action {
-  flex: 0 0 48%;
+  flex: 1 0 100%;
+  margin-bottom: var(--space-s);
 }

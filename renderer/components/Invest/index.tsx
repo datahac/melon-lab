@@ -1,6 +1,6 @@
 import * as Tm from '@melonproject/token-math';
 import React, { useState, Fragment } from 'react';
-import Participation from '~/components/ParticipationForm';
+import ParticipationForm from '~/components/ParticipationForm';
 import InvestTransactions from '+/components/InvestTransactions';
 import withForm from './withForm';
 import { withRouter } from 'next/router';
@@ -14,7 +14,7 @@ import { BalanceConsumer } from '+/components/BalanceContext';
 const ParticipationFormContainer = withForm(props => (
   <BalanceConsumer>
     {({ weth }) => (
-      <Participation
+      <ParticipationForm
         {...props}
         wethBalance={weth && weth}
         setup={true}

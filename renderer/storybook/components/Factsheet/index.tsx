@@ -106,15 +106,16 @@ const Factsheet: StatelessComponent<FactsheetProps> = ({
               </div>
             </div>
           )}
-          {!isShutdown && !isCompetition && isManager && (
+        </div>
+        {!isShutdown && !isCompetition && isManager && (
+          <div className="factsheet__item">
             <Fragment>
-              <hr />
               <Button onClick={handleShutDown} style="danger" size="small">
                 Irreversibly shut down fund
               </Button>
             </Fragment>
-          )}
-        </div>
+          </div>
+        )}
       </Fragment>
     )}
   </div>
