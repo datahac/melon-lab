@@ -39,7 +39,7 @@
 }
 
 .fund-template__order-form-wrap {
-  margin: 0 var(--space-m) var(--space-m);
+  margin: 0 var(--space-s) var(--space-s);
 }
 
 .fund-template__holdings {
@@ -99,7 +99,7 @@
 }
 
 .fund-template__open-orders-wrap {
-  padding: 0 var(--space-m) var(--space-m) var(--space-m);
+  padding: 0 var(--space-s) var(--space-s) var(--space-s);
 }
 
 .fund-template__recent-trades {
