@@ -8,8 +8,6 @@ const mapHoldings = R.curryN(2, (nav, asset) => {
 
   return {
     price: asset.price,
-    // TODO: Re-implement fraction.
-    fraction: 0,
     balance: asset.balance,
     name: token && token.value,
     symbol: asset.balance.token.symbol,
@@ -17,7 +15,7 @@ const mapHoldings = R.curryN(2, (nav, asset) => {
 });
 
 const sortHoldings = R.sortWith([
-  R.descend(R.prop('fraction')),
+  R.descend(R.path(['balance', 'quantity'])),
   R.ascend(R.prop('symbol')),
 ]);
 
@@ -39,6 +37,8 @@ const HoldingsContainer = ({
       },
     });
   };
+
+  console.log(holdings);
 
   return (
     <Holdings
