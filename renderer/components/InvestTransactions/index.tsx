@@ -94,7 +94,7 @@ export default withRouter(props => {
   return (
     <ModalTransactions
       text={`The following method on the Melon Smart Contracts will be executed:`}
-      open={!!props.values || !!props.step}
+      open={!!props.values || props.step > 0}
       estimations={estimations}
       executions={executions}
       handleCancel={() => {

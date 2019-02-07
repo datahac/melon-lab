@@ -12,22 +12,26 @@ import { AccountConsumer } from '+/components/AccountContext';
 import { BalanceConsumer } from '+/components/BalanceContext';
 
 const ParticipationFormContainer = withForm(props => (
-  <Participation
-    {...props}
-    setup={true}
-    setInvestValues={props.setInvestValues}
-  />
+  <BalanceConsumer>
+    {({ weth }) => (
+      <Participation
+        {...props}
+        wethBalance={weth && weth}
+        setup={true}
+        setInvestValues={props.setInvestValues}
+      />
+    )}
+  </BalanceConsumer>
 ));
 
 const InvestContainer = ({ address, ...props }) => {
-  const [step, setStep] = useState(null);
+  const [step, setStep] = useState(0);
   const [investValues, setInvestValues] = useState(null);
 
   return (
     <Composer
       components={[
         <AccountConsumer />,
-        <BalanceConsumer />,
         <FundQuery address={address} />,
         ({ results: [account], render }) => (
           <RequestQuery
@@ -38,7 +42,7 @@ const InvestContainer = ({ address, ...props }) => {
         ),
       ]}
     >
-      {([account, balance, fundProps, requestProps]) => {
+      {([account, fundProps, requestProps]) => {
         const waitingTime = R.pathOr(
           '0',
           ['data', 'hasActiveRequest', 'waitingTime'],
@@ -54,13 +58,11 @@ const InvestContainer = ({ address, ...props }) => {
         const isInitialRequest = Tm.isZero(
           R.pathOr('0', ['data', 'fund', 'totalSupply', 'quantity'], fundProps),
         );
-        const wethBalance = balance && balance.weth;
 
         return (
           <Fragment>
             <ParticipationFormContainer
               {...props}
-              wethBalance={wethBalance}
               setInvestValues={setInvestValues}
               loading={R.path(['loading'], fundProps)}
               sharePrice={R.path(['data', 'fund', 'sharePrice'], fundProps)}
