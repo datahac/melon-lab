@@ -4,13 +4,25 @@ import { withHandlers, compose } from 'recompose';
 import { FormErros } from '~/components/ParticipationForm';
 
 const withForm = withFormik({
-  mapPropsToValues: props => ({
-    price: props.sharePrice,
-    total:
-      props.sharePrice && Tm.createQuantity(props.sharePrice.quote.token, 0),
-    quantity:
-      props.sharePrice && Tm.createQuantity(props.sharePrice.base.token, 0),
-  }),
+  mapPropsToValues: props => {
+    const sharePrice =
+      props.sharePrice &&
+      Tm.createPrice(props.sharePrice.base, {
+        ...props.sharePrice.quote,
+        quantity: Tm.add(
+          props.sharePrice.quote.quantity,
+          Tm.divide(props.sharePrice.quote.quantity, 10),
+        ),
+      });
+
+    return {
+      price: props.isInitialRequest ? props.sharePrice : sharePrice,
+      total:
+        props.sharePrice && Tm.createQuantity(props.sharePrice.quote.token, 0),
+      quantity:
+        props.sharePrice && Tm.createQuantity(props.sharePrice.base.token, 0),
+    };
+  },
   validate: (values, props) => {
     let errors: FormErros = {};
 
