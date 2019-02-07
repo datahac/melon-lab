@@ -40,13 +40,13 @@ const OrderBookTable = ({ style, entries, onClickOrder, canTrade }) => {
               }}
             >
               <div className="orderbook-table__body-cell">
-                {Tm.toFixed(order.trade, 4)}
+                {Tm.toFixed(order.trade, 6)}
               </div>
               <div className="orderbook-table__body-cell">
-                {Tm.toFixed(order.trade.base, 4)}
+                {Tm.toFixed(order.trade.base, 6)}
               </div>
               <div className="orderbook-table__body-cell">
-                {Tm.toFixed(order.cummulative, 4)}
+                {Tm.toFixed(order.cummulative, 6)}
               </div>
 
               <VolumeBar style={style} widthBar={`${current}%`} />
