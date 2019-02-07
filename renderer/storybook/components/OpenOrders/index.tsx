@@ -1,4 +1,5 @@
 import React, { StatelessComponent } from 'react';
+import classNames from 'classnames';
 import Button from '~/blocks/Button';
 import {
   CellBody,
@@ -42,8 +43,8 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
           <Table>
             <TableHead>
               <Row isHead={true} size={isManager && 'small'}>
-                <CellHead noPadding={false}>Buy</CellHead>
-                <CellHead>Sell</CellHead>
+                <CellHead noPadding={false}>Asset</CellHead>
+                <CellHead>Type</CellHead>
                 <CellHead>Price</CellHead>
                 <CellHead noPadding={false}>Quantity</CellHead>
                 {isManager && <CellHead noPadding={false} />}
@@ -52,15 +53,21 @@ export const OpenOrders: StatelessComponent<OpenOrdersProps> = ({
             <TableBody>
               {orders &&
                 orders.map(order => {
-                  const buy =
-                    order.type === 'ASK' ? order.trade.quote : order.trade.base;
-                  const sell =
-                    order.type === 'ASK' ? order.trade.base : order.trade.quote;
+                  const orderTypeClassName = type =>
+                    classNames('open-orders__type', {
+                      [`open-orders__type--${type.toLowerCase()}`]: type,
+                    });
 
                   return (
-                    <Row key={order.id} size="medium">
-                      <CellBody noPadding={false}>{sell.token.symbol}</CellBody>
-                      <CellBody>{buy.token.symbol}</CellBody>
+                    <Row key={order.id} size="small">
+                      <CellBody noPadding={false}>
+                        {order.trade.base.token.symbol}
+                      </CellBody>
+                      <CellBody>
+                        <span className={orderTypeClassName(order.type)}>
+                          {order.type === 'BID' ? 'Buy' : 'Sell'}
+                        </span>
+                      </CellBody>
                       <CellBody>
                         {order.price && displayQuantity(order.price)}
                       </CellBody>
