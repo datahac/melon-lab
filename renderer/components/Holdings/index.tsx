@@ -38,8 +38,6 @@ const HoldingsContainer = ({
     });
   };
 
-  console.log(holdings);
-
   return (
     <Holdings
       quoteAsset={quoteAsset}
