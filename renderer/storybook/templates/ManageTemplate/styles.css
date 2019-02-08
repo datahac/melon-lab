@@ -138,7 +138,7 @@
 
 .manage-template__title {
   background-color: var(--color-secondary);
-  padding: var(--space-s) var(--space-m) var(--space-s);
+  padding: var(--space-s);
 }
 
 .manage-template__subtitle {
