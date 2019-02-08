@@ -23,6 +23,10 @@ export interface FundHeadlineProps {
   inception?: string;
   personalStake?: Tm.QuantityInterface;
   totalSupply?: Tm.QuantityInterface;
+  account?: string;
+  isShutdown?: boolean;
+  isManager?: boolean;
+  handleShutDown: () => void;
 }
 
 const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
