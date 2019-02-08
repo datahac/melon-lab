@@ -67,8 +67,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
         <div className="participation-form">
           {isWaiting && (
             <Notification isWarning>
-              You already requested an investment for this fund ({address}).
-              Please wait!
+              You already requested an investment for this fund. Please wait!
             </Notification>
           )}
 
