@@ -1,7 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import FactSheet from '~/components/Factsheet';
-import { NetworkConsumer } from '+/components/NetworkContext';
-import { FundManagerConsumer } from '+/components/FundManagerContext';
+import FundHeadline from '~/components/FundHeadline';
 import { SetupConsumer } from '+/components/SetupContext';
 import ShutDownFund from '+/components/ShutDownFund';
 import Composer from 'react-composer';
@@ -16,24 +14,20 @@ const useSetOpenModal = isOpen => {
   return [current, setFromEvent];
 };
 
-const FactsheetContainer = ({ address, fund, loading, isManager, account }) => {
+const FundHeadlineContainer = ({
+  address,
+  fund,
+  loading,
+  isManager,
+  account,
+  totalFunds,
+  quoteAsset,
+}) => {
   const [shutDownModal, setShutDownModal] = useSetOpenModal(false);
 
   return (
-    <Composer
-      components={[
-        <FundManagerConsumer />,
-        <NetworkConsumer />,
-        <SetupConsumer />,
-      ]}
-    >
-      {([_, network, setup]) => {
-        const reportUrl =
-          address &&
-          `https://${
-            network.network === 'KOVAN' ? 'melon' : 'olympiad'
-          }-reporting.now.sh/report/${address}`;
-
+    <Composer components={[<SetupConsumer />]}>
+      {([setup]) => {
         return (
           <Fragment>
             <ShutDownFund
@@ -42,15 +36,16 @@ const FactsheetContainer = ({ address, fund, loading, isManager, account }) => {
               fundAddress={address}
               update={setup.update}
             />
-            <FactSheet
+            <FundHeadline
               {...fund}
               account={account}
-              fundAddress={address}
+              address={address}
               isManager={isManager}
-              reportUrl={reportUrl}
               loading={loading}
               handleShutDown={setShutDownModal}
               isShutdown={setup.isShutdown}
+              totalFunds={totalFunds}
+              quoteAsset={quoteAsset}
             />
           </Fragment>
         );
@@ -59,4 +54,4 @@ const FactsheetContainer = ({ address, fund, loading, isManager, account }) => {
   );
 };
 
-export default FactsheetContainer;
+export default FundHeadlineContainer;

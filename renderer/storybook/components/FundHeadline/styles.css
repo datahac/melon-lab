@@ -6,7 +6,6 @@
 
   @media (--viewport-m) {
     flex-direction: row;
-    align-items: center;
   }
 }
 
@@ -42,10 +41,35 @@
 }
 
 .fund-headline__headline {
-  max-width: 35%;
+  flex: 0 0 35%;
+  padding-right: var(--space-s);
 }
 
-.fund-headline__address {
+.fund-headline__contact {
   color: var(--color-grey);
   font-size: var(--font-size-s);
+}
+
+.fund-headline__information {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex: 0 0 65%;
+}
+
+.fund-headline__item {
+  flex: 0 0 50%;
+  padding: var(--space-xs) var(--space-xs) 0 0;
+
+  @media (--viewport-s) {
+    flex: 0 0 33%;
+  }
+}
+
+.fund-headline__actions {
+  display: flex;
+}
+
+.fund-headline__action {
+  padding: var(--space-s) var(--space-s) 0 0;
 }

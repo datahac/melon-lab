@@ -6,6 +6,8 @@ const data = {
   title: 'Your Wallet',
   icon: 'wallet',
   text: 'Hello World',
+  name: 'My Fund',
+  address: '0x0CAB71b27Af9f4caF4484EAcC45B547f6CB07B80',
   gav: {
     quantity: '10000',
     token: {

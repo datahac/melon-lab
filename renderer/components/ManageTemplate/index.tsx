@@ -14,6 +14,7 @@ import FactSheet from '+/components/FactSheet';
 import OrderForm from '+/components/OrderForm';
 import Holdings from '+/components/Holdings';
 import OrderBook from '+/components/OrderBook';
+import FundHeadline from '+/components/FundHeadline';
 import FundQuery from './data/fund';
 import HoldingsQuery from './data/holdings';
 import isSameAddress from '~/shared/utils/isSameAddress';
@@ -316,20 +317,15 @@ export default ({ address, quoteAsset, baseAsset }) => {
               priceFeedUp: network && network.priceFeedUp,
               address: account,
             }}
+            FundHeadline={FundHeadline}
             FundHeadlineProps={{
-              ...fundData,
+              fund: fundData,
               totalFunds,
               address,
               quoteAsset,
               loading: fundProps.loading,
-            }}
-            FactSheet={FactSheet}
-            FactSheetProps={{
-              fund: fundData,
-              address,
-              loading: fundProps.loading,
-              isManager,
               account,
+              isManager,
             }}
             Holdings={Holdings}
             HoldingsProps={{

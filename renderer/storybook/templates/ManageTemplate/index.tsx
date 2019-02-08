@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import Footer from '~/components/Footer';
 import Header from '~/components/Header';
 import Notification from '~/blocks/Notification';
-import FundHeadline from '~/components/FundHeadline';
 import Layout from '~/design/Layout';
 
 import styles from './styles.css';
@@ -21,7 +20,8 @@ const ManageTemplate = ({
   RecentTrades,
   RecentTradesProps,
   HeaderProps = {},
-  FundHeadlineProps,
+  FundHeadline,
+  FundHeadlineProps = {},
 }) => {
   const message =
     FundHeadlineProps &&
@@ -52,11 +52,6 @@ const ManageTemplate = ({
             </Fragment>
           )}
           <div className="manage-template__content">
-            <div className="manage-template__info">
-              <div className="manage-template__info-item">
-                <FactSheet {...FactSheetProps} />
-              </div>
-            </div>
             <div className="manage-template__order">
               <div className="manage-template__holdings">
                 <h3 className="manage-template__subtitle">Holdings</h3>
