@@ -7,7 +7,7 @@ import styles from './styles.css';
 export interface ButtonProps {
   buttonValue?: any;
   disabled?: boolean;
-  onClick: (e, value) => void;
+  onClick?: (e, value) => void;
   size?: 'small' | 'medium' | 'large';
   style?: 'secondary' | 'primary' | 'warning' | 'danger' | 'success' | 'clear';
   type?: string;
