@@ -85,7 +85,7 @@
     "react-number-format": "^4.0.6",
     "react-select": "^2.3.0",
     "recompose": "^0.30.0",
-    "rxjs": "^6.4.0",
+    "rxjs": "^6.3.3",
     "rxjs-hooks": "https://github.com/fubhy/rxjs-hooks#build",
     "styled-jsx": "^3.2.0",
     "web3-eth-accounts": "^1.0.0-beta.37",
