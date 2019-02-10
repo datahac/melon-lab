@@ -12,6 +12,8 @@ import {
   Exchanges,
   signOrder,
   stringifyStruct,
+  getWrapperLock,
+  makeEthfinexOrder,
 } from '@melonproject/protocol';
 import { getWallet } from '../environment';
 
@@ -116,6 +118,52 @@ const estimateMakeOrder = async (
       console.error(e);
       throw e;
     }
+  }
+
+  if (exchange === 'ETHFINEX') {
+    const wrapperRegistryEfx = R.path(
+      [
+        'deployment',
+        'thirdPartyContracts',
+        'exchanges',
+        'ethfinex',
+        'wrapperRegistryEFX',
+      ],
+      env,
+    );
+    const ethfinexAddress = R.path(
+      ['deployment', 'exchangeConfigs', Exchanges.Ethfinex, 'exchange'],
+      env,
+    );
+    // TODO: Refactor this into a directive
+    const wallet = loaders.getWallet();
+    const withSigner = await withPrivateKeySigner(
+      environment,
+      wallet.privateKey,
+    );
+    const wrappedMakerToken = await getWrapperLock(env, wrapperRegistryEfx, {
+      token: makerQuantity.token,
+    });
+    const wrappedMakerQuantity = Tm.createQuantity(
+      wrappedMakerToken,
+      makerQuantity.quantity,
+    );
+    const unsignedOrder = await createOrder(env, ethfinexAddress, {
+      takerQuantity,
+      makerAddress: tradingAddress,
+      makerQuantity: wrappedMakerQuantity,
+    });
+    const signedOrder = await signOrder(withSigner, unsignedOrder);
+    const result = await makeEthfinexOrder.prepare(env, tradingAddress, {
+      signedOrder,
+    });
+
+    return (
+      result && {
+        ...result.rawTransaction,
+        signedOrder: JSON.stringify(stringifyStruct(signedOrder)),
+      }
+    );
   }
 
   throw new Error(`Make order not implemented for ${exchange}`);

@@ -6,6 +6,7 @@ import {
   withDifferentAccount,
   cancelOasisDexOrder,
   cancel0xOrder,
+  cancelEthfinexOrder,
 } from '@melonproject/protocol';
 
 const estimateCancelOrder = async (
@@ -42,6 +43,12 @@ const estimateCancelOrder = async (
     return result && result.rawTransaction;
   }
 
+  if (exchange === 'ETHFINEX') {
+    const result = await cancelEthfinexOrder.prepare(env, tradingAddress, {
+      orderHashHex: id,
+    });
+    return result && result.rawTransaction;
+  }
   throw new Error(`Cancel order not implemented for ${exchange}`);
 };
 

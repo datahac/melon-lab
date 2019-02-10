@@ -3,6 +3,7 @@ import {
   withDifferentAccount,
   cancelOasisDexOrder,
   cancel0xOrder,
+  cancelEthfinexOrder,
 } from '@melonproject/protocol';
 
 const executeCancelOrder = async (
@@ -26,6 +27,16 @@ const executeCancelOrder = async (
 
   if (exchange === 'RADAR_RELAY') {
     const result = await cancel0xOrder.send(
+      env,
+      tradingAddress,
+      signed.rawTransaction,
+    );
+
+    return !!result;
+  }
+
+  if (exchange === 'ETHFINEX') {
+    const result = await cancelEthfinexOrder.send(
       env,
       tradingAddress,
       signed.rawTransaction,

@@ -1,7 +1,7 @@
 const availableExchanges = {
   OASIS_DEX: 'OasisDex',
   RADAR_RELAY: 'Radar Relay',
-  // ETHFINEX: 'ETHFinex',
+  ETHFINEX: 'ETHFinex',
   KYBER_NETWORK: 'Kyber',
 };
 

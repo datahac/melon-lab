@@ -62,7 +62,7 @@ const WrappedOrderForm = withApollo(
     );
 
     const limitExchanges = Object.keys(
-      R.omit(['KYBER_NETWORK', 'ETHFINEX'], availableExchanges),
+      R.omit(['KYBER_NETWORK'], availableExchanges),
     ).reduce(
       (carry, current) =>
         carry.concat([
@@ -74,7 +74,9 @@ const WrappedOrderForm = withApollo(
       [],
     );
 
-    const marketExchanges = Object.keys(availableExchanges).reduce(
+    const marketExchanges = Object.keys(
+      R.omit(['ETHFINEX'], availableExchanges),
+    ).reduce(
       (carry, current) =>
         carry.concat([
           {
