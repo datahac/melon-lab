@@ -3,13 +3,13 @@ import React, { StatelessComponent } from 'react';
 
 import styles from './styles.css';
 
-export interface ButtonProps {
+export interface TileProps {
   onClick: () => void;
   active?: boolean;
   error?: boolean;
 }
 
-const Button: StatelessComponent<ButtonProps> = ({
+const Button: StatelessComponent<TileProps> = ({
   children,
   onClick,
   active,
