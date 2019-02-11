@@ -27,6 +27,7 @@ export interface FundHeadlineProps {
   isShutdown?: boolean;
   isManager?: boolean;
   handleShutDown: () => void;
+  handleClaimRewards: () => void;
 }
 
 const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
@@ -46,6 +47,7 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   isShutdown,
   isManager,
   handleShutDown,
+  handleClaimRewards,
 }) => {
   const etherscanUrl =
     track === 'live'
@@ -107,6 +109,15 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
                     >
                       Redeem
                     </Link>
+                  </div>
+                  <div className="fund-headline__action">
+                    <Button
+                      onClick={handleClaimRewards}
+                      style="primary"
+                      size="small"
+                    >
+                      Claim rewards
+                    </Button>
                   </div>
                 </Fragment>
               )}

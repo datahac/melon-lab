@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 import FundHeadline from '~/components/FundHeadline';
 import { SetupConsumer } from '+/components/SetupContext';
 import ShutDownFund from '+/components/ShutDownFund';
+import ClaimRewards from '+/components/ClaimRewards';
 import Composer from 'react-composer';
 
 const useSetOpenModal = isOpen => {
@@ -24,18 +25,27 @@ const FundHeadlineContainer = ({
   quoteAsset,
 }) => {
   const [shutDownModal, setShutDownModal] = useSetOpenModal(false);
+  const [claimRewardsModal, setClaimRewardsModal] = useSetOpenModal(false);
 
   return (
     <Composer components={[<SetupConsumer />]}>
       {([setup]) => {
         return (
           <Fragment>
+            {claimRewardsModal}
             <ShutDownFund
               shutDown={shutDownModal}
               setShutDown={setShutDownModal}
               fundAddress={address}
               update={setup.update}
             />
+
+            <ClaimRewards
+              claimRewards={claimRewardsModal}
+              setClaimRewards={setClaimRewardsModal}
+              fundAddress={address}
+            />
+
             <FundHeadline
               {...fund}
               account={account}
@@ -46,6 +56,7 @@ const FundHeadlineContainer = ({
               isShutdown={setup.isShutdown}
               totalFunds={totalFunds}
               quoteAsset={quoteAsset}
+              handleClaimRewards={setClaimRewardsModal}
             />
           </Fragment>
         );

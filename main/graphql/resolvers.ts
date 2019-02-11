@@ -644,11 +644,11 @@ export default {
       { from, fundAddress },
       { environment, loaders },
     ) => {
-      const { feeManagerAddress } = await loaders.fundRoutes.load(fundAddress);
+      const { accountingAddress } = await loaders.fundRoutes.load(fundAddress);
 
       const env = withDifferentAccount(environment, new Tm.Address(from));
 
-      const result = await triggerRewardAllFees.prepare(env, feeManagerAddress);
+      const result = await triggerRewardAllFees.prepare(env, accountingAddress);
 
       return result && result.rawTransaction;
     },
@@ -657,13 +657,13 @@ export default {
       { from, signed, fundAddress },
       { environment, loaders },
     ) => {
-      const { feeManagerAddress } = await loaders.fundRoutes.load(fundAddress);
+      const { accountingAddress } = await loaders.fundRoutes.load(fundAddress);
       const transaction = signed.rawTransaction;
       const env = withDifferentAccount(environment, new Tm.Address(from));
 
       const result = await triggerRewardAllFees.send(
         env,
-        feeManagerAddress,
+        accountingAddress,
         transaction,
       );
 

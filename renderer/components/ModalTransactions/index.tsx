@@ -89,6 +89,7 @@ const WithFormModal = compose(
             text={''}
             total={total}
             description={step}
+            error={error}
           />
         </Modal>
       )
