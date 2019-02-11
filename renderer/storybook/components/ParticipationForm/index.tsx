@@ -78,7 +78,10 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
 
           {readyToExecute && (
             <Fragment>
-              <p>Execute your investment request</p>
+              <Notification isWarning>
+                Execute your investment request!
+              </Notification>
+              <hr />
               <Button onClick={executeRequest}>Execute Request</Button>
             </Fragment>
           )}
