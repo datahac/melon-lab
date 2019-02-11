@@ -29,8 +29,9 @@ export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
 }) => {
   const isDanger = currentAddress && !isHardwareWallet ? 'danger' : 'primary';
   const showFrameButton =
-    !currentAddress ||
-    (ethAccounts.length > 0 &&
+    (!currentAddress && ethAccounts.length > 0) ||
+    (currentAddress &&
+      ethAccounts.length > 0 &&
       ethAccounts[0].toLowerCase() !== currentAddress.toLowerCase());
 
   return (
