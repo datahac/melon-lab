@@ -936,7 +936,7 @@ export default {
       return loaders.generateMnemonic();
     },
     useFrame: async (_, { address }, { environment, loaders }) => {
-      const ethAccounts = environment.eth.getAccounts();
+      const ethAccounts = await environment.eth.getAccounts();
 
       if (address.toLowerCase() !== ethAccounts[0].toLowerCase()) {
         throw new Error(

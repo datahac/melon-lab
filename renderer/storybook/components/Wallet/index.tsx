@@ -7,6 +7,7 @@ import styles from './styles.css';
 
 export interface WalletSettingsProps {
   hasWallet: boolean;
+  isHardwareWallet: boolean;
   currentAddress?: string;
   deleteWallet: () => void;
   isCompetition?: boolean;
@@ -20,12 +21,17 @@ export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
   currentAddress,
   deleteWallet,
   hasWallet,
+  isHardwareWallet,
   isCompetition,
   loading,
-  ethAccounts,
+  ethAccounts = [],
   useFrameAccount,
 }) => {
-  const isDanger = currentAddress ? 'danger' : 'primary';
+  const isDanger = currentAddress && !isHardwareWallet ? 'danger' : 'primary';
+  const showFrameButton =
+    !currentAddress ||
+    (ethAccounts.length > 0 &&
+      ethAccounts[0].toLowerCase() !== currentAddress.toLowerCase());
 
   return (
     <div className="wallet">
@@ -34,7 +40,7 @@ export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
         <Spinner icon={true} size="small" />
       ) : (
         <Fragment>
-          {currentAddress && (
+          {currentAddress && !isHardwareWallet && (
             <Fragment>
               <h2>Settings</h2>
               <p>
@@ -73,12 +79,16 @@ export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
             </Fragment>
           )}
 
-          {ethAccounts && ethAccounts.length > 0 && (
+          {isHardwareWallet && (
+            <p>You are using a hardware wallet through Frame.</p>
+          )}
+
+          {showFrameButton && (
             <div className="wallet__button">
               <Link
                 style={isDanger}
                 size="medium"
-                onClick={() => useFrameAccount({ address: ethAccounts[0] })}
+                onClick={() => useFrameAccount(ethAccounts[0])}
               >
                 Use {ethAccounts[0]} from Frame
               </Link>

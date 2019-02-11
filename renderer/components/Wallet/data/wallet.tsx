@@ -20,8 +20,6 @@ const useFrameMutation = gql`
   }
 `;
 
-// const checkFrameAccountsMutation = gql``
-
 const WalletQuery = ({ children }) => (
   <Query query={query} ssr={false} errorPolicy="all" pollInterval={2000}>
     {children}

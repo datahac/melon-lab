@@ -42,10 +42,19 @@ const WalletContainer = ({ router }) => (
       network,
       walletProps,
       deleteWallet,
-      useFrameAccount,
+      useFrameMutation,
     ]) => {
       const hasWallet = walletProps.data && walletProps.data.hasStoredWallet;
       const ethAccounts = walletProps.data && walletProps.data.ethAccounts;
+
+      const useFrameAccount = address =>
+        useFrameMutation({ variables: { address } });
+
+      const isHardwareWallet =
+        ethAccounts &&
+        account &&
+        ethAccounts.length > 0 &&
+        account.toLowerCase() === ethAccounts[0].toLowerCase();
 
       return (
         <Wallet
@@ -59,6 +68,7 @@ const WalletContainer = ({ router }) => (
           networkId={network && network.network}
           ethAccounts={ethAccounts}
           useFrameAccount={useFrameAccount}
+          isHardwareWallet={isHardwareWallet}
         />
       );
     }}
