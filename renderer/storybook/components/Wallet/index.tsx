@@ -11,6 +11,9 @@ export interface WalletSettingsProps {
   deleteWallet: () => void;
   isCompetition?: boolean;
   loading?: boolean;
+  ethAccounts?: string[];
+  checkFrameAccounts: () => void;
+  useFrameAccount: (account) => void;
 }
 
 export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
@@ -19,14 +22,16 @@ export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
   hasWallet,
   isCompetition,
   loading,
+  ethAccounts,
+  useFrameAccount,
 }) => {
   const isDanger = currentAddress ? 'danger' : 'primary';
 
   return (
     <div className="wallet">
-      <style jsx>{styles}</style>
+      <style jsx={true}>{styles}</style>
       {loading ? (
-        <Spinner icon size="small" />
+        <Spinner icon={true} size="small" />
       ) : (
         <Fragment>
           {currentAddress && (
@@ -66,6 +71,28 @@ export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
                 </Fragment>
               )}
             </Fragment>
+          )}
+
+          {ethAccounts && ethAccounts.length > 0 && (
+            <div className="wallet__button">
+              <Link
+                style={isDanger}
+                size="medium"
+                onClick={() => useFrameAccount({ address: ethAccounts[0] })}
+              >
+                Use {ethAccounts[0]} from Frame
+              </Link>
+            </div>
+          )}
+
+          {ethAccounts && ethAccounts.length === 0 && (
+            <div className="wallet__button">
+              No accounts found from Frame.{' '}
+              <a href="https://frame.sh/" target="_blank">
+                Download Frame here.
+              </a>{' '}
+              Follow the instructions and come back here.
+            </div>
           )}
 
           {hasWallet && (

@@ -6,9 +6,18 @@ import subscribeSyncing from './utils/subscribeSyncing';
 import hasRecentPrice from './utils/hasRecentPrice';
 import currentPeers from './utils/currentPeers';
 
+export enum WalletTypes {
+  KEYTAR = 'KEYTAR',
+  HARDWARE = 'HARDWARE',
+  INJECTED = 'INJECTED',
+}
+
 export async function createContext(environment, wallet = null) {
   // The current wallet (in an electron context);
   let currentWallet = wallet;
+  let walletType: WalletTypes | undefined = !!wallet
+    ? WalletTypes.INJECTED
+    : undefined;
 
   const block$ = subscribeBlock(environment).pipe(publishReplay(1));
   const syncing$ = subscribeSyncing(environment).pipe(publishReplay(1));
@@ -32,11 +41,15 @@ export async function createContext(environment, wallet = null) {
     environment,
     streams,
     loaders: {
-      setWallet: value => {
+      setWallet: (value, type: WalletTypes = WalletTypes.KEYTAR) => {
         currentWallet = value;
+        walletType = type;
       },
       getWallet: () => {
         return currentWallet;
+      },
+      getWalletType: () => {
+        return walletType;
       },
       ...createLoaders(environment, streams),
     },

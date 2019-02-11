@@ -36,7 +36,7 @@ const Link: StatelessComponent<LinkProps> = ({
   });
 
   return (
-    <NextLink href={href} passHref>
+    <NextLink href={href || '#'} passHref={true}>
       <a
         title={title}
         onClick={onClick}
@@ -45,7 +45,7 @@ const Link: StatelessComponent<LinkProps> = ({
         className={linkClassNames}
         rel={rel}
       >
-        <style jsx>{styles}</style>
+        <style jsx={true}>{styles}</style>
         {children}
       </a>
     </NextLink>

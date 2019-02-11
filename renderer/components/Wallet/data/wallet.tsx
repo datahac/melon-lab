@@ -4,24 +4,33 @@ import gql from 'graphql-tag';
 const query = gql`
   query GetWallet {
     hasStoredWallet
+    ethAccounts
   }
 `;
 
-const mutation = gql`
+const deleteWalletMutation = gql`
   mutation DeleteWalletMutation {
     deleteWallet
   }
 `;
 
+const useFrameMutation = gql`
+  mutation UseFrameMutation($address: String!) {
+    useFrame(address: $address)
+  }
+`;
+
+// const checkFrameAccountsMutation = gql``
+
 const WalletQuery = ({ children }) => (
-  <Query query={query} ssr={false} errorPolicy="all">
+  <Query query={query} ssr={false} errorPolicy="all" pollInterval={2000}>
     {children}
   </Query>
 );
 
-const WalletMutation = ({ onCompleted, children }) => (
+const DeleteWalletMutation = ({ onCompleted, children }) => (
   <Mutation
-    mutation={mutation}
+    mutation={deleteWalletMutation}
     onCompleted={onCompleted}
     update={(cache, { data: { deleteWallet } }) => {
       if (!deleteWallet) {
@@ -48,4 +57,10 @@ const WalletMutation = ({ onCompleted, children }) => (
   </Mutation>
 );
 
-export { WalletQuery, WalletMutation };
+const UseFrameMutation = ({ children, onCompleted }) => (
+  <Mutation mutation={useFrameMutation} onCompleted={onCompleted}>
+    {children}
+  </Mutation>
+);
+
+export { WalletQuery, DeleteWalletMutation, UseFrameMutation };

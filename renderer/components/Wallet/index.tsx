@@ -5,8 +5,13 @@ import { AccountConsumer } from '+/components/AccountContext';
 import { BalanceConsumer } from '+/components/BalanceContext';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
-import { WalletQuery, WalletMutation } from './data/wallet';
+import {
+  WalletQuery,
+  DeleteWalletMutation,
+  UseFrameMutation,
+} from './data/wallet';
 import { withRouter } from 'next/router';
+import { Router } from 'express';
 
 const WalletContainer = ({ router }) => (
   <Composer
@@ -16,11 +21,16 @@ const WalletContainer = ({ router }) => (
       <BalanceConsumer />,
       <NetworkConsumer />,
       <WalletQuery />,
-      <WalletMutation
+      <DeleteWalletMutation
         onCompleted={() => {
           router.push({
             pathname: '/wallet',
           });
+        }}
+      />,
+      <UseFrameMutation
+        onCompleted={() => {
+          router.push({ pathname: '/' });
         }}
       />,
     ]}
@@ -32,8 +42,10 @@ const WalletContainer = ({ router }) => (
       network,
       walletProps,
       deleteWallet,
+      useFrameAccount,
     ]) => {
       const hasWallet = walletProps.data && walletProps.data.hasStoredWallet;
+      const ethAccounts = walletProps.data && walletProps.data.ethAccounts;
 
       return (
         <Wallet
@@ -45,6 +57,8 @@ const WalletContainer = ({ router }) => (
           hasWallet={hasWallet}
           currentAddress={account}
           networkId={network && network.network}
+          ethAccounts={ethAccounts}
+          useFrameAccount={useFrameAccount}
         />
       );
     }}

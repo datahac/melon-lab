@@ -54,6 +54,7 @@ import { estimateRedeem } from './mutators/estimateRedeem';
 import { executeRedeem } from './mutators/executeRedeem';
 import { estimateRequestInvestment } from './mutators/estimateRequestInvestment';
 import { executeRequestInvestment } from './mutators/executeRequestInvestment';
+import { WalletTypes } from './context';
 
 const stringifyObject = R.mapObjIndexed((value, key) => `${value}`);
 
@@ -79,6 +80,15 @@ export default {
     hasStoredWallet: async () => {
       const credentials = await keytar.findCredentials('melon.fund');
       return !!(credentials && credentials.length);
+    },
+    ethAccounts: async (_, __, { environment }) => {
+      try {
+        const accounts = await environment.eth.getAccounts();
+        return accounts;
+      } catch (e) {
+        console.warn(e);
+        return [];
+      }
     },
     currentBlock: (_, __, { loaders }) => {
       return loaders.currentBlock();
@@ -924,6 +934,24 @@ export default {
     },
     generateMnemonic: (_, __, { loaders }) => {
       return loaders.generateMnemonic();
+    },
+    useFrame: async (_, { address }, { environment, loaders }) => {
+      const ethAccounts = environment.eth.getAccounts();
+
+      if (address.toLowerCase() !== ethAccounts[0].toLowerCase()) {
+        throw new Error(
+          `Address mismatch. ethAccounts: ${
+            ethAccounts[0]
+          }, argument: ${address}`,
+        );
+      }
+
+      loaders.setWallet(
+        {
+          address,
+        },
+        WalletTypes.HARDWARE,
+      );
     },
   },
   Subscription: {

@@ -376,6 +376,7 @@ type Query {
   defaultAccount: String
   allAccounts: [String]
   hasStoredWallet: Boolean
+  ethAccounts: [String]
 
   "Fetch the associated fund of an account."
   associatedFund(
@@ -689,6 +690,8 @@ type Mutation {
   Randomly generate a new mnemonic phrase.
   """
   generateMnemonic: String
+
+  useFrame(address: String!): String
 }
 
 type Subscription {
