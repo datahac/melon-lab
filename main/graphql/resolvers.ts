@@ -699,38 +699,6 @@ export default {
 
       return stringifyObject(order);
     },
-    createEthfinexOrder: async (
-      _,
-      { from, buyToken, buyQuantity, sellToken, sellQuantity },
-      { environment, loaders },
-    ) => {
-      const fund = await loaders.fundAddressFromManager.load(from);
-      const { tradingAddress } = await loaders.fundRoutes.load(fund);
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const ethfinexAddress =
-        env.deployment.exchangeConfigs[Exchanges.Ethfinex].exchange;
-      const wrapperRegistryEFX =
-        env.deployment.thirdPartyContracts.exchanges.ethfinex
-          .wrapperRegistryEFX;
-
-      const makerWrapperLock = await getWrapperLock(env, wrapperRegistryEFX, {
-        token: getTokenBySymbol(environment, sellToken),
-      });
-
-      const makerQuantity = Tm.createQuantity(makerWrapperLock, sellQuantity);
-      const takerQuantity = Tm.createQuantity(
-        getTokenBySymbol(environment, buyToken),
-        buyQuantity,
-      );
-
-      const order = await createOrder(env, ethfinexAddress, {
-        makerQuantity,
-        takerQuantity,
-        makerAddress: tradingAddress,
-      });
-
-      return stringifyObject(order);
-    },
     // tslint:disable:object-shorthand-properties-first
     estimateDeployUserWhitelist: async (
       _,
