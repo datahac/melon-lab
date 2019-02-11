@@ -47,6 +47,20 @@ mutation estimateFundSetupStepMutation($step: FundSetupStepEnum!) {
     gasPrice
     to
     value
+    amguInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
+    incentiveInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
   }
 }
 
@@ -80,6 +94,20 @@ mutation estimateFundSetupCompleteMutation {
     gasPrice
     to
     value
+    amguInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
+    incentiveInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
   }
 }
 

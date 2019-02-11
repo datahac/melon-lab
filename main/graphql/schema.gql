@@ -311,6 +311,17 @@ type UnsignedPlainTransaction implements UnsignedTransaction {
   value: String
 }
 
+type UnsignedAmguTransaction implements UnsignedTransaction {
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
+  amguInEth: Quantity
+  incentiveInEth: Quantity
+}
+
 type UnsignedOrderTransaction implements UnsignedTransaction {
   data: String
   from: String
@@ -424,7 +435,7 @@ type Mutation {
   estimateFundSetupStep(
     "The step in the fund factory process."
     step: FundSetupStepEnum!
-  ): UnsignedPlainTransaction @account
+  ): UnsignedAmguTransaction @account
 
   """
   Executes a fund setup step transaction with the given gas price per unit.
@@ -439,7 +450,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "completeSetup" transaction.
   """
-  estimateFundSetupComplete: UnsignedPlainTransaction @account
+  estimateFundSetupComplete: UnsignedAmguTransaction @account
 
   """
   Executes the "completeSetup" transaction with the given gas price per unit.
@@ -456,7 +467,7 @@ type Mutation {
     fundAddress: String!
     investmentAmount: String!
     maxPrice: String
-  ): UnsignedPlainTransaction @account
+  ): UnsignedAmguTransaction @account
 
   """
   Executes the "request investment" transaction with the given gas price per unit.
@@ -470,8 +481,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "execute request" transaction.
   """
-  estimateExecuteRequest(fundAddress: String!): UnsignedPlainTransaction
-    @account
+  estimateExecuteRequest(fundAddress: String!): UnsignedAmguTransaction @account
 
   """
   Executes the "execute request" transaction with the given gas price per unit.
@@ -485,8 +495,7 @@ type Mutation {
   """
   Estimates the number of gas units required for the "execute request" transaction.
   """
-  estimateCancelRequest(fundAddress: String!): UnsignedPlainTransaction
-    @account
+  estimateCancelRequest(fundAddress: String!): UnsignedPlainTransaction @account
 
   """
   Executes the "execute request" transaction with the given gas price per unit.

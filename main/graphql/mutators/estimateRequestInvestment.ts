@@ -43,7 +43,13 @@ const estimateRequestInvestment = async (
       params,
     );
 
-    return result && result.rawTransaction;
+    return (
+      result && {
+        ...result.rawTransaction,
+        amguInEth: result.amguInEth,
+        incentiveInEth: result.incentiveInEth,
+      }
+    );
   } catch (error) {
     console.error(error);
     throw error;

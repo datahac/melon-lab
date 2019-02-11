@@ -14,6 +14,20 @@ mutation estimateRequestInvestmentMutation(
     gasPrice
     to
     value
+    amguInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
+    incentiveInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
   }
 }
 
@@ -47,6 +61,20 @@ mutation estimateExecuteRequestMutation($fundAddress: String!) {
     gasPrice
     to
     value
+    amguInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
+    incentiveInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
   }
 }
 

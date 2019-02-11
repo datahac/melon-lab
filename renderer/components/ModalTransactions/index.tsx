@@ -154,6 +154,14 @@ const ModalTransactions = ({
                 ['data', 'estimate', 'gasPrice'],
                 estimateProps,
               )}
+              amguInEth={R.path(
+                ['data', 'estimate', 'amguInEth'],
+                estimateProps,
+              )}
+              incentiveInEth={R.path(
+                ['data', 'estimate', 'incentiveInEth'],
+                estimateProps,
+              )}
             />
           );
         }}

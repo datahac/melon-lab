@@ -31,6 +31,8 @@ export interface FeeFormProps {
   gasLimit: number;
   total: Tm.QuantityInterface;
   description?: string;
+  amguInEth: Tm.QuantityInterface;
+  incentiveInEth: Tm.QuantityInterface;
 }
 
 export const FeeForm: StatelessComponent<FeeFormProps> = ({
@@ -44,9 +46,11 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   gasLimit,
   total,
   description,
+  amguInEth,
+  incentiveInEth,
 }) => (
   <div className="fee-form">
-    <style jsx>{styles}</style>
+    <style jsx={true}>{styles}</style>
     {error && <p>{error.message}</p>}
     {!error && text && <p>{text}</p>}
     {!error && (
@@ -55,7 +59,7 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
           value={values.gasPrice}
           label="Gas price (WEI)"
           name="gasPrice"
-          insideLabel
+          insideLabel={true}
           onChange={handleChange}
           onBlur={handleBlur}
           required={true}
@@ -69,20 +73,38 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
       <div>
         <Table>
           <TableHead>
-            <Row isHead>
+            <Row isHead={true}>
               <CellHead>Description</CellHead>
-              <CellHead>Gas Limit</CellHead>
-              <CellHead textAlign="right">Total</CellHead>
+              <CellHead />
+              <CellHead textAlign="right">Cost</CellHead>
             </Row>
           </TableHead>
           <TableBody>
             <Row>
               <CellBody>{description}</CellBody>
-              <CellBody>{gasLimit}</CellBody>
+              <CellBody>Gas limit: {gasLimit}</CellBody>
               <CellBody textAlign="right">
                 Ξ {total && Tm.toFixed(total, 6)}
               </CellBody>
             </Row>
+            {amguInEth && (
+              <Row>
+                <CellBody>Amgu</CellBody>
+                <CellBody />
+                <CellBody textAlign="right">
+                  Ξ {Tm.toFixed(amguInEth, 6)}
+                </CellBody>
+              </Row>
+            )}
+            {incentiveInEth && (
+              <Row>
+                <CellBody>Incentive</CellBody>
+                <CellBody />
+                <CellBody textAlign="right">
+                  Ξ {Tm.toFixed(incentiveInEth, 6)}
+                </CellBody>
+              </Row>
+            )}
           </TableBody>
         </Table>
         <p>

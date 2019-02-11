@@ -454,7 +454,9 @@ export default {
       const env = withDifferentAccount(environment, new Tm.Address(from));
       const result = await fn.prepare(env, version);
 
-      return result && result.rawTransaction;
+      return (
+        result && { ...result.rawTransaction, amguInEth: result.amguInEth }
+      );
     },
     executeFundSetupStep: async (
       _,
@@ -485,7 +487,9 @@ export default {
       const env = withDifferentAccount(environment, new Tm.Address(from));
       const result = await completeSetup.prepare(env, version);
 
-      return result && result.rawTransaction;
+      return (
+        result && { ...result.rawTransaction, amguInEth: result.amguInEth }
+      );
     },
     executeFundSetupComplete: async (_, { from, signed }, { environment }) => {
       const version = environment.deployment.melonContracts.version;
@@ -547,7 +551,9 @@ export default {
 
       const result = await executeRequest.prepare(env, participationAddress);
 
-      return result && result.rawTransaction;
+      return (
+        result && { ...result.rawTransaction, amguInEth: result.amguInEth }
+      );
     },
     executeExecuteRequest: async (
       _,
