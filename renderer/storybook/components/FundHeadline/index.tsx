@@ -47,7 +47,7 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   isManager,
   handleShutDown,
 }) => {
-  const fundUrl =
+  const etherscanUrl =
     track === 'live'
       ? `https://etherscan.io/address/${address}`
       : `https://kovan.etherscan.io/address/${address}`;
@@ -63,13 +63,17 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
         <Fragment>
           <div className="fund-headline__headline">
             <h1 className="fund-headline__title">{name}</h1>
-            <div className="fund-headline__contact">
+            <div className="fund-headline__links">
               <a
                 href="https://ipfs.io/ipfs/Qmc9JRw4zarrs6gJwu6tC58UAgeEujNg9VMWcH8MUEd5TW/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Contact Investors/Managers
+              </a>
+              {' '}|{' '}
+              <a href={etherscanUrl} target="_blank" rel="noopener noreferrer">
+                View on Etherscan
               </a>
             </div>
 
