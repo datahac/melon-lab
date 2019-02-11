@@ -12,13 +12,15 @@ import {
   estimateRequestInvestmentMutation,
   executeExecuteRequestMutation,
   executeRequestInvestmentMutation,
+  estimateCancelRequestMutation,
+  executeCancelRequestMutation,
 } from '~/queries/invest.gql';
 
 export default withRouter(props => {
   const estimations: any[] = [];
   const executions: any[] = [];
 
-  if (props.isInitialRequest || !props.isWaiting) {
+  if ((props.isInitialRequest || !props.isWaiting) && !props.isExpired) {
     estimations.push(
       {
         mutation: estimateApproveTransferMutation,
@@ -74,6 +76,33 @@ export default withRouter(props => {
     });
     executions.push({
       mutation: executeExecuteRequestMutation,
+      variables: {
+        fundAddress: props.fundAddress,
+      },
+      update: () => {
+        props.setStep(null);
+        props.setInvestValues(null);
+        // onCompleted is not working because of render
+        props.router.push({
+          pathname: '/manage',
+          query: {
+            address: props.fundAddress,
+          },
+        });
+      },
+    });
+  }
+
+  if (props.isExpired) {
+    estimations.push({
+      mutation: estimateCancelRequestMutation,
+      variables: {
+        fundAddress: props.fundAddress,
+      },
+      name: 'cancelRequest',
+    });
+    executions.push({
+      mutation: executeCancelRequestMutation,
       variables: {
         fundAddress: props.fundAddress,
       },

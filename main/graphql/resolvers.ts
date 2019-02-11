@@ -30,13 +30,13 @@ import {
   deployContract,
   Exchanges,
   executeRequest,
+  cancelRequest,
   FunctionSignatures,
   getExpectedRate,
   getOpenOrders,
   getTokenBySymbol,
   getWrapperLock,
   register,
-  requestInvestment,
   shutDownFund,
   triggerRewardAllFees,
   withDifferentAccount,
@@ -561,6 +561,39 @@ export default {
       const env = withDifferentAccount(environment, new Tm.Address(from));
 
       const result = await executeRequest.send(
+        env,
+        participationAddress,
+        transaction,
+      );
+
+      return !!result;
+    },
+    estimateCancelRequest: async (
+      _,
+      { from, fundAddress },
+      { environment, loaders },
+    ) => {
+      const { participationAddress } = await loaders.fundRoutes.load(
+        fundAddress,
+      );
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+
+      const result = await cancelRequest.prepare(env, participationAddress);
+
+      return result && result.rawTransaction;
+    },
+    executeCancelRequest: async (
+      _,
+      { from, signed, fundAddress },
+      { environment, loaders },
+    ) => {
+      const { participationAddress } = await loaders.fundRoutes.load(
+        fundAddress,
+      );
+      const transaction = signed.rawTransaction;
+      const env = withDifferentAccount(environment, new Tm.Address(from));
+
+      const result = await cancelRequest.send(
         env,
         participationAddress,
         transaction,

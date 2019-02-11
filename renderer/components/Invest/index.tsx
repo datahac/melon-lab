@@ -58,6 +58,10 @@ const InvestContainer = ({ address, ...props }) => {
         const isInitialRequest = Tm.isZero(
           R.pathOr('0', ['data', 'fund', 'totalSupply', 'quantity'], fundProps),
         );
+        const isExpired = R.path(
+          ['data', 'hasActiveRequest', 'isExpired'],
+          requestProps,
+        );
 
         return (
           <Fragment>
@@ -71,6 +75,8 @@ const InvestContainer = ({ address, ...props }) => {
               readyToExecute={readyToExecute}
               isInitialRequest={isInitialRequest}
               executeRequest={() => setStep(3)}
+              cancelRequest={() => setStep(4)}
+              isExpired={isExpired}
             />
 
             <InvestTransactions
@@ -82,6 +88,7 @@ const InvestContainer = ({ address, ...props }) => {
               isWaiting={isWaiting}
               readyToExecute={readyToExecute}
               isInitialRequest={isInitialRequest}
+              isExpired={isExpired}
             />
           </Fragment>
         );

@@ -357,6 +357,7 @@ type InvestRequest {
 
   "If waiting time 0 then ready to execute"
   waitingTime: String!
+  isExpired: Boolean!
 }
 
 type Query {
@@ -476,6 +477,21 @@ type Mutation {
   Executes the "execute request" transaction with the given gas price per unit.
   """
   executeExecuteRequest(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean @account @sign
+
+  """
+  Estimates the number of gas units required for the "execute request" transaction.
+  """
+  estimateCancelRequest(fundAddress: String!): UnsignedPlainTransaction
+    @account
+
+  """
+  Executes the "execute request" transaction with the given gas price per unit.
+  """
+  executeCancelRequest(
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     fundAddress: String!

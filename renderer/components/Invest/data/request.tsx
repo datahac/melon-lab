@@ -11,6 +11,7 @@ export const query = gql`
         quantity
       }
       waitingTime
+      isExpired
     }
   }
 `;

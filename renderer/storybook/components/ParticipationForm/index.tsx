@@ -31,12 +31,14 @@ export interface ParticipationFormProps {
   handleSubmit?: () => void;
   handleChange?: () => void;
   executeRequest?: () => void;
+  cancelRequest?: () => void;
   loading?: boolean;
   address?: string;
   sharePrice?: Tm.PriceInterface;
   isWaiting?: boolean;
   readyToExecute?: boolean;
   isInitialRequest?: boolean;
+  isExpired?: boolean;
 }
 
 const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
@@ -54,8 +56,11 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   readyToExecute,
   executeRequest,
   isInitialRequest,
+  isExpired,
+  cancelRequest,
 }) => {
   const numberPlaceholder = (0).toFixed(decimals);
+
   return (
     <Fragment>
       <style jsx>{styles}</style>
@@ -65,7 +70,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
         </div>
       ) : (
         <div className="participation-form">
-          {isWaiting && (
+          {isWaiting && !isExpired && (
             <Notification isWarning>
               You already requested an investment for this fund. Please wait!
             </Notification>
@@ -75,6 +80,14 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
             <Fragment>
               <p>Execute your investment request</p>
               <Button onClick={executeRequest}>Execute Request</Button>
+            </Fragment>
+          )}
+
+          {isExpired && (
+            <Fragment>
+              <Notification isWarning>Your request is expired!</Notification>
+              <hr />
+              <Button onClick={cancelRequest}>Cancel Request</Button>
             </Fragment>
           )}
 

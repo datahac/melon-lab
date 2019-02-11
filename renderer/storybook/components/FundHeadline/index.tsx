@@ -70,8 +70,8 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
                 rel="noopener noreferrer"
               >
                 Contact Investors/Managers
-              </a>
-              {' '}|{' '}
+              </a>{' '}
+              |{' '}
               <a href={etherscanUrl} target="_blank" rel="noopener noreferrer">
                 View on Etherscan
               </a>
