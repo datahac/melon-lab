@@ -55,7 +55,7 @@ const WithFormModal = compose(
     return (
       rendered && (
         <Modal
-          title="Fees"
+          title={step}
           loading={loading}
           isOpen={open}
           PrimaryAction={Button}
