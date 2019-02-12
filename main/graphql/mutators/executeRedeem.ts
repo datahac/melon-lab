@@ -3,13 +3,15 @@ import { withDifferentAccount, redeemQuantity } from '@melonproject/protocol';
 
 const executeRedeem = async (
   _,
-  { from, signed, fundAddress },
+  { from, signedOrNot, fundAddress },
   { environment, loaders },
 ) => {
   try {
-    const { participationAddress } = await loaders.fundRoutes.load(fundAddress);
+    const transaction = signedOrNot.rawTransaction
+      ? signedOrNot.rawTransaction
+      : signedOrNot;
 
-    const transaction = signed.rawTransaction;
+    const { participationAddress } = await loaders.fundRoutes.load(fundAddress);
     const env = withDifferentAccount(environment, new Tm.Address(from));
 
     const result = await redeemQuantity.send(

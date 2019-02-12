@@ -6,11 +6,14 @@ import {
 
 const executeTriggerRewardAllFees = async (
   _,
-  { from, signed, fundAddress },
+  { from, signedOrNot, fundAddress },
   { environment, loaders },
 ) => {
+  const transaction = signedOrNot.rawTransaction
+    ? signedOrNot.rawTransaction
+    : signedOrNot;
+
   const { accountingAddress } = await loaders.fundRoutes.load(fundAddress);
-  const transaction = signed.rawTransaction;
   const env = withDifferentAccount(environment, new Tm.Address(from));
 
   const result = await triggerRewardAllFees.send(

@@ -3,12 +3,15 @@ import { approve, withDifferentAccount } from '@melonproject/protocol';
 
 const executeApproveTransfer = async (
   _,
-  { from, signed, fundAddress, investmentAmount },
+  { from, signedOrNot, fundAddress, investmentAmount },
   { environment, loaders },
 ) => {
+  const transaction = signedOrNot.rawTransaction
+    ? signedOrNot.rawTransaction
+    : signedOrNot;
+
   const { participationAddress } = await loaders.fundRoutes.load(fundAddress);
   const quoteToken = await loaders.quoteToken();
-  const transaction = signed.rawTransaction;
   const env = withDifferentAccount(environment, new Tm.Address(from));
 
   const params = {

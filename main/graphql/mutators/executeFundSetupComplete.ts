@@ -3,11 +3,14 @@ import { withDifferentAccount, completeSetup } from '@melonproject/protocol';
 
 const executeFundSetupComplete = async (
   _,
-  { from, signed },
+  { from, signedOrNot },
   { environment },
 ) => {
+  const transaction = signedOrNot.rawTransaction
+    ? signedOrNot.rawTransaction
+    : signedOrNot;
+
   const version = environment.deployment.melonContracts.version;
-  const transaction = signed.rawTransaction;
   const env = withDifferentAccount(environment, new Tm.Address(from));
 
   return completeSetup.send(env, version, transaction);

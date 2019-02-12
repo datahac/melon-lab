@@ -8,9 +8,13 @@ import {
 
 const executeCancelOrder = async (
   _,
-  { from, signed, exchange },
+  { from, signedOrNot, exchange },
   { environment, loaders },
 ) => {
+  const transaction = signedOrNot.rawTransaction
+    ? signedOrNot.rawTransaction
+    : signedOrNot;
+
   const fund = await loaders.fundAddressFromManager.load(from);
   const { tradingAddress } = await loaders.fundRoutes.load(fund);
   const env = withDifferentAccount(environment, new Tm.Address(from));
@@ -19,18 +23,14 @@ const executeCancelOrder = async (
     const result = await cancelOasisDexOrder.send(
       env,
       tradingAddress,
-      signed.rawTransaction,
+      transaction,
     );
 
     return !!result;
   }
 
   if (exchange === 'RADAR_RELAY') {
-    const result = await cancel0xOrder.send(
-      env,
-      tradingAddress,
-      signed.rawTransaction,
-    );
+    const result = await cancel0xOrder.send(env, tradingAddress, transaction);
 
     return !!result;
   }
@@ -39,7 +39,7 @@ const executeCancelOrder = async (
     const result = await cancelEthfinexOrder.send(
       env,
       tradingAddress,
-      signed.rawTransaction,
+      transaction,
     );
 
     return !!result;

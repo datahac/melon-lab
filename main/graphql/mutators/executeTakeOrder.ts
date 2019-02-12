@@ -9,9 +9,13 @@ import {
 
 const executeTakeOrder = async (
   _,
-  { from, signed, exchange },
+  { from, signedOrNot, exchange },
   { environment, loaders },
 ) => {
+  const transaction = signedOrNot.rawTransaction
+    ? signedOrNot.rawTransaction
+    : signedOrNot;
+
   const fund = await loaders.fundAddressFromManager.load(from);
   const { tradingAddress, accountingAddress } = await loaders.fundRoutes.load(
     fund,
@@ -25,7 +29,7 @@ const executeTakeOrder = async (
     const result = await takeOasisDexOrder.send(
       env,
       tradingAddress,
-      signed.rawTransaction,
+      transaction,
     );
 
     const type = Tm.isEqual(denominationAsset, result.sell.token)
@@ -55,7 +59,7 @@ const executeTakeOrder = async (
     const result: TakeOrderOnKyberResult = await takeOrderOnKyber.send(
       env,
       tradingAddress,
-      signed.rawTransaction,
+      transaction,
     );
 
     const type = Tm.isEqual(denominationAsset, result.takerQuantity.token)
@@ -81,11 +85,7 @@ const executeTakeOrder = async (
   }
 
   if (exchange === 'RADAR_RELAY') {
-    const result = await take0xOrder.send(
-      env,
-      tradingAddress,
-      signed.rawTransaction,
-    );
+    const result = await take0xOrder.send(env, tradingAddress, transaction);
 
     const type = Tm.isEqual(denominationAsset, result.takerFilledAmount.token)
       ? 'BUY'

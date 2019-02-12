@@ -10,9 +10,13 @@ import {
 
 const executeMakeOrder = async (
   _,
-  { from, signed, exchange, signedOrder },
+  { from, signedOrNot, exchange, signedOrder },
   { environment, loaders },
 ) => {
+  const transaction = signedOrNot.rawTransaction
+    ? signedOrNot.rawTransaction
+    : signedOrNot;
+
   const fund = await loaders.fundAddressFromManager.load(from);
   const { tradingAddress } = await loaders.fundRoutes.load(fund);
   const env = withDifferentAccount(environment, new Tm.Address(from));
@@ -21,7 +25,7 @@ const executeMakeOrder = async (
     const result = await makeOasisDexOrder.send(
       env,
       tradingAddress,
-      signed.rawTransaction,
+      transaction,
     );
 
     return !!result;
@@ -32,14 +36,9 @@ const executeMakeOrder = async (
     const chain = await getChainName(env);
 
     try {
-      const result = await make0xOrder.send(
-        env,
-        tradingAddress,
-        signed.rawTransaction,
-        {
-          signedOrder: parsedOrder,
-        },
-      );
+      const result = await make0xOrder.send(env, tradingAddress, transaction, {
+        signedOrder: parsedOrder,
+      });
 
       if (chain === 'kovan') {
         await axios.post(
@@ -67,7 +66,7 @@ const executeMakeOrder = async (
       const result = await makeEthfinexOrder.send(
         env,
         tradingAddress,
-        signed.rawTransaction,
+        transaction,
         {
           signedOrder: parsedOrder,
         },

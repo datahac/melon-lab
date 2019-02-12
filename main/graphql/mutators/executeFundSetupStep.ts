@@ -12,11 +12,14 @@ import {
 
 const executeFundSetupStep = async (
   _,
-  { step, from, signed },
+  { step, from, signedOrNot },
   { environment },
 ) => {
+  const transaction = signedOrNot.rawTransaction
+    ? signedOrNot.rawTransaction
+    : signedOrNot;
+
   const version = environment.deployment.melonContracts.version;
-  const transaction = signed.rawTransaction;
   const fn = {
     // TODO: Change
     CREATE_ACCOUNTING: createAccounting,

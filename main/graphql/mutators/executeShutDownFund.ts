@@ -3,11 +3,14 @@ import { withDifferentAccount, shutDownFund } from '@melonproject/protocol';
 
 const executeShutDownFund = async (
   _,
-  { from, signed, fundAddress },
+  { from, signedOrNot, fundAddress },
   { environment },
 ) => {
+  const transaction = signedOrNot.rawTransaction
+    ? signedOrNot.rawTransaction
+    : signedOrNot;
   const version = environment.deployment.melonContracts.version;
-  const transaction = signed.rawTransaction;
+
   const params = {
     hub: fundAddress,
   };

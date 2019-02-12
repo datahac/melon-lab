@@ -12,10 +12,6 @@ export const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
   inheritResolversFromInterfaces: true,
-  // schemaDirectives: {
-  //   account: AccountDirective,
-  //   sign: SignDirective,
-  // },
 });
 
 const signWithPrivateKey = async (environment, wallet, unsigned) => {
@@ -27,14 +23,6 @@ const signWithPrivateKey = async (environment, wallet, unsigned) => {
     wallet && wallet.privateKey,
   );
 
-  return signed;
-};
-
-const signWithHardwareWallet = async (environment, wallet, unsigned) => {
-  const signed = await environment.eth.signTransaction(
-    unsigned,
-    wallet.address,
-  );
   return signed;
 };
 
@@ -60,8 +48,6 @@ addQueryDirectives(schema, {
       walletType === WalletTypes.HARDWARE
         ? unsigned
         : await signWithPrivateKey(environment, wallet, unsigned);
-
-    console.log(signedOrNot);
 
     const newArgs = {
       ...args,
