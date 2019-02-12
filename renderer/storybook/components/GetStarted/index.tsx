@@ -10,7 +10,7 @@ export interface GetStartedProps {
   link: {
     href: string;
     text: string;
-    query: string;
+    query?: any;
   };
 }
 

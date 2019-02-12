@@ -4,9 +4,10 @@ import GetStarted from '~/components/GetStarted';
 import { AccountConsumer } from '+/components/AccountContext';
 import { BalanceConsumer } from '+/components/BalanceContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
+import { SetupConsumer } from '+/components/SetupContext';
 import * as Tm from '@melonproject/token-math';
 
-const getLink = (account, eth, fund) => {
+const getLink = (account, eth, fund, isComplete) => {
   if (account) {
     if (eth && Tm.isZero(eth.quantity)) {
       return {
@@ -15,11 +16,19 @@ const getLink = (account, eth, fund) => {
       };
     }
 
-    if (fund) {
+    if (fund && isComplete) {
       return {
         query: { address: fund },
         href: '/manage',
         text: 'Go to your fund',
+      };
+    }
+
+    if (fund && !isComplete) {
+      return {
+        query: { address: fund },
+        href: '/setup',
+        text: 'Continue setup your fund',
       };
     }
 
@@ -41,10 +50,16 @@ const GetStartedContainer = ({ ...props }) => (
       <AccountConsumer />,
       <BalanceConsumer />,
       <FundManagerConsumer />,
+      <SetupConsumer />,
     ]}
   >
-    {([account, balance, managerProps]) => {
-      const link = getLink(account, balance.eth, managerProps.fund);
+    {([account, balance, managerProps, setupProps]) => {
+      const link = getLink(
+        account,
+        balance.eth,
+        managerProps.fund,
+        setupProps.isComplete,
+      );
 
       return <GetStarted link={link} {...props} />;
     }}
