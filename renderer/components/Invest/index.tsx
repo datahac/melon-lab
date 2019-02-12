@@ -9,19 +9,11 @@ import { RequestQuery } from './data/request';
 import * as R from 'ramda';
 import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
-import { BalanceConsumer } from '+/components/BalanceContext';
+import { withApollo } from 'react-apollo';
+import { compose } from 'recompose';
 
 const ParticipationFormContainer = withForm(props => (
-  <BalanceConsumer>
-    {({ weth }) => (
-      <ParticipationForm
-        {...props}
-        wethBalance={weth && weth}
-        setup={true}
-        setInvestValues={props.setInvestValues}
-      />
-    )}
-  </BalanceConsumer>
+  <ParticipationForm {...props} />
 ));
 
 const InvestContainer = ({ address, ...props }) => {
@@ -77,6 +69,7 @@ const InvestContainer = ({ address, ...props }) => {
               executeRequest={() => setStep(3)}
               cancelRequest={() => setStep(4)}
               isExpired={isExpired}
+              account={account}
             />
 
             <InvestTransactions
@@ -97,4 +90,7 @@ const InvestContainer = ({ address, ...props }) => {
   );
 };
 
-export default withRouter(InvestContainer);
+export default compose(
+  withRouter,
+  withApollo,
+)(InvestContainer);

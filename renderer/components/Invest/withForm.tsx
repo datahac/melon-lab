@@ -1,30 +1,34 @@
 import * as Tm from '@melonproject/token-math';
 import { withFormik } from 'formik';
 import { withHandlers, compose } from 'recompose';
-import { FormErros } from '~/components/ParticipationForm';
+import { FormErrors } from '~/components/ParticipationForm';
+import gql from 'graphql-tag';
 
-const withForm = withFormik({
-  mapPropsToValues: props => {
-    const sharePrice =
-      props.sharePrice &&
-      Tm.createPrice(props.sharePrice.base, {
-        ...props.sharePrice.quote,
-        quantity: Tm.add(
-          props.sharePrice.quote.quantity,
-          Tm.divide(props.sharePrice.quote.quantity, 10),
-        ),
-      });
+export const balanceQuery = gql`
+  query BalanceQuery($account: String!) {
+    balance(address: $account, symbol: "WETH") {
+      quantity
+      token {
+        decimals
+        symbol
+        address
+      }
+    }
+  }
+`;
 
-    return {
-      price: props.isInitialRequest ? props.sharePrice : sharePrice,
-      total:
-        props.sharePrice && Tm.createQuantity(props.sharePrice.quote.token, 0),
-      quantity:
-        props.sharePrice && Tm.createQuantity(props.sharePrice.base.token, 0),
-    };
-  },
-  validate: (values, props) => {
-    let errors: FormErros = {};
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+const validate = (values, props) => {
+  return sleep(0).then(async () => {
+    let errors: FormErrors = {};
+
+    const { data } = await props.client.query({
+      query: balanceQuery,
+      variables: {
+        account: props.account,
+      },
+    });
 
     if (!values.quantity) {
       errors.quantity = 'Required';
@@ -46,14 +50,37 @@ const withForm = withFormik({
       errors.total = 'Required';
     } else if (Tm.isZero(values.total)) {
       errors.total = 'Invalid quantity';
-    } else if (
-      Tm.greaterThan(values.total.quantity, props.wethBalance.quantity)
-    ) {
+    } else if (Tm.greaterThan(values.total.quantity, data.balance.quantity)) {
       errors.total = 'Insufficient balance';
     }
 
-    return errors;
+    if (Object.keys(errors).length) {
+      throw errors;
+    }
+  });
+};
+
+const withForm = withFormik({
+  mapPropsToValues: props => {
+    const sharePrice =
+      props.sharePrice &&
+      Tm.createPrice(props.sharePrice.base, {
+        ...props.sharePrice.quote,
+        quantity: Tm.add(
+          props.sharePrice.quote.quantity,
+          Tm.divide(props.sharePrice.quote.quantity, 10),
+        ),
+      });
+
+    return {
+      price: props.isInitialRequest ? props.sharePrice : sharePrice,
+      total:
+        props.sharePrice && Tm.createQuantity(props.sharePrice.quote.token, 0),
+      quantity:
+        props.sharePrice && Tm.createQuantity(props.sharePrice.base.token, 0),
+    };
   },
+  validate,
   enableReinitialize: true,
   handleSubmit: (values, form) => {
     form.props.setInvestValues(values);
