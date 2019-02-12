@@ -15,49 +15,52 @@ import {
 } from 'rxjs/operators';
 import * as Tm from '@melonproject/token-math';
 import {
-  approve as approveTransfer,
-  beginSetup,
-  completeSetup,
-  Contracts,
-  createAccounting,
-  createFeeManager,
-  createOrder,
-  createParticipation,
-  createPolicyManager,
-  createShares,
-  createTrading,
-  createVault,
-  deployContract,
   Exchanges,
-  executeRequest,
-  cancelRequest,
-  FunctionSignatures,
   getExpectedRate,
   getOpenOrders,
   getTokenBySymbol,
-  getWrapperLock,
-  register,
-  shutDownFund,
-  triggerRewardAllFees,
-  withDifferentAccount,
 } from '@melonproject/protocol';
 
 import sameBlock from './utils/sameBlock';
 import toAsyncIterator from './utils/toAsyncIterator';
-import { estimateTakeOrder } from './mutators/estimateTakeOrder';
-import { executeTakeOrder } from './mutators/executeTakeOrder';
-import { estimateMakeOrder } from './mutators/estimateMakeOrder';
-import { executeMakeOrder } from './mutators/executeMakeOrder';
-import { estimateCancelOrder } from './mutators/estimateCancelOrder';
-import { executeCancelOrder } from './mutators/executeCancelOrder';
-import { estimateRedeem } from './mutators/estimateRedeem';
-import { executeRedeem } from './mutators/executeRedeem';
+
+import { estimateFundSetupBegin } from './mutators/estimateFundSetupBegin';
+import { executeFundSetupBegin } from './mutators/executeFundSetupBegin';
+import { estimateFundSetupStep } from './mutators/estimateFundSetupStep';
+import { executeFundSetupStep } from './mutators/executeFundSetupStep';
+import { estimateFundSetupComplete } from './mutators/estimateFundSetupComplete';
+import { executeFundSetupComplete } from './mutators/executeFundSetupComplete';
 import { estimateRequestInvestment } from './mutators/estimateRequestInvestment';
 import { executeRequestInvestment } from './mutators/executeRequestInvestment';
-import { estimateFundSetupBegin } from './mutators/estimateFundSetupBegin';
-import { WalletTypes } from './context';
+import { estimateApproveTransfer } from './mutators/estimateApproveTransfer';
+import { executeApproveTransfer } from './mutators/executeApproveTransfer';
+import { estimateExecuteRequest } from './mutators/estimateExecuteRequest';
+import { executeExecuteRequest } from './mutators/executeExecuteRequest';
+import { estimateCancelRequest } from './mutators/estimateCancelRequest';
+import { executeCancelRequest } from './mutators/executeCancelRequest';
+import { estimateShutDownFund } from './mutators/estimateShutDownFund';
+import { executeShutDownFund } from './mutators/executeShutDownFund';
+import { estimateTriggerRewardAllFees } from './mutators/estimateTriggerRewardAllFees';
+import { executeTriggerRewardAllFees } from './mutators/executeTriggerRewardAllFees';
+import { estimateRedeem } from './mutators/estimateRedeem';
+import { executeRedeem } from './mutators/executeRedeem';
+import { estimateMakeOrder } from './mutators/estimateMakeOrder';
+import { executeMakeOrder } from './mutators/executeMakeOrder';
+import { estimateTakeOrder } from './mutators/estimateTakeOrder';
+import { executeTakeOrder } from './mutators/executeTakeOrder';
+import { estimateCancelOrder } from './mutators/estimateCancelOrder';
+import { executeCancelOrder } from './mutators/executeCancelOrder';
+import { estimateDeployUserWhitelist } from './mutators/estimateDeployUserWhitelist';
+import { estimateDeployAssetBlacklist } from './mutators/estimateDeployAssetBlacklist';
+import { estimateDeployAssetWhitelist } from './mutators/estimateDeployAssetWhitelist';
+import { estimateDeployMaxConcentration } from './mutators/estimateDeployMaxConcentration';
+import { estimateDeployMaxPositions } from './mutators/estimateDeployMaxPositions';
+import { estimateDeployPriceTolerance } from './mutators/estimateDeployPriceTolerance';
+import { executeDeploy } from './mutators/executeDeploy';
+import { estimateRegisterPolicies } from './mutators/estimateRegisterPolicies';
+import { executeRegisterPolicies } from './mutators/executeRegisterPolicies';
 
-const stringifyObject = R.mapObjIndexed((value, key) => `${value}`);
+import { WalletTypes } from './context';
 
 const exchangeMap = {
   [Exchanges.ZeroEx]: 'RADAR_RELAY',
@@ -277,8 +280,8 @@ export default {
     },
     personalStake: (parent, { investor }, { loaders }) => {
       return loaders.fundParticipation.load({
-        fund: parent,
         investor,
+        fund: parent,
       });
     },
     gav: (parent, _, { loaders }) => {
@@ -371,246 +374,23 @@ export default {
   },
   Mutation: {
     estimateFundSetupBegin,
-    executeFundSetupBegin: (_, { from, signedOrNot }, { environment }) => {
-      const transaction = signedOrNot.rawTransaction
-        ? signedOrNot.rawTransaction
-        : signedOrNot;
-
-      const version = environment.deployment.melonContracts.version;
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      return beginSetup.send(env, version, transaction);
-    },
-    estimateFundSetupStep: async (_, { step, from }, { environment }) => {
-      const version = environment.deployment.melonContracts.version;
-      const fn = {
-        CREATE_ACCOUNTING: createAccounting,
-        CREATE_FEE_MANAGER: createFeeManager,
-        CREATE_PARTICIPATION: createParticipation,
-        CREATE_POLICY_MANAGER: createPolicyManager,
-        CREATE_SHARES: createShares,
-        CREATE_TRADING: createTrading,
-        CREATE_VAULT: createVault,
-      }[step];
-
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const result = await fn.prepare(env, version);
-
-      return (
-        result && { ...result.rawTransaction, amguInEth: result.amguInEth }
-      );
-    },
-    executeFundSetupStep: async (
-      _,
-      { step, from, signed },
-      { environment },
-    ) => {
-      const version = environment.deployment.melonContracts.version;
-      const transaction = signed.rawTransaction;
-      const fn = {
-        // TODO: Change
-        CREATE_ACCOUNTING: createAccounting,
-        CREATE_FEE_MANAGER: createFeeManager,
-        CREATE_PARTICIPATION: createParticipation,
-        CREATE_POLICY_MANAGER: createPolicyManager,
-        CREATE_SHARES: createShares,
-        CREATE_TRADING: createTrading,
-        CREATE_VAULT: createVault,
-      }[step];
-
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const result = await fn.send(env, version, transaction);
-
-      return !!result;
-    },
-
-    estimateFundSetupComplete: async (_, { from }, { environment }) => {
-      const version = environment.deployment.melonContracts.version;
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const result = await completeSetup.prepare(env, version);
-
-      return (
-        result && { ...result.rawTransaction, amguInEth: result.amguInEth }
-      );
-    },
-    executeFundSetupComplete: async (_, { from, signed }, { environment }) => {
-      const version = environment.deployment.melonContracts.version;
-      const transaction = signed.rawTransaction;
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      return completeSetup.send(env, version, transaction);
-    },
+    executeFundSetupBegin,
+    estimateFundSetupStep,
+    executeFundSetupStep,
+    estimateFundSetupComplete,
+    executeFundSetupComplete,
     estimateRequestInvestment,
     executeRequestInvestment,
-    estimateApproveTransfer: async (
-      _,
-      { from, fundAddress, investmentAmount },
-      { environment, loaders },
-    ) => {
-      const { participationAddress } = await loaders.fundRoutes.load(
-        fundAddress,
-      );
-      const quoteToken = await loaders.quoteToken();
-      const params = {
-        howMuch: Tm.createQuantity(quoteToken, investmentAmount),
-        spender: participationAddress,
-      };
-
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const result = await approveTransfer.prepare(env, params);
-      return result && result.rawTransaction;
-    },
-    executeApproveTransfer: async (
-      _,
-      { from, signed, fundAddress, investmentAmount },
-      { environment, loaders },
-    ) => {
-      const { participationAddress } = await loaders.fundRoutes.load(
-        fundAddress,
-      );
-      const quoteToken = await loaders.quoteToken();
-      const transaction = signed.rawTransaction;
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const params = {
-        howMuch: Tm.createQuantity(quoteToken, investmentAmount),
-        spender: participationAddress,
-      };
-
-      const result = await approveTransfer.send(env, transaction, params);
-
-      return !!result;
-    },
-    estimateExecuteRequest: async (
-      _,
-      { from, fundAddress },
-      { environment, loaders },
-    ) => {
-      const { participationAddress } = await loaders.fundRoutes.load(
-        fundAddress,
-      );
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await executeRequest.prepare(env, participationAddress);
-
-      return (
-        result && { ...result.rawTransaction, amguInEth: result.amguInEth }
-      );
-    },
-    executeExecuteRequest: async (
-      _,
-      { from, signed, fundAddress },
-      { environment, loaders },
-    ) => {
-      const { participationAddress } = await loaders.fundRoutes.load(
-        fundAddress,
-      );
-      const transaction = signed.rawTransaction;
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await executeRequest.send(
-        env,
-        participationAddress,
-        transaction,
-      );
-
-      return !!result;
-    },
-    estimateCancelRequest: async (
-      _,
-      { from, fundAddress },
-      { environment, loaders },
-    ) => {
-      const { participationAddress } = await loaders.fundRoutes.load(
-        fundAddress,
-      );
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await cancelRequest.prepare(env, participationAddress);
-
-      return result && result.rawTransaction;
-    },
-    executeCancelRequest: async (
-      _,
-      { from, signed, fundAddress },
-      { environment, loaders },
-    ) => {
-      const { participationAddress } = await loaders.fundRoutes.load(
-        fundAddress,
-      );
-      const transaction = signed.rawTransaction;
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await cancelRequest.send(
-        env,
-        participationAddress,
-        transaction,
-      );
-
-      return !!result;
-    },
-    estimateShutDownFund: async (_, { from, fundAddress }, { environment }) => {
-      const params = {
-        hub: fundAddress,
-      };
-
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await shutDownFund.prepare(
-        env,
-        environment.deployment.melonContracts.version,
-        params,
-      );
-
-      return result && result.rawTransaction;
-    },
-    executeShutDownFund: async (
-      _,
-      { from, signed, fundAddress },
-      { environment },
-    ) => {
-      const version = environment.deployment.melonContracts.version;
-      const transaction = signed.rawTransaction;
-      const params = {
-        hub: fundAddress,
-      };
-
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await shutDownFund.send(env, version, transaction, params);
-
-      return !!result;
-    },
-    estimateTriggerRewardAllFees: async (
-      _,
-      { from, fundAddress },
-      { environment, loaders },
-    ) => {
-      const { accountingAddress } = await loaders.fundRoutes.load(fundAddress);
-
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await triggerRewardAllFees.prepare(env, accountingAddress);
-
-      return result && result.rawTransaction;
-    },
-    executeTriggerRewardAllFees: async (
-      _,
-      { from, signed, fundAddress },
-      { environment, loaders },
-    ) => {
-      const { accountingAddress } = await loaders.fundRoutes.load(fundAddress);
-      const transaction = signed.rawTransaction;
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await triggerRewardAllFees.send(
-        env,
-        accountingAddress,
-        transaction,
-      );
-
-      return !!result;
-    },
+    estimateApproveTransfer,
+    executeApproveTransfer,
+    estimateExecuteRequest,
+    executeExecuteRequest,
+    estimateCancelRequest,
+    executeCancelRequest,
+    estimateShutDownFund,
+    executeShutDownFund,
+    estimateTriggerRewardAllFees,
+    executeTriggerRewardAllFees,
     estimateRedeem,
     executeRedeem,
     estimateMakeOrder,
@@ -619,198 +399,15 @@ export default {
     executeTakeOrder,
     estimateCancelOrder,
     executeCancelOrder,
-    create0xOrder: async (
-      _,
-      { from, buyToken, buyQuantity, sellToken, sellQuantity },
-      { environment, loaders },
-    ) => {
-      const fund = await loaders.fundAddressFromManager.load(from);
-      const { tradingAddress } = await loaders.fundRoutes.load(fund);
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const zeroExAddress =
-        env.deployment.exchangeConfigs[Exchanges.ZeroEx].exchange;
-
-      const makerQuantity = Tm.createQuantity(
-        getTokenBySymbol(environment, sellToken),
-        sellQuantity,
-      );
-      const takerQuantity = Tm.createQuantity(
-        getTokenBySymbol(environment, buyToken),
-        buyQuantity,
-      );
-
-      const order = await createOrder(env, zeroExAddress, {
-        makerQuantity,
-        takerQuantity,
-        makerAddress: tradingAddress,
-      });
-
-      return stringifyObject(order);
-    },
-    // tslint:disable:object-shorthand-properties-first
-    estimateDeployUserWhitelist: async (
-      _,
-      { from, addresses },
-      { environment, loaders },
-    ) => {
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await deployContract.prepare(
-        env,
-        Contracts.UserWhitelist,
-        [addresses],
-      );
-
-      return result.unsignedTransaction;
-    },
-    estimateDeployAssetBlacklist: async (
-      _,
-      { from, symbols },
-      { environment, loaders },
-    ) => {
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const addresses = symbols.map(
-        symbol => getTokenBySymbol(env, symbol).address,
-      );
-
-      const result = await deployContract.prepare(
-        env,
-        Contracts.AssetBlacklist,
-        [addresses],
-      );
-
-      return result.unsignedTransaction;
-    },
-    estimateDeployAssetWhitelist: async (
-      _,
-      { from, symbols },
-      { environment, loaders },
-    ) => {
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const addresses = symbols.map(
-        symbol => getTokenBySymbol(env, symbol).address,
-      );
-
-      const result = await deployContract.prepare(
-        env,
-        Contracts.AssetWhitelist,
-        [addresses],
-      );
-
-      return result.unsignedTransaction;
-    },
-    estimateDeployMaxConcentration: async (
-      _,
-      { from, percent },
-      { environment, loaders },
-    ) => {
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await deployContract.prepare(
-        env,
-        Contracts.MaxConcentration,
-        [
-          `${Tm.divide(
-            Tm.appendDecimals(Tm.createToken('ETH'), percent),
-            100,
-          )}`,
-        ],
-      );
-      return result.unsignedTransaction;
-    },
-    estimateDeployMaxPositions: async (
-      _,
-      { from, positions },
-      { environment, loaders },
-    ) => {
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await deployContract.prepare(env, Contracts.MaxPositions, [
-        `${positions}`,
-      ]);
-
-      return result.unsignedTransaction;
-    },
-    estimateDeployPriceTolerance: async (
-      _,
-      { from, percent },
-      { environment, loaders },
-    ) => {
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await deployContract.prepare(
-        env,
-        Contracts.PriceTolerance,
-        [`${percent}`],
-      );
-
-      return result.unsignedTransaction;
-    },
-    executeDeploy: async (_, { from, signed }, { environment, loaders }) => {
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const result = await deployContract.send(env, {
-        signedTransaction: signed.rawTransaction,
-      });
-      return result;
-    },
-    estimateRegisterPolicies: async (
-      _,
-      { from, policies },
-      { environment, loaders },
-    ) => {
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const fund = await loaders.fundAddressFromManager.load(from);
-      const { policyManagerAddress } = await loaders.fundRoutes.load(fund);
-
-      const registrations = policies.reduce((carry, current) => {
-        if (current.type === 'TRADE') {
-          return [
-            {
-              method: FunctionSignatures.takeOrder,
-              policy: current.address,
-            },
-            {
-              method: FunctionSignatures.makeOrder,
-              policy: current.address,
-            },
-            ...carry,
-          ];
-        }
-        return [
-          {
-            method: FunctionSignatures.executeRequestFor,
-            policy: current.address,
-          },
-        ];
-      }, []);
-
-      const result = await register.prepare(
-        env,
-        policyManagerAddress,
-        registrations,
-      );
-
-      return result.rawTransaction;
-    },
-    executeRegisterPolicies: async (
-      _,
-      { from, signed },
-      { environment, loaders },
-    ) => {
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-      const fund = await loaders.fundAddressFromManager.load(from);
-      const { policyManagerAddress } = await loaders.fundRoutes.load(fund);
-
-      const result = await register.send(
-        env,
-        policyManagerAddress,
-        signed.rawTransaction,
-      );
-
-      return result;
-    },
+    estimateDeployUserWhitelist,
+    estimateDeployAssetBlacklist,
+    estimateDeployAssetWhitelist,
+    estimateDeployMaxConcentration,
+    estimateDeployMaxPositions,
+    estimateDeployPriceTolerance,
+    executeDeploy,
+    estimateRegisterPolicies,
+    executeRegisterPolicies,
     deleteWallet: async () => {
       const credentials = (await keytar.findCredentials('melon.fund')) || [];
       credentials.forEach(item => {
@@ -905,7 +502,7 @@ export default {
         // TODO: Make the throttling depend on the actual input stream.
         const stream$ = observable$.pipe(
           buffer(Rx.timer(200, 1000)),
-          filter(events => !!events.length),
+          filter(events => !!(events as any).length),
           merge(default$),
         );
 

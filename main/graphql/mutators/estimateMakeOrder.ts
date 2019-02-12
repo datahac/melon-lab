@@ -15,7 +15,6 @@ import {
   getWrapperLock,
   makeEthfinexOrder,
 } from '@melonproject/protocol';
-import { getWallet } from '../environment';
 
 const DAY_IN_SECONDS = 24 * 60 * 60;
 
