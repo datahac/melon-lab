@@ -54,6 +54,7 @@ import { estimateRedeem } from './mutators/estimateRedeem';
 import { executeRedeem } from './mutators/executeRedeem';
 import { estimateRequestInvestment } from './mutators/estimateRequestInvestment';
 import { executeRequestInvestment } from './mutators/executeRequestInvestment';
+import { estimateFundSetupBegin } from './mutators/estimateFundSetupBegin';
 import { WalletTypes } from './context';
 
 const stringifyObject = R.mapObjIndexed((value, key) => `${value}`);
@@ -86,7 +87,7 @@ export default {
         const accounts = await environment.eth.getAccounts();
         return accounts;
       } catch (e) {
-        console.warn(e);
+        console.warn(e.message);
         return [];
       }
     },
@@ -201,12 +202,12 @@ export default {
         const exchange = exchangeMap[order.exchange];
 
         return {
-          id: order.id,
           type,
           trade,
           volume,
           price,
           exchange,
+          id: order.id,
           timestamp: order.timestamp,
           original: {
             id: order.id,
@@ -369,84 +370,12 @@ export default {
     },
   },
   Mutation: {
-    estimateFundSetupBegin: async (
-      _,
-      { from, name, exchanges, managementFee, performanceFee },
-      { environment, loaders },
-    ) => {
-      const quoteToken = await loaders.quoteToken();
-      const {
-        exchangeConfigs,
-        melonContracts: { priceSource, version },
-        thirdPartyContracts: { tokens },
-      } = environment.deployment;
+    estimateFundSetupBegin,
+    executeFundSetupBegin: (_, { from, signedOrNot }, { environment }) => {
+      const transaction = signedOrNot.rawTransaction
+        ? signedOrNot.rawTransaction
+        : signedOrNot;
 
-      const selectedExchanges = {
-        ...(exchanges.includes('ZERO_EX_EXCHANGE') && {
-          ZeroEx: exchangeConfigs.ZeroEx,
-        }),
-        ...(exchanges.includes('MATCHING_MARKET') && {
-          MatchingMarket: exchangeConfigs.MatchingMarket,
-        }),
-        ...(exchanges.includes('KYBER_NETWORK') && {
-          KyberNetwork: exchangeConfigs.KyberNetwork,
-        }),
-        ...(exchanges.includes('ETHFINEX') && {
-          Ethfinex: exchangeConfigs.Ethfinex,
-        }),
-      };
-
-      const nativeToken = tokens.find(token => {
-        return token.symbol === 'WETH';
-      });
-
-      const mlnToken = tokens.find(token => {
-        return token.symbol === 'MLN';
-      });
-
-      const fees = [
-        {
-          feeAddress: environment.deployment.melonContracts.fees.managementFee.toLowerCase(),
-          feePeriod: new Tm.BigInteger(0),
-          feeRate: new Tm.BigInteger(
-            Tm.multiply(
-              new Tm.BigInteger(managementFee),
-              Tm.power(new Tm.BigInteger(10), new Tm.BigInteger(16)),
-            ),
-          ),
-        },
-        {
-          feeAddress: environment.deployment.melonContracts.fees.performanceFee.toLowerCase(),
-          feePeriod: new Tm.BigInteger(86400 * 90),
-          feeRate: new Tm.BigInteger(
-            Tm.multiply(
-              new Tm.BigInteger(performanceFee),
-              Tm.power(new Tm.BigInteger(10), new Tm.BigInteger(16)),
-            ),
-          ),
-        },
-      ];
-
-      // TODO: Properly handle provided exchanges, tokens, etc.
-      const params = {
-        fees,
-        defaultTokens: [quoteToken, mlnToken],
-        exchangeConfigs: selectedExchanges,
-        fundName: name,
-        priceSource,
-        quoteToken,
-        nativeToken,
-      };
-
-      // TODO: The environment should not hold account data. Maybe?
-      const env = withDifferentAccount(environment, new Tm.Address(from));
-
-      const result = await beginSetup.prepare(env, version, params);
-
-      return result && result.rawTransaction;
-    },
-    executeFundSetupBegin: (_, { from, signed }, { environment }) => {
-      const transaction = signed.rawTransaction;
       const version = environment.deployment.melonContracts.version;
       const env = withDifferentAccount(environment, new Tm.Address(from));
 

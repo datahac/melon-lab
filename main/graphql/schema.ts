@@ -54,16 +54,18 @@ addQueryDirectives(schema, {
       args[directiveArgs.source],
     );
 
-    const signed =
+    // If the endpoint (aka Hardware wallet) is capable of signing itself, we
+    // skip signing here.
+    const signedOrNot =
       walletType === WalletTypes.HARDWARE
-        ? await signWithHardwareWallet(environment, wallet, unsigned)
+        ? unsigned
         : await signWithPrivateKey(environment, wallet, unsigned);
 
-    console.log(signed);
+    console.log(signedOrNot);
 
     const newArgs = {
       ...args,
-      [directiveArgs.target]: signed,
+      [directiveArgs.target]: signedOrNot,
     };
 
     return resolve(source, newArgs, context, info);

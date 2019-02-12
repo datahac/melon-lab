@@ -56,7 +56,11 @@ const DeleteWalletMutation = ({ onCompleted, children }) => (
 );
 
 const UseFrameMutation = ({ children, onCompleted }) => (
-  <Mutation mutation={useFrameMutation} onCompleted={onCompleted}>
+  <Mutation
+    mutation={useFrameMutation}
+    onCompleted={onCompleted}
+    refetchQueries={() => ['AccountQuery', 'BalanceQuery']}
+  >
     {children}
   </Mutation>
 );

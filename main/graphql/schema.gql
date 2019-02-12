@@ -3,7 +3,7 @@
 directive @authenticated on FIELD | FIELD_DEFINITION
 directive @sign(
   source: String = "unsigned"
-  target: String = "signed"
+  target: String = "signedOrNot"
 ) on FIELD | FIELD_DEFINITION
 directive @account(arg: String = "from") on FIELD | FIELD_DEFINITION
 
