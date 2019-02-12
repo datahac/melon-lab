@@ -42,9 +42,6 @@ const mapRankings = R.curryN(2, (network, fund) => ({
   ...fund,
   inception: fund.inception,
   sharePrice: fund.sharePrice,
-  reportUrl: `https://${
-    network === 'KOVAN' ? 'melon' : 'olympiad'
-  }-reporting.now.sh/report/${fund.address}`,
 }));
 
 const sortRankings = ordering => (a, b) => {

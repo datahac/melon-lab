@@ -75,17 +75,3 @@
 .card__rank-symbol {
   font-size: var(--font-size-xs);
 }
-
-.card__report {
-  width: auto;
-  border-top: none;
-  border-left: 1px solid var(--color-border);
-  padding: 0 0 0 var(--space-m);
-  margin: 0 0 0 var(--space-m);
-}
-
-.card__report :global(.link) {
-  display: block;
-  z-index: 999;
-  display: flex;
-}

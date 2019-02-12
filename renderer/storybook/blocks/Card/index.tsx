@@ -14,7 +14,6 @@ export interface CardProps {
   name?: string;
   rank?: number;
   sharePrice?: Tm.PriceInterface;
-  reportUrl?: string;
   onClick?: React.MouseEventHandler;
   decimals?: number;
 }
@@ -25,15 +24,12 @@ const Card: StatelessComponent<CardProps> = ({
   name,
   rank,
   sharePrice,
-  reportUrl,
   onClick,
   decimals = 4,
 }) => {
   const cardClassNames = classNames('card', {
     'card--active': isActive,
   });
-
-  const handleReportClick = e => e.stopPropagation();
 
   return (
     <div onClick={onClick} className={cardClassNames}>
@@ -54,11 +50,6 @@ const Card: StatelessComponent<CardProps> = ({
               <span className="card__label">Inception Date</span>{' '}
               {format(inception, 'DD. MMM YYYY HH:mm')}
             </div>
-          </div>
-          <div className="card__report" onClick={handleReportClick}>
-            <Link target="_blank" href={reportUrl} title="Show Report">
-              <Icons width="16px" height="20px" name="report" />
-            </Link>
           </div>
         </div>
       </div>
