@@ -1,56 +1,23 @@
 import React from 'react';
 import ModalTransaction from '+/components/ModalTransaction';
-import gql from 'graphql-tag';
 
-const estimateShutDownFundMutation = gql`
-  mutation EstimateShutDownFund($fundAddress: String!) {
-    estimate: estimateShutDownFund(fundAddress: $fundAddress) @account {
-      data
-      from
-      gas
-      gasPrice
-      to
-      value
-    }
-  }
-`;
-
-const executeShutDownFundMutation = gql`
-  mutation ExecuteShutDownFund(
-    $data: String!
-    $from: String!
-    $gas: String!
-    $gasPrice: String!
-    $to: String!
-    $value: String!
-    $fundAddress: String!
-  ) {
-    execute: executeShutDownFund(
-      fundAddress: $fundAddress
-      unsigned: {
-        data: $data
-        from: $from
-        gas: $gas
-        gasPrice: $gasPrice
-        to: $to
-        value: $value
-      }
-    ) @sign @account
-  }
-`;
+import {
+  estimateShutDownFund,
+  executeShutDownFund,
+} from '~/queries/shutDownFund.gql';
 
 export default props => (
   <ModalTransaction
     text="The following method on the Melon Smart Contracts will be executed: shutDownFund"
     open={props.shutDown}
     estimate={{
-      mutation: estimateShutDownFundMutation,
+      mutation: estimateShutDownFund,
       variables: {
         fundAddress: props.fundAddress,
       },
     }}
     execute={{
-      mutation: executeShutDownFundMutation,
+      mutation: executeShutDownFund,
       variables: {
         fundAddress: props.fundAddress,
       },

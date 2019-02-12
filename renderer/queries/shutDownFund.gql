@@ -1,0 +1,32 @@
+mutation estimateShutDownFund($fundAddress: String!) {
+  estimate: estimateShutDownFund(fundAddress: $fundAddress) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation executeShutDownFund(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+  $fundAddress: String!
+) {
+  execute: executeShutDownFund(
+    fundAddress: $fundAddress
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}

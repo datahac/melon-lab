@@ -3,12 +3,11 @@ import Footer from '~/components/Footer';
 import Header from '~/components/Header';
 import Notification from '~/blocks/Notification';
 import Layout from '~/design/Layout';
+import * as R from 'ramda';
 
 import styles from './styles.css';
 
 const ManageTemplate = ({
-  FactSheet,
-  FactSheetProps,
   Holdings,
   HoldingsProps,
   OrderForm,
@@ -23,9 +22,9 @@ const ManageTemplate = ({
   FundHeadline,
   FundHeadlineProps = {},
 }) => {
+  // console.log(FundHeadlineProps)
   const message =
-    FundHeadlineProps &&
-    FundHeadlineProps.isShutdown &&
+    R.path(['fund', 'isShutdown'], FundHeadlineProps) &&
     'This fund is shutdown';
 
   return (
