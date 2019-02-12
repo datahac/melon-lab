@@ -53,7 +53,6 @@ const FundHeadlineContainer = ({
               isManager={isManager}
               loading={loading}
               handleShutDown={setShutDownModal}
-              isShutdown={setup.isShutdown}
               totalFunds={totalFunds}
               quoteAsset={quoteAsset}
               handleClaimRewards={setClaimRewardsModal}

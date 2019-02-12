@@ -82,20 +82,23 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
             <div className="fund-headline__actions">
               {account && address && (
                 <Fragment>
-                  <div className="fund-headline__action">
-                    <Link
-                      href={{
-                        pathname: '/invest',
-                        query: {
-                          address,
-                        },
-                      }}
-                      style="primary"
-                      size="small"
-                    >
-                      Invest
-                    </Link>
-                  </div>
+                  {!isShutdown && (
+                    <div className="fund-headline__action">
+                      <Link
+                        href={{
+                          pathname: '/invest',
+                          query: {
+                            address,
+                          },
+                        }}
+                        style="primary"
+                        size="small"
+                      >
+                        Invest
+                      </Link>
+                    </div>
+                  )}
+
                   <div className="fund-headline__action">
                     <Link
                       href={{
@@ -110,15 +113,18 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
                       Redeem
                     </Link>
                   </div>
-                  <div className="fund-headline__action">
-                    <Button
-                      onClick={handleClaimRewards}
-                      style="primary"
-                      size="small"
-                    >
-                      Claim rewards
-                    </Button>
-                  </div>
+
+                  {!isShutdown && (
+                    <div className="fund-headline__action">
+                      <Button
+                        onClick={handleClaimRewards}
+                        style="primary"
+                        size="small"
+                      >
+                        Claim rewards
+                      </Button>
+                    </div>
+                  )}
                 </Fragment>
               )}
               {!isShutdown && isManager && (

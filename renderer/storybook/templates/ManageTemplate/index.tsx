@@ -22,7 +22,6 @@ const ManageTemplate = ({
   FundHeadline,
   FundHeadlineProps = {},
 }) => {
-  // console.log(FundHeadlineProps)
   const message =
     R.path(['fund', 'isShutdown'], FundHeadlineProps) &&
     'This fund is shutdown';
