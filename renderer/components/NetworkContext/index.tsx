@@ -68,7 +68,7 @@ const NetworkContextHandler = ({ children, ...props }) => {
     timeout && clearTimeout(timeout);
     timeout = setTimeout(() => {
       setBlockOverdue(true);
-    }, 60000);
+    }, 120000); // Block overdue after 2 minutes
   }, [props.currentBlock]);
 
   return (
