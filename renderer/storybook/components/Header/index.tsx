@@ -73,7 +73,7 @@ export const getStatus = (
   }
 
   return {
-    message: 'Melon Node',
+    message: 'Ready',
     type: statusTypes.NEUTRAL,
   };
 };
@@ -123,7 +123,7 @@ export const Header: StatelessComponent<HeaderProps> = ({
 
   return (
     <div className="header">
-      <style jsx>{styles}</style>
+      <style jsx={true}>{styles}</style>
       <div className="header__logo">
         <Link href="/">
           <a href="/">

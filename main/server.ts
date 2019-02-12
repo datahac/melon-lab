@@ -6,8 +6,12 @@ import { createContext } from './graphql/context';
 import { getEnvironment, getWallet } from './graphql/environment';
 
 (async () => {
-  // Bootstrap the graphql server.
-  const environment = await getEnvironment();
+  const logger =
+    process.env.NODE_ENV === 'production'
+      ? undefined
+      : require('@melonproject/protocol/lib/tests/utils/testLogger').testLogger;
+
+  const environment = await getEnvironment(logger);
   const wallet = await getWallet();
   const context = await createContext(environment, wallet);
   const apollo = new ApolloServer({
