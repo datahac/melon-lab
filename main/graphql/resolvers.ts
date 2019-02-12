@@ -234,6 +234,9 @@ export default {
     isComplete: (parent, _, { loaders }) => {
       return loaders.fundIsComplete.load(parent);
     },
+    allowedExchanges: (parent, _, { loaders }) => {
+      return loaders.fundAllowedExchanges.load(parent);
+    },
     name: (parent, _, { loaders }) => {
       return loaders.fundName.load(parent);
     },

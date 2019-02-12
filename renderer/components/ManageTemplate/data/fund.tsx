@@ -61,6 +61,7 @@ export const query = gql`
           symbol
         }
       }
+      allowedExchanges
     }
   }
 `;

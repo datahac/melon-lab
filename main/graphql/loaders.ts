@@ -19,6 +19,7 @@ import getFundOwner from './loaders/fund/fundOwner';
 import getFundParticipation from './loaders/fund/fundParticipation';
 import getFundRoutes from './loaders/fund/fundRoutes';
 import getFundTotalSupply from './loaders/fund/fundTotalSupply';
+import getFundAllowedExchanges from './loaders/fund/fundAllowedExchanges';
 import getQuoteToken from './loaders/quoteToken';
 import getRoutes from './loaders/routes';
 import getSymbolBalance from './loaders/symbolBalance';
@@ -33,6 +34,21 @@ export default (environment, streams) => {
   const fundIsComplete = new DataLoader(addresses => {
     const fn = getFundIsComplete(environment);
     return Promise.all(addresses.map(fn) || []);
+  });
+
+  const fundAllowedExchanges = new DataLoader(async addresses => {
+    const routes = await fundRoutes.loadMany(addresses);
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { tradingAddress } = routes[key] || {
+          tradingAddress: null,
+        };
+
+        return (
+          tradingAddress && getFundAllowedExchanges(environment, tradingAddress)
+        );
+      }),
+    );
   });
 
   const fundAddressFromManager = new DataLoader(addresses => {
@@ -344,5 +360,6 @@ export default (environment, streams) => {
     exchangeOrders,
     exchangeOrdersObservable,
     tokens,
+    fundAllowedExchanges,
   };
 };

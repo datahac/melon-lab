@@ -220,6 +220,7 @@ type Fund {
   feesShareQuantity: Quantity
   isShutdown: Boolean
   isComplete: Boolean
+  allowedExchanges: [ExchangeEnum]
 }
 
 type Holding {

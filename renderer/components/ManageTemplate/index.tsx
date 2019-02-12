@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Composer from 'react-composer';
 import * as R from 'ramda';
 import * as Tm from '@melonproject/token-math';
@@ -10,7 +10,6 @@ import { CapabilityConsumer } from '+/components/CapabilityContext';
 import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 import { FundManagerConsumer } from '+/components/FundManagerContext';
 import Template from '~/templates/ManageTemplate';
-import FactSheet from '+/components/FactSheet';
 import OrderForm from '+/components/OrderForm';
 import Holdings from '+/components/Holdings';
 import OrderBook from '+/components/OrderBook';
@@ -38,7 +37,6 @@ import {
   switchMap,
   startWith,
   distinctUntilChanged,
-  tap,
 } from 'rxjs/operators';
 
 // A bid-order on the orderbook resolves to a sell from the fund (The order maker wants to buy something, so we sell em)
@@ -79,7 +77,9 @@ const useExchangeSelector = availableExchangesKeys => {
     return set([].concat(current.slice(0, index), current.slice(index + 1)));
   };
 
-  return [current, setFromEvent];
+  const setFromValue = value => set(value);
+
+  return [current, setFromEvent, setFromValue];
 };
 
 const useOrderSelector = order => {
@@ -174,41 +174,12 @@ const AggregatedOrders = ({
   </Composer>
 );
 
-const Container = ({
+export const ManageTemplateContainer = ({
   address,
   quoteAsset,
   baseAsset,
-  allExchangesKeys,
-  eventCallback,
-  children,
+  fundProps,
 }) => {
-  return (
-    <Composer
-      components={[
-        <AccountConsumer />,
-        <BalanceConsumer />,
-        <NetworkConsumer />,
-        <CapabilityConsumer />,
-        <ConfigurationConsumer />,
-        <FundManagerConsumer />,
-        <HoldingsQuery address={address} />,
-        ({ results: [account], render }) => (
-          <FundQuery address={address} account={account} children={render} />
-        ),
-        <AggregatedOrders
-          quoteAsset={quoteAsset}
-          baseAsset={baseAsset}
-          exchanges={allExchangesKeys}
-          eventCallback={eventCallback}
-        />,
-      ]}
-    >
-      {children}
-    </Composer>
-  );
-};
-
-export default ({ address, quoteAsset, baseAsset }) => {
   const [selectedOrder, setOrder] = useOrderSelector({
     // Order ID is set when clicking on order in orderbook
     id: null,
@@ -221,11 +192,22 @@ export default ({ address, quoteAsset, baseAsset }) => {
     signedOrder: null,
   });
 
-  const allExchanges = Object.entries(availableExchanges);
-  const allExchangesKeys = Object.keys(availableExchanges);
-  const [selectedExchanges, updateExchanges] = useExchangeSelector(
-    allExchangesKeys,
+  const allowedExchanges = R.pathOr([], ['data', 'fund', 'allowedExchanges'])(
+    fundProps,
   );
+  const allExchanges = Object.entries(availableExchanges).filter(
+    exchange => allowedExchanges.indexOf(exchange[0]) != -1,
+  );
+
+  const [
+    selectedExchanges,
+    updateExchanges,
+    setAllowedExchanges,
+  ] = useExchangeSelector(allowedExchanges);
+
+  useEffect(() => {
+    setAllowedExchanges(allowedExchanges);
+  }, [fundProps.loading]);
 
   const [eventCallback, [asks, bids]] = useEventCallback(
     (events$, inputs$, _) => {
@@ -276,12 +258,22 @@ export default ({ address, quoteAsset, baseAsset }) => {
   );
 
   return (
-    <Container
-      address={address}
-      baseAsset={baseAsset}
-      quoteAsset={quoteAsset}
-      allExchangesKeys={allExchangesKeys}
-      eventCallback={eventCallback}
+    <Composer
+      components={[
+        <AccountConsumer />,
+        <BalanceConsumer />,
+        <NetworkConsumer />,
+        <CapabilityConsumer />,
+        <ConfigurationConsumer />,
+        <FundManagerConsumer />,
+        <HoldingsQuery address={address} />,
+        <AggregatedOrders
+          quoteAsset={quoteAsset}
+          baseAsset={baseAsset}
+          exchanges={allowedExchanges}
+          eventCallback={eventCallback}
+        />,
+      ]}
     >
       {([
         account,
@@ -291,7 +283,6 @@ export default ({ address, quoteAsset, baseAsset }) => {
         configuration,
         managerProps,
         holdingsProps,
-        fundProps,
         orderbookProps,
       ]) => {
         const holdingsData = R.pathOr([], ['data', 'fund', 'holdings'])(
@@ -358,7 +349,7 @@ export default ({ address, quoteAsset, baseAsset }) => {
               selectedExchanges,
               asks,
               bids,
-              loading: orderbookProps.loading,
+              loading: orderbookProps.loading || fundProps.loading,
             }}
             OpenOrders={OpenOrdersContainer}
             OpenOrdersProps={{
@@ -376,6 +367,32 @@ export default ({ address, quoteAsset, baseAsset }) => {
           />
         );
       }}
-    </Container>
+    </Composer>
   );
 };
+
+export const ManageTemplate = ({ address, quoteAsset, baseAsset }) => {
+  return (
+    <Composer
+      components={[
+        <AccountConsumer />,
+        ({ results: [account], render }) => (
+          <FundQuery address={address} account={account} children={render} />
+        ),
+      ]}
+    >
+      {([account, fundProps]) => {
+        return (
+          <ManageTemplateContainer
+            address={address}
+            quoteAsset={quoteAsset}
+            baseAsset={baseAsset}
+            fundProps={fundProps}
+          />
+        );
+      }}
+    </Composer>
+  );
+};
+
+export default ManageTemplate;
