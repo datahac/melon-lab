@@ -114,17 +114,15 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
                     </Link>
                   </div>
 
-                  {!isShutdown && (
-                    <div className="fund-headline__action">
-                      <Button
-                        onClick={handleClaimRewards}
-                        style="primary"
-                        size="small"
-                      >
-                        Claim rewards
-                      </Button>
-                    </div>
-                  )}
+                  <div className="fund-headline__action">
+                    <Button
+                      onClick={handleClaimRewards}
+                      style="primary"
+                      size="small"
+                    >
+                      Claim rewards
+                    </Button>
+                  </div>
                 </Fragment>
               )}
               {!isShutdown && isManager && (
