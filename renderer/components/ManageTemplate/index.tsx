@@ -195,9 +195,10 @@ export const ManageTemplateContainer = ({
   const allowedExchanges = R.pathOr([], ['data', 'fund', 'allowedExchanges'])(
     fundProps,
   );
-  const allExchanges = Object.entries(availableExchanges).filter(
-    exchange => allowedExchanges.indexOf(exchange[0]) != -1,
-  );
+  const allExchanges = allowedExchanges.map(item => [
+    item,
+    availableExchanges[item],
+  ]);
 
   const [
     selectedExchanges,
