@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import * as R from 'ramda';
 import Modal from '~/blocks/Modal';
 import Button from '~/blocks/Button';
@@ -10,6 +10,7 @@ import withForm from './withForm';
 import { compose } from 'recompose';
 import { withRouter } from 'next/router';
 import * as Tm from '@melonproject/token-math';
+import ErrorModal from '+/components/ErrorModal'
 
 const WithFormModal = compose(
   withForm,
@@ -102,43 +103,49 @@ const ModalTransaction = ({
   text,
   open,
   step,
-}) => (
-  <Composer
-    components={[
-      ({ render }) => (
-        <Mutation {...estimate}>{(a, b) => render([a, b])}</Mutation>
-      ),
-      ({ results: [[estimate, estimateProps]], render }) => (
-        <Mutation
-          {...execute}
-          variables={{
-            ...R.path(['data', 'estimate'], estimateProps),
-            ...execute.variables,
-          }}
-        >
-          {(a, b) => render([a, b])}
-        </Mutation>
-      ),
-    ]}
-  >
-    {([[estimate, estimateProps], [execute, executeProps]]) => {
-      return (
-        <WithFormModal
-          handleCancel={handleCancel}
-          error={estimateProps.error || executeProps.error}
-          loading={estimateProps.loading || executeProps.loading}
-          text={text}
-          open={open}
-          gasLimit={R.path(['data', 'estimate', 'gas'], estimateProps)}
-          gasPrice={R.path(['data', 'estimate', 'gasPrice'], estimateProps)}
-          current={estimate}
-          estimate={estimate}
-          execute={execute}
-          step={step}
-        />
-      );
-    }}
-  </Composer>
-);
+}) => {
+  return (
+    <Composer
+      components={[
+        ({ render }) => (
+          <Mutation {...estimate}>{(a, b) => render([a, b])}</Mutation>
+        ),
+        ({ results: [[estimate, estimateProps]], render }) => (
+          <Mutation
+            {...execute}
+            variables={{
+              ...R.path(['data', 'estimate'], estimateProps),
+              ...execute.variables,
+            }}
+          >
+            {(a, b) => render([a, b])}
+          </Mutation>
+        ),
+      ]}
+    >
+      {([[estimate, estimateProps], [execute, executeProps]]) => {
+        return (
+          <Fragment>
+            <WithFormModal
+              handleCancel={handleCancel}
+              error={estimateProps.error || executeProps.error}
+              loading={estimateProps.loading || executeProps.loading}
+              text={text}
+              open={open}
+              gasLimit={R.path(['data', 'estimate', 'gas'], estimateProps)}
+              gasPrice={R.path(['data', 'estimate', 'gasPrice'], estimateProps)}
+              current={estimate}
+              estimate={estimate}
+              execute={execute}
+              step={step}
+            />
+
+            <ErrorModal error={executeProps.error} />
+          </Fragment>
+        );
+      }}
+    </Composer>
+  );
+};
 
 export default ModalTransaction;

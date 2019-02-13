@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import * as R from 'ramda';
 import Modal from '~/blocks/Modal';
 import Button from '~/blocks/Button';
@@ -11,6 +11,7 @@ import withForm from './withForm';
 import { compose } from 'recompose';
 import { withRouter } from 'next/router';
 import * as Tm from '@melonproject/token-math';
+import ErrorModal from '+/components/ErrorModal';
 
 const WithFormModal = compose(
   withForm,
@@ -140,34 +141,38 @@ const ModalTransactions = ({
       >
         {([[estimate, estimateProps], [execute, executeProps]]) => {
           return (
-            <WithFormModal
-              handleCancel={handleCancel}
-              error={estimateProps.error || executeProps.error}
-              loading={estimateProps.loading || executeProps.loading}
-              text={text}
-              open={open}
-              estimate={estimate}
-              execute={execute}
-              estimations={estimations}
-              current={estimation}
-              step={
-                !R.isEmpty(filteredEstimations) && filteredEstimations[0].name
-              }
-              gasLimit={R.path(['data', 'estimate', 'gas'], estimateProps)}
-              gasPrice={R.pathOr(
-                0,
-                ['data', 'estimate', 'gasPrice'],
-                estimateProps,
-              )}
-              amguInEth={R.path(
-                ['data', 'estimate', 'amguInEth'],
-                estimateProps,
-              )}
-              incentiveInEth={R.path(
-                ['data', 'estimate', 'incentiveInEth'],
-                estimateProps,
-              )}
-            />
+            <Fragment>
+              <WithFormModal
+                handleCancel={handleCancel}
+                error={estimateProps.error || executeProps.error}
+                loading={estimateProps.loading || executeProps.loading}
+                text={text}
+                open={open}
+                estimate={estimate}
+                execute={execute}
+                estimations={estimations}
+                current={estimation}
+                step={
+                  !R.isEmpty(filteredEstimations) && filteredEstimations[0].name
+                }
+                gasLimit={R.path(['data', 'estimate', 'gas'], estimateProps)}
+                gasPrice={R.pathOr(
+                  0,
+                  ['data', 'estimate', 'gasPrice'],
+                  estimateProps,
+                )}
+                amguInEth={R.path(
+                  ['data', 'estimate', 'amguInEth'],
+                  estimateProps,
+                )}
+                incentiveInEth={R.path(
+                  ['data', 'estimate', 'incentiveInEth'],
+                  estimateProps,
+                )}
+              />
+
+              <ErrorModal error={executeProps.error} />
+            </Fragment>
           );
         }}
       </Composer>
