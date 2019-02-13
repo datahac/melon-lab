@@ -8,6 +8,7 @@ import {
   TableBody,
   TableHead,
 } from '~/blocks/Table';
+import Notification from '~/blocks/Notification';
 import * as Tm from '@melonproject/token-math';
 
 import styles from './styles.css';
@@ -51,7 +52,7 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
 }) => (
   <div className="fee-form">
     <style jsx>{styles}</style>
-    {error && <p>{error.message}</p>}
+    {error && <Notification isError>{error.message}</Notification>}
     {!error && text && <p>{text}</p>}
     {!error && (
       <div className="fee-form__input">
