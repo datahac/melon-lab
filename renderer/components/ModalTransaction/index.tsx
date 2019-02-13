@@ -91,7 +91,14 @@ const WithFormModal = compose(
   },
 );
 
-const ModalTransaction = ({ execute, estimate, handleCancel, text, open }) => (
+const ModalTransaction = ({
+  execute,
+  estimate,
+  handleCancel,
+  text,
+  open,
+  step,
+}) => (
   <Composer
     components={[
       ({ render }) => (
@@ -123,6 +130,7 @@ const ModalTransaction = ({ execute, estimate, handleCancel, text, open }) => (
           current={estimate}
           estimate={estimate}
           execute={execute}
+          step={step}
         />
       );
     }}

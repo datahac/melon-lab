@@ -7,6 +7,7 @@ import {
 
 export default props => (
   <ModalTransaction
+    step="makeOrder"
     text="The following method on the Melon Smart Contracts will be executed: makeOrder"
     open={!!props.values && props.values.strategy === 'Limit'}
     estimate={{

@@ -10,6 +10,7 @@ export default props => {
   return (
     <ModalTransaction
       text="The following method on the Melon Smart Contracts will be executed: takeOrder"
+      step="takeOrder"
       open={!!props.values && props.values.strategy === 'Market'}
       estimate={{
         mutation: EstimateTakeOrderMutation,

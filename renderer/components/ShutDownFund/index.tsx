@@ -9,6 +9,7 @@ import {
 export default props => (
   <ModalTransaction
     text="The following method on the Melon Smart Contracts will be executed: shutDownFund"
+    step="shutDownFund"
     open={props.shutDown}
     estimate={{
       mutation: estimateShutDownFund,

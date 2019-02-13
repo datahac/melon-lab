@@ -42,6 +42,7 @@ const executeTriggerRewardAllFeesMutation = gql`
 export default props => (
   <ModalTransaction
     text="The following method on the Melon Smart Contracts will be executed: triggerRewardAllFees"
+    step="triggerRewardAllFees"
     open={props.claimRewards}
     estimate={{
       mutation: estimateTriggerRewardAllFeesMutation,
