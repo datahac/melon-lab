@@ -35,7 +35,9 @@ const LoadWalletContainer = ({ router }) => {
         return (
           <LoadWalletForm
             hasStoredWallet={hasStoredWallet}
-            serverError={error}
+            serverError={
+              error || (mutationProps.error && mutationProps.error.message)
+            }
             onSubmit={values => {
               loadWallet({
                 variables: {
