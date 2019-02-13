@@ -27,10 +27,12 @@ const ImportWalletContainer = ({ router }) => {
       components={[
         ({ render }) => (
           <WalletMutation
-            onCompleted={() => {
-              router.push({
-                pathname: '/wallet',
-              });
+            onCompleted={data => {
+              if (data.importWallet) {
+                router.push({
+                  pathname: '/wallet',
+                });
+              }
             }}
           >
             {(a, b) => render([a, b])}
@@ -42,15 +44,17 @@ const ImportWalletContainer = ({ router }) => {
         <ImportWalletForm
           onImportFile={onImportFile}
           file={file}
-          serverError={error}
-          onSubmit={values =>
+          serverError={
+            error || (walletProps.error && walletProps.error.message)
+          }
+          onSubmit={values => {
             importWallet({
               variables: {
                 file,
                 password: values.password,
               },
-            }).catch(setError)
-          }
+            });
+          }}
           loading={walletProps.loading}
         />
       )}
