@@ -27,4 +27,3 @@ mac:
   category: public.app-category.finance
   target:
     - dmg
-    - zip
