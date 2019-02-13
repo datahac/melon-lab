@@ -23,9 +23,9 @@ interface FormErrors {
 
 export interface FeeFormProps {
   error?: Error;
-  errors: FormErrors;
-  handleBlur: () => void;
-  handleChange: () => void;
+  errors?: FormErrors;
+  handleBlur?: () => void;
+  handleChange?: () => void;
   touched?: any;
   values: FormValues;
   text?: string;

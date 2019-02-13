@@ -28,6 +28,8 @@ const WithFormModal = compose(
     gasLimit,
     current,
     values,
+    amguInEth,
+    incentiveInEth,
     ...props
   }) => {
     const [rendered, setRendered] = useState(false);
@@ -84,6 +86,8 @@ const WithFormModal = compose(
             total={total}
             description={step}
             error={error}
+            amguInEth={amguInEth}
+            incentiveInEth={incentiveInEth}
           />
         </Modal>
       )
