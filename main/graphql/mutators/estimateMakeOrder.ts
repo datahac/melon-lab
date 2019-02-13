@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as R from 'ramda';
+import * as web3Utils from 'web3-utils';
 
 import * as Tm from '@melonproject/token-math';
 import {
@@ -14,9 +15,40 @@ import {
   stringifyStruct,
   getWrapperLock,
   makeEthfinexOrder,
+  Environment,
 } from '@melonproject/protocol';
+import { WalletTypes } from '../context';
 
 const DAY_IN_SECONDS = 24 * 60 * 60;
+
+const withHardwareSigner = (environment: Environment, account: Tm.Address) => {
+  const signMessage = async message => {
+    const signature = await environment.eth.personal.sign(
+      message,
+      account.toString(),
+    );
+    const { v, r, s } = web3Utils.getSignatureParameters(signature) as any;
+    const messageHash = web3Utils.soliditySha3(message);
+    return {
+      message,
+      messageHash,
+      signature,
+      v,
+      r,
+      s,
+    };
+  };
+
+  const withWallet = {
+    ...environment,
+    wallet: {
+      signMessage,
+      address: account,
+    },
+  };
+
+  return withWallet;
+};
 
 const estimateMakeOrder = async (
   _,
@@ -67,10 +99,12 @@ const estimateMakeOrder = async (
     try {
       // TODO: Refactor this into a directive
       const wallet = loaders.getWallet();
-      const withSigner = await withPrivateKeySigner(
-        environment,
-        wallet.privateKey,
-      );
+      const walletType = loaders.getWalletType();
+
+      const withSigner =
+        walletType === WalletTypes.HARDWARE
+          ? await withHardwareSigner(environment, wallet.address)
+          : await withPrivateKeySigner(environment, wallet.privateKey);
 
       const options = {
         type,
@@ -136,10 +170,13 @@ const estimateMakeOrder = async (
     );
     // TODO: Refactor this into a directive
     const wallet = loaders.getWallet();
-    const withSigner = await withPrivateKeySigner(
-      environment,
-      wallet.privateKey,
-    );
+    const walletType = loaders.getWalletType();
+
+    const withSigner =
+      walletType === WalletTypes.HARDWARE
+        ? await withHardwareSigner(environment, wallet.address)
+        : await withPrivateKeySigner(environment, wallet.privateKey);
+
     const wrappedMakerToken = await getWrapperLock(env, wrapperRegistryEfx, {
       token: makerQuantity.token,
     });

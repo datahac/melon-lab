@@ -1561,9 +1561,10 @@
   dependencies:
     source-map-support "^0.5.3"
 
-"@melonproject/protocol@0.9.29":
-  version "0.9.29"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.29.tgz#2e72f2a74b11d3c8787285fde30200af871b4670"
+"@melonproject/protocol@0.9.31":
+  version "0.9.31"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.31.tgz#18e45b4bf482d195d78560ce436e3333f0de4777"
+  integrity sha512-j4KJkKzdMFW7KWLqAZxUm8T6hM1+VnUKXJBB7FzmFsoue4xCRCFsloBFP5X7/CFQoC5wbH3ymu0MMQfZhsruKA==
   dependencies:
     "@0x/contract-wrappers" "^4.1.1"
     "@0x/order-utils" "^3.0.4"
@@ -2027,7 +2028,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/bn.js@^4.11.0":
+"@types/bn.js@^4.11.0", "@types/bn.js@^4.11.4":
   version "4.11.4"
   resolved "https://registry.yarnpkg.com/@types/bn.js/-/bn.js-4.11.4.tgz#a7bed5bdef9f16b25c92ba27745ab261374787d7"
   dependencies:
@@ -15702,6 +15703,22 @@ web3-utils@1.0.0-beta.41:
   resolved "https://registry.yarnpkg.com/web3-utils/-/web3-utils-1.0.0-beta.41.tgz#83301ffd85cbf9b99a8bd5ca828f96113a1ccc71"
   dependencies:
     "@babel/runtime" "^7.3.1"
+    "@types/node" "^10.12.18"
+    bn.js "4.11.8"
+    eth-lib "0.2.8"
+    ethjs-unit "^0.1.6"
+    lodash "^4.17.11"
+    number-to-bn "1.7.0"
+    randomhex "0.1.5"
+    utf8 "2.1.1"
+
+web3-utils@^1.0.0-beta.37:
+  version "1.0.0-beta.46"
+  resolved "https://registry.yarnpkg.com/web3-utils/-/web3-utils-1.0.0-beta.46.tgz#9984dda27c9079b129e741cbb63b665ae0f9725c"
+  integrity sha512-mSz+NrAil2fDZkxTXHPntCclZ8DofMjv8Q+BYR0VAyzTzylpYNXAV0WDdxBp/sXgniWRZXZMF7OkQNWqhZ1J9g==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    "@types/bn.js" "^4.11.4"
     "@types/node" "^10.12.18"
     bn.js "4.11.8"
     eth-lib "0.2.8"
