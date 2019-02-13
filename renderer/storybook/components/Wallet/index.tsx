@@ -36,7 +36,7 @@ export const WalletSettings: StatelessComponent<WalletSettingsProps> = ({
 
   return (
     <div className="wallet">
-      <style jsx={true}>{styles}</style>
+      <style jsx>{styles}</style>
       {loading ? (
         <Spinner icon={true} size="small" />
       ) : (

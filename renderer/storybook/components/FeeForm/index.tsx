@@ -50,7 +50,7 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
   incentiveInEth,
 }) => (
   <div className="fee-form">
-    <style jsx={true}>{styles}</style>
+    <style jsx>{styles}</style>
     {error && <p>{error.message}</p>}
     {!error && text && <p>{text}</p>}
     {!error && (

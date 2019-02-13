@@ -123,7 +123,7 @@ export const Header: StatelessComponent<HeaderProps> = ({
 
   return (
     <div className="header">
-      <style jsx={true}>{styles}</style>
+      <style jsx>{styles}</style>
       <div className="header__logo">
         <Link href="/">
           <a href="/">

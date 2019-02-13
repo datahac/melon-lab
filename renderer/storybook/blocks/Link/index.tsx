@@ -45,7 +45,7 @@ const Link: StatelessComponent<LinkProps> = ({
         className={linkClassNames}
         rel={rel}
       >
-        <style jsx={true}>{styles}</style>
+        <style jsx>{styles}</style>
         {children}
       </a>
     </NextLink>
