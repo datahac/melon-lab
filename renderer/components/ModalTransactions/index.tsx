@@ -138,7 +138,7 @@ const ModalTransactions = ({
           return (
             <WithFormModal
               handleCancel={handleCancel}
-              error={estimateProps.error || executeProps.errors}
+              error={estimateProps.error || executeProps.error}
               loading={estimateProps.loading || executeProps.loading}
               text={text}
               open={open}
