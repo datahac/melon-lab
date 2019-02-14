@@ -171,7 +171,12 @@ const ModalTransactions = ({
                 )}
               />
 
-              {executeProps.error && <ErrorModal error={executeProps.error} />}
+              {!!(executeProps.error || estimateProps.error) && (
+                <ErrorModal
+                  error={executeProps.error || estimateProps.error}
+                  handleCancel={handleCancel}
+                />
+              )}
             </Fragment>
           );
         }}

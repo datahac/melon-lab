@@ -3,7 +3,7 @@ import Modal from '~/blocks/Modal';
 import Button from '~/blocks/Button';
 import Notification from '~/blocks/Notification';
 
-const ErrorModal = ({ error }) => {
+const ErrorModal = ({ error, handleCancel }) => {
   const [showErrorModal, setShowErrorModal] = useState(false);
 
   useEffect(() => {
@@ -20,7 +20,10 @@ const ErrorModal = ({ error }) => {
       PrimaryActionProps={{
         children: 'Ok',
         style: 'primary',
-        onClick: () => setShowErrorModal(false),
+        onClick: () => {
+          setShowErrorModal(false);
+          handleCancel();
+        },
       }}
     >
       <Notification isError>{error && error.message}</Notification>
