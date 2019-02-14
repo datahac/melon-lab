@@ -8,12 +8,13 @@ export interface ModalProps {
   title?: string;
   text?: string;
   loading?: boolean;
+  isOpen?: boolean;
   PrimaryAction;
   PrimaryActionProps;
-  SecondaryAction;
-  SecondaryActionProps;
-  ContentWrapper;
-  ContentWrapperProps;
+  SecondaryAction?;
+  SecondaryActionProps?;
+  ContentWrapper?;
+  ContentWrapperProps?;
 }
 
 const Modal: StatelessComponent<ModalProps> = ({
