@@ -412,6 +412,7 @@ type Query {
 }
 
 type Mutation {
+  estimateNothing(nothing: Boolean): Boolean
   # TODO: Give more fund configuration options: Policies, pricefeed, ...
   """
   Estimates the number of gas units required for the "beginSetup" transaction.
@@ -526,6 +527,10 @@ type Mutation {
     fundAddress: String!
     investmentAmount: String!
   ): Boolean @account @sign
+
+  estimateDeposit(quantity: String!): UnsignedPlainTransaction @account
+
+  executeDeposit(unsigned: UnsignedTransactionInput!): Boolean @account @sign
 
   estimateRedeem(
     fundAddress: String!

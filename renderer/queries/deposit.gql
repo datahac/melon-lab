@@ -1,0 +1,30 @@
+mutation estimateDepositMutation($quantity: String!) {
+  estimate: estimateDeposit(quantity: $quantity) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation executeDepositMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+) {
+  execute: executeDeposit(
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}

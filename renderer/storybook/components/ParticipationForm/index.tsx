@@ -39,6 +39,8 @@ export interface ParticipationFormProps {
   readyToExecute?: boolean;
   isInitialRequest?: boolean;
   isExpired?: boolean;
+  ethBalance?: Tm.QuantityInterface;
+  wethBalance?: Tm.QuantityInterface;
 }
 
 const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
@@ -58,6 +60,8 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   isInitialRequest,
   isExpired,
   cancelRequest,
+  ethBalance,
+  wethBalance,
 }) => {
   const numberPlaceholder = (0).toFixed(decimals);
 
@@ -140,6 +144,13 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                     decimals={decimals}
                     disabled={isInitialRequest}
                   />
+                </div>
+
+                <div className="participation-form__current-price">
+                  <span>
+                    ETH: {ethBalance && Tm.toFixed(ethBalance)} | WETH:{' '}
+                    {wethBalance && Tm.toFixed(wethBalance)}
+                  </span>
                 </div>
                 <div className="participation-form__input">
                   <Input

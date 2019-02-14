@@ -1,3 +1,7 @@
+mutation estimateNothing($nothing: Boolean) {
+  estimate: estimateNothing(nothing: $nothing) @account
+}
+
 mutation estimateRequestInvestmentMutation(
   $investmentAmount: String!
   $fundAddress: String!

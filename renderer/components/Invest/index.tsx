@@ -11,6 +11,7 @@ import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
 import { withApollo } from 'react-apollo';
 import { compose } from 'recompose';
+import { BalanceConsumer } from '+/components/BalanceContext';
 
 const ParticipationFormContainer = withForm(props => (
   <ParticipationForm {...props} />
@@ -32,9 +33,10 @@ const InvestContainer = ({ address, ...props }) => {
             children={render}
           />
         ),
+        <BalanceConsumer />,
       ]}
     >
-      {([account, fundProps, requestProps]) => {
+      {([account, fundProps, requestProps, balanceProps]) => {
         const waitingTime = R.pathOr(
           '0',
           ['data', 'hasActiveRequest', 'waitingTime'],
@@ -66,10 +68,12 @@ const InvestContainer = ({ address, ...props }) => {
               isWaiting={isWaiting}
               readyToExecute={readyToExecute}
               isInitialRequest={isInitialRequest}
-              executeRequest={() => setStep(3)}
-              cancelRequest={() => setStep(4)}
+              executeRequest={() => setStep(4)}
+              cancelRequest={() => setStep(5)}
               isExpired={isExpired}
               account={account}
+              wethBalance={balanceProps.weth}
+              ethBalance={balanceProps.eth}
             />
 
             <InvestTransactions
@@ -82,6 +86,8 @@ const InvestContainer = ({ address, ...props }) => {
               readyToExecute={readyToExecute}
               isInitialRequest={isInitialRequest}
               isExpired={isExpired}
+              wethBalance={balanceProps.weth}
+              ethBalance={balanceProps.eth}
             />
           </Fragment>
         );

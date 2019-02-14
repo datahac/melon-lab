@@ -2,8 +2,8 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
 const withForm = withFormik({
-  mapPropsToValues: props => ({
-    gasPrice: props.gasPrice,
+  mapPropsToValues: (props: any) => ({
+    gasPrice: props.gasPrice.toString(),
   }),
   validationSchema: props =>
     Yup.object().shape({

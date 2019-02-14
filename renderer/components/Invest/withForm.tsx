@@ -6,7 +6,15 @@ import gql from 'graphql-tag';
 
 export const balanceQuery = gql`
   query BalanceQuery($account: String!) {
-    balance(address: $account, symbol: "WETH") {
+    weth: balance(address: $account, symbol: "WETH") {
+      quantity
+      token {
+        decimals
+        symbol
+        address
+      }
+    }
+    eth: balance(address: $account, symbol: "ETH") {
       quantity
       token {
         decimals
@@ -21,7 +29,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const validate = (values, props) => {
   return sleep(0).then(async () => {
-    let errors: FormErrors = {};
+    const errors: FormErrors = {};
 
     const { data } = await props.client.query({
       query: balanceQuery,
@@ -29,6 +37,11 @@ const validate = (values, props) => {
         account: props.account,
       },
     });
+
+    const maxInvestQuantity = Tm.subtract(
+      Tm.add(data.eth.quantity, data.weth.quantity),
+      Tm.createQuantity(data.eth.token, 0.1).quantity,
+    );
 
     if (!values.quantity) {
       errors.quantity = 'Required';
@@ -50,7 +63,7 @@ const validate = (values, props) => {
       errors.total = 'Required';
     } else if (Tm.isZero(values.total)) {
       errors.total = 'Invalid quantity';
-    } else if (Tm.greaterThan(values.total.quantity, data.balance.quantity)) {
+    } else if (Tm.greaterThan(values.total.quantity, maxInvestQuantity)) {
       errors.total = 'Insufficient balance';
     }
 

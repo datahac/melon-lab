@@ -24,6 +24,7 @@ import {
 import sameBlock from './utils/sameBlock';
 import toAsyncIterator from './utils/toAsyncIterator';
 
+import { estimateNothing } from './mutators/estimateNothing';
 import { estimateFundSetupBegin } from './mutators/estimateFundSetupBegin';
 import { executeFundSetupBegin } from './mutators/executeFundSetupBegin';
 import { estimateFundSetupStep } from './mutators/estimateFundSetupStep';
@@ -34,6 +35,8 @@ import { estimateRequestInvestment } from './mutators/estimateRequestInvestment'
 import { executeRequestInvestment } from './mutators/executeRequestInvestment';
 import { estimateApproveTransfer } from './mutators/estimateApproveTransfer';
 import { executeApproveTransfer } from './mutators/executeApproveTransfer';
+import { estimateDeposit } from './mutators/estimateDeposit';
+import { executeDeposit } from './mutators/executeDeposit';
 import { estimateExecuteRequest } from './mutators/estimateExecuteRequest';
 import { executeExecuteRequest } from './mutators/executeExecuteRequest';
 import { estimateCancelRequest } from './mutators/estimateCancelRequest';
@@ -373,6 +376,7 @@ export default {
     },
   },
   Mutation: {
+    estimateNothing,
     estimateFundSetupBegin,
     executeFundSetupBegin,
     estimateFundSetupStep,
@@ -383,6 +387,8 @@ export default {
     executeRequestInvestment,
     estimateApproveTransfer,
     executeApproveTransfer,
+    estimateDeposit,
+    executeDeposit,
     estimateExecuteRequest,
     executeExecuteRequest,
     estimateCancelRequest,
