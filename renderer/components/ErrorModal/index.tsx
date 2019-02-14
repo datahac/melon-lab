@@ -3,7 +3,7 @@ import Modal from '~/blocks/Modal';
 import Button from '~/blocks/Button';
 import Notification from '~/blocks/Notification';
 
-const ErrorModal = ({ error, handleCancel }) => {
+const ErrorModal = ({ error, handleSubmit }) => {
   const [showErrorModal, setShowErrorModal] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const ErrorModal = ({ error, handleCancel }) => {
         style: 'primary',
         onClick: () => {
           setShowErrorModal(false);
-          handleCancel();
+          handleSubmit && handleSubmit();
         },
       }}
     >

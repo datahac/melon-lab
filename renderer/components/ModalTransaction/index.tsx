@@ -143,7 +143,7 @@ const ModalTransaction = ({
             {!!(executeProps.error || estimateProps.error) && (
               <ErrorModal
                 error={executeProps.error || estimateProps.error}
-                handleCancel={handleCancel}
+                handleSubmit={handleCancel}
               />
             )}
           </Fragment>
