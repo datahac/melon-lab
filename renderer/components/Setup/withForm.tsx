@@ -19,8 +19,9 @@ const initialValues = {
   terms: false,
   policies: {},
   fees: {
-    performanceFee: '',
-    managementFee: '',
+    performanceFee: '0',
+    managementFee: '0',
+    feePeriod: '90',
   },
 };
 
@@ -61,14 +62,16 @@ const withForm = withFormik({
                 .typeError('Performance fee is required')
                 .required('Performance fee is required')
                 .min(0, 'Fee must be positive')
-                .max(100, 'Fee can not be greater than 100')
-                .integer('Fee must be an integer'),
+                .max(100, 'Fee can not be greater than 100'),
               managementFee: Yup.number()
                 .typeError('Management fee is required')
                 .required('Management fee is required')
                 .min(0, 'Fee must be positive')
-                .max(100, 'Fee can not be greater than 100')
-                .integer('Fee must be an integer'),
+                .max(100, 'Fee can not be greater than 100'),
+              feePeriod: Yup.number()
+                .typeError('Fee period is required')
+                .required('Fee period is required')
+                .min(0, 'Fee must be positive'),
             }),
           }
         : {}),

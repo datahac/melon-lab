@@ -1,14 +1,16 @@
 mutation estimateFundSetupBeginMutation(
   $name: String!
   $exchanges: [String]!
-  $performanceFee: Float!
-  $managementFee: Float!
+  $performanceFee: String!
+  $managementFee: String!
+  $feePeriod: String
 ) {
   estimate: estimateFundSetupBegin(
     name: $name
     exchanges: $exchanges
     performanceFee: $performanceFee
     managementFee: $managementFee
+    feePeriod: $feePeriod
   ) @account {
     data
     from

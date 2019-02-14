@@ -55,6 +55,7 @@ export default props => (
       variables: {
         fundAddress: props.fundAddress,
       },
+      refetchQueries: () => ['FundQuery'],
       onCompleted: () => {
         props.setClaimRewards(false);
       },

@@ -41,6 +41,7 @@ export default props => {
           exchange: props.values.exchange,
         },
         refetchQueries: () => [
+          'FundQuery',
           'HoldingsQuery',
           'OrdersQuery',
           'OpenOrdersQuery',

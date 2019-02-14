@@ -419,8 +419,9 @@ type Mutation {
   estimateFundSetupBegin(
     name: String!
     exchanges: [String]!
-    performanceFee: Float!
-    managementFee: Float!
+    performanceFee: String!
+    managementFee: String!
+    feePeriod: String
   ): UnsignedPlainTransaction @account
 
   """
@@ -563,7 +564,7 @@ type Mutation {
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
-  ): Quantity @account @sign
+  ): Boolean @account @sign
 
   estimateMakeOrder(
     exchange: ExchangeEnum!

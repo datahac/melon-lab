@@ -3,7 +3,7 @@ import { withDifferentAccount, beginSetup } from '@melonproject/protocol';
 
 const estimateFundSetupBegin = async (
   _,
-  { from, name, exchanges, managementFee, performanceFee },
+  { from, name, exchanges, managementFee, performanceFee, feePeriod = '90' },
   { environment, loaders },
 ) => {
   const quoteToken = await loaders.quoteToken();
@@ -42,18 +42,18 @@ const estimateFundSetupBegin = async (
       feePeriod: new Tm.BigInteger(0),
       feeRate: new Tm.BigInteger(
         Tm.multiply(
-          new Tm.BigInteger(managementFee),
-          Tm.power(new Tm.BigInteger(10), new Tm.BigInteger(16)),
+          new Tm.BigInteger(Math.round(parseFloat(managementFee) * 10000)),
+          Tm.power(new Tm.BigInteger(10), new Tm.BigInteger(12)),
         ),
       ),
     },
     {
       feeAddress: environment.deployment.melonContracts.fees.performanceFee.toLowerCase(),
-      feePeriod: new Tm.BigInteger(86400 * 90),
+      feePeriod: new Tm.BigInteger(Math.round(86400 * parseFloat(feePeriod))),
       feeRate: new Tm.BigInteger(
         Tm.multiply(
-          new Tm.BigInteger(performanceFee),
-          Tm.power(new Tm.BigInteger(10), new Tm.BigInteger(16)),
+          new Tm.BigInteger(Math.round(parseFloat(performanceFee) * 10000)),
+          Tm.power(new Tm.BigInteger(10), new Tm.BigInteger(12)),
         ),
       ),
     },

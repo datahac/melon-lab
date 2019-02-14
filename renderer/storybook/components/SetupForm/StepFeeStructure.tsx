@@ -7,6 +7,7 @@ interface FormValues {
   fees: {
     managementFee: string;
     performanceFee: string;
+    feePeriod: string;
   };
 }
 
@@ -27,9 +28,9 @@ export const StepFeeStructure: StatelessComponent<StepFeeStructureProps> = ({
   values,
 }) => (
   <div className="setup__step">
-    <style jsx>{styles}</style>
+    <style jsx={true}>{styles}</style>
     <h3>Fee structure</h3>
-    <h4>Management fee</h4>
+    <h4>Management fee (%)</h4>
     <Input
       onChange={handleChange}
       onBlur={handleBlur}
@@ -45,7 +46,7 @@ export const StepFeeStructure: StatelessComponent<StepFeeStructureProps> = ({
         errors.fees.managementFee
       }
     />
-    <h4>Performance fee</h4>
+    <h4>Performance fee (%)</h4>
     <Input
       onChange={handleChange}
       onBlur={handleBlur}
@@ -59,6 +60,22 @@ export const StepFeeStructure: StatelessComponent<StepFeeStructureProps> = ({
         !!touched.fees.performanceFee &&
         !!errors.fees &&
         errors.fees.performanceFee
+      }
+    />
+    <h4>Performance fee period (days)</h4>
+    <Input
+      onChange={handleChange}
+      onBlur={handleBlur}
+      value={values.fees && values.fees.feePeriod}
+      required={true}
+      name="fees.feePeriod"
+      type="number"
+      placeholder="Fee period in days"
+      error={
+        !!touched.fees &&
+        !!touched.fees.feePeriod &&
+        !!errors.fees &&
+        errors.fees.feePeriod
       }
     />
   </div>

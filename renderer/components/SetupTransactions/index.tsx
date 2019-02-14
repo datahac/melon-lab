@@ -22,8 +22,15 @@ export default withRouter(props => (
         variables: props.values && {
           name: R.path(['values', 'name'], props),
           exchanges: R.path(['values', 'exchanges'], props),
-          performanceFee: R.path(['values', 'fees', 'performanceFee'], props),
-          managementFee: R.path(['values', 'fees', 'managementFee'], props),
+          performanceFee: R.path(
+            ['values', 'fees', 'performanceFee'],
+            props,
+          ).toString(),
+          managementFee: R.path(
+            ['values', 'fees', 'managementFee'],
+            props,
+          ).toString(),
+          feePeriod: R.path(['values', 'fees', 'feePeriod'], props).toString(),
         },
         isComplete: !!props.fund,
         name: 'setupBegin',
