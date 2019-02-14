@@ -192,10 +192,12 @@ export const ManageTemplateContainer = ({
     signedOrder: null,
   });
 
-  const allowedExchanges = R.pathOr([], ['data', 'fund', 'allowedExchanges'])(
-    fundProps,
-  );
-  const allExchanges = allowedExchanges.map(item => [
+  const allowedExchangeNames = R.pathOr(
+    [],
+    ['data', 'fund', 'allowedExchanges'],
+  )(fundProps);
+
+  const exchangesMap = allowedExchangeNames.map(item => [
     item,
     availableExchanges[item],
   ]);
@@ -204,10 +206,10 @@ export const ManageTemplateContainer = ({
     selectedExchanges,
     updateExchanges,
     setAllowedExchanges,
-  ] = useExchangeSelector(allowedExchanges);
+  ] = useExchangeSelector(allowedExchangeNames);
 
   useEffect(() => {
-    setAllowedExchanges(allowedExchanges);
+    setAllowedExchanges(allowedExchangeNames);
   }, [fundProps.loading]);
 
   const [eventCallback, [asks, bids]] = useEventCallback(
@@ -271,7 +273,7 @@ export const ManageTemplateContainer = ({
         <AggregatedOrders
           quoteAsset={quoteAsset}
           baseAsset={baseAsset}
-          exchanges={allowedExchanges}
+          exchanges={allowedExchangeNames}
           eventCallback={eventCallback}
         />,
       ]}
@@ -336,6 +338,7 @@ export const ManageTemplateContainer = ({
               holdings: holdingsData,
               formValues: selectedOrder,
               key: baseAsset,
+              exchanges: exchangesMap,
               bid: R.path(['trade'], R.head(bids)),
               ask: R.path(['trade'], R.head(asks)),
             }}
@@ -345,11 +348,13 @@ export const ManageTemplateContainer = ({
               baseAsset,
               isManager,
               setOrder,
-              allExchanges,
               updateExchanges,
               selectedExchanges,
               asks,
               bids,
+              allExchanges: exchangesMap.filter(
+                ([name]) => name !== 'KYBER_NETWORK',
+              ),
               loading: orderbookProps.loading || fundProps.loading,
             }}
             OpenOrders={OpenOrdersContainer}

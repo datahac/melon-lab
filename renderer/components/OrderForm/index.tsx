@@ -10,7 +10,6 @@ import MakeOrder from '+/components/MakeOrder';
 import TakeOrder from '+/components/TakeOrder';
 import withForm from './withForm';
 import isSameAddress from '~/shared/utils/isSameAddress';
-import availableExchanges from '~/shared/utils/availableExchanges';
 import {
   debounceTime,
   switchMap,
@@ -61,31 +60,20 @@ const WrappedOrderForm = withApollo(
       [props.values.exchange, props.values.quantity],
     );
 
-    const limitExchanges = Object.keys(
-      R.omit(['KYBER_NETWORK'], availableExchanges),
-    ).reduce(
-      (carry, current) =>
-        carry.concat([
-          {
-            name: availableExchanges[current],
-            value: current,
-          },
-        ]),
-      [],
-    );
+    const limitExchanges = props.exchanges
+      .filter(([value]) => value !== 'KYBER_NETWORK')
+      .map(([value, name]) => ({
+        value,
+        name,
+      }));
 
-    const marketExchanges = Object.keys(
-      R.omit(['ETHFINEX'], availableExchanges),
-    ).reduce(
-      (carry, current) =>
-        carry.concat([
-          {
-            name: availableExchanges[current],
-            value: current,
-          },
-        ]),
-      [],
-    );
+    const marketExchanges = props.exchanges
+      .filter(([value]) => value !== 'ETHFINEX')
+      .map(([value, name]) => ({
+        value,
+        name,
+      }));
+
     return (
       <Fragment>
         <MakeOrder
@@ -149,6 +137,7 @@ const OrderFormContainer: React.PureComponent<{}, {}> = props => {
             setOrderFormValues={setSubmittedValues}
             bid={props.bid}
             ask={props.ask}
+            exchanges={props.exchanges}
           />
         );
       }}

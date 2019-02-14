@@ -11,10 +11,10 @@ const availableExchangeContracts = [
     value: 'KYBER_NETWORK',
     text: 'Kyber Network',
   },
-  {
-    value: 'ETHFINEX',
-    text: 'ETH Finex',
-  },
+  // {
+  //   value: 'ETHFINEX',
+  //   text: 'ETH Finex',
+  // },
 ];
 
 export default availableExchangeContracts;
