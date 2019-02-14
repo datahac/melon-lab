@@ -54,24 +54,27 @@ const HomeTemplateContainer = ({ title, text, icon, children }) => (
           >
             {children}
           </HomeTemplate>
-          <WarningModal
-            text={
-              <div>
-                You are connected to the <strong>mainnet</strong>
-                <br />
-                <br />
-                <strong>This is untested alpha software.</strong>
-                <br />
-                <br />
-                No contributor can be held liable for any damage to your
-                computer or loss of funds by using this application.
-                <br />
-                <br />
-                <strong>Use at your own risk. Do your own research.</strong>
-              </div>
-            }
-            isOpen={network.network === 'LIVE'}
-          />
+
+          {network.network === 'LIVE' && (
+            <WarningModal
+              text={
+                <div>
+                  You are connected to the <strong>mainnet</strong>
+                  <br />
+                  <br />
+                  <strong>This is untested alpha software.</strong>
+                  <br />
+                  <br />
+                  No contributor can be held liable for any damage to your
+                  computer or loss of funds by using this application.
+                  <br />
+                  <br />
+                  <strong>Use at your own risk. Do your own research.</strong>
+                </div>
+              }
+              isOpen
+            />
+          )}
         </Fragment>
       );
     }}
