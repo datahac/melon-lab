@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import * as Tm from '@melonproject/token-math';
 import { makeExecutableSchema } from 'graphql-tools';
 import Accounts from 'web3-eth-accounts';
 import addQueryDirectives from './directives/addQueryDirectives';
@@ -41,6 +42,9 @@ addQueryDirectives(schema, {
       ['data', 'from', 'gas', 'gasPrice', 'to', 'value'],
       args[directiveArgs.source],
     );
+
+    // Convert gasPrice in GWEI to wei
+    unsigned.gasPrice = Tm.multiply(unsigned.gasPrice, 1000000000).toString();
 
     // If the endpoint (aka Hardware wallet) is capable of signing itself, we
     // skip signing here.

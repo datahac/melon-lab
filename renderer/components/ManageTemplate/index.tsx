@@ -204,9 +204,11 @@ export const ManageTemplateContainer = ({
 
   const orderbookExchanges = exchangesMap.filter(
     ([name]) => name !== 'KYBER_NETWORK',
-  )
+  );
 
-  const orderbookExchangesNames = allowedExchangeNames.filter(name => name !== 'KYBER_NETWORK');
+  const orderbookExchangesNames = allowedExchangeNames.filter(
+    name => name !== 'KYBER_NETWORK',
+  );
 
   const [
     selectedExchanges,

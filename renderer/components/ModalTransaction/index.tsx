@@ -11,6 +11,7 @@ import { compose } from 'recompose';
 import { withRouter } from 'next/router';
 import * as Tm from '@melonproject/token-math';
 import ErrorModal from '+/components/ErrorModal';
+import { GasPriceConsumer } from '+/components/GasPriceContext';
 
 const WithFormModal = compose(
   withForm,
@@ -27,6 +28,7 @@ const WithFormModal = compose(
     estimations,
     step,
     gasLimit,
+    setGasPrice,
     current,
     values,
     amguInEth,
@@ -51,8 +53,13 @@ const WithFormModal = compose(
           symbol: 'ETH',
           decimals: 18,
         },
-        (gasLimit * values.gasPrice).toString(),
+        Tm.multiply(gasLimit, 1000000000, values.gasPrice).toString(),
       );
+
+    function extendendHandleSubmit(...args) {
+      handleSubmit(...args);
+      setGasPrice(values.gasPrice);
+    }
 
     return (
       rendered && (
@@ -74,7 +81,7 @@ const WithFormModal = compose(
           }}
           ContentWrapper={Form}
           ContentWrapperProps={{
-            onSubmit: handleSubmit,
+            onSubmit: extendendHandleSubmit,
           }}
         >
           {text}
@@ -121,9 +128,14 @@ const ModalTransaction = ({
             {(a, b) => render([a, b])}
           </Mutation>
         ),
+        <GasPriceConsumer />,
       ]}
     >
-      {([[estimate, estimateProps], [execute, executeProps]]) => {
+      {([
+        [estimate, estimateProps],
+        [execute, executeProps],
+        { gasPrice, setGasPrice },
+      ]) => {
         return (
           <Fragment>
             <WithFormModal
@@ -133,7 +145,8 @@ const ModalTransaction = ({
               text={text}
               open={open}
               gasLimit={R.path(['data', 'estimate', 'gas'], estimateProps)}
-              gasPrice={R.path(['data', 'estimate', 'gasPrice'], estimateProps)}
+              gasPrice={gasPrice}
+              setGasPrice={setGasPrice}
               current={estimate}
               estimate={estimate}
               execute={execute}

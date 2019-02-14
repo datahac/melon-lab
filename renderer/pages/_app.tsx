@@ -9,6 +9,7 @@ import { NetworkProvider } from '+/components/NetworkContext';
 import { CapabilityProvider } from '+/components/CapabilityContext';
 import { SetupProvider } from '+/components/SetupContext';
 import withApollo from '~/shared/graphql/withApollo';
+import GasPriceProvider from '+/components/GasPriceContext';
 
 if (!!process.browser) {
   global.eval = () => {
@@ -36,7 +37,9 @@ class MyApp extends App {
                   <BalanceProvider>
                     <CapabilityProvider>
                       <SetupProvider>
-                        <Component {...this.props.pageProps} />
+                        <GasPriceProvider>
+                          <Component {...this.props.pageProps} />
+                        </GasPriceProvider>
                       </SetupProvider>
                     </CapabilityProvider>
                   </BalanceProvider>

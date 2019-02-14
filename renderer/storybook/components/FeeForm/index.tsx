@@ -58,7 +58,7 @@ export const FeeForm: StatelessComponent<FeeFormProps> = ({
       <div className="fee-form__input">
         <Input
           value={values.gasPrice}
-          label="Gas price (WEI)"
+          label="Gas price (GWEI)"
           name="gasPrice"
           insideLabel={true}
           onChange={handleChange}
