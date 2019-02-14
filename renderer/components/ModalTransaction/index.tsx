@@ -10,7 +10,7 @@ import withForm from './withForm';
 import { compose } from 'recompose';
 import { withRouter } from 'next/router';
 import * as Tm from '@melonproject/token-math';
-import ErrorModal from '+/components/ErrorModal'
+import ErrorModal from '+/components/ErrorModal';
 
 const WithFormModal = compose(
   withForm,
@@ -140,7 +140,7 @@ const ModalTransaction = ({
               step={step}
             />
 
-            <ErrorModal error={executeProps.error} />
+            {executeProps.error && <ErrorModal error={executeProps.error} />}
           </Fragment>
         );
       }}
