@@ -9,6 +9,7 @@ import { ConfigurationConsumer } from '+/components/ConfigurationContext';
 import GetStarted from '+/components/GetStarted';
 import Ranking from '+/components/Ranking';
 import WarningModal from '../WarningModal';
+import { SettingsConsumer } from '../SettingsContext';
 
 const HomeTemplateContainer = ({ title, text, icon, children }) => (
   <Composer
@@ -18,9 +19,12 @@ const HomeTemplateContainer = ({ title, text, icon, children }) => (
       <NetworkConsumer />,
       <CapabilityConsumer />,
       <ConfigurationConsumer />,
+      ({ results: [, , network], render }) => (
+        <SettingsConsumer network={network} children={render} />
+      ),
     ]}
   >
-    {([account, balances, network, capabibility, configuration]) => {
+    {([account, balances, network, capabibility, configuration, settings]) => {
       return (
         <Fragment>
           <HomeTemplate
@@ -72,7 +76,8 @@ const HomeTemplateContainer = ({ title, text, icon, children }) => (
                   <strong>Use at your own risk. Do your own research.</strong>
                 </div>
               }
-              isOpen
+              isOpen={settings.isWarningModalOpen}
+              handleSubmit={() => settings.setIsWarningModalOpen(false)}
             />
           )}
         </Fragment>

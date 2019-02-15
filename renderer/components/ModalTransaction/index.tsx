@@ -11,7 +11,7 @@ import { compose } from 'recompose';
 import { withRouter } from 'next/router';
 import * as Tm from '@melonproject/token-math';
 import ErrorModal from '+/components/ErrorModal';
-import { GasPriceConsumer } from '+/components/GasPriceContext';
+import { SettingsConsumer } from '+/components/SettingsContext';
 
 const WithFormModal = compose(
   withForm,
@@ -128,7 +128,7 @@ const ModalTransaction = ({
             {(a, b) => render([a, b])}
           </Mutation>
         ),
-        <GasPriceConsumer />,
+        <SettingsConsumer />,
       ]}
     >
       {([
