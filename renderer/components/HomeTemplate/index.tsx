@@ -63,17 +63,30 @@ const HomeTemplateContainer = ({ title, text, icon, children }) => (
             <WarningModal
               text={
                 <div>
-                  You are connected to the <strong>mainnet</strong>
+                  You are about to enter Melon on the{' '}
+                  <strong>Ethereum Main network.</strong>
                   <br />
                   <br />
-                  <strong>This is untested alpha software.</strong>
+                  <strong>
+                    This is untested alpha software. It may not perform as
+                    expected.
+                  </strong>
                   <br />
                   <br />
-                  No contributor can be held liable for any damage to your
-                  computer or loss of funds by using this application.
+                  The Melon Technical Council, all former employees of Melonport
+                  AG or any other contributor can not be held liable for any
+                  damage to your computer or loss of funds by using this
+                  application.
                   <br />
                   <br />
-                  <strong>Use at your own risk. Do your own research.</strong>
+                  <strong style={{ fontSize: '1.5em', color: 'red' }}>
+                    Use at your own risk. Do your own research.
+                  </strong>
+                  <br />
+                  <br />
+                  You are solely responsible for the regulatory compliance with
+                  all laws that may apply to your individual use case of the
+                  Melon protocol. This software is for demonstration only.
                 </div>
               }
               isOpen={settings.isWarningModalOpen}

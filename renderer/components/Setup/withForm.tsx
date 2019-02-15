@@ -32,25 +32,24 @@ const withForm = withFormik({
     Yup.object().shape({
       ...(props.page === 0
         ? {
-            name: Yup.string()
-              .required('Name is required.')
-              .test(
-                'is-unique',
-                'There is already a fund with this name',
-                async value => {
-                  if (value) {
-                    const { data } = await props.client.query({
-                      query: uniqueFundQuery,
-                      variables: {
-                        name: value,
-                      },
-                    });
+            name: Yup.string().required('Name is required.'),
+            // .test(
+            //   'is-unique',
+            //   'There is already a fund with this name',
+            //   async value => {
+            //     if (value) {
+            //       const { data } = await props.client.query({
+            //         query: uniqueFundQuery,
+            //         variables: {
+            //           name: value,
+            //         },
+            //       });
 
-                    return !data.fundByName;
-                  }
-                  return false;
-                },
-              ),
+            //       return !data.fundByName;
+            //     }
+            //     return false;
+            //   },
+            // ),
             exchanges: Yup.array().min(1, 'Min one exchange is required'),
           }
         : {}),
