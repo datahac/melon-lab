@@ -20,16 +20,19 @@ electron.app.on('ready', async () => {
   main.webContents.on('will-navigate', handleRedirect(main));
   main.webContents.on('new-window', handleRedirect(main));
 
-  await prepareServer();
-  await prepareRenderer({
-    development: './renderer',
-    production: './',
-  });
-
-  createMenu();
-
-  await prepareDevelopment(main);
-  main.loadURL(url);
+  try {
+    createMenu();
+    await prepareRenderer({
+      development: './renderer',
+      production: './',
+    });
+    await prepareDevelopment(main);
+    await prepareServer();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    main.loadURL(url);
+  }
 });
 
 electron.app.on('window-all-closed', () => {
