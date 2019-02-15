@@ -1,7 +1,7 @@
 const installExtension = async extension => {
-  // if (process.env.NODE_ENV !== 'development') {
-  //   return;
-  // }
+  if (process.env.NODE_ENV !== 'development') {
+    return;
+  }
 
   try {
     const dependency = require('electron-devtools-installer');
@@ -14,9 +14,9 @@ const installExtension = async extension => {
 };
 
 export const prepareDevelopment = async window => {
-  // if (process.env.NODE_ENV !== 'development') {
-  //   return;
-  // }
+  if (process.env.NODE_ENV !== 'development') {
+    return;
+  }
 
   await installExtension('REACT_DEVELOPER_TOOLS');
   await installExtension('APOLLO_DEVELOPER_TOOLS');

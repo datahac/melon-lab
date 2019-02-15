@@ -1561,19 +1561,19 @@
   dependencies:
     source-map-support "^0.5.3"
 
-"@melonproject/protocol@0.9.31":
-  version "0.9.31"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.31.tgz#18e45b4bf482d195d78560ce436e3333f0de4777"
-  integrity sha512-j4KJkKzdMFW7KWLqAZxUm8T6hM1+VnUKXJBB7FzmFsoue4xCRCFsloBFP5X7/CFQoC5wbH3ymu0MMQfZhsruKA==
+"@melonproject/protocol@0.9.39":
+  version "0.9.39"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.39.tgz#e88c804b09bdf1411ecd54ddc255c35c978d40c6"
+  integrity sha512-21k/wbCjWc1UhuXb9JWoMv+/P6z9E1+Ozrsrb/r+nMwJwTUuEmxpwgiSDAO6srMHatXzSQm+Ws7v1bAEtPlXig==
   dependencies:
     "@0x/contract-wrappers" "^4.1.1"
     "@0x/order-utils" "^3.0.4"
-    "@melonproject/ganache-cli" "^6.1.9"
     "@melonproject/token-math" "0.1.5"
     ava "0.25.0"
     axios "^0.18.0"
     commander "^2.19.0"
     ethereum-types "^1.1.4"
+    ganache-cli "^6.3.0"
     ramda "^0.25.0"
     request-promise "^4.2.2"
     solc "^0.4.25"
@@ -7529,6 +7529,15 @@ g-status@^2.0.2:
     arrify "^1.0.1"
     matcher "^1.0.0"
     simple-git "^1.85.0"
+
+ganache-cli@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/ganache-cli/-/ganache-cli-6.3.0.tgz#574f9d35aaec8da6e01c2be49db8fe73129eb561"
+  integrity sha512-8SyzfX2ipRVBx1fBZLg3j8I3E334U3Vazk5mEpYcWqnIjC2ace6jtOXHG4aTuAvSz3+HzQ8p8pRjOJxdDZ2pnQ==
+  dependencies:
+    bn.js "4.11.8"
+    source-map-support "0.5.9"
+    yargs "11.1.0"
 
 ganache-core@^2.2.1:
   version "2.3.3"
@@ -16281,6 +16290,23 @@ yargs-parser@^9.0.2:
   dependencies:
     camelcase "^4.1.0"
 
+yargs@11.1.0, yargs@^11.0.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-11.1.0.tgz#90b869934ed6e871115ea2ff58b03f4724ed2d77"
+  dependencies:
+    cliui "^4.0.0"
+    decamelize "^1.1.1"
+    find-up "^2.1.0"
+    get-caller-file "^1.0.1"
+    os-locale "^2.0.0"
+    require-directory "^2.1.1"
+    require-main-filename "^1.0.1"
+    set-blocking "^2.0.0"
+    string-width "^2.0.0"
+    which-module "^2.0.0"
+    y18n "^3.2.1"
+    yargs-parser "^9.0.2"
+
 yargs@^10.0.3:
   version "10.1.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-10.1.2.tgz#454d074c2b16a51a43e2fb7807e4f9de69ccb5c5"
@@ -16297,23 +16323,6 @@ yargs@^10.0.3:
     which-module "^2.0.0"
     y18n "^3.2.1"
     yargs-parser "^8.1.0"
-
-yargs@^11.0.0:
-  version "11.1.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-11.1.0.tgz#90b869934ed6e871115ea2ff58b03f4724ed2d77"
-  dependencies:
-    cliui "^4.0.0"
-    decamelize "^1.1.1"
-    find-up "^2.1.0"
-    get-caller-file "^1.0.1"
-    os-locale "^2.0.0"
-    require-directory "^2.1.1"
-    require-main-filename "^1.0.1"
-    set-blocking "^2.0.0"
-    string-width "^2.0.0"
-    which-module "^2.0.0"
-    y18n "^3.2.1"
-    yargs-parser "^9.0.2"
 
 yargs@^12.0.1, yargs@^12.0.2, yargs@^12.0.4, yargs@^12.0.5:
   version "12.0.5"
