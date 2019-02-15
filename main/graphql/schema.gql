@@ -37,8 +37,9 @@ enum FundSetupStepEnum {
 }
 
 enum PolicyTypeEnum {
-  TRADE
+  TRADING
   INVEST
+  BOTH
 }
 
 enum OrderEventTypeEnum {

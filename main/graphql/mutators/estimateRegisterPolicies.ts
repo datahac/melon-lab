@@ -5,6 +5,12 @@ import {
   register,
 } from '@melonproject/protocol';
 
+enum PolicyTypes {
+  TRADING = 'TRADING',
+  INVEST = 'INVEST',
+  BOTH = 'BOTH',
+}
+
 const estimateRegisterPolicies = async (
   _,
   { from, policies },
@@ -15,7 +21,7 @@ const estimateRegisterPolicies = async (
   const { policyManagerAddress } = await loaders.fundRoutes.load(fund);
 
   const registrations = policies.reduce((carry, current) => {
-    if (current.type === 'TRADE') {
+    if (current.type === PolicyTypes.TRADING) {
       return [
         {
           method: FunctionSignatures.takeOrder,
@@ -25,15 +31,45 @@ const estimateRegisterPolicies = async (
           method: FunctionSignatures.makeOrder,
           policy: current.address,
         },
+        {
+          method: FunctionSignatures.cancelOrder,
+          policy: current.address,
+        },
         ...carry,
       ];
     }
-    return [
-      {
-        method: FunctionSignatures.executeRequestFor,
-        policy: current.address,
-      },
-    ];
+
+    if (current.type === PolicyTypes.BOTH) {
+      return [
+        {
+          method: FunctionSignatures.takeOrder,
+          policy: current.address,
+        },
+        {
+          method: FunctionSignatures.makeOrder,
+          policy: current.address,
+        },
+        {
+          method: FunctionSignatures.cancelOrder,
+          policy: current.address,
+        },
+        {
+          method: FunctionSignatures.executeRequestFor,
+          policy: current.address,
+        },
+        ...carry,
+      ];
+    }
+
+    if (current.type === PolicyTypes.BOTH) {
+      return [
+        {
+          method: FunctionSignatures.executeRequestFor,
+          policy: current.address,
+        },
+        ...carry,
+      ];
+    }
   }, []);
 
   const result = await register.prepare(

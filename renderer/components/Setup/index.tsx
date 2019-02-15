@@ -42,9 +42,6 @@ const steps = [
       'policies.priceTolerance',
       'policies.maxPositions',
       'policies.maxConcentration',
-      'policies.assetWhitelist',
-      'policies.assetWhitelist',
-      'policies.assetWhitelist',
     ],
   },
   {

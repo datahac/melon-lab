@@ -139,6 +139,21 @@ const executeRegisterPoliciesMutation = gql`
   }
 `;
 
+enum PolicyTypes {
+  TRADING = 'TRADING',
+  INVEST = 'INVEST',
+  BOTH = 'BOTH',
+}
+
+const policyTypeMap = {
+  priceTolerance: PolicyTypes.TRADING,
+  maxPositions: PolicyTypes.BOTH,
+  maxConcentration: PolicyTypes.BOTH,
+  userWhitelist: PolicyTypes.INVEST,
+  assetWhitelist: PolicyTypes.BOTH,
+  assetBlacklist: PolicyTypes.BOTH,
+};
+
 export default withRouter(props => {
   const [registerPolicies, setRegisterPolicies] = useState([]);
   const [isActive, setIsActive] = useState(true);
@@ -214,7 +229,7 @@ export default withRouter(props => {
         update: (_, result) => {
           const data = {
             address: result.data.execute,
-            type: policy.name === 'userWhitelist' ? 'INVEST' : 'TRADE',
+            type: policyTypeMap[policy.name],
             name: policy.name,
           };
           setRegisterPolicies([...registerPolicies, data]);
