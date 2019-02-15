@@ -12,28 +12,14 @@ export const TermsConditions: StatelessComponent<TermsConditionsProps> = ({
       <Fragment>
         <h4>Disclaimer for the use of the Melon Protocol (“Disclaimer”)</h4>
         <p>
-          Please read the complete version of the terms and conditions{' '}
-          <a
-            href={
-              `https://github.com/melonproject/contribution/blob/master/` +
-              `Melonport_Second%20Contribution%20Period_FINAL.pdf`
-            }
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            here
-          </a>
-        </p>
-        <p>
           <strong>THIS SOFTWARE IS INTENDED FOR TESTING PURPOSES ONLY.</strong>
         </p>
         <p>
           <strong>
-            User confirms to have read the full terms of the second contribution
-            period & first capsule (Paros) carefully before continuing to the
-            next step. Agreement to this Disclaimer is subject to being
-            represented by a secure elliptic curve digital signature using the
-            IPFS hash of the Disclaimer.
+            Melon is an open source, decentralized crypto asset management
+            protocol for setting up and running on-chain crypto funds. Before
+            using the Melon protocol, please review the documentation for a
+            thorough explanation of its mechanics.
           </strong>
         </p>
         <p>
@@ -45,18 +31,7 @@ export const TermsConditions: StatelessComponent<TermsConditionsProps> = ({
           (the “Melon Protocol”) which enables users, to manage crypto assets.
           THE SOFTWARE DEPLOYMENT OF THE CURRENT VERSION OF THE MELON PROTOCOL
           TO THE ETHEREUM MAINNET IS MADE FOR TESTING PURPOSES IN A LIVE
-          ENVIRONMENT ONLY and within the clear framework set out by the{' '}
-          <a
-            href={
-              `https://github.com/melonproject/contribution/blob/master/` +
-              `Melonport_Second%20Contribution%20Period_FINAL.pdf`
-            }
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            first capsule (Paros) and second contribution period terms{' '}
-          </a>
-          .
+          ENVIRONMENT ONLY. .
         </p>
 
         <p>
@@ -141,36 +116,12 @@ export const TermsConditions: StatelessComponent<TermsConditionsProps> = ({
           is excluded.
         </p>
         <p>
-          BY ACCEPTING{' '}
-          <strong>
-            <a
-              href={
-                `https://github.com/melonproject/contribution/blob/master/` +
-                `Melonport_Second%20Contribution%20Period_FINAL.pdf`
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              THIS DOCUMENT
-            </a>{' '}
-          </strong>{' '}
-          THE USER UNDERSTANDS AND ACCEPTS ALL THE TERMS AND CONDITIONS AS SET
-          HEREIN.
+          BY ACCEPTING THIS DOCUMENT THE USER UNDERSTANDS AND ACCEPTS ALL THE
+          TERMS AND CONDITIONS AS SET HEREIN.
         </p>
       </Fragment>
     ) : (
       <Fragment>
-        <p>
-          The following terms and conditions have been deployed to IPFS and
-          resolve to the following hash:{' '}
-          <a
-            href="https://ipfs.io/ipfs/QmQrY13NWoSwK2Ani5eBwiyo1gsNa4xLQYfS8zBuHro8Lm"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            QmQrY13NWoSwK2Ani5eBwiyo1gsNa4xLQYfS8zBuHro8Lm
-          </a>
-        </p>
         <p>
           <strong>THIS SOFTWARE IS INTENDED FOR TESTING PURPOSES ONLY.</strong>
         </p>
