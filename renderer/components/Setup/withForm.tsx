@@ -33,6 +33,7 @@ const withForm = withFormik({
       ...(props.page === 0
         ? {
             name: Yup.string().required('Name is required.'),
+            // // TODO: Make this work again
             // .test(
             //   'is-unique',
             //   'There is already a fund with this name',
