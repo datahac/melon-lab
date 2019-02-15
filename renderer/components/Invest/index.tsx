@@ -48,7 +48,7 @@ const InvestContainer = ({ address, ...props }) => {
         );
 
         const isWaiting = Tm.greaterThan(waitingTime, '0');
-        const readyToExecute = Tm.isZero(waitingTime) && hasActiveRequest;
+        const readyToExecute = Tm.isZero(waitingTime) && !!hasActiveRequest;
         const isInitialRequest = Tm.isZero(
           R.pathOr('0', ['data', 'fund', 'totalSupply', 'quantity'], fundProps),
         );
