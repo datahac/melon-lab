@@ -93,6 +93,14 @@ const HomeTemplateContainer = ({ title, text, icon, children }) => (
               handleSubmit={() => settings.setIsWarningModalOpen(false)}
             />
           )}
+
+          {settings.isNetworkModalOpen && (
+            <WarningModal
+              text={<div>Your are not conntected to a network!</div>}
+              isOpen={!network.network}
+              handleSubmit={() => settings.setIsNetworkModalOpen(false)}
+            />
+          )}
         </Fragment>
       );
     }}

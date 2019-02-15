@@ -4,6 +4,7 @@ import { NetworkConsumer } from '../NetworkContext';
 const SettingsContext = React.createContext({
   gasPrice: 5,
   isWarningModalOpen: false,
+  isNetworkModalOpen: false,
 });
 
 export const SettingsConsumer = SettingsContext.Consumer;
@@ -13,6 +14,7 @@ const SettingsProvider = ({ children, network }) => {
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(
     network === 'LIVE',
   );
+  const [isNetworkModalOpen, setIsNetworkModalOpen] = useState(!network);
 
   useEffect(() => {
     if (network === 'LIVE') setIsWarningModalOpen(true);
@@ -25,6 +27,8 @@ const SettingsProvider = ({ children, network }) => {
         setGasPrice,
         isWarningModalOpen,
         setIsWarningModalOpen,
+        isNetworkModalOpen,
+        setIsNetworkModalOpen,
       }}
     >
       {children}
