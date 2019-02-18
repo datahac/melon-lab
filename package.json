@@ -22,7 +22,7 @@
     "lint:main": "tslint --project main/tsconfig.json -c tslint.json",
     "lint:renderer": "tslint --project renderer/tsconfig.json -c tslint.json",
     "lint": "yarn lint:main && yarn lint:renderer && yarn lint:integration",
-    "postinstall": "electron-builder install-app-deps",
+    "postinstall": "ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true electron-builder install-app-deps",
     "prebuild:app": "rimraf package",
     "prebuild:main": "rimraf build/main",
     "prebuild:renderer": "rimraf build/renderer renderer/.next",
