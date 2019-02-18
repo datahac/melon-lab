@@ -13066,9 +13066,10 @@ rustbn.js@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/rustbn.js/-/rustbn.js-0.2.0.tgz#8082cb886e707155fd1cb6f23bd591ab8d55d0ca"
 
-"rxjs-hooks@https://github.com/fubhy/rxjs-hooks#build":
-  version "0.3.2"
-  resolved "https://github.com/fubhy/rxjs-hooks#a6a16ac1b6f46f4794e04cb8ea90f7fe46ddfae2"
+rxjs-hooks@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/rxjs-hooks/-/rxjs-hooks-0.3.3.tgz#9c846ca25a403e5c0f419d44185c64ea80a651ad"
+  integrity sha512-kG7VJCVFQfID1P9erk8O0CJ7FwtSwrSWYs7OJsmjSAaHA4thfGAOcQNBlxLUrPjGuNiW9BG+7675Oi5GKeG2iQ==
   dependencies:
     tslib "^1.9.3"
 
