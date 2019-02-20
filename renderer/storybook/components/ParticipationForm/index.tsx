@@ -8,18 +8,21 @@ import * as R from 'ramda';
 import Notification from '~/blocks/Notification';
 
 import styles from './styles.css';
+import Dropdown from '~/blocks/Dropdown';
 
 export interface FormValues {
   price: Tm.PriceInterface;
   quantity: Tm.QuantityInterface;
   total: Tm.QuantityInterface;
   type: string;
+  investAsset;
 }
 
 export interface FormErrors {
   quantity?: string;
   total?: string;
   price?: string;
+  investAsset?: string;
 }
 
 export interface ParticipationFormProps {
@@ -41,6 +44,7 @@ export interface ParticipationFormProps {
   isExpired?: boolean;
   ethBalance?: Tm.QuantityInterface;
   wethBalance?: Tm.QuantityInterface;
+  authTokens?;
 }
 
 const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
@@ -62,6 +66,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   cancelRequest,
   ethBalance,
   wethBalance,
+  authTokens,
 }) => {
   const numberPlaceholder = (0).toFixed(decimals);
 
@@ -145,6 +150,17 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                     disabled={isInitialRequest}
                   />
                 </div>
+
+                {authTokens && (
+                  <div className="participation-form__input">
+                    <Dropdown
+                      onChange={handleChange}
+                      value={values.investAsset}
+                      options={authTokens}
+                      name="investAsset"
+                    />
+                  </div>
+                )}
 
                 <div className="participation-form__current-price">
                   <span>

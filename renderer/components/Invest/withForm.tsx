@@ -91,6 +91,7 @@ const withForm = withFormik({
         props.sharePrice && Tm.createQuantity(props.sharePrice.quote.token, 0),
       quantity:
         props.sharePrice && Tm.createQuantity(props.sharePrice.base.token, 0),
+      investAsset: '',
     };
   },
   validate,
