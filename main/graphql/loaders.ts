@@ -17,6 +17,8 @@ import getFundName from './loaders/fund/fundName';
 import getFundNativeAsset from './loaders/fund/fundNativeAsset';
 import getFundOwner from './loaders/fund/fundOwner';
 import getFundParticipation from './loaders/fund/fundParticipation';
+import getInvestAllowed from './loaders/fund/fundInvestAllowed';
+import getFundPolicies from './loaders/fund/fundPolicies';
 import getFundRoutes from './loaders/fund/fundRoutes';
 import getFundTotalSupply from './loaders/fund/fundTotalSupply';
 import getFundAllowedExchanges from './loaders/fund/fundAllowedExchanges';
@@ -46,6 +48,38 @@ export default (environment, streams) => {
 
         return (
           tradingAddress && getFundAllowedExchanges(environment, tradingAddress)
+        );
+      }),
+    );
+  });
+
+  const fundInvestAllowed = new DataLoader(async addresses => {
+    const fn = getInvestAllowed(environment, tokens());
+    const routes = await fundRoutes.loadMany(addresses);
+
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { participationAddress } = routes[key] || {
+          participationAddress: null,
+        };
+
+        return participationAddress && fn(participationAddress);
+      }),
+    );
+  });
+
+  const fundPolicies = new DataLoader(async addresses => {
+    const routes = await fundRoutes.loadMany(addresses);
+
+    return Promise.all(
+      addresses.map((address, key) => {
+        const { policyManagerAddress } = routes[key] || {
+          policyManagerAddress: null,
+        };
+
+        return (
+          policyManagerAddress &&
+          getFundPolicies(environment, policyManagerAddress)
         );
       }),
     );
@@ -339,11 +373,14 @@ export default (environment, streams) => {
     fundOwner,
     fundParticipation,
     fundDenominationAsset,
+    fundAllowedExchanges,
+    fundInvestAllowed,
     fundRank,
     fundRanking,
     fundReady,
     fundRoutes,
     fundTotalSupply,
+    fundPolicies,
     generateMnemonic,
     importWallet,
     networkName,
@@ -360,6 +397,5 @@ export default (environment, streams) => {
     exchangeOrders,
     exchangeOrdersObservable,
     tokens,
-    fundAllowedExchanges,
   };
 };

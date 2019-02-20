@@ -62,6 +62,10 @@ import { estimateDeployPriceTolerance } from './mutators/estimateDeployPriceTole
 import { executeDeploy } from './mutators/executeDeploy';
 import { estimateRegisterPolicies } from './mutators/estimateRegisterPolicies';
 import { executeRegisterPolicies } from './mutators/executeRegisterPolicies';
+import { estimateDisableInvestment } from './mutators/estimateDisableInvestment';
+import { executeDisableInvestment } from './mutators/executeDisableInvestment';
+import { estimateEnableInvestment } from './mutators/estimateEnableInvestment';
+import { executeEnableInvestment } from './mutators/executeEnableInvestment';
 
 import { WalletTypes } from './context';
 
@@ -254,6 +258,12 @@ export default {
     allowedExchanges: (parent, _, { loaders }) => {
       return loaders.fundAllowedExchanges.load(parent);
     },
+    investAllowed: (parent, _, { loaders }) => {
+      return loaders.fundInvestAllowed.load(parent);
+    },
+    policies: (parent, _, { loaders }) => {
+      return loaders.fundPolicies.load(parent);
+    },
     name: (parent, _, { loaders }) => {
       return loaders.fundName.load(parent);
     },
@@ -414,6 +424,10 @@ export default {
     executeDeploy,
     estimateRegisterPolicies,
     executeRegisterPolicies,
+    estimateEnableInvestment,
+    executeEnableInvestment,
+    estimateDisableInvestment,
+    executeDisableInvestment,
     deleteWallet: async () => {
       const credentials = (await keytar.findCredentials('melon.fund')) || [];
       credentials.forEach(item => {

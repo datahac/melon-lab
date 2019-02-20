@@ -222,6 +222,19 @@ type Fund {
   isShutdown: Boolean
   isComplete: Boolean
   allowedExchanges: [ExchangeEnum]
+  investAllowed: [Token]
+  policies: [Policy]
+}
+
+type Policy {
+  address: String
+  name: String
+  parameters: [PolicyParameter]
+}
+
+type PolicyParameter {
+  key: String
+  value: String
 }
 
 type Holding {
@@ -570,6 +583,42 @@ type Mutation {
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
+  ): Boolean @account @sign
+
+  """
+  Estimates the number of gas units required for the "enable investment" transaction.
+  """
+  estimateEnableInvestment(
+    fundAddress: String!
+    assets: String!
+  ): UnsignedPlainTransaction @account
+
+  """
+  Executes the "enable investment" transaction with the given gas price per unit.
+  """
+  executeEnableInvestment(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+    assets: String!
+  ): Boolean @account @sign
+
+  """
+  Estimates the number of gas units required for the "disable investment" transaction.
+  """
+  estimateDisableInvestment(
+    fundAddress: String!
+    assets: String!
+  ): UnsignedPlainTransaction @account
+
+  """
+  Executes the "disable investment" transaction with the given gas price per unit.
+  """
+  executeDisableInvestment(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+    assets: String!
   ): Boolean @account @sign
 
   estimateMakeOrder(
