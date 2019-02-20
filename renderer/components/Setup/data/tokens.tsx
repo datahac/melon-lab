@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 export const query = gql`
   query TokensQuery {
     tokens {
+      address
       symbol
       decimals
     }

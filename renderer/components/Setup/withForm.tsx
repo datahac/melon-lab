@@ -16,7 +16,6 @@ const uniqueFundQuery = gql`
 const initialValues = {
   name: '',
   exchanges: [],
-  authInvestAssets: [{ value: 'WETH', label: 'WETH' }],
   terms: false,
   policies: {},
   fees: {
@@ -98,7 +97,7 @@ const withForm = withFormik({
           }
         : {}),
 
-      ...(props.page === 4
+      ...(props.page === 3
         ? {
             terms: Yup.boolean().test(
               'is-checked',

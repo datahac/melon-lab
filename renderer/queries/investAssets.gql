@@ -1,0 +1,109 @@
+mutation EstimateEnableInvestmentMutation(
+  $fundAddress: String!
+  $assets: [String]!
+) {
+  estimate: estimateEnableInvestment(
+    fundAddress: $fundAddress
+    assets: $assets
+  ) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+    amguInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
+    incentiveInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
+  }
+}
+
+mutation ExecuteEnableInvestmentMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+  $fundAddress: String!
+  $assets: [String]!
+) {
+  execute: executeEnableInvestment(
+    fundAddress: $fundAddress
+    assets: $assets
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}
+
+mutation EstimateDisableInvestmentMutation(
+  $fundAddress: String!
+  $assets: [String]!
+) {
+  estimate: estimateDisableInvestment(
+    fundAddress: $fundAddress
+    assets: $assets
+  ) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+    amguInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
+    incentiveInEth {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
+  }
+}
+
+mutation ExecuteDisableInvestmentMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+  $fundAddress: String!
+  $assets: [String]!
+) {
+  execute: executeDisableInvestment(
+    fundAddress: $fundAddress
+    assets: $assets
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}

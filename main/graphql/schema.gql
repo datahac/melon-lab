@@ -590,8 +590,8 @@ type Mutation {
   """
   estimateEnableInvestment(
     fundAddress: String!
-    assets: String!
-  ): UnsignedPlainTransaction @account
+    assets: [String]!
+  ): UnsignedAmguTransaction @account
 
   """
   Executes the "enable investment" transaction with the given gas price per unit.
@@ -600,7 +600,7 @@ type Mutation {
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
-    assets: String!
+    assets: [String]!
   ): Boolean @account @sign
 
   """
@@ -608,8 +608,8 @@ type Mutation {
   """
   estimateDisableInvestment(
     fundAddress: String!
-    assets: String!
-  ): UnsignedPlainTransaction @account
+    assets: [String]!
+  ): UnsignedAmguTransaction @account
 
   """
   Executes the "disable investment" transaction with the given gas price per unit.
@@ -618,7 +618,7 @@ type Mutation {
     "Unsigned transaction data."
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
-    assets: String!
+    assets: [String]!
   ): Boolean @account @sign
 
   estimateMakeOrder(

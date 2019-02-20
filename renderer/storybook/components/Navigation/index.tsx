@@ -29,7 +29,9 @@ const Navigation: StatelessComponent<NavigationProps> = ({
           navigationItems.map(item => (
             <li
               key={item.name}
-              className={navigationItemClassNames(item.href === activePath)}
+              className={navigationItemClassNames(
+                item.href.split('?')[0] === activePath,
+              )}
             >
               <Link href={item.href} passHref>
                 <a className="navigation__link">{item.name}</a>

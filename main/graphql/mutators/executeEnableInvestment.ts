@@ -4,21 +4,24 @@ import { withDifferentAccount, enableInvestment } from '@melonproject/protocol';
 const executeEnableInvestment = async (
   _,
   { from, signedOrNot, fundAddress, assets },
-  { environment },
+  { environment, loaders },
 ) => {
   const transaction = signedOrNot.rawTransaction
     ? signedOrNot.rawTransaction
     : signedOrNot;
-  const version = environment.deployment.melonContracts.version;
 
   const params = {
     assets,
-    hub: fundAddress,
   };
 
+  const { participationAddress } = await loaders.fundRoutes.load(fundAddress);
   const env = withDifferentAccount(environment, new Tm.Address(from));
-  const result = await enableInvestment.send(env, version, transaction, params);
-
+  const result = await enableInvestment.send(
+    env,
+    participationAddress,
+    transaction,
+    params,
+  );
   return !!result;
 };
 

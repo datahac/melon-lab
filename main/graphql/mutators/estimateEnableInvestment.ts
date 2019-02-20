@@ -4,17 +4,17 @@ import { withDifferentAccount, enableInvestment } from '@melonproject/protocol';
 const estimateEnableInvestment = async (
   _,
   { from, fundAddress, assets },
-  { environment },
+  { environment, loaders },
 ) => {
   const params = {
     assets,
-    hub: fundAddress,
   };
 
+  const { participationAddress } = await loaders.fundRoutes.load(fundAddress);
   const env = withDifferentAccount(environment, new Tm.Address(from));
   const result = await enableInvestment.prepare(
     env,
-    environment.deployment.melonContracts.version,
+    participationAddress,
     params,
   );
 
