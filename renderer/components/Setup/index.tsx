@@ -7,6 +7,7 @@ import StepFund from '~/components/SetupForm/StepFund';
 import StepRiskProfile from '~/components/SetupForm/StepRiskProfile';
 import StepTerms from '~/components/SetupForm/StepTerms';
 import StepOverview from '~/components/SetupForm/StepOverview';
+import StepAuthInvestAssets from '~/components/SetupForm/StepAuthInvestAssets';
 import SetupForm from '~/components/SetupForm';
 import StepFeeStructure from '~/components/SetupForm/StepFeeStructure';
 import Link from '~/blocks/Link';
@@ -43,6 +44,10 @@ const steps = [
       'policies.maxPositions',
       'policies.maxConcentration',
     ],
+  },
+  {
+    key: 'authInvestAssets',
+    name: 'Authorized Investment Assets',
   },
   {
     key: 'terms-conditions',
@@ -105,6 +110,12 @@ const SetupFormContainer = withForm(props => {
             onActivatePolicy={props.onActivatePolicy}
             availablePolicies={availablePolicies(tokens)}
           />
+        </WizardPage>
+        <WizardPage
+          onClickNext={props.onClickNext}
+          onClickPrev={props.onClickPrev}
+        >
+          <StepAuthInvestAssets {...props} tokens={tokens} />
         </WizardPage>
         <WizardPage
           onClickNext={props.onClickNext}

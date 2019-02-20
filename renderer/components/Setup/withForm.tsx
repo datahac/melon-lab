@@ -16,6 +16,7 @@ const uniqueFundQuery = gql`
 const initialValues = {
   name: '',
   exchanges: [],
+  authInvestAssets: [{ value: 'WETH', label: 'WETH' }],
   terms: false,
   policies: {},
   fees: {

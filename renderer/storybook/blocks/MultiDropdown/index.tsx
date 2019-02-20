@@ -5,7 +5,7 @@ import colors from '~/design/colors';
 import styles from './styles.css';
 
 export interface MultiDropdownProps {
-  onChange: (values) => void;
+  onChange?: (values) => void;
   onBlur?: () => void;
   options: Array<{
     value: string;
