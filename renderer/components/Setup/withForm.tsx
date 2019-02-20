@@ -98,7 +98,7 @@ const withForm = withFormik({
           }
         : {}),
 
-      ...(props.page === 3
+      ...(props.page === 4
         ? {
             terms: Yup.boolean().test(
               'is-checked',
@@ -141,7 +141,7 @@ const withFormHandlers = withHandlers({
     e.preventDefault();
     const fields = R.path([props.page, 'validateFields'], props.steps);
 
-    if (fields) {
+    if (fields && fields.length > 0) {
       await fields.map(item => props.setFieldTouched(item, true, true));
       await props.validateForm().then(errors => {
         if (!R.isEmpty(errors)) {
