@@ -4,7 +4,7 @@ import { investAllowed } from '@melonproject/protocol';
 async function fundInvestAllowed(environment, tokens, address) {
   const allowed = await Promise.all(
     tokens.map(token => {
-      investAllowed(environment, address, { asset: token.address });
+      return investAllowed(environment, address, { asset: token.address });
     }),
   );
 

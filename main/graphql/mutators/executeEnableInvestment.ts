@@ -22,6 +22,7 @@ const executeEnableInvestment = async (
     transaction,
     params,
   );
+
   return !!result;
 };
 

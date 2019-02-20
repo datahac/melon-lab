@@ -10,11 +10,12 @@ const withForm = withFormik({
   handleSubmit: (values, form) => {
     form.props.setAllowedAssets(values.allowedAssets.map(item => item.value));
   },
-  mapPropsToValues: props => {
-    return {
-      allowedAssets: props.allowedAssets,
-    };
-  },
+  mapPropsToValues: props => ({
+    allowedAssets: props.allowedAssets.map(item => ({
+      label: item.symbol,
+      value: item.address,
+    })),
+  }),
 });
 
 export default withForm;
