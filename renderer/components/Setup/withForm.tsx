@@ -149,6 +149,8 @@ const withFormHandlers = withHandlers({
         }
         return props.setPage(props.page + 1);
       });
+    } else {
+      return props.setPage(props.page + 1);
     }
   },
   onClickPrev: props => e => {
