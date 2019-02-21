@@ -1,19 +1,23 @@
 const availableExchangeContracts = [
   {
     value: 'MATCHING_MARKET',
-    text: 'OasisDex',
+    label: 'OasisDex',
   },
   {
     value: 'ZERO_EX_EXCHANGE',
-    text: '0x',
+    label: '0x',
   },
   {
     value: 'KYBER_NETWORK',
-    text: 'Kyber Network',
+    label: 'Kyber Network',
+  },
+  {
+    value: 'MELON_ENGINE',
+    label: 'Melon Engine',
   },
   // {
   //   value: 'ETHFINEX',
-  //   text: 'ETH Finex',
+  //   label: 'ETH Finex',
   // },
 ];
 

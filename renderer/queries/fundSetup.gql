@@ -1,6 +1,7 @@
 mutation estimateFundSetupBeginMutation(
   $name: String!
   $exchanges: [String]!
+  $assets: [String]!
   $performanceFee: String!
   $managementFee: String!
   $feePeriod: String
@@ -8,6 +9,7 @@ mutation estimateFundSetupBeginMutation(
   estimate: estimateFundSetupBegin(
     name: $name
     exchanges: $exchanges
+    assets: $assets
     performanceFee: $performanceFee
     managementFee: $managementFee
     feePeriod: $feePeriod

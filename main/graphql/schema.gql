@@ -14,6 +14,7 @@ enum ExchangeEnum {
   OASIS_DEX
   KYBER_NETWORK
   ETHFINEX
+  MELON_ENGINE
 }
 
 enum OrderTypeEnum {
@@ -258,12 +259,6 @@ type Signature {
   v: Int!
 }
 
-type ExchangeConfig {
-  adapterAddress: String!
-  exchangeAddress: String!
-  takesCustody: Boolean!
-}
-
 type AdapterAddresses {
   kyberAdapter: String!
   matchingMarketAdapter: String!
@@ -286,8 +281,7 @@ type FactoryAddresses {
 }
 
 type ThirdPartyContracts {
-  exchanges: [ExchangeConfig]!
-  tokens: [Token]!
+  tokens: [Token]
 }
 
 type MelonContracts {
@@ -420,6 +414,7 @@ type Query {
   kyberPrice(symbol: String!, quantity: String!, type: TradeTypeEnum!): Price
 
   tokens: [Token]
+  quoteToken: Token
 
   "Check if fund has active invest request"
   hasActiveRequest(fundAddress: String!, userAddress: String!): InvestRequest
@@ -434,6 +429,7 @@ type Mutation {
   estimateFundSetupBegin(
     name: String!
     exchanges: [String]!
+    assets: [String]
     performanceFee: String!
     managementFee: String!
     feePeriod: String
@@ -677,9 +673,9 @@ type Mutation {
   # Policies
   estimateDeployUserWhitelist(addresses: [String]): UnsignedPlainTransaction
     @account
-  estimateDeployAssetBlacklist(symbols: [String]): UnsignedPlainTransaction
+  estimateDeployAssetBlacklist(addresses: [String]): UnsignedPlainTransaction
     @account
-  estimateDeployAssetWhitelist(symbols: [String]): UnsignedPlainTransaction
+  estimateDeployAssetWhitelist(addresses: [String]): UnsignedPlainTransaction
     @account
   estimateDeployMaxConcentration(percent: Float): UnsignedPlainTransaction
     @account

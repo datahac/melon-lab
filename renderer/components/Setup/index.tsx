@@ -23,6 +23,7 @@ import * as R from 'ramda';
 import availablePolicies from '~/shared/utils/availablePolicies';
 import availableExchangeContracts from '~/shared/utils/availableExchangeContracts';
 import { TokensQuery } from './data/tokens';
+import Spinner from '~/blocks/Spinner';
 
 const steps = [
   {
@@ -61,7 +62,7 @@ const SetupFormContainer = withForm(props => {
     props.tokens.reduce((carry, current) => {
       return carry.concat([
         {
-          value: current.symbol,
+          value: current.address,
           label: current.symbol,
         },
       ]);
@@ -88,7 +89,7 @@ const SetupFormContainer = withForm(props => {
             },
           }}
         >
-          <StepFund {...props} />
+          <StepFund {...props} availableAssets={tokens} />
         </WizardPage>
         <WizardPage
           onClickNext={props.onClickNext}
@@ -123,6 +124,7 @@ const SetupFormContainer = withForm(props => {
             {...props}
             availableExchangeContracts={availableExchangeContracts}
             availablePolicies={availablePolicies()}
+            availableAssets={tokens}
           />
         </WizardPage>
       </Wizard>
@@ -172,22 +174,30 @@ const Setup = ({ ...props }) => {
 
           {(!!fundValues || !manager.fund) && (
             <TokensQuery>
-              {queryProps => (
-                <SetupFormContainer
-                  {...props}
-                  account={account}
-                  configuration={configuration}
-                  page={page}
-                  setPage={setPage}
-                  steps={steps}
-                  setShowModal={setShowModal}
-                  setFundValues={setFundValues}
-                  showModal={showModal}
-                  validateOnBlur={true}
-                  validateOnChange={false}
-                  tokens={R.path(['data', 'tokens'], queryProps)}
-                />
-              )}
+              {queryProps =>
+                queryProps.loading ? (
+                  <div className="holdings__loading">
+                    <Spinner icon />
+                  </div>
+                ) : (
+                  <SetupFormContainer
+                    {...props}
+                    loading={queryProps.loading}
+                    account={account}
+                    configuration={configuration}
+                    page={page}
+                    setPage={setPage}
+                    steps={steps}
+                    setShowModal={setShowModal}
+                    setFundValues={setFundValues}
+                    showModal={showModal}
+                    validateOnBlur={true}
+                    validateOnChange={false}
+                    tokens={R.path(['data', 'tokens'], queryProps)}
+                    quoteToken={R.path(['data', 'quoteToken'], queryProps)}
+                  />
+                )
+              }
             </TokensQuery>
           )}
         </Fragment>

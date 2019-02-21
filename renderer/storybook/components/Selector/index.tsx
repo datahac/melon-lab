@@ -6,7 +6,7 @@ import styles from './styles.css';
 export interface SelectorProps {
   availableItems?: Array<{
     value: string;
-    text: string;
+    label: string;
   }>;
   selectedItems?: Array<string>;
   handleOnChange: () => void;
@@ -32,8 +32,8 @@ export const Selector: StatelessComponent<SelectorProps> = ({
               <Checkbox
                 roundedCorners
                 style="boxed"
-                name="blabla"
-                text={item.text}
+                name={item.value}
+                text={item.label}
                 value={item.value}
                 handleOnChange={handleOnChange}
                 handleOnBlur={handleOnBlur}

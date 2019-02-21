@@ -4,16 +4,18 @@ import * as R from 'ramda';
 
 import styles from './styles.css';
 
-export interface StepTermsProps {
+export interface StepOverviewProps {
   values;
   availableExchangeContracts;
   availablePolicies;
+  availableAssets;
 }
 
-export const StepTerms: StatelessComponent<StepTermsProps> = ({
+export const StepOverview: StatelessComponent<StepOverviewProps> = ({
   values,
   availablePolicies,
   availableExchangeContracts,
+  availableAssets,
 }) => {
   return (
     <div className="setup__step">
@@ -32,7 +34,18 @@ export const StepTerms: StatelessComponent<StepTermsProps> = ({
                 const exchange = availableExchangeContracts.find(
                   exchange => exchange.value === item,
                 );
-                return <div key={exchange.value}>{exchange.text}</div>;
+                return <div key={exchange.value}>{exchange.label}</div>;
+              })}
+            </CellBody>
+          </Row>
+          <Row>
+            <CellHead>Allowed investment assets</CellHead>
+            <CellBody>
+              {values.assets.map(item => {
+                const asset = availableAssets.find(
+                  asset => asset.value === item,
+                );
+                return <div key={asset.value}>{asset.label}</div>;
               })}
             </CellBody>
           </Row>
@@ -98,4 +111,4 @@ export const StepTerms: StatelessComponent<StepTermsProps> = ({
   );
 };
 
-export default StepTerms;
+export default StepOverview;

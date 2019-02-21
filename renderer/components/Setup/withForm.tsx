@@ -13,44 +13,51 @@ const uniqueFundQuery = gql`
   }
 `;
 
-const initialValues = {
+const initialValues = props => ({
   name: '',
   exchanges: [],
   terms: false,
   policies: {},
+  assets: props.quoteToken ? [props.quoteToken.address] : [],
   fees: {
     performanceFee: '0',
     managementFee: '0',
     feePeriod: '90',
   },
-};
+});
 
 const withForm = withFormik({
-  mapPropsToValues: props =>
-    props.formValues ? { ...props.formValues } : initialValues,
+  mapPropsToValues: props => {
+    if (!!props.formValues) {
+      return props.formValues;
+    }
+
+    return initialValues(props);
+  },
   validationSchema: props =>
     Yup.object().shape({
       ...(props.page === 0
         ? {
-            name: Yup.string().required('Name is required.'),
-            // // TODO: Make this work again
-            // .test(
-            //   'is-unique',
-            //   'There is already a fund with this name',
-            //   async value => {
-            //     if (value) {
-            //       const { data } = await props.client.query({
-            //         query: uniqueFundQuery,
-            //         variables: {
-            //           name: value,
-            //         },
-            //       });
+            name: Yup.string()
+              .required('Name is required.')
+              .test(
+                'is-unique',
+                'There is already a fund with this name',
+                async value => {
+                  if (value) {
+                    const { data } = await props.client.query({
+                      query: uniqueFundQuery,
+                      variables: {
+                        name: value,
+                      },
+                    });
 
-            //       return !data.fundByName;
-            //     }
-            //     return false;
-            //   },
-            // ),
+                    return !data.fundByName;
+                  }
+
+                  return false;
+                },
+              ),
             exchanges: Yup.array().min(1, 'Min one exchange is required'),
           }
         : {}),
@@ -134,6 +141,16 @@ const withFormHandlers = withHandlers({
       props.setFieldValue('exchanges', [
         ...exchanges.filter(item => item !== value),
       ]);
+    }
+  },
+  onChangeAssets: props => event => {
+    const value = event.target.value;
+    const { assets } = props.values;
+
+    if (!assets.includes(value)) {
+      props.setFieldValue('assets', [...assets, value]);
+    } else {
+      props.setFieldValue('assets', [...assets.filter(item => item !== value)]);
     }
   },
   onClickNext: props => async e => {

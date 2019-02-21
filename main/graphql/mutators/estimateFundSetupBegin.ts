@@ -1,9 +1,21 @@
 import * as Tm from '@melonproject/token-math';
-import { withDifferentAccount, beginSetup } from '@melonproject/protocol';
+import {
+  withDifferentAccount,
+  beginSetup,
+  getTokenByAddress,
+} from '@melonproject/protocol';
 
 const estimateFundSetupBegin = async (
   _,
-  { from, name, exchanges, managementFee, performanceFee, feePeriod = '90' },
+  {
+    from,
+    name,
+    exchanges,
+    assets,
+    managementFee,
+    performanceFee,
+    feePeriod = '90',
+  },
   { environment, loaders },
 ) => {
   const quoteToken = await loaders.quoteToken();
@@ -26,14 +38,13 @@ const estimateFundSetupBegin = async (
     ...(exchanges.includes('ETHFINEX') && {
       Ethfinex: exchangeConfigs.Ethfinex,
     }),
+    ...(exchanges.includes('MELON_ENGINE') && {
+      Ethfinex: exchangeConfigs.MelonEngine,
+    }),
   };
 
   const nativeToken = tokens.find(token => {
     return token.symbol === 'WETH';
-  });
-
-  const mlnToken = tokens.find(token => {
-    return token.symbol === 'MLN';
   });
 
   const fees = [
@@ -59,19 +70,22 @@ const estimateFundSetupBegin = async (
     },
   ];
 
+  const defaultTokens = assets
+    .map(address => getTokenByAddress(environment, address))
+    .filter(token => !!token);
+
   const params = {
     fees,
     priceSource,
     quoteToken,
     nativeToken,
-    defaultTokens: [quoteToken, mlnToken],
+    defaultTokens,
     exchangeConfigs: selectedExchanges,
     fundName: name,
   };
 
   // TODO: The environment should not hold account data. Maybe?
   const env = withDifferentAccount(environment, new Tm.Address(from));
-
   const result = await beginSetup.prepare(env, version, params);
 
   return result && result.rawTransaction;

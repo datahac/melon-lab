@@ -3,6 +3,12 @@ import gql from 'graphql-tag';
 
 export const query = gql`
   query TokensQuery {
+    quoteToken {
+      address
+      symbol
+      decimals
+    }
+
     tokens {
       address
       symbol

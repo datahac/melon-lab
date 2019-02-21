@@ -2,7 +2,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 export const query = gql`
-  query FundQuery($address: String!) {
+  query FundInvestAllowedQuery($address: String!) {
     fund(address: $address) {
       id
       investAllowed {

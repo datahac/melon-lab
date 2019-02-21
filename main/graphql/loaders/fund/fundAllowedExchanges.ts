@@ -9,6 +9,7 @@ async function fundAllowedExchanges(environment, address) {
     [Exchanges.MatchingMarket]: 'OASIS_DEX',
     [Exchanges.KyberNetwork]: 'KYBER_NETWORK',
     [Exchanges.Ethfinex]: 'ETHFINEX',
+    [Exchanges.MelonEngine]: 'MELON_ENGINE',
   };
 
   return allowedExchanges.map(item => exchangeMap[item]);

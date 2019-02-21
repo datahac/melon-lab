@@ -31,6 +31,7 @@ export default withRouter(props => (
             props,
           ).toString(),
           feePeriod: R.path(['values', 'fees', 'feePeriod'], props).toString(),
+          assets: R.path(['values', 'assets'], props),
         },
         isComplete: !!props.fund,
         name: 'setupBegin',
@@ -211,7 +212,7 @@ export default withRouter(props => (
 
           // onCompleted is not working because of render
           if (R.isEmpty(R.path(['values', 'policies'], props))) {
-            props.roux.push({
+            props.router.push({
               pathname: '/invest',
               query: {
                 address: props.fund,

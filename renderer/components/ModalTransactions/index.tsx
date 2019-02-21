@@ -113,6 +113,7 @@ const ModalTransactions = ({
   executions,
   estimations,
   handleCancel,
+  handleComplete,
   text,
   open,
 }) => {

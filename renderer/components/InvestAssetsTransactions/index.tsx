@@ -14,66 +14,55 @@ export default withRouter(props => {
   const executions: any[] = [];
 
   const { currentAssets, allowedAssets } = props;
-  const disableAssets = currentAssets.filter(current => {
-    return (allowedAssets || []).indexOf(current) !== -1;
-  });
+  const disableAssets = allowedAssets
+    ? currentAssets.filter(current => {
+        return (allowedAssets || []).indexOf(current) === -1;
+      })
+    : [];
 
   const enableAssets = (allowedAssets || []).filter(current => {
     return currentAssets.indexOf(current) === -1;
   });
 
-  if (disableAssets && disableAssets.length > 0) {
-    estimations.push({
-      mutation: EstimateDisableInvestmentMutation,
-      variables: {
-        fundAddress: props.address,
-        assets: disableAssets,
-      },
-      name: 'disableInvestment',
-    });
+  estimations.push({
+    name: 'disableInvestment',
+    mutation: EstimateDisableInvestmentMutation,
+    isComplete: !disableAssets.length,
+    variables: {
+      fundAddress: props.address,
+      assets: disableAssets,
+    },
+  });
 
-    executions.push({
-      mutation: ExecuteDisableInvestmentMutation,
-      variables: {
-        fundAddress: props.address,
-        assets: disableAssets,
-      },
-    });
-  }
+  executions.push({
+    mutation: ExecuteDisableInvestmentMutation,
+    isComplete: !disableAssets.length,
+    variables: {
+      fundAddress: props.address,
+      assets: disableAssets,
+    },
+    refetchQueries: () => ['FundInvestAllowedQuery'],
+  });
 
-  if (enableAssets && enableAssets.length > 0) {
-    estimations.push({
-      mutation: EstimateEnableInvestmentMutation,
-      variables: {
-        fundAddress: props.address,
-        assets: enableAssets,
-      },
-      name: 'enableInvestment',
-    });
+  estimations.push({
+    name: 'enableInvestment',
+    mutation: EstimateEnableInvestmentMutation,
+    isComplete: !enableAssets.length,
+    variables: {
+      fundAddress: props.address,
+      assets: enableAssets,
+    },
+  });
 
-    executions.push({
-      mutation: ExecuteEnableInvestmentMutation,
-      variables: {
-        fundAddress: props.address,
-        assets: enableAssets,
-      },
-    });
-  }
-
-  if (!estimations.length || !executions.length) {
-    return null;
-  }
-
-  executions[executions.length - 1].update = () => {
-    props.setAllowedAssets(null);
-
-    props.router.push({
-      pathname: '/invest',
-      query: {
-        address: props.address,
-      },
-    });
-  };
+  executions.push({
+    mutation: ExecuteEnableInvestmentMutation,
+    isComplete: !enableAssets.length,
+    variables: {
+      fundAddress: props.address,
+      assets: enableAssets,
+    },
+    refetchQueries: () => ['FundInvestAllowedQuery'],
+  });
 
   return (
     <ModalTransactions
@@ -81,6 +70,19 @@ export default withRouter(props => {
       open={!!props.allowedAssets}
       estimations={estimations}
       executions={executions}
+      handleCancel={() => {
+        props.setAllowedAssets(null);
+      }}
+      handleComplete={() => {
+        props.setAllowedAssets(null);
+
+        props.router.push({
+          pathname: '/invest',
+          query: {
+            address: props.address,
+          },
+        });
+      }}
     />
   );
 });

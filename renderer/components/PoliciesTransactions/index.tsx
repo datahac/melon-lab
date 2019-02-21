@@ -5,8 +5,8 @@ import * as R from 'ramda';
 import React, { useState } from 'react';
 
 const estimateDeployAssetWhitelistMutation = gql`
-  mutation EstimateDeployAssetWhitelist($symbols: [String]) {
-    estimate: estimateDeployAssetWhitelist(symbols: $symbols) @account {
+  mutation EstimateDeployAssetWhitelist($addresses: [String]) {
+    estimate: estimateDeployAssetWhitelist(addresses: $addresses) @account {
       data
       from
       gas
@@ -18,8 +18,8 @@ const estimateDeployAssetWhitelistMutation = gql`
 `;
 
 const estimateDeployAssetBlacklistMutation = gql`
-  mutation EstimateDeployAssetBlacklist($symbols: [String]) {
-    estimate: estimateDeployAssetBlacklist(symbols: $symbols) @account {
+  mutation EstimateDeployAssetBlacklist($addresses: [String]) {
+    estimate: estimateDeployAssetBlacklist(addresses: $addresses) @account {
       data
       from
       gas
@@ -194,7 +194,7 @@ export default withRouter(props => {
     assetWhitelist: {
       mutation: estimateDeployAssetWhitelistMutation,
       variables: {
-        symbols:
+        addresses:
           R.path(['assetWhitelist'], policiesValues) &&
           policiesValues.assetWhitelist.reduce((carry, current) => {
             return carry.concat([current.value]);
@@ -204,7 +204,7 @@ export default withRouter(props => {
     assetBlacklist: {
       mutation: estimateDeployAssetBlacklistMutation,
       variables: {
-        symbols:
+        addresses:
           R.path(['assetBlacklist'], policiesValues) &&
           policiesValues.assetBlacklist.reduce((carry, current) => {
             return carry.concat([current.value]);

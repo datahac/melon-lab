@@ -125,6 +125,9 @@ export default {
     rankings: (_, __, { loaders }) => {
       return loaders.fundRanking();
     },
+    quoteToken: (_, __, { loaders }) => {
+      return loaders.quoteToken();
+    },
     tokens: (_, __, { loaders }) => {
       return loaders.tokens();
     },
@@ -372,6 +375,16 @@ export default {
   },
   OasisDexOrder: {
     metadata: parent => parent.original,
+  },
+  Policy: {
+    parameters: parent => {
+      const keys = Object.keys(parent.parameters);
+
+      return keys.map(key => ({
+        key,
+        value: parent.parameters[key],
+      }));
+    },
   },
   Holding: {
     fraction: async (parent, _, { loaders }) => {

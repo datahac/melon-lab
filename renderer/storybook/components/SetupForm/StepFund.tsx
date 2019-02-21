@@ -8,6 +8,7 @@ import styles from './styles.css';
 interface FormValues {
   name: string;
   exchanges: any;
+  assets: any;
 }
 
 export interface StepNameProps {
@@ -19,6 +20,8 @@ export interface StepNameProps {
   values: FormValues;
   address: string;
   onChangeExchanges;
+  onChangeAssets;
+  availableAssets;
 }
 
 export const StepName: StatelessComponent<StepNameProps> = ({
@@ -28,6 +31,8 @@ export const StepName: StatelessComponent<StepNameProps> = ({
   touched,
   values,
   onChangeExchanges,
+  onChangeAssets,
+  availableAssets,
 }) => {
   return (
     <div className="setup__step">
@@ -51,6 +56,15 @@ export const StepName: StatelessComponent<StepNameProps> = ({
         handleOnChange={onChangeExchanges}
         availableItems={availableExchangeContracts}
         selectedItems={values.exchanges}
+      />
+
+      <h4>Allowed investment assets</h4>
+      <Selector
+        errors={touched.assets && errors.assets}
+        handleOnBlur={handleBlur}
+        handleOnChange={onChangeAssets}
+        availableItems={availableAssets}
+        selectedItems={values.assets}
       />
     </div>
   );
