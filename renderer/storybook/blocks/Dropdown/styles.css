@@ -26,6 +26,7 @@
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-top: 6px solid var(--color-primary-dark);
+  pointer-events: none;
 }
 
 .dropdown__select {
