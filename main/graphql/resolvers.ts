@@ -19,6 +19,8 @@ import {
   getExpectedRate,
   getOpenOrders,
   getTokenBySymbol,
+  getEnginePrice,
+  getLiquidEther,
 } from '@melonproject/protocol';
 
 import sameBlock from './utils/sameBlock';
@@ -189,6 +191,26 @@ export default {
       });
 
       return rate;
+    },
+    enginePrice: async (_, __, { environment }) => {
+      const engineAddress = R.path(
+        ['deployment', 'melonContracts', 'engine'],
+        environment,
+      );
+
+      const enginePrice = await getEnginePrice(environment, engineAddress);
+
+      return enginePrice;
+    },
+    liquidEther: async (_, __, { environment }) => {
+      const engineAddress = R.path(
+        ['deployment', 'melonContracts', 'engine'],
+        environment,
+      );
+
+      const liquidEther = await getLiquidEther(environment, engineAddress);
+
+      return liquidEther;
     },
     openOrders: async (_, { fundAddress }, { environment, loaders }) => {
       const {

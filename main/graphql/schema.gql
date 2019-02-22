@@ -402,6 +402,8 @@ type Query {
   routes("The address of the fund manager." manager: String): Routes
 
   kyberPrice(symbol: String!, quantity: String!, type: TradeTypeEnum!): Price
+  enginePrice: Price
+  liquidEther: Quantity
 
   tokens: [Token]
   quoteToken: Token

@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import * as Rx from 'rxjs';
 import * as R from 'ramda';
 import * as Tm from '@melonproject/token-math';
 import { useObservable } from 'rxjs-hooks';
@@ -9,6 +10,7 @@ import { FundManagerConsumer } from '+/components/FundManagerContext';
 import MakeOrder from '+/components/MakeOrder';
 import TakeOrder from '+/components/TakeOrder';
 import withForm from './withForm';
+import EnginePriceQuery from './data/enginePrice';
 import isSameAddress from '~/shared/utils/isSameAddress';
 import {
   debounceTime,
@@ -54,14 +56,23 @@ const WrappedOrderForm = withApollo(
           }),
         );
 
-        return kyber$;
+        const melon$ = inputs$.pipe(
+          filter(([exchange]) => exchange === 'MELON_ENGINE'),
+          tap(([, , enginePrice]) => {
+            props.setFieldValue('price', enginePrice);
+          }),
+        );
+
+        return Rx.merge(kyber$, melon$);
       },
       props.initialValues.price,
-      [props.values.exchange, props.values.quantity],
+      [props.values.exchange, props.values.quantity, props.enginePrice],
     );
 
     const limitExchanges = props.exchanges
-      .filter(([value]) => value !== 'KYBER_NETWORK')
+      .filter(
+        ([value]) => !R.includes(value, ['KYBER_NETWORK', 'MELON_ENGINE']),
+      )
       .map(([value, name]) => ({
         value,
         name,
@@ -118,8 +129,14 @@ const OrderFormContainer: React.PureComponent<{}, {}> = props => {
   };
 
   return (
-    <Composer components={[<NetworkConsumer />, <FundManagerConsumer />]}>
-      {([network, managerProps]) => {
+    <Composer
+      components={[
+        <NetworkConsumer />,
+        <FundManagerConsumer />,
+        <EnginePriceQuery />,
+      ]}
+    >
+      {([network, managerProps, enginePrice]) => {
         const isManager =
           !!managerProps.fund &&
           isSameAddress(managerProps.fund, props.address);
@@ -132,6 +149,7 @@ const OrderFormContainer: React.PureComponent<{}, {}> = props => {
             isManager={isManager}
             holdings={props.holdings}
             formValues={props.formValues}
+            enginePrice={R.path(['data', 'enginePrice'], enginePrice)}
             priceFeedUp={network && network.priceFeedUp}
             orderFormValues={submittedValues}
             setOrderFormValues={setSubmittedValues}

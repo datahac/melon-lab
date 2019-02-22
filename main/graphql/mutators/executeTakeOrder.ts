@@ -5,6 +5,7 @@ import {
   TakeOrderOnKyberResult,
   takeOasisDexOrder,
   take0xOrder,
+  takeEngineOrder,
 } from '@melonproject/protocol';
 
 const executeTakeOrder = async (
@@ -107,6 +108,11 @@ const executeTakeOrder = async (
     };
 
     return res;
+  }
+
+  if (exchange === 'MELON_ENGINE') {
+    await takeEngineOrder.send(env, tradingAddress, transaction);
+    return;
   }
 
   throw new Error(`Make order not implemented for ${exchange}`);

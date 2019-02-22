@@ -10,6 +10,7 @@ import {
   getOasisDexOrder,
   takeOasisDexOrder,
   take0xOrder,
+  takeEngineOrder,
 } from '@melonproject/protocol';
 
 const estimateTakeOrder = async (
@@ -98,6 +99,18 @@ const estimateTakeOrder = async (
     const result = await take0xOrder.prepare(env, tradingAddress, {
       takerQuantity,
       signedOrder: orderToTake.original.signedOrder,
+    });
+
+    return result && result.rawTransaction;
+  }
+
+  if (exchange === 'MELON_ENGINE') {
+    const makerToken = getTokenBySymbol(env, buyToken);
+    const takerToken = getTokenBySymbol(env, sellToken);
+
+    const result = await takeEngineOrder.prepare(env, tradingAddress, {
+      makerQuantity: Tm.createQuantity(makerToken, buyQuantity),
+      takerQuantity: Tm.createQuantity(takerToken, sellQuantity),
     });
 
     return result && result.rawTransaction;
