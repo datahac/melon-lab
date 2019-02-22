@@ -1,8 +1,10 @@
 import * as Tm from '@melonproject/token-math';
+import * as R from 'ramda';
 import { withFormik } from 'formik';
 import { withHandlers, compose } from 'recompose';
 import { FormErrors } from '~/components/ParticipationForm';
 import gql from 'graphql-tag';
+import displayQuantity from '~/shared/utils/displayQuantity';
 
 export const balanceQuery = gql`
   query BalanceQuery($account: String!, $symbol: String!) {
@@ -14,30 +16,54 @@ export const balanceQuery = gql`
         address
       }
     }
-    eth: balance(address: $account, symbol: "ETH") {
-      quantity
-      token {
-        decimals
-        symbol
-        address
+  }
+`;
+
+export const remainingQuery = gql`
+  query RemainingInvestAmountQuery($address: String!, $symbol: String!) {
+    fund(address: $address) {
+      id
+      remainingInvestAmount(asset: $symbol) {
+        quantity
+        token {
+          address
+          symbol
+          decimals
+        }
       }
     }
   }
 `;
+
+const balance = async (props) => {
+  const { data } = await props.client.query({
+    query: balanceQuery,
+    variables: {
+      account: props.account,
+      symbol: props.asset,
+    },
+  });
+
+  return R.path(['asset', 'quantity'], data);
+};
+
+const remaining = async (props) => {
+  const { data } = await props.client.query({
+    query: remainingQuery,
+    variables: {
+      address: props.address,
+      symbol: props.asset,
+    },
+  });
+
+  return R.path(['fund', 'remainingInvestAmount'], data);
+};
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const validate = (values, props) => {
   return sleep(0).then(async () => {
     const errors: FormErrors = {};
-
-    const { data } = await props.client.query({
-      query: balanceQuery,
-      variables: {
-        account: props.account,
-        symbol: props.asset,
-      },
-    });
 
     if (!values.quantity) {
       errors.quantity = 'Required';
@@ -59,8 +85,19 @@ const validate = (values, props) => {
       errors.total = 'Required';
     } else if (Tm.isZero(values.total)) {
       errors.total = 'Invalid quantity';
-    } else if (Tm.greaterThan(values.total.quantity, data.asset.quantity)) {
-      errors.total = 'Insufficient balance';
+    } else {
+      await (async () => {
+        const remains = await remaining(props);
+        if (Tm.greaterThan(values.total.quantity, remains.quantity)) {
+          errors.total = `Maximum AUM exceeded (${displayQuantity(remains)})`;
+          return;
+        }
+
+        const currentBalance = await balance(props);
+        if (Tm.greaterThan(values.total.quantity, currentBalance)) {
+          errors.total = `Insufficient balance (${displayQuantity(currentBalance)})`;
+        }
+      })();
     }
 
     if (Object.keys(errors).length) {

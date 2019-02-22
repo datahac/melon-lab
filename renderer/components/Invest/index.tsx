@@ -114,6 +114,7 @@ const InvestContainer = ({ address, ...props }) => {
             )) || (
               <ParticipationFormContainer
                 {...props}
+                address={address}
                 setInvestValues={setInvestValues}
                 sharePrice={sharePrice}
                 allowedAssets={allowedAssets}

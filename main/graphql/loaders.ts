@@ -21,6 +21,7 @@ import getFundParticipation from './loaders/fund/fundParticipation';
 import getInvestAllowed from './loaders/fund/fundInvestAllowed';
 import getFundPolicies from './loaders/fund/fundPolicies';
 import getFundRoutes from './loaders/fund/fundRoutes';
+import getFundRemainingInvestAmount from './loaders/fund/fundRemainingInvestAmount';
 import getFundTotalSupply from './loaders/fund/fundTotalSupply';
 import getFundAllowedExchanges from './loaders/fund/fundAllowedExchanges';
 import getQuoteToken from './loaders/quoteToken';
@@ -32,6 +33,7 @@ import generateMnemonic from './loaders/wallet/generateMnemonic';
 import restoreWallet from './loaders/wallet/restoreWallet';
 import resolveNetwork from './utils/resolveNetwork';
 import takeLast from './utils/takeLast';
+import { getTokenBySymbol } from '@melonproject/protocol';
 
 export default (environment, streams) => {
   const fundIsComplete = new DataLoader(addresses => {
@@ -71,11 +73,25 @@ export default (environment, streams) => {
 
   const fundRemainingInvestAmount = new DataLoader(async pairs => {
     const addresses = pairs.map(pair => pair.fund);
-    const routes = await fundRoutes.loadMany(addresses);
+    const assets = pairs
+      .map(pair => pair.asset)
+      .map(asset => {
+        return getTokenBySymbol(environment, asset);
+      });
+
+    const dai = await assetPrice.load(getTokenBySymbol(environment, 'DAI'));
+    const calculations = await fundCalculations.loadMany(addresses);
+    const prices = await assetPrice.loadMany(assets);
+    const fn = getFundRemainingInvestAmount(dai);
 
     return Promise.all(
       pairs.map((pair, key) => {
-        return null;
+        const price = prices[key];
+        const { gav } = calculations[key] || {
+          gav: null,
+        };
+
+        return gav && price && fn(price, gav);
       }),
     );
   });
