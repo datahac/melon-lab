@@ -1543,12 +1543,13 @@
   dependencies:
     events "^3.0.0"
 
-"@melonproject/exchange-aggregator@^0.1.15":
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.1.15.tgz#1d6ecb632bd000a1c8ee96d45877342548cf3e25"
+"@melonproject/exchange-aggregator@^0.1.17":
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.1.17.tgz#016c21f48c3f8cfa448927eaf013ac09ca12e8c3"
+  integrity sha512-ZGp9iCDE1QezWVkzXC3h4Y2EQwRrO+7pQkkRNfTnUV7l30/OCXXaLmn68ZSqIYyNRkAYJcE+Eb/vl+qRKNzg4A==
   dependencies:
     "@melonproject/protocol" "^0.9.24"
-    "@melonproject/token-math" "^0.1.5"
+    "@melonproject/token-math" "^0.1.6"
     "@radarrelay/types" "^1.2.1"
     axios "^0.18.0"
     isomorphic-ws "^4.0.1"
@@ -1608,7 +1609,7 @@
     yup "^0.26.6"
     zen-observable-ts "^0.8.10"
 
-"@melonproject/token-math@0.1.5", "@melonproject/token-math@^0.1.5":
+"@melonproject/token-math@0.1.5":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@melonproject/token-math/-/token-math-0.1.5.tgz#ec8c31355162602f448dc19996e7350da3b4479c"
   dependencies:

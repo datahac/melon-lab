@@ -15,3 +15,7 @@
 .holdings :global(.holding) {
   border-top: 1px solid var(--color-border);
 }
+
+.holdings :global(.holding--active) {
+  background-color: var(--color-primary);
+}

@@ -8,10 +8,14 @@ import {
   Environment,
   getTokenBySymbol,
   getChainName,
+  constructEnvironment,
 } from '@melonproject/protocol';
 
 import { Kyber } from '@melonproject/exchange-aggregator/lib/exchanges/kyber/types';
 import { OasisDex } from '@melonproject/exchange-aggregator/lib/exchanges/oasisdex/types';
+import { Tracks } from '@melonproject/protocol/lib/utils/environment/Environment';
+import { withDeployment } from '@melonproject/protocol/lib/utils/environment/withDeployment';
+import { kyber } from '@melonproject/exchange-aggregator/lib/exchanges';
 
 // HACK: We need to cache the open orders here (Signed Orders) to
 const offChainOrders = new Map();
@@ -42,7 +46,7 @@ export default R.curryN(
           return exchanges.oasisdex.fetch({
             ...options,
             environment,
-          } as OasisDex.FetchOptions);
+          } as OasisDex.WatchOptions);
         case 'RADAR_RELAY':
           return exchanges.radarrelay.fetch(options);
         case 'KYBER_NETWORK':
@@ -53,9 +57,12 @@ export default R.curryN(
         case 'ETHFINEX':
           return exchanges.ethfinex.fetch(options);
         default:
-          throw new Error('Invalid exchange.');
+          return [];
       }
-    })().catch(() => []);
+    })().catch(e => {
+      console.error(e);
+      return [];
+    });
 
     return result;
   },
