@@ -46,7 +46,7 @@ export default R.curryN(
       case 'ETHFINEX':
         return exchanges.ethfinex.watch(options);
       default:
-        return Rx.throwError(new Error('Invalid exchange.'));
+        return Rx.empty();
     }
   },
 );

@@ -53,9 +53,12 @@ export default R.curryN(
         case 'ETHFINEX':
           return exchanges.ethfinex.fetch(options);
         default:
-          throw new Error('Invalid exchange.');
+          return [];
       }
-    })().catch(() => []);
+    })().catch(e => {
+      console.error(e);
+      return [];
+    });
 
     return result;
   },
