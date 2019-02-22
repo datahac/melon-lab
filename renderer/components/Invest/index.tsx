@@ -11,7 +11,6 @@ import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
 import { withApollo } from 'react-apollo';
 import { compose } from 'recompose';
-import { BalanceConsumer } from '+/components/BalanceContext';
 
 const ParticipationFormContainer = withForm(props => (
   <ParticipationForm {...props} />
@@ -33,10 +32,9 @@ const InvestContainer = ({ address, ...props }) => {
             children={render}
           />
         ),
-        <BalanceConsumer />,
       ]}
     >
-      {([account, fundProps, requestProps, balanceProps]) => {
+      {([account, fundProps, requestProps]) => {
         const waitingTime = R.pathOr(
           '0',
           ['data', 'hasActiveRequest', 'waitingTime'],
@@ -57,13 +55,18 @@ const InvestContainer = ({ address, ...props }) => {
           requestProps,
         );
 
+        const sharePrice = R.path(['data', 'fund', 'sharePrice'], fundProps);
+        const allowedAssets = R.path(['data', 'fund', 'investAllowed'], fundProps);
+        const loading = R.path(['loading'], fundProps);
+
         return (
           <Fragment>
             <ParticipationFormContainer
               {...props}
               setInvestValues={setInvestValues}
-              loading={R.path(['loading'], fundProps)}
-              sharePrice={R.path(['data', 'fund', 'sharePrice'], fundProps)}
+              loading={loading}
+              sharePrice={sharePrice}
+              allowedAssets={allowedAssets}
               setStep={setStep}
               isWaiting={isWaiting}
               readyToExecute={readyToExecute}
@@ -72,8 +75,6 @@ const InvestContainer = ({ address, ...props }) => {
               cancelRequest={() => setStep(5)}
               isExpired={isExpired}
               account={account}
-              wethBalance={balanceProps.weth}
-              ethBalance={balanceProps.eth}
             />
 
             <InvestTransactions
@@ -86,8 +87,6 @@ const InvestContainer = ({ address, ...props }) => {
               readyToExecute={readyToExecute}
               isInitialRequest={isInitialRequest}
               isExpired={isExpired}
-              wethBalance={balanceProps.weth}
-              ethBalance={balanceProps.eth}
             />
           </Fragment>
         );

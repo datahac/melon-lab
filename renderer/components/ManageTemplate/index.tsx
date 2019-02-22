@@ -38,6 +38,7 @@ import {
   startWith,
   distinctUntilChanged,
 } from 'rxjs/operators';
+import PoliciesInformation from '~/components/PoliciesInformation';
 
 // A bid-order on the orderbook resolves to a sell from the fund (The order maker wants to buy something, so we sell em)
 const bidAskSellBuyMap = {
@@ -362,12 +363,11 @@ export const ManageTemplateContainer = ({
               canInteract: capabibility && capabibility.canInteract,
               // TODO: Re-add this.
             }}
-            RecentTrades={() => null}
-            RecentTradesProps={
-              {
-                // TODO: Re-add this.
-              }
-            }
+            Policies={PoliciesInformation}
+            PoliciesProps={{
+              policies: fundData && fundData.policies || [],
+              loading: fundProps.loading,
+            }}
           />
         );
       }}

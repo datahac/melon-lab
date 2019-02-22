@@ -5,8 +5,8 @@ import { FormErrors } from '~/components/ParticipationForm';
 import gql from 'graphql-tag';
 
 export const balanceQuery = gql`
-  query BalanceQuery($account: String!) {
-    weth: balance(address: $account, symbol: "WETH") {
+  query BalanceQuery($account: String!, $symbol: String!) {
+    asset: balance(address: $account, symbol: $symbol) {
       quantity
       token {
         decimals
@@ -35,13 +35,9 @@ const validate = (values, props) => {
       query: balanceQuery,
       variables: {
         account: props.account,
+        symbol: props.asset,
       },
     });
-
-    const maxInvestQuantity = Tm.subtract(
-      Tm.add(data.eth.quantity, data.weth.quantity),
-      Tm.createQuantity(data.eth.token, 0.1).quantity,
-    );
 
     if (!values.quantity) {
       errors.quantity = 'Required';
@@ -63,7 +59,7 @@ const validate = (values, props) => {
       errors.total = 'Required';
     } else if (Tm.isZero(values.total)) {
       errors.total = 'Invalid quantity';
-    } else if (Tm.greaterThan(values.total.quantity, maxInvestQuantity)) {
+    } else if (Tm.greaterThan(values.total.quantity, data.asset.quantity)) {
       errors.total = 'Insufficient balance';
     }
 
@@ -91,7 +87,7 @@ const withForm = withFormik({
         props.sharePrice && Tm.createQuantity(props.sharePrice.quote.token, 0),
       quantity:
         props.sharePrice && Tm.createQuantity(props.sharePrice.base.token, 0),
-      investAsset: '',
+      asset: props.asset,
     };
   },
   validate,

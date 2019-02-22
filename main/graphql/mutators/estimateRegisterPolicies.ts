@@ -71,6 +71,8 @@ const estimateRegisterPolicies = async (
       ];
     }
 
+    console.log(current);
+
     return carry;
   }, []);
 

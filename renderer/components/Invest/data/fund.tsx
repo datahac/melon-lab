@@ -24,6 +24,11 @@ export const query = gql`
           quantity
         }
       }
+      investAllowed {
+        symbol
+        address
+        decimals
+      }
     }
   }
 `;

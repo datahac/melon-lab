@@ -62,6 +62,15 @@ export const query = gql`
         }
       }
       allowedExchanges
+
+      policies {
+        name
+        address
+        parameters {
+          key
+          value
+        }
+      }
     }
   }
 `;

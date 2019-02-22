@@ -102,7 +102,7 @@
   padding: 0 var(--space-s) var(--space-s) var(--space-s);
 }
 
-.manage-template__recent-trades {
+.manage-template__policies {
   border-top: 1px solid var(--color-border);
 
   @media (--viewport-l) {

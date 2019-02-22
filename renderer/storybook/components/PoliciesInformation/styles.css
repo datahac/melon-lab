@@ -1,0 +1,12 @@
+.policies {
+  border-top: 1px solid var(--color-border);
+  margin: var(--space-xs) var(--space-s);
+}
+
+.policies__no-items {
+  margin: var(--space-xs) 0;
+}
+
+.policies__spinner {
+  margin: var(--space-xs) 0;
+}

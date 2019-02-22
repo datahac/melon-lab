@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import * as Tm from '@melonproject/token-math';
 
 import ModalTransactions from '+/components/ModalTransactions';
 
@@ -8,11 +7,6 @@ import {
   estimateApproveTransferMutation,
   executeApproveTransferMutation,
 } from '~/queries/approve.gql';
-
-import {
-  estimateDepositMutation,
-  executeDepositMutation,
-} from '~/queries/deposit.gql';
 
 import {
   estimateNothing,
@@ -34,61 +28,38 @@ export default withRouter(props => {
     props.values &&
     props.values.total
   ) {
-    const ethToWrap: Tm.BigInteger = props.values
-      ? Tm.subtract(props.values.total.quantity, props.wethBalance.quantity)
-      : Tm.toBI('0');
-
-    if (Tm.greaterThan(ethToWrap, Tm.toBI('0'))) {
-      estimations.push({
-        mutation: estimateDepositMutation,
-        variables: { quantity: ethToWrap.toString() },
-        isComplete: props.step > 1,
-        name: 'deposit',
-      });
-      executions.push({
-        mutation: executeDepositMutation,
-        isComplete: props.step > 1,
-        name: 'deposit',
-        refetchQueries: () => ['FundQuery', 'RequestQuery'],
-        update: () => {
-          props.setStep(2);
-        },
-      });
-    } else {
-      props.step === 1 && props.setStep(2);
-    }
-
     estimations.push(
       {
         mutation:
-          props.step === 2 ? estimateApproveTransferMutation : estimateNothing,
+          props.step === 1 ? estimateApproveTransferMutation : estimateNothing,
         variables:
-          props.step === 2
+          props.step === 1
             ? {
                 fundAddress: props.fundAddress,
                 investmentAmount: props.values.total.quantity.toString(),
               }
             : {},
-        isComplete: props.step > 2,
+        isComplete: props.step > 1,
         name: 'approveTransfer',
       },
       {
         mutation:
-          props.step === 3
+          props.step === 2
             ? estimateRequestInvestmentMutation
             : estimateNothing,
         variables:
-          props.step === 3
+          props.step === 2
             ? {
                 fundAddress: props.fundAddress,
                 investmentAmount: props.values.total.quantity.toString(),
                 maxPrice: props.values.price.quote.quantity.toString(),
               }
             : {},
-        isComplete: props.step > 3,
+        isComplete: props.step > 2,
         name: 'requestInvestment',
       },
     );
+
     executions.push(
       {
         mutation: executeApproveTransferMutation,
@@ -97,7 +68,7 @@ export default withRouter(props => {
           investmentAmount: props.values.total.quantity.toString(),
         },
         update: () => {
-          props.setStep(3);
+          props.setStep(2);
         },
       },
       {
@@ -107,7 +78,7 @@ export default withRouter(props => {
         },
         refetchQueries: () => ['FundQuery', 'RequestQuery'],
         update: () => {
-          props.setStep(4);
+          props.setStep(3);
         },
       },
     );

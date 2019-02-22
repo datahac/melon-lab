@@ -14,6 +14,7 @@ const OpenOrdersContainer = ({ address, canInteract, isManager }) => {
           <OpenOrders
             canInteract={canInteract}
             isManager={isManager}
+            loading={queryProps.loading}
             orders={R.pathOr([], ['data', 'openOrders'], queryProps)}
             onClick={setSelectedOrder}
           />

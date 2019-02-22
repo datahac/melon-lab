@@ -16,8 +16,8 @@ const ManageTemplate = ({
   OrderBookProps,
   OpenOrders,
   OpenOrdersProps,
-  RecentTrades,
-  RecentTradesProps,
+  Policies,
+  PoliciesProps,
   HeaderProps = {},
   FundHeadline,
   FundHeadlineProps = {},
@@ -78,9 +78,9 @@ const ManageTemplate = ({
                   <OpenOrders {...OpenOrdersProps} />
                 </div>
               </div>
-              <div className="manage-template__recent-trades">
-                <h3 className="manage-template__subtitle">Recent trades</h3>
-                <RecentTrades {...RecentTradesProps} />
+              <div className="manage-template__policies">
+                <h3 className="manage-template__subtitle">Policies</h3>
+                <Policies {...PoliciesProps} />
               </div>
             </div>
           </div>
