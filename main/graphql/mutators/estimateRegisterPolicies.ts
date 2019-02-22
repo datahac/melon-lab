@@ -61,7 +61,7 @@ const estimateRegisterPolicies = async (
       ];
     }
 
-    if (current.type === PolicyTypes.BOTH) {
+    if (current.type === PolicyTypes.INVEST) {
       return [
         {
           method: FunctionSignatures.executeRequestFor,
@@ -70,6 +70,8 @@ const estimateRegisterPolicies = async (
         ...carry,
       ];
     }
+
+    return carry;
   }, []);
 
   const result = await register.prepare(

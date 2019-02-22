@@ -202,22 +202,14 @@ export const ManageTemplateContainer = ({
     availableExchanges[item],
   ]);
 
-  const orderbookExchanges = exchangesMap.filter(
-    ([name]) => name !== 'KYBER_NETWORK',
-  );
-
-  const orderbookExchangesNames = allowedExchangeNames.filter(
-    name => name !== 'KYBER_NETWORK',
-  );
-
   const [
     selectedExchanges,
     updateExchanges,
     setAllowedExchanges,
-  ] = useExchangeSelector(orderbookExchangesNames);
+  ] = useExchangeSelector(allowedExchangeNames);
 
   useEffect(() => {
-    setAllowedExchanges(orderbookExchangesNames);
+    setAllowedExchanges(allowedExchangeNames);
   }, [fundProps.loading]);
 
   const [eventCallback, [asks, bids]] = useEventCallback(
@@ -360,7 +352,7 @@ export const ManageTemplateContainer = ({
               selectedExchanges,
               asks,
               bids,
-              allExchanges: orderbookExchanges,
+              allExchanges: exchangesMap,
               loading: orderbookProps.loading || fundProps.loading,
             }}
             OpenOrders={OpenOrdersContainer}
