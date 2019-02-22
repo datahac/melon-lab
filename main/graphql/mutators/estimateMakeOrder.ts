@@ -19,8 +19,6 @@ import {
 } from '@melonproject/protocol';
 import { WalletTypes } from '../context';
 
-const DAY_IN_SECONDS = 24 * 60 * 60;
-
 const withHardwareSigner = (environment: Environment, account: Tm.Address) => {
   const signMessage = async message => {
     const signature = await environment.eth.personal.sign(
@@ -56,13 +54,8 @@ const estimateMakeOrder = async (
   { environment, loaders },
 ) => {
   const fund = await loaders.fundAddressFromManager.load(from);
-  const { tradingAddress, accountingAddress } = await loaders.fundRoutes.load(
-    fund,
-  );
+  const { tradingAddress } = await loaders.fundRoutes.load(fund);
   const env = withDifferentAccount(environment, new Tm.Address(from));
-  const denominationAsset = await loaders.fundDenominationAsset.load(
-    accountingAddress,
-  );
 
   const makerQuantity = Tm.createQuantity(
     getTokenBySymbol(environment, sellToken),
@@ -88,54 +81,57 @@ const estimateMakeOrder = async (
       env,
     );
 
-    const type = Tm.isEqual(makerQuantity.token, denominationAsset)
-      ? 'buy'
-      : 'sell';
-
-    const quantity = type === 'buy' ? takerQuantity : makerQuantity;
-    const total = type === 'buy' ? makerQuantity : takerQuantity;
-    const price = Tm.normalize(Tm.createPrice(quantity, total));
-
     try {
       // TODO: Refactor this into a directive
       const wallet = loaders.getWallet();
       const walletType = loaders.getWalletType();
+      const networkName = await loaders.networkName();
 
       const withSigner =
         walletType === WalletTypes.HARDWARE
           ? await withHardwareSigner(environment, wallet.address)
           : await withPrivateKeySigner(environment, wallet.privateKey);
 
-      const options = {
-        type,
-        quantity: quantity.quantity.toString(),
-        price: Tm.toFixed(price.quote, price.quote.token.decimals),
-        expiration: (Math.round(Date.now() / 1000) + DAY_IN_SECONDS).toString(),
-      };
-
-      const response = await axios.post(
-        'https://api.kovan.radarrelay.com/v2/markets/mlnt-weth/order/limit',
-        options,
-      );
-
-      const unsignedOrder = {
-        ...R.omit(
-          ['makerAddress', 'signature', 'makerAssetAmount', 'takerAssetAmount'],
-          response.data,
-        ),
-        makerAddress: tradingAddress.toLowerCase(),
-        makerAssetAmount: makerQuantity.quantity.toString(),
-        takerAssetAmount: takerQuantity.quantity.toString(),
-      };
-
       const orderFromProtocol = await createOrder(env, zeroExAddress, {
         makerQuantity,
         takerQuantity,
         makerAddress: tradingAddress,
-        feeRecipientAddress: unsignedOrder.feeRecipientAddress,
+        // feeRecipientAddress: unsignedOrder.feeRecipientAddress,
       });
 
-      const signedOrder = await signOrder(withSigner, orderFromProtocol);
+      // See: https://github.com/0xProject/standard-relayer-api/blob/master/http/v2.md#payload
+      const payload = {
+        makerAddress: orderFromProtocol.makerAddress,
+        takerAddress: orderFromProtocol.takerAddress,
+        makerAssetAmount: orderFromProtocol.makerAssetAmount,
+        takerAssetAmount: orderFromProtocol.takerAssetAmount,
+        makerAssetData: orderFromProtocol.makerAssetAmount,
+        takerAssetData: orderFromProtocol.takerAssetData,
+        exchangeAddress: orderFromProtocol.exchangeAddress,
+        expirationTimeSeconds: orderFromProtocol.expirationTimeSeconds,
+      };
+
+      /*
+      response = {
+          "senderAddress": "0xa2b31dacf30a9c50ca473337c01d8a201ae33e32",
+          "feeRecipientAddress": "0xb046140686d052fff581f63f8136cce132e857da",
+          "makerFee": "100000000000000",
+          "takerFee": "200000000000000"
+      }
+      */
+      const response = await axios.post(
+        `https://api${
+          networkName !== 'LIVE' ? '.kovan' : ''
+        }.radarrelay.com/0x/v2/order_config`,
+        payload,
+      );
+
+      const unsignedOrder = {
+        ...orderFromProtocol,
+        ...response.data,
+      };
+
+      const signedOrder = await signOrder(withSigner, unsignedOrder);
 
       const result = await make0xOrder.prepare(env, tradingAddress, {
         signedOrder,
