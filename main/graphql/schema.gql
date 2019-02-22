@@ -217,8 +217,9 @@ type Fund {
   isShutdown: Boolean
   isComplete: Boolean
   allowedExchanges: [ExchangeEnum]
-  investAllowed: [Token]
   policies: [Policy]
+  investAllowed: [Token]
+  remainingInvestAmount(asset: String!): Quantity
 }
 
 type Policy {

@@ -27,17 +27,16 @@ export const query = gql`
   }
 `;
 
-const SharePriceQuery = ({ address, symbol, children }) =>
-  console.log(symbol, address) || (
-    <Query
-      query={query}
-      skip={!symbol}
-      ssr={false}
-      errorPolicy="all"
-      variables={{ symbol, address }}
-    >
-      {children}
-    </Query>
-  );
+const SharePriceQuery = ({ address, symbol, children }) => (
+  <Query
+    query={query}
+    skip={!symbol}
+    ssr={false}
+    errorPolicy="all"
+    variables={{ symbol, address }}
+  >
+    {children}
+  </Query>
+);
 
 export { SharePriceQuery };

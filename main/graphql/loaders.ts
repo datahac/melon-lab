@@ -69,6 +69,17 @@ export default (environment, streams) => {
     );
   });
 
+  const fundRemainingInvestAmount = new DataLoader(async pairs => {
+    const addresses = pairs.map(pair => pair.fund);
+    const routes = await fundRoutes.loadMany(addresses);
+
+    return Promise.all(
+      pairs.map((pair, key) => {
+        return null;
+      }),
+    );
+  });
+
   const fundPolicies = new DataLoader(async addresses => {
     const routes = await fundRoutes.loadMany(addresses);
 
@@ -378,6 +389,7 @@ export default (environment, streams) => {
     currentBlock,
     hasActiveRequest,
     fundAddressFromManager,
+    fundRemainingInvestAmount,
     fundByName,
     fundCalculations,
     fundHoldings,

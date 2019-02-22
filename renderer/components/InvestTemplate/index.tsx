@@ -7,6 +7,7 @@ import { BalanceConsumer } from '+/components/BalanceContext';
 import { NetworkConsumer } from '+/components/NetworkContext';
 import { CapabilityConsumer } from '+/components/CapabilityContext';
 import { ConfigurationConsumer } from '+/components/ConfigurationContext';
+import { FundManagerConsumer } from '../FundManagerContext';
 
 const InvestTemplateContainer = ({ router, title, address, children }) => (
   <Composer
@@ -16,13 +17,16 @@ const InvestTemplateContainer = ({ router, title, address, children }) => (
       <NetworkConsumer />,
       <CapabilityConsumer />,
       <ConfigurationConsumer />,
+      <FundManagerConsumer />,
     ]}
   >
-    {([account, balances, network, capabibility, configuration]) => {
+    {([account, balances, network, capabibility, configuration, manager]) => {
       return (
         <WalletTemplate
           NavigationProps={
-            account && {
+            account &&
+            manager &&
+            manager.fund === address && {
               activePath: router.pathname,
               navigationItems: [
                 {

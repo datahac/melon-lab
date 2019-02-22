@@ -264,6 +264,12 @@ export default {
     investAllowed: (parent, _, { loaders }) => {
       return loaders.fundInvestAllowed.load(parent);
     },
+    remainingInvestAmount: (parent, { asset }, { loaders }) => {
+      return loaders.fundRemainingInvestAmount.load({
+        asset,
+        fund: parent,
+      });
+    },
     policies: (parent, _, { loaders }) => {
       return loaders.fundPolicies.load(parent);
     },
