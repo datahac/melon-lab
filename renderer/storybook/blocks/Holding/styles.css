@@ -1,52 +1,25 @@
-.holding {
-  position: relative;
-  height: 42px;
-}
-
 .holding__wrapper {
   position: absolute;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: var(--space-xxs) var(--space-s);
   line-height: 1;
-}
-
-.holding--active {
-  background-color: var(--color-primary);
 }
 
 .holding__balance {
   font-size: var(--font-size-s);
   color: var(--color-grey);
-  flex: 0 0 25%;
-  text-align: right;
-}
-
-.holding__price {
-  flex: 0 0 25%;
 }
 
 .holding__symbol {
-  flex: 0 0 50%;
   overflow: hidden;
-  padding-right: var(--space-m);
 }
 
 .holding__name {
+  display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: var(--space-xxs);
-  display: block;
   font-size: var(--font-size-s);
   color: var(--color-grey);
-}
-
-.holding__bar {
-  position: absolute;
-  height: 100%;
-  background-color: var(--color-secondary);
 }

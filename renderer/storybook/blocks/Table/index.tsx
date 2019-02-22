@@ -22,6 +22,7 @@ export interface RowProps {
   isHead?: boolean;
   rowClass?: string;
   size?: string;
+  className: string;
 }
 
 const Table: StatelessComponent<TableProps> = ({ children }) => (
@@ -50,8 +51,10 @@ const Row: StatelessComponent<RowProps> = ({
   children,
   isHead,
   size,
+  className,
+  ...props
 }) => {
-  const cellClassNames = classNames('table__row', {
+  const cellClassNames = classNames(className, 'table__row', {
     'table__row--head': isHead,
     'table__row--body': !isHead,
     'table__row--active': active,
@@ -61,7 +64,7 @@ const Row: StatelessComponent<RowProps> = ({
   return (
     <Fragment>
       <style jsx>{styles}</style>
-      <tr className={cellClassNames}>{children}</tr>
+      <tr className={cellClassNames} {...props}>{children}</tr>
     </Fragment>
   );
 };

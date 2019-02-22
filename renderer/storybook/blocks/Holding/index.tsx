@@ -1,7 +1,8 @@
 import classNames from 'classnames';
-import React, { StatelessComponent } from 'react';
+import React, { StatelessComponent, Fragment } from 'react';
 import styles from './styles.css';
 import * as Tm from '@melonproject/token-math';
+import { CellBody, Row } from '../Table';
 
 export interface HoldingProps {
   fraction?: number;
@@ -16,7 +17,6 @@ export interface HoldingProps {
 
 const Holding: StatelessComponent<HoldingProps> = ({
   decimals = 4,
-  fraction,
   balance,
   price,
   symbol,
@@ -29,31 +29,32 @@ const Holding: StatelessComponent<HoldingProps> = ({
   });
 
   return (
-    <div className={holdingClassNames} onClick={onClickHolding}>
+    <Fragment>
       <style jsx>{styles}</style>
       <style jsx>{`
         .holding {
           cursor: ${onClickHolding ? 'pointer' : 'auto'};
         }
-
-        .holding__bar {
-          width: ${fraction}%;
-        }
       `}</style>
-      {(fraction && fraction > 0 && <div className="holding__bar" />) || null}
-      <div className="holding__wrapper">
-        <div className="holding__symbol">
-          {symbol}
-          <span className="holding__name">{name}</span>
-        </div>
-        <div className="holding__price">
-          {price && Tm.toFixed(price, decimals)}
-        </div>
-        <div className="holding__balance">
-          {balance && Tm.toFixed(balance, decimals)}
-        </div>
-      </div>
-    </div>
+      <Row className={holdingClassNames} onClick={onClickHolding}>
+        <CellBody noPadding={false}>
+          <span className="holding__symbol">
+            {symbol}
+            <span className="holding__name">{name}</span>
+          </span>
+        </CellBody>
+        <CellBody noPadding={false}>
+          <div className="holding__price">
+            {price && Tm.toFixed(price, decimals)}
+          </div>
+        </CellBody>
+        <CellBody noPadding={false}>
+          <div className="holding__balance">
+            {balance && Tm.toFixed(balance, decimals)}
+          </div>
+        </CellBody>
+      </Row>
+    </Fragment>
   );
 };
 
