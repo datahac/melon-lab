@@ -45,20 +45,21 @@ export const Holdings: StatelessComponent<HoldingsProps> = ({
             </Row>
           </TableHead>
           <TableBody>
-            {holdings && holdings.map(asset => (
-              <Holding
-                key={asset.symbol}
-                fraction={asset.fraction}
-                symbol={asset.symbol}
-                name={asset.name}
-                price={asset.price}
-                balance={asset.balance}
-                active={baseAsset === asset.symbol}
-                onClickHolding={
-                  !(asset.symbol === quoteAsset) ? () => onClick(asset) : null
-                }
-              />
-            ))}
+            {holdings &&
+              holdings.map(asset => (
+                <Holding
+                  key={asset.symbol}
+                  fraction={asset.fraction}
+                  symbol={asset.symbol}
+                  name={asset.name}
+                  price={asset.price}
+                  balance={asset.balance}
+                  active={baseAsset === asset.symbol}
+                  onClickHolding={
+                    !(asset.symbol === quoteAsset) ? () => onClick(asset) : null
+                  }
+                />
+              ))}
           </TableBody>
         </Table>
       </div>

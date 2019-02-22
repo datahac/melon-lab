@@ -64,7 +64,9 @@ const Row: StatelessComponent<RowProps> = ({
   return (
     <Fragment>
       <style jsx>{styles}</style>
-      <tr className={cellClassNames} {...props}>{children}</tr>
+      <tr className={cellClassNames} {...props}>
+        {children}
+      </tr>
     </Fragment>
   );
 };
