@@ -21,7 +21,6 @@ import {
 export default withRouter(props => {
   const estimations: any[] = [];
   const executions: any[] = [];
-
   if (
     (props.isInitialRequest || !props.isWaiting) &&
     !props.isExpired &&
@@ -37,6 +36,7 @@ export default withRouter(props => {
             ? {
                 fundAddress: props.fundAddress,
                 investmentAmount: props.values.total.quantity.toString(),
+                investmentAsset: props.values.total.token.address.toString(),
               }
             : {},
         isComplete: props.step > 1,
@@ -52,6 +52,7 @@ export default withRouter(props => {
             ? {
                 fundAddress: props.fundAddress,
                 investmentAmount: props.values.total.quantity.toString(),
+                investmentAsset: props.values.total.token.address.toString(),
                 maxPrice: props.values.price.quote.quantity.toString(),
               }
             : {},
@@ -66,6 +67,7 @@ export default withRouter(props => {
         variables: props.values && {
           fundAddress: props.fundAddress,
           investmentAmount: props.values.total.quantity.toString(),
+          investmentAsset: props.values.total.token.address.toString(),
         },
         update: () => {
           props.setStep(2);

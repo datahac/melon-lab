@@ -8,22 +8,6 @@ export const query = gql`
       totalSupply {
         quantity
       }
-      sharePrice {
-        base {
-          token {
-            symbol
-            decimals
-          }
-          quantity
-        }
-        quote {
-          token {
-            symbol
-            decimals
-          }
-          quantity
-        }
-      }
       investAllowed {
         symbol
         address

@@ -306,26 +306,11 @@ export default {
     nav: (parent, _, { loaders }) => {
       return loaders.fundCalculations.load(parent).then(R.prop('nav'));
     },
-    sharePrice: (parent, _, { loaders }) => {
-      return loaders.fundCalculations.load(parent).then(R.prop('sharePrice'));
-    },
-    managementReward: async (parent, _, { loaders }) => {
-      return null;
-    },
-    managementFeeRate: async (parent, _, { loaders }) => {
-      return null;
-    },
-    performanceReward: async (parent, _, { loaders }) => {
-      return null;
-    },
-    performanceFeeRate: async (parent, _, { loaders }) => {
-      return null;
-    },
-    unclaimedFees: async (parent, _, { loaders }) => {
-      return null;
-    },
-    feesShareQuantity: async (parent, _, { loaders }) => {
-      return null;
+    sharePrice: (parent, { symbol }, { loaders }) => {
+      return loaders.fundSharePrice.load({
+        fund: parent,
+        asset: symbol,
+      });
     },
     holdings: async (parent, _, { loaders }) => {
       return loaders.fundHoldings.load(parent);
@@ -375,16 +360,6 @@ export default {
   },
   OasisDexOrder: {
     metadata: parent => parent.original,
-  },
-  Policy: {
-    parameters: parent => {
-      const keys = Object.keys(parent.parameters);
-
-      return keys.map(key => ({
-        key,
-        value: parent.parameters[key],
-      }));
-    },
   },
   Holding: {
     fraction: async (parent, _, { loaders }) => {

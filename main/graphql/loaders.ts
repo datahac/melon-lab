@@ -14,6 +14,7 @@ import getFundIsComplete from './loaders/fund/fundIsComplete';
 import getHasActiveRequest from './loaders/hasActiveRequest';
 import getFundIsShutdown from './loaders/fund/fundIsShutdown';
 import getFundName from './loaders/fund/fundName';
+import getFundSharePrice from './loaders/fund/fundSharePrice';
 import getFundNativeAsset from './loaders/fund/fundNativeAsset';
 import getFundOwner from './loaders/fund/fundOwner';
 import getFundParticipation from './loaders/fund/fundParticipation';
@@ -98,6 +99,20 @@ export default (environment, streams) => {
   const fundName = new DataLoader(addresses => {
     const fn = getFundName(environment);
     return Promise.all(addresses.map(fn) || []);
+  });
+
+  const fundSharePrice = new DataLoader(async pairs => {
+    const funds = pairs.map(pair => pair.fund);
+    const routes = await fundRoutes.loadMany(funds);
+
+    const fn = getFundSharePrice(environment);
+    return Promise.all(
+      pairs.map((pair, key) => {
+        const { sharesAddress, accountingAddress } = routes[key];
+
+        return fn(sharesAddress, accountingAddress, pair.asset);
+      }) || [],
+    );
   });
 
   const fundDenominationAsset = new DataLoader(async addresses => {
@@ -369,6 +384,7 @@ export default (environment, streams) => {
     fundInception,
     fundIsShutdown,
     fundName,
+    fundSharePrice,
     fundNativeAsset,
     fundOwner,
     fundParticipation,

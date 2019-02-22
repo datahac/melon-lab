@@ -1,20 +1,26 @@
 import React, { StatelessComponent } from 'react';
 import styles from './styles.css';
 import Spinner from '~/blocks/Spinner';
+import Table, {
+  TableHead,
+  Row,
+  CellHead,
+  TableBody,
+  CellBody,
+} from '~/blocks/Table';
 
 export interface PoliciesInformationProps {
   policies: any;
   loading: boolean;
 }
 
-export const PoliciesInformation: StatelessComponent<PoliciesInformationProps> = ({
-  policies,
-  loading,
-}) => {
+export const PoliciesInformation: StatelessComponent<
+  PoliciesInformationProps
+> = ({ policies, loading }) => {
   return (
     <div className="policies">
       <style jsx>{styles}</style>
-      
+
       {loading && (
         <div className="policies__spinner">
           <Spinner icon size="small" />
@@ -26,10 +32,23 @@ export const PoliciesInformation: StatelessComponent<PoliciesInformationProps> =
       )}
 
       {!loading && !!policies.length && (
-        <div className="policies__list">
-          {policies.map(policy => (
-            <div key={policy.name}>{policy.name}</div>
-          ))}
+        <div className="policies__table-wrap">
+          <Table>
+            <TableHead>
+              <Row isHead={true}>
+                <CellHead>Name</CellHead>
+                <CellHead>Parameters</CellHead>
+              </Row>
+            </TableHead>
+            <TableBody>
+              {policies.map(policy => (
+                <Row key={policy.name} size="small">
+                  <CellBody>{policy.name}</CellBody>
+                  <CellBody>{policy.parameters}</CellBody>
+                </Row>
+              ))}
+            </TableBody>
+          </Table>
         </div>
       )}
     </div>

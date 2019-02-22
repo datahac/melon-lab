@@ -1,9 +1,11 @@
 mutation estimateApproveTransferMutation(
   $investmentAmount: String!
+  $investmentAsset: String!
   $fundAddress: String!
 ) {
   estimate: estimateApproveTransfer(
     investmentAmount: $investmentAmount
+    investmentAsset: $investmentAsset
     fundAddress: $fundAddress
   ) @account {
     data
@@ -23,10 +25,12 @@ mutation executeApproveTransferMutation(
   $to: String!
   $value: String!
   $investmentAmount: String!
+  $investmentAsset: String!
   $fundAddress: String!
 ) {
   execute: executeApproveTransfer(
     investmentAmount: $investmentAmount
+    investmentAsset: $investmentAsset
     fundAddress: $fundAddress
     unsigned: {
       data: $data

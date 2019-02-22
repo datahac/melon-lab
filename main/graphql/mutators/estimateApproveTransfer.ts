@@ -1,15 +1,19 @@
 import * as Tm from '@melonproject/token-math';
-import { withDifferentAccount, approve } from '@melonproject/protocol';
+import {
+  withDifferentAccount,
+  getTokenByAddress,
+  approve,
+} from '@melonproject/protocol';
 
 const estimateApproveTransfer = async (
   _,
-  { from, fundAddress, investmentAmount },
+  { from, fundAddress, investmentAmount, investmentAsset },
   { environment, loaders },
 ) => {
   const { participationAddress } = await loaders.fundRoutes.load(fundAddress);
-  const quoteToken = await loaders.quoteToken();
+  const investmentToken = getTokenByAddress(environment, investmentAsset);
   const params = {
-    howMuch: Tm.createQuantity(quoteToken, investmentAmount),
+    howMuch: Tm.createQuantity(investmentToken, investmentAmount),
     spender: participationAddress,
   };
 

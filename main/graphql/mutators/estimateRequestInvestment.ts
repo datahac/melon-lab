@@ -1,37 +1,35 @@
 import * as Tm from '@melonproject/token-math';
 import {
   getToken,
+  getTokenByAddress,
   withDifferentAccount,
   requestInvestment,
 } from '@melonproject/protocol';
 
 const estimateRequestInvestment = async (
   _,
-  { from, fundAddress, investmentAmount, maxPrice },
+  { from, fundAddress, investmentAmount, investmentAsset, maxPrice },
   { environment, loaders },
 ) => {
   try {
-    const { tokens } = environment.deployment.thirdPartyContracts;
     const {
       participationAddress,
       sharesAddress,
     } = await loaders.fundRoutes.load(fundAddress);
-    const nativeToken = tokens.find(token => {
-      return token.symbol === 'WETH';
-    });
 
+    const assetToken = getTokenByAddress(environment, investmentAsset);
     const fundToken = await getToken(environment, sharesAddress);
 
     const sharePrice = Tm.createPrice(
       Tm.createQuantity(fundToken, 1),
-      Tm.createQuantity(nativeToken, maxPrice || 1),
+      Tm.createQuantity(assetToken, maxPrice || 1),
     );
 
     const params = {
-      investmentAmount: Tm.createQuantity(nativeToken, investmentAmount),
+      investmentAmount: Tm.createQuantity(assetToken, investmentAmount),
       requestedShares: Tm.valueIn(
         sharePrice,
-        Tm.createQuantity(nativeToken, investmentAmount),
+        Tm.createQuantity(assetToken, investmentAmount),
       ),
     };
 

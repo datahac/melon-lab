@@ -11,6 +11,9 @@ import Composer from 'react-composer';
 import { AccountConsumer } from '+/components/AccountContext';
 import { withApollo } from 'react-apollo';
 import { compose } from 'recompose';
+import Dropdown from '~/blocks/Dropdown';
+import { SharePriceQuery } from './data/sharePrice';
+import Spinner from '~/blocks/Spinner';
 
 const ParticipationFormContainer = withForm(props => (
   <ParticipationForm {...props} />
@@ -18,6 +21,7 @@ const ParticipationFormContainer = withForm(props => (
 
 const InvestContainer = ({ address, ...props }) => {
   const [step, setStep] = useState(0);
+  const [asset, setAsset] = useState(null);
   const [investValues, setInvestValues] = useState(null);
 
   return (
@@ -25,6 +29,21 @@ const InvestContainer = ({ address, ...props }) => {
       components={[
         <AccountConsumer />,
         <FundQuery address={address} />,
+        ({ results: [_, fundProps], render }) => {
+          const firstAllowedAsset = R.compose(
+            R.prop('symbol'),
+            R.head,
+            R.pathOr([], ['data', 'fund', 'investAllowed']),
+          )(fundProps);
+
+          return (
+            <SharePriceQuery
+              address={address}
+              symbol={asset || firstAllowedAsset}
+              children={render}
+            />
+          );
+        },
         ({ results: [account], render }) => (
           <RequestQuery
             fundAddress={address}
@@ -34,7 +53,7 @@ const InvestContainer = ({ address, ...props }) => {
         ),
       ]}
     >
-      {([account, fundProps, requestProps]) => {
+      {([account, fundProps, sharePriceProps, requestProps]) => {
         const waitingTime = R.pathOr(
           '0',
           ['data', 'hasActiveRequest', 'waitingTime'],
@@ -55,27 +74,60 @@ const InvestContainer = ({ address, ...props }) => {
           requestProps,
         );
 
-        const sharePrice = R.path(['data', 'fund', 'sharePrice'], fundProps);
-        const allowedAssets = R.path(['data', 'fund', 'investAllowed'], fundProps);
-        const loading = R.path(['loading'], fundProps);
+        const sharePrice = R.path(
+          ['data', 'fund', 'sharePrice'],
+          sharePriceProps,
+        );
+        const allowedAssets = R.pathOr(
+          [],
+          ['data', 'fund', 'investAllowed'],
+          fundProps,
+        );
+
+        const fundLoading = R.path(['loading'], fundProps);
+        const sharePriceLoading = R.path(['loading'], sharePriceProps);
+        const firstAllowedAsset = R.compose(
+          R.prop('symbol'),
+          R.head,
+        )(allowedAssets);
 
         return (
           <Fragment>
-            <ParticipationFormContainer
-              {...props}
-              setInvestValues={setInvestValues}
-              loading={loading}
-              sharePrice={sharePrice}
-              allowedAssets={allowedAssets}
-              setStep={setStep}
-              isWaiting={isWaiting}
-              readyToExecute={readyToExecute}
-              isInitialRequest={isInitialRequest}
-              executeRequest={() => setStep(4)}
-              cancelRequest={() => setStep(5)}
-              isExpired={isExpired}
-              account={account}
-            />
+            {!fundLoading && !readyToExecute && (
+              <Dropdown
+                onChange={event => {
+                  setAsset(event.target.value);
+                }}
+                value={asset || firstAllowedAsset}
+                options={allowedAssets.map(token => ({
+                  value: token.symbol,
+                  name: token.symbol,
+                }))}
+                name="asset"
+              />
+            )}
+
+            {((fundLoading || sharePriceLoading) && (
+              <div>
+                <Spinner icon size="small" />
+              </div>
+            )) || (
+              <ParticipationFormContainer
+                {...props}
+                setInvestValues={setInvestValues}
+                sharePrice={sharePrice}
+                allowedAssets={allowedAssets}
+                setStep={setStep}
+                asset={asset || firstAllowedAsset}
+                isWaiting={isWaiting}
+                readyToExecute={readyToExecute}
+                isInitialRequest={isInitialRequest}
+                executeRequest={() => setStep(4)}
+                cancelRequest={() => setStep(5)}
+                isExpired={isExpired}
+                account={account}
+              />
+            )}
 
             <InvestTransactions
               fundAddress={address}

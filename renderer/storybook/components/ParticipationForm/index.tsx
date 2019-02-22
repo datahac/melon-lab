@@ -35,7 +35,6 @@ export interface ParticipationFormProps {
   handleChange?: () => void;
   executeRequest?: () => void;
   cancelRequest?: () => void;
-  loading?: boolean;
   address?: string;
   sharePrice?: Tm.PriceInterface;
   isWaiting?: boolean;
@@ -55,7 +54,6 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   handleChange,
   touched,
   values,
-  loading,
   sharePrice,
   isWaiting,
   readyToExecute,
@@ -63,8 +61,6 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   isInitialRequest,
   isExpired,
   cancelRequest,
-  ethBalance,
-  wethBalance,
   allowedAssets,
 }) => {
   const numberPlaceholder = (0).toFixed(decimals);
@@ -72,20 +68,14 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   return (
     <Fragment>
       <style jsx>{styles}</style>
-      {loading && (
-        <div className="participation-form__spinner">
-          <Spinner icon size="small" />
-        </div>
-      )}
-      
-      {!loading && allowedAssets.length === 0 && (
+      {!allowedAssets.length && (
         <Notification isWarning>
           This fund does not currently allow investment.
         </Notification>
       )}
 
-      {!loading && allowedAssets.length > 0 && (
-        <div className="participation-form">      
+      {allowedAssets.length && (
+        <div className="participation-form">
           {isWaiting && !isExpired && (
             <Notification isWarning>
               You already requested an investment for this fund. Please wait!
@@ -112,7 +102,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
 
           {!isWaiting && !readyToExecute && (
             <Fragment>
-              <Form onSubmit={handleSubmit}>            
+              <Form onSubmit={handleSubmit}>
                 <div className="participation-form__input">
                   <Input
                     value={
@@ -138,18 +128,6 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 </div>
 
                 <div className="participation-form__input">
-                  <Dropdown
-                    onChange={handleChange}
-                    value={values.asset}
-                    options={allowedAssets.map(token => ({
-                      value: token.symbol,
-                      name: token.symbol,
-                    }))}
-                    name="asset"
-                  />
-                </div>
-
-                <div className="participation-form__input">
                   <Input
                     value={values.price && Tm.toFixed(values.price, decimals)}
                     type="number"
@@ -169,7 +147,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                     disabled={isInitialRequest}
                   />
                 </div>
-          
+
                 <div className="participation-form__input">
                   <Input
                     value={values.total && Tm.toFixed(values.total, decimals)}

@@ -4,11 +4,13 @@ mutation estimateNothing($nothing: Boolean) {
 
 mutation estimateRequestInvestmentMutation(
   $investmentAmount: String!
+  $investmentAsset: String!
   $fundAddress: String!
   $maxPrice: String
 ) {
   estimate: estimateRequestInvestment(
     investmentAmount: $investmentAmount
+    investmentAsset: $investmentAsset
     fundAddress: $fundAddress
     maxPrice: $maxPrice
   ) @account {

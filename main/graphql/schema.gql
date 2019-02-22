@@ -211,15 +211,9 @@ type Fund {
   nativeAsset: Token
   holdings: [Holding]
   openOrders: [Order]
-  sharePrice: Price
+  sharePrice(symbol: String!): Price
   totalSupply: Quantity
   personalStake(investor: String): Quantity
-  managementReward: Quantity
-  managementFeeRate: String
-  performanceReward: Quantity
-  performanceFeeRate: String
-  unclaimedFees: Quantity
-  feesShareQuantity: Quantity
   isShutdown: Boolean
   isComplete: Boolean
   allowedExchanges: [ExchangeEnum]
@@ -230,12 +224,7 @@ type Fund {
 type Policy {
   address: String
   name: String
-  parameters: [PolicyParameter]
-}
-
-type PolicyParameter {
-  key: String
-  value: String
+  parameters: String
 }
 
 type Holding {
@@ -480,6 +469,7 @@ type Mutation {
   estimateRequestInvestment(
     fundAddress: String!
     investmentAmount: String!
+    investmentAsset: String!
     maxPrice: String
   ): UnsignedAmguTransaction @account
 
@@ -526,6 +516,7 @@ type Mutation {
   estimateApproveTransfer(
     fundAddress: String!
     investmentAmount: String!
+    investmentAsset: String!
   ): UnsignedPlainTransaction @account
 
   """
@@ -536,6 +527,7 @@ type Mutation {
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
     investmentAmount: String!
+    investmentAsset: String!
   ): Boolean @account @sign
 
   estimateDeposit(quantity: String!): UnsignedPlainTransaction @account

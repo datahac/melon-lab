@@ -1,9 +1,13 @@
 import * as Tm from '@melonproject/token-math';
-import { approve, withDifferentAccount } from '@melonproject/protocol';
+import {
+  approve,
+  getTokenByAddress,
+  withDifferentAccount,
+} from '@melonproject/protocol';
 
 const executeApproveTransfer = async (
   _,
-  { from, signedOrNot, fundAddress, investmentAmount },
+  { from, signedOrNot, fundAddress, investmentAmount, investmentAsset },
   { environment, loaders },
 ) => {
   const transaction = signedOrNot.rawTransaction
@@ -11,11 +15,11 @@ const executeApproveTransfer = async (
     : signedOrNot;
 
   const { participationAddress } = await loaders.fundRoutes.load(fundAddress);
-  const quoteToken = await loaders.quoteToken();
+  const investmentToken = getTokenByAddress(environment, investmentAsset);
   const env = withDifferentAccount(environment, new Tm.Address(from));
 
   const params = {
-    howMuch: Tm.createQuantity(quoteToken, investmentAmount),
+    howMuch: Tm.createQuantity(investmentToken, investmentAmount),
     spender: participationAddress,
   };
 

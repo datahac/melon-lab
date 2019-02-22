@@ -365,7 +365,7 @@ export const ManageTemplateContainer = ({
             }}
             Policies={PoliciesInformation}
             PoliciesProps={{
-              policies: fundData && fundData.policies || [],
+              policies: (fundData && fundData.policies) || [],
               loading: fundProps.loading,
             }}
           />

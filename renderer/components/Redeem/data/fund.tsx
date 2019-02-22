@@ -8,7 +8,7 @@ export const query = gql`
       totalSupply {
         quantity
       }
-      sharePrice {
+      sharePrice(symbol: "WETH") {
         base {
           token {
             symbol

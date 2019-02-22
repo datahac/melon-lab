@@ -79,7 +79,7 @@ const ManageTemplate = ({
                 </div>
               </div>
               <div className="manage-template__policies">
-                <h3 className="manage-template__subtitle">Policies</h3>
+                <h3 className="manage-template__subtitle">Risk profile</h3>
                 <Policies {...PoliciesProps} />
               </div>
             </div>

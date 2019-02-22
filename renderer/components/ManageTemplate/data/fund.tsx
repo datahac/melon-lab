@@ -27,7 +27,7 @@ export const query = gql`
         }
       }
 
-      sharePrice {
+      sharePrice(symbol: "WETH") {
         base {
           token {
             symbol
@@ -66,10 +66,7 @@ export const query = gql`
       policies {
         name
         address
-        parameters {
-          key
-          value
-        }
+        parameters
       }
     }
   }
