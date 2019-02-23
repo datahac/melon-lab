@@ -1562,30 +1562,6 @@
   dependencies:
     source-map-support "^0.5.3"
 
-"@melonproject/protocol@0.9.39":
-  version "0.9.39"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.39.tgz#e88c804b09bdf1411ecd54ddc255c35c978d40c6"
-  integrity sha512-21k/wbCjWc1UhuXb9JWoMv+/P6z9E1+Ozrsrb/r+nMwJwTUuEmxpwgiSDAO6srMHatXzSQm+Ws7v1bAEtPlXig==
-  dependencies:
-    "@0x/contract-wrappers" "^4.1.1"
-    "@0x/order-utils" "^3.0.4"
-    "@melonproject/token-math" "0.1.5"
-    ava "0.25.0"
-    axios "^0.18.0"
-    commander "^2.19.0"
-    ethereum-types "^1.1.4"
-    ganache-cli "^6.3.0"
-    ramda "^0.25.0"
-    request-promise "^4.2.2"
-    solc "^0.4.25"
-    web3 "^1.0.0-beta.37"
-    web3-eth "1.0.0-beta.37"
-    web3-eth-abi "1.0.0-beta.37"
-    web3-eth-accounts "^1.0.0-beta.37"
-    web3-utils "1.0.0-beta.37"
-    yup "^0.26.6"
-    zen-observable-ts "^0.8.10"
-
 "@melonproject/protocol@^0.9.24":
   version "0.9.24"
   resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.24.tgz#195e23ed62228150d8de7cf3cc443d2fa3a76a99"
@@ -1598,6 +1574,29 @@
     axios "^0.18.0"
     commander "^2.19.0"
     ethereum-types "^1.1.4"
+    ramda "^0.25.0"
+    request-promise "^4.2.2"
+    solc "^0.4.25"
+    web3 "^1.0.0-beta.37"
+    web3-eth "1.0.0-beta.37"
+    web3-eth-abi "1.0.0-beta.37"
+    web3-eth-accounts "^1.0.0-beta.37"
+    web3-utils "1.0.0-beta.37"
+    yup "^0.26.6"
+    zen-observable-ts "^0.8.10"
+
+"@melonproject/protocol@^0.9.43":
+  version "0.9.43"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-0.9.43.tgz#4f0ef15755d01701c607514ea7b48b71e552ffd7"
+  integrity sha512-+hvBehFaXFpat9cOAPKLXB/wmyFLYOowvkvkoC/EPaX3OBnnrjLh9zDqVCMxKu1ZZhU04IFyMyg0RgFhHRwVHA==
+  dependencies:
+    "@0x/contract-wrappers" "^4.1.1"
+    "@0x/order-utils" "^3.0.4"
+    "@melonproject/token-math" "0.1.5"
+    axios "^0.18.0"
+    commander "^2.19.0"
+    ethereum-types "^1.1.4"
+    ganache-cli "^6.3.0"
     ramda "^0.25.0"
     request-promise "^4.2.2"
     solc "^0.4.25"
