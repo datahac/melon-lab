@@ -54,7 +54,7 @@ const estimateRegisterPolicies = async (
           policy: current.address,
         },
         {
-          method: FunctionSignatures.executeRequestFor,
+          method: FunctionSignatures.requestInvestment,
           policy: current.address,
         },
         ...carry,
@@ -64,7 +64,7 @@ const estimateRegisterPolicies = async (
     if (current.type === PolicyTypes.INVEST) {
       return [
         {
-          method: FunctionSignatures.executeRequestFor,
+          method: FunctionSignatures.requestInvestment,
           policy: current.address,
         },
         ...carry,
