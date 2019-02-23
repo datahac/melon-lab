@@ -60,6 +60,7 @@ const WrappedOrderForm = withApollo(
           filter(([exchange]) => exchange === 'MELON_ENGINE'),
           tap(([, , enginePrice]) => {
             props.setFieldValue('price', enginePrice);
+            props.setFieldValue('type', 'Sell');
           }),
         );
 

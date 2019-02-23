@@ -80,6 +80,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
   const isMarket = values.strategy === 'Market' ? true : false;
   // const isOrderSelected = !!values.id;
   const isKyber = values.exchange === 'KYBER_NETWORK';
+  const isMelonEngine = values.exchange === 'MELON_ENGINE';
   const numberPlaceholder = (0).toFixed(decimals);
 
   return (
@@ -180,7 +181,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             formatNumber={true}
             error={(touched.quantity || !!values.quantity) && errors.quantity}
             disabled={
-              (isMarket && !isKyber && !values.price) ||
+              (isMarket && !isKyber && !isMelonEngine && !values.price) ||
               !priceFeedUp ||
               !isManager
             }
@@ -200,7 +201,7 @@ export const OrderForm: StatelessComponent<OrderFormProps> = ({
             formatNumber={true}
             error={(touched.total || !!values.total) && errors.total}
             disabled={
-              (isMarket && !isKyber && !values.price) ||
+              (isMarket && !isKyber && !isMelonEngine && !values.price) ||
               !priceFeedUp ||
               !isManager
             }
