@@ -198,9 +198,16 @@ export default {
         environment,
       );
 
+      const weth = getTokenBySymbol(environment, 'WETH');
+
       const enginePrice = await getEnginePrice(environment, engineAddress);
 
-      return enginePrice;
+      const enginePriceWeth = Tm.createPrice(
+        enginePrice.base,
+        Tm.createQuantity(weth, enginePrice.quote.quantity),
+      );
+
+      return enginePriceWeth;
     },
     liquidEther: async (_, __, { environment }) => {
       const engineAddress = R.path(

@@ -35,7 +35,7 @@ export const remainingQuery = gql`
   }
 `;
 
-const balance = async (props) => {
+const balance = async props => {
   const { data } = await props.client.query({
     query: balanceQuery,
     variables: {
@@ -47,7 +47,7 @@ const balance = async (props) => {
   return R.path(['asset', 'quantity'], data);
 };
 
-const remaining = async (props) => {
+const remaining = async props => {
   const { data } = await props.client.query({
     query: remainingQuery,
     variables: {
@@ -95,7 +95,9 @@ const validate = (values, props) => {
 
         const currentBalance = await balance(props);
         if (Tm.greaterThan(values.total.quantity, currentBalance)) {
-          errors.total = `Insufficient balance (${displayQuantity(currentBalance)})`;
+          errors.total = `Insufficient balance (${displayQuantity(
+            currentBalance,
+          )})`;
         }
       })();
     }
