@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import * as Tm from '@melonproject/token-math';
 import { withFormik } from 'formik';
 import { withHandlers, compose } from 'recompose';
@@ -35,6 +36,16 @@ const withForm = withFormik({
       values.type === 'Buy'
     ) {
       errors.total = 'Insufficient balance';
+    }
+
+    if (
+      values.exchange === 'MELON_ENGINE' &&
+      Tm.greaterThan(
+        R.pathOr('0', ['total', 'quantity'], values),
+        R.pathOr('0', ['liquidEther', 'quantity'], props),
+      )
+    ) {
+      errors.total = 'Not enough liquid ETH on Melon Engine';
     }
 
     return errors;

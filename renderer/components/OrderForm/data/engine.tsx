@@ -2,7 +2,14 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const query = gql`
-  query EnginePriceQuery {
+  query EngineQuery {
+    liquidEther {
+      token {
+        symbol
+        decimals
+      }
+      quantity
+    }
     enginePrice {
       base {
         token {
@@ -24,8 +31,6 @@ const query = gql`
   }
 `;
 
-const EnginePriceQuery = ({ children }) => (
-  <Query query={query}>{children}</Query>
-);
+const EngineQuery = ({ children }) => <Query query={query}>{children}</Query>;
 
-export default EnginePriceQuery;
+export default EngineQuery;

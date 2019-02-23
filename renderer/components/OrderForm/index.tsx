@@ -10,7 +10,7 @@ import { FundManagerConsumer } from '+/components/FundManagerContext';
 import MakeOrder from '+/components/MakeOrder';
 import TakeOrder from '+/components/TakeOrder';
 import withForm from './withForm';
-import EnginePriceQuery from './data/enginePrice';
+import EngineQuery from './data/engine';
 import isSameAddress from '~/shared/utils/isSameAddress';
 import {
   debounceTime,
@@ -134,10 +134,10 @@ const OrderFormContainer: React.PureComponent<{}, {}> = props => {
       components={[
         <NetworkConsumer />,
         <FundManagerConsumer />,
-        <EnginePriceQuery />,
+        <EngineQuery />,
       ]}
     >
-      {([network, managerProps, enginePrice]) => {
+      {([network, managerProps, engine]) => {
         const isManager =
           !!managerProps.fund &&
           isSameAddress(managerProps.fund, props.address);
@@ -150,7 +150,8 @@ const OrderFormContainer: React.PureComponent<{}, {}> = props => {
             isManager={isManager}
             holdings={props.holdings}
             formValues={props.formValues}
-            enginePrice={R.path(['data', 'enginePrice'], enginePrice)}
+            enginePrice={R.path(['data', 'enginePrice'], engine)}
+            liquidEther={R.path(['data', 'liquidEther'], engine)}
             priceFeedUp={network && network.priceFeedUp}
             orderFormValues={submittedValues}
             setOrderFormValues={setSubmittedValues}
