@@ -43,7 +43,7 @@ export const StepOverview: StatelessComponent<StepOverviewProps> = ({
             <CellBody>
               {values.assets.map(item => {
                 const asset = availableAssets.find(
-                  asset => asset.value === item,
+                  asset => asset.value.toLowerCase() === item.toLowerCase(),
                 );
                 return <div key={asset.value}>{asset.label}</div>;
               })}
