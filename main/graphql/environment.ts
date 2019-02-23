@@ -6,12 +6,14 @@ import {
 } from '@melonproject/protocol/lib/utils/environment/Environment';
 import Wallet from 'ethers-wallet';
 
-export const getEnvironment = (logger?: CurriedLogger) => {
+export const getEnvironment = async (logger?: CurriedLogger) => {
   const environment = constructEnvironment({
     logger,
     endpoint: process.env.ENDPOINT,
     track: process.env.TRACK as Tracks,
   });
+
+  await environment.eth.net.getId();
 
   return withDeployment(environment);
 };
