@@ -34,7 +34,7 @@ const InvestTemplateContainer = ({ router, title, address, children }) => (
                   href: `/invest?address=${address}`,
                 },
                 {
-                  name: 'Allowed assets',
+                  name: 'Allowed subscription assets',
                   href: `/invest/assets?address=${address}`,
                 },
               ],

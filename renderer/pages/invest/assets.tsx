@@ -35,7 +35,10 @@ export default class InvestAssetsPage extends React.Component {
     }
 
     return (
-      <InvestTemplate title="Allowed assets" address={this.props.address}>
+      <InvestTemplate
+        title="Allowed subscription assets"
+        address={this.props.address}
+      >
         <InvestAssets address={this.props.address} />
       </InvestTemplate>
     );

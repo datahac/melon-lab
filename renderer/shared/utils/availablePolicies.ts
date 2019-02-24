@@ -17,7 +17,7 @@ const availablePolicies = (
   tokens?: Tm.QuantityInterface[],
 ): AvailablePolicies => ({
   priceTolerance: {
-    name: 'Price tolerance',
+    name: 'Price tolerance (%)',
     desc: 'The higher the tolerance, the greater the risk',
     unit: '%',
     defaultValue: '',
@@ -28,7 +28,7 @@ const availablePolicies = (
   },
   maxPositions: {
     name: 'Maximum number of positions',
-    desc: 'The higher the tolerance, the greater the risk',
+    desc: 'Higher numbers, greater diversification potential',
     defaultValue: '',
     Component: Input,
     ComponentProps: {
@@ -36,7 +36,7 @@ const availablePolicies = (
     },
   },
   maxConcentration: {
-    name: 'Max concentration',
+    name: 'Max concentration (%)',
     desc: 'High Diversification <-> High Concentration',
     unit: '%',
     defaultValue: '',
@@ -47,7 +47,7 @@ const availablePolicies = (
   },
   userWhitelist: {
     name: 'User whitelist',
-    desc: 'Whitelisted ethereum addresses (one per line)',
+    desc: 'Investor whitelist (one per line)',
     defaultValue: '',
     Component: Textarea,
     ComponentProps: {
@@ -56,7 +56,7 @@ const availablePolicies = (
   },
   assetWhitelist: {
     name: 'Asset whitelist',
-    desc: 'Whitelisted assets (one per line)',
+    desc: 'Whitelisted, investable assets',
     defaultValue: [],
     Component: MultiDropdown,
     ComponentProps: {
@@ -66,7 +66,7 @@ const availablePolicies = (
   },
   assetBlacklist: {
     name: 'Asset blacklist',
-    desc: 'Whitelisted assets (one per line)',
+    desc: 'Blacklisted, investable assets',
     defaultValue: [],
     Component: MultiDropdown,
     ComponentProps: {

@@ -39,7 +39,7 @@ export const StepOverview: StatelessComponent<StepOverviewProps> = ({
             </CellBody>
           </Row>
           <Row>
-            <CellHead>Allowed investment assets</CellHead>
+            <CellHead>Allowed Subscription Assets</CellHead>
             <CellBody>
               {values.assets.map(item => {
                 const asset = availableAssets.find(

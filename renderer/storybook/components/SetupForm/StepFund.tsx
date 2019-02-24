@@ -58,7 +58,7 @@ export const StepName: StatelessComponent<StepNameProps> = ({
         selectedItems={values.exchanges}
       />
 
-      <h4>Allowed investment assets</h4>
+      <h4>Allowed Subscription Assets</h4>
       <Selector
         errors={touched.assets && errors.assets}
         handleOnBlur={handleBlur}

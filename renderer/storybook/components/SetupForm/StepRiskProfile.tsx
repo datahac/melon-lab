@@ -32,7 +32,7 @@ export const StepRiskProfile: StatelessComponent<StepRiskProfileProps> = ({
       <h3>Risk Profile</h3>
       <p>
         Configure the risk management profile of your fund and the rules to be
-        enforce by the smart contracts
+        enforced by the smart contracts
       </p>
 
       <Policies
