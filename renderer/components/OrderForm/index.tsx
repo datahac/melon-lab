@@ -67,7 +67,12 @@ const WrappedOrderForm = withApollo(
         return Rx.merge(kyber$, melon$);
       },
       props.initialValues.price,
-      [props.values.exchange, props.values.quantity, props.enginePrice],
+      [
+        props.values.exchange,
+        props.values.quantity,
+        props.enginePrice,
+        props.values.type,
+      ],
     );
 
     const limitExchanges = props.exchanges
