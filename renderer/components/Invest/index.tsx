@@ -13,7 +13,6 @@ import { withApollo } from 'react-apollo';
 import { compose } from 'recompose';
 import Dropdown from '~/blocks/Dropdown';
 import { SharePriceQuery } from './data/sharePrice';
-import Spinner from '~/blocks/Spinner';
 
 const ParticipationFormContainer = withForm(props => (
   <ParticipationForm {...props} />
@@ -107,28 +106,23 @@ const InvestContainer = ({ address, ...props }) => {
               />
             )}
 
-            {((fundLoading || sharePriceLoading) && (
-              <div>
-                <Spinner icon size="small" />
-              </div>
-            )) || (
-              <ParticipationFormContainer
-                {...props}
-                address={address}
-                setInvestValues={setInvestValues}
-                sharePrice={sharePrice}
-                allowedAssets={allowedAssets}
-                setStep={setStep}
-                asset={asset || firstAllowedAsset}
-                isWaiting={isWaiting}
-                readyToExecute={readyToExecute}
-                isInitialRequest={isInitialRequest}
-                executeRequest={() => setStep(4)}
-                cancelRequest={() => setStep(5)}
-                isExpired={isExpired}
-                account={account}
-              />
-            )}
+            <ParticipationFormContainer
+              {...props}
+              loading={fundLoading || sharePriceLoading}
+              address={address}
+              setInvestValues={setInvestValues}
+              sharePrice={sharePrice}
+              allowedAssets={allowedAssets}
+              setStep={setStep}
+              asset={asset || firstAllowedAsset}
+              isWaiting={isWaiting}
+              readyToExecute={readyToExecute}
+              isInitialRequest={isInitialRequest}
+              executeRequest={() => setStep(4)}
+              cancelRequest={() => setStep(5)}
+              isExpired={isExpired}
+              account={account}
+            />
 
             <InvestTransactions
               fundAddress={address}
