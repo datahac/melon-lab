@@ -203,14 +203,18 @@ export const ManageTemplateContainer = ({
     availableExchanges[item],
   ]);
 
+  const orderbookExchanges = allowedExchangeNames.filter(id => {
+    return id !== 'MELON_ENGINE';
+  });
+
   const [
     selectedExchanges,
     updateExchanges,
     setAllowedExchanges,
-  ] = useExchangeSelector(allowedExchangeNames);
+  ] = useExchangeSelector(orderbookExchanges);
 
   useEffect(() => {
-    setAllowedExchanges(allowedExchangeNames);
+    setAllowedExchanges(orderbookExchanges);
   }, [fundProps.loading]);
 
   const [eventCallback, [asks, bids]] = useEventCallback(
@@ -321,6 +325,7 @@ export const ManageTemplateContainer = ({
               loading: fundProps.loading,
               account,
               isManager,
+              network: network && network.network, 
             }}
             Holdings={Holdings}
             HoldingsProps={{
@@ -353,7 +358,9 @@ export const ManageTemplateContainer = ({
               selectedExchanges,
               asks,
               bids,
-              allExchanges: exchangesMap,
+              allExchanges: exchangesMap.filter(([id]) => {
+                return id !== 'MELON_ENGINE';
+              }),
               loading: orderbookProps.loading || fundProps.loading,
             }}
             OpenOrders={OpenOrdersContainer}

@@ -23,6 +23,7 @@ const FundHeadlineContainer = ({
   account,
   totalFunds,
   quoteAsset,
+  network,
 }) => {
   const [shutDownModal, setShutDownModal] = useSetOpenModal(false);
   const [claimRewardsModal, setClaimRewardsModal] = useSetOpenModal(false);
@@ -56,6 +57,7 @@ const FundHeadlineContainer = ({
               totalFunds={totalFunds}
               quoteAsset={quoteAsset}
               handleClaimRewards={setClaimRewardsModal}
+              network={network}
             />
           </Fragment>
         );

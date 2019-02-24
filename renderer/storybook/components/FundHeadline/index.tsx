@@ -17,7 +17,7 @@ export interface FundHeadlineProps {
   totalFunds?: string;
   quoteAsset?: string;
   address?: string;
-  track?: string;
+  network?: string;
   loading?: boolean;
   decimals?: number;
   inception?: string;
@@ -37,7 +37,7 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   rank,
   totalFunds,
   address,
-  track,
+  network,
   loading,
   decimals = 4,
   inception,
@@ -49,10 +49,8 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   handleShutDown,
   handleClaimRewards,
 }) => {
-  const etherscanUrl =
-    track === 'live'
-      ? `https://etherscan.io/address/${address}`
-      : `https://kovan.etherscan.io/address/${address}`;
+  const prefix = network === 'kovan' ? 'kovan.' : '';
+  const etherscanUrl = network === 'kovan' || network === 'LIVE' && `https://${prefix}etherscan.io/address/${address}`;
 
   return (
     <div className="fund-headline">
@@ -65,19 +63,13 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
         <Fragment>
           <div className="fund-headline__headline">
             <h1 className="fund-headline__title">{name}</h1>
-            <div className="fund-headline__links">
-              <a
-                href="https://ipfs.io/ipfs/Qmc9JRw4zarrs6gJwu6tC58UAgeEujNg9VMWcH8MUEd5TW/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Contact Investors/Managers
-              </a>{' '}
-              |{' '}
-              <a href={etherscanUrl} target="_blank" rel="noopener noreferrer">
-                View on Etherscan
-              </a>
-            </div>
+            {etherscanUrl && (
+              <div className="fund-headline__links">
+                <a href={etherscanUrl} target="_blank" rel="noopener noreferrer">
+                  View on Etherscan
+                </a>
+              </div>
+            )}
 
             <div className="fund-headline__actions">
               {account && address && (
