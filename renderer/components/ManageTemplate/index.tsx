@@ -111,6 +111,17 @@ const useOrderSelector = order => {
         type: bidAskSellBuyMap[type],
         signedOrder: metadata,
       });
+    } else if (exchange === 'KYBER_NETWORK') {
+      set({
+        exchange,
+        strategy: 'Market',
+        type: bidAskSellBuyMap[type],
+        id: null,
+        price: trade,
+        quantity: trade && trade.base,
+        total: trade && trade.quote,
+        signedOrder: null,
+      });
     } else {
       set({
         exchange,
