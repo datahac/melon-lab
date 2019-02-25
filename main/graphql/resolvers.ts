@@ -166,7 +166,7 @@ export default {
     hasActiveRequest: (_, { fundAddress, userAddress }, { loaders }) => {
       return loaders.hasActiveRequest.load({ fundAddress, userAddress });
     },
-    kyberPrice: async (_, { symbol, quantity, type }, { loaders }) => {
+    kyberPrice: async (_, { symbol, quantity, total, type }, { loaders }) => {
       const environment = await loaders.environment();
       const kyberNetworkProxy = R.path(
         [
@@ -181,18 +181,28 @@ export default {
 
       const weth = getTokenBySymbol(environment, 'WETH');
       const makerAsset =
-        type === 'BUY' ? weth : getTokenBySymbol(environment, symbol);
+        type === 'BUY' ? getTokenBySymbol(environment, symbol) : weth;
       const takerAsset =
-        type === 'SELL' ? weth : getTokenBySymbol(environment, symbol);
+        type === 'SELL' ? getTokenBySymbol(environment, symbol) : weth;
 
-      const fillTakerQuantity = Tm.createQuantity(takerAsset, quantity);
+      const fillTakerQuantity = Tm.createQuantity(
+        takerAsset,
+        type === 'SELL' ? quantity : total,
+      );
+
       const rate = await getExpectedRate(environment, kyberNetworkProxy, {
         makerAsset,
         takerAsset,
         fillTakerQuantity,
       });
 
-      return rate;
+      // Quote token is wrong from expected rate for SELL prices
+      const price =
+        type === 'BUY'
+          ? Tm.normalize(Tm.createPrice(rate.quote, rate.base))
+          : rate;
+
+      return price;
     },
     enginePrice: async (_, __, { loaders }) => {
       const environment = await loaders.environment();

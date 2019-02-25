@@ -401,7 +401,12 @@ type Query {
   "Loads the current routes for fund creation for a fund manager address."
   routes("The address of the fund manager." manager: String): Routes
 
-  kyberPrice(symbol: String!, quantity: String!, type: TradeTypeEnum!): Price
+  kyberPrice(
+    symbol: String!
+    quantity: String!
+    total: String!
+    type: TradeTypeEnum!
+  ): Price
   enginePrice: Price
   liquidEther: Quantity
 

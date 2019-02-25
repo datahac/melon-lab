@@ -1,9 +1,10 @@
 query KyberPriceQuery(
   $symbol: String!
   $quantity: String!
+  $total: String!
   $type: TradeTypeEnum!
 ) {
-  kyberPrice(symbol: $symbol, quantity: $quantity, type: $type) {
+  kyberPrice(symbol: $symbol, quantity: $quantity, total: $total, type: $type) {
     base {
       token {
         symbol

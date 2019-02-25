@@ -19,6 +19,8 @@ const estimateTakeOrder = async (
   { loaders },
 ) => {
   const environment = await loaders.environment();
+  console.log({ exchange, buyToken, buyQuantity, sellToken, sellQuantity });
+
   const env: Environment = withDifferentAccount(
     environment,
     new Tm.Address(from),
@@ -65,17 +67,21 @@ const estimateTakeOrder = async (
     );
 
     const buy = Tm.createQuantity(getTokenBySymbol(env, buyToken), buyQuantity);
+    const sell = Tm.createQuantity(
+      getTokenBySymbol(env, sellToken),
+      sellQuantity,
+    );
 
-    const rate = await getExpectedRate(env, kyberNetworkProxy, {
-      takerAsset: buy.token,
-      makerAsset: getTokenBySymbol(env, sellToken),
-      fillTakerQuantity: buy,
-    });
+    // const rate = await getExpectedRate(env, kyberNetworkProxy, {
+    //   takerAsset: getTokenBySymbol(env, sellToken),
+    //   makerAsset: buy.token,
+    //   fillTakerQuantity: buy,
+    // });
 
-    const sell = Tm.valueIn(rate, buy);
+    // const sell = Tm.valueIn(rate, buy);
 
     const result = await takeOrderOnKyber.prepare(env, tradingAddress, {
-      makerQuantity: Tm.createQuantity(buy.token, 0),
+      makerQuantity: buy, //Tm.createQuantity(buy.token, 0),
       takerQuantity: sell,
     });
 

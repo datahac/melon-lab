@@ -29,15 +29,17 @@ const WrappedOrderForm = withApollo(
         const kyber$ = inputs$.pipe(
           filter(([exchange]) => exchange === 'KYBER_NETWORK'),
           debounceTime(250),
-          switchMap(async ([_, quantity]) => {
+          switchMap(async ([_, quantity, total, __, type]) => {
             const result = await props.client.query({
               query: KyberPriceQuery,
               variables: {
                 quantity:
                   (quantity && quantity.quantity.toString()) ||
                   '1000000000000000000',
+                total:
+                  (total && total.quantity.toString()) || '1000000000000000000',
                 symbol: props.baseToken.token.symbol,
-                type: props.values.type && props.values.type.toUpperCase(),
+                type: type.toUpperCase(),
               },
             });
 
@@ -58,7 +60,7 @@ const WrappedOrderForm = withApollo(
 
         const melon$ = inputs$.pipe(
           filter(([exchange]) => exchange === 'MELON_ENGINE'),
-          tap(([, , enginePrice]) => {
+          tap(([, , , enginePrice]) => {
             props.setFieldValue('price', enginePrice);
             props.setFieldValue('type', 'Sell');
           }),
@@ -70,6 +72,7 @@ const WrappedOrderForm = withApollo(
       [
         props.values.exchange,
         props.values.quantity,
+        props.values.total,
         props.enginePrice,
         props.values.type,
       ],
