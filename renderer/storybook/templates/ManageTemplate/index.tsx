@@ -26,7 +26,7 @@ const ManageTemplate = ({
     R.path(['fund', 'isShutdown'], FundHeadlineProps) &&
     'This fund is shutdown';
 
-    return (
+  return (
     <Layout>
       <div className="manage-template">
         <style jsx>{styles}</style>

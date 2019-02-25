@@ -325,7 +325,7 @@ export const ManageTemplateContainer = ({
               loading: fundProps.loading,
               account,
               isManager,
-              network: network && network.network, 
+              network: network && network.network,
             }}
             Holdings={Holdings}
             HoldingsProps={{

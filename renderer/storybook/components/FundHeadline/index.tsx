@@ -50,7 +50,9 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   handleClaimRewards,
 }) => {
   const prefix = network === 'kovan' ? 'kovan.' : '';
-  const etherscanUrl = network === 'kovan' || network === 'LIVE' && `https://${prefix}etherscan.io/address/${address}`;
+  const etherscanUrl =
+    network === 'kovan' ||
+    (network === 'LIVE' && `https://${prefix}etherscan.io/address/${address}`);
 
   return (
     <div className="fund-headline">
@@ -65,7 +67,11 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
             <h1 className="fund-headline__title">{name}</h1>
             {etherscanUrl && (
               <div className="fund-headline__links">
-                <a href={etherscanUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={etherscanUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   View on Etherscan
                 </a>
               </div>
