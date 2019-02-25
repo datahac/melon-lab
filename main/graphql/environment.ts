@@ -11,10 +11,15 @@ import {
   catchError,
   scan,
   delay,
-  publishReplay,
-  tap,
   shareReplay,
+  withLatestFrom,
+  switchMap,
+  distinctUntilChanged,
+  skipUntil,
+  map,
+  tap,
   retry,
+  publishReplay,
 } from 'rxjs/operators';
 
 const createEnvironment = async (endpoint: string, logger?: CurriedLogger) => {
@@ -28,43 +33,57 @@ const createEnvironment = async (endpoint: string, logger?: CurriedLogger) => {
   return withDeployment(environment);
 };
 
+const withRetry = (times, interval) =>
+  retryWhen(errors =>
+    errors.pipe(
+      scan((count, error) => {
+        if (count >= times) {
+          throw error;
+        }
+
+        return count + 1;
+      }, 0),
+      delay(interval),
+    ),
+  );
+
+const withFallback = (fallback, logger?: CurriedLogger) =>
+  catchError(() => Rx.defer(() => createEnvironment(fallback, logger)));
+
 export const getEnvironment = async (logger?: CurriedLogger) => {
   const [primary, ...fallbacks] = (process.env.ENDPOINT as string).split(',');
 
-  const withRetry = (times, interval) =>
-    retryWhen(errors =>
-      errors.pipe(
-        scan((count, error) => {
-          if (count >= times) {
-            throw error;
+  const makeEnvironment = () =>
+    fallbacks
+      .reduce((carry, current) => {
+        return carry.pipe(
+          withFallback(current),
+          withRetry(3, 250),
+        );
+      }, Rx.defer(() => createEnvironment(primary, logger)))
+      .pipe(withRetry(3, 250));
+
+  const environment$ = makeEnvironment();
+  const stream$ = environment$.pipe(
+    switchMap(environment =>
+      Rx.interval(250).pipe(
+        switchMap(() => environment.eth.net.getId()),
+        scan((carry, current) => {
+          if (carry && carry !== current) {
+            throw new Error('Network change detected.');
           }
 
-          return count + 1;
-        }, 0),
-        delay(interval),
+          return current;
+        }),
+        distinctUntilChanged(),
+        map(() => environment),
       ),
-    );
-
-  const withFallback = fallback =>
-    catchError(() => {
-      return Rx.from(createEnvironment(fallback, logger));
-    });
-
-  const makeEnvironment = () =>
-    fallbacks.reduce(
-      (carry, current) =>
-        carry.pipe(
-          withRetry(3, 250),
-          withFallback(current),
-        ),
-      Rx.defer(() => createEnvironment(primary, logger)),
-    );
-
-  return makeEnvironment().pipe(
-    withRetry(3, 1000),
-    catchError(() => Rx.from(makeEnvironment())),
-    shareReplay(1),
+    ),
+    retry(),
+    publishReplay(1),
   );
+
+  return stream$;
 };
 
 export const getWallet = async () => {

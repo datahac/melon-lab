@@ -47,6 +47,12 @@ const peerCountSubscription = gql`
   }
 `;
 
+const networkSubscription = gql`
+  subscription NetworkSubscription {
+    network
+  }
+`;
+
 const NetworkContextHandler = ({ children, ...props }) => {
   const [blockOverdue, setBlockOverdue] = useState(false);
   let unsubscribe;
@@ -92,10 +98,24 @@ export const NetworkProvider = ({ children }) => (
           return props.subscribeToMore({
             document: subscription,
             updateQuery: (previous, { subscriptionData: result }) => {
+              const value = result && result.data && result.data[field];
+              if (
+                field === 'network' &&
+                previous.network &&
+                previous.network !== value
+              ) {
+                props.client.resetStore();
+
+                return {
+                  ...defaults,
+                  [field]: value,
+                };
+              }
+
               return {
                 ...defaults,
                 ...previous,
-                [field]: result && result.data && result.data[field],
+                [field]: value,
               };
             },
           });
@@ -106,6 +126,7 @@ export const NetworkProvider = ({ children }) => (
           subscribeToField(currentBlockSubscription, 'currentBlock'),
           subscribeToField(peerCountSubscription, 'peerCount'),
           subscribeToField(priceFeedUpSubscription, 'priceFeedUp'),
+          subscribeToField(networkSubscription, 'network'),
         ];
 
         return () => {

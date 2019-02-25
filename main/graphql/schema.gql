@@ -749,6 +749,7 @@ type Mutation {
 type Subscription {
   orders(exchange: ExchangeEnum!, base: String!, quote: String!): [OrderEvent]
   currentBlock: String
+  network: String
   nodeSynced: Boolean
   priceFeedUp: Boolean
   peerCount: String

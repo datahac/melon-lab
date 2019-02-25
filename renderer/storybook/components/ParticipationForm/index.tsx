@@ -70,21 +70,23 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   return (
     <Fragment>
       <style jsx>{styles}</style>
-      {!loading && !allowedAssets.length && (
+      {(!loading && !allowedAssets.length && (
         <Notification isWarning>
           This fund does not currently allow investment.
         </Notification>
-      ) || null}
+      )) ||
+        null}
 
-      {allowedAssets.length && (
+      {(allowedAssets.length && (
         <div className="participation-form">
-          {isWaiting && !isExpired && (
+          {(isWaiting && !isExpired && (
             <Notification isWarning>
               You already requested an investment for this fund. Please wait!
             </Notification>
-          ) || null}
+          )) ||
+            null}
 
-          {readyToExecute && (
+          {(readyToExecute && (
             <Fragment>
               <Notification isWarning>
                 Execute your investment request!
@@ -92,15 +94,17 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
               <hr />
               <Button onClick={executeRequest}>Execute Request</Button>
             </Fragment>
-          ) || null}
+          )) ||
+            null}
 
-          {isExpired && (
+          {(isExpired && (
             <Fragment>
               <Notification isWarning>Your request is expired!</Notification>
               <hr />
               <Button onClick={cancelRequest}>Cancel Request</Button>
             </Fragment>
-          ) || null}
+          )) ||
+            null}
 
           {!loading && !isWaiting && !readyToExecute && (
             <Form onSubmit={handleSubmit}>
@@ -124,8 +128,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
               </div>
               <div className="participation-form__current-price">
                 <span>
-                  Current share price:{' '}
-                  {sharePrice && Tm.toFixed(sharePrice)}
+                  Current share price: {sharePrice && Tm.toFixed(sharePrice)}
                 </span>
               </div>
 
@@ -154,10 +157,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
                 <Input
                   value={values.total && Tm.toFixed(values.total, decimals)}
                   type="number"
-                  label={`Total (${R.path(
-                    ['token', 'symbol'],
-                    values.total,
-                  )})`}
+                  label={`Total (${R.path(['token', 'symbol'], values.total)})`}
                   name="total"
                   insideLabel
                   placeholder={numberPlaceholder}
@@ -176,7 +176,8 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
             </Form>
           )}
         </div>
-      ) || null}
+      )) ||
+        null}
     </Fragment>
   );
 };

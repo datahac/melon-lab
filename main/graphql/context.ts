@@ -33,6 +33,7 @@ export async function createContext(environment$, wallet = null) {
     ranking$,
     syncing$,
     recentPrice$,
+    environment$,
   };
 
   Object.values(streams).forEach(stream$ => stream$.connect());

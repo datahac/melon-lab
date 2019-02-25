@@ -12,6 +12,7 @@ import {
   takeUntil,
   take,
   merge,
+  switchMap,
 } from 'rxjs/operators';
 import * as Tm from '@melonproject/token-math';
 import {
@@ -70,6 +71,7 @@ import { estimateEnableInvestment } from './mutators/estimateEnableInvestment';
 import { executeEnableInvestment } from './mutators/executeEnableInvestment';
 
 import { WalletTypes } from './context';
+import resolveNetwork from './utils/resolveNetwork';
 
 const exchangeMap = {
   [Exchanges.ZeroEx]: 'RADAR_RELAY',
@@ -576,6 +578,18 @@ export default {
           address,
         });
         const stream$ = observable$.pipe(distinctUntilChanged(R.equals));
+
+        return toAsyncIterator(stream$);
+      },
+    },
+    network: {
+      resolve: value => value,
+      subscribe: (_, __, { streams }) => {
+        const stream$ = streams.environment$.pipe(
+          switchMap(environment => environment.eth.net.getId()),
+          distinctUntilChanged(),
+          map(id => resolveNetwork(id)),
+        );
 
         return toAsyncIterator(stream$);
       },

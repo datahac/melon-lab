@@ -93,11 +93,9 @@ const InvestContainer = ({ address, ...props }) => {
 
         return (
           <Fragment>
-            {fundLoading && (
-              <Spinner icon />
-            ) || null}
+            {(fundLoading && <Spinner icon />) || null}
 
-            {!fundLoading && !readyToExecute && (
+            {(!fundLoading && !readyToExecute && (
               <Dropdown
                 onChange={event => {
                   setAsset(event.target.value);
@@ -109,7 +107,8 @@ const InvestContainer = ({ address, ...props }) => {
                 }))}
                 name="asset"
               />
-            ) || null}
+            )) ||
+              null}
 
             <ParticipationFormContainer
               {...props}
