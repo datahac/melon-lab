@@ -14,8 +14,7 @@ export const prepareServer = async () => {
       : require('@melonproject/protocol/lib/tests/utils/testLogger').testLogger;
 
   const wallet = await getWallet();
-  const environment = await getEnvironment(logger);
-  const context = await createContext(environment, wallet);
+  const context = await createContext(getEnvironment(logger), wallet);
   const link = createSchemaLink({ schema, context });
   createIpcExecutor({ link, ipc: ipcMain });
 };

@@ -51,8 +51,9 @@ const withHardwareSigner = (environment: Environment, account: Tm.Address) => {
 const estimateMakeOrder = async (
   _,
   { from, exchange, buyToken, buyQuantity, sellToken, sellQuantity },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const fund = await loaders.fundAddressFromManager.load(from);
   const { tradingAddress } = await loaders.fundRoutes.load(fund);
   const env = withDifferentAccount(environment, new Tm.Address(from));

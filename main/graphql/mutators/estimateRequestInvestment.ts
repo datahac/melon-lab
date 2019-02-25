@@ -9,8 +9,9 @@ import {
 const estimateRequestInvestment = async (
   _,
   { from, fundAddress, investmentAmount, investmentAsset, maxPrice },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   try {
     const {
       participationAddress,

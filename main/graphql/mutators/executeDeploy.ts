@@ -1,7 +1,8 @@
 import * as Tm from '@melonproject/token-math';
 import { withDifferentAccount, deployContract } from '@melonproject/protocol';
 
-const executeDeploy = async (_, { from, signedOrNot }, { environment }) => {
+const executeDeploy = async (_, { from, signedOrNot }, { loaders }) => {
+  const environment = await loaders.environment();
   const args = signedOrNot.rawTransaction
     ? { signedTransaction: signedOrNot.rawTransaction }
     : { unsignedTransaction: signedOrNot };

@@ -4,8 +4,9 @@ import { withDifferentAccount, executeRequest } from '@melonproject/protocol';
 const estimateExecuteRequest = async (
   _,
   { from, fundAddress },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const { participationAddress } = await loaders.fundRoutes.load(fundAddress);
   const env = withDifferentAccount(environment, new Tm.Address(from));
 

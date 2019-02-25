@@ -7,8 +7,9 @@ import {
 const estimateTriggerRewardAllFees = async (
   _,
   { from, fundAddress },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const { accountingAddress } = await loaders.fundRoutes.load(fundAddress);
 
   const env = withDifferentAccount(environment, new Tm.Address(from));

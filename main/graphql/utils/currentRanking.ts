@@ -6,6 +6,7 @@ import {
   retryWhen,
   delay,
   concatMap,
+  withLatestFrom,
 } from 'rxjs/operators';
 import { getFundDetails } from '@melonproject/protocol';
 
@@ -18,18 +19,19 @@ const requestRanking = (environment, rankingAddress, versionAddress) => {
   );
 };
 
-const currentRanking = (environment, block$) => {
+const currentRanking = (environment$, block$) => {
   const throttled$ = block$.pipe(
     distinctUntilKeyChanged('number'),
     throttleTime(5000),
   );
 
   return throttled$.pipe(
-    concatMap(() => {
+    withLatestFrom(environment$),
+    concatMap(([_, env]) => {
       return requestRanking(
-        environment,
-        environment.deployment.melonContracts.ranking,
-        environment.deployment.melonContracts.version,
+        env,
+        env.deployment.melonContracts.ranking,
+        env.deployment.melonContracts.version,
       );
     }),
   );

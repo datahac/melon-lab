@@ -4,8 +4,9 @@ import { withDifferentAccount, completeSetup } from '@melonproject/protocol';
 const executeFundSetupComplete = async (
   _,
   { from, signedOrNot },
-  { environment },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const transaction = signedOrNot.rawTransaction
     ? signedOrNot.rawTransaction
     : signedOrNot;

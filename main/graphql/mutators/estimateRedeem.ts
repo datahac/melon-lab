@@ -8,8 +8,9 @@ import {
 const estimateRedeem = async (
   _,
   { from, fundAddress, sharesQuantity },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const { participationAddress } = await loaders.fundRoutes.load(fundAddress);
 
   const fundToken = await getFundToken(environment, fundAddress);

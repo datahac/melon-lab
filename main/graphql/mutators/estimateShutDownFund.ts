@@ -1,11 +1,8 @@
 import * as Tm from '@melonproject/token-math';
 import { withDifferentAccount, shutDownFund } from '@melonproject/protocol';
 
-const estimateShutDownFund = async (
-  _,
-  { from, fundAddress },
-  { environment },
-) => {
+const estimateShutDownFund = async (_, { from, fundAddress }, { loaders }) => {
+  const environment = await loaders.environment();
   const params = {
     hub: fundAddress,
   };

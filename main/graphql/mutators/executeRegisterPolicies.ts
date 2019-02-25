@@ -4,8 +4,9 @@ import { withDifferentAccount, register } from '@melonproject/protocol';
 const executeRegisterPolicies = async (
   _,
   { from, signedOrNot },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const transaction = signedOrNot.rawTransaction
     ? signedOrNot.rawTransaction
     : signedOrNot;

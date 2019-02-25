@@ -35,7 +35,7 @@ export const InvestAssetsForm: StatelessComponent<InvestAssetsProps> = ({
     <style jsx>{styles}</style>
     {loading ? (
       <div className="invest-assets-form__spinner">
-        <Spinner icon size="small" />
+        <Spinner icon />
       </div>
     ) : (
       <div className="invest-assets-form">

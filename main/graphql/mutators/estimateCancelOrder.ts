@@ -9,11 +9,8 @@ import {
   cancelEthfinexOrder,
 } from '@melonproject/protocol';
 
-const estimateCancelOrder = async (
-  _,
-  { from, id, exchange },
-  { environment, loaders },
-) => {
+const estimateCancelOrder = async (_, { from, id, exchange }, { loaders }) => {
+  const environment = await loaders.environment();
   const fund = await loaders.fundAddressFromManager.load(from);
   const { tradingAddress } = await loaders.fundRoutes.load(fund);
   const env = withDifferentAccount(environment, new Tm.Address(from));

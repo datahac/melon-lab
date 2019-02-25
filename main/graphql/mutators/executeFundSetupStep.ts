@@ -13,8 +13,9 @@ import {
 const executeFundSetupStep = async (
   _,
   { step, from, signedOrNot },
-  { environment },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const transaction = signedOrNot.rawTransaction
     ? signedOrNot.rawTransaction
     : signedOrNot;

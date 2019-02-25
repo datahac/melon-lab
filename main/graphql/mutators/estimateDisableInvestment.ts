@@ -7,8 +7,9 @@ import {
 const estimateDisableInvestment = async (
   _,
   { from, fundAddress, assets },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const params = {
     assets,
   };

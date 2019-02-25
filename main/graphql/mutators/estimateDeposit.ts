@@ -5,11 +5,8 @@ import {
   getTokenBySymbol,
 } from '@melonproject/protocol';
 
-const estimateDeposit = async (
-  _,
-  { from, quantity },
-  { environment, loaders },
-) => {
+const estimateDeposit = async (_, { from, quantity }, { loaders }) => {
+  const environment = await loaders.environment();
   const wethToken = await getTokenBySymbol(environment, 'WETH');
   const env = withDifferentAccount(environment, new Tm.Address(from));
 

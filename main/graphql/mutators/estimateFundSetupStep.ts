@@ -10,7 +10,8 @@ import {
   withDifferentAccount,
 } from '@melonproject/protocol';
 
-const estimateFundSetupStep = async (_, { step, from }, { environment }) => {
+const estimateFundSetupStep = async (_, { step, from }, { loaders }) => {
+  const environment = await loaders.environment();
   const version = environment.deployment.melonContracts.version;
   const fn = {
     CREATE_ACCOUNTING: createAccounting,

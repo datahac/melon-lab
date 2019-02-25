@@ -1,4 +1,4 @@
-import { publishReplay } from 'rxjs/operators';
+import { publishReplay, takeLast } from 'rxjs/operators';
 import createLoaders from './loaders';
 import subscribeBlock from './utils/subscribeBlock';
 import currentRanking from './utils/currentRanking';
@@ -12,18 +12,18 @@ export enum WalletTypes {
   INJECTED = 'INJECTED',
 }
 
-export async function createContext(environment, wallet = null) {
+export async function createContext(environment$, wallet = null) {
   // The current wallet (in an electron context);
   let currentWallet = wallet;
   let walletType: WalletTypes | undefined = !!wallet
     ? WalletTypes.INJECTED
     : undefined;
 
-  const block$ = subscribeBlock(environment).pipe(publishReplay(1));
-  const syncing$ = subscribeSyncing(environment).pipe(publishReplay(1));
-  const peers$ = currentPeers(environment, block$).pipe(publishReplay(1));
-  const ranking$ = currentRanking(environment, block$).pipe(publishReplay(1));
-  const recentPrice$ = hasRecentPrice(environment, block$).pipe(
+  const block$ = subscribeBlock(environment$).pipe(publishReplay(1));
+  const syncing$ = subscribeSyncing(environment$).pipe(publishReplay(1));
+  const peers$ = currentPeers(environment$, block$).pipe(publishReplay(1));
+  const ranking$ = currentRanking(environment$, block$).pipe(publishReplay(1));
+  const recentPrice$ = hasRecentPrice(environment$, block$).pipe(
     publishReplay(1),
   );
 
@@ -37,21 +37,24 @@ export async function createContext(environment, wallet = null) {
 
   Object.values(streams).forEach(stream$ => stream$.connect());
 
-  return () => ({
-    environment,
-    streams,
-    loaders: {
-      setWallet: (value, type: WalletTypes = WalletTypes.KEYTAR) => {
-        currentWallet = value;
-        walletType = type;
+  return () => {
+    const loaders = createLoaders(environment$, streams);
+
+    return {
+      streams,
+      loaders: {
+        setWallet: (value, type: WalletTypes = WalletTypes.KEYTAR) => {
+          currentWallet = value;
+          walletType = type;
+        },
+        getWallet: () => {
+          return currentWallet;
+        },
+        getWalletType: () => {
+          return walletType;
+        },
+        ...loaders,
       },
-      getWallet: () => {
-        return currentWallet;
-      },
-      getWalletType: () => {
-        return walletType;
-      },
-      ...createLoaders(environment, streams),
-    },
-  });
+    };
+  };
 }

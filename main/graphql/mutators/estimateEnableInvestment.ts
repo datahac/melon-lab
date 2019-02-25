@@ -4,8 +4,9 @@ import { withDifferentAccount, enableInvestment } from '@melonproject/protocol';
 const estimateEnableInvestment = async (
   _,
   { from, fundAddress, assets },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const params = {
     assets,
   };

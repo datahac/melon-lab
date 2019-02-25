@@ -5,7 +5,8 @@ import {
   getTokenBySymbol,
 } from '@melonproject/protocol';
 
-const executeDeposit = async (_, { from, signedOrNot }, { environment }) => {
+const executeDeposit = async (_, { from, signedOrNot }, { loaders }) => {
+  const environment = await loaders.environment();
   const transaction = signedOrNot.rawTransaction
     ? signedOrNot.rawTransaction
     : signedOrNot;

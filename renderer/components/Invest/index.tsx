@@ -13,6 +13,7 @@ import { withApollo } from 'react-apollo';
 import { compose } from 'recompose';
 import Dropdown from '~/blocks/Dropdown';
 import { SharePriceQuery } from './data/sharePrice';
+import Spinner from '~/blocks/Spinner';
 
 const ParticipationFormContainer = withForm(props => (
   <ParticipationForm {...props} />
@@ -92,6 +93,10 @@ const InvestContainer = ({ address, ...props }) => {
 
         return (
           <Fragment>
+            {fundLoading && (
+              <Spinner icon />
+            ) || null}
+
             {!fundLoading && !readyToExecute && (
               <Dropdown
                 onChange={event => {
@@ -104,7 +109,7 @@ const InvestContainer = ({ address, ...props }) => {
                 }))}
                 name="asset"
               />
-            )}
+            ) || null}
 
             <ParticipationFormContainer
               {...props}

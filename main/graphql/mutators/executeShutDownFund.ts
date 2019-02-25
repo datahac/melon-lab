@@ -4,8 +4,9 @@ import { withDifferentAccount, shutDownFund } from '@melonproject/protocol';
 const executeShutDownFund = async (
   _,
   { from, signedOrNot, fundAddress },
-  { environment },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const transaction = signedOrNot.rawTransaction
     ? signedOrNot.rawTransaction
     : signedOrNot;

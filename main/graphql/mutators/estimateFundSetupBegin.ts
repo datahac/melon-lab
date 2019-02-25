@@ -16,8 +16,9 @@ const estimateFundSetupBegin = async (
     performanceFee,
     feePeriod = '90',
   },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const quoteToken = await loaders.quoteToken();
   const {
     exchangeConfigs,

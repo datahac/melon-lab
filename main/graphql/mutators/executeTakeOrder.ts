@@ -11,8 +11,9 @@ import {
 const executeTakeOrder = async (
   _,
   { from, signedOrNot, exchange },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const transaction = signedOrNot.rawTransaction
     ? signedOrNot.rawTransaction
     : signedOrNot;

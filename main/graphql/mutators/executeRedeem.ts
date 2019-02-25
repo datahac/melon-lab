@@ -4,8 +4,9 @@ import { withDifferentAccount, redeemQuantity } from '@melonproject/protocol';
 const executeRedeem = async (
   _,
   { from, signedOrNot, fundAddress },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   try {
     const transaction = signedOrNot.rawTransaction
       ? signedOrNot.rawTransaction

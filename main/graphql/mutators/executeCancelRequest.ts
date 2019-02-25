@@ -4,8 +4,9 @@ import { withDifferentAccount, cancelRequest } from '@melonproject/protocol';
 const executeCancelRequest = async (
   _,
   { from, signedOrNot, fundAddress },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const transaction = signedOrNot.rawTransaction
     ? signedOrNot.rawTransaction
     : signedOrNot;

@@ -8,8 +8,9 @@ import {
 const estimateApproveTransfer = async (
   _,
   { from, fundAddress, investmentAmount, investmentAsset },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const { participationAddress } = await loaders.fundRoutes.load(fundAddress);
   const investmentToken = getTokenByAddress(environment, investmentAsset);
   const params = {

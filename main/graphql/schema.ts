@@ -34,7 +34,8 @@ addQueryDirectives(schema, {
       return resolve(source, args, context, info);
     }
 
-    const { environment, loaders } = context;
+    const { loaders } = context;
+    const environment = await loaders.environment();
     const wallet = loaders.getWallet();
     const walletType = loaders.getWalletType();
 

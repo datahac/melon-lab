@@ -4,8 +4,9 @@ import { withDifferentAccount, enableInvestment } from '@melonproject/protocol';
 const executeEnableInvestment = async (
   _,
   { from, signedOrNot, fundAddress, assets },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const transaction = signedOrNot.rawTransaction
     ? signedOrNot.rawTransaction
     : signedOrNot;

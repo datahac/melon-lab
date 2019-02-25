@@ -6,6 +6,7 @@ import {
   retryWhen,
   delay,
   concatMap,
+  withLatestFrom,
 } from 'rxjs/operators';
 import { getQuoteToken, hasValidPrice } from '@melonproject/protocol';
 
@@ -20,13 +21,16 @@ const requestHasRecentPrice = environment => {
   );
 };
 
-const hasRecentPrice = (environment, block$) => {
+const hasRecentPrice = (environment$, block$) => {
   const throttled$ = block$.pipe(
     distinctUntilKeyChanged('number'),
     throttleTime(5000),
   );
 
-  return throttled$.pipe(concatMap(() => requestHasRecentPrice(environment)));
+  return throttled$.pipe(
+    withLatestFrom(environment$),
+    concatMap(([_, env]) => requestHasRecentPrice(env)),
+  );
 };
 
 export default hasRecentPrice;

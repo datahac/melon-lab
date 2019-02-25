@@ -16,8 +16,9 @@ import {
 const estimateTakeOrder = async (
   _,
   { from, id, exchange, buyToken, buyQuantity, sellToken, sellQuantity },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const env: Environment = withDifferentAccount(
     environment,
     new Tm.Address(from),

@@ -8,8 +8,9 @@ import {
 const estimateDeployAssetBlacklist = async (
   _,
   { from, addresses },
-  { environment },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const env = withDifferentAccount(environment, new Tm.Address(from));
   const result = await deployContract.prepare(env, Contracts.AssetBlacklist, [
     addresses,

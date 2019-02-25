@@ -11,11 +11,8 @@ enum PolicyTypes {
   BOTH = 'BOTH',
 }
 
-const estimateRegisterPolicies = async (
-  _,
-  { from, policies },
-  { environment, loaders },
-) => {
+const estimateRegisterPolicies = async (_, { from, policies }, { loaders }) => {
+  const environment = await loaders.environment();
   const env = withDifferentAccount(environment, new Tm.Address(from));
   const fund = await loaders.fundAddressFromManager.load(from);
   const { policyManagerAddress } = await loaders.fundRoutes.load(fund);

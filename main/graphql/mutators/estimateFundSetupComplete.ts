@@ -1,7 +1,8 @@
 import * as Tm from '@melonproject/token-math';
 import { withDifferentAccount, completeSetup } from '@melonproject/protocol';
 
-const estimateFundSetupComplete = async (_, { from }, { environment }) => {
+const estimateFundSetupComplete = async (_, { from }, { loaders }) => {
+  const environment = await loaders.environment();
   const version = environment.deployment.melonContracts.version;
   const env = withDifferentAccount(environment, new Tm.Address(from));
   const result = await completeSetup.prepare(env, version);

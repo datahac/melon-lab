@@ -35,29 +35,35 @@ import resolveNetwork from './utils/resolveNetwork';
 import takeLast from './utils/takeLast';
 import { getTokenBySymbol } from '@melonproject/protocol';
 
-export default (environment, streams) => {
-  const fundIsComplete = new DataLoader(addresses => {
-    const fn = getFundIsComplete(environment);
+export default (environment$, streams) => {
+  const environment = memoizeOne(async () => {
+    return takeLast(environment$);
+  });
+
+  const fundIsComplete = new DataLoader(async addresses => {
+    const env = await environment();
+    const fn = getFundIsComplete(env);
     return Promise.all(addresses.map(fn) || []);
   });
 
   const fundAllowedExchanges = new DataLoader(async addresses => {
+    const env = await environment();
     const routes = await fundRoutes.loadMany(addresses);
+
     return Promise.all(
       addresses.map((address, key) => {
         const { tradingAddress } = routes[key] || {
           tradingAddress: null,
         };
 
-        return (
-          tradingAddress && getFundAllowedExchanges(environment, tradingAddress)
-        );
+        return tradingAddress && getFundAllowedExchanges(env, tradingAddress);
       }),
     );
   });
 
   const fundInvestAllowed = new DataLoader(async addresses => {
-    const fn = getInvestAllowed(environment, tokens());
+    const env = await environment();
+    const fn = getInvestAllowed(env, await tokens());
     const routes = await fundRoutes.loadMany(addresses);
 
     return Promise.all(
@@ -72,14 +78,20 @@ export default (environment, streams) => {
   });
 
   const fundRemainingInvestAmount = new DataLoader(async pairs => {
+    const env = await environment();
     const addresses = pairs.map(pair => pair.fund);
     const assets = pairs
       .map(pair => pair.asset)
       .map(asset => {
-        return getTokenBySymbol(environment, asset);
+        return getTokenBySymbol(env, asset);
       });
 
-    const dai = await assetPrice.load(getTokenBySymbol(environment, 'DAI'));
+    const daiToken = getTokenBySymbol(env, 'DAI');
+    if (!daiToken) {
+      throw new Error('Missing DAI token.');
+    }
+
+    const dai = await assetPrice.load(daiToken);
     const calculations = await fundCalculations.loadMany(addresses);
     const prices = await assetPrice.loadMany(assets);
     const fn = getFundRemainingInvestAmount(dai);
@@ -97,6 +109,7 @@ export default (environment, streams) => {
   });
 
   const fundPolicies = new DataLoader(async addresses => {
+    const env = await environment();
     const routes = await fundRoutes.loadMany(addresses);
 
     return Promise.all(
@@ -106,33 +119,36 @@ export default (environment, streams) => {
         };
 
         return (
-          policyManagerAddress &&
-          getFundPolicies(environment, policyManagerAddress)
+          policyManagerAddress && getFundPolicies(env, policyManagerAddress)
         );
       }),
     );
   });
 
-  const fundAddressFromManager = new DataLoader(addresses => {
-    const fn = getFundAddressFromManager(environment);
+  const fundAddressFromManager = new DataLoader(async addresses => {
+    const env = await environment();
+    const fn = getFundAddressFromManager(env);
     return Promise.all(addresses.map(fn) || []);
   });
 
-  const routes = new DataLoader(addresses => {
-    const fn = getRoutes(environment);
+  const routes = new DataLoader(async addresses => {
+    const env = await environment();
+    const fn = getRoutes(env);
     return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundName = new DataLoader(addresses => {
-    const fn = getFundName(environment);
+  const fundName = new DataLoader(async addresses => {
+    const env = await environment();
+    const fn = getFundName(env);
     return Promise.all(addresses.map(fn) || []);
   });
 
   const fundSharePrice = new DataLoader(async pairs => {
+    const env = await environment();
     const funds = pairs.map(pair => pair.fund);
     const routes = await fundRoutes.loadMany(funds);
 
-    const fn = getFundSharePrice(environment);
+    const fn = getFundSharePrice(env);
     return Promise.all(
       pairs.map((pair, key) => {
         const { sharesAddress, accountingAddress } = routes[key];
@@ -143,6 +159,7 @@ export default (environment, streams) => {
   });
 
   const fundDenominationAsset = new DataLoader(async addresses => {
+    const env = await environment();
     const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
@@ -151,14 +168,14 @@ export default (environment, streams) => {
         };
 
         return (
-          accountingAddress &&
-          getFundDenominationAsset(environment, accountingAddress)
+          accountingAddress && getFundDenominationAsset(env, accountingAddress)
         );
       }),
     );
   });
 
   const fundNativeAsset = new DataLoader(async addresses => {
+    const env = await environment();
     const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
@@ -166,10 +183,7 @@ export default (environment, streams) => {
           accountingAddress: null,
         };
 
-        return (
-          accountingAddress &&
-          getFundNativeAsset(environment, accountingAddress)
-        );
+        return accountingAddress && getFundNativeAsset(env, accountingAddress);
       }),
     );
   });
@@ -183,17 +197,20 @@ export default (environment, streams) => {
     );
   });
 
-  const fundOwner = new DataLoader(addresses => {
-    const fn = getFundOwner(environment);
+  const fundOwner = new DataLoader(async addresses => {
+    const env = await environment();
+    const fn = getFundOwner(env);
     return Promise.all(addresses.map(fn) || []);
   });
 
-  const fundRoutes = new DataLoader(addresses => {
-    const fn = getFundRoutes(environment);
+  const fundRoutes = new DataLoader(async addresses => {
+    const env = await environment();
+    const fn = getFundRoutes(env);
     return Promise.all(addresses.map(fn) || []);
   });
 
   const fundTotalSupply = new DataLoader(async addresses => {
+    const env = await environment();
     const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
@@ -201,7 +218,7 @@ export default (environment, streams) => {
           sharesAddress: null,
         };
 
-        return sharesAddress && getFundTotalSupply(environment, sharesAddress);
+        return sharesAddress && getFundTotalSupply(env, sharesAddress);
       }),
     );
   });
@@ -216,12 +233,14 @@ export default (environment, streams) => {
     );
   });
 
-  const fundInception = new DataLoader(addresses => {
-    const fn = getFundInception(environment);
+  const fundInception = new DataLoader(async addresses => {
+    const env = await environment();
+    const fn = getFundInception(env);
     return Promise.all(addresses.map(fn) || []);
   });
 
   const fundCalculations = new DataLoader(async addresses => {
+    const env = await environment();
     const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
@@ -229,15 +248,13 @@ export default (environment, streams) => {
           accountingAddress: null,
         };
 
-        return (
-          accountingAddress &&
-          getFundCalculations(environment, accountingAddress)
-        );
+        return accountingAddress && getFundCalculations(env, accountingAddress);
       }),
     );
   });
 
   const fundHoldings = new DataLoader(async addresses => {
+    const env = await environment();
     const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
@@ -245,20 +262,20 @@ export default (environment, streams) => {
           accountingAddress: null,
         };
 
-        return (
-          accountingAddress && getFundHoldings(environment, accountingAddress)
-        );
+        return accountingAddress && getFundHoldings(env, accountingAddress);
       }),
     );
   });
 
-  const fundIsShutdown = new DataLoader(addresses => {
-    const fn = getFundIsShutdown(environment);
+  const fundIsShutdown = new DataLoader(async addresses => {
+    const env = await environment();
+    const fn = getFundIsShutdown(env);
     return Promise.all(addresses.map(fn) || []);
   });
 
   const fundParticipation = new DataLoader(
     async pairs => {
+      const env = await environment();
       const funds = pairs.map(pair => pair.fund);
       const investors = pairs.map(pair => pair.investor);
       const routes = await fundRoutes.loadMany(funds);
@@ -269,8 +286,7 @@ export default (environment, streams) => {
           };
 
           return (
-            sharesAddress &&
-            getFundParticipation(environment, sharesAddress, investor)
+            sharesAddress && getFundParticipation(env, sharesAddress, investor)
           );
         }),
       );
@@ -295,13 +311,15 @@ export default (environment, streams) => {
   });
 
   const hasActiveRequest = new DataLoader(async addresses => {
-    const fn = getHasActiveRequest(environment);
+    const env = await environment();
+    const fn = getHasActiveRequest(env);
     return Promise.all(addresses.map(fn) || []);
   });
 
   const symbolBalance = new DataLoader(
     async pairs => {
-      const fn = getSymbolBalance(environment);
+      const env = await environment();
+      const fn = getSymbolBalance(env);
       const result = pairs.map(pair => fn(pair.symbol, pair.address));
       return Promise.all(result || []);
     },
@@ -312,7 +330,8 @@ export default (environment, streams) => {
 
   const symbolBalanceObservable = new DataLoader(
     async pairs => {
-      const fn = getSymbolBalanceObservable(environment, streams);
+      const env = await environment();
+      const fn = getSymbolBalanceObservable(env, streams);
       const result = pairs.map(pair => {
         const stream$ = fn(pair.symbol, pair.address);
         return stream$.pipe(share());
@@ -326,8 +345,9 @@ export default (environment, streams) => {
   );
 
   const assetPrice = new DataLoader(
-    tokens => {
-      const fn = getAssetPrice(environment);
+    async tokens => {
+      const env = await environment();
+      const fn = getAssetPrice(env);
       return Promise.all(tokens.map(fn) || []);
     },
     {
@@ -337,7 +357,8 @@ export default (environment, streams) => {
 
   const exchangeOrders = new DataLoader(
     async pairs => {
-      const fn = getExchangeOrders(environment);
+      const env = await environment();
+      const fn = getExchangeOrders(env);
       const result = pairs.map(pair =>
         fn(pair.exchange, pair.base, pair.quote),
       );
@@ -352,7 +373,8 @@ export default (environment, streams) => {
 
   const exchangeOrdersObservable = new DataLoader(
     async pairs => {
-      const fn = getExchangeOrdersObservable(environment);
+      const env = await environment();
+      const fn = getExchangeOrdersObservable(env);
       const result = pairs.map(async pair => {
         const stream$ = await fn(pair.exchange, pair.base, pair.quote);
         return stream$.pipe(share());
@@ -365,11 +387,10 @@ export default (environment, streams) => {
     },
   );
 
-  const quoteToken = memoizeOne(() => {
-    return getQuoteToken(
-      environment,
-      environment.deployment.melonContracts.priceSource,
-    );
+  const quoteToken = memoizeOne(async () => {
+    const env = await environment();
+
+    return getQuoteToken(env, env.deployment.melonContracts.priceSource);
   });
 
   const currentBlock = memoizeOne(() => {
@@ -388,19 +409,23 @@ export default (environment, streams) => {
     return takeLast(streams.peers$);
   });
 
-  const versionDeployment = memoizeOne(() => {
-    return environment.deployment;
+  const versionDeployment = memoizeOne(async () => {
+    const env = await environment();
+    return env.deployment;
   });
 
   const networkName = memoizeOne(async () => {
-    return resolveNetwork(await environment.eth.net.getId());
+    const env = await environment();
+    return resolveNetwork(await env.eth.net.getId());
   });
 
-  const tokens = memoizeOne(() => {
-    return environment.deployment.thirdPartyContracts.tokens;
+  const tokens = memoizeOne(async () => {
+    const env = await environment();
+    return env.deployment.thirdPartyContracts.tokens;
   });
 
   return {
+    environment,
     assetPrice,
     currentBlock,
     hasActiveRequest,

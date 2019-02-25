@@ -8,8 +8,9 @@ import {
 const estimateDeployPriceTolerance = async (
   _,
   { from, percent },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const env = withDifferentAccount(environment, new Tm.Address(from));
 
   const result = await deployContract.prepare(env, Contracts.PriceTolerance, [

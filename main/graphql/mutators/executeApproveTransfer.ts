@@ -8,8 +8,9 @@ import {
 const executeApproveTransfer = async (
   _,
   { from, signedOrNot, fundAddress, investmentAmount, investmentAsset },
-  { environment, loaders },
+  { loaders },
 ) => {
+  const environment = await loaders.environment();
   const transaction = signedOrNot.rawTransaction
     ? signedOrNot.rawTransaction
     : signedOrNot;

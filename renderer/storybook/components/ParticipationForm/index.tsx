@@ -70,11 +70,11 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
   return (
     <Fragment>
       <style jsx>{styles}</style>
-      {!allowedAssets.length && (
+      {!loading && !allowedAssets.length && (
         <Notification isWarning>
           This fund does not currently allow investment.
         </Notification>
-      )}
+      ) || null}
 
       {allowedAssets.length && (
         <div className="participation-form">
@@ -82,7 +82,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
             <Notification isWarning>
               You already requested an investment for this fund. Please wait!
             </Notification>
-          )}
+          ) || null}
 
           {readyToExecute && (
             <Fragment>
@@ -92,7 +92,7 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
               <hr />
               <Button onClick={executeRequest}>Execute Request</Button>
             </Fragment>
-          )}
+          ) || null}
 
           {isExpired && (
             <Fragment>
@@ -100,89 +100,83 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
               <hr />
               <Button onClick={cancelRequest}>Cancel Request</Button>
             </Fragment>
-          )}
+          ) || null}
 
-          {!isWaiting && !readyToExecute && (
-            <Fragment>
-              {loading ? (
-                <Spinner icon size="small" />
-              ) : (
-                <Form onSubmit={handleSubmit}>
-                  <div className="participation-form__input">
-                    <Input
-                      value={
-                        values.quantity && Tm.toFixed(values.quantity, decimals)
-                      }
-                      type="number"
-                      label="Quantity (Shares)"
-                      name="quantity"
-                      insideLabel
-                      placeholder={numberPlaceholder}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      required={true}
-                      formatNumber={true}
-                      error={touched.quantity && errors.quantity}
-                      decimals={decimals}
-                    />
-                  </div>
-                  <div className="participation-form__current-price">
-                    <span>
-                      Current share price:{' '}
-                      {sharePrice && Tm.toFixed(sharePrice)}
-                    </span>
-                  </div>
+          {!loading && !isWaiting && !readyToExecute && (
+            <Form onSubmit={handleSubmit}>
+              <div className="participation-form__input">
+                <Input
+                  value={
+                    values.quantity && Tm.toFixed(values.quantity, decimals)
+                  }
+                  type="number"
+                  label="Quantity (Shares)"
+                  name="quantity"
+                  insideLabel
+                  placeholder={numberPlaceholder}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required={true}
+                  formatNumber={true}
+                  error={touched.quantity && errors.quantity}
+                  decimals={decimals}
+                />
+              </div>
+              <div className="participation-form__current-price">
+                <span>
+                  Current share price:{' '}
+                  {sharePrice && Tm.toFixed(sharePrice)}
+                </span>
+              </div>
 
-                  <div className="participation-form__input">
-                    <Input
-                      value={values.price && Tm.toFixed(values.price, decimals)}
-                      type="number"
-                      label={`Max price (${R.path(
-                        ['quote', 'token', 'symbol'],
-                        values.price,
-                      )})`}
-                      name="price"
-                      insideLabel
-                      placeholder={numberPlaceholder}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      required={true}
-                      formatNumber={true}
-                      error={touched.price && errors.price}
-                      decimals={decimals}
-                      disabled={isInitialRequest}
-                    />
-                  </div>
+              <div className="participation-form__input">
+                <Input
+                  value={values.price && Tm.toFixed(values.price, decimals)}
+                  type="number"
+                  label={`Max price (${R.path(
+                    ['quote', 'token', 'symbol'],
+                    values.price,
+                  )})`}
+                  name="price"
+                  insideLabel
+                  placeholder={numberPlaceholder}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required={true}
+                  formatNumber={true}
+                  error={touched.price && errors.price}
+                  decimals={decimals}
+                  disabled={isInitialRequest}
+                />
+              </div>
 
-                  <div className="participation-form__input">
-                    <Input
-                      value={values.total && Tm.toFixed(values.total, decimals)}
-                      type="number"
-                      label={`Total (${R.path(
-                        ['token', 'symbol'],
-                        values.total,
-                      )})`}
-                      name="total"
-                      insideLabel
-                      placeholder={numberPlaceholder}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      required={true}
-                      formatNumber={true}
-                      error={touched.total && errors.total}
-                      decimals={decimals}
-                    />
-                  </div>
+              <div className="participation-form__input">
+                <Input
+                  value={values.total && Tm.toFixed(values.total, decimals)}
+                  type="number"
+                  label={`Total (${R.path(
+                    ['token', 'symbol'],
+                    values.total,
+                  )})`}
+                  name="total"
+                  insideLabel
+                  placeholder={numberPlaceholder}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required={true}
+                  formatNumber={true}
+                  error={touched.total && errors.total}
+                  decimals={decimals}
+                />
+              </div>
 
-                  <div className="participation-form__input">
-                    <Button type="submit">Submit request</Button>
-                  </div>
-                </Form>
-              )}
-            </Fragment>
+              <div className="participation-form__input">
+                <Button type="submit">Submit request</Button>
+              </div>
+            </Form>
           )}
         </div>
-      )}
+      ) || null}
     </Fragment>
   );
 };

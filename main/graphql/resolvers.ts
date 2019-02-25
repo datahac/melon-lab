@@ -94,7 +94,8 @@ export default {
       const credentials = await keytar.findCredentials('melon.fund');
       return !!(credentials && credentials.length);
     },
-    ethAccounts: async (_, __, { environment }) => {
+    ethAccounts: async (_, __, { loaders }) => {
+      const environment = await loaders.environment();
       try {
         const accounts = await environment.eth.getAccounts();
         return accounts;
@@ -165,7 +166,8 @@ export default {
     hasActiveRequest: (_, { fundAddress, userAddress }, { loaders }) => {
       return loaders.hasActiveRequest.load({ fundAddress, userAddress });
     },
-    kyberPrice: async (_, { symbol, quantity, type }, { environment }) => {
+    kyberPrice: async (_, { symbol, quantity, type }, { loaders }) => {
+      const environment = await loaders.environment();
       const kyberNetworkProxy = R.path(
         [
           'deployment',
@@ -192,7 +194,8 @@ export default {
 
       return rate;
     },
-    enginePrice: async (_, __, { environment }) => {
+    enginePrice: async (_, __, { loaders }) => {
+      const environment = await loaders.environment();
       const engineAddress = R.path(
         ['deployment', 'melonContracts', 'engine'],
         environment,
@@ -209,7 +212,8 @@ export default {
 
       return enginePriceWeth;
     },
-    liquidEther: async (_, __, { environment }) => {
+    liquidEther: async (_, __, { loaders }) => {
+      const environment = await loaders.environment();
       const engineAddress = R.path(
         ['deployment', 'melonContracts', 'engine'],
         environment,
@@ -219,7 +223,8 @@ export default {
 
       return liquidEther;
     },
-    openOrders: async (_, { fundAddress }, { environment, loaders }) => {
+    openOrders: async (_, { fundAddress }, { loaders }) => {
+      const environment = await loaders.environment();
       const {
         tradingAddress,
         accountingAddress,
@@ -504,7 +509,8 @@ export default {
     generateMnemonic: (_, __, { loaders }) => {
       return loaders.generateMnemonic();
     },
-    useFrame: async (_, { address }, { environment, loaders }) => {
+    useFrame: async (_, { address }, { loaders }) => {
+      const environment = await loaders.environment();
       const ethAccounts = await environment.eth.getAccounts();
 
       if (address.toLowerCase() !== ethAccounts[0].toLowerCase()) {
