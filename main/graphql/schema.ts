@@ -28,6 +28,15 @@ const signWithPrivateKey = async (environment, wallet, unsigned) => {
 };
 
 addQueryDirectives(schema, {
+  authenticated: (resolve, source, args, context, info) => {
+    const { loaders } = context;
+    const wallet = loaders.getWallet();
+    if (!wallet) {
+      return null;
+    }
+
+    return resolve(source, args, context, info);
+  },
   sign: async (resolve, source, args, context, info, directiveArgs) => {
     if (typeof args[directiveArgs.target] !== 'undefined') {
       // The transaction is already signed.

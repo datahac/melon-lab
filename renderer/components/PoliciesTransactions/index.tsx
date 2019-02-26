@@ -155,7 +155,6 @@ const policyTypeMap = {
 };
 
 export default withRouter(props => {
-  const [registerPolicies, setRegisterPolicies] = useState([]);
   const [isActive, setIsActive] = useState(true);
   const policiesValues = R.path(['values', 'policies'], props);
 
@@ -217,7 +216,7 @@ export default withRouter(props => {
     selectedPolicies &&
     selectedPolicies.map(policy => ({
       ...policiesToEstimations[policy.name],
-      isComplete: !!registerPolicies.find(item => item.name === policy.name),
+      isComplete: !!props.registerPolicies.find(item => item.name === policy.name),
       name: policy.name,
     }));
 
@@ -232,7 +231,7 @@ export default withRouter(props => {
             type: policyTypeMap[policy.name],
             name: policy.name,
           };
-          setRegisterPolicies([...registerPolicies, data]);
+          props.setRegisterPolicies([...props.registerPolicies, data]);
         },
       };
     });

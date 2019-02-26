@@ -163,10 +163,14 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
               {totalSupply && Tm.toFixed(totalSupply)}
             </div>
             <div className="fund-headline__item">
-              <div className="fund-headline__item-title">
-                Shares owned by me
-              </div>
-              {personalStake && Tm.toFixed(personalStake)}
+              {personalStake && (
+                <Fragment>
+                  <div className="fund-headline__item-title">
+                    Shares owned by me
+                  </div>
+                  {personalStake && Tm.toFixed(personalStake)}
+                </Fragment>
+              )}
             </div>
           </div>
         </Fragment>

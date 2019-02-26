@@ -62,7 +62,7 @@ const SetupFormContainer = withForm(props => {
     props.tokens.reduce((carry, current) => {
       return carry.concat([
         {
-          value: current.address,
+          value: current.address.toLowerCase(),
           label: current.symbol,
         },
       ]);
@@ -136,6 +136,7 @@ const Setup = ({ ...props }) => {
   const [fundValues, setFundValues] = useState(null);
   const [page, setPage] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [registerPolicies, setRegisterPolicies] = useState([]);
 
   return (
     <Composer
@@ -170,6 +171,8 @@ const Setup = ({ ...props }) => {
             }
             values={fundValues}
             fund={manager.fund}
+            registerPolicies={registerPolicies}
+            setRegisterPolicies={setRegisterPolicies}
           />
 
           {(!!fundValues || !manager.fund) && (

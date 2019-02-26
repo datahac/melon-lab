@@ -54,7 +54,7 @@ export const query = gql`
 
       owner
       inception
-      personalStake @account(arg: "investor") @authenticated {
+      personalStake @authenticated @account(arg: "investor") {
         quantity
         token {
           decimals
