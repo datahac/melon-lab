@@ -1,0 +1,17 @@
+.convert-form__input {
+  margin: 0 0 var(--space-m) 0;
+}
+
+.convert-form__balances {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 0 var(--space-xs) var(--space-xs) 0;
+  color: var(--color-grey);
+}
+
+.convert-form__balance:not(:first-child)::after {
+  content: '';
+  margin-right: 8px;
+  padding-right: 8px;
+  border-right: 1px solid var(--color-border);
+}

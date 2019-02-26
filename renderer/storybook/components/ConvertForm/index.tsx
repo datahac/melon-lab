@@ -1,0 +1,82 @@
+import React, { Fragment, StatelessComponent } from 'react';
+import * as Tm from '@melonproject/token-math';
+import Button from '~/blocks/Button';
+import Form from '~/blocks/Form';
+import Input from '~/blocks/Input';
+
+import styles from './styles.css';
+
+export interface FormValues {
+  quantity: Tm.QuantityInterface;
+}
+
+export interface FormErrors {
+  quantity?: string;
+}
+
+export interface ParticipationFormProps {
+  decimals?: number;
+  touched?: any;
+  errors: FormErrors;
+  values: FormValues;
+  handleBlur?: () => void;
+  handleSubmit?: () => void;
+  handleChange?: () => void;
+  executeRequest?: () => void;
+  cancelRequest?: () => void;
+  address?: string;
+  ethBalance?: Tm.QuantityInterface;
+  wethBalance?: Tm.QuantityInterface;
+}
+
+const ConvertForm: StatelessComponent<ParticipationFormProps> = ({
+  decimals = 6,
+  errors,
+  handleBlur,
+  handleSubmit,
+  handleChange,
+  touched,
+  values,
+  ethBalance,
+  wethBalance,
+}) => {
+  console.log(ethBalance);
+  const numberPlaceholder = (0).toFixed(decimals);
+
+  return (
+    <Fragment>
+      <style jsx>{styles}</style>
+      <Form onSubmit={handleSubmit}>
+        <div className="convert-form__balances">
+          <span className="convert-form__balance">
+            ETH: {ethBalance && Tm.toFixed(ethBalance)}
+          </span>
+          <span className="convert-form__balance">
+            WETH: {wethBalance && Tm.toFixed(wethBalance)}
+          </span>
+        </div>
+        <div className="convert-form__input">
+          <Input
+            value={values.quantity && Tm.toFixed(values.quantity, decimals)}
+            type="number"
+            label="Quantity"
+            name="quantity"
+            insideLabel
+            placeholder={numberPlaceholder}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            required={true}
+            formatNumber={true}
+            error={touched.quantity && errors.quantity}
+            decimals={decimals}
+          />
+        </div>
+        <div className="convert-form__input">
+          <Button type="submit">Convert</Button>
+        </div>
+      </Form>
+    </Fragment>
+  );
+};
+
+export default ConvertForm;
