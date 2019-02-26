@@ -18,7 +18,7 @@ const initialValues = props => ({
   exchanges: [],
   terms: false,
   policies: {},
-  assets: props.quoteToken ? [props.quoteToken.address] : [],
+  assets: props.quoteToken ? [props.quoteToken.address.toLowerCase()] : [],
   fees: {
     performanceFee: '0',
     managementFee: '0',
