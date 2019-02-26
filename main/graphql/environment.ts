@@ -50,7 +50,7 @@ const withRetry = (times, interval) =>
 const withFallback = (fallback, logger?: CurriedLogger) =>
   catchError(() => Rx.defer(() => createEnvironment(fallback, logger)));
 
-export const getEnvironment = async (logger?: CurriedLogger) => {
+export const getEnvironment = (logger?: CurriedLogger) => {
   const [primary, ...fallbacks] = (process.env.ENDPOINT as string).split(',');
 
   const makeEnvironment = () =>

@@ -3,11 +3,8 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import flush from 'styled-jsx/server';
 
 const electron = !!JSON.parse(process.env.ELECTRON || 'true');
-const csp = electron
-  ? process.env.NODE_ENV === 'development'
-    ? `default-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src data: http://localhost:8000;`
-    : `default-src 'self' 'unsafe-inline'; font-src data: file:;`
-  : null;
+const csp = electron && process.env.NODE_ENV !== 'development' &&
+  `default-src 'self' 'unsafe-inline'; font-src data: file:;`;
 
 export default class MyDocument extends Document {
   static getInitialProps(context) {
