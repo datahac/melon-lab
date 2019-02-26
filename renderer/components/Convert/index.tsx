@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react';
+import * as R from 'ramda';
 import ConvertForm from '~/components/ConvertForm';
 import withForm from './withForm';
 import { withRouter } from 'next/router';
@@ -7,6 +8,8 @@ import { AccountConsumer } from '+/components/AccountContext';
 import { withApollo } from 'react-apollo';
 import { compose } from 'recompose';
 import { BalanceConsumer } from '../BalanceContext';
+import ModalTransaction from '../ModalTransaction';
+import { estimateDepositMutation, executeDepositMutation } from '~/queries/deposit.gql';
 
 const ConvertFormContainer = withForm(props => <ConvertForm {...props} />);
 
@@ -16,7 +19,6 @@ const InvestContainer = ({ address, ...props }) => {
   return (
     <Composer components={[<AccountConsumer />, <BalanceConsumer />]}>
       {([accountProps, balanceProps]) => {
-        console.log(accountProps, balanceProps);
         return (
           <Fragment>
             <ConvertFormContainer
@@ -26,6 +28,27 @@ const InvestContainer = ({ address, ...props }) => {
               account={accountProps}
               ethBalance={balanceProps.eth}
               wethBalance={balanceProps.weth}
+            />
+
+            <ModalTransaction
+              open={!!convertValues}
+              step="executeDeposit"
+              estimate={{
+                mutation: estimateDepositMutation,
+                variables: {
+                  quantity: R.path(['quantity', 'quantity'], convertValues),
+                },
+              }}
+              execute={{
+                mutation: executeDepositMutation,
+                update: () => {
+                  setConvertValues(null);
+                  props.router.push('/wallet');
+                },
+              }}
+              handleCancel={() => {
+                setConvertValues(null);
+              }}
             />
           </Fragment>
         );

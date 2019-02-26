@@ -24,7 +24,6 @@ export interface ParticipationFormProps {
   handleChange?: () => void;
   executeRequest?: () => void;
   cancelRequest?: () => void;
-  address?: string;
   ethBalance?: Tm.QuantityInterface;
   wethBalance?: Tm.QuantityInterface;
 }
@@ -40,7 +39,6 @@ const ConvertForm: StatelessComponent<ParticipationFormProps> = ({
   ethBalance,
   wethBalance,
 }) => {
-  console.log(ethBalance);
   const numberPlaceholder = (0).toFixed(decimals);
 
   return (
@@ -48,12 +46,13 @@ const ConvertForm: StatelessComponent<ParticipationFormProps> = ({
       <style jsx>{styles}</style>
       <Form onSubmit={handleSubmit}>
         <div className="convert-form__balances">
-          <span className="convert-form__balance">
-            ETH: {ethBalance && Tm.toFixed(ethBalance)}
+          {ethBalance && (<span className="convert-form__balance">
+            ETH: {Tm.toFixed(ethBalance)}
           </span>
-          <span className="convert-form__balance">
-            WETH: {wethBalance && Tm.toFixed(wethBalance)}
-          </span>
+          )}
+          {wethBalance && <span className="convert-form__balance">
+            WETH: {Tm.toFixed(wethBalance)}
+          </span>}
         </div>
         <div className="convert-form__input">
           <Input

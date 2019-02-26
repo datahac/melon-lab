@@ -33,6 +33,10 @@ const WalletTemplateContainer = ({ router, title, text, icon, children }) => (
                   name: 'Settings',
                   href: '/wallet/settings',
                 },
+                {
+                  name: 'Convert',
+                  href: '/wallet/convert',
+                },
               ],
             }
           }
