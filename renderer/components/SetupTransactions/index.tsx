@@ -213,9 +213,10 @@ export default withRouter(props => (
           // onCompleted is not working because of render
           if (R.isEmpty(R.path(['values', 'policies'], props))) {
             props.router.push({
-              pathname: '/invest',
+              pathname: '/policies',
               query: {
                 address: props.fund,
+                destination: encodeURI(`/invest?address=${props.fund}`),
               },
             });
           }

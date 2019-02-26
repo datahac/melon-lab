@@ -59,7 +59,7 @@ export const InvestAssetsForm: StatelessComponent<InvestAssetsProps> = ({
           </div>
 
           <div className="invest-assets-form__input">
-            <Button type="submit">Set allowed subscription assets</Button>
+            <Button type="submit">Submit request</Button>
           </div>
         </Form>
       </div>

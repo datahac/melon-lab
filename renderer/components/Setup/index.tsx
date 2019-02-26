@@ -4,7 +4,6 @@ import { compose } from 'recompose';
 import Wizard from '~/components/Wizard';
 import WizardPage from '~/components/WizardPage';
 import StepFund from '~/components/SetupForm/StepFund';
-import StepRiskProfile from '~/components/SetupForm/StepRiskProfile';
 import StepTerms from '~/components/SetupForm/StepTerms';
 import StepOverview from '~/components/SetupForm/StepOverview';
 import SetupForm from '~/components/SetupForm';
@@ -18,9 +17,7 @@ import { FundManagerConsumer } from '+/components/FundManagerContext';
 import { SetupConsumer } from '+/components/SetupContext';
 import withForm from './withForm';
 import SetupTransactions from '+/components/SetupTransactions';
-import PoliciesTransactions from '+/components/PoliciesTransactions';
 import * as R from 'ramda';
-import availablePolicies from '~/shared/utils/availablePolicies';
 import availableExchangeContracts from '~/shared/utils/availableExchangeContracts';
 import { TokensQuery } from './data/tokens';
 import Spinner from '~/blocks/Spinner';
@@ -35,15 +32,6 @@ const steps = [
     key: 'fee-structure',
     name: 'Fee structure',
     validateFields: ['fees.performanceFee', 'fees.managementFee'],
-  },
-  {
-    key: 'risk-profile',
-    name: 'Risk Profile',
-    validateFields: [
-      'policies.priceTolerance',
-      'policies.maxPositions',
-      'policies.maxConcentration',
-    ],
   },
   {
     key: 'terms-conditions',
@@ -101,16 +89,6 @@ const SetupFormContainer = withForm(props => {
           onClickNext={props.onClickNext}
           onClickPrev={props.onClickPrev}
         >
-          <StepRiskProfile
-            {...props}
-            onActivatePolicy={props.onActivatePolicy}
-            availablePolicies={availablePolicies(tokens)}
-          />
-        </WizardPage>
-        <WizardPage
-          onClickNext={props.onClickNext}
-          onClickPrev={props.onClickPrev}
-        >
           <StepTerms {...props} />
         </WizardPage>
         <WizardPage
@@ -123,7 +101,6 @@ const SetupFormContainer = withForm(props => {
           <StepOverview
             {...props}
             availableExchangeContracts={availableExchangeContracts}
-            availablePolicies={availablePolicies()}
             availableAssets={tokens}
           />
         </WizardPage>
@@ -136,7 +113,6 @@ const Setup = ({ ...props }) => {
   const [fundValues, setFundValues] = useState(null);
   const [page, setPage] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const [registerPolicies, setRegisterPolicies] = useState([]);
 
   return (
     <Composer
@@ -161,18 +137,6 @@ const Setup = ({ ...props }) => {
             routes={manager.routes}
             fund={manager.fund}
             setup={setup}
-          />
-
-          <PoliciesTransactions
-            progress={
-              !R.isEmpty(R.path(['policies'], fundValues)) &&
-              setup.isComplete &&
-              !!manager.fund
-            }
-            values={fundValues}
-            fund={manager.fund}
-            registerPolicies={registerPolicies}
-            setRegisterPolicies={setRegisterPolicies}
           />
 
           {(!!fundValues || !manager.fund) && (

@@ -155,9 +155,7 @@ const policyTypeMap = {
 };
 
 export default withRouter(props => {
-  const [isActive, setIsActive] = useState(true);
   const policiesValues = R.path(['values', 'policies'], props);
-
   const selectedPolicies = R.compose(
     R.map(R.zipObj(['name', 'value'])),
     R.toPairs,
@@ -233,6 +231,7 @@ export default withRouter(props => {
             type: policyTypeMap[policy.name],
             name: policy.name,
           };
+  
           props.setRegisterPolicies([...props.registerPolicies, data]);
         },
       };
@@ -241,7 +240,7 @@ export default withRouter(props => {
   return (
     <ModalTransactions
       text={`The following method on the Melon Smart Contracts will be executed:`}
-      open={isActive && props.progress}
+      open={!!selectedPolicies.length}
       estimations={[
         ...policiesEstimations,
         {
@@ -258,20 +257,17 @@ export default withRouter(props => {
         {
           mutation: executeRegisterPoliciesMutation,
           update: () => {
-            setIsActive(false);
-            props.router.push({
-              pathname: '/invest',
+            props.router.push(props.destination ? props.destination : {
+              pathname: '/manage',
               query: {
-                address: props.fund,
+                address: props.address,
               },
             });
           },
         },
       ]}
       handleCancel={() => {
-        props.router.push({
-          pathname: '/wallet',
-        });
+        props.setFormValues(null);
       }}
     />
   );

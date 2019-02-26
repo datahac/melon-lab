@@ -113,6 +113,21 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
                   </div>
 
                   <div className="fund-headline__action">
+                    <Link
+                      href={{
+                        pathname: '/policies',
+                        query: {
+                          address,
+                        },
+                      }}
+                      style="primary"
+                      size="small"
+                    >
+                      Add policies
+                    </Link>
+                  </div>
+
+                  <div className="fund-headline__action">
                     <Button
                       onClick={handleClaimRewards}
                       style="primary"

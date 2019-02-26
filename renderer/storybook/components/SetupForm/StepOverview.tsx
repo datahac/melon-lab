@@ -7,13 +7,11 @@ import styles from './styles.css';
 export interface StepOverviewProps {
   values;
   availableExchangeContracts;
-  availablePolicies;
   availableAssets;
 }
 
 export const StepOverview: StatelessComponent<StepOverviewProps> = ({
   values,
-  availablePolicies,
   availableExchangeContracts,
   availableAssets,
 }) => {
@@ -57,54 +55,6 @@ export const StepOverview: StatelessComponent<StepOverviewProps> = ({
             <CellHead>Performance Fee</CellHead>
             <CellBody>{values.fees && values.fees.performanceFee}%</CellBody>
           </Row>
-          {!R.isEmpty(values.policies) && (
-            <Fragment>
-              {Object.keys(values.policies).map((keyName, i) => (
-                <Row key={`${keyName}-${i}`}>
-                  <CellHead>{availablePolicies[keyName].name}</CellHead>
-
-                  <CellBody>
-                    {(keyName === 'assetWhitelist' ||
-                      keyName === 'assetBlacklist') && (
-                      <ul className="setup__list">
-                        {values.policies[keyName].map(item => (
-                          <li
-                            className="setup__list-item"
-                            key={`${keyName}-${item.value}`}
-                          >
-                            {item.label}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    {keyName === 'userWhitelist' && (
-                      <ul className="setup__list">
-                        {values.policies[keyName].split('\n').map(item => (
-                          <li
-                            className="setup__list-item"
-                            key={`${keyName}-${item}`}
-                          >
-                            {item}
-                            {availablePolicies[keyName].unit}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    {(keyName === 'priceTolerance' ||
-                      keyName === 'maxPositions' ||
-                      keyName === 'maxConcentration') && (
-                      <Fragment>
-                        {values.policies[keyName]}
-                        {availablePolicies[keyName].unit}
-                      </Fragment>
-                    )}
-                  </CellBody>
-                </Row>
-              ))}
-            </Fragment>
-          )}
         </TableBody>
       </Table>
     </div>

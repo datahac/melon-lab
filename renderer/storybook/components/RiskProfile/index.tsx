@@ -1,38 +1,39 @@
 import React, { StatelessComponent } from 'react';
 import Policies from '~/components/Policies';
-
-import styles from './styles.css';
-import { ObjectCache } from 'apollo-cache-inmemory';
+import Form from '~/blocks/Form';
+import Button from '~/blocks/Button';
 
 interface FormValues {
-  policies: ObjectCache;
+  policies: any;
 }
-export interface StepRiskProfileProps {
+
+export interface RiskProfileProps {
   errors?: any;
   handleBlur?: () => void;
   handleChange?: () => void;
+  handleSubmit?: () => void;
   touched?: any;
   values: FormValues;
   onActivatePolicy;
   availablePolicies;
 }
 
-export const StepRiskProfile: StatelessComponent<StepRiskProfileProps> = ({
+export const RiskProfile: StatelessComponent<RiskProfileProps> = ({
   onActivatePolicy,
   values,
   errors,
   touched,
+  handleSubmit,
   handleBlur,
   handleChange,
   availablePolicies,
 }) => {
   return (
-    <div className="setup__step">
-      <style jsx>{styles}</style>
-      <h3>Risk Profile</h3>
+    <Form onSubmit={handleSubmit}>
+      <h3>Risk Profile</h3> 
       <p>
         Configure the risk management profile of your fund and the rules to be
-        enforced by the smart contracts
+        enforced by the smart contracts.
       </p>
 
       <Policies
@@ -44,8 +45,12 @@ export const StepRiskProfile: StatelessComponent<StepRiskProfileProps> = ({
         onActivatePolicy={onActivatePolicy}
         availablePolicies={availablePolicies}
       />
-    </div>
+
+      <div className="risk-profile-form__input">
+        <Button type="submit">Submit request</Button>
+      </div>
+    </Form>
   );
 };
 
-export default StepRiskProfile;
+export default RiskProfile;
