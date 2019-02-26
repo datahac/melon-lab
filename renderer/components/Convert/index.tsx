@@ -46,6 +46,9 @@ const InvestContainer = ({ address, ...props }) => {
                   setConvertValues(null);
                   props.router.push('/wallet');
                 },
+                refetchQueries: () => [
+                  'BalanceQuery',
+                ],
               }}
               handleCancel={() => {
                 setConvertValues(null);
