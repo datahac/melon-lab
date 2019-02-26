@@ -245,7 +245,7 @@ export default withRouter(props => {
         {
           mutation: estimateRegisterPoliciesMutation,
           variables: {
-            policies: registerPolicies.map(({ name, ...item }) => item),
+            policies: props.registerPolicies.map(({ name, ...item }) => item),
           },
           isComplete: false,
           name: 'registerPolicies',
