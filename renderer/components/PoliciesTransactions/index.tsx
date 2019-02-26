@@ -216,7 +216,9 @@ export default withRouter(props => {
     selectedPolicies &&
     selectedPolicies.map(policy => ({
       ...policiesToEstimations[policy.name],
-      isComplete: !!props.registerPolicies.find(item => item.name === policy.name),
+      isComplete: !!props.registerPolicies.find(
+        item => item.name === policy.name,
+      ),
       name: policy.name,
     }));
 

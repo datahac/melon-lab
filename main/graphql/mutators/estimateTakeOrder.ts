@@ -6,7 +6,6 @@ import {
   Environment,
   takeOrderOnKyber,
   getTokenBySymbol,
-  getExpectedRate,
   getOasisDexOrder,
   takeOasisDexOrder,
   take0xOrder,
@@ -19,7 +18,6 @@ const estimateTakeOrder = async (
   { loaders },
 ) => {
   const environment = await loaders.environment();
-  console.log({ exchange, buyToken, buyQuantity, sellToken, sellQuantity });
 
   const env: Environment = withDifferentAccount(
     environment,
@@ -55,33 +53,14 @@ const estimateTakeOrder = async (
   }
 
   if (exchange === 'KYBER_NETWORK') {
-    const kyberNetworkProxy = R.path(
-      [
-        'deployment',
-        'thirdPartyContracts',
-        'exchanges',
-        'kyber',
-        'kyberNetworkProxy',
-      ],
-      environment,
-    );
-
     const buy = Tm.createQuantity(getTokenBySymbol(env, buyToken), buyQuantity);
     const sell = Tm.createQuantity(
       getTokenBySymbol(env, sellToken),
       sellQuantity,
     );
 
-    // const rate = await getExpectedRate(env, kyberNetworkProxy, {
-    //   takerAsset: getTokenBySymbol(env, sellToken),
-    //   makerAsset: buy.token,
-    //   fillTakerQuantity: buy,
-    // });
-
-    // const sell = Tm.valueIn(rate, buy);
-
     const result = await takeOrderOnKyber.prepare(env, tradingAddress, {
-      makerQuantity: buy, //Tm.createQuantity(buy.token, 0),
+      makerQuantity: buy,
       takerQuantity: sell,
     });
 
