@@ -27,7 +27,11 @@ export const RiskProfile: StatelessComponent<RiskProfileProps> = ({
   handleBlur,
   handleChange,
   availablePolicies,
+  existingPolicies,
 }) => {
+  // TODO: Filter available policies and show already registered policies.
+  console.log(existingPolicies);
+
   return (
     <Form onSubmit={handleSubmit}>
       <h3>Risk Profile</h3> 
