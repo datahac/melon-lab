@@ -41,8 +41,8 @@ export const PoliciesInformation: StatelessComponent<
               </Row>
             </TableHead>
             <TableBody>
-              {policies.map(policy => (
-                <Row key={policy.name} size="small">
+              {policies.map((policy) => (
+                <Row key={policy.address} size="small">
                   <CellBody>{policy.name}</CellBody>
                   <CellBody>{policy.parameters}</CellBody>
                 </Row>
