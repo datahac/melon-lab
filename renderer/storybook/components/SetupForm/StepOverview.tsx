@@ -55,6 +55,10 @@ export const StepOverview: StatelessComponent<StepOverviewProps> = ({
             <CellHead>Performance Fee</CellHead>
             <CellBody>{values.fees && values.fees.performanceFee}%</CellBody>
           </Row>
+          <Row>
+            <CellHead>Performance Fee Period</CellHead>
+            <CellBody>{values.fees && values.fees.feePeriod} days</CellBody>
+          </Row>
         </TableBody>
       </Table>
     </div>
