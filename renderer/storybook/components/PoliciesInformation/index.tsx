@@ -17,7 +17,7 @@ export interface PoliciesInformationProps {
 export const PoliciesInformation: StatelessComponent<
   PoliciesInformationProps
 > = ({ policies, loading }) => {
-  console.log(policies);
+  // console.log(policies);
   return (
     <div className="policies">
       <style jsx>{styles}</style>
