@@ -71,7 +71,7 @@ const ConvertForm: StatelessComponent<ParticipationFormProps> = ({
           />
         </div>
         <div className="convert-form__input">
-          <Button type="submit">Convert</Button>
+          <Button type="submit">Wrap Ether</Button>
         </div>
       </Form>
     </Fragment>

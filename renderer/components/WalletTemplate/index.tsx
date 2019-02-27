@@ -34,7 +34,7 @@ const WalletTemplateContainer = ({ router, title, text, icon, children }) => (
                   href: '/wallet/settings',
                 },
                 {
-                  name: 'Convert',
+                  name: 'Wrap Ether',
                   href: '/wallet/convert',
                 },
               ],
