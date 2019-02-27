@@ -17,6 +17,7 @@ export interface PoliciesInformationProps {
 export const PoliciesInformation: StatelessComponent<
   PoliciesInformationProps
 > = ({ policies, loading }) => {
+  console.log(policies);
   return (
     <div className="policies">
       <style jsx>{styles}</style>
@@ -41,7 +42,7 @@ export const PoliciesInformation: StatelessComponent<
               </Row>
             </TableHead>
             <TableBody>
-              {policies.map((policy) => (
+              {policies.map(policy => (
                 <Row key={policy.address} size="small">
                   <CellBody>{policy.name}</CellBody>
                   <CellBody>{policy.parameters}</CellBody>

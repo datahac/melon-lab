@@ -4,7 +4,10 @@ import * as R from 'ramda';
 import tokens from '~/shared/utils/tokens';
 
 const mapHoldings = R.curryN(2, (nav, asset) => {
-  const token = R.find(R.propEq('key', asset.balance.token.symbol), tokens);
+  const token = R.find(
+    R.propEq('key', R.path(['balance', 'token', 'symbol'], asset)),
+    tokens,
+  );
 
   return {
     price: asset.price,
