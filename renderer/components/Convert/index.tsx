@@ -22,6 +22,8 @@ const InvestContainer = ({ address, ...props }) => {
   return (
     <Composer components={[<AccountConsumer />, <BalanceConsumer />]}>
       {([accountProps, balanceProps]) => {
+        const quantity = R.path(['quantity', 'quantity'], convertValues);
+
         return (
           <Fragment>
             <ConvertFormContainer
@@ -35,14 +37,12 @@ const InvestContainer = ({ address, ...props }) => {
 
             <ModalTransaction
               text={`The following method on the Melon Smart Contracts will be executed:`}
-              open={!!convertValues}
+              open={!!quantity}
               step="executeDeposit"
               estimate={{
                 mutation: estimateDepositMutation,
-                variables: {
-                  quantity:
-                    R.path(['quantity', 'quantity'], convertValues) &&
-                    R.path(['quantity', 'quantity'], convertValues).toString(),
+                variables: quantity && {
+                  quantity: quantity.toString(),
                 },
               }}
               execute={{
