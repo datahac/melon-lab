@@ -9,7 +9,10 @@ import { withApollo } from 'react-apollo';
 import { compose } from 'recompose';
 import { BalanceConsumer } from '../BalanceContext';
 import ModalTransaction from '../ModalTransaction';
-import { estimateDepositMutation, executeDepositMutation } from '~/queries/deposit.gql';
+import {
+  estimateDepositMutation,
+  executeDepositMutation,
+} from '~/queries/deposit.gql';
 
 const ConvertFormContainer = withForm(props => <ConvertForm {...props} />);
 
@@ -37,7 +40,9 @@ const InvestContainer = ({ address, ...props }) => {
               estimate={{
                 mutation: estimateDepositMutation,
                 variables: {
-                  quantity: R.path(['quantity', 'quantity'], convertValues),
+                  quantity:
+                    R.path(['quantity', 'quantity'], convertValues) &&
+                    R.path(['quantity', 'quantity'], convertValues).toString(),
                 },
               }}
               execute={{
@@ -46,9 +51,7 @@ const InvestContainer = ({ address, ...props }) => {
                   setConvertValues(null);
                   props.router.push('/wallet');
                 },
-                refetchQueries: () => [
-                  'BalanceQuery',
-                ],
+                refetchQueries: () => ['BalanceQuery'],
               }}
               handleCancel={() => {
                 setConvertValues(null);
