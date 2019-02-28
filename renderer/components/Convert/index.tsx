@@ -38,7 +38,7 @@ const InvestContainer = ({ address, ...props }) => {
             <ModalTransaction
               text={`The following method on the Melon Smart Contracts will be executed:`}
               open={!!quantity}
-              step="executeDeposit"
+              step="deposit"
               estimate={{
                 mutation: estimateDepositMutation,
                 variables: quantity && {
