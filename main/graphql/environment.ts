@@ -66,7 +66,7 @@ export const getEnvironment = (logger?: CurriedLogger) => {
   const environment$ = makeEnvironment();
   const stream$ = environment$.pipe(
     switchMap(environment =>
-      Rx.interval(250).pipe(
+      Rx.interval(5000).pipe(
         switchMap(() => environment.eth.net.getId()),
         scan((carry, current) => {
           if (carry && carry !== current) {
