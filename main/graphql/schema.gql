@@ -542,6 +542,10 @@ type Mutation {
 
   executeDeposit(unsigned: UnsignedTransactionInput!): Boolean @account @sign
 
+  estimateWithdraw(quantity: String!): UnsignedPlainTransaction @account
+
+  executeWithdraw(unsigned: UnsignedTransactionInput!): Boolean @account @sign
+
   estimateRedeem(
     fundAddress: String!
     sharesQuantity: String!

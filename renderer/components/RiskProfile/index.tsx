@@ -13,15 +13,14 @@ import Spinner from '~/blocks/Spinner';
 import { FundPoliciesQuery } from './data/fund';
 
 const RiskProfileFormContainer = withForm(props => {
-  const tokens = R.propOr([], 'tokens', props)
-    .reduce((carry, current) => {
-      return carry.concat([
-        {
-          value: current.address.toLowerCase(),
-          label: current.symbol,
-        },
-      ]);
-    }, []);
+  const tokens = R.propOr([], 'tokens', props).reduce((carry, current) => {
+    return carry.concat([
+      {
+        value: current.address.toLowerCase(),
+        label: current.symbol,
+      },
+    ]);
+  }, []);
 
   return (
     <RiskProfile
@@ -40,13 +39,16 @@ const RiskProfileContainer = ({ ...props }) => {
     <Composer
       components={[
         <TokensQuery />,
-        <FundPoliciesQuery address={props.address} />
+        <FundPoliciesQuery address={props.address} />,
       ]}
     >
       {([tokensProps, policyProps]) => {
         const loading = tokensProps.loading || policyProps.loading;
         const availableTokens = R.path(['data', 'tokens'], tokensProps);
-        const existingPolicies = R.path(['data', 'fund', 'policies'], policyProps);
+        const existingPolicies = R.path(
+          ['data', 'fund', 'policies'],
+          policyProps,
+        );
 
         return (
           <Fragment>
@@ -60,7 +62,7 @@ const RiskProfileContainer = ({ ...props }) => {
             />
 
             {loading && <Spinner icon />}
-            
+
             {!loading && (
               <RiskProfileFormContainer
                 {...props}

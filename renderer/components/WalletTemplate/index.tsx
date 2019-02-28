@@ -37,6 +37,10 @@ const WalletTemplateContainer = ({ router, title, text, icon, children }) => (
                   name: 'Wrap Ether',
                   href: '/wallet/convert',
                 },
+                {
+                  name: 'Unwrap Ether',
+                  href: '/wallet/withdraw',
+                },
               ],
             }
           }

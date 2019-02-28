@@ -25,7 +25,8 @@ export default class InvestPage extends React.Component {
 
     return {
       address: parameters.address,
-      destination: parameters.destination && decodeURI(parameters.destination) || null,
+      destination:
+        (parameters.destination && decodeURI(parameters.destination)) || null,
     };
   }
 

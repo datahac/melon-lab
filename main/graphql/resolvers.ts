@@ -40,6 +40,8 @@ import { estimateApproveTransfer } from './mutators/estimateApproveTransfer';
 import { executeApproveTransfer } from './mutators/executeApproveTransfer';
 import { estimateDeposit } from './mutators/estimateDeposit';
 import { executeDeposit } from './mutators/executeDeposit';
+import { estimateWithdraw } from './mutators/estimateWithdraw';
+import { executeWithdraw } from './mutators/executeWithdraw';
 import { estimateExecuteRequest } from './mutators/estimateExecuteRequest';
 import { executeExecuteRequest } from './mutators/executeExecuteRequest';
 import { estimateCancelRequest } from './mutators/estimateCancelRequest';
@@ -439,6 +441,8 @@ export default {
     executeApproveTransfer,
     estimateDeposit,
     executeDeposit,
+    estimateWithdraw,
+    executeWithdraw,
     estimateExecuteRequest,
     executeExecuteRequest,
     estimateCancelRequest,

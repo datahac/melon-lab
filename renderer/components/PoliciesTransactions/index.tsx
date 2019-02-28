@@ -231,7 +231,7 @@ export default withRouter(props => {
             type: policyTypeMap[policy.name],
             name: policy.name,
           };
-  
+
           props.setRegisterPolicies([...props.registerPolicies, data]);
         },
       };
@@ -257,12 +257,16 @@ export default withRouter(props => {
         {
           mutation: executeRegisterPoliciesMutation,
           update: () => {
-            props.router.push(props.destination ? props.destination : {
-              pathname: '/manage',
-              query: {
-                address: props.address,
-              },
-            });
+            props.router.push(
+              props.destination
+                ? props.destination
+                : {
+                    pathname: '/manage',
+                    query: {
+                      address: props.address,
+                    },
+                  },
+            );
           },
         },
       ]}

@@ -26,6 +26,7 @@ export interface ParticipationFormProps {
   cancelRequest?: () => void;
   ethBalance?: Tm.QuantityInterface;
   wethBalance?: Tm.QuantityInterface;
+  actionLabel?: string;
 }
 
 const ConvertForm: StatelessComponent<ParticipationFormProps> = ({
@@ -38,6 +39,7 @@ const ConvertForm: StatelessComponent<ParticipationFormProps> = ({
   values,
   ethBalance,
   wethBalance,
+  actionLabel = 'Wrap Ether',
 }) => {
   const numberPlaceholder = (0).toFixed(decimals);
 
@@ -46,13 +48,16 @@ const ConvertForm: StatelessComponent<ParticipationFormProps> = ({
       <style jsx>{styles}</style>
       <Form onSubmit={handleSubmit}>
         <div className="convert-form__balances">
-          {ethBalance && (<span className="convert-form__balance">
-            ETH: {Tm.toFixed(ethBalance)}
-          </span>
+          {ethBalance && (
+            <span className="convert-form__balance">
+              ETH: {Tm.toFixed(ethBalance)}
+            </span>
           )}
-          {wethBalance && <span className="convert-form__balance">
-            WETH: {Tm.toFixed(wethBalance)}
-          </span>}
+          {wethBalance && (
+            <span className="convert-form__balance">
+              WETH: {Tm.toFixed(wethBalance)}
+            </span>
+          )}
         </div>
         <div className="convert-form__input">
           <Input
@@ -71,7 +76,7 @@ const ConvertForm: StatelessComponent<ParticipationFormProps> = ({
           />
         </div>
         <div className="convert-form__input">
-          <Button type="submit">Wrap Ether</Button>
+          <Button type="submit">{actionLabel}</Button>
         </div>
       </Form>
     </Fragment>

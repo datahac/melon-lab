@@ -34,7 +34,7 @@ export const RiskProfile: StatelessComponent<RiskProfileProps> = ({
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h3>Risk Profile</h3> 
+      <h3>Risk Profile</h3>
       <p>
         Configure the risk management profile of your fund and the rules to be
         enforced by the smart contracts.
