@@ -40,7 +40,7 @@ export const Policies: StatelessComponent<PoliciesProps> = ({
       <h4>Active policies ({activePolicies.length})</h4>
       {activePolicies.length > 0 ? (
         <div className="policies__items">
-          {activePolicies.map(item => {
+          {activePolicies.map((item) => {
             const policy = availablePolicies[item];
             const isTouched = touched.policies && touched.policies[item];
 

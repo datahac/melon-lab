@@ -40,7 +40,7 @@ const estimateFundSetupBegin = async (
       Ethfinex: exchangeConfigs.Ethfinex,
     }),
     ...(exchanges.includes('MELON_ENGINE') && {
-      Ethfinex: exchangeConfigs.MelonEngine,
+      MelonEngine: exchangeConfigs.MelonEngine,
     }),
   };
 

@@ -95,7 +95,7 @@ const InvestContainer = ({ address, ...props }) => {
           <Fragment>
             {(fundLoading && <Spinner icon />) || null}
 
-            {(!fundLoading && !readyToExecute && (
+            {(!fundLoading && !readyToExecute && !(isWaiting && !isExpired) && (
               <Dropdown
                 onChange={event => {
                   setAsset(event.target.value);
