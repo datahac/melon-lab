@@ -33,6 +33,8 @@ export default props => (
         props.setShutDown(false);
       },
     }}
-    handleCancel={props.setShutDown}
+    handleCancel={() => {
+      props.setShutDown(false);
+    }}
   />
 );

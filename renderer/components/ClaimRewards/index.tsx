@@ -60,6 +60,8 @@ export default props => (
         props.setClaimRewards(false);
       },
     }}
-    handleCancel={props.setClaimRewards}
+    handleCancel={() => {
+      props.setClaimRewards(false);
+    }}
   />
 );
