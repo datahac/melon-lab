@@ -9,6 +9,14 @@ const query = gql`
       address
       name
       inception
+      version
+      gav {
+        token {
+          symbol
+          decimals
+        }
+        quantity
+      }
       sharePrice {
         base {
           token {

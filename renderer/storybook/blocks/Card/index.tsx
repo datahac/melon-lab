@@ -7,6 +7,7 @@ import Icons from '~/design/Icons';
 import * as Tm from '@melonproject/token-math';
 
 import styles from './styles.css';
+import displayQuantity from '~/shared/utils/displayQuantity';
 
 export interface CardProps {
   inception?: string;
@@ -22,7 +23,9 @@ const Card: StatelessComponent<CardProps> = ({
   inception,
   isActive,
   name,
+  gav,
   rank,
+  version,
   sharePrice,
   onClick,
   decimals = 4,
@@ -46,9 +49,17 @@ const Card: StatelessComponent<CardProps> = ({
               <span className="card__label">Share price</span>{' '}
               {sharePrice && displayPrice(sharePrice, decimals)}
             </div>
+            <div className="card__aum">
+              <span className="card__label">AUM</span>{' '}
+              {gav && displayQuantity(gav, decimals)}
+            </div>
             <div className="card__inception-date">
               <span className="card__label">Inception Date</span>{' '}
               {format(inception, 'DD. MMM YYYY HH:mm')}
+            </div>
+            <div className="card__version">
+              <span className="card__label">Version</span>{' '}
+              {version}
             </div>
           </div>
         </div>

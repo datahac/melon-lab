@@ -46,6 +46,9 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   account,
   isShutdown,
   isManager,
+  managementFeeRate,
+  performanceFeeRate,
+  performanceFeePeriod,
   handleShutDown,
   handleClaimRewards,
 }) => {
@@ -71,6 +74,7 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
                   href={etherscanUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  title={address}
                 >
                   View on Etherscan
                 </a>
@@ -187,6 +191,30 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
                 </Fragment>
               )}
             </div>
+            {managementFeeRate !== null && (
+              <div className="fund-headline__item">
+                <div className="fund-headline__item-title">
+                  Management fee
+                </div>
+                {managementFeeRate}%
+              </div>
+            )}
+            {performanceFeeRate !== null && (
+              <div className="fund-headline__item">
+                <div className="fund-headline__item-title">
+                  Performance fee
+                </div>
+                {performanceFeeRate}%
+              </div>
+            )}
+            {performanceFeePeriod !== null && (
+              <div className="fund-headline__item">
+                <div className="fund-headline__item-title">
+                  Performance fee period
+                </div>
+                {performanceFeePeriod / (60 * 60 * 24)} days
+              </div>
+            )}
           </div>
         </Fragment>
       )}

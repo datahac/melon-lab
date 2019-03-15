@@ -5,6 +5,7 @@ query {
     address
     name
     inception
+    version
     sharePrice {
       quote {
         quantity

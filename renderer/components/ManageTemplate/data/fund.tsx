@@ -27,6 +27,9 @@ export const query = gql`
         }
       }
 
+			managementFeeRate
+      performanceFeeRate
+      performanceFeePeriod
       sharePrice(symbol: "WETH") {
         base {
           token {

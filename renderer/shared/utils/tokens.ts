@@ -1,71 +1,39 @@
 const tokens = [
   {
-    key: 'ANT',
-    value: 'Aragon',
-  },
-  {
-    key: 'BAT',
     value: 'Basic Attention Token',
+    key: 'BAT',
   },
   {
-    key: 'DGD',
-    value: 'DigixDAO',
-  },
-  {
-    key: 'DGX',
     value: 'Digix Gold Token',
+    key: 'DGX',
   },
   {
-    key: 'GNO',
-    value: 'Gnosis',
-  },
-  {
+    value: 'Rep Token',
     key: 'REP',
-    value: 'Augur',
   },
   {
+    value: 'ZeroX Protocol Token',
     key: 'ZRX',
-    value: '0x',
   },
   {
-    key: 'REQ',
-    value: 'Request Network',
-  },
-  {
-    key: 'ETH',
-    value: 'ETH',
-  },
-  {
+    value: 'Eth Token',
     key: 'WETH',
-    value: 'Wrapped ETH',
   },
   {
+    value: 'Melon Token',
     key: 'MLN',
-    value: 'Melon',
   },
   {
+    value: 'MakerDao',
     key: 'MKR',
-    value: 'Maker',
   },
   {
-    key: 'DAI',
     value: 'Dai',
+    key: 'DAI',
   },
   {
-    key: 'KNC',
     value: 'Kyber Network',
-  },
-  {
-    key: 'JNT',
-    value: 'Jibrel Network',
-  },
-  {
-    key: 'OMG',
-    value: 'OmiseGO',
-  },
-  {
-    key: 'NMR',
-    value: 'Numeraire',
+    key: 'KNC',
   },
 ];
 

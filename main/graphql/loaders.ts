@@ -14,6 +14,8 @@ import getFundIsComplete from './loaders/fund/fundIsComplete';
 import getHasActiveRequest from './loaders/hasActiveRequest';
 import getFundIsShutdown from './loaders/fund/fundIsShutdown';
 import getFundName from './loaders/fund/fundName';
+import getFundManagementFee from './loaders/fund/fundManagementFee';
+import getFundPerformanceFee from './loaders/fund/fundPerformanceFee';
 import getFundSharePrice from './loaders/fund/fundSharePrice';
 import getFundNativeAsset from './loaders/fund/fundNativeAsset';
 import getFundOwner from './loaders/fund/fundOwner';
@@ -296,6 +298,36 @@ export default (environment$, streams) => {
     },
   );
 
+  const fundManagementFee = new DataLoader(async addresses => {
+    const env = await environment();
+    const routes = await fundRoutes.loadMany(addresses);
+    const fn = getFundManagementFee(env);
+    return Promise.all(
+      addresses.map((_, key) => {
+        const { feeManagerAddress: address } = routes[key] || {
+          feeManagerAddress: null,
+        };
+
+        return address && fn(address);
+      }),
+    );
+  });
+
+  const fundPerformanceFee = new DataLoader(async addresses => {
+    const env = await environment();
+    const routes = await fundRoutes.loadMany(addresses);
+    const fn = getFundPerformanceFee(env);
+    return Promise.all(
+      addresses.map((_, key) => {
+        const { feeManagerAddress: address } = routes[key] || {
+          feeManagerAddress: null,
+        };
+
+        return address && fn(address);
+      }),
+    );
+  });
+
   const fundByName = new DataLoader(async names => {
     const ranking = await fundRanking();
     return Promise.all(
@@ -442,6 +474,8 @@ export default (environment$, streams) => {
     fundOwner,
     fundParticipation,
     fundDenominationAsset,
+    fundManagementFee,
+    fundPerformanceFee,
     fundAllowedExchanges,
     fundInvestAllowed,
     fundRank,

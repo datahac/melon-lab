@@ -38,12 +38,6 @@ const availableOrdering = [
   },
 ];
 
-const mapRankings = R.curryN(2, (network, fund) => ({
-  ...fund,
-  inception: fund.inception,
-  sharePrice: fund.sharePrice,
-}));
-
 const sortRankings = ordering => (a, b) => {
   if (ordering === '+rank') {
     return Tm.greaterThan(a.rank, b.rank) ? 1 : -1;
@@ -89,7 +83,6 @@ const RankingContainer = ({}) => {
             ((rankingProps.data && rankingProps.data.rankings) || [])
               .slice()
               .filter(filterRankings(search.toLocaleLowerCase()))
-              .map(mapRankings(network.network))
               .sort(sortRankings(ordering))) ||
           [];
 

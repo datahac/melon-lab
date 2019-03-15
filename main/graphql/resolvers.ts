@@ -366,8 +366,20 @@ export default {
         asset: symbol,
       });
     },
-    holdings: async (parent, _, { loaders }) => {
+    holdings: (parent, _, { loaders }) => {
       return loaders.fundHoldings.load(parent);
+    },
+    managementFeeRate: async (parent, _, { loaders }) => {
+      const fee = await loaders.fundManagementFee.load(parent);
+      return fee && fee.rate;
+    },
+    performanceFeeRate: async (parent, _, { loaders }) => {
+      const fee = await loaders.fundManagementFee.load(parent);
+      return fee && fee.rate;
+    },
+    performanceFeePeriod: async (parent, _, { loaders }) => {
+      const fee = await loaders.fundPerformanceFee.load(parent);
+      return fee && fee.period;
     },
   },
   UnsignedTransaction: {

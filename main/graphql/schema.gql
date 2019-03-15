@@ -182,6 +182,8 @@ type Ranking {
   inception: DateTime
   fund: Fund
   sharePrice: Price
+  gav: Quantity
+  version: String
 }
 
 type Routes {
@@ -220,6 +222,9 @@ type Fund {
   policies: [Policy]
   investAllowed: [Token]
   remainingInvestAmount(asset: String!): Quantity
+  managementFeeRate: Int
+  performanceFeeRate: Int
+  performanceFeePeriod: Int
 }
 
 type Policy {

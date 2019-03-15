@@ -45,9 +45,8 @@
   }
 }
 
-.card__inception-date {
-  flex-grow: 1;
-  text-align: right;
+.card__gav, .card__share-price, .card__inception-date, .card__version {
+  margin: 0 40px;
 }
 
 .card__info-cell {
