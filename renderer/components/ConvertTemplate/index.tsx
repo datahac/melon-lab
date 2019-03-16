@@ -39,6 +39,9 @@ const ConvertTemplateContainer = ({ router, title, address, children }) => (
           HeadlineProps={{
             title,
           }}
+          FooterProps={{
+            priceFeedUpdate: network && network.priceFeedUpdate,
+          }}
         >
           {children}
         </DefaultTemplate>

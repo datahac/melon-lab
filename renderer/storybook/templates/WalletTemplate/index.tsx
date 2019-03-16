@@ -10,6 +10,7 @@ import styles from './styles.css';
 const WalletTemplate = ({
   HeaderProps = {},
   HeadlineProps,
+  FooterProps = {},
   NavigationProps,
   children,
 }) => {
@@ -40,7 +41,7 @@ const WalletTemplate = ({
         </div>
 
         <div className="default-template__footer">
-          <Footer />
+          <Footer {...FooterProps} />
         </div>
       </div>
     </Layout>

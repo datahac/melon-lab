@@ -21,6 +21,7 @@ const ManageTemplate = ({
   HeaderProps = {},
   FundHeadline,
   FundHeadlineProps = {},
+  FooterProps = {},
 }) => {
   const message =
     R.path(['fund', 'isShutdown'], FundHeadlineProps) &&
@@ -87,7 +88,7 @@ const ManageTemplate = ({
         </div>
 
         <div className="manage-template__footer">
-          <Footer />
+          <Footer {...FooterProps} />
         </div>
       </div>
     </Layout>

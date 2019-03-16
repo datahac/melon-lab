@@ -5,8 +5,12 @@ import Headline from '~/blocks/Headline';
 import Layout from '~/design/Layout';
 
 import styles from './styles.css';
-
-const DefaultTemplate = ({ HeaderProps = {}, HeadlineProps, children }) => {
+const DefaultTemplate = ({
+  HeaderProps = {},
+  HeadlineProps,
+  FooterProps = {},
+  children,
+}) => {
   return (
     <Layout>
       <div className="default-template">
@@ -27,7 +31,7 @@ const DefaultTemplate = ({ HeaderProps = {}, HeadlineProps, children }) => {
         </div>
 
         <div className="default-template__footer">
-          <Footer />
+          <Footer {...FooterProps} />
         </div>
       </div>
     </Layout>

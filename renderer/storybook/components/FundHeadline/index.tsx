@@ -193,17 +193,13 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
             </div>
             {managementFeeRate !== null && (
               <div className="fund-headline__item">
-                <div className="fund-headline__item-title">
-                  Management fee
-                </div>
+                <div className="fund-headline__item-title">Management fee</div>
                 {managementFeeRate}%
               </div>
             )}
             {performanceFeeRate !== null && (
               <div className="fund-headline__item">
-                <div className="fund-headline__item-title">
-                  Performance fee
-                </div>
+                <div className="fund-headline__item-title">Performance fee</div>
                 {performanceFeeRate}%
               </div>
             )}

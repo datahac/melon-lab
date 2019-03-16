@@ -9,6 +9,7 @@ const defaults = {
   priceFeedUp: null,
   peerCount: null,
   blockOverdue: null,
+  priceFeedUpdate: null,
 };
 
 export const NetworkContext = React.createContext(defaults);
@@ -20,6 +21,7 @@ export const networkQuery = gql`
     nodeSynced
     priceFeedUp
     peerCount
+    priceFeedUpdate
   }
 `;
 

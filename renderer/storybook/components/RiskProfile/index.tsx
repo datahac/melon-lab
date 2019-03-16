@@ -36,7 +36,9 @@ export const RiskProfile: StatelessComponent<RiskProfileProps> = ({
 }) => {
   // TODO: Filter available policies and show already registered policies.
   // console.log(existingPolicies);
-  const canSubmit = !!Object.keys(R.propOr({}, 'policies', values)).length && !Object.keys(errors).length;
+  const canSubmit =
+    !!Object.keys(R.propOr({}, 'policies', values)).length &&
+    !Object.keys(errors).length;
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -59,7 +61,9 @@ export const RiskProfile: StatelessComponent<RiskProfileProps> = ({
 
       <div className="risk-profile__actions">
         <div className="risk-profile__action">
-          <Button type="submit" disabled={!canSubmit}>Submit request</Button>
+          <Button type="submit" disabled={!canSubmit}>
+            Submit request
+          </Button>
         </div>
 
         <div className="risk-profile__action">
@@ -69,11 +73,11 @@ export const RiskProfile: StatelessComponent<RiskProfileProps> = ({
               const target = destination
                 ? destination
                 : {
-                  pathname: '/manage',
-                  query: {
-                    address,
-                  },
-                };
+                    pathname: '/manage',
+                    query: {
+                      address,
+                    },
+                  };
 
               router.push(target);
             }}
@@ -82,7 +86,6 @@ export const RiskProfile: StatelessComponent<RiskProfileProps> = ({
           </Button>
         </div>
       </div>
-
     </Form>
   );
 };

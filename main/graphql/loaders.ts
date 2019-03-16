@@ -35,7 +35,7 @@ import generateMnemonic from './loaders/wallet/generateMnemonic';
 import restoreWallet from './loaders/wallet/restoreWallet';
 import resolveNetwork from './utils/resolveNetwork';
 import takeLast from './utils/takeLast';
-import { getTokenBySymbol } from '@melonproject/protocol';
+import { getTokenBySymbol, getLastUpdate } from '@melonproject/protocol';
 
 export default (environment$, streams) => {
   const environment = memoizeOne(async () => {
@@ -456,6 +456,11 @@ export default (environment$, streams) => {
     return env.deployment.thirdPartyContracts.tokens;
   });
 
+  const priceFeedUpdate = memoizeOne(async () => {
+    const env = await environment();
+    return await getLastUpdate(env, env.deployment.melonContracts.priceSource);
+  });
+
   return {
     environment,
     assetPrice,
@@ -500,5 +505,6 @@ export default (environment$, streams) => {
     exchangeOrders,
     exchangeOrdersObservable,
     tokens,
+    priceFeedUpdate,
   };
 };

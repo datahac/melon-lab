@@ -57,10 +57,6 @@ const Card: StatelessComponent<CardProps> = ({
               <span className="card__label">Inception Date</span>{' '}
               {format(inception, 'DD. MMM YYYY HH:mm')}
             </div>
-            <div className="card__version">
-              <span className="card__label">Version</span>{' '}
-              {version}
-            </div>
           </div>
         </div>
       </div>

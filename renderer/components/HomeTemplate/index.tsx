@@ -50,6 +50,9 @@ const HomeTemplateContainer = ({ title, text, icon, children }) => (
                   }
                 : null
             }
+            FooterProps={{
+              priceFeedUpdate: network && network.priceFeedUpdate,
+            }}
             GetStarted={GetStarted}
             GetStartedProps={{
               isHome: true,

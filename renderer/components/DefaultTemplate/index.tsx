@@ -42,6 +42,9 @@ const DefaultTemplateContainer = ({ title, text, icon, children }) => (
                 }
               : null
           }
+          FooterProps={{
+            priceFeedUpdate: network && network.priceFeedUpdate,
+          }}
         >
           {children}
         </DefaultTemplate>

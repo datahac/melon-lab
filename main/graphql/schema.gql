@@ -394,6 +394,7 @@ type Query {
   currentBlock: String
   nodeSynced: Boolean
   priceFeedUp: Boolean
+  priceFeedUpdate: Int
   peerCount: String
   contractDeployment: Deployment
   totalFunds: Int

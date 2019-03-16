@@ -11,6 +11,7 @@ const HomeTemplate = ({
   Ranking,
   RankingProps = {},
   HeaderProps = {},
+  FooterProps = {},
 }) => {
   return (
     <Layout>
@@ -34,7 +35,7 @@ const HomeTemplate = ({
         </div>
 
         <div className="home-template__footer">
-          <Footer />
+          <Footer {...FooterProps} />
         </div>
       </div>
     </Layout>

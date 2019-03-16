@@ -64,6 +64,9 @@ const WalletTemplateContainer = ({ router, title, text, icon, children }) => (
               icon,
             }
           }
+          FooterProps={{
+            priceFeedUpdate: network && network.priceFeedUpdate,
+          }}
         >
           {children}
         </WalletTemplate>

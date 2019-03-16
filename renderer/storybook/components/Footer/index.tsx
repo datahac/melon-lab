@@ -1,8 +1,8 @@
 import React, { StatelessComponent } from 'react';
-
+import format from 'date-fns/format';
 import styles from './styles.css';
 
-const Footer: StatelessComponent = () => (
+const Footer: StatelessComponent = ({ priceFeedUpdate }) => (
   <div className="footer">
     <style jsx>{styles}</style>
     <span className="footer__item">
@@ -25,6 +25,12 @@ const Footer: StatelessComponent = () => (
         Melonport
       </a>
     </span>
+    {priceFeedUpdate && (
+      <span className="footer__item">
+        Last pricefeed update:{' '}
+        {format(priceFeedUpdate * 1000, 'DD. MMM YYYY HH:mm')}
+      </span>
+    )}
   </div>
 );
 

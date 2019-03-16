@@ -120,6 +120,9 @@ export default {
     priceFeedUp: (_, __, { loaders }) => {
       return loaders.priceFeedUp();
     },
+    priceFeedUpdate: (_, __, { loaders }) => {
+      return loaders.priceFeedUpdate();
+    },
     peerCount: (_, __, { loaders }) => {
       return loaders.peerCount();
     },
