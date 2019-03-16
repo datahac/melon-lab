@@ -12,11 +12,11 @@ const tokens = [
     key: 'REP',
   },
   {
-    value: 'ZeroX Protocol Token',
+    value: 'ZeroEX Protocol Token',
     key: 'ZRX',
   },
   {
-    value: 'Eth Token',
+    value: 'Wrapped Ether',
     key: 'WETH',
   },
   {
@@ -34,6 +34,14 @@ const tokens = [
   {
     value: 'Kyber Network',
     key: 'KNC',
+  },
+  {
+    value: 'USD Coin',
+    key: 'USDC',
+  },
+  {
+    value: 'Wrapped BTC',
+    key: 'WBTC',
   },
 ];
 

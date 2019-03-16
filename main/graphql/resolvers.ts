@@ -374,7 +374,7 @@ export default {
       return fee && fee.rate;
     },
     performanceFeeRate: async (parent, _, { loaders }) => {
-      const fee = await loaders.fundManagementFee.load(parent);
+      const fee = await loaders.fundPerformanceFee.load(parent);
       return fee && fee.rate;
     },
     performanceFeePeriod: async (parent, _, { loaders }) => {
