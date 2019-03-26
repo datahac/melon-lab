@@ -1585,10 +1585,10 @@
     yup "^0.26.6"
     zen-observable-ts "^0.8.10"
 
-"@melonproject/protocol@^1.0.1-hotfix-1":
-  version "1.0.1-hotfix-1"
-  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-1.0.1-hotfix-1.tgz#688a0f11951fecc276e3e7308787cdbe3d46b00a"
-  integrity sha512-b9jDYyhR2z5JHCsfED4C7aqDfgq2GImNfXMOSc698c39edDp7o8S8HpduMKSrXNUzi8QUTUnVGFlNumC4lA8uA==
+"@melonproject/protocol@^1.0.1-hotfix-2":
+  version "1.0.1-hotfix-2"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-1.0.1-hotfix-2.tgz#361d29fb444617d232af3faf1dcbc496752a27f8"
+  integrity sha512-bCjnsz0hUwhnU/JH5G7YIwwTxBjn4Ch9RMh8N0iaIGBeEOzneD73fWvjyOxXt8f0wbQJ6lnFHeF/KhRPM4eIFA==
   dependencies:
     "@0x/contract-wrappers" "^4.1.1"
     "@0x/order-utils" "^3.0.4"

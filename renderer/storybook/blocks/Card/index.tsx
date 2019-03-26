@@ -49,10 +49,12 @@ const Card: StatelessComponent<CardProps> = ({
               <span className="card__label">Share price</span>{' '}
               {sharePrice && displayPrice(sharePrice, decimals)}
             </div>
-            <div className="card__aum">
-              <span className="card__label">AUM</span>{' '}
-              {gav && displayQuantity(gav, decimals)}
-            </div>
+            {gav && (
+              <div className="card__aum">
+                <span className="card__label">AUM</span>{' '}
+                {displayQuantity(gav, decimals)}
+              </div>
+            )}
             <div className="card__inception-date">
               <span className="card__label">Inception Date</span>{' '}
               {format(inception, 'DD. MMM YYYY HH:mm')}
