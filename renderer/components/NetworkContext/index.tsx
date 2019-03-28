@@ -7,7 +7,6 @@ const defaults = {
   currentBlock: null,
   nodeSynced: null,
   priceFeedUp: null,
-  peerCount: null,
   blockOverdue: null,
   priceFeedUpdate: null,
 };
@@ -20,7 +19,6 @@ export const networkQuery = gql`
     currentBlock
     nodeSynced
     priceFeedUp
-    peerCount
     priceFeedUpdate
   }
 `;
@@ -40,12 +38,6 @@ const nodeSyncedSubscription = gql`
 const priceFeedUpSubscription = gql`
   subscription PriceFeedSubscription {
     priceFeedUp
-  }
-`;
-
-const peerCountSubscription = gql`
-  subscription PeerCountSubscription {
-    peerCount
   }
 `;
 
@@ -126,7 +118,6 @@ export const NetworkProvider = ({ children }) => (
         const subscriptions = [
           subscribeToField(nodeSyncedSubscription, 'nodeSynced'),
           subscribeToField(currentBlockSubscription, 'currentBlock'),
-          subscribeToField(peerCountSubscription, 'peerCount'),
           subscribeToField(priceFeedUpSubscription, 'priceFeedUp'),
           subscribeToField(networkSubscription, 'network'),
         ];
