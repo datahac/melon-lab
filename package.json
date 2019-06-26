@@ -143,6 +143,7 @@
     "websocket": "^1.0.28"
   },
   "resolutions": {
+    "@melonproject/protocol": "^1.0.8",
     "styled-jsx": "^3.2.0",
     "electron-is-dev": "^0.3.0"
   },
