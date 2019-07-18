@@ -3,6 +3,10 @@
   min-height: 28px;
 }
 
+.holdings__locked {
+  color: var(--color-grey);
+}
+
 .holdings :global(.holdings__action-cell) {
   width: 130px;
 }

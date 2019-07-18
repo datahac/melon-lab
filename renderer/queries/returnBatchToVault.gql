@@ -1,0 +1,38 @@
+mutation estimateReturnBatchToVaultMutation(
+  $fundAddress: String!
+  $assets: [String!]!
+) {
+  estimate: estimateReturnBatchToVault(
+    fundAddress: $fundAddress
+    assets: $assets
+  ) @account {
+    data
+    from
+    gas
+    gasPrice
+    to
+    value
+  }
+}
+
+mutation executeReturnBatchToVaultMutation(
+  $data: String!
+  $from: String!
+  $gas: String!
+  $gasPrice: String!
+  $to: String!
+  $value: String!
+  $fundAddress: String!
+) {
+  execute: executeReturnBatchToVault(
+    fundAddress: $fundAddress
+    unsigned: {
+      data: $data
+      from: $from
+      gas: $gas
+      gasPrice: $gasPrice
+      to: $to
+      value: $value
+    }
+  ) @sign @account
+}

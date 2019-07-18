@@ -39,6 +39,7 @@ import {
   distinctUntilChanged,
 } from 'rxjs/operators';
 import PoliciesInformation from '~/components/PoliciesInformation';
+import { RequestQuery } from '+/components/Invest/data/request';
 
 // A bid-order on the orderbook resolves to a sell from the fund (The order maker wants to buy something, so we sell em)
 const bidAskSellBuyMap = {
@@ -188,9 +189,11 @@ const AggregatedOrders = ({
 
 export const ManageTemplateContainer = ({
   address,
+  account,
   quoteAsset,
   baseAsset,
   fundProps,
+  requestProps,
 }) => {
   const [selectedOrder, setOrder] = useOrderSelector({
     // Order ID is set when clicking on order in orderbook
@@ -279,13 +282,13 @@ export const ManageTemplateContainer = ({
   return (
     <Composer
       components={[
-        <AccountConsumer />,
         <BalanceConsumer />,
         <NetworkConsumer />,
         <CapabilityConsumer />,
         <ConfigurationConsumer />,
         <FundManagerConsumer />,
         <HoldingsQuery address={address} />,
+        <RequestQuery fundAddress={address} userAddress={account} />,
         <AggregatedOrders
           quoteAsset={quoteAsset}
           baseAsset={baseAsset}
@@ -295,13 +298,13 @@ export const ManageTemplateContainer = ({
       ]}
     >
       {([
-        account,
         balances,
         network,
-        capabibility,
+        capability,
         configuration,
         managerProps,
         holdingsProps,
+        requestProps,
         orderbookProps,
       ]) => {
         const holdingsData = R.pathOr([], ['data', 'fund', 'holdings'])(
@@ -311,13 +314,18 @@ export const ManageTemplateContainer = ({
         const totalFunds = R.pathOr(0, ['data', 'totalFunds'])(fundProps);
         const isManager =
           !!managerProps.fund && isSameAddress(managerProps.fund, address);
+        const expiredRequest = R.pathOr(
+          false,
+          ['data', 'hasActiveRequest', 'isExpired'],
+          requestProps,
+        );
 
         return (
           <Template
             HeaderProps={{
               ethBalance: balances && balances.eth,
-              canInvest: capabibility && capabibility.canInvest,
-              canInteract: capabibility && capabibility.canInteract,
+              canInvest: capability && capability.canInvest,
+              canInteract: capability && capability.canInteract,
               canonicalPriceFeedAddress:
                 configuration && configuration.melonContracts.priceSource,
               network: network && network.network,
@@ -333,7 +341,8 @@ export const ManageTemplateContainer = ({
               totalFunds,
               address,
               quoteAsset,
-              loading: fundProps.loading,
+              expiredRequest,
+              loading: fundProps.loading || requestProps.loading,
               account,
               isManager,
               network: network && network.network,
@@ -343,6 +352,7 @@ export const ManageTemplateContainer = ({
               address,
               quoteAsset,
               baseAsset,
+              isManager,
               holdings: holdingsData,
               loading: fundProps.loading || holdingsProps.loading,
               nav: fundData && fundData.nav,
@@ -378,7 +388,7 @@ export const ManageTemplateContainer = ({
             OpenOrdersProps={{
               address,
               isManager,
-              canInteract: capabibility && capabibility.canInteract,
+              canInteract: capability && capability.canInteract,
               // TODO: Re-add this.
             }}
             Policies={PoliciesInformation}
@@ -407,6 +417,7 @@ export const ManageTemplate = ({ address, quoteAsset, baseAsset }) => {
         return (
           <ManageTemplateContainer
             address={address}
+            account={account}
             quoteAsset={quoteAsset}
             baseAsset={baseAsset}
             fundProps={fundProps}

@@ -235,6 +235,7 @@ type Policy {
 
 type Holding {
   balance: Quantity!
+  locked: Quantity!
   price: Price!
   fraction: String!
 }
@@ -558,6 +559,16 @@ type Mutation {
   ): UnsignedPlainTransaction @account
 
   executeRedeem(
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean @account @sign
+
+  estimateReturnBatchToVault(
+    fundAddress: String!
+    assets: [String!]!
+  ): UnsignedPlainTransaction @account
+
+  executeReturnBatchToVault(
     unsigned: UnsignedTransactionInput!
     fundAddress: String!
   ): Boolean @account @sign

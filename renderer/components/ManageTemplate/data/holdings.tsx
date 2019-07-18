@@ -1,36 +1,36 @@
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const query = gql`
+export const query = gql`
+  fragment QuantityFragment on Quantity {
+    quantity
+    token {
+      symbol
+      decimals
+      address
+    }
+  }
+
   query HoldingsQuery($address: String!) {
     fund(address: $address) {
       id
       address
       holdings {
+        locked {
+          ...QuantityFragment
+        }
+
         balance {
-          quantity
-          token {
-            symbol
-            decimals
-            address
-          }
+          ...QuantityFragment
         }
 
         price {
           base {
-            quantity
-            token {
-              symbol
-              decimals
-            }
+            ...QuantityFragment
           }
 
           quote {
-            quantity
-            token {
-              symbol
-              decimals
-            }
+            ...QuantityFragment
           }
         }
         fraction

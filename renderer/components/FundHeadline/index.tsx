@@ -21,6 +21,7 @@ const FundHeadlineContainer = ({
   loading,
   isManager,
   account,
+  expiredRequest,
   totalFunds,
   quoteAsset,
   network,
@@ -53,6 +54,7 @@ const FundHeadlineContainer = ({
               address={address}
               isManager={isManager}
               loading={loading}
+              expiredRequest={expiredRequest}
               handleShutDown={setShutDownModal}
               totalFunds={totalFunds}
               quoteAsset={quoteAsset}

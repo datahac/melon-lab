@@ -24,6 +24,7 @@ export interface FundHeadlineProps {
   personalStake?: Tm.QuantityInterface;
   totalSupply?: Tm.QuantityInterface;
   account?: string;
+  expiredRequest: boolean;
   isShutdown?: boolean;
   isManager?: boolean;
   handleShutDown: () => void;
@@ -46,6 +47,7 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
   account,
   isShutdown,
   isManager,
+  expiredRequest,
   managementFeeRate,
   performanceFeeRate,
   performanceFeePeriod,
@@ -153,6 +155,22 @@ const FundHeadline: StatelessComponent<FundHeadlineProps> = ({
                       Shut down
                     </Button>
                   </Fragment>
+                </div>
+              )}
+              {expiredRequest && isManager && (
+                <div className="fund-headline__expired">
+                  You have an expired investment request. Click{' '}
+                  <Link
+                    href={{
+                      pathname: '/invest',
+                      query: {
+                        address,
+                      },
+                    }}
+                  >
+                    here
+                  </Link>{' '}
+                  to cancel it.
                 </div>
               )}
             </div>

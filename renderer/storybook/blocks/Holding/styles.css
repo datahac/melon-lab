@@ -6,13 +6,20 @@
   line-height: 1;
 }
 
-.holding__balance {
+.holding__locked {
   font-size: var(--font-size-s);
   color: var(--color-grey);
 }
 
 .holding__symbol {
   overflow: hidden;
+}
+
+.holding__release {
+  display: inline-block;
+  position: relative;
+  top: -2px;
+  margin-left: 10px;
 }
 
 .holding__name {

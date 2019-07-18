@@ -260,11 +260,16 @@ export default (environment$, streams) => {
     const routes = await fundRoutes.loadMany(addresses);
     return Promise.all(
       addresses.map((address, key) => {
-        const { accountingAddress } = routes[key] || {
+        const { accountingAddress, tradingAddress } = routes[key] || {
           accountingAddress: null,
+          tradingAddress: null,
         };
 
-        return accountingAddress && getFundHoldings(env, accountingAddress);
+        return (
+          accountingAddress &&
+          tradingAddress &&
+          getFundHoldings(env, accountingAddress, tradingAddress)
+        );
       }),
     );
   });

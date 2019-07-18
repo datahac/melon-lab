@@ -85,8 +85,6 @@ const estimateFundSetupBegin = async (
     fundName: name,
   };
 
-  console.log(JSON.stringify(params, undefined, 4));
-
   // TODO: The environment should not hold account data. Maybe?
   const env = withDifferentAccount(environment, new Tm.Address(from));
   const result = await beginSetup.prepare(env, version, params);

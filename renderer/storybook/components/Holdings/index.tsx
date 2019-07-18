@@ -8,9 +8,11 @@ import Table, { TableHead, Row, CellHead, TableBody } from '~/blocks/Table';
 
 export interface Holding {
   balance: Tm.QuantityInterface;
+  price: Tm.PriceInterface;
   symbol: string;
   fraction: string;
-  price: Tm.PriceInterface;
+  name: string;
+  address: string;
 }
 
 export interface HoldingsProps {
@@ -18,6 +20,8 @@ export interface HoldingsProps {
   quoteAsset?: string;
   baseAsset?: string;
   loading?: boolean;
+  isManager: boolean;
+  setReleaseToken: (asset) => void;
   onClick: (asset) => void;
 }
 
@@ -26,6 +30,8 @@ export const Holdings: StatelessComponent<HoldingsProps> = ({
   quoteAsset,
   baseAsset,
   loading,
+  isManager,
+  setReleaseToken,
   onClick,
 }) => (
   <div className="holdings" id="holdings">
@@ -52,12 +58,15 @@ export const Holdings: StatelessComponent<HoldingsProps> = ({
                   fraction={asset.fraction}
                   symbol={asset.symbol}
                   name={asset.name}
+                  isManager={isManager}
                   price={asset.price}
                   balance={asset.balance}
+                  locked={asset.locked}
                   active={baseAsset === asset.symbol}
                   onClickHolding={
                     !(asset.symbol === quoteAsset) ? () => onClick(asset) : null
                   }
+                  onClickRelease={() => setReleaseToken(asset.address)}
                 />
               ))}
           </TableBody>

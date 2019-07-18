@@ -1,4 +1,5 @@
 module.exports = {
+  '--space-xxxs': '2px',
   '--space-xxs': '4px',
   '--space-xs': '8px',
   '--space-s': '12px',

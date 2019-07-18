@@ -52,6 +52,8 @@ import { estimateTriggerRewardAllFees } from './mutators/estimateTriggerRewardAl
 import { executeTriggerRewardAllFees } from './mutators/executeTriggerRewardAllFees';
 import { estimateRedeem } from './mutators/estimateRedeem';
 import { executeRedeem } from './mutators/executeRedeem';
+import { estimateReturnBatchToVault } from './mutators/estimateReturnBatchToVault';
+import { executeReturnBatchToVault } from './mutators/executeReturnBatchToVault';
 import { estimateMakeOrder } from './mutators/estimateMakeOrder';
 import { executeMakeOrder } from './mutators/executeMakeOrder';
 import { estimateTakeOrder } from './mutators/estimateTakeOrder';
@@ -435,11 +437,8 @@ export default {
       // TODO: Re-implement this.
       return 0;
     },
-    balance: parent => {
-      return parent;
-    },
     price: async (parent, _, { loaders }) => {
-      return loaders.assetPrice.load(parent.token);
+      return loaders.assetPrice.load(parent.balance.token);
     },
   },
   Mutation: {
@@ -468,6 +467,8 @@ export default {
     executeTriggerRewardAllFees,
     estimateRedeem,
     executeRedeem,
+    estimateReturnBatchToVault,
+    executeReturnBatchToVault,
     estimateMakeOrder,
     executeMakeOrder,
     estimateTakeOrder,

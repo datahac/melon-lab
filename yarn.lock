@@ -1492,12 +1492,12 @@
   dependencies:
     events "^3.0.0"
 
-"@melonproject/exchange-aggregator@^0.1.17":
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.1.17.tgz#016c21f48c3f8cfa448927eaf013ac09ca12e8c3"
-  integrity sha512-ZGp9iCDE1QezWVkzXC3h4Y2EQwRrO+7pQkkRNfTnUV7l30/OCXXaLmn68ZSqIYyNRkAYJcE+Eb/vl+qRKNzg4A==
+"@melonproject/exchange-aggregator@^0.1.19":
+  version "0.1.19"
+  resolved "https://registry.yarnpkg.com/@melonproject/exchange-aggregator/-/exchange-aggregator-0.1.19.tgz#b236a66b36ffaab5c861612613f3acf091e95f44"
+  integrity sha512-B08YhkbI0HctDji1uzBh/XAwKtVrZOd+lCmq9LUs8YghDDn2HCLDNbLJSR1M/08cVz4dKTJj1R+FbpTlqtOvPA==
   dependencies:
-    "@melonproject/protocol" "^0.9.24"
+    "@melonproject/protocol" "^1.0.9"
     "@melonproject/token-math" "^0.1.6"
     "@radarrelay/types" "^1.2.1"
     axios "^0.18.0"
@@ -1505,10 +1505,32 @@
     ramda "^0.26.1"
     rxjs "^6.3.3"
 
-"@melonproject/protocol@^0.9.24", "@melonproject/protocol@^1.0.8":
+"@melonproject/protocol@^1.0.8":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-1.0.8.tgz#05234277beab96cfacb08b8c8f9902bf725a9a32"
   integrity sha512-Qr9kvld83TaTF0kh1AKfdwLI82HwXQd4qPXIWOmJai/vEJlwtMVD91AmVfa2I+QcbGRcevF+Zq7ueicO2Sg7tQ==
+  dependencies:
+    "@0x/contract-wrappers" "^4.1.1"
+    "@0x/order-utils" "^3.0.4"
+    "@melonproject/token-math" "0.1.5"
+    axios "^0.18.0"
+    commander "^2.19.0"
+    ethereum-types "^1.1.4"
+    ramda "^0.25.0"
+    request-promise "^4.2.2"
+    solc "^0.4.25"
+    web3 "^1.0.0-beta.37"
+    web3-eth "1.0.0-beta.37"
+    web3-eth-abi "1.0.0-beta.37"
+    web3-eth-accounts "^1.0.0-beta.37"
+    web3-utils "1.0.0-beta.37"
+    yup "^0.26.6"
+    zen-observable-ts "^0.8.10"
+
+"@melonproject/protocol@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@melonproject/protocol/-/protocol-1.0.9.tgz#611838e58f074fc7ee83285eb7dcbe4502be0892"
+  integrity sha512-9pbJ+qNdFGDoqgFNGdI9oh3A5zQRVyoS99vguJr7ygsoSsIoqgZ6rfYDxFD4j6FMTBr3y/E1gC3NaTSInFlobw==
   dependencies:
     "@0x/contract-wrappers" "^4.1.1"
     "@0x/order-utils" "^3.0.4"

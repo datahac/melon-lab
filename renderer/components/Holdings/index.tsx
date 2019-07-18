@@ -1,7 +1,9 @@
+import React, { useState } from 'react';
 import Holdings from '~/components/Holdings';
 import Router from 'next/router';
 import * as R from 'ramda';
 import tokens from '~/shared/utils/tokens';
+import ReleaseToken from '../ReleaseToken';
 
 const mapHoldings = R.curryN(2, (nav, asset) => {
   const token = R.find(
@@ -12,8 +14,10 @@ const mapHoldings = R.curryN(2, (nav, asset) => {
   return {
     price: asset.price,
     balance: asset.balance,
+    locked: asset.locked,
     name: token && token.value,
     symbol: asset.balance.token.symbol,
+    address: asset.balance.token.address,
   };
 });
 
@@ -26,10 +30,13 @@ const HoldingsContainer = ({
   nav,
   loading,
   address,
+  isManager,
   holdings,
   baseAsset,
   quoteAsset,
 }) => {
+  const [releaseToken, setReleaseToken] = useState(null);
+
   const onClick = (asset, address) => {
     Router.push({
       pathname: '/manage',
@@ -42,13 +49,22 @@ const HoldingsContainer = ({
   };
 
   return (
-    <Holdings
-      quoteAsset={quoteAsset}
-      baseAsset={baseAsset}
-      holdings={sortHoldings(holdings.map(mapHoldings(nav)))}
-      loading={loading}
-      onClick={asset => onClick(asset, address)}
-    />
+    <>
+      <ReleaseToken
+        fundAddress={address}
+        releaseToken={releaseToken}
+        setReleaseToken={setReleaseToken}
+      />
+      <Holdings
+        quoteAsset={quoteAsset}
+        baseAsset={baseAsset}
+        holdings={sortHoldings(holdings.map(mapHoldings(nav)))}
+        loading={loading}
+        isManager={isManager}
+        onClick={asset => onClick(asset, address)}
+        setReleaseToken={setReleaseToken}
+      />
+    </>
   );
 };
 

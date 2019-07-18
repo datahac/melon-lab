@@ -62,6 +62,11 @@
   color: var(--color-white);
 }
 
+.button--tiny {
+  font-size: var(--font-size-xxs);
+  padding: var(--space-xxxs) var(--space-xxxs);
+}
+
 .button--small {
   font-size: var(--font-size-xs);
   padding: var(--space-xs) var(--space-l);

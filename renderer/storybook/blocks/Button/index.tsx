@@ -8,7 +8,7 @@ export interface ButtonProps {
   buttonValue?: any;
   disabled?: boolean;
   onClick?: (e, value) => void;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'tiny' | 'small' | 'medium' | 'large';
   style?: 'secondary' | 'primary' | 'warning' | 'danger' | 'success' | 'clear';
   type?: string;
   icon?: string;

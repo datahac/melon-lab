@@ -80,3 +80,7 @@
 .fund-headline__action {
   padding: var(--space-s) var(--space-s) 0 0;
 }
+
+.fund-headline__expired {
+  margin-top: var(--space-s);
+}

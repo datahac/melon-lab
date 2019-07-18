@@ -9,6 +9,7 @@ module.exports = {
     '--font-size-m': '0.875rem',
     '--font-size-s': '0.75rem',
     '--font-size-xs': '0.625rem',
+    '--font-size-xxs': '0.55rem',
   },
   fontWeights: {
     '--font-weight-light': '300',
