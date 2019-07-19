@@ -81,8 +81,10 @@ const ParticipationForm: StatelessComponent<ParticipationFormProps> = ({
         <div className="participation-form">
           {(isWaiting && !isExpired && (
             <Notification isWarning>
-              You have a valid investment request pending in this fund. Please come back between the next pricefeed
-              update and within 24 hours from now, in order to execute that investment request. Please note this investment request may be executed by another party as well. 
+              You have a valid investment request pending in this fund. Please
+              come back between the next pricefeed update and within 24 hours
+              from now, in order to execute that investment request. Please note
+              this investment request may be executed by another party as well.
             </Notification>
           )) ||
             null}
