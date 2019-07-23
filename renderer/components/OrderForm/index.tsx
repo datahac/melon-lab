@@ -50,7 +50,7 @@ const WrappedOrderForm = withApollo(
             if (exchange === 'KYBER_NETWORK') {
               props.setFieldValue('price', price);
 
-              if (quantity) {
+              if (quantity && typeof price !== 'undefined' && price !== null) {
                 const total = Tm.valueIn(price, quantity);
                 props.setFieldValue('total', total);
               }

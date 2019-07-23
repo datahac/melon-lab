@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import ModalTransaction from '+/components/ModalTransaction';
 import React from 'react';
 import {
@@ -16,20 +17,20 @@ export default props => (
         exchange: props.values.exchange,
         buyToken:
           props.values.type === 'Buy'
-            ? props.values.price.base.token.symbol
-            : props.values.price.quote.token.symbol,
+            ? R.path(['values', 'price', 'base', 'token', 'symbol'], props)
+            : R.path(['values', 'price', 'quote', 'token', 'symbol'], props),
         sellToken:
           props.values.type === 'Buy'
-            ? props.values.price.quote.token.symbol
-            : props.values.price.base.token.symbol,
+            ? R.path(['values', 'price', 'quote', 'token', 'symbol'], props)
+            : R.path(['values', 'price', 'base', 'token', 'symbol'], props),
         buyQuantity:
           props.values.type === 'Buy'
-            ? props.values.quantity.quantity.toString()
-            : props.values.total.quantity.toString(),
+            ? R.pathOr('', ['values', 'quantity', 'quantity'], props).toString()
+            : R.pathOr('', ['values', 'total', 'quantity'], props).toString(),
         sellQuantity:
           props.values.type === 'Buy'
-            ? props.values.total.quantity.toString()
-            : props.values.quantity.quantity.toString(),
+            ? R.pathOr('', ['values', 'total', 'quantity'], props).toString()
+            : R.pathOr('', ['values', 'quantity', 'quantity'], props).toString(),
       },
     }}
     execute={{
