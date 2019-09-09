@@ -88,7 +88,10 @@ const validate = (values, props) => {
     } else {
       await (async () => {
         const remains = await remaining(props);
-        if (Tm.greaterThan(values.total.quantity, remains.quantity)) {
+        if (
+          remains !== null &&
+          Tm.greaterThan(values.total.quantity, remains.quantity)
+        ) {
           errors.total = `Maximum AUM exceeded (${displayQuantity(remains)})`;
           return;
         }

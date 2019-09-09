@@ -30,7 +30,11 @@ export default props => (
         sellQuantity:
           props.values.type === 'Buy'
             ? R.pathOr('', ['values', 'total', 'quantity'], props).toString()
-            : R.pathOr('', ['values', 'quantity', 'quantity'], props).toString(),
+            : R.pathOr(
+                '',
+                ['values', 'quantity', 'quantity'],
+                props,
+              ).toString(),
       },
     }}
     execute={{
