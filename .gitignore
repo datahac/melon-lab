@@ -1,11 +1,9 @@
 # Dependencies
 node_modules/
-node_modules.*/
 
 # Generated files
 package-lock.json
 coverage/
-build/
 
 # Ignore all log files.
 *.log
@@ -14,7 +12,6 @@ build/
 .*
 
 # Allowed dot files
-!.nvmrc
 !.env.example
 !.env.defaults
 !.babelrc

@@ -1,0 +1,782 @@
+# Fields that are only safe within the native app environment and are blocked
+# from execution in the hosted / web environment.
+directive @authenticated on FIELD | FIELD_DEFINITION
+directive @sign(
+  source: String = "unsigned"
+  target: String = "signedOrNot"
+) on FIELD | FIELD_DEFINITION
+directive @account(arg: String = "from") on FIELD | FIELD_DEFINITION
+
+scalar DateTime
+
+enum ExchangeEnum {
+  RADAR_RELAY
+  OASIS_DEX
+  KYBER_NETWORK
+  ETHFINEX
+  MELON_ENGINE
+}
+
+enum OrderTypeEnum {
+  ASK
+  BID
+}
+
+enum TradeTypeEnum {
+  BUY
+  SELL
+}
+
+enum FundSetupStepEnum {
+  CREATE_ACCOUNTING
+  CREATE_FEE_MANAGER
+  CREATE_PARTICIPATION
+  CREATE_POLICY_MANAGER
+  CREATE_SHARES
+  CREATE_TRADING
+  CREATE_VAULT
+}
+
+enum PolicyTypeEnum {
+  TRADING
+  INVEST
+  BOTH
+}
+
+enum OrderEventTypeEnum {
+  SET
+  REMOVE
+}
+
+interface OrderEvent {
+  id: String!
+  exchange: ExchangeEnum!
+  event: OrderEventTypeEnum!
+}
+
+type SetOrderEvent implements OrderEvent {
+  id: String!
+  exchange: ExchangeEnum!
+  order: Order!
+  event: OrderEventTypeEnum!
+}
+
+type RemoveOrderEvent implements OrderEvent {
+  id: String!
+  exchange: ExchangeEnum!
+  event: OrderEventTypeEnum!
+}
+
+interface Order {
+  id: String!
+  trade: Price!
+  price: String!
+  volume: String!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+}
+
+type EthfinexOrder implements Order {
+  id: String!
+  trade: Price!
+  price: String!
+  volume: String!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+  metadata: ZeroExOrderMetadata
+}
+
+type ZeroExOrder implements Order {
+  id: String!
+  trade: Price!
+  price: String!
+  volume: String!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+  metadata: ZeroExOrderMetadata
+}
+
+type OasisDexOrder implements Order {
+  id: String!
+  trade: Price!
+  price: String!
+  volume: String!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+  metadata: OasisDexOrderMetadata
+}
+
+type KyberNetworkOrder implements Order {
+  id: String!
+  trade: Price!
+  price: String!
+  volume: String!
+  type: OrderTypeEnum!
+  exchange: ExchangeEnum!
+}
+
+type ZeroExOrderMetadata {
+  exchangeAddress: String!
+  senderAddress: String!
+  makerAddress: String!
+  takerAddress: String!
+  makerAssetData: String!
+  takerAssetData: String!
+  feeRecipientAddress: String!
+  makerAssetAmount: String!
+  takerAssetAmount: String!
+  makerFee: String!
+  takerFee: String!
+  expirationTimeSeconds: Int!
+  salt: String!
+  signature: String
+}
+
+type SignedZeroExOrderMetadata {
+  exchangeAddress: String!
+  senderAddress: String!
+  makerAddress: String!
+  takerAddress: String!
+  makerAssetData: String!
+  takerAssetData: String!
+  feeRecipientAddress: String!
+  makerAssetAmount: String!
+  takerAssetAmount: String!
+  makerFee: String!
+  takerFee: String!
+  expirationTimeSeconds: Int!
+  salt: String!
+  signature: String!
+}
+
+type OasisDexOrderMetadata {
+  id: String!
+  maker: String
+  taker: String
+  isActive: Boolean!
+  exchangeContractAddress: String
+  timestamp: String!
+}
+
+type Price {
+  base: Quantity
+  quote: Quantity
+}
+
+type Quantity {
+  token: Token
+  quantity: String
+}
+
+type Token {
+  symbol: String
+  decimals: Int
+  address: String
+}
+
+type Ranking {
+  id: String
+  rank: Int
+  address: String
+  name: String
+  inception: DateTime
+  fund: Fund
+  sharePrice: Price
+  gav: Quantity
+  version: String
+}
+
+type Routes {
+  accountingAddress: String
+  feeManagerAddress: String
+  participationAddress: String
+  policyManagerAddress: String
+  priceSourceAddress: String
+  registryAddress: String
+  sharesAddress: String
+  tradingAddress: String
+  vaultAddress: String
+  versionAddress: String
+}
+
+type Fund {
+  id: String
+  rank: Int
+  address: String
+  name: String
+  inception: DateTime
+  gav: Quantity
+  nav: Quantity
+  owner: String
+  routes: Routes
+  denominationAsset: Token
+  nativeAsset: Token
+  holdings: [Holding]
+  openOrders: [Order]
+  sharePrice(symbol: String!): Price
+  totalSupply: Quantity
+  personalStake(investor: String): Quantity
+  isShutdown: Boolean
+  isComplete: Boolean
+  allowedExchanges: [ExchangeEnum]
+  policies: [Policy]
+  investAllowed: [Token]
+  remainingInvestAmount(asset: String!): Quantity
+  managementFeeRate: Int
+  performanceFeeRate: Int
+  performanceFeePeriod: Int
+}
+
+type Policy {
+  address: String
+  name: String
+  parameters: String
+}
+
+type Holding {
+  balance: Quantity!
+  locked: Quantity!
+  price: Price!
+  fraction: String!
+}
+
+type Trade {
+  id: String
+  trade: Price!
+  price: String
+  volume: String!
+  type: TradeTypeEnum!
+  exchange: ExchangeEnum!
+}
+
+type Signature {
+  r: String!
+  s: String!
+  v: Int!
+}
+
+type AdapterAddresses {
+  kyberAdapter: String!
+  matchingMarketAdapter: String!
+  zeroExAdapter: String!
+}
+
+type PolicyAddresses {
+  priceTolerance: String!
+  userWhitelist: String!
+}
+
+type FactoryAddresses {
+  accountingFactory: String!
+  feeManagerFactory: String!
+  participationFactory: String!
+  policyManagerFactory: String!
+  sharesFactory: String!
+  tradingFactory: String!
+  vaultFactory: String!
+}
+
+type ThirdPartyContracts {
+  tokens: [Token]
+}
+
+type MelonContracts {
+  priceSource: String!
+  adapters: AdapterAddresses!
+  policies: PolicyAddresses!
+  engine: String!
+  registry: String!
+  version: String!
+  ranking: String!
+}
+
+type Deployment {
+  melonContracts: MelonContracts!
+  thirdPartyContracts: ThirdPartyContracts!
+  version: String
+  ranking: String
+  tokens: [Token]
+}
+
+interface UnsignedTransaction {
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
+}
+
+type UnsignedPlainTransaction implements UnsignedTransaction {
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
+}
+
+type UnsignedAmguTransaction implements UnsignedTransaction {
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
+  amguInEth: Quantity
+  incentiveInEth: Quantity
+}
+
+type UnsignedOrderTransaction implements UnsignedTransaction {
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
+  signedOrder: String
+}
+
+input UnsignedTransactionInput {
+  data: String
+  from: String
+  gas: String
+  gasPrice: String
+  to: String
+  value: String
+}
+
+input PolicyInput {
+  address: String!
+  type: PolicyTypeEnum!
+}
+
+input SignZeroExOrderInput {
+  exchangeAddress: String!
+  senderAddress: String!
+  makerAddress: String!
+  takerAddress: String!
+  makerAssetData: String!
+  takerAssetData: String!
+  feeRecipientAddress: String!
+  makerAssetAmount: String!
+  takerAssetAmount: String!
+  makerFee: String!
+  takerFee: String!
+  expirationTimeSeconds: Int!
+  salt: String!
+}
+
+type InvestRequest {
+  invest: Quantity!
+  shares: Quantity!
+
+  "If waiting time 0 then ready to execute"
+  waitingTime: String!
+  isExpired: Boolean!
+}
+
+type Query {
+  defaultAccount: String
+  allAccounts: [String]
+  hasStoredWallet: Boolean
+  ethAccounts: [String]
+
+  "Fetch the associated fund of an account."
+  associatedFund(
+    "The address of the account to load the fund for."
+    manager: String
+  ): String
+
+  "Loads a fund by its name."
+  fundByName("The name of the fund to load." name: String!): Fund
+
+  network: String
+  currentBlock: String
+  priceFeedUp: Boolean
+  priceFeedUpdate: Int
+  peerCount: String
+  contractDeployment: Deployment
+  totalFunds: Int
+  balance(symbol: String!, address: String): Quantity
+  fund(address: String!): Fund
+  rankings: [Ranking]
+  orders(exchange: ExchangeEnum!, base: String!, quote: String!): [Order]
+  openOrders(fundAddress: String): [Order]
+
+  "Loads the current routes for fund creation for a fund manager address."
+  routes("The address of the fund manager." manager: String): Routes
+
+  kyberPrice(
+    symbol: String!
+    quantity: String!
+    total: String!
+    type: TradeTypeEnum!
+  ): Price
+  enginePrice: Price
+  liquidEther: Quantity
+
+  tokens: [Token]
+  quoteToken: Token
+
+  "Check if fund has active invest request"
+  hasActiveRequest(fundAddress: String!, userAddress: String!): InvestRequest
+}
+
+type Mutation {
+  estimateNothing(nothing: Boolean): Boolean
+  # TODO: Give more fund configuration options: Policies, pricefeed, ...
+  """
+  Estimates the number of gas units required for the "beginSetup" transaction.
+  """
+  estimateFundSetupBegin(
+    name: String!
+    exchanges: [String]!
+    assets: [String]
+    performanceFee: String!
+    managementFee: String!
+    feePeriod: String
+  ): UnsignedPlainTransaction @account
+
+  """
+  Executes the "beginSetup" transaction with the given gas price per unit.
+  """
+  executeFundSetupBegin(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+  ): String @account @sign
+
+  """
+  Estimates the number of gas units required for a fund setup step transaction.
+  """
+  estimateFundSetupStep(
+    "The step in the fund factory process."
+    step: FundSetupStepEnum!
+  ): UnsignedAmguTransaction @account
+
+  """
+  Executes a fund setup step transaction with the given gas price per unit.
+  """
+  executeFundSetupStep(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    "The step in the fund factory process."
+    step: FundSetupStepEnum!
+  ): Boolean @account @sign
+
+  """
+  Estimates the number of gas units required for the "completeSetup" transaction.
+  """
+  estimateFundSetupComplete: UnsignedAmguTransaction @account
+
+  """
+  Executes the "completeSetup" transaction with the given gas price per unit.
+  """
+  executeFundSetupComplete(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+  ): String @account @sign
+
+  """
+  Estimates the number of gas units required for the "request investment" transaction.
+  """
+  estimateRequestInvestment(
+    fundAddress: String!
+    investmentAmount: String!
+    investmentAsset: String!
+    maxPrice: String
+  ): UnsignedAmguTransaction @account
+
+  """
+  Executes the "request investment" transaction with the given gas price per unit.
+  """
+  executeRequestInvestment(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean @account @sign
+
+  """
+  Estimates the number of gas units required for the "execute request" transaction.
+  """
+  estimateExecuteRequest(fundAddress: String!): UnsignedAmguTransaction @account
+
+  """
+  Executes the "execute request" transaction with the given gas price per unit.
+  """
+  executeExecuteRequest(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean @account @sign
+
+  """
+  Estimates the number of gas units required for the "execute request" transaction.
+  """
+  estimateCancelRequest(fundAddress: String!): UnsignedPlainTransaction @account
+
+  """
+  Executes the "execute request" transaction with the given gas price per unit.
+  """
+  executeCancelRequest(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean @account @sign
+
+  """
+  Estimates the number of gas units required for the "approve transfer" transaction.
+  """
+  estimateApproveTransfer(
+    fundAddress: String!
+    investmentAmount: String!
+    investmentAsset: String!
+  ): UnsignedPlainTransaction @account
+
+  """
+  Executes the "approve transfer" transaction with the given gas price per unit.
+  """
+  executeApproveTransfer(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+    investmentAmount: String!
+    investmentAsset: String!
+  ): Boolean @account @sign
+
+  estimateDeposit(quantity: String!): UnsignedPlainTransaction @account
+
+  executeDeposit(unsigned: UnsignedTransactionInput!): Boolean @account @sign
+
+  estimateWithdraw(quantity: String!): UnsignedPlainTransaction @account
+
+  executeWithdraw(unsigned: UnsignedTransactionInput!): Boolean @account @sign
+
+  estimateRedeem(
+    fundAddress: String!
+    sharesQuantity: String!
+  ): UnsignedPlainTransaction @account
+
+  executeRedeem(
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean @account @sign
+
+  estimateReturnBatchToVault(
+    fundAddress: String!
+    assets: [String!]!
+  ): UnsignedPlainTransaction @account
+
+  executeReturnBatchToVault(
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean @account @sign
+
+  """
+  Executes the "execute request" transaction with the given gas price per unit.
+  """
+  executeShutDownFund(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean @account @sign
+
+  """
+  Estimates the number of gas units required for the "approve transfer" transaction.
+  """
+  estimateShutDownFund(fundAddress: String!): UnsignedPlainTransaction @account
+
+  """
+  Estimates the number of gas units required for the "trigger reward all fees" transaction.
+  """
+  estimateTriggerRewardAllFees(fundAddress: String!): UnsignedTransaction
+    @account
+
+  """
+  Executes the "trigger reward all fees" transaction with the given gas price per unit.
+  """
+  executeTriggerRewardAllFees(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+  ): Boolean @account @sign
+
+  """
+  Estimates the number of gas units required for the "enable investment" transaction.
+  """
+  estimateEnableInvestment(
+    fundAddress: String!
+    assets: [String]!
+  ): UnsignedAmguTransaction @account
+
+  """
+  Executes the "enable investment" transaction with the given gas price per unit.
+  """
+  executeEnableInvestment(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+    assets: [String]!
+  ): Boolean @account @sign
+
+  """
+  Estimates the number of gas units required for the "disable investment" transaction.
+  """
+  estimateDisableInvestment(
+    fundAddress: String!
+    assets: [String]!
+  ): UnsignedAmguTransaction @account
+
+  """
+  Executes the "disable investment" transaction with the given gas price per unit.
+  """
+  executeDisableInvestment(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    fundAddress: String!
+    assets: [String]!
+  ): Boolean @account @sign
+
+  estimateMakeOrder(
+    exchange: ExchangeEnum!
+    buyToken: String!
+    buyQuantity: String!
+    sellToken: String!
+    sellQuantity: String!
+  ): UnsignedOrderTransaction @account
+
+  executeMakeOrder(
+    "Unsigned transaction data."
+    unsigned: UnsignedTransactionInput!
+    exchange: ExchangeEnum!
+    signedOrder: String
+  ): Boolean @account @sign
+
+  estimateTakeOrder(
+    id: String
+    exchange: ExchangeEnum!
+    buyToken: String
+    buyQuantity: String
+    sellToken: String
+    sellQuantity: String
+  ): UnsignedPlainTransaction @account
+
+  executeTakeOrder(
+    unsigned: UnsignedTransactionInput!
+    exchange: ExchangeEnum!
+  ): Trade @account @sign
+
+  estimateCancelOrder(
+    id: String!
+    exchange: ExchangeEnum!
+  ): UnsignedPlainTransaction @account
+
+  executeCancelOrder(
+    unsigned: UnsignedTransactionInput!
+    exchange: ExchangeEnum!
+  ): Boolean @account @sign
+
+  create0xOrder(
+    buyToken: String!
+    buyQuantity: String!
+    sellToken: String!
+    sellQuantity: String!
+  ): ZeroExOrderMetadata
+
+  createEthfinexOrder(
+    buyToken: String!
+    buyQuantity: String!
+    sellToken: String!
+    sellQuantity: String!
+  ): ZeroExOrderMetadata
+
+  # Policies
+  estimateDeployUserWhitelist(addresses: [String]): UnsignedPlainTransaction
+    @account
+  estimateDeployAssetBlacklist(addresses: [String]): UnsignedPlainTransaction
+    @account
+  estimateDeployAssetWhitelist(addresses: [String]): UnsignedPlainTransaction
+    @account
+  estimateDeployMaxConcentration(percent: Float): UnsignedPlainTransaction
+    @account
+  estimateDeployMaxPositions(positions: Int): UnsignedPlainTransaction @account
+  estimateDeployPriceTolerance(percent: Int): UnsignedPlainTransaction @account
+  executeDeploy(unsigned: UnsignedTransactionInput): String @account @sign
+
+  estimateRegisterPolicies(policies: [PolicyInput]!): UnsignedTransaction
+    @account
+  executeRegisterPolicies(unsigned: UnsignedTransactionInput): Boolean
+    @account
+    @sign
+
+  """
+  Export the currently active wallet in its encrypted form.
+  """
+  exportWallet(
+    "The password for decrypting the wallet."
+    password: String!
+  ): String
+
+  """
+  Log out of the current wallet and delete its encrypted representation
+  from local storage. This requires the user to either re-upload the
+  encrypted wallet or restore it from its mnemonic when attempting to
+  log in again.
+  """
+  deleteWallet: Boolean!
+
+  """
+  Log in to a previously stored wallet. Returns a list of possible account
+  addresses from the wallet.
+  """
+  loginWallet(
+    "The password for decrypting the wallet."
+    password: String!
+  ): [String]
+
+  """
+  Import and log in to wallet using a wallet JSON. Within the native app
+  environment, this will cause the encrypted wallet to be stored locally
+  for future use.
+  """
+  importWallet(
+    "The encrypted wallet."
+    wallet: String!
+    "The password for decrypting the wallet."
+    password: String!
+  ): [String]
+
+  """
+  Restore and login to a wallet using a mnemonic. Within the native app
+  environment,this will cause the encrypted wallet to be stored locally
+  for future use.
+  """
+  restoreWallet(
+    "The mnemonic to restore the wallet with."
+    mnemonic: String!
+    "The password for decrypting the wallet."
+    password: String!
+  ): [String]
+
+  """
+  Randomly generate a new mnemonic phrase.
+  """
+  generateMnemonic: String
+
+  useFrame(address: String!): String
+}
+
+type Subscription {
+  orders(exchange: ExchangeEnum!, base: String!, quote: String!): [OrderEvent]
+  currentBlock: String
+  network: String
+  priceFeedUp: Boolean
+  peerCount: String
+  balance(symbol: String!, address: String): Quantity
+}
+
+schema {
+  query: Query
+  subscription: Subscription
+  mutation: Mutation
+}
