@@ -1,6 +1,6 @@
 const postcssPresetEnv = require('postcss-preset-env');
-const customProperties = require('./src/storybook/design/properties');
-const customMedia = require('./src/storybook/design/media');
+const customProperties = require('./storybook/design/properties');
+const customMedia = require('./storybook/design/media');
 
 module.exports = {
   plugins: [

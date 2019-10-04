@@ -29,7 +29,6 @@ const DefaultTemplateContainer = ({ title, text, icon, children }) => (
             network: network && network.network,
             currentBlock: network && network.currentBlock,
             blockOverdue: network && network.blockOverdue,
-            nodeSynced: network && network.nodeSynced,
             priceFeedUp: network && network.priceFeedUp,
           }}
           HeadlineProps={

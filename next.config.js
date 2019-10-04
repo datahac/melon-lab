@@ -3,6 +3,7 @@ const find = require('find-up');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = require('@zeit/next-typescript')({
+  target: 'serverless',
   webpack: (config, options) => {
     config.resolve.alias = Object.assign({}, config.resolve.alias || {}, {
       // Override the mock link component used in storybook.
@@ -53,6 +54,9 @@ module.exports = require('@zeit/next-typescript')({
       fs: 'empty',
       net: 'empty',
       tls: 'empty',
+      ws: 'empty',
+      websocket: 'empty',
+      'utf-8-validate': 'empty',
     };
 
     config.performance = Object.assign({}, config.performance, {

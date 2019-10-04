@@ -8,12 +8,12 @@
   "scripts": {
     "clean": "rimraf coverage build",
     "clean:logs": "rimraf logs/*.log",
-    "dev": "yarn next dev src",
-    "start": "yarn next start src",
-    "build": "yarn next build src",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "lint": "tslint --project src/tsconfig.json -c tslint.json",
-    "storybook": "start-storybook -c src/storybook/config --port 3060 --quiet"
+    "dev": "yarn next dev",
+    "start": "yarn next start",
+    "build": "yarn next build",
+    "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "lint": "tslint --project tsconfig.json -c tslint.json",
+    "storybook": "start-storybook -c storybook/config --port 3060 --quiet"
   },
   "author": "Melonport <team@melonport.com>",
   "contributors": [
@@ -32,6 +32,7 @@
     "apollo-link-error": "^1.1.7",
     "apollo-utilities": "^1.1.1",
     "axios": "^0.18.0",
+    "bip39": "^3.0.2",
     "cross-env": "^5.1.5",
     "dataloader": "^1.4.0",
     "date-fns": "^1.30.1",
@@ -42,10 +43,10 @@
     "graphql-iso-date": "^3.6.1",
     "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.4",
+    "isomorphic-ws": "^4.0.1",
     "memoize-one": "^5.0.0",
     "next": "^8.0.0",
     "next-with-apollo": "^3.3.2",
-    "node-hid": "^0.7.9",
     "query-string": "^6.2.0",
     "ramda": "^0.26.0",
     "react": "^16.8.1",
@@ -59,6 +60,7 @@
     "recompose": "^0.30.0",
     "rxjs": "^6.3.3",
     "rxjs-hooks": "^0.3.3",
+    "sha3": "^2.0.7",
     "styled-jsx": "^3.2.1",
     "web3-eth-accounts": "^1.0.0-beta.37",
     "web3-utils": "^1.0.0-beta.37",
@@ -87,7 +89,12 @@
   },
   "resolutions": {
     "@melonproject/protocol": "^1.0.8",
-    "styled-jsx": "^3.2.0"
+    "styled-jsx": "^3.2.0",
+    "@0x/contracts-test-utils": "./ignore",
+    "ws": "./ignore",
+    "websocket": "./ignore",
+    "web3-providers-ws": "./ignore",
+    "scrypt": "./ignore"
   },
   "husky": {
     "hooks": {
